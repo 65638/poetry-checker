@@ -1,0 +1,191 @@
+{
+  "status": "draft_only_not_for_release",
+  "note": "规则卡草案（teaching-v1）。全部条目 reviewStatus=pending，未含任何真实文献出处，不进入发布来源集合；ID 除 METER.POSITION 外均为提交 Codex/组长确认的提案。",
+  "cards": [
+    {
+      "draftId": "draft-meter-position-v1",
+      "reviewStatus": "pending",
+      "status": "draft_only_not_for_release",
+      "rule": {
+        "id": "METER.POSITION",
+        "version": "draft-1",
+        "name": "逐位平仄允许集合",
+        "scope": "四类近体模板的逐字位允许集合",
+        "statement": "比较字位有效平仄候选集合与模板允许集合：候选全集包含于允许集合为通过，两者完全不相交为失败，部分相交或存在未知候选为待复核；不得挑选合律读音。",
+        "limitations": [
+          "仅为基础模板允许集合，不能替代孤平、尾式与拗救约束",
+          "可变位（中）具体口径待组长核定",
+          "语文学出处与版本定位待人工核实"
+        ],
+        "evidenceIds": []
+      },
+      "sourceNeeded": ["待补真实底本、章节或页面定位"]
+    },
+    {
+      "draftId": "draft-rhyme-common-group-v1",
+      "reviewStatus": "pending",
+      "status": "draft_only_not_for_release",
+      "rule": {
+        "id": "RHYME.COMMON_GROUP",
+        "version": "draft-1",
+        "name": "全部必押韵脚公共归部",
+        "scope": "平声押韵的四类近体模板",
+        "statement": "检查所有必押韵脚在同一有效读音约束下的公共韵部；信息不全时待复核。",
+        "limitations": [
+          "语文学出处及版本定位待人工核实",
+          "首句借韵策略另列"
+        ],
+        "evidenceIds": []
+      },
+      "sourceNeeded": ["待补真实底本、章节或页面定位", "首句借邻韵关系表待审核"]
+    },
+    {
+      "draftId": "draft-relation-dui-v1",
+      "reviewStatus": "pending",
+      "status": "draft_only_not_for_release",
+      "rule": {
+        "id": "RELATION.DUI",
+        "version": "draft-1",
+        "name": "联内对仗关系（失对检查）",
+        "scope": "四类近体模板相邻联",
+        "statement": "同联出句与对句关键节奏位平仄应相对；以第二字为主要判别点，结合五言二四、七言二四六及整句谱式；先识别已认可变格，再处理其对关系检查的影响。",
+        "limitations": [
+          "已认可变格不得机械重复报失对",
+          "七言扩展与变格位置口径待核定",
+          "语文学出处待人工核实"
+        ],
+        "evidenceIds": []
+      },
+      "sourceNeeded": ["待补真实底本、章节或页面定位"]
+    },
+    {
+      "draftId": "draft-relation-nian-v1",
+      "reviewStatus": "pending",
+      "status": "draft_only_not_for_release",
+      "rule": {
+        "id": "RELATION.NIAN",
+        "version": "draft-1",
+        "name": "联间粘连关系（失粘检查）",
+        "scope": "四类近体模板相邻联之间",
+        "statement": "上联对句与下联出句关键节奏位平仄应相粘；以第二字为主要判别点，结合五言二四、七言二四六及整句谱式。",
+        "limitations": [
+          "语文学出处待人工核实",
+          "与变格的关系口径待核定"
+        ],
+        "evidenceIds": []
+      },
+      "sourceNeeded": ["待补真实底本、章节或页面定位"]
+    },
+    {
+      "draftId": "draft-guping-narrow-v1",
+      "reviewStatus": "pending",
+      "status": "draft_only_not_for_release",
+      "rule": {
+        "id": "GUPING.NARROW",
+        "version": "draft-1",
+        "name": "窄义孤平（B 型平收句）",
+        "scope": "B 型平收句",
+        "statement": "采用窄义口径：五言 ZPZZP，或七言对应后五字，在无相应救法时判定为孤平；不采用“整句只有一个平声”的宽口径。",
+        "limitations": [
+          "七言对应位置的精确表述待核定",
+          "救法关系由 RESCUE.SELF 等另行表达",
+          "语文学出处待人工核实"
+        ],
+        "evidenceIds": []
+      },
+      "sourceNeeded": ["待补真实底本、章节或页面定位"]
+    },
+    {
+      "draftId": "draft-tail-sanping-v1",
+      "reviewStatus": "pending",
+      "status": "draft_only_not_for_release",
+      "rule": {
+        "id": "TAIL.SANPING",
+        "version": "draft-1",
+        "name": "三平尾",
+        "scope": "按模板检查的近体句末三字",
+        "statement": "末三字全平为三平尾，判定为错误（severity=error）。",
+        "limitations": [
+          "仅对按所选模板检查的近体句生效",
+          "语文学出处待人工核实"
+        ],
+        "evidenceIds": []
+      },
+      "sourceNeeded": ["待补真实底本、章节或页面定位"]
+    },
+    {
+      "draftId": "draft-tail-sanze-v1",
+      "reviewStatus": "pending",
+      "status": "draft_only_not_for_release",
+      "rule": {
+        "id": "TAIL.SANZE",
+        "version": "draft-1",
+        "name": "三仄尾",
+        "scope": "按模板检查的近体句末三字",
+        "statement": "末三字全仄为三仄尾，默认警告（severity=warning）；其出现不自动使全篇失败。",
+        "limitations": [
+          "仅对按所选模板检查的近体句生效",
+          "语文学出处待人工核实"
+        ],
+        "evidenceIds": []
+      },
+      "sourceNeeded": ["待补真实底本、章节或页面定位"]
+    },
+    {
+      "draftId": "draft-rescue-self-v1",
+      "reviewStatus": "pending",
+      "status": "draft_only_not_for_release",
+      "rule": {
+        "id": "RESCUE.SELF",
+        "version": "draft-1",
+        "name": "孤平自救",
+        "scope": "B 型平收句",
+        "statement": "认可 B 型五言 ZPPZP（七言对应尾部）为孤平自救；须指出拗位与救位，不能把所有 B 型偏离都算已救。",
+        "limitations": [
+          "七言对应位置待核定",
+          "更宽跨句救法不在 P0 范围",
+          "语文学出处待人工核实"
+        ],
+        "evidenceIds": []
+      },
+      "sourceNeeded": ["待补真实底本、章节或页面定位"]
+    },
+    {
+      "draftId": "draft-rescue-teao-v1",
+      "reviewStatus": "pending",
+      "status": "draft_only_not_for_release",
+      "rule": {
+        "id": "RESCUE.TEAO",
+        "version": "draft-1",
+        "name": "特拗",
+        "scope": "C 型句",
+        "statement": "认可 C 型五言 PPZPZ、七言对应“中仄平平仄平仄”为特拗；须匹配完整审核模式及其余约束后才认可，认可后不得对被认可位置重复硬报偏离。",
+        "limitations": [
+          "七言对应完整模式待核定",
+          "语文学出处待人工核实"
+        ],
+        "evidenceIds": []
+      },
+      "sourceNeeded": ["待补真实底本、章节或页面定位"]
+    },
+    {
+      "draftId": "draft-rescue-duiju-v1",
+      "reviewStatus": "pending",
+      "status": "draft_only_not_for_release",
+      "rule": {
+        "id": "RESCUE.DUIJU",
+        "version": "draft-1",
+        "name": "对句相救",
+        "scope": "同联 A/B 型",
+        "statement": "认可同联对应 A/B 型的 ZZPZZ / PPPZP（如“野火烧不尽/春风吹又生”）为对句相救；明确出句第四字与对句第三字，七言扩展需核定对应位置及前缀。",
+        "limitations": [
+          "七言扩展待核定",
+          "更宽跨句救法不在 P0 范围",
+          "语文学出处待人工核实"
+        ],
+        "evidenceIds": []
+      },
+      "sourceNeeded": ["待补真实底本、章节或页面定位", "七言对应位置及前缀需组长核定"]
+    }
+  ]
+}
