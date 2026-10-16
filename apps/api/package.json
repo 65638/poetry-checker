@@ -1,0 +1,15 @@
+{
+  "name": "@poetry/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "start": "tsx src/server.ts",
+    "test": "vitest run --root ../.. apps/api/tests"
+  },
+  "dependencies": {
+    "@poetry/contracts": "workspace:*",
+    "fastify": "5.1.0"
+  }
+}

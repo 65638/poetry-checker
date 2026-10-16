@@ -3,10 +3,22 @@
   "compilerOptions": {
     "noEmit": true,
     "paths": {
-      "@poetry/contracts": ["./packages/contracts/src/index.ts"],
-      "@poetry/prosody": ["./packages/prosody/src/index.ts"]
+      "@poetry/contracts": [
+        "./packages/contracts/src/index.ts"
+      ],
+      "@poetry/prosody": [
+        "./packages/prosody/src/index.ts"
+      ]
     }
   },
-  "include": ["packages/**/*.ts", "scripts/**/*.ts", "vitest.config.ts"],
-  "exclude": ["node_modules", "**/dist"]
+  "include": [
+    "apps/**/*.ts",
+    "packages/**/*.ts",
+    "scripts/**/*.ts",
+    "vitest.config.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/dist"
+  ]
 }

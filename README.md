@@ -13,7 +13,7 @@ pnpm verify
 
 未安装 pnpm 时，使用包含 npm 的标准 Node.js 24 安装后执行 `npm install -g pnpm@11.25.0`，或按 pnpm 官方说明安装同一版本。本地依赖已安装；重新克隆或解压需安装依赖。
 
-`verify` 执行 lint、类型检查、单元测试、两包构建和生成物一致性检查。当前没有 `pnpm dev`，也没有运行中的 API 或前端页面；这些由组长/GLM 与 D 接入后补齐。
+`verify` 执行 lint、类型检查、单元测试、两包构建和生成物一致性检查。`pnpm dev` / `pnpm dev:api` 启动 API 开发 mock（127.0.0.1:3000，`PORT` 可改）；前端页面仍由 D 接入后补齐。
 
 ## 已有内容与待开发内容
 
@@ -24,7 +24,7 @@ pnpm verify
 | 基础核心     | 16 套整诗模板、基础平仄匹配、三值判断、全部韵脚公共归部集合判断             |
 | 工程检查     | 锁文件、ESLint、TypeScript、Vitest、构建、生成物检查、GitHub Actions 工作流 |
 | 完整格律判定 | 待实现；evaluateProsodyCore 明确抛出 PROSODY_EVALUATION_PENDING             |
-| 数据与应用   | 三套韵书、解析消歧、体裁、Fastify API、React Web、真实金标准与 E2E 待实现   |
+| 数据与应用   | API 开发 mock 已就绪（fixture 支撑、错误码符合契约）；三套韵书、解析消歧、体裁、React Web、真实金标准与 E2E 待实现 |
 
 当前匹配 score 仅有 toneFit，粘对/押韵特征尚为空。不可直接用于正式体裁判别或“全篇合律”结论。合成 fixture 使用字面“平”“仄”构造，只验证结构和界面，版本为 fixture-only。
 

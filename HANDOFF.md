@@ -41,3 +41,25 @@ Claude 接入后负责视觉/展示组件，D 与 DeepSeek 负责业务工程；
 | Codex    | 实现完整格律判定和解释输出，接受 C 的最小反例            |
 
 源码包不含 .git、node_modules 或 dist。协作远端为 https://github.com/65638/poetry-checker.git，主分支 main，本地 origin 已关联。后续成员优先从远端克隆，以保留提交历史；ZIP 仅为源码备份。操作见 docs/github.md。0001/0002 交接记录描述的是首次发布前的历史状态。
+
+---
+
+# GLM 接入：D1 复验、契约冻结与 API mock（2026-10-16）
+
+执行者：组长本地 GLM（ZCode）。在独立 Node 24.19.0 / pnpm 11.25.0 环境复验后完成以下工作。
+
+## 已完成
+
+- 底座复验：全新环境 `pnpm install` + `pnpm verify` 全绿（lint、typecheck、测试、构建、生成物一致性），Codex 声称的基础交付属实。
+- 契约冻结：人工审核 Schema/OpenAPI/fixture 与《02_公共接口契约_v1.md》一致后，以标签 `contract-v1` 冻结基线；记录见 docs/contract-freeze.md。冻结后公共变更走独立 PR。
+- `apps/api`（GLM 所有）：Fastify D1 开发 mock。`/healthz`、`/readyz`、`/api/v1/rhyme-books`、`/api/v1/analyze`（AnalyzeRequestSchema 校验、422 统一错误、413 超限、五类 fixture 确定性选取、请求韵书回写 policy/poem.book、inputHash 重算、出站 Schema 校验）；`characters/rules/sources` 按契约返回 503 DATA_NOT_READY。错误处理保留 Fastify 4xx 状态码，未知错误才映射 500。**不执行真实格律判断。**
+- 模块清单：`@poetry/lexicon`、`@poetry/readings`、`@poetry/genre`、`@poetry/web` 补 package.json 声明（仅清单，src 归各负责人）。
+- 根配置：新增 `dev` / `dev:api` 脚本；tsconfig include 与 vitest include 纳入 `apps/**`；新增依赖 fastify 5.1.0 并更新 lockfile。
+- 验证：`pnpm verify` 36 项测试通过（原 27 + api 9）；真实启动冒烟：healthz 200 / analyze 200+出站校验 / 非法枚举 422 / 坏 JSON 400 / 未知路由 404 / 数据未就绪 503。
+
+## 待办（按任务书）
+
+- API 真实编排：A/B/C/E 模块就绪后按契约第 4 节顺序接入，替换 mock 选 fixture 逻辑；`readyz` 改为反映真实数据装载。
+- D 接入 web 后把 `pnpm dev` 扩展为同时启动 API 与 Web。
+- 组长 D1 决策项：中华新韵底本（建议直接采用十四韵规则 + pinyin-data 重建并标注重建表）。
+

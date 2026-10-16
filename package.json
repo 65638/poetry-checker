@@ -16,7 +16,9 @@
     "format": "prettier --write .",
     "generate:contracts": "pnpm build && tsx scripts/generate-contracts.ts",
     "check:generated": "pnpm build && tsx scripts/generate-contracts.ts --check",
-    "verify": "pnpm lint && pnpm typecheck && pnpm test && pnpm check:generated"
+    "verify": "pnpm lint && pnpm typecheck && pnpm test && pnpm check:generated",
+    "dev:api": "pnpm --filter @poetry/api dev",
+    "dev": "pnpm --filter @poetry/api dev"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
