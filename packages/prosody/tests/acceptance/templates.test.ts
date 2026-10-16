@@ -93,6 +93,23 @@ describe("C-D1-01：四体 16 套模板结构验收", () => {
   });
 });
 
+describe("可变位口径（Codex 2026-10-17 确认：七言 D 第 3 字可平可仄、第 5 字固定仄；五言 D 第 3 字固定仄）", () => {
+  it("七言 D 型：第 1、3 字允许 P/Z，第 5 字只有 Z", () => {
+    const template = getTemplates("qijue").find((item) => item.id === "qijue-ping-unrhymed");
+    const line4 = template?.expectedTones[3];
+    expect(line4?.[0]).toEqual(["P", "Z"]); // 七言第 1 字（中）
+    expect(line4?.[2]).toEqual(["P", "Z"]); // 七言第 3 字（中）
+    expect(line4?.[4]).toEqual(["Z"]); // 七言第 5 字固定仄
+  });
+
+  it("五言 D 型：仅第 1 字可变，第 3 字固定仄", () => {
+    const template = getTemplates("wujue").find((item) => item.id === "wujue-ze-unrhymed");
+    const line4 = template?.expectedTones[3];
+    expect(line4?.[0]).toEqual(["P", "Z"]); // 五言第 1 字（中）
+    expect(line4?.[2]).toEqual(["Z"]); // 五言第 3 字固定仄
+  });
+});
+
 describe("matchTemplates 行为验收（只验收候选特征，不断言“最终合律通过”）", () => {
   it("C-D1-02：合成 A B C D 五绝在 wujue 下命中仄起首句不入韵模板", () => {
     const poem = makeSyntheticPoem(["A", "B", "C", "D"], 5);

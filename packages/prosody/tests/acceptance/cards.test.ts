@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import { RuleCardSchema } from "@poetry/contracts";
 
 // 规则卡草案结构校验：草案不得进入发布来源集合，不能伪造出处。
+// ID 与 version 采用 Codex 2026-10-17 确认口径（10 个固定 ID，首版 version="1"）。
 
 interface DraftCardEntry {
   draftId: string;
@@ -14,7 +15,7 @@ interface DraftCardEntry {
 
 const EXPECTED_RULE_IDS = [
   "METER.POSITION",
-  "RHYME.COMMON_GROUP",
+  "RHYME.COMMON",
   "RELATION.DUI",
   "RELATION.NIAN",
   "GUPING.NARROW",
@@ -33,7 +34,7 @@ function loadCards(): DraftCardEntry[] {
 }
 
 describe("规则卡草案结构校验（draft-only，非发布数据）", () => {
-  it("共 10 个条目，提案 ID 与预期一致且 draftId 唯一", () => {
+  it("共 10 个条目，ID 与 Codex 确认口径一致且 draftId 唯一", () => {
     const cards = loadCards();
     expect(cards).toHaveLength(10);
     expect(
@@ -42,12 +43,12 @@ describe("规则卡草案结构校验（draft-only，非发布数据）", () => 
     expect(new Set(cards.map((card) => card.draftId)).size).toBe(10);
   });
 
-  it("每个 rule 本体通过 RuleCardSchema，且标记为待审核草案", () => {
+  it("每个 rule 本体通过 RuleCardSchema，首版 version 为 \"1\"，且标记为待审核草案", () => {
     for (const card of loadCards()) {
       expect(card.reviewStatus).toBe("pending");
       expect(card.status).toBe("draft_only_not_for_release");
       const rule = RuleCardSchema.parse(card.rule);
-      expect(rule.version).toBe("draft-1");
+      expect(rule.version).toBe("1");
     }
   });
 
@@ -58,5 +59,23 @@ describe("规则卡草案结构校验（draft-only，非发布数据）", () => 
       expect(card.sourceNeeded.length).toBeGreaterThan(0);
       expect(card.sourceNeeded.join("")).toMatch(/待/);
     }
+  });
+
+  it("A 型小拗政策②写入 METER.POSITION，不新增第 11 个规则 ID", () => {
+    const cards = loadCards();
+    const meter = cards.find((card) => (card.rule as { id?: string }).id === "METER.POSITION");
+    expect(meter).toBeDefined();
+    const rule = RuleCardSchema.parse(meter?.rule);
+    expect(rule.statement).toContain("A 型");
+    expect(rule.statement).toContain("info");
+    expect(cards.filter((card) => (card.rule as { id?: string }).id === "METER.POSITION")).toHaveLength(1);
+  });
+
+  it("七言对句相救位置按确认写入 6↔5", () => {
+    const cards = loadCards();
+    const rescue = cards.find((card) => (card.rule as { id?: string }).id === "RESCUE.DUIJU");
+    const rule = RuleCardSchema.parse(rescue?.rule);
+    expect(rule.statement).toContain("第 6 字");
+    expect(rule.statement).toContain("第 5 字");
   });
 });
