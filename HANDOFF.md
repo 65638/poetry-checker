@@ -63,3 +63,9 @@ Claude 接入后负责视觉/展示组件，D 与 DeepSeek 负责业务工程；
 - D 接入 web 后把 `pnpm dev` 扩展为同时启动 API 与 Web。
 - 组长 D1 决策项：中华新韵底本（建议直接采用十四韵规则 + pinyin-data 重建并标注重建表）。
 
+
+---
+
+# GLM 交付：Web 基础环境（2026-10-17，响应 D 的配置需求）
+
+React 19.3.1 / Vite 8.3.4 / plugin-react 6.1.2（registry 实查锁定）；web 独立 tsconfig（DOM/JSX/Bundler）+ 根 typecheck 双项目串联；根 ESLint 覆盖 TSX 与浏览器环境；vitest 增加 .test.tsx 收集（jsdom/Testing Library/MSW 待 D 提需求后统一加入）；`/api`、`/healthz`、`/readyz` 代理已验证；`src/main.tsx` 占位入口移交 D。验证：`pnpm verify` 全绿（36 测试 + vite build），双服务冒烟通过。明细见 docs/handoffs/0003-web-foundation.md。

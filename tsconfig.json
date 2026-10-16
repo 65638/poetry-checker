@@ -12,8 +12,8 @@
     }
   },
   "include": [
-    "apps/**/*.ts",
     "packages/**/*.ts",
+    "apps/api/**/*.ts",
     "scripts/**/*.ts",
     "vitest.config.ts"
   ],

@@ -13,7 +13,7 @@ pnpm verify
 
 未安装 pnpm 时，使用包含 npm 的标准 Node.js 24 安装后执行 `npm install -g pnpm@11.25.0`，或按 pnpm 官方说明安装同一版本。本地依赖已安装；重新克隆或解压需安装依赖。
 
-`verify` 执行 lint、类型检查、单元测试、两包构建和生成物一致性检查。`pnpm dev` / `pnpm dev:api` 启动 API 开发 mock（127.0.0.1:3000，`PORT` 可改）；前端页面仍由 D 接入后补齐。
+`verify` 执行 lint、类型检查、单元测试、两包构建和生成物一致性检查。`pnpm dev:api` 启动 API 开发 mock（127.0.0.1:3000，`PORT` 可改）；`pnpm dev:web` 启动 Vite 前端（5173，代理 /api、/healthz、/readyz → 3000）；入口 `src/main.tsx` 已移交 D。
 
 ## 已有内容与待开发内容
 
