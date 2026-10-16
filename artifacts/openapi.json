@@ -1,0 +1,4056 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "诗格律检查器 API",
+    "version": "1.0",
+    "description": "契约基线。复杂跨字段校验以 Zod 实现为准；HTTP 服务尚待接入。"
+  },
+  "paths": {
+    "/api/v1/analyze": {
+      "post": {
+        "operationId": "analyze",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnalyzeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "含明确结果或不确定项的完整报告",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnalysisResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "参见契约错误码",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "参见契约错误码",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "参见契约错误码",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "参见契约错误码",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "参见契约错误码",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rhyme-books": {
+      "get": {
+        "operationId": "listRhymeBooks",
+        "responses": {
+          "200": {
+            "description": "已加载韵书与覆盖说明",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RhymeBooksResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "参见契约错误码",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "参见契约错误码",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/characters/{char}": {
+      "get": {
+        "operationId": "lookupCharacter",
+        "parameters": [
+          {
+            "name": "char",
+            "in": "path",
+            "required": true,
+            "description": "单个 Unicode 码点的汉字",
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1
+            }
+          },
+          {
+            "name": "book",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "string",
+              "enum": [
+                "pingshui",
+                "cilin",
+                "xinyun"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "全部候选及来源；缺字在 missing 中表达",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LookupResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "参见契约错误码",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "参见契约错误码",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "参见契约错误码",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rules/{ruleId}": {
+      "get": {
+        "operationId": "getRule",
+        "parameters": [
+          {
+            "name": "ruleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "规则及证据",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RuleResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "参见契约错误码",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "参见契约错误码",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "参见契约错误码",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/sources/{sourceId}": {
+      "get": {
+        "operationId": "getSource",
+        "parameters": [
+          {
+            "name": "sourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "来源及证据",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SourceResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "参见契约错误码",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "参见契约错误码",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "参见契约错误码",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/healthz": {
+      "get": {
+        "operationId": "health",
+        "responses": {
+          "200": {
+            "description": "进程存活",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/readyz": {
+      "get": {
+        "operationId": "ready",
+        "responses": {
+          "200": {
+            "description": "全部真实数据与规则就绪",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReadyResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "参见契约错误码",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AnalyzeRequest": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "minLength": 1
+          },
+          "rhymeBook": {
+            "type": "string",
+            "enum": [
+              "pingshui",
+              "cilin",
+              "xinyun"
+            ]
+          },
+          "genreHint": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "regulated",
+              "ancient"
+            ]
+          },
+          "formHint": {
+            "anyOf": [
+              {
+                "type": "string",
+                "const": "auto"
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "wujue",
+                  "qijue",
+                  "wulv",
+                  "qilv"
+                ]
+              }
+            ]
+          },
+          "ruleSet": {
+            "type": "string",
+            "const": "teaching-v1"
+          },
+          "inputHash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "readingOverrides": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "tokenId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "readingId": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "tokenId",
+                "readingId"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "text",
+          "rhymeBook",
+          "genreHint",
+          "formHint",
+          "ruleSet",
+          "readingOverrides"
+        ],
+        "additionalProperties": false
+      },
+      "AnalysisResponse": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "schemaVersion": {
+            "type": "string",
+            "const": "1.0"
+          },
+          "inputHash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "versions": {
+            "type": "object",
+            "properties": {
+              "data": {
+                "type": "string",
+                "minLength": 1
+              },
+              "rules": {
+                "type": "string",
+                "minLength": 1
+              },
+              "context": {
+                "type": "string",
+                "minLength": 1
+              },
+              "works": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "data",
+              "rules",
+              "context",
+              "works"
+            ],
+            "additionalProperties": false
+          },
+          "policy": {
+            "type": "object",
+            "properties": {
+              "rhymeBook": {
+                "type": "string",
+                "enum": [
+                  "pingshui",
+                  "cilin",
+                  "xinyun"
+                ]
+              },
+              "toneBasis": {
+                "type": "string",
+                "enum": [
+                  "historical",
+                  "mandarin_base"
+                ]
+              },
+              "notice": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "rhymeBook",
+              "toneBasis",
+              "notice"
+            ],
+            "additionalProperties": false
+          },
+          "poem": {
+            "type": "object",
+            "properties": {
+              "originalText": {
+                "type": "string"
+              },
+              "inputHash": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "lines": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "line": {
+                      "type": "integer",
+                      "exclusiveMinimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "text": {
+                      "type": "string"
+                    },
+                    "tokenIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  },
+                  "required": [
+                    "line",
+                    "text",
+                    "tokenIds"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "tokens": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "tokenId": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "text": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "line": {
+                      "type": "integer",
+                      "exclusiveMinimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "column": {
+                      "type": "integer",
+                      "exclusiveMinimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "startUtf16": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "endUtf16": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "candidates": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "character": {
+                            "type": "string"
+                          },
+                          "book": {
+                            "type": "string",
+                            "enum": [
+                              "pingshui",
+                              "cilin",
+                              "xinyun"
+                            ]
+                          },
+                          "toneClass": {
+                            "type": "string",
+                            "enum": [
+                              "ping",
+                              "shang",
+                              "qu",
+                              "ru",
+                              "yinping",
+                              "yangping",
+                              "neutral",
+                              "ze_unspecified"
+                            ]
+                          },
+                          "tone": {
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "P",
+                                  "Z"
+                                ]
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "groupIds": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "gloss": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "modernReading": {
+                            "anyOf": [
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "pinyin": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  },
+                                  "toneNumber": {
+                                    "anyOf": [
+                                      {
+                                        "type": "number",
+                                        "const": 1
+                                      },
+                                      {
+                                        "type": "number",
+                                        "const": 2
+                                      },
+                                      {
+                                        "type": "number",
+                                        "const": 3
+                                      },
+                                      {
+                                        "type": "number",
+                                        "const": 4
+                                      },
+                                      {
+                                        "type": "number",
+                                        "const": 5
+                                      }
+                                    ]
+                                  },
+                                  "evidenceIds": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "pinyin",
+                                  "toneNumber",
+                                  "evidenceIds"
+                                ],
+                                "additionalProperties": false
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "fanqie": {
+                            "anyOf": [
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "text": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  },
+                                  "evidenceIds": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "text",
+                                  "evidenceIds"
+                                ],
+                                "additionalProperties": false
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "evidenceIds": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "character",
+                          "book",
+                          "toneClass",
+                          "tone",
+                          "groupIds",
+                          "gloss",
+                          "modernReading",
+                          "fanqie",
+                          "evidenceIds"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "effectiveCandidateIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "readingStatus": {
+                      "type": "string",
+                      "enum": [
+                        "resolved",
+                        "ambiguous",
+                        "unknown"
+                      ]
+                    },
+                    "selectedReadingId": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "selectionMethod": {
+                      "type": "string",
+                      "enum": [
+                        "unique",
+                        "context_rule",
+                        "user",
+                        "unresolved"
+                      ]
+                    },
+                    "possibleTones": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "enum": [
+                          "P",
+                          "Z"
+                        ]
+                      }
+                    },
+                    "toneStatus": {
+                      "type": "string",
+                      "enum": [
+                        "resolved",
+                        "ambiguous",
+                        "unknown"
+                      ]
+                    },
+                    "tone": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "enum": [
+                            "P",
+                            "Z"
+                          ]
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "reason": {
+                      "type": "string"
+                    },
+                    "evidenceIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  },
+                  "required": [
+                    "tokenId",
+                    "text",
+                    "line",
+                    "column",
+                    "startUtf16",
+                    "endUtf16",
+                    "candidates",
+                    "effectiveCandidateIds",
+                    "readingStatus",
+                    "selectedReadingId",
+                    "selectionMethod",
+                    "possibleTones",
+                    "toneStatus",
+                    "tone",
+                    "reason",
+                    "evidenceIds"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "quality": {
+                "type": "string",
+                "enum": [
+                  "ok",
+                  "needs_review"
+                ]
+              },
+              "notices": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "startUtf16": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "endUtf16": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "startUtf16",
+                    "endUtf16"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "book": {
+                "type": "string",
+                "enum": [
+                  "pingshui",
+                  "cilin",
+                  "xinyun"
+                ]
+              }
+            },
+            "required": [
+              "originalText",
+              "inputHash",
+              "lines",
+              "tokens",
+              "quality",
+              "notices",
+              "book"
+            ],
+            "additionalProperties": false
+          },
+          "genre": {
+            "type": "object",
+            "properties": {
+              "formFamily": {
+                "type": "string",
+                "enum": [
+                  "regulated",
+                  "ancient",
+                  "undetermined",
+                  "unsupported"
+                ]
+              },
+              "formId": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "wujue",
+                      "qijue",
+                      "wulv",
+                      "qilv"
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "historicalTags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "applicability": {
+                "type": "string",
+                "enum": [
+                  "applicable",
+                  "not_applicable",
+                  "uncertain",
+                  "unsupported"
+                ]
+              },
+              "basisType": {
+                "type": "string",
+                "enum": [
+                  "user",
+                  "reviewed_metadata",
+                  "heuristic"
+                ]
+              },
+              "candidateTemplateIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "selectedTemplateId": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "reasons": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "evidenceIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "required": [
+              "formFamily",
+              "formId",
+              "historicalTags",
+              "applicability",
+              "basisType",
+              "candidateTemplateIds",
+              "selectedTemplateId",
+              "reasons",
+              "evidenceIds"
+            ],
+            "additionalProperties": false
+          },
+          "prosody": {
+            "type": "object",
+            "properties": {
+              "candidates": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "formId": {
+                      "type": "string",
+                      "enum": [
+                        "wujue",
+                        "qijue",
+                        "wulv",
+                        "qilv"
+                      ]
+                    },
+                    "lineTypes": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "enum": [
+                          "A",
+                          "B",
+                          "C",
+                          "D"
+                        ]
+                      }
+                    },
+                    "expectedTones": {
+                      "type": "array",
+                      "items": {
+                        "type": "array",
+                        "items": {
+                          "minItems": 1,
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "enum": [
+                              "P",
+                              "Z"
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "requiredRhymeLines": {
+                      "type": "array",
+                      "items": {
+                        "type": "integer",
+                        "exclusiveMinimum": 0,
+                        "maximum": 9007199254740991
+                      }
+                    },
+                    "evaluatedKeyRate": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "features": {
+                      "type": "object",
+                      "properties": {
+                        "toneFit": {
+                          "anyOf": [
+                            {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 1
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "relationFit": {
+                          "anyOf": [
+                            {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 1
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "rhymeFit": {
+                          "anyOf": [
+                            {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 1
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "parallelismFit": {
+                          "anyOf": [
+                            {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 1
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "toneFit",
+                        "relationFit",
+                        "rhymeFit",
+                        "parallelismFit"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "score": {
+                      "anyOf": [
+                        {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "formId",
+                    "lineTypes",
+                    "expectedTones",
+                    "requiredRhymeLines",
+                    "evaluatedKeyRate",
+                    "features",
+                    "score"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "selectedTemplateId": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "checks": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "ruleId": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "ruleVersion": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "pass",
+                        "fail",
+                        "uncertain",
+                        "not_applicable",
+                        "unsupported"
+                      ]
+                    },
+                    "severity": {
+                      "type": "string",
+                      "enum": [
+                        "error",
+                        "warning",
+                        "info"
+                      ]
+                    },
+                    "locations": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "tokenId": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "line": {
+                            "type": "integer",
+                            "exclusiveMinimum": 0,
+                            "maximum": 9007199254740991
+                          },
+                          "column": {
+                            "type": "integer",
+                            "exclusiveMinimum": 0,
+                            "maximum": 9007199254740991
+                          }
+                        },
+                        "required": [
+                          "tokenId",
+                          "line",
+                          "column"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "expected": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "observed": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "templateId": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "evidenceIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "resolvedBy": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "relatedFindingIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "ruleId",
+                    "ruleVersion",
+                    "status",
+                    "severity",
+                    "locations",
+                    "expected",
+                    "observed",
+                    "message",
+                    "templateId",
+                    "evidenceIds",
+                    "resolvedBy",
+                    "relatedFindingIds"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "rhyme": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "pass",
+                      "fail",
+                      "uncertain",
+                      "not_applicable",
+                      "unsupported"
+                    ]
+                  },
+                  "tokenIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "commonGroupIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                },
+                "required": [
+                  "status",
+                  "tokenIds",
+                  "commonGroupIds"
+                ],
+                "additionalProperties": false
+              },
+              "relations": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "nian",
+                        "dui"
+                      ]
+                    },
+                    "tokenIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "pass",
+                        "fail",
+                        "uncertain",
+                        "not_applicable",
+                        "unsupported"
+                      ]
+                    },
+                    "findingIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "tokenIds",
+                    "status",
+                    "findingIds"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "candidates",
+              "selectedTemplateId",
+              "checks",
+              "rhyme",
+              "relations"
+            ],
+            "additionalProperties": false
+          },
+          "provenance": {
+            "type": "object",
+            "properties": {
+              "groups": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "book": {
+                      "type": "string",
+                      "enum": [
+                        "pingshui",
+                        "cilin",
+                        "xinyun"
+                      ]
+                    },
+                    "name": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "toneClass": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "evidenceIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "book",
+                    "name",
+                    "toneClass",
+                    "evidenceIds"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "sources": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "title": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "edition": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "url": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "format": "uri"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "license": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "snapshotSha256": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "pattern": "^[a-f0-9]{64}$"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "revision": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "retrievedAt": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "format": "date-time",
+                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "title",
+                    "edition",
+                    "url",
+                    "license",
+                    "snapshotSha256",
+                    "revision",
+                    "retrievedAt"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "sourceId": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "rhyme_entry",
+                        "dictionary",
+                        "fanqie",
+                        "context",
+                        "work_metadata"
+                      ]
+                    },
+                    "locator": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "assertion": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "excerpt": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "reviewStatus": {
+                      "type": "string",
+                      "enum": [
+                        "approved",
+                        "unverified"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "sourceId",
+                    "kind",
+                    "locator",
+                    "assertion",
+                    "excerpt",
+                    "reviewStatus"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "rules": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "version": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "name": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "scope": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "statement": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "limitations": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "evidenceIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "version",
+                    "name",
+                    "scope",
+                    "statement",
+                    "limitations",
+                    "evidenceIds"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "groups",
+              "sources",
+              "evidence",
+              "rules"
+            ],
+            "additionalProperties": false
+          },
+          "summary": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "string",
+                "enum": [
+                  "pass",
+                  "fail",
+                  "needs_review",
+                  "not_applicable",
+                  "unsupported"
+                ]
+              },
+              "message": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "status",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "inputHash",
+          "versions",
+          "policy",
+          "poem",
+          "genre",
+          "prosody",
+          "provenance",
+          "summary"
+        ],
+        "additionalProperties": false
+      },
+      "ErrorResponse": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "minLength": 1
+              },
+              "message": {
+                "type": "string",
+                "minLength": 1
+              },
+              "fieldErrors": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "path": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "path",
+                    "message"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "code",
+              "message",
+              "fieldErrors"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "error"
+        ],
+        "additionalProperties": false
+      },
+      "LookupResult": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "book": {
+            "type": "string",
+            "enum": [
+              "pingshui",
+              "cilin",
+              "xinyun"
+            ]
+          },
+          "dataVersion": {
+            "type": "string",
+            "minLength": 1
+          },
+          "entries": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "character": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "candidates": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "character": {
+                        "type": "string"
+                      },
+                      "book": {
+                        "type": "string",
+                        "enum": [
+                          "pingshui",
+                          "cilin",
+                          "xinyun"
+                        ]
+                      },
+                      "toneClass": {
+                        "type": "string",
+                        "enum": [
+                          "ping",
+                          "shang",
+                          "qu",
+                          "ru",
+                          "yinping",
+                          "yangping",
+                          "neutral",
+                          "ze_unspecified"
+                        ]
+                      },
+                      "tone": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "enum": [
+                              "P",
+                              "Z"
+                            ]
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "groupIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "gloss": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "modernReading": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "pinyin": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "toneNumber": {
+                                "anyOf": [
+                                  {
+                                    "type": "number",
+                                    "const": 1
+                                  },
+                                  {
+                                    "type": "number",
+                                    "const": 2
+                                  },
+                                  {
+                                    "type": "number",
+                                    "const": 3
+                                  },
+                                  {
+                                    "type": "number",
+                                    "const": 4
+                                  },
+                                  {
+                                    "type": "number",
+                                    "const": 5
+                                  }
+                                ]
+                              },
+                              "evidenceIds": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "minLength": 1
+                                }
+                              }
+                            },
+                            "required": [
+                              "pinyin",
+                              "toneNumber",
+                              "evidenceIds"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "fanqie": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "text": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "evidenceIds": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "minLength": 1
+                                }
+                              }
+                            },
+                            "required": [
+                              "text",
+                              "evidenceIds"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "evidenceIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "character",
+                      "book",
+                      "toneClass",
+                      "tone",
+                      "groupIds",
+                      "gloss",
+                      "modernReading",
+                      "fanqie",
+                      "evidenceIds"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "character",
+                "candidates"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "missing": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "groups": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "book": {
+                  "type": "string",
+                  "enum": [
+                    "pingshui",
+                    "cilin",
+                    "xinyun"
+                  ]
+                },
+                "name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "toneClass": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "evidenceIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "required": [
+                "id",
+                "book",
+                "name",
+                "toneClass",
+                "evidenceIds"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sourceId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "rhyme_entry",
+                    "dictionary",
+                    "fanqie",
+                    "context",
+                    "work_metadata"
+                  ]
+                },
+                "locator": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "assertion": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "excerpt": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "reviewStatus": {
+                  "type": "string",
+                  "enum": [
+                    "approved",
+                    "unverified"
+                  ]
+                }
+              },
+              "required": [
+                "id",
+                "sourceId",
+                "kind",
+                "locator",
+                "assertion",
+                "excerpt",
+                "reviewStatus"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "edition": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "url": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "license": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "snapshotSha256": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^[a-f0-9]{64}$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "revision": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "retrievedAt": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "date-time",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "id",
+                "title",
+                "edition",
+                "url",
+                "license",
+                "snapshotSha256",
+                "revision",
+                "retrievedAt"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "book",
+          "dataVersion",
+          "entries",
+          "missing",
+          "groups",
+          "evidence",
+          "sources"
+        ],
+        "additionalProperties": false
+      },
+      "RuleCard": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "version": {
+            "type": "string",
+            "minLength": 1
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scope": {
+            "type": "string",
+            "minLength": 1
+          },
+          "statement": {
+            "type": "string",
+            "minLength": 1
+          },
+          "limitations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "evidenceIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "required": [
+          "id",
+          "version",
+          "name",
+          "scope",
+          "statement",
+          "limitations",
+          "evidenceIds"
+        ],
+        "additionalProperties": false
+      },
+      "SourceRecord": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "edition": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "url": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uri"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "license": {
+            "type": "string",
+            "minLength": 1
+          },
+          "snapshotSha256": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "revision": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "retrievedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "edition",
+          "url",
+          "license",
+          "snapshotSha256",
+          "revision",
+          "retrievedAt"
+        ],
+        "additionalProperties": false
+      },
+      "Evidence": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sourceId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "rhyme_entry",
+              "dictionary",
+              "fanqie",
+              "context",
+              "work_metadata"
+            ]
+          },
+          "locator": {
+            "type": "string",
+            "minLength": 1
+          },
+          "assertion": {
+            "type": "string",
+            "minLength": 1
+          },
+          "excerpt": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "reviewStatus": {
+            "type": "string",
+            "enum": [
+              "approved",
+              "unverified"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "sourceId",
+          "kind",
+          "locator",
+          "assertion",
+          "excerpt",
+          "reviewStatus"
+        ],
+        "additionalProperties": false
+      },
+      "ReadingCandidate": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "character": {
+            "type": "string"
+          },
+          "book": {
+            "type": "string",
+            "enum": [
+              "pingshui",
+              "cilin",
+              "xinyun"
+            ]
+          },
+          "toneClass": {
+            "type": "string",
+            "enum": [
+              "ping",
+              "shang",
+              "qu",
+              "ru",
+              "yinping",
+              "yangping",
+              "neutral",
+              "ze_unspecified"
+            ]
+          },
+          "tone": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "P",
+                  "Z"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "groupIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "gloss": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "modernReading": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "pinyin": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "toneNumber": {
+                    "anyOf": [
+                      {
+                        "type": "number",
+                        "const": 1
+                      },
+                      {
+                        "type": "number",
+                        "const": 2
+                      },
+                      {
+                        "type": "number",
+                        "const": 3
+                      },
+                      {
+                        "type": "number",
+                        "const": 4
+                      },
+                      {
+                        "type": "number",
+                        "const": 5
+                      }
+                    ]
+                  },
+                  "evidenceIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                },
+                "required": [
+                  "pinyin",
+                  "toneNumber",
+                  "evidenceIds"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "fanqie": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "evidenceIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                },
+                "required": [
+                  "text",
+                  "evidenceIds"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "evidenceIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "required": [
+          "id",
+          "character",
+          "book",
+          "toneClass",
+          "tone",
+          "groupIds",
+          "gloss",
+          "modernReading",
+          "fanqie",
+          "evidenceIds"
+        ],
+        "additionalProperties": false
+      },
+      "ParsedPoem": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "originalText": {
+            "type": "string"
+          },
+          "inputHash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "lines": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "line": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "text": {
+                  "type": "string"
+                },
+                "tokenIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "required": [
+                "line",
+                "text",
+                "tokenIds"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "tokens": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "tokenId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "text": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "line": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "column": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "startUtf16": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "endUtf16": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "tokenId",
+                "text",
+                "line",
+                "column",
+                "startUtf16",
+                "endUtf16"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "quality": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "needs_review"
+            ]
+          },
+          "notices": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "message": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "startUtf16": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "endUtf16": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "code",
+                "message",
+                "startUtf16",
+                "endUtf16"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "originalText",
+          "inputHash",
+          "lines",
+          "tokens",
+          "quality",
+          "notices"
+        ],
+        "additionalProperties": false
+      },
+      "AnnotatedPoem": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "originalText": {
+            "type": "string"
+          },
+          "inputHash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "lines": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "line": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "text": {
+                  "type": "string"
+                },
+                "tokenIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "required": [
+                "line",
+                "text",
+                "tokenIds"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "tokens": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "tokenId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "text": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "line": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "column": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "startUtf16": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "endUtf16": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "candidates": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "character": {
+                        "type": "string"
+                      },
+                      "book": {
+                        "type": "string",
+                        "enum": [
+                          "pingshui",
+                          "cilin",
+                          "xinyun"
+                        ]
+                      },
+                      "toneClass": {
+                        "type": "string",
+                        "enum": [
+                          "ping",
+                          "shang",
+                          "qu",
+                          "ru",
+                          "yinping",
+                          "yangping",
+                          "neutral",
+                          "ze_unspecified"
+                        ]
+                      },
+                      "tone": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "enum": [
+                              "P",
+                              "Z"
+                            ]
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "groupIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "gloss": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "modernReading": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "pinyin": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "toneNumber": {
+                                "anyOf": [
+                                  {
+                                    "type": "number",
+                                    "const": 1
+                                  },
+                                  {
+                                    "type": "number",
+                                    "const": 2
+                                  },
+                                  {
+                                    "type": "number",
+                                    "const": 3
+                                  },
+                                  {
+                                    "type": "number",
+                                    "const": 4
+                                  },
+                                  {
+                                    "type": "number",
+                                    "const": 5
+                                  }
+                                ]
+                              },
+                              "evidenceIds": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "minLength": 1
+                                }
+                              }
+                            },
+                            "required": [
+                              "pinyin",
+                              "toneNumber",
+                              "evidenceIds"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "fanqie": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "text": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "evidenceIds": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "minLength": 1
+                                }
+                              }
+                            },
+                            "required": [
+                              "text",
+                              "evidenceIds"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "evidenceIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "character",
+                      "book",
+                      "toneClass",
+                      "tone",
+                      "groupIds",
+                      "gloss",
+                      "modernReading",
+                      "fanqie",
+                      "evidenceIds"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "effectiveCandidateIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "readingStatus": {
+                  "type": "string",
+                  "enum": [
+                    "resolved",
+                    "ambiguous",
+                    "unknown"
+                  ]
+                },
+                "selectedReadingId": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "selectionMethod": {
+                  "type": "string",
+                  "enum": [
+                    "unique",
+                    "context_rule",
+                    "user",
+                    "unresolved"
+                  ]
+                },
+                "possibleTones": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "P",
+                      "Z"
+                    ]
+                  }
+                },
+                "toneStatus": {
+                  "type": "string",
+                  "enum": [
+                    "resolved",
+                    "ambiguous",
+                    "unknown"
+                  ]
+                },
+                "tone": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "enum": [
+                        "P",
+                        "Z"
+                      ]
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "reason": {
+                  "type": "string"
+                },
+                "evidenceIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "required": [
+                "tokenId",
+                "text",
+                "line",
+                "column",
+                "startUtf16",
+                "endUtf16",
+                "candidates",
+                "effectiveCandidateIds",
+                "readingStatus",
+                "selectedReadingId",
+                "selectionMethod",
+                "possibleTones",
+                "toneStatus",
+                "tone",
+                "reason",
+                "evidenceIds"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "quality": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "needs_review"
+            ]
+          },
+          "notices": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "message": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "startUtf16": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "endUtf16": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "code",
+                "message",
+                "startUtf16",
+                "endUtf16"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "book": {
+            "type": "string",
+            "enum": [
+              "pingshui",
+              "cilin",
+              "xinyun"
+            ]
+          }
+        },
+        "required": [
+          "originalText",
+          "inputHash",
+          "lines",
+          "tokens",
+          "quality",
+          "notices",
+          "book"
+        ],
+        "additionalProperties": false
+      },
+      "TemplateCandidate": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "formId": {
+            "type": "string",
+            "enum": [
+              "wujue",
+              "qijue",
+              "wulv",
+              "qilv"
+            ]
+          },
+          "lineTypes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ]
+            }
+          },
+          "expectedTones": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "P",
+                    "Z"
+                  ]
+                }
+              }
+            }
+          },
+          "requiredRhymeLines": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "evaluatedKeyRate": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "features": {
+            "type": "object",
+            "properties": {
+              "toneFit": {
+                "anyOf": [
+                  {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "relationFit": {
+                "anyOf": [
+                  {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "rhymeFit": {
+                "anyOf": [
+                  {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "parallelismFit": {
+                "anyOf": [
+                  {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "toneFit",
+              "relationFit",
+              "rhymeFit",
+              "parallelismFit"
+            ],
+            "additionalProperties": false
+          },
+          "score": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "formId",
+          "lineTypes",
+          "expectedTones",
+          "requiredRhymeLines",
+          "evaluatedKeyRate",
+          "features",
+          "score"
+        ],
+        "additionalProperties": false
+      },
+      "GenreDecision": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "formFamily": {
+            "type": "string",
+            "enum": [
+              "regulated",
+              "ancient",
+              "undetermined",
+              "unsupported"
+            ]
+          },
+          "formId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "wujue",
+                  "qijue",
+                  "wulv",
+                  "qilv"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "historicalTags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "applicability": {
+            "type": "string",
+            "enum": [
+              "applicable",
+              "not_applicable",
+              "uncertain",
+              "unsupported"
+            ]
+          },
+          "basisType": {
+            "type": "string",
+            "enum": [
+              "user",
+              "reviewed_metadata",
+              "heuristic"
+            ]
+          },
+          "candidateTemplateIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "selectedTemplateId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "reasons": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "evidenceIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "required": [
+          "formFamily",
+          "formId",
+          "historicalTags",
+          "applicability",
+          "basisType",
+          "candidateTemplateIds",
+          "selectedTemplateId",
+          "reasons",
+          "evidenceIds"
+        ],
+        "additionalProperties": false
+      },
+      "ProsodyReport": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "candidates": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "formId": {
+                  "type": "string",
+                  "enum": [
+                    "wujue",
+                    "qijue",
+                    "wulv",
+                    "qilv"
+                  ]
+                },
+                "lineTypes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "A",
+                      "B",
+                      "C",
+                      "D"
+                    ]
+                  }
+                },
+                "expectedTones": {
+                  "type": "array",
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "minItems": 1,
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "enum": [
+                          "P",
+                          "Z"
+                        ]
+                      }
+                    }
+                  }
+                },
+                "requiredRhymeLines": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                },
+                "evaluatedKeyRate": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "features": {
+                  "type": "object",
+                  "properties": {
+                    "toneFit": {
+                      "anyOf": [
+                        {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "relationFit": {
+                      "anyOf": [
+                        {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "rhymeFit": {
+                      "anyOf": [
+                        {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "parallelismFit": {
+                      "anyOf": [
+                        {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "toneFit",
+                    "relationFit",
+                    "rhymeFit",
+                    "parallelismFit"
+                  ],
+                  "additionalProperties": false
+                },
+                "score": {
+                  "anyOf": [
+                    {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "id",
+                "formId",
+                "lineTypes",
+                "expectedTones",
+                "requiredRhymeLines",
+                "evaluatedKeyRate",
+                "features",
+                "score"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "selectedTemplateId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "checks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "ruleId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "ruleVersion": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "pass",
+                    "fail",
+                    "uncertain",
+                    "not_applicable",
+                    "unsupported"
+                  ]
+                },
+                "severity": {
+                  "type": "string",
+                  "enum": [
+                    "error",
+                    "warning",
+                    "info"
+                  ]
+                },
+                "locations": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "tokenId": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "line": {
+                        "type": "integer",
+                        "exclusiveMinimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "column": {
+                        "type": "integer",
+                        "exclusiveMinimum": 0,
+                        "maximum": 9007199254740991
+                      }
+                    },
+                    "required": [
+                      "tokenId",
+                      "line",
+                      "column"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "expected": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "observed": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "message": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "templateId": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "evidenceIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "resolvedBy": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "relatedFindingIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "required": [
+                "id",
+                "ruleId",
+                "ruleVersion",
+                "status",
+                "severity",
+                "locations",
+                "expected",
+                "observed",
+                "message",
+                "templateId",
+                "evidenceIds",
+                "resolvedBy",
+                "relatedFindingIds"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "rhyme": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "string",
+                "enum": [
+                  "pass",
+                  "fail",
+                  "uncertain",
+                  "not_applicable",
+                  "unsupported"
+                ]
+              },
+              "tokenIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "commonGroupIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "required": [
+              "status",
+              "tokenIds",
+              "commonGroupIds"
+            ],
+            "additionalProperties": false
+          },
+          "relations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "nian",
+                    "dui"
+                  ]
+                },
+                "tokenIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "pass",
+                    "fail",
+                    "uncertain",
+                    "not_applicable",
+                    "unsupported"
+                  ]
+                },
+                "findingIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "required": [
+                "kind",
+                "tokenIds",
+                "status",
+                "findingIds"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "candidates",
+          "selectedTemplateId",
+          "checks",
+          "rhyme",
+          "relations"
+        ],
+        "additionalProperties": false
+      },
+      "RhymeBooksResponse": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "books": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "enum": [
+                    "pingshui",
+                    "cilin",
+                    "xinyun"
+                  ]
+                },
+                "name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "dataVersion": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "groupCount": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "coverageNotice": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "dataVersion",
+                "groupCount",
+                "coverageNotice"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "books"
+        ],
+        "additionalProperties": false
+      },
+      "RuleResponse": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "rule": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "version": {
+                "type": "string",
+                "minLength": 1
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "scope": {
+                "type": "string",
+                "minLength": 1
+              },
+              "statement": {
+                "type": "string",
+                "minLength": 1
+              },
+              "limitations": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "evidenceIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "required": [
+              "id",
+              "version",
+              "name",
+              "scope",
+              "statement",
+              "limitations",
+              "evidenceIds"
+            ],
+            "additionalProperties": false
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sourceId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "rhyme_entry",
+                    "dictionary",
+                    "fanqie",
+                    "context",
+                    "work_metadata"
+                  ]
+                },
+                "locator": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "assertion": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "excerpt": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "reviewStatus": {
+                  "type": "string",
+                  "enum": [
+                    "approved",
+                    "unverified"
+                  ]
+                }
+              },
+              "required": [
+                "id",
+                "sourceId",
+                "kind",
+                "locator",
+                "assertion",
+                "excerpt",
+                "reviewStatus"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "edition": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "url": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "license": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "snapshotSha256": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^[a-f0-9]{64}$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "revision": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "retrievedAt": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "date-time",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "id",
+                "title",
+                "edition",
+                "url",
+                "license",
+                "snapshotSha256",
+                "revision",
+                "retrievedAt"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "rule",
+          "evidence",
+          "sources"
+        ],
+        "additionalProperties": false
+      },
+      "SourceResponse": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "edition": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "url": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "license": {
+                "type": "string",
+                "minLength": 1
+              },
+              "snapshotSha256": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "revision": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "retrievedAt": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "title",
+              "edition",
+              "url",
+              "license",
+              "snapshotSha256",
+              "revision",
+              "retrievedAt"
+            ],
+            "additionalProperties": false
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sourceId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "rhyme_entry",
+                    "dictionary",
+                    "fanqie",
+                    "context",
+                    "work_metadata"
+                  ]
+                },
+                "locator": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "assertion": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "excerpt": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "reviewStatus": {
+                  "type": "string",
+                  "enum": [
+                    "approved",
+                    "unverified"
+                  ]
+                }
+              },
+              "required": [
+                "id",
+                "sourceId",
+                "kind",
+                "locator",
+                "assertion",
+                "excerpt",
+                "reviewStatus"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "source",
+          "evidence"
+        ],
+        "additionalProperties": false
+      },
+      "HealthResponse": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "const": "ok"
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "additionalProperties": false
+      },
+      "ReadyResponse": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "const": "ready"
+          },
+          "versions": {
+            "type": "object",
+            "properties": {
+              "data": {
+                "type": "string",
+                "minLength": 1
+              },
+              "rules": {
+                "type": "string",
+                "minLength": 1
+              },
+              "context": {
+                "type": "string",
+                "minLength": 1
+              },
+              "works": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "data",
+              "rules",
+              "context",
+              "works"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "status",
+          "versions"
+        ],
+        "additionalProperties": false
+      }
+    }
+  }
+}
