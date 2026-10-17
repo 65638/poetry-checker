@@ -138,20 +138,20 @@ resolveReadings(input: {
 
 ### 4.2 状态矩阵
 
-| 输入情形                     | readingStatus | selected | selectionMethod | possibleTones  | toneStatus  | tone       |
-| ---------------------------- | ------------- | -------- | --------------- | -------------- | ----------- | ---------- |
-| 没有候选                     | `unknown`     | `null`   | `unresolved`    | `[]`           | `unknown`   | `null`     |
-| 唯一候选且证据已审核         | `resolved`    | 该候选   | `unique`        | 该候选声调     | 按候选      | 按候选     |
-| 唯一候选但证据未审核/为空    | `unknown`     | `null`   | `unresolved`    | `[]`           | `unknown`   | `null`     |
-| 多个候选含 P、Z              | `ambiguous`   | `null`   | `unresolved`    | `["P","Z"]`    | `ambiguous` | `null`     |
-| 两个不同读音但同为 Z         | `ambiguous`   | `null`   | `unresolved`    | `["Z"]`        | `resolved`  | `"Z"`      |
-| 已知 P + 声调未知候选        | `ambiguous`   | `null`   | `unresolved`    | `["P"]`        | `unknown`   | `null`     |
-| 多候选中部分证据未审核       | `ambiguous`   | `null`   | `unresolved`    | 按全部候选     | 按全部候选  | 按全部候选 |
-| 合法用户覆盖                 | `resolved`    | 用户所选 | `user`          | 按所选候选     | 按所选候选  | 按所选候选 |
-| 规则命中同一候选且证据齐备   | `resolved`    | 该候选   | `context_rule`  | 按该候选       | 按该候选    | 按该候选   |
-| 规则证据不足 / 未审核        | `ambiguous`   | `null`   | `unresolved`    | 按全部候选     | 按全部候选  | 按全部候选 |
-| 规则证据齐备但候选自身未审核 | `ambiguous`   | `null`   | `unresolved`    | 按该候选       | 按该候选    | 按该候选   |
-| 同优先级规则冲突             | `ambiguous`   | `null`   | `unresolved`    | 按保留候选合集 | 按合集      | 按合集     |
+| 输入情形                     | readingStatus                                                     | selected | selectionMethod | possibleTones  | toneStatus  | tone       |
+| ---------------------------- | ----------------------------------------------------------------- | -------- | --------------- | -------------- | ----------- | ---------- |
+| 没有候选                     | `unknown`                                                         | `null`   | `unresolved`    | `[]`           | `unknown`   | `null`     |
+| 唯一候选且证据已审核         | `resolved`                                                        | 该候选   | `unique`        | 该候选声调     | 按候选      | 按候选     |
+| 唯一候选但证据未审核/为空    | **抛 `LOOKUP_EVIDENCE_UNVERIFIED`**（数据未就绪，不返回任何状态） |
+| 多个候选含 P、Z              | `ambiguous`                                                       | `null`   | `unresolved`    | `["P","Z"]`    | `ambiguous` | `null`     |
+| 两个不同读音但同为 Z         | `ambiguous`                                                       | `null`   | `unresolved`    | `["Z"]`        | `resolved`  | `"Z"`      |
+| 已知 P + 声调未知候选        | `ambiguous`                                                       | `null`   | `unresolved`    | `["P"]`        | `unknown`   | `null`     |
+| 多候选中部分证据未审核       | `ambiguous`                                                       | `null`   | `unresolved`    | 按全部候选     | 按全部候选  | 按全部候选 |
+| 合法用户覆盖                 | `resolved`                                                        | 用户所选 | `user`          | 按所选候选     | 按所选候选  | 按所选候选 |
+| 规则命中同一候选且证据齐备   | `resolved`                                                        | 该候选   | `context_rule`  | 按该候选       | 按该候选    | 按该候选   |
+| 规则证据不足 / 未审核        | `ambiguous`                                                       | `null`   | `unresolved`    | 按全部候选     | 按全部候选  | 按全部候选 |
+| 规则证据齐备但候选自身未审核 | `ambiguous`                                                       | `null`   | `unresolved`    | 按该候选       | 按该候选    | 按该候选   |
+| 同优先级规则冲突             | `ambiguous`                                                       | `null`   | `unresolved`    | 按保留候选合集 | 按合集      | 按合集     |
 
 平仄推导规则（与 `AnnotatedTokenSchema` 的 refinement 完全一致）：
 
@@ -172,13 +172,20 @@ resolveReadings(input: {
 
 **证据同时决定能否下结论**（不只是显示）：
 
-| 情形                                            | 结论                                                                               |
-| ----------------------------------------------- | ---------------------------------------------------------------------------------- |
-| 候选的 `evidenceIds` 里至少有一条 approved 证据 | 该候选“可支撑”确定结论                                                             |
-| 候选的 `evidenceIds` 为空，或全部是 unverified  | 该候选**不可**支撑确定结论                                                         |
-| 全部候选都不可支撑                              | `readingStatus = unknown`、`effectiveCandidateIds = []`，`reason` 说明证据未经审核 |
-| 部分候选不可支撑（候选数 > 1）                  | 仍 `ambiguous` 并**保留全部候选**；`reason` 点名哪些候选证据未审核                 |
-| 规则指向的候选自身不可支撑                      | 不给 `resolved`，退回 `ambiguous`（`effectiveCandidateIds` 只留该候选）            |
+| 情形                                            | 结论                                                                                            |
+| ----------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| 候选的 `evidenceIds` 里至少有一条 approved 证据 | 该候选“可支撑”确定结论                                                                          |
+| 候选的 `evidenceIds` 为空，或全部是 unverified  | 该候选**不可**支撑确定结论                                                                      |
+| 全部候选都不可支撑                              | **抛 `LOOKUP_EVIDENCE_UNVERIFIED`**（数据未就绪），不返回 `resolved/ambiguous/unknown` 任一状态 |
+| 部分候选不可支撑（候选数 > 1）                  | 仍 `ambiguous` 并**保留全部候选**；`reason` 点名哪些候选证据未审核                              |
+| 规则指向的候选自身不可支撑                      | 不给 `resolved`，退回 `ambiguous`（`effectiveCandidateIds` 只留该候选）                         |
+
+为什么是抛错而不是返回 `unknown`：契约只有 `resolved / ambiguous / unknown`，没有“证据待核实”。
+拿 `unknown` 顶替会把“已收录但未审核”显示成“未收录”，下游无法区分，等于换了个方式放行。
+因此全部候选都无已审核证据时按**数据未就绪**处理，由 API 映射为 503（见第 5 节）。
+
+同时**不通过丢弃未审核候选来缩小读音集合**：部分候选不可支撑时，全部候选都保留，绝不在剩余候选上
+假造“唯一候选”。
 
 关键约束：**证据缺口不能用来收窄候选**。两个候选里只有一个带已审核证据时，不能据此排除另一个——
 那会把“没登记证据”误当成“读音不成立”。
@@ -187,12 +194,11 @@ resolveReadings(input: {
 
 只有一个候选时，只有在该候选**自身证据已审核**的前提下才给 `readingStatus = resolved`（`selectionMethod = unique`）。
 
-若该候选没有已审核证据，则不给确定读音：`readingStatus = unknown`、`selectedReadingId = null`、
-`effectiveCandidateIds = []`、`possibleTones = []`、`toneStatus = unknown`。候选仍完整保留在 `candidates` 中，
-`reason` 写明“未经审核的证据不能支撑确定读音结论”。
+若该候选没有已审核证据，`resolveReadings` 抛 `LOOKUP_EVIDENCE_UNVERIFIED`：
+不返回 `resolved`，也不用 `unknown` 冒充“未收录”，由 API 映射为 503 数据未就绪。
 
-> 契约张力：`AnnotatedToken` 没有“待核实”状态位，`unknown` 是唯一能表达“暂不可断言”的取值。
-> 宁可让 C/E 看到 `unknown`，也不把未核实来源说成确定事实。可选契约变更见第 7 节。
+> 契约张力：`AnnotatedToken` 没有“待核实”状态位。`unknown` 与“未收录”无法区分，
+> 因此选择显式报错而不是换一种方式放行。可选契约变更见第 7 节。
 
 ### 4.5 用户覆盖校验
 
@@ -216,8 +222,9 @@ resolveReadings(input: {
 3. **最长优先**：同一字位被多条规则命中时，只保留短语码点最长的那一组。
 4. **同长冲突**：最长相同的规则选中不同候选时，保留全部被选候选，`ambiguous` + `unresolved`，`reason` 写明冲突规则 ID。
 5. **只认 `approved`**：`unverified` 规则命中会被记录为 `CONTEXT_RULE_UNVERIFIED_IGNORED` notice，不改变读音。
-6. **规则证据必须齐备**：`reviewStatus = approved` 还不够——`evidenceIds` 必须非空、每条都能在
-   `lookup.evidence` 中解析到、且全部是 `approved`。任一不满足即视为证据不足，不参与选音，
+6. **规则证据必须齐备且用途正确**：`reviewStatus = approved` 还不够——`evidenceIds` 必须非空、每条都能在
+   `lookup.evidence` 中解析到、全部是 `approved`，**并且 `kind = "context"`**。
+   候选自己的韵书归部证据（`rhyme_entry`）不能顶替语境依据。任一不满足即视为证据不足，不参与选音，
    命中记录为 `CONTEXT_RULE_EVIDENCE_INSUFFICIENT` notice。
 7. **被选候选自身也要可支撑**：即使规则证据齐备，如果规则指向的候选自身没有已审核证据，也不给 `resolved`，
    退回 `ambiguous` 且 `effectiveCandidateIds` 只留该候选。
@@ -229,21 +236,22 @@ resolveReadings(input: {
 
 模块只抛 `ReadingsError`，带稳定 `code` 与定位 `details`（只含 ID，不含原文全文）：
 
-| code                                  | 含义                                                       | 建议映射（供 GLM 决策） |
-| ------------------------------------- | ---------------------------------------------------------- | ----------------------- |
-| `POEM_TOKEN_SLICE_MISMATCH`           | poem 自身不一致，区间切不回原文                            | 500（服务端自身 bug）   |
-| `POEM_TOKEN_DUPLICATE`                | 同一 `tokenId` 出现两次                                    | 500                     |
-| `LOOKUP_ENTRY_DUPLICATE`              | 同字多条 entry                                             | 503 `DATA_NOT_READY`    |
-| `LOOKUP_CANDIDATE_CHARACTER_MISMATCH` | 候选字与 entry 不符 / 非单码点                             | 503                     |
-| `LOOKUP_CANDIDATE_BOOK_MISMATCH`      | 跨书候选                                                   | 503                     |
-| `LOOKUP_CANDIDATE_DUPLICATE`          | 同字重复候选 ID                                            | 503                     |
-| `LOOKUP_EVIDENCE_UNKNOWN`             | 候选引用不存在的证据                                       | 503                     |
-| `OVERRIDE_TOKEN_UNKNOWN`              | 覆盖指向不存在的字位                                       | 422                     |
-| `OVERRIDE_DUPLICATE_TOKEN`            | 同一字位重复覆盖                                           | 422                     |
-| `OVERRIDE_READING_UNKNOWN`            | 覆盖指向别字/别书/不存在的候选                             | 422                     |
-| `CONTEXT_RULE_STALE`                  | 规则指向当前数据不存在的候选                               | 503                     |
-| `CONTEXT_RULE_INVALID`                | 规则结构自相矛盾                                           | 503                     |
-| `CONTEXT_RULES_PENDING`               | 保留码：若将来关闭规则执行，遇到 approved 规则必须显式抛出 | 501 / 503               |
+| code                                  | 含义                                                       | 建议映射（供 GLM 决策）                  |
+| ------------------------------------- | ---------------------------------------------------------- | ---------------------------------------- |
+| `POEM_TOKEN_SLICE_MISMATCH`           | poem 自身不一致，区间切不回原文                            | 500（服务端自身 bug）                    |
+| `POEM_TOKEN_DUPLICATE`                | 同一 `tokenId` 出现两次                                    | 500                                      |
+| `LOOKUP_ENTRY_DUPLICATE`              | 同字多条 entry                                             | 503 `DATA_NOT_READY`                     |
+| `LOOKUP_CANDIDATE_CHARACTER_MISMATCH` | 候选字与 entry 不符 / 非单码点                             | 503                                      |
+| `LOOKUP_CANDIDATE_BOOK_MISMATCH`      | 跨书候选                                                   | 503                                      |
+| `LOOKUP_CANDIDATE_DUPLICATE`          | 同字重复候选 ID                                            | 503                                      |
+| `LOOKUP_EVIDENCE_UNKNOWN`             | 候选引用不存在的证据                                       | 503                                      |
+| `LOOKUP_EVIDENCE_UNVERIFIED`          | 某字位全部候选都没有已审核证据（证据待核实）               | **503 `DATA_NOT_READY`**，不得降级成 200 |
+| `OVERRIDE_TOKEN_UNKNOWN`              | 覆盖指向不存在的字位                                       | 422                                      |
+| `OVERRIDE_DUPLICATE_TOKEN`            | 同一字位重复覆盖                                           | 422                                      |
+| `OVERRIDE_READING_UNKNOWN`            | 覆盖指向别字/别书/不存在的候选                             | 422                                      |
+| `CONTEXT_RULE_STALE`                  | 规则指向当前数据不存在的候选                               | 503                                      |
+| `CONTEXT_RULE_INVALID`                | 规则结构自相矛盾                                           | 503                                      |
+| `CONTEXT_RULES_PENDING`               | 保留码：若将来关闭规则执行，遇到 approved 规则必须显式抛出 | 501 / 503                                |
 
 数据类错误给 `503` 的意图是：宁可让 API 报“数据未就绪”，也不要把缺证据的候选当成已核实事实返回。
 

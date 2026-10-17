@@ -315,7 +315,8 @@ export function contextRule(spec: {
     book: spec.book ?? "pingshui",
     selectCandidateIds: spec.selectCandidateIds,
     negativeExamples: [],
-    evidenceIds: spec.evidenceIds ?? [APPROVED_EVIDENCE.id],
+    // 语境规则必须引用 kind="context" 的已审核证据；韵书归部证据不能顶替。
+    evidenceIds: spec.evidenceIds ?? [RULE_EVIDENCE.id],
     reviewStatus: spec.reviewStatus ?? "approved",
   };
 }

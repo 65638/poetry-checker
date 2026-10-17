@@ -13,7 +13,7 @@
 | `packages/readings/src/index.ts`          | 公共导出                                                          |
 | `packages/readings/tests/fixtures.ts`     | 合成 `LookupResult`/证据/规则（全部标 synthetic）                 |
 | `packages/readings/tests/parse.test.ts`   | 解析与位置用例（10 个）                                           |
-| `packages/readings/tests/resolve.test.ts` | 候选传播与覆盖用例（27 个）                                       |
+| `packages/readings/tests/resolve.test.ts` | 候选传播与覆盖用例（29 个）                                       |
 | `packages/readings/README.md`             | 调用方式与边界                                                    |
 | `packages/readings/HANDOFF.md`            | 本文件                                                            |
 | `data/context/README.md`                  | 规则格式、匹配口径、待审队列用法                                  |
@@ -47,33 +47,50 @@
 
 **FIX-1 未审核的候选证据不能支撑确定读音结论。**
 
-旧行为：唯一候选即使没有任何已审核证据也返回 `resolved` + `selectionMethod=unique`，只在 `reason` 里加一句提醒。
-新行为：候选必须**至少有一条 approved 证据**才算“可支撑”：
+旧行为（审计复现点）：唯一候选即使没有任何已审核证据也返回 `readingStatus=resolved` →
+下游得到 `toneStatus=resolved`、`quality=ok`，仅 `reason` 写“待核实”挡不住下游。
 
-| 情形                                      | 新结果                                                                                                             |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| 唯一候选且证据已审核                      | `resolved` / `unique`                                                                                              |
-| 唯一候选但证据未审核或 `evidenceIds` 为空 | `unknown`、`selectedReadingId=null`、`effectiveCandidateIds=[]`、`possibleTones=[]`；候选仍完整保留在 `candidates` |
-| 全部候选都不可支撑                        | 同上（未知），`reason` 说明证据未经审核                                                                            |
-| 多候选中部分不可支撑                      | 仍 `ambiguous` 并**保留全部候选**；`reason` 点名哪些候选证据未审核                                                 |
+新行为：候选必须**至少有一条 approved 证据**才算“可支撑”。
 
-关键取舍：**不用证据缺口收窄候选**。两个候选里只有一个带已审核证据时，不能据此排除另一个，
-那会把“没登记证据”误判成“读音不成立”。
-用例：`FIX-1 唯一候选但证据未审核`、`FIX-1 候选证据为空数组`、`FIX-1 多候选中仅部分证据未审核`。
+| 情形                                      | 新结果                                                             |
+| ----------------------------------------- | ------------------------------------------------------------------ |
+| 唯一候选且证据已审核                      | `resolved` / `unique`（不变）                                      |
+| 唯一候选但证据未审核或 `evidenceIds` 为空 | **抛 `LOOKUP_EVIDENCE_UNVERIFIED`**，不返回任何 `readingStatus`    |
+| 全部候选都不可支撑                        | 同上，抛数据未就绪错误                                             |
+| 多候选中部分不可支撑                      | 仍 `ambiguous` 并**保留全部候选**；`reason` 点名哪些候选证据未审核 |
 
-**FIX-2 语境规则引用的证据缺失或未审核时，不能自动确定选音。**
+为什么抛错而不是返回 `unknown`：冻结契约只有 `resolved/ambiguous/unknown`，没有“证据待核实”；
+用 `unknown` 顶替会把“已收录但未审核”显示成“未收录”，下游无法区分，等于换个方式放行。
+所以按**数据未就绪**处理，请 GLM 映射 503（见第 6 节）。未擅改契约。
 
-旧行为：只看 `rule.reviewStatus === "approved"`，不看 `rule.evidenceIds` 是否可解析、是否已审核。
-新行为：规则要生效必须同时满足——自身 `approved`，且 `evidenceIds` 非空、每条都能在 `lookup.evidence` 解析到、
-并且全部 `approved`。任一不满足即不参与选音，命中记录为 `CONTEXT_RULE_EVIDENCE_INSUFFICIENT` notice
-（与未审核规则的 `CONTEXT_RULE_UNVERIFIED_IGNORED` 区分开，不静默丢弃）。
+关键取舍：**不用证据缺口收窄候选**——部分候选不可支撑时全部保留，绝不在剩余候选上假造“唯一候选”。
+
+用例：`FIX-1 唯一候选全部依据未审核`（断言抛错）、`FIX-1 候选证据为空数组`（断言抛错）、
+`FIX-1 多候选中仅部分证据未审核`、`FIX-1 用户覆盖选中未审核候选`（证据不晋升）。
+
+**FIX-2 语境规则证据要先验，不可事后过滤。**
+
+旧行为（审计复现点）：只看 `rule.reviewStatus === "approved"`。规则标 approved 但引用不存在或未审核的
+语境证据时仍确定选音；候选自身的韵书归部证据被当作语境依据。
+
+新行为：规则要生效必须同时满足——
+
+1. `reviewStatus === "approved"`；
+2. `evidenceIds` 非空；
+3. 每条都能在 `lookup.evidence` 解析到；
+4. 每条都是 `approved`；
+5. **每条 `kind === "context"`**（`rhyme_entry` 等归部证据不能顶替语境依据）。
+
+任一不满足即不参与选音，命中记录为 `CONTEXT_RULE_EVIDENCE_INSUFFICIENT` notice
+（与未审核规则的 `CONTEXT_RULE_UNVERIFIED_IGNORED` 区分，不静默丢弃、也不事后过滤候选）。
 
 另加一道闸：即使规则证据齐备，若规则指向的**候选自身**没有已审核证据，也不给 `resolved`，
 退回 `ambiguous` 且 `effectiveCandidateIds` 只留该候选。
-用例：`FIX-2 规则证据为空`、`FIX-2 规则证据未审核`、`FIX-2 规则证据在 lookup 中缺失`、
-`FIX-2 规则证据齐备但被选候选自身证据未审核`。
 
-口径已同步到 `docs/readings.md` §4.2 状态矩阵、§4.3 证据口径、§4.6 规则执行与 notice 表。
+用例：`FIX-2 规则证据为空`、`FIX-2 规则证据未审核`、`FIX-2 规则证据在 lookup 中缺失`、
+`FIX-2 规则引用已审核但非语境用途的证据`、`FIX-2 规则证据齐备但被选候选自身证据未审核`。
+
+口径已同步到 `docs/readings.md` §4.2 状态矩阵、§4.3 证据口径、§4.4、§4.6 规则执行、notice 表与错误码表。
 
 ## 3. 实际命令与结果
 
@@ -83,7 +100,7 @@
 $ pnpm verify
 $ eslint .                        → 通过
 $ tsc --noEmit && tsc --noEmit -p apps/web/tsconfig.json → 通过
-$ vitest run                      → 6 个文件 / 73 个用例全通过（其中 readings 2 文件 / 37 用例）
+$ vitest run                      → 6 个文件 / 75 个用例全通过（其中 readings 2 文件 / 39 用例）
 $ pnpm build && tsx scripts/generate-contracts.ts --check → 通过（8 个契约/模板文件一致）
 退出码 0
 ```
@@ -93,8 +110,8 @@ $ pnpm build && tsx scripts/generate-contracts.ts --check → 通过（8 个契�
 ```text
 $ node node_modules/vitest/vitest.mjs run packages/readings/tests
  ✓ packages/readings/tests/parse.test.ts (10 tests)
- ✓ packages/readings/tests/resolve.test.ts (27 tests)
- Test Files 2 passed / Tests 37 passed
+ ✓ packages/readings/tests/resolve.test.ts (29 tests)
+ Test Files 2 passed / Tests 39 passed
 ```
 
 **未运行**：`pnpm --filter @poetry/readings test`（该脚本不存在，见第 6 节申请）；没有 `todo` 跳过的用例。
@@ -117,6 +134,12 @@ $ node node_modules/vitest/vitest.mjs run packages/readings/tests
 | 语境规则                     | **0 条生效**。`data/context/rules.approved.json` 未创建                                                    |
 | 待审队列                     | `data/context/review-queue.json` 4 条（更/重/长/行），`reviewStatus=unverified`，`selectCandidateIds` 为空 |
 
+**真实上下文规则目前已审核 0 条**：队列里那 4 条是待审问题清单，不是已覆盖的语境，
+不计入任何覆盖率，也不能当作“语境规则已就绪”。
+
+审计材料 `复现/b-audit-repro.ts` 与 `b-repro-results.json` 属于审计方的合成复现材料，
+**不在本包发布路径内**，也没有被本分支引入（`git ls-files` 中不存在这两个文件）。
+
 合成 fixture 与真实语文学验证严格分开：
 
 - 合成验证（已完成）：位置映射、状态传播、覆盖校验、规则最长匹配/冲突、Schema 一致性、不变性。
@@ -128,8 +151,10 @@ $ node node_modules/vitest/vitest.mjs run packages/readings/tests
    在补齐前 C/API 只能按相对路径引用，无法 `import ... from "@poetry/readings"`。
 2. **缺少真实字表**：所有候选来自合成 fixture；真实覆盖情况未知。
 3. **语境规则无一条生效**：缺 A 的稳定候选 ID、缺可定位来源、缺人工审核。队列里 4 条只能算问题清单。
-4. **`unknown` 承担了“证据待核实”的语义**：证据未审核时本模块只能返回 `unknown`（契约没有“待核实”状态位）。
-   代价是“未收录”与“未核实”在下游都表现为 `unknown`，只能靠 `reason` 区分；已在 `docs/readings.md` §7 提出可选契约变更。
+4. **“证据待核实”只能靠异常路径表达**：契约没有该状态位，`unknown` 又与“未收录”无法区分，
+   因此全部候选都无已审核证据时抛 `LOOKUP_EVIDENCE_UNVERIFIED`，由 API 映射 503。
+   代价是只要本篇有一个字位证据未审核，整次分析就失败——这是有意的 fail-closed，等 A 补审核后可恢复。
+   已在 `docs/readings.md` §7 提出可选契约变更（新增“待核实”状态位）。
 5. **未做跨句/分词匹配**：只有同句内精确短语。
 6. **未做覆盖率/准确率**：没有留出验证，不报百分比。
 7. **Node 补丁版本差异**：本机 24.21.0 而仓库锁 24.19.0，未观察到差异，正式验收建议在 24.19.0 复核。
@@ -163,6 +188,8 @@ $ node node_modules/vitest/vitest.mjs run packages/readings/tests
 
 - `OVERRIDE_*` → 422；`CONTEXT_RULE_INVALID`/`CONTEXT_RULE_STALE`/`LOOKUP_*` → 503；
   `POEM_TOKEN_*` → 500（服务端自身 bug）。
+- **`LOOKUP_EVIDENCE_UNVERIFIED` 必须映射为 503 `DATA_NOT_READY`**，不得降级成 200，也不得当成
+  `unknown` 正常返回——它是“证据未审核”的唯一表达方式。
 - `CONTEXT_RULES_PENDING` 是保留码：若将来关闭规则执行，遇到 approved 规则必须显式抛此码，
   **不能**被 API 转成 200。
 
@@ -202,6 +229,14 @@ const annotated = resolveReadings({
   即“汉字序列、不含标点”，与本模块一致；C 的 `makeAnnotatedPoem` 也按行间换行占 1 个 UTF-16 单元累计偏移。
 - **文件重叠只有根 `HANDOFF.md`**：C 分支改动 22 个文件、D 分支改动 24 个文件，与本分支（13 个文件）唯一的交集是
   根 `HANDOFF.md`，双方都是追加段落 —— 先合的一方无冲突，后合的一方需保留两段。
-- **请 GLM 注意**：核对时 `git diff origin/main origin/feat/c-d1-acceptance -- HANDOFF.md` 显示 C 分支**删除了**
-  main 末尾的“GLM 交付：Web 基础环境（2026-10-17）”整段。若非有意，合并前请确认，避免该记录丢失。
-  本分支未改动那段内容。
+- **更正上一版的错误判断（C 分支并未删除记录）**：我先前依据 `git diff origin/main origin/feat/c-d1-acceptance -- HANDOFF.md`
+  判断 C 删除了 main 末尾的“GLM 交付：Web 基础环境（2026-10-17）”整段。**该判断是错的**。
+  两端 diff 会把“对方分支基线较旧、尚未包含后加内容”显示成删除；C 并没有主动删改。
+  经评审指出后核对：三路合并（merge base 为该分支的分叉点）会正常保留那段记录。
+  以后判断本分支改了什么，只用 `git diff origin/main...HEAD`（三点，基于 merge base），
+  不能用 `git diff origin/main HEAD`（两点）认定增删。
+
+## 10. 交给评审的 PR 说明（正文可更新用）
+
+两项缺陷的解决方式见第 2.1 节；错误码与 503 映射见第 6 节；
+真实上下文规则已审核 0 条（见第 4 节），本批次不构成任何覆盖率结论。

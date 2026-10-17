@@ -57,7 +57,7 @@ node node_modules/vitest/vitest.mjs run packages/readings/tests
 pnpm verify
 ```
 
-D1 实际结果见 [`HANDOFF.md`](./HANDOFF.md)：37 个 readings 用例、全仓 73 个用例、`pnpm verify` 通过。
+D1 实际结果见 [`HANDOFF.md`](./HANDOFF.md)：39 个 readings 用例、全仓 75 个用例、`pnpm verify` 通过。
 
 `packages/readings/package.json` 目前**没有** `exports` / `build` / `test` 脚本（属于 GLM 的写入路径，
 D1 未改动），所以 `pnpm --filter @poetry/readings test` 还不存在，其它包也还不能按包名导入本模块。
