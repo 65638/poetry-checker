@@ -2,8 +2,13 @@
   --pc-bg: #f7f5ef;
   --pc-surface: #ffffff;
   --pc-surface-sunken: #f0ede5;
+  --pc-surface-hover: #e8e4d9;
+  --pc-paper-texture: url("/design/paper-grain.svg");
+  --pc-paper-tile: 240px;
   --pc-divider: #ddd8cc;
   --pc-border-control: #8a8578;
+  --pc-rule: #8a8578;
+  --pc-seal: #a8362a;
 
   --pc-text: #262923;
   --pc-text-muted: #666a61;
@@ -15,18 +20,22 @@
 
   --pc-pass-fg: #245c4b;
   --pc-pass-bg: #e8f1ed;
+  --pc-pass-bg-strong: #dcebe3;
   --pc-pass-border: #245c4b;
 
   --pc-fail-fg: #a52f2f;
   --pc-fail-bg: #fff1ef;
+  --pc-fail-bg-strong: #fbe3df;
   --pc-fail-border: #a52f2f;
 
   --pc-review-fg: #805500;
   --pc-review-bg: #fff6de;
+  --pc-review-bg-strong: #fcefc6;
   --pc-review-border: #805500;
 
   --pc-neutral-fg: #4a4d46;
   --pc-neutral-bg: #f0ede5;
+  --pc-neutral-bg-strong: #e8e4d9;
   --pc-neutral-border: #8a8578;
 
   --pc-tone-ping: #245c4b;
@@ -56,12 +65,17 @@
   --pc-text-sm: 14px;
   --pc-text-md: 16px;
   --pc-text-lg: 20px;
-  --pc-text-poem: 28px;
+  --pc-text-xl: 24px;
+  --pc-text-display: 32px;
+  --pc-text-poem: 32px;
   --pc-leading-body: 1.6;
   --pc-leading-evidence: 1.7;
 
   --pc-cell: 44px;
+  --pc-seal-size: 36px;
+  --pc-status-icon: 40px;
   --pc-cell-gap: 4px;
+  --pc-band-pad: var(--pc-space-3);
   --pc-page-max: 1200px;
   --pc-page-margin: 32px;
   --pc-input-col: 340px;
@@ -71,7 +85,8 @@
   --pc-dur-control: 120ms;
   --pc-dur-panel: 220ms;
 
-  background: var(--pc-bg);
+  background: var(--pc-bg) var(--pc-paper-texture) repeat;
+  background-size: var(--pc-paper-tile);
   color: var(--pc-text);
   font-family: var(--pc-font-sans);
   font-size: var(--pc-text-md);
@@ -88,6 +103,10 @@
   .pc-root {
     --pc-page-margin: 16px;
     --pc-text-poem: 24px;
+    --pc-text-display: 26px;
+    --pc-seal-size: 30px;
+    --pc-status-icon: 36px;
+    --pc-band-pad: var(--pc-space-2);
   }
 }
 

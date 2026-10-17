@@ -50,6 +50,7 @@ export function CheckerView(props: CheckerViewProps) {
     <div ref={rootRef} className="pc-root">
       <div className="pc-page" inert={panelOpen}>
         <header className="pc-header">
+          <span className="pc-seal" aria-hidden="true">律</span>
           <h1 className="pc-title">诗格律检查器</h1>
         </header>
 
