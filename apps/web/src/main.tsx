@@ -4,7 +4,7 @@ import { createRoot } from "react-dom/client";
 import { CheckerStore } from "./app/store";
 import { DevContainer } from "./app/DevContainer";
 import { EXAMPLES } from "./app/examples";
-import { createHttpTransport } from "./api/analyze";
+import { createRuntimeTransport, readWebEnv } from "./app/config";
 import { useCheckerStore } from "./hooks/useCheckerStore";
 import type { CheckerViewProps } from "./view-contract";
 
@@ -17,11 +17,12 @@ const EMPTY_DRAFT = {
 };
 
 function App() {
-  // 生产入口只用真实 HTTP transport；开发场景不得从这里偷偷兜底。
-  const store = useMemo(
-    () => new CheckerStore(EMPTY_DRAFT, { transport: createHttpTransport() }),
-    [],
-  );
+  // 生产入口走 resolveApiConfig：只接受 http transport，
+  // 误开 VITE_DEV_MOCK 会在构建产物里直接抛错，不做静默兜底。
+  const store = useMemo(() => {
+    const { transport } = createRuntimeTransport(readWebEnv());
+    return new CheckerStore(EMPTY_DRAFT, { transport });
+  }, []);
   const state = useCheckerStore(store);
 
   const props: CheckerViewProps = {
