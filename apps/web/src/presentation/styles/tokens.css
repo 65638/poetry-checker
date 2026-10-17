@@ -1,3 +1,9 @@
+/* Only page-global rule here: clears the UA 8px body margin so the paper background reaches the edges. */
+html,
+body {
+  margin: 0;
+}
+
 .pc-root {
   --pc-bg: #f7f5ef;
   --pc-surface: #ffffff;
