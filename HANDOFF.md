@@ -71,6 +71,111 @@ React 19.3.1 / Vite 8.3.4 / plugin-react 6.1.2（registry 实查锁定）；web 
 
 ---
 
+# A 交付：D1 韵书来源、缺部检查与查询入口（2026-10-17）
+
+执行者：队员 A 的 DeepSeek。基线：本地 `feat/a-d1-lexicon` 从 `main` 的 `3080a1c`（C 的 PR #1 已合入；任务书写的 `e549194` 已被新提交推进，`contract-v1` 仍为 `9b27322`，未改动）。
+
+## 交付了什么
+
+| 路径                                                  | 内容                                                                                                                                                |
+| ----------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `packages/lexicon/src/index.ts`                       | 导出 `lookupCharacters`（签名与冻结契约一致）＋ `createLexicon` / `registerSnapshot` / `deserializeSnapshot`                                        |
+| `packages/lexicon/src/lookup.ts`                      | 显式版本注册、批量去重、码位稳定排序、多候选保留、引用收集、`LookupResultSchema` 出站校验、`LexiconError`                                           |
+| `packages/lexicon/src/snapshot.ts`                    | 快照定义与 **引用完整性**校验（悬空 evidence / group / source 一律拒绝）                                                                            |
+| `packages/lexicon/src/completeness.ts`                | 三套门槛（平水 106 部逐字比对 / 词林 19 部 33 子卷 / 新韵 14 韵 56 子卷）＋ `checkCompleteness`                                                     |
+| `packages/lexicon/src/xinyun/`                        | 十四韵规则表、拼音正规化（调号/ü/jqx/yw/iu-ui-un/舌尖元音）、归部                                                                                   |
+| `packages/lexicon/src/adapters/chinese-word-rhyme.ts` | 原表 → 快照的纯函数导入（不改写、不补缺部、不补反切义项）                                                                                           |
+| `packages/lexicon/src/digest.ts`                      | 规范化 + SHA-256 业务内容摘要（下载时间不入摘要）                                                                                                   |
+| `packages/lexicon/tests/`                             | `fixture.test.ts`、`completeness.test.ts`、`xinyun.test.ts`、`reproducibility.test.ts`、`real-sample.test.ts`、`fixtures.ts`，覆盖 A-D1-01～A-D1-10 |
+| `scripts/data/fetch-sources.ts`                       | 下载与导入分开；按 manifest 摘要比对，不符即拒写                                                                                                    |
+| `scripts/data/inspect.ts`                             | 读取本地快照做统计与缺口报告（只读）                                                                                                                |
+| `scripts/data/build-sample.ts`                        | 生成真实七字小样本（可重复，摘要稳定）                                                                                                              |
+| `scripts/data/rebuild-xinyun.ts`                      | 新韵重建覆盖 / 未映射 / 冲突报告；`--full` 另存全表                                                                                                 |
+| `data/sources/manifest.json`                          | 4 个来源：URL、固定提交/标签、许可线索、字节数与 SHA-256、上游待核实项、不可达记录                                                                  |
+| `data/raw/`                                           | 8 个原样快照（平水/词林/新韵粗分/新韵四声/两份 LICENSE/上游 README/pinyin.txt）＋ 说明                                                              |
+| `data/normalized/`                                    | 真实七字小样本（`unverified`）＋ 命名与生成说明                                                                                                     |
+| `data/patches/`                                       | 三讲缺部草案、新韵“一”冲突草案（均 `draft` / `unverified`，未发布）                                                                                 |
+| `data/releases/`                                      | 只有 README，明确**当前无发布包**                                                                                                                   |
+| `docs/data-provenance.md`、`docs/data-quality.md`     | 来源与实际统计、缺口、冲突、抽样队列、风险                                                                                                          |
+| `packages/lexicon/README.md`                          | 调用方式、可用 `dataVersion`、错误码、门槛、命令                                                                                                    |
+
+## 实际基线（实跑，不是转述）
+
+- 平水：5 卷 / **105 部**（上平 15、下平 15、**上 28**、去 30、入 17），缺**上声三讲**；原表条目 10,671 → 去重候选 10,378；字形 8,232；多归部字形 1,823；85 个韵部存在同字内部重复。
+- 词林：19 部 / 33 子卷 / 归属 5,575 / 字形 5,037 / 无空卷；仄声一律 `ze_unspecified`。
+- 新韵候选表（仅对照）：14 韵 / 56 子卷 / 归属 7,693 / 字形 6,730；“一”= 十二齐·阴平 + 十二齐·去声（冲突单列）。
+- 新韵重建表：读音源 41,923 字形 / 53,457 读音 → 已归部 53,414、未映射 43、轻声丢弃 241、`er` 规则待核实影响 104；覆盖 41,803 字形 / 56 子卷全非空；业务内容摘要 `5e9bbd0a…b2ce84`。
+- 七字真实小样本：业务内容摘要 `1ec87329…617ab8`，重复生成一致；逐字归部与源表一致（白=入声十一陌、一=入声四质、更=八庚+二十四敬、流/楼=十一尤、雪=入声九屑、物=入声五物）。
+
+## 测试与验证（用户本机终端实跑，2026-10-17，vitest 5.0.5）
+
+- 包内测试：`pnpm exec vitest run packages/lexicon/tests` → Test Files 5 passed (5)、Tests 66 passed (66)，覆盖 A-D1-01～A-D1-10。
+- 全仓回归：`pnpm test` → Test Files 12 passed (12)、Tests 149 passed (149)，未造成 contracts/prosody/api 回归。
+- 类型检查：`pnpm typecheck` → 0 错误（含 apps/web/tsconfig.json 第二条 tsc）。
+- 静态检查：`pnpm lint` → 0 问题；`pnpm check:generated` → 8 个契约/模板核对通过，无漂移。
+- 来源摘要复核：`node scripts/data/fetch-sources.ts --check` → 8/8 与 manifest 一致，0 不一致。
+- 数据脚本实跑：inspect / build-sample / rebuild-xinyun 均实际运行，统计数字见上文。
+- 人工审核：**0 条**（七字小样本仅机器对照），不因测试通过视为已审核。
+- “数据门槛失败（平水 105/106）”与“检查器测试通过”是两件事：前者是数据事实，后者是代码行为。
+
+## 未完成 / 明确未做
+
+1. 全量三库导入、106/19/14 发布验收、278+60 人工抽样：**0 条人工审核**，全部转 D2。
+2. 平水三讲：只有缺口记录与草案，`proposedCharacters: null`（维基文库不可达，拒绝猜字）。
+3. 新韵“一”冲突：只登记与分列，未裁决。
+4. 十四韵规则权威出处：**未取得**，状态 `unverified`（`er → 十二齐` 也在待核实）。
+5. 已提交 `24e42ce` 并推送 `feat/a-d1-lexicon`；草稿 PR 待开（不自行合入）。
+
+## 未验证项（不得当成已通过）
+
+| 项 | 现状 | 为什么不算通过 |
+|---|---|---|
+| 词林 / 新韵门槛 | CILIN_GATE、XINYUN_GATE 只在合成数据上验证过常量形状（19/33、14/56） | 没有真实快照，门槛从未在真实数据上跑过 |
+| 发布包统计 | data/releases/README.md 的「19 部 33 子卷齐全无空卷」「56 子卷 / 41,803 字形」 | 仅为文档断言，无测试覆盖 |
+| 七字真实小样本 | 人工审核 0 / 7 | 只做了机器与原表对照，未与韵书权威文本核 |
+| 平水 106 部门槛 | 仅有「预期失败」断言 | 三讲正文未取得（unreachable），未真正通过 |
+| 新韵十四韵规则 | rulesProvenance.status = unverified | 规则文本、发布机构、版次均未取得 |
+| 上游许可 | 仅核对仓库 LICENSE 声明 | 转载字表的上游授权链未核实，不得称“可商用” |
+
+## 执行环境限制与需要人工处理的事项
+
+1. **原检出目录已消失**：开工时的 `D:\新建文件夹 (2)\poetry-checker` 现已不存在；本次落盘目标为 `D:\a\poetry-checker`（`feat/a-d1-lexicon`，本批从 `3080a1c` 起，现 HEAD `24e42ce`，已装 `node_modules`）。
+2. **AI 执行环境无法访问 GitHub**（TLS 叶子证书校验失败：`UNABLE_TO_VERIFY_LEAF_SIGNATURE`，schannel 侧 `SEC_E_NO_CREDENTIALS`）；实际推送由用户终端完成，已成功（`24e42ce` 已在 `origin/feat/a-d1-lexicon`）。来源快照取回因此改用 jsdelivr 的同一固定 ref，并用“提交/标签双侧摘要一致”约束内容。
+3. **维基文库不可达**（`UND_ERR_CONNECT_TIMEOUT`），《平水韻》《詞林正韻》正文与修订号未取得，记为 `unreachable` / 未核实。
+
+## 给 B
+
+- 入口：`lookupCharacters({ characters, rhymeBook, dataVersion })`，返回 `LookupResult`（用 `LookupResultSchema` 校验过）。
+- 可用 `dataVersion`：`sample-pingshui-cwr-ff0e9c1-d1`（真实七字小样本，`unverified`）。测试用 `fixture-lexicon-d1` / `fixture-lexicon-xinyun-d1`（合成，不得当判音依据）。
+- ID 规则：候选 `pingshui:<字>:<声类>:<韵目>`；韵部 `group:<book>:<卷>:<韵目>`；证据 `ev:<book>:<卷>:<韵目>`；来源 `src:chinese_word_rhyme` / `src:pinyin-data`。
+- `missing` 只给未收录字，**不会**补默认平仄或拼音；`candidates` 保留全部多读多部，同一字可能平仄不同——需要你按语境消歧，我不替你挑“更”的读法。
+- 所有候选目前 `fanqie`/`gloss`/`modernReading` 为 `null`，别把缺证当成“无此读法”。
+
+## 给 GLM（需要你接线，**尚不可执行**）
+
+1. **`packages/lexicon/package.json` 已知缺口**：目前只声明了 `name`/`version`/`private`/`type`，**没有**
+   - `dependencies`: `@poetry/contracts`（`workspace:*`）
+   - `exports`: `{ ".": { types, development: "./src/index.ts", import: "./dist/index.js" } }`
+   - `scripts`: `build`（`tsc -p tsconfig.build.json`）、`test`（`vitest run --root ../.. packages/lexicon/tests`）
+   - `tsconfig.build.json`
+
+   后果：`import "@poetry/contracts"` 现在**只有在仓库根目录运行时**才能解析（靠根 `node_modules/@poetry/contracts` 的
+   workspace 链接）；一旦把包单独发布/单独安装，解析会失败。`pnpm --filter @poetry/lexicon test` 也**还不存在**。
+   需 GLM 补依赖、exports、脚本与编译配置后，本包的测试/构建才算接线完成。
+
+2. 根命令 `data:build` / `data:check` 还不存在，需在脚本落地后接线；不要把本文件里的命令写成“已经可用”。
+3. `/api/v1/rhyme-books` 与 `/api/v1/characters/{char}` 的实测：数据未达发布门槛前应继续 503，`readyz` 不要因本批数据变 ready。
+4. 新韵对外文案请使用“中华新韵（十四韵，项目重建表，非官方原始字表）”。
+5. 运行入口：测试 `pnpm exec vitest run packages/lexicon/tests`；脚本需 `tsx` 或 Node 24 原生类型剥离，
+   且**从仓库根目录**执行（`node --conditions=development scripts/data/{inspect,build-sample,rebuild-xinyun}.ts`，
+   或 `pnpm exec tsx scripts/data/<script>.ts`）。
+
+## D2 第一步
+
+取得维基文库《平水韻》三讲正文与修订号（有网环境）→ 出补丁差异并人审 → 让平水达到 106 部且逐部非空；同时把 `chinese_word_rhyme` 原表全量导入成发布候选（词林 19 部、新韵重建 56 子卷），再接 `data:build` / `data:check` 与 278+60 抽样。
+
+---
+
 # B 交付：D1 解析与候选传播（2026-10-17）
 
 分支 `feat/b-d1-readings`（基线 `e549194`，`contract-v1` 仍为 `9b27322`，未改契约）；PR #3（→ `main`，未自行合并）。
@@ -95,3 +200,78 @@ React 19.3.1 / Vite 8.3.4 / plugin-react 6.1.2（registry 实查锁定）；web 
 本批内容边界：M2 解析与候选传播（B）、readings 包接线与 API 错误映射（GLM，14 个错误码显式映射，503 族统一 DATA_NOT_READY 错误体）。B 的证据门槛三连修（8e48d10 未审核证据不支撑确定读音 → 6e8eb16 显式数据未就绪 → d8b4ecf 堵住用户覆盖/规则选音/歧义保留三条绕过路径）全部包含。
 
 尚未包含：真实韵书字表（A）、体裁（E）、完整格律判定（Codex 下一批）、真实 API 编排（GLM，等前三者就绪）。analyze 仍为 fixture mock。
+
+---
+
+# E 交付：D1 体裁最小分支与金标准审核框架（2026-10-17）
+
+分支 `feat/e-d1-genre`（基线 `main` = `0a94212`；`contract-v1` 仍为 `9b27322`，**未改契约**）。
+
+## 已实现
+
+- `packages/genre/src/classify.ts`：`classifyGenre` 最小可靠分支——用户显式古体、显式近体形式、用户选择近体、
+  auto 的形制判定、特征完整度门槛、并列（<0.05）、关键可判率（<0.8）、`quality=needs_review`、排律/超支持形制。
+  `selectedTemplateId` 只在“唯一候选且四项特征齐全”时给出；其余一律 `null` 并保留候选。
+- `packages/genre/src/errors.ts`：`GENRE_ERROR_CODES` 与 `GenreError`；未实现分支抛 `GENRE_BRANCH_PENDING`
+  （`branch=auto-high-confidence`），**不用 uncertain 占位冒充完成**。
+- `packages/genre/src/golden-case.ts`：手写 GoldenCase 校验器（不依赖 zod 传递依赖），`approved` 必须有审核人与可解析证据；
+  批量校验拒绝重复 `id`；`request` 直接复用冻结的 `AnalyzeRequestSchema`。
+- `packages/genre/tests`：fixtures 与 24 项测试（E-D1-01 ~ E-D1-08 + 未实现分支/非法组合/排律/未知字过多/不可变/确定性）。
+- `tests/golden/cases/*.json`：登鹳雀楼、静夜思、黄鹤楼三首 **pending** 档案（结构有效、来源待核实、未运行）。
+- `data/works/`：候选登记与待审核清单，**0 条 approved**，不加载为元数据。
+- 文档：`docs/test-report.md`（运行台账）、`docs/limitations.md`（已知边界）、`tests/integration/acceptance-plan.md`（D2–D5 矩阵，全部未运行）。
+
+## 验证（实际结果）
+
+- `pnpm install --frozen-lockfile` exit 0（271 条锁定项）。
+- `pnpm verify` 改动前 exit 0（135 项）；改动后 exit 0（**159 项**，12 个测试文件）。
+- `pnpm exec vitest run packages/genre/tests`：2 文件 **24 项通过**。
+- `pnpm typecheck` exit 0；`pnpm exec eslint packages/genre` exit 0。
+- 环境：Node v24.21.0 / pnpm 11.25.0（任务书要求 24.19.0，`engines >=24 <25` 满足，已记录）。
+
+## 未做 / 待人工核实
+
+- **真实作品：3 首待审核、真实分析 0/3 未运行**（分开报，不因结构校验通过而视为已审核）。
+- auto 高吻合自动判定、`approved` 正文指纹匹配（D2）。
+- API 接线、错误码映射（GLM）；真实韵书/读音/格律（A/B/Codex）；前端展示（D）。
+- 三首正文的权威出处、异文版本、体裁依据、读音依据均待人工核实。
+
+## 待 GLM
+
+1. `packages/genre/package.json` 补 `exports` / `build` / `test` / `dependencies: @poetry/contracts` 与 `tsconfig.build.json`
+   （当前该包不能按包名被其它包导入，跨包导入依赖根链接与 tsconfig paths）。
+2. `GENRE_BRANCH_PENDING` 到 HTTP 状态的映射建议（应显式“未就绪”，不得捕获为成功或降级为 uncertain）。
+3. 若要求 GoldenCase 用 Zod，需为 genre 显式加 `zod` 依赖；当前为手写校验。
+
+---
+
+# E 追加：D2 已审核正文指纹匹配（2026-10-17）
+
+同一分支 `feat/e-d1-genre` 追加提交（未改契约、未触碰他人路径）。
+
+## 已实现
+
+- `packages/genre/src/fingerprint.ts`：`normalizeForFingerprint`（只保留汉字，去标点/空白，**不**做简繁转换与异文归并）
+  与 `fingerprintText`（规范化后 SHA-256）；`isHanCharacter` 与解析侧同判定、不引入跨包依赖。
+- `classifyGenre` 规则 3 落地：`approved` 元数据按 `approvedTextFingerprints` 精确匹配——
+  - 命中 1 条 → 采用其 formFamily/formId/historicalTags，`basisType=reviewed_metadata`，透传 `evidenceIds`；
+  - 命中多条 → `uncertain` 并列出命中 id（疑似异文/重复登记），交人工裁定；
+  - 无命中但有 approved 元数据 → 明确写入 reasons：“指纹与本诗不一致，未作为识别依据”；
+  - `unverified` 元数据一律不参与；用户显式选择优先于元数据。
+
+## 验证
+
+- `pnpm exec vitest run packages/genre/tests`：**29 项通过**（D1 的 24 + 指纹 5）。
+- `pnpm verify` exit 0：12 文件 **164 项**；`typecheck` / `prettier --check` 通过。
+
+## 仍待
+
+- 真实作品分析 0/3 未运行；异文规则、指纹版本管理、真实语料接入未做。
+- 高吻合自动判定分支仍抛 `GENRE_BRANCH_PENDING`（等核心补齐 relationFit/rhymeFit 与样本校准）。
+- 包配置与 API 接线仍待 GLM。
+
+## 交接单
+
+给组长的验收单（交付清单、行为规格、决策项、GLM/C 请求、复现步骤、回滚）见
+[`docs/handoffs/0005-e-genre-d1.md`](docs/handoffs/0005-e-genre-d1.md)；对应 PR
+[#4](https://github.com/65638/poetry-checker/pull/4)（draft）。

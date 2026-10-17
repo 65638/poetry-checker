@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "d1-draft",
+  "note": "候选登记，非 approved 元数据。来源定位与语言学依据均待人工核实。",
+  "items": [
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "title": "登鹳雀楼",
+      "author": "王之涣",
+      "text": "白日依山尽，黄河入海流。欲穷千里目，更上一层楼。",
+      "sourceLead": null,
+      "pendingItems": [
+        "正文版本与权威出处（书名/卷次/版次/页码）",
+        "体裁判定依据（五绝）的文献出处",
+        "平水韵流/楼同尤部、白/一为古入声的韵书依据"
+      ],
+      "reviewStatus": "pending",
+      "reviewers": [],
+      "evidenceIds": []
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "title": "静夜思",
+      "author": "李白",
+      "text": "床前明月光，疑是地上霜。举头望明月，低头思故乡。",
+      "sourceLead": null,
+      "pendingItems": [
+        "通行本正文出处；异文（如“床前看月光”）另立版本",
+        "“古绝”体裁标记的依据",
+        "不得推广为“任意五言四句不合谱即古体”"
+      ],
+      "reviewStatus": "pending",
+      "reviewers": [],
+      "evidenceIds": []
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "title": "黄鹤楼",
+      "author": "崔颢",
+      "text": "昔人已乘黄鹤去，此地空余黄鹤楼。黄鹤一去不复返，白云千载空悠悠。晴川历历汉阳树，芳草萋萋鹦鹉洲。日暮乡关何处是，烟波江上使人愁。",
+      "sourceLead": null,
+      "pendingItems": [
+        "正文出处；首句异文（“昔人已乘白云去”等）另立版本",
+        "七律形式与特殊拗律的文献依据",
+        "常格偏离的可见性要求：不得全绿，也不得改判古体"
+      ],
+      "reviewStatus": "pending",
+      "reviewers": [],
+      "evidenceIds": []
+    }
+  ]
+}

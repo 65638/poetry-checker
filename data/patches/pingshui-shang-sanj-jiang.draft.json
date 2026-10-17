@@ -1,0 +1,66 @@
+{
+  "patchId": "patch-pingshui-shang-sanj-jiang-draft",
+  "title": "平水韵上声三讲补缺（草案，未发布）",
+  "status": "draft",
+  "reviewStatus": "unverified",
+  "publishedAt": null,
+  "target": {
+    "book": "pingshui",
+    "bucket": "上",
+    "groupName": "三讲",
+    "expectedToneClass": "shang"
+  },
+  "observedGap": {
+    "detectedBy": "packages/lexicon/src/completeness.ts checkCompleteness(PINGSHUI_GATE)",
+    "expectedGroupCount": 106,
+    "actualGroupCount": 105,
+    "expectedBucketCounts": {
+      "上平": 15,
+      "下平": 15,
+      "上": 29,
+      "去": 30,
+      "入": 17
+    },
+    "actualBucketCounts": {
+      "上平": 15,
+      "下平": 15,
+      "上": 28,
+      "去": 30,
+      "入": 17
+    },
+    "missingGroups": ["三讲"],
+    "releaseGatePassed": false,
+    "sourceId": "src:chinese_word_rhyme",
+    "sourceRevision": "ff0e9c13fb037c43e0eaa5dc929c0fe4fa2ffb18",
+    "sourceFile": "data/raw/chinese_word_rhyme/Pingshui_Rhyme.json"
+  },
+  "basis": [
+    {
+      "sourceId": "src:wikisource:pingshuiyun",
+      "url": "https://zh.wikisource.org/wiki/平水韻",
+      "locator": "上声三讲正文（拟）",
+      "status": "unreachable",
+      "error": "UND_ERR_CONNECT_TIMEOUT：本机 zh.wikisource.org / zh.wikipedia.org 均连接超时",
+      "revision": null,
+      "retrievedAt": null,
+      "license": "页面声明 CC BY-SA 4.0（依任务书记录，本次未能亲自复核）"
+    }
+  ],
+  "proposedCharacters": null,
+  "proposedCharactersReason": "未取得可定位的三讲正文，禁止凭记忆或模型补字；不填任何韵字即为当前正确状态。",
+  "forbiddenShortcuts": [
+    "不得为了让 groupCount 变成 106 而新增空韵目或占位韵目。",
+    "不得把注文中的汉字当作韵字收录。",
+    "不得改取 chinese_word_rhyme 的其他提交而沿用本次统计。",
+    "未审核的补字不得进入 data/releases。"
+  ],
+  "nextSteps": [
+    "在有网环境取得《平水韻》三讲正文与修订号，保留署名与许可。",
+    "逐字核对后生成 patch 差异（前后对照、逐条证据），再由人审签。",
+    "补丁生效后重跑 scripts/data/inspect.ts，确认 15+15+29+30+17=106 且各部非空。"
+  ],
+  "notes": [
+    "本文件是缺口记录与修订草案，不是修订结果。",
+    "缺部数据仍会被检查器报告；发布门槛失败是预期状态，不代表检查器故障。"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "id": "golden-huanghelou-ps-v1",
+  "title": "黄鹤楼",
+  "author": "崔颢",
+  "text": "昔人已乘黄鹤去，此地空余黄鹤楼。黄鹤一去不复返，白云千载空悠悠。晴川历历汉阳树，芳草萋萋鹦鹉洲。日暮乡关何处是，烟波江上使人愁。",
+  "sourceCandidates": [
+    {
+      "kind": "lead",
+      "value": null,
+      "note": "待查：全唐诗崔颢卷；首句异文（“昔人已乘白云去”等）需另立版本登记"
+    }
+  ],
+  "request": {
+    "rhymeBook": "pingshui",
+    "genreHint": "auto",
+    "formHint": "auto",
+    "ruleSet": "teaching-v1",
+    "readingOverrides": []
+  },
+  "assertions": [
+    { "path": "genre.formId", "equals": "qilv" },
+    { "path": "genre.historicalTags", "equals": "特殊拗律" }
+  ],
+  "reviewStatus": "pending",
+  "reviewers": [],
+  "evidenceIds": [],
+  "notes": "候选预期：保留七律形式与特殊拗律说明；常格偏离应当可见，不得因出律改判古体免检，也不得让全文常格完美通过。正文与体裁依据待人工核实。"
+}

@@ -1,0 +1,278 @@
+{
+  "dataVersion": "sample-pingshui-cwr-ff0e9c1-d1",
+  "book": "pingshui",
+  "reviewStatus": "unverified",
+  "notice": "真实七字小样本（白、一、更、流、楼、雪、物）：数据取自 chinese_word_rhyme 固定提交的平水韵原表，仅登记韵部归属与声类；反切、义项、今读一律为 null。开发/待审核身份，不是全量发布数据，也不代表 106 部门槛已通过（该提交缺上声三讲）。",
+  "candidates": [
+    {
+      "id": "pingshui:更:ping:八庚",
+      "character": "更",
+      "book": "pingshui",
+      "toneClass": "ping",
+      "tone": "P",
+      "groupIds": [
+        "group:pingshui:下平:八庚"
+      ],
+      "gloss": null,
+      "modernReading": null,
+      "fanqie": null,
+      "evidenceIds": [
+        "ev:pingshui:下平:八庚"
+      ]
+    },
+    {
+      "id": "pingshui:流:ping:十一尤",
+      "character": "流",
+      "book": "pingshui",
+      "toneClass": "ping",
+      "tone": "P",
+      "groupIds": [
+        "group:pingshui:下平:十一尤"
+      ],
+      "gloss": null,
+      "modernReading": null,
+      "fanqie": null,
+      "evidenceIds": [
+        "ev:pingshui:下平:十一尤"
+      ]
+    },
+    {
+      "id": "pingshui:楼:ping:十一尤",
+      "character": "楼",
+      "book": "pingshui",
+      "toneClass": "ping",
+      "tone": "P",
+      "groupIds": [
+        "group:pingshui:下平:十一尤"
+      ],
+      "gloss": null,
+      "modernReading": null,
+      "fanqie": null,
+      "evidenceIds": [
+        "ev:pingshui:下平:十一尤"
+      ]
+    },
+    {
+      "id": "pingshui:更:qu:二十四敬",
+      "character": "更",
+      "book": "pingshui",
+      "toneClass": "qu",
+      "tone": "Z",
+      "groupIds": [
+        "group:pingshui:去:二十四敬"
+      ],
+      "gloss": null,
+      "modernReading": null,
+      "fanqie": null,
+      "evidenceIds": [
+        "ev:pingshui:去:二十四敬"
+      ]
+    },
+    {
+      "id": "pingshui:一:ru:入声四质",
+      "character": "一",
+      "book": "pingshui",
+      "toneClass": "ru",
+      "tone": "Z",
+      "groupIds": [
+        "group:pingshui:入:入声四质"
+      ],
+      "gloss": null,
+      "modernReading": null,
+      "fanqie": null,
+      "evidenceIds": [
+        "ev:pingshui:入:入声四质"
+      ]
+    },
+    {
+      "id": "pingshui:物:ru:入声五物",
+      "character": "物",
+      "book": "pingshui",
+      "toneClass": "ru",
+      "tone": "Z",
+      "groupIds": [
+        "group:pingshui:入:入声五物"
+      ],
+      "gloss": null,
+      "modernReading": null,
+      "fanqie": null,
+      "evidenceIds": [
+        "ev:pingshui:入:入声五物"
+      ]
+    },
+    {
+      "id": "pingshui:雪:ru:入声九屑",
+      "character": "雪",
+      "book": "pingshui",
+      "toneClass": "ru",
+      "tone": "Z",
+      "groupIds": [
+        "group:pingshui:入:入声九屑"
+      ],
+      "gloss": null,
+      "modernReading": null,
+      "fanqie": null,
+      "evidenceIds": [
+        "ev:pingshui:入:入声九屑"
+      ]
+    },
+    {
+      "id": "pingshui:白:ru:入声十一陌",
+      "character": "白",
+      "book": "pingshui",
+      "toneClass": "ru",
+      "tone": "Z",
+      "groupIds": [
+        "group:pingshui:入:入声十一陌"
+      ],
+      "gloss": null,
+      "modernReading": null,
+      "fanqie": null,
+      "evidenceIds": [
+        "ev:pingshui:入:入声十一陌"
+      ]
+    }
+  ],
+  "groups": [
+    {
+      "id": "group:pingshui:下平:八庚",
+      "book": "pingshui",
+      "name": "八庚",
+      "toneClass": "ping",
+      "evidenceIds": [
+        "ev:pingshui:下平:八庚"
+      ]
+    },
+    {
+      "id": "group:pingshui:下平:十一尤",
+      "book": "pingshui",
+      "name": "十一尤",
+      "toneClass": "ping",
+      "evidenceIds": [
+        "ev:pingshui:下平:十一尤"
+      ]
+    },
+    {
+      "id": "group:pingshui:去:二十四敬",
+      "book": "pingshui",
+      "name": "二十四敬",
+      "toneClass": "qu",
+      "evidenceIds": [
+        "ev:pingshui:去:二十四敬"
+      ]
+    },
+    {
+      "id": "group:pingshui:入:入声四质",
+      "book": "pingshui",
+      "name": "入声四质",
+      "toneClass": "ru",
+      "evidenceIds": [
+        "ev:pingshui:入:入声四质"
+      ]
+    },
+    {
+      "id": "group:pingshui:入:入声五物",
+      "book": "pingshui",
+      "name": "入声五物",
+      "toneClass": "ru",
+      "evidenceIds": [
+        "ev:pingshui:入:入声五物"
+      ]
+    },
+    {
+      "id": "group:pingshui:入:入声九屑",
+      "book": "pingshui",
+      "name": "入声九屑",
+      "toneClass": "ru",
+      "evidenceIds": [
+        "ev:pingshui:入:入声九屑"
+      ]
+    },
+    {
+      "id": "group:pingshui:入:入声十一陌",
+      "book": "pingshui",
+      "name": "入声十一陌",
+      "toneClass": "ru",
+      "evidenceIds": [
+        "ev:pingshui:入:入声十一陌"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "id": "ev:pingshui:下平:八庚",
+      "sourceId": "src:chinese_word_rhyme",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 下平声部/八庚",
+      "assertion": "data/Pingshui_Rhyme.json 下平声部/八庚 共收录 194 个字形（原表条目 197 条）",
+      "excerpt": null,
+      "reviewStatus": "unverified"
+    },
+    {
+      "id": "ev:pingshui:下平:十一尤",
+      "sourceId": "src:chinese_word_rhyme",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 下平声部/十一尤",
+      "assertion": "data/Pingshui_Rhyme.json 下平声部/十一尤 共收录 249 个字形（原表条目 255 条）",
+      "excerpt": null,
+      "reviewStatus": "unverified"
+    },
+    {
+      "id": "ev:pingshui:去:二十四敬",
+      "sourceId": "src:chinese_word_rhyme",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 去声部/二十四敬",
+      "assertion": "data/Pingshui_Rhyme.json 去声部/二十四敬 共收录 59 个字形（原表条目 62 条）",
+      "excerpt": null,
+      "reviewStatus": "unverified"
+    },
+    {
+      "id": "ev:pingshui:入:入声四质",
+      "sourceId": "src:chinese_word_rhyme",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 入声部/入声四质",
+      "assertion": "data/Pingshui_Rhyme.json 入声部/入声四质 共收录 147 个字形（原表条目 158 条）",
+      "excerpt": null,
+      "reviewStatus": "unverified"
+    },
+    {
+      "id": "ev:pingshui:入:入声五物",
+      "sourceId": "src:chinese_word_rhyme",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 入声部/入声五物",
+      "assertion": "data/Pingshui_Rhyme.json 入声部/入声五物 共收录 48 个字形（原表条目 48 条）",
+      "excerpt": null,
+      "reviewStatus": "unverified"
+    },
+    {
+      "id": "ev:pingshui:入:入声九屑",
+      "sourceId": "src:chinese_word_rhyme",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 入声部/入声九屑",
+      "assertion": "data/Pingshui_Rhyme.json 入声部/入声九屑 共收录 166 个字形（原表条目 173 条）",
+      "excerpt": null,
+      "reviewStatus": "unverified"
+    },
+    {
+      "id": "ev:pingshui:入:入声十一陌",
+      "sourceId": "src:chinese_word_rhyme",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 入声部/入声十一陌",
+      "assertion": "data/Pingshui_Rhyme.json 入声部/入声十一陌 共收录 186 个字形（原表条目 196 条）",
+      "excerpt": null,
+      "reviewStatus": "unverified"
+    }
+  ],
+  "sources": [
+    {
+      "id": "src:chinese_word_rhyme",
+      "title": "chinese_word_rhyme（Pingshui_Rhyme.json）",
+      "edition": "提交 ff0e9c13fb037c43e0eaa5dc929c0fe4fa2ffb18",
+      "url": "https://raw.githubusercontent.com/charlesix59/chinese_word_rhyme/ff0e9c13fb037c43e0eaa5dc929c0fe4fa2ffb18/data/Pingshui_Rhyme.json",
+      "license": "MIT（上游转载授权待核实）",
+      "snapshotSha256": "fd11164ca1b848eb6b777688d5d6628ce772d72d0a25a0efd12d6b58459c6e2e",
+      "revision": "ff0e9c13fb037c43e0eaa5dc929c0fe4fa2ffb18",
+      "retrievedAt": null
+    }
+  ]
+}
