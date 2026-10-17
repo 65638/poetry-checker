@@ -1,0 +1,115 @@
+.pc-root {
+  --pc-bg: #f7f5ef;
+  --pc-surface: #ffffff;
+  --pc-surface-sunken: #f0ede5;
+  --pc-divider: #ddd8cc;
+  --pc-border-control: #8a8578;
+
+  --pc-text: #262923;
+  --pc-text-muted: #666a61;
+  --pc-text-on-accent: #ffffff;
+
+  --pc-accent: #245c4b;
+  --pc-accent-hover: #1b4a3c;
+  --pc-accent-soft: #e8f1ed;
+
+  --pc-pass-fg: #245c4b;
+  --pc-pass-bg: #e8f1ed;
+  --pc-pass-border: #245c4b;
+
+  --pc-fail-fg: #a52f2f;
+  --pc-fail-bg: #fff1ef;
+  --pc-fail-border: #a52f2f;
+
+  --pc-review-fg: #805500;
+  --pc-review-bg: #fff6de;
+  --pc-review-border: #805500;
+
+  --pc-neutral-fg: #4a4d46;
+  --pc-neutral-bg: #f0ede5;
+  --pc-neutral-border: #8a8578;
+
+  --pc-tone-ping: #245c4b;
+  --pc-tone-ze: #262923;
+  --pc-tone-unknown: #805500;
+
+  --pc-focus: #1d4ed8;
+  --pc-focus-width: 2px;
+  --pc-focus-offset: 2px;
+
+  --pc-space-1: 4px;
+  --pc-space-2: 8px;
+  --pc-space-3: 12px;
+  --pc-space-4: 16px;
+  --pc-space-5: 24px;
+  --pc-space-6: 32px;
+  --pc-space-7: 48px;
+
+  --pc-radius: 8px;
+  --pc-radius-panel: 12px;
+
+  --pc-font-sans: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC", sans-serif;
+  --pc-font-serif: "Songti SC", "STSong", "SimSun", "NSimSun", "Noto Serif CJK SC",
+    "Source Han Serif SC", "SimSun-ExtB", "MingLiU-ExtB", serif;
+
+  --pc-text-sm: 14px;
+  --pc-text-md: 16px;
+  --pc-text-lg: 20px;
+  --pc-text-poem: 28px;
+  --pc-leading-body: 1.6;
+  --pc-leading-evidence: 1.7;
+
+  --pc-cell: 44px;
+  --pc-cell-gap: 4px;
+  --pc-page-max: 1200px;
+  --pc-page-margin: 32px;
+  --pc-input-col: 340px;
+  --pc-col-gap: 24px;
+  --pc-panel-width: 440px;
+
+  --pc-dur-control: 120ms;
+  --pc-dur-panel: 220ms;
+
+  background: var(--pc-bg);
+  color: var(--pc-text);
+  font-family: var(--pc-font-sans);
+  font-size: var(--pc-text-md);
+  line-height: var(--pc-leading-body);
+}
+
+@media (max-width: 1099px) {
+  .pc-root {
+    --pc-page-margin: 24px;
+  }
+}
+
+@media (max-width: 599px) {
+  .pc-root {
+    --pc-page-margin: 16px;
+    --pc-text-poem: 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pc-root {
+    --pc-dur-control: 0ms;
+    --pc-dur-panel: 0ms;
+  }
+}
+
+.pc-root :focus-visible {
+  outline: var(--pc-focus-width) solid var(--pc-focus);
+  outline-offset: var(--pc-focus-offset);
+}
+
+.pc-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
