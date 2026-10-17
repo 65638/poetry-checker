@@ -14,7 +14,7 @@
 | E | packages/genre；data/works；tests/golden、integration；系统报告、限制和演示脚本 |
 | E + D | tests/e2e 按文件分工，由 E 管理场景，D 配合页面选择器 |
 
-当前设计状态：Claude 尚未接入；展示组件未实现。Codex 保留候补责任，组长试接后记录实际写入方。新增设计规格文件已由 Codex 提供，可供 Claude 或候补直接使用。D 不在容器里自行覆盖全局样式；展示方不发 API 请求或重判格律。
+当前设计状态：**Claude 已接入（2026-10-17）**——经聊天入口交付文件，由组长/GLM 落盘到仓库并验证；写入方记录为 Claude，落盘分支 feat/claude-presentation。Codex 保留候补责任（交付持续不可用或超时未出可检查切片时切换）。D 不在容器里自行覆盖全局样式；展示方不发 API 请求或重判格律。
 
 D 在 D1 首小时落地并冻结 CheckerViewProps；设计/业务分支共同导入它。试接入约 1 小时不可用，或约 2 工作小时无可检查展示切片时，组长记录候补切换，D 继续独立业务工作。视觉基线见 docs/team/03_前端设计与协作约定.md；英文 Claude 任务书中的类型同源生成。
 
