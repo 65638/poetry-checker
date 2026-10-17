@@ -46,7 +46,10 @@ tsc --noEmit                           → exit 0
 tsc --noEmit -p apps/web/tsconfig.json → exit 0
 eslint .                               → exit 0
 vite build（apps/web）                 → exit 0，118 modules，dist/index.html + assets
+$env:PNPM_CONFIG_NODE_LINKER='hoisted'; pnpm verify → exit 0（lint/typecheck/test/build/生成物 全通过）
 ```
+
+`pnpm verify` 的实际通过条件与原因见下节「环境说明」。
 
 真实链路冒烟（`pnpm dev:api` + `pnpm dev:web`）：
 
@@ -59,7 +62,7 @@ POST /api/v1/analyze       → 200，summary.status=pass，poem.originalText 与
 ```
 
 **未执行**：DOM 组件测试（缺 jsdom/Testing Library）、E2E、375/768/1440px 视觉验收、
-真实三库与真实名篇、`pnpm verify` 完整串联（见下节环境说明）。
+真实三库与真实名篇。
 
 ## 审计批次修复（状态与字符）
 
@@ -105,23 +108,40 @@ POST /api/v1/analyze       → 200，summary.status=pass，poem.originalText 与
 
 ## 环境说明（Windows 符号链接）
 
-本机 Windows 未开启「开发者模式」时，普通用户无法创建符号链接，pnpm 的默认
-store 布局会以 `EPERM` 失败。已确认开启
-`HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock!
-AllowDevelopmentWithoutDevLicense=1`（即「开发者模式」）后 pnpm 可正常工作。
+本机「开发者模式」已开启（`HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock!
+AllowDevelopmentWithoutDevLicense=1`），命令行 `mklink /D` 与 Node 的 `fs.symlink`
+手工均可成功；但 pnpm 内部对 `node_modules/.pnpm` 做的链接仍稳定报
+`ERR_PNPM_EPERM [symlinkAllModules]`。这是本机环境的既有问题，与本次代码无关。
 
-为完成本批次验证，检出使用了**不进入版本库**的本地配置（`.git/info/exclude`
-已忽略 `.pnpm-store/`、`.npmrc`）：
+因此本批次用 `node-linker=hoisted`（纯复制，不建符号链接）规避，
+并且需要**环境变量**形式，因为 `pnpm verify` 会触发一次依赖状态检查、
+内部重新执行 `install`，命令行参数不会传递到那次调用：
+
+```powershell
+$env:PNPM_CONFIG_NODE_LINKER = 'hoisted'
+pnpm verify          # exit 0
+```
+
+结果（2026-10-17 实测，清理 `node_modules` 后重装再跑）：
+
+```text
+$ eslint .                                    → 通过
+$ tsc --noEmit && tsc --noEmit -p apps/web/tsconfig.json → 通过
+$ vitest run                                  → 116 passed (7 files)
+$ pnpm build && tsx scripts/generate-contracts.ts --check → 通过（8 个生成物一致）
+```
+
+不设该环境变量时 `pnpm verify` 会在依赖检查阶段以 `EPERM` 退出（测试本身仍通过）。
+这只影响本机的安装方式，**不修改 lockfile、包清单或根配置**；其他机器按 README
+正常 `pnpm install --frozen-lockfile` 即可。
+
+检出另有**不进入版本库**的本地配置（`.git/info/exclude` 已忽略）：
 
 ```ini
 # poetry-checker/.npmrc（本地，不入库）
 store-dir=.pnpm-store
 node-linker=hoisted
 ```
-
-这只影响本机的 `node_modules` 布局与 store 位置，**不修改 lockfile、包清单或根配置**。
-其他机器按 README 正常 `pnpm install --frozen-lockfile` 即可，无需这份 `.npmrc`。
-`pnpm verify` 的四个子步骤（lint/typecheck/test/build）已在上面逐项实际执行并通过。
 
 ## 未解决问题
 
@@ -135,6 +155,8 @@ node-linker=hoisted
    没有把合成数据挂名真实作品。
 7. 已具备转正式 PR 的条件需组长确认：验证只到本机实际执行，
    未覆盖浏览器视觉与真实 API 链路。
+8. 本机 pnpm 的 `ERR_PNPM_EPERM` 是环境问题，建议由 GLM 决定是否在
+   `pnpm-workspace.yaml` 里统一 `nodeLinker: hoisted`，避免每个成员各自处理。
 
 ## 集成方法
 

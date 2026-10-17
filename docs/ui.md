@@ -105,7 +105,19 @@
 | `tsc --noEmit -p apps/web/tsconfig.json` | 通过 |
 | `eslint .` | 通过 |
 | `vite build`（apps/web） | 通过，118 模块，dist 产出 |
+| `pnpm verify`（需 `PNPM_CONFIG_NODE_LINKER=hoisted`） | **exit 0**：lint、双 typecheck、116 项测试、构建、生成物一致性全部通过 |
 | 真实链路冒烟 | `GET /` 200、`/src/main.tsx` 200、`/healthz` 200、`/readyz` 200、`POST /api/v1/analyze` 200 且 `summary.status=pass`、原文匹配 |
+
+`pnpm verify` 需要环境变量是因为本机 pnpm 在 `node_modules/.pnpm` 建符号链接会
+`ERR_PNPM_EPERM`；`verify` 内部会触发一次依赖检查并重新 install，命令行参数传不进去。
+用 `node-linker=hoisted`（纯复制）规避：
+
+```powershell
+$env:PNPM_CONFIG_NODE_LINKER = 'hoisted'
+pnpm verify
+```
+
+这是本机环境问题，不影响其他机器按 README 正常安装。
 
 未执行：DOM 组件测试（缺 jsdom/Testing Library）、E2E、375/768/1440 视觉验收、
 真实三库与真实名篇。这些按任务书属于后续批次或设计方/E 的范围。
