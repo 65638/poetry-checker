@@ -1,0 +1,28 @@
+{
+  "id": "golden-dengguanquelou-ps-v1",
+  "title": "登鹳雀楼",
+  "author": "王之涣",
+  "text": "白日依山尽，黄河入海流。欲穷千里目，更上一层楼。",
+  "sourceCandidates": [
+    {
+      "kind": "lead",
+      "value": null,
+      "note": "待查：全唐诗卷二百五十三王之涣名下；具体页码与版次未核实，不开列猜测 URL"
+    }
+  ],
+  "request": {
+    "rhymeBook": "pingshui",
+    "genreHint": "auto",
+    "formHint": "auto",
+    "ruleSet": "teaching-v1",
+    "readingOverrides": []
+  },
+  "assertions": [
+    { "path": "genre.formId", "equals": "wujue" },
+    { "path": "genre.applicability", "equals": "applicable" }
+  ],
+  "reviewStatus": "pending",
+  "reviewers": [],
+  "evidenceIds": [],
+  "notes": "候选预期：五绝；平水韵流/楼同尤部，白/一为古入声。正文、体裁、读音与规则来源均待人工核实，尚未运行真实分析。"
+}
