@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@poetry/contracts": "workspace:*",
+    "@poetry/readings": "workspace:*",
     "fastify": "5.1.0"
   }
 }
