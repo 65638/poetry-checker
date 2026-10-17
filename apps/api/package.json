@@ -10,11 +10,8 @@
   },
   "dependencies": {
     "@poetry/contracts": "workspace:*",
-<<<<<<< HEAD
-    "@poetry/lexicon": "workspace:*",
-=======
     "@poetry/genre": "workspace:*",
->>>>>>> origin/glm/genre-wiring
+    "@poetry/lexicon": "workspace:*",
     "@poetry/readings": "workspace:*",
     "fastify": "5.1.0"
   }
