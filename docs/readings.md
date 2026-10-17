@@ -266,12 +266,12 @@ resolveReadings(input: {
 
 ## 6. D1 明确未做（D2 起）
 
-1. 真实字表接入：`lookup` 仍由 A 提供，本批次只用合成 fixture 验证流程。
-2. `data/context/rules.approved.json` 尚未创建：没有真实候选 ID、没有可定位来源、没有人工审核，一条规则都不生效。
-3. 同义/近义词表、分词、跨句指代：不做，D1 只有精确短语。
-4. 覆盖率与准确率：未做，不报任何百分比（没有留出验证就没有数字）。
-5. `@poetry/readings` 的 `package.json`（`exports`/`build`/`test` 脚本）属于 GLM 的写入路径，本批次未改动；
-   在 GLM 补齐前，其它包**不能**通过包名导入本模块（见 HANDOFF 的配置申请）。
+1. ~~真实字表接入~~：D2 已接 A 的七字真实快照做联调；全量字表仍未交付（见第 9 节）。
+2. `data/context/rules.approved.json` 尚未创建：没有义项证据、没有人工审核，一条规则都不生效。
+3. 同义/近义词表、分词、跨句指代：不做，只有精确短语。
+4. 覆盖率与准确率：**只报带分母的事实统计**，不报读音准确率/自动覆盖率——没有已审核证据与已审核规则，
+   任何比例都是拿未核实数据算出来的。
+5. ~~`package.json` 配置~~：GLM 已补 `exports`/`build`/`test`，本模块可按包名导入。
 
 ## 7. 交接要求
 
@@ -292,23 +292,68 @@ resolveReadings(input: {
 **给 GLM**
 
 - 入口：`@poetry/readings` 导出 `parseText`、`resolveReadings`、`ReadingsError`、`READINGS_ERROR_CODES`。
-- 需要 `packages/readings/package.json` 增加 `exports` / `build` / `test`（与 `@poetry/contracts`、`@poetry/prosody` 同构）与 `tsconfig.build.json`。
+- `packages/readings/package.json` 的 `exports` / `build` / `test` 已由 GLM 补齐，本模块可按包名导入。
 - 错误码映射见第 5 节；任何未实现分支都不能被 API 转成 200。
-- 可选契约变更建议：`AnnotatedToken` 增加“数据/证据待核实”状态位，替代目前用 `reason` 表达的口径。
+- **语境证据必须由 API 并入 `lookup`**：`contextRules[].evidenceIds` 指向的 `kind="context"` 证据要并进
+  `lookup.evidence`，其 `SourceRecord` 并进 `lookup.sources`。最小样例见 `data/context/injection-example.md`。
+- 可选契约变更建议：`AnnotatedToken` 增加“数据/证据待核实”状态位，替代目前走异常的口径。
 
 ## 8. 复现
 
 ```powershell
-# D1 实际跑过的（见 HANDOFF 记录的环境差异）
-node node_modules/vitest/vitest.mjs run packages/readings/tests
-node node_modules/typescript/bin/tsc --noEmit
-```
-
-仓库约定命令（待 GLM 补 `@poetry/readings` 的 test 脚本与 exports 后可用）：
-
-```powershell
+# 单元测试（合成 fixture + 真实快照各一组）
 pnpm exec vitest run packages/readings/tests
 pnpm --filter @poetry/readings test
+
+# 真实数据覆盖统计（生成 data/context/d2-coverage-report.{json,md}）
+node node_modules/tsx/dist/cli.mjs packages/readings/scripts/d2-coverage.ts
+
 pnpm typecheck
 pnpm verify
 ```
+
+## 9. D2：真实数据联调现状（2026-10-17）
+
+### 9.1 数据现状
+
+| 项           | 值                                                                                        |
+| ------------ | ----------------------------------------------------------------------------------------- |
+| 快照         | `data/normalized/pingshui.sample-d1.json`，`dataVersion = sample-pingshui-cwr-ff0e9c1-d1` |
+| 覆盖字数     | **7 字**：白、一、更、流、楼、雪、物                                                      |
+| 快照审核身份 | `reviewStatus: unverified`（证据同样全部 `unverified`）                                   |
+| 语境规则     | **approved 0 条**；`rules.approved.json` 不存在                                           |
+
+### 9.2 三首固定正文的实测（分母=字位）
+
+| 作品     | 字位 | 有候选字位 | 缺字位 | 多候选字位 | 无已审核证据字位 | `resolveReadings` 结果          |
+| -------- | ---- | ---------- | ------ | ---------- | ---------------- | ------------------------------- |
+| 登鹳雀楼 | 20   | 5          | 15     | 1（更）    | 5                | 抛 `LOOKUP_EVIDENCE_UNVERIFIED` |
+| 静夜思   | 20   | 0          | 20     | 0          | 0                | 正常返回，20 字位全 `unknown`   |
+| 黄鹤楼   | 56   | 3          | 53     | 0          | 3                | 抛 `LOOKUP_EVIDENCE_UNVERIFIED` |
+
+生成命令见第 8 节；明细在 `data/context/d2-coverage-report.json`。
+
+读法：
+
+- **静夜思能正常返回**不是“更好”，而是它的字一个都没收录——`unknown` 是“未收录”的合法表达。
+- **另两首抛错**才是正确结果：字有候选，但证据未审核，标注阶段整体未就绪。
+- 因此本批次**没有**自动覆盖率、也没有读音准确率可报。
+
+### 9.3 「更」的真实候选
+
+| 候选 ID                   | 声类 | 平仄 | 韵部       |
+| ------------------------- | ---- | ---- | ---------- |
+| `pingshui:更:ping:八庚`   | ping | P    | 下平八庚   |
+| `pingshui:更:qu:二十四敬` | qu   | Z    | 去二十四敬 |
+
+这两条是**真实候选**，已写入 `data/context/review-queue.json` 的 `proposedSelectCandidateIds`。
+但“副词义→去声”“夜间计时义→平声”的对应关系仍是**待审假设**，缺可定位义项证据，
+所以 `selectCandidateIds` 留空、`reviewStatus` 保持 `unverified`，运行时不生效。
+
+## 10. 语境规则与证据的绑定规则（D2 起）
+
+- 候选 ID 绑定 `dataVersion`：升级数据版本必须重新校验所有 `selectCandidateIds` 与 `evidenceIds`。
+- `ContextRule.evidenceIds` 必须指向 `kind="context"` 的已审核证据；`Evidence.sourceId` 必须能在 `lookup.sources` 解析。
+- 一条规则要生效，需同时满足：规则 `approved`、证据齐备且用途正确、**被选候选自身也有已审核证据**。
+  前两条不满足 → notice；第三条不满足 → 抛 `LOOKUP_EVIDENCE_UNVERIFIED`。
+- `targetOffset` 按码点计，不用 UTF-16 长度；跨行短语不命中（只匹配同句）。

@@ -1,21 +1,34 @@
-# data/context：语境规则格式与待审队列（D1）
+# data/context：语境规则格式与待审队列（D1 建立，D2 接入真实数据）
 
-本目录属于队员 B（见 `docs/ownership.md`）。D1 只建立**格式**和**待审核队列**，不产出任何可生效的发布规则。
+本目录属于队员 B（见 `docs/ownership.md`）。到 D2 为止仍**没有任何可生效的发布规则**：
+格式与队列已就绪，真实语境证据与人工审核都还没有。
 
 ## 目录约定
 
-| 文件                           | 作用                                                         | 是否可被运行时加载                                                 |
-| ------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------------ |
-| `review-queue.json`            | 待审核语境清单：候选词组、偏移、要查的词义、正反例、来源状态 | **否**。这是人工整理材料，不是 `ContextRule[]`，加载器不得直接读它 |
-| `rules.approved.json`（D2 起） | 已审核、可生效的 `ContextRule[]`                             | 是。**本批次不创建**，避免用合成内容冒充审核结果                   |
+| 文件                         | 作用                                                         | 是否可被运行时加载                                                 |
+| ---------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------------ |
+| `review-queue.json`          | 待审核语境清单：候选词组、偏移、要查的词义、正反例、来源状态 | **否**。这是人工整理材料，不是 `ContextRule[]`，加载器不得直接读它 |
+| `injection-example.md/js`    | 给 GLM 的最小注入样例：语境证据如何并入 `lookup`             | **否**。形状示例，ID 带 `example` 前缀                             |
+| `d2-coverage-report.json/md` | D2 真实数据覆盖统计（带分母）与缺口清单                      | 否。报告产物                                                       |
+| `rules.approved.json`        | 已审核、可生效的 `ContextRule[]`                             | 是。**尚未创建**，避免用未审核内容冒充审核结果                     |
 
 运行时只接受 `reviewStatus = "approved"` 的规则参与自动选音；`unverified` 规则命中时会被 `resolveReadings` 记录为
-`CONTEXT_RULE_UNVERIFIED_IGNORED` notice，不改变任何字位的读音。
+`CONTEXT_RULE_UNVERIFIED_IGNORED` notice，不改变任何字位的读音。规则已审核但证据缺失/未审核/用途不是 `context` 时，
+记为 `CONTEXT_RULE_EVIDENCE_INSUFFICIENT` notice，同样不选音。
+
+## D2 的真实数据状态
+
+- 真实快照：`data/normalized/pingshui.sample-d1.json`（`dataVersion = sample-pingshui-cwr-ff0e9c1-d1`），
+  只覆盖 7 个字，证据全部 `unverified`。
+- 「更」已有两个真实候选 ID（`pingshui:更:ping:八庚` / `pingshui:更:qu:二十四敬`），
+  但义项→候选的对应仍是待审推测，写在 `proposedSelectCandidateIds`，不是 `selectCandidateIds`。
+- 覆盖统计与缺口清单见 `d2-coverage-report.md`：三首固定正文共 96 字位，仅 8 字位有候选。
 
 ## 为什么现在没有 rules.approved.json
 
-- A（`@poetry/lexicon`）尚未交付真实字表，`selectCandidateIds` 必须是 A 给出的**真实稳定候选 ID**。
-  在拿到 ID 之前编一个“看起来像真的”ID 放进生产规则，会让规则在真实数据上静默失效或选错字。
+- 真实字表只覆盖 7 个字，三首诗中 88 个字位连候选都没有，`selectCandidateIds` 无从填写。
+- 即使是「更」，也还没有可定位的义项证据（韵书条目/字书义项/反切），只有现代读音线索；
+  按任务书口径，现代读音不能直接等同古韵义项。
 - 候选 ID 属于跨模块契约（`ReadingCandidate.id` 由 A 维护），B 不造 ID、不改字表。
 - 本批次没有任何一条语境结论经过人工审核，因此按 `docs/readings.md` 的口径，一条也不能进入发布选择器。
 
