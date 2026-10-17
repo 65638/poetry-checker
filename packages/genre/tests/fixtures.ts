@@ -5,6 +5,7 @@
  * 不代表任何真实作品、读音、体裁或语言学真值；不得进入真实分析路径。
  */
 import { createHash } from "node:crypto";
+import { fingerprintText } from "../src/index.js";
 import type {
   AnnotatedPoem,
   AnnotatedToken,
@@ -235,8 +236,9 @@ export function makeWorkMetadata(options: {
     id: options.id,
     title: options.title,
     author: null,
+    // 指纹与正文判定同一规范化：去标点/空白、保留字形字序。
     approvedTextFingerprints:
-      options.text === undefined ? [] : [sha256Hex(options.text)],
+      options.text === undefined ? [] : [fingerprintText(options.text)],
     formFamily: options.formFamily,
     formId: options.formId ?? null,
     historicalTags: options.historicalTags ?? [],

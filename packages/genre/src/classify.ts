@@ -22,6 +22,7 @@ import type {
   WorkMetadata,
 } from "@poetry/contracts";
 import { GenreError } from "./errors.js";
+import { fingerprintText } from "./fingerprint.js";
 
 export interface ClassifyGenreInput {
   poem: AnnotatedPoem;
@@ -366,6 +367,43 @@ function decideAuto(
   });
 }
 
+/** 已审核元数据 → 体裁结论：采用审核的形式与标签，并带上证据。 */
+const APPLICABILITY_BY_FAMILY: Readonly<
+  Record<WorkMetadata["formFamily"], GenreDecision["applicability"]>
+> = {
+  regulated: "applicable",
+  ancient: "not_applicable",
+  undetermined: "uncertain",
+  unsupported: "unsupported",
+};
+
+function decideByReviewedMetadata(
+  entry: WorkMetadata,
+  candidates: TemplateCandidate[],
+): GenreDecision {
+  const formLabel =
+    entry.formId === null
+      ? entry.formFamily
+      : `${entry.formFamily}/${entry.formId}`;
+  return decision({
+    formFamily: entry.formFamily,
+    formId: entry.formId,
+    historicalTags: entry.historicalTags,
+    applicability: APPLICABILITY_BY_FAMILY[entry.formFamily],
+    basisType: "reviewed_metadata",
+    candidateTemplateIds: candidates
+      .filter((candidate) => candidate.formId === entry.formId)
+      .map((candidate) => candidate.id),
+    selectedTemplateId: null,
+    evidenceIds: entry.evidenceIds,
+    reasons: [
+      `正文指纹精确匹配已审核作品元数据：${entry.title}`,
+      `采用审核的形式与标签（${formLabel}）`,
+      "合律判定仍由格律引擎给出，本模块不下合律结论",
+    ],
+  });
+}
+
 export function classifyGenre(input: ClassifyGenreInput): GenreDecision {
   const { poem, candidates, metadata, genreHint, formHint } = input;
 
@@ -402,8 +440,38 @@ export function classifyGenre(input: ClassifyGenreInput): GenreDecision {
     return decideByRegulatedHint(candidates, shape);
   }
 
-  // 规则 3：已审核作品正文指纹匹配（D1 未实现）。
-  // 只读扫描一遍元数据，确保未审核条目不会被当作确定识别依据。
+  // 规则 3：已审核作品正文指纹精确匹配（去标点/空白、保留字形字序）。
+  // 未审核元数据一律不参与；标题、作者、首句都不作为匹配依据。
+  const fingerprint = fingerprintText(poem.originalText);
+  const matchedMetadata = metadata.filter(
+    (entry) =>
+      entry.reviewStatus === "approved" &&
+      entry.approvedTextFingerprints.includes(fingerprint),
+  );
+
+  const onlyMatch =
+    matchedMetadata.length === 1 ? matchedMetadata[0] : undefined;
+  if (onlyMatch !== undefined) {
+    return decideByReviewedMetadata(onlyMatch, candidates);
+  }
+
+  if (matchedMetadata.length > 1) {
+    return decision({
+      formFamily: "undetermined",
+      applicability: "uncertain",
+      basisType: "reviewed_metadata",
+      candidateTemplateIds: candidates.map((candidate) => candidate.id),
+      evidenceIds: matchedMetadata.flatMap((entry) => entry.evidenceIds),
+      reasons: [
+        `正文指纹同时匹配 ${matchedMetadata.length} 条已审核元数据：${matchedMetadata
+          .map((entry) => entry.id)
+          .join("、")}`,
+        "疑似异文或重复登记，需人工裁定后才能输出体裁结论",
+      ],
+    });
+  }
+
+  // 规则 4 起：auto 分支按形制与候选特征判定。
   const approvedMetadata = metadata.filter(
     (entry) => entry.reviewStatus === "approved",
   );
@@ -417,7 +485,7 @@ export function classifyGenre(input: ClassifyGenreInput): GenreDecision {
       ...autoDecision,
       reasons: [
         ...autoDecision.reasons,
-        "存在 approved 作品元数据，但正文指纹匹配未实现（D2），本次未作为识别依据",
+        "存在 approved 作品元数据，但正文指纹与本诗不一致，未作为识别依据",
       ],
     };
   }

@@ -32,6 +32,8 @@ const decision = classifyGenre({
 | auto + 形制属四类 + 候选缺 relationFit/rhymeFit  | undetermined/uncertain，selectedTemplateId=null，保留候选                                    |
 | auto + 关键可判率 <0.8 或 `quality=needs_review` | undetermined/uncertain                                                                       |
 | auto + 并列（分差 <0.05）或低吻合（<0.75）       | undetermined/uncertain，保留全部候选 ID                                                      |
+| auto + 指纹命中 1 条 approved 元数据             | 采用审核的 formFamily/formId/标签，basisType=reviewed_metadata，带 evidenceIds               |
+| auto + 指纹命中多条 approved 元数据              | undetermined/uncertain，列出命中 id，交人工裁定                                              |
 | auto + 高吻合（≥0.90）                           | **抛 `GENRE_BRANCH_PENDING`**（D2 实现）                                                     |
 | auto + 形制超四类（含排律/长律）                 | unsupported / applicability=unsupported                                                      |
 | 任何输入                                         | 不使用未审核元数据；不改 poem / candidates / metadata                                        |
@@ -44,7 +46,7 @@ const decision = classifyGenre({
 ## 命令（当前仓库实际可用）
 
 ```sh
-pnpm exec vitest run packages/genre/tests   # 24 项
+pnpm exec vitest run packages/genre/tests   # 29 项
 pnpm typecheck
 pnpm exec eslint packages/genre
 ```
@@ -59,5 +61,6 @@ pnpm exec eslint packages/genre
 ## D2 接线条件
 
 - 核心给齐 relationFit / rhymeFit（及 parallelismFit）后才可按阈值给出近体候选结论。
-- `approved` 元数据 + 精确正文指纹匹配（去标点/空白、保留字形字序）实现后，才能走 `basisType=reviewed_metadata`。
+- ~~`approved` 元数据 + 精确正文指纹匹配~~ **已实现**（`fingerprint.ts`：去标点/空白、保留字形字序）；
+  仍缺真实语料的异文规则与指纹版本管理。
 - API 侧需把 `GENRE_BRANCH_PENDING` 映射为明确的“功能未就绪”错误，**不得捕获为成功或静默降级为 uncertain**。

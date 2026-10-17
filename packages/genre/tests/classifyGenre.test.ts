@@ -204,7 +204,7 @@ describe("classifyGenre：auto 分支与特征门槛", () => {
     expect(result.applicability).toBe("uncertain");
   });
 
-  it("approved 元数据存在也不会在 D1 被当作品识别依据", () => {
+  it("approved 元数据指纹与正文不一致时不被当作识别依据", () => {
     const approved = [
       makeWorkMetadata({
         id: "meta-2",
@@ -224,7 +224,8 @@ describe("classifyGenre：auto 分支与特征门槛", () => {
     });
 
     expect(result.formFamily).not.toBe("ancient");
-    expect(result.reasons.join("")).toContain("指纹匹配未实现");
+    expect(result.basisType).not.toBe("reviewed_metadata");
+    expect(result.reasons.join("")).toContain("指纹与本诗不一致");
   });
 
   it("排律形制：unsupported，不冒称古体", () => {
@@ -374,5 +375,103 @@ describe("classifyGenre：输入不可变与确定性", () => {
 
     expect(result.applicability).toBe("uncertain");
     expect(result.selectedTemplateId).toBeNull();
+  });
+});
+
+describe("classifyGenre：D2 已审核正文指纹匹配", () => {
+  const WITH_PUNCTUATION = "字字字字字，字字字字字。字字字字字，字字字字字。";
+
+  function approvedMeta(text: string, overrides: Record<string, unknown> = {}) {
+    return makeWorkMetadata({
+      id: "meta-dengguanquelou",
+      title: "合成五绝",
+      text,
+      formFamily: "regulated",
+      formId: "wujue",
+      historicalTags: ["五绝"],
+      reviewStatus: "approved",
+      evidenceIds: ["ev-genre-1"],
+      ...overrides,
+    });
+  }
+
+  it("标点不同的同一正文：指纹一致，basisType=reviewed_metadata 并带证据", () => {
+    const result = classifyGenre({
+      poem: makeRegularPoem(4, 5),
+      candidates: [makeTemplateCandidate({ id: "tpl-a", formId: "wujue" })],
+      metadata: [approvedMeta(WITH_PUNCTUATION)],
+      genreHint: "auto",
+      formHint: "auto",
+    });
+
+    expect(result.basisType).toBe("reviewed_metadata");
+    expect(result.formFamily).toBe("regulated");
+    expect(result.formId).toBe("wujue");
+    expect(result.applicability).toBe("applicable");
+    expect(result.historicalTags).toEqual(["五绝"]);
+    expect(result.evidenceIds).toEqual(["ev-genre-1"]);
+    expect(result.candidateTemplateIds).toEqual(["tpl-a"]);
+    expect(result.reasons.join("")).toContain("正文指纹精确匹配");
+    expect(GenreDecisionSchema.safeParse(result).success).toBe(true);
+  });
+
+  it("未审核元数据即使指纹一致也不使用", () => {
+    const result = classifyGenre({
+      poem: makeRegularPoem(4, 5),
+      candidates: [],
+      metadata: [
+        approvedMeta(WITH_PUNCTUATION, { reviewStatus: "unverified" }),
+      ],
+      genreHint: "auto",
+      formHint: "auto",
+    });
+
+    expect(result.basisType).not.toBe("reviewed_metadata");
+    expect(result.applicability).toBe("uncertain");
+  });
+
+  it("两条已审核元数据指纹相同：不猜，返回 uncertain 并列出 id", () => {
+    const result = classifyGenre({
+      poem: makeRegularPoem(4, 5),
+      candidates: [],
+      metadata: [
+        approvedMeta(WITH_PUNCTUATION),
+        approvedMeta(WITH_PUNCTUATION, { id: "meta-variant-2" }),
+      ],
+      genreHint: "auto",
+      formHint: "auto",
+    });
+
+    expect(result.applicability).toBe("uncertain");
+    expect(result.formFamily).toBe("undetermined");
+    expect(result.reasons.join("")).toContain("meta-variant-2");
+    expect(result.reasons.join("")).toContain("人工裁定");
+  });
+
+  it("用户显式选择优先于已审核元数据", () => {
+    const result = classifyGenre({
+      poem: makeRegularPoem(4, 5),
+      candidates: [],
+      metadata: [approvedMeta(WITH_PUNCTUATION)],
+      genreHint: "ancient",
+      formHint: "auto",
+    });
+
+    expect(result.basisType).toBe("user");
+    expect(result.formFamily).toBe("ancient");
+  });
+
+  it("简繁不转换：字形不同则指纹不同，不会误匹配", () => {
+    const result = classifyGenre({
+      poem: makeRegularPoem(4, 5),
+      candidates: [],
+      metadata: [
+        approvedMeta("字字字字字，字字字字字。字字字字字，字字字字字。一"),
+      ],
+      genreHint: "auto",
+      formHint: "auto",
+    });
+
+    expect(result.basisType).not.toBe("reviewed_metadata");
   });
 });

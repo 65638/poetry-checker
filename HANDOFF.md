@@ -137,3 +137,30 @@ React 19.3.1 / Vite 8.3.4 / plugin-react 6.1.2（registry 实查锁定）；web 
    （当前该包不能按包名被其它包导入，跨包导入依赖根链接与 tsconfig paths）。
 2. `GENRE_BRANCH_PENDING` 到 HTTP 状态的映射建议（应显式“未就绪”，不得捕获为成功或降级为 uncertain）。
 3. 若要求 GoldenCase 用 Zod，需为 genre 显式加 `zod` 依赖；当前为手写校验。
+
+---
+
+# E 追加：D2 已审核正文指纹匹配（2026-10-17）
+
+同一分支 `feat/e-d1-genre` 追加提交（未改契约、未触碰他人路径）。
+
+## 已实现
+
+- `packages/genre/src/fingerprint.ts`：`normalizeForFingerprint`（只保留汉字，去标点/空白，**不**做简繁转换与异文归并）
+  与 `fingerprintText`（规范化后 SHA-256）；`isHanCharacter` 与解析侧同判定、不引入跨包依赖。
+- `classifyGenre` 规则 3 落地：`approved` 元数据按 `approvedTextFingerprints` 精确匹配——
+  - 命中 1 条 → 采用其 formFamily/formId/historicalTags，`basisType=reviewed_metadata`，透传 `evidenceIds`；
+  - 命中多条 → `uncertain` 并列出命中 id（疑似异文/重复登记），交人工裁定；
+  - 无命中但有 approved 元数据 → 明确写入 reasons：“指纹与本诗不一致，未作为识别依据”；
+  - `unverified` 元数据一律不参与；用户显式选择优先于元数据。
+
+## 验证
+
+- `pnpm exec vitest run packages/genre/tests`：**29 项通过**（D1 的 24 + 指纹 5）。
+- `pnpm verify` exit 0：12 文件 **164 项**；`typecheck` / `prettier --check` 通过。
+
+## 仍待
+
+- 真实作品分析 0/3 未运行；异文规则、指纹版本管理、真实语料接入未做。
+- 高吻合自动判定分支仍抛 `GENRE_BRANCH_PENDING`（等核心补齐 relationFit/rhymeFit 与样本校准）。
+- 包配置与 API 接线仍待 GLM。

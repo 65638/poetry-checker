@@ -11,6 +11,12 @@ export { GenreError, GENRE_ERROR_CODES, isGenreError } from "./errors.js";
 export type { GenreErrorCode } from "./errors.js";
 
 export {
+  fingerprintText,
+  isHanCharacter,
+  normalizeForFingerprint,
+} from "./fingerprint.js";
+
+export {
   GOLDEN_REVIEW_STATUSES,
   validateGoldenCase,
   validateGoldenCases,
