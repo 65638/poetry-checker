@@ -36,7 +36,7 @@ Claude 接入后负责视觉/展示组件，D 与 DeepSeek 负责业务工程；
 | A        | 导入真实三韵书，核查缺部与来源                           |
 | B        | 原文解析、码点/UTF-16 映射和候选消歧                     |
 | C        | 核心公共入口、规则卡和独立正反例                         |
-| D        | 用 fixture 开发业务容器，接设计方展示组件                  |
+| D        | 用 fixture 开发业务容器，接设计方展示组件                |
 | E        | 完整体裁特征 fixture、作品审核框架、系统场景             |
 | Codex    | 实现完整格律判定和解释输出，接受 C 的最小反例            |
 
@@ -51,7 +51,7 @@ Claude 接入后负责视觉/展示组件，D 与 DeepSeek 负责业务工程；
 ## 已完成
 
 - 底座复验：全新环境 `pnpm install` + `pnpm verify` 全绿（lint、typecheck、测试、构建、生成物一致性），Codex 声称的基础交付属实。
-- 契约冻结：人工审核 Schema/OpenAPI/fixture 与《02_公共接口契约_v1.md》一致后，以标签 `contract-v1` 冻结基线；记录见 docs/contract-freeze.md。冻结后公共变更走独立 PR。
+- 契约冻结：人工审核 Schema/OpenAPI/fixture 与《02\_公共接口契约\_v1.md》一致后，以标签 `contract-v1` 冻结基线；记录见 docs/contract-freeze.md。冻结后公共变更走独立 PR。
 - `apps/api`（GLM 所有）：Fastify D1 开发 mock。`/healthz`、`/readyz`、`/api/v1/rhyme-books`、`/api/v1/analyze`（AnalyzeRequestSchema 校验、422 统一错误、413 超限、五类 fixture 确定性选取、请求韵书回写 policy/poem.book、inputHash 重算、出站 Schema 校验）；`characters/rules/sources` 按契约返回 503 DATA_NOT_READY。错误处理保留 Fastify 4xx 状态码，未知错误才映射 500。**不执行真实格律判断。**
 - 模块清单：`@poetry/lexicon`、`@poetry/readings`、`@poetry/genre`、`@poetry/web` 补 package.json 声明（仅清单，src 归各负责人）。
 - 根配置：新增 `dev` / `dev:api` 脚本；tsconfig include 与 vitest include 纳入 `apps/**`；新增依赖 fastify 5.1.0 并更新 lockfile。
@@ -63,9 +63,24 @@ Claude 接入后负责视觉/展示组件，D 与 DeepSeek 负责业务工程；
 - D 接入 web 后把 `pnpm dev` 扩展为同时启动 API 与 Web。
 - 组长 D1 决策项：中华新韵底本（建议直接采用十四韵规则 + pinyin-data 重建并标注重建表）。
 
-
 ---
 
 # GLM 交付：Web 基础环境（2026-10-17，响应 D 的配置需求）
 
 React 19.3.1 / Vite 8.3.4 / plugin-react 6.1.2（registry 实查锁定）；web 独立 tsconfig（DOM/JSX/Bundler）+ 根 typecheck 双项目串联；根 ESLint 覆盖 TSX 与浏览器环境；vitest 增加 .test.tsx 收集（jsdom/Testing Library/MSW 待 D 提需求后统一加入）；`/api`、`/healthz`、`/readyz` 代理已验证；`src/main.tsx` 占位入口移交 D。验证：`pnpm verify` 全绿（36 测试 + vite build），双服务冒烟通过。明细见 docs/handoffs/0003-web-foundation.md。
+
+---
+
+# B 交付：D1 解析与候选传播（2026-10-17）
+
+分支 `feat/b-d1-readings`（基线 `e549194`，`contract-v1` 仍为 `9b27322`，未改契约）。
+
+- `packages/readings`：实现 `parseText`（分句、码点遍历、UTF-16 半开区间、SHA-256、notice、排版白名单）与
+  `resolveReadings`（全候选保留、唯一/歧义/未知、用户覆盖校验、平仄双状态、已审核语境规则的最长匹配与冲突处理）。
+- `data/context`：规则格式与 4 条待审核语境（更/重/长/行），**0 条生效规则**，不编造候选 ID 与来源。
+- `docs/readings.md`：解析政策、选音优先级、notice/错误码表、实现边界。
+- 验证：`pnpm verify` 全绿，**67 个用例**（原 36 + readings 31）；单独 `packages/readings/tests` 31 个用例通过。
+- 未做：真实字表接入、生产语境规则、覆盖率/准确率评测。
+- **待 GLM**：`packages/readings/package.json` 的 `exports`/`build`/`test` 与 `tsconfig.build.json` 申请
+  （当前该包无法按包名被其它包导入）；错误码到 HTTP 状态的映射建议。
+- 明细与复现差异见 [`packages/readings/HANDOFF.md`](packages/readings/HANDOFF.md)。
