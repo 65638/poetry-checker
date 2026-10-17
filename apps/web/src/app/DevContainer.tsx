@@ -1,4 +1,4 @@
-import { lazy, Suspense, type ChangeEvent } from "react";
+import { lazy, Suspense, useState, type ChangeEvent } from "react";
 import type { CheckerViewProps } from "../view-contract";
 import {
   FORM_LABELS,
@@ -7,6 +7,14 @@ import {
   RHYME_BOOK_LABELS,
   codePointLength,
 } from "./examples";
+import {
+  buildFindings,
+  buildRhymeFeet,
+  buildTokenSpectrum,
+  groupFindings,
+  locateFinding,
+  rhymeCommonGroups,
+} from "./reportView";
 import type { DevScenarioId } from "./devScenarios";
 
 /** 场景选择器按需加载：生产包里只留这个 lazy 占位，不含场景文案。 */
@@ -56,6 +64,21 @@ export function DevContainer(props: DevContainerProps) {
 
   const selectedToken =
     report?.poem.tokens.find((token) => token.tokenId === selectedTokenId) ?? null;
+
+  // 视图模型全部来自纯函数（src/app/reportView.ts），不在这里重算格律。
+  const [onlyAttention, setOnlyAttention] = useState(false);
+  const tokenSpectrum = report === null ? [] : buildTokenSpectrum(report);
+  const findings = report === null ? [] : buildFindings(report);
+  const findingGroups = groupFindings(findings, onlyAttention);
+  const selectedFindingTargets =
+    report === null || selectedFindingId === null
+      ? []
+      : locateFinding(report, selectedFindingId);
+  const rhymeFeet = report === null ? [] : buildRhymeFeet(report);
+  const commonGroups =
+    report === null
+      ? { status: "unknown" as const, groupIds: [] }
+      : rhymeCommonGroups(report);
 
   return (
     <main data-testid="dev-container" style={{ fontFamily: "system-ui, sans-serif", padding: 16, maxWidth: 960, margin: "0 auto" }}>
@@ -202,47 +225,106 @@ export function DevContainer(props: DevContainerProps) {
             </p>
 
             <h3>逐字谱</h3>
+            <p>
+              <small>
+                字位按原文顺序；括号内为平仄，韵脚以「韵」标记，未定为「未定」。
+              </small>
+            </p>
             <ul>
-              {report.poem.tokens.map((token) => (
-                <li key={token.tokenId}>
+              {tokenSpectrum.map((cell) => (
+                <li key={cell.tokenId}>
                   <button
                     type="button"
                     onClick={() => {
-                      onSelectToken(token.tokenId);
+                      onSelectToken(cell.tokenId);
                     }}
-                    aria-pressed={selectedTokenId === token.tokenId}
+                    aria-pressed={selectedTokenId === cell.tokenId}
+                    data-token-id={cell.tokenId}
                   >
-                    {token.text}
+                    {cell.text}
                   </button>{" "}
-                  {token.tone === "P" ? "平" : token.tone === "Z" ? "仄" : "未定"}
-                  {token.toneStatus !== "resolved" ? "（待定）" : ""}{" "}
-                  <small>{token.tokenId}</small>
+                  {cell.toneLabel}
+                  {cell.tonePending ? "（待定）" : ""}
+                  {cell.isRhyme ? "〔韵〕" : ""}{" "}
+                  <small>
+                    {cell.tokenId} · 第 {cell.line} 行第 {cell.column} 字
+                  </small>
                 </li>
               ))}
             </ul>
 
             <h3>诊断</h3>
-            <ul>
-              {report.prosody.checks.map((check) => (
-                <li key={check.id}>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      onSelectFinding(check.id);
-                    }}
-                    aria-pressed={selectedFindingId === check.id}
-                  >
-                    定位
-                  </button>{" "}
-                  [{check.status}] {check.ruleId}：{check.message}
-                </li>
-              ))}
-            </ul>
+            <p>
+              <label htmlFor="only-attention">
+                <input
+                  id="only-attention"
+                  type="checkbox"
+                  checked={onlyAttention}
+                  onChange={(event) => {
+                    setOnlyAttention(event.target.checked);
+                  }}
+                />{" "}
+                只看需处理项
+              </label>
+            </p>
+            {findingGroups.length === 0 ? (
+              <p>没有符合当前筛选的诊断。</p>
+            ) : (
+              findingGroups.map((group) => (
+                <div key={group.group}>
+                  <h4>
+                    {group.label}（{group.items.length}）
+                  </h4>
+                  <ul>
+                    {group.items.map((finding) => (
+                      <li key={finding.id}>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            onSelectFinding(finding.id);
+                          }}
+                          aria-pressed={selectedFindingId === finding.id}
+                        >
+                          定位
+                        </button>{" "}
+                        [{finding.status}/{finding.severity}] {finding.ruleId}：
+                        {finding.message}
+                        {finding.tokenIds.length > 0 ? (
+                          <small>（字位 {finding.tokenIds.join("、")}）</small>
+                        ) : null}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))
+            )}
+
+            {selectedFindingTargets.length > 0 ? (
+              <p role="status">
+                已定位到：{" "}
+                {selectedFindingTargets
+                  .map(
+                    (target) =>
+                      `${target.text}（${target.tokenId}，第 ${target.line} 行第 ${target.column} 字，UTF-16 ${target.startUtf16}–${target.endUtf16}）`,
+                  )
+                  .join("、")}
+              </p>
+            ) : null}
 
             <h3>押韵</h3>
             <p>
-              状态 {report.prosody.rhyme.status}｜韵脚{" "}
-              {report.prosody.rhyme.tokenIds.join("、") || "无"}
+              状态 {report.prosody.rhyme.status}｜
+              {rhymeFeet.length === 0
+                ? "无韵脚"
+                : `韵脚 ${rhymeFeet.map((foot) => `${foot.text}(${foot.tokenId})`).join("、")}`}
+            </p>
+            <p>
+              共同归部：
+              {commonGroups.status === "shared"
+                ? commonGroups.groupIds.join("、")
+                : commonGroups.status === "none"
+                  ? "未找到共同韵部"
+                  : "无可用韵脚，无法判断"}
             </p>
           </>
         )}
