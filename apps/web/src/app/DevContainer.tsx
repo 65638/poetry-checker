@@ -9,12 +9,14 @@ import {
 } from "./examples";
 import {
   buildFindings,
+  buildRelations,
   buildRhymeFeet,
   buildTokenSpectrum,
   groupFindings,
   locateFinding,
   rhymeCommonGroups,
 } from "./reportView";
+import { buildTokenEvidence, collectEvidenceGaps } from "./evidence";
 import type { DevScenarioId } from "./devScenarios";
 
 /** 场景选择器按需加载：生产包里只留这个 lazy 占位，不含场景文案。 */
@@ -62,10 +64,8 @@ export function DevContainer(props: DevContainerProps) {
     onLoadDevScenario,
   } = props;
 
-  const selectedToken =
-    report?.poem.tokens.find((token) => token.tokenId === selectedTokenId) ?? null;
-
-  // 视图模型全部来自纯函数（src/app/reportView.ts），不在这里重算格律。
+  // 视图模型全部来自纯函数（src/app/reportView.ts、src/app/evidence.ts），
+  // 不在这里重算格律，也不补造来源/反切。
   const [onlyAttention, setOnlyAttention] = useState(false);
   const tokenSpectrum = report === null ? [] : buildTokenSpectrum(report);
   const findings = report === null ? [] : buildFindings(report);
@@ -79,6 +79,37 @@ export function DevContainer(props: DevContainerProps) {
     report === null
       ? { status: "unknown" as const, groupIds: [] }
       : rhymeCommonGroups(report);
+  const relations = report === null ? [] : buildRelations(report);
+  const tokenEvidence =
+    report === null || selectedTokenId === null
+      ? null
+      : buildTokenEvidence(report, selectedTokenId);
+  const evidenceGapState = tokenEvidence === null ? null : collectEvidenceGaps(tokenEvidence);
+  const evidenceGaps =
+    tokenEvidence === null || evidenceGapState === null
+      ? []
+      : [
+          ...(evidenceGapState.missingFanqie.length > 0
+            ? [`${evidenceGapState.missingFanqie.length} 个候选未提供反切`]
+            : []),
+          ...(evidenceGapState.unresolvedEvidenceIds.length > 0
+            ? [`引用不到证据：${evidenceGapState.unresolvedEvidenceIds.join("、")}`]
+            : []),
+          ...(evidenceGapState.findingsWithoutRuleCard.length > 0
+            ? [`诊断缺少规则卡：${evidenceGapState.findingsWithoutRuleCard.join("、")}`]
+            : []),
+        ];
+  const evidenceSources =
+    tokenEvidence === null
+      ? []
+      : [
+          ...new Map(
+            tokenEvidence.candidates
+              .flatMap((candidate) => candidate.evidence)
+              .flatMap((item) => (item.source === null ? [] : [item.source]))
+              .map((source) => [source.id, source]),
+          ).values(),
+        ];
 
   return (
     <main data-testid="dev-container" style={{ fontFamily: "system-ui, sans-serif", padding: 16, maxWidth: 960, margin: "0 auto" }}>
@@ -326,40 +357,141 @@ export function DevContainer(props: DevContainerProps) {
                   ? "未找到共同韵部"
                   : "无可用韵脚，无法判断"}
             </p>
+
+            <h3>粘对</h3>
+            {relations.length === 0 ? (
+              <p>
+                当前报告未提供粘对关系（`prosody.relations` 为空），不视为通过。
+              </p>
+            ) : (
+              <ul>
+                {relations.map((relation, index) => (
+                  <li key={`${relation.kind}-${index}`}>
+                    {relation.kindLabel}：
+                    {relation.sides
+                      .map((side) =>
+                        side.text === null
+                          ? `${side.tokenId}（未解析）`
+                          : `${side.text}(${side.tokenId})`,
+                      )
+                      .join(" ↔ ")}
+                    ｜状态 {relation.status}
+                    {relation.hasUnresolvedTokens ? "｜含未解析字位" : ""}
+                    {relation.findingIds.length > 0
+                      ? `｜诊断 ${relation.findingIds.join("、")}`
+                      : ""}
+                  </li>
+                ))}
+              </ul>
+            )}
           </>
         )}
       </section>
 
       <section aria-labelledby="evidence-heading">
         <h2 id="evidence-heading">证据抽屉（临时）</h2>
-        {selectedToken === null ? (
+        {tokenEvidence === null ? (
           <p>点击逐字谱中的字位查看候选。</p>
         ) : (
           <>
             <p>
-              字位 {selectedToken.tokenId}「{selectedToken.text}」· 选择方法{" "}
-              {selectedToken.selectionMethod} · 状态 {selectedToken.readingStatus}
+              字位 {tokenEvidence.tokenId}「{tokenEvidence.text}」（第{" "}
+              {tokenEvidence.line} 行第 {tokenEvidence.column} 字）· 平仄{" "}
+              {tokenEvidence.toneLabel}（{tokenEvidence.toneStatus}）· 读音{" "}
+              {tokenEvidence.readingStatus}
+              {tokenEvidence.isUserSpecified ? "· 用户指定" : ""}
             </p>
+            <p>
+              <small>
+                原文区间 UTF-16 {tokenEvidence.startUtf16}–
+                {tokenEvidence.endUtf16}，切片「{tokenEvidence.slice}」
+                {tokenEvidence.reason.length > 0 ? `；依据：${tokenEvidence.reason}` : ""}
+              </small>
+            </p>
+            {tokenEvidence.groupNames.length > 0 ? (
+              <p>韵部：{tokenEvidence.groupNames.join("、")}</p>
+            ) : null}
+
+            <h4>候选读音</h4>
             <ul>
-              {selectedToken.candidates.map((candidate) => (
+              {tokenEvidence.candidates.map((candidate) => (
                 <li key={candidate.id}>
                   <button
                     type="button"
                     onClick={() => {
                       onChooseReading({
-                        tokenId: selectedToken.tokenId,
+                        tokenId: tokenEvidence.tokenId,
                         readingId: candidate.id,
                       });
                     }}
                   >
                     选择
                   </button>{" "}
-                  {candidate.tone === "P" ? "平" : candidate.tone === "Z" ? "仄" : "未知"}{" "}
-                  {candidate.toneClass}｜{candidate.gloss ?? "无释义"}｜
-                  {candidate.fanqie === null ? "该数据未提供反切" : candidate.fanqie.text}
+                  {candidate.toneLabel}｜{candidate.toneClass}
+                  {candidate.isEffective ? "" : "（不参与判定）"}
+                  {candidate.isSelected ? "（当前）" : ""}｜
+                  {candidate.gloss ?? "无释义"}｜
+                  {candidate.fanqie.available
+                    ? `反切 ${candidate.fanqie.text}`
+                    : "该数据未提供反切"}
+                  {candidate.modernReading === null
+                    ? ""
+                    : `｜今读 ${candidate.modernReading.pinyin}${candidate.modernReading.toneNumber}`}
+                  {candidate.groupNames.length > 0
+                    ? `｜韵部 ${candidate.groupNames.join("、")}`
+                    : ""}
                 </li>
               ))}
             </ul>
+
+            {tokenEvidence.findings.length > 0 ? (
+              <>
+                <h4>相关规则</h4>
+                <ul>
+                  {tokenEvidence.findings.map((finding) => (
+                    <li key={finding.id}>
+                      [{finding.status}/{finding.severity}] {finding.ruleId}：
+                      {finding.message}
+                      {finding.ruleCard === null ? (
+                        <em>（无规则卡）</em>
+                      ) : (
+                        <small>
+                          {" "}
+                          — {finding.ruleCard.name}：{finding.ruleCard.statement}
+                          （v{finding.ruleCard.version}）
+                          {finding.ruleCard.limitations.length > 0
+                            ? `｜限制：${finding.ruleCard.limitations.join("；")}`
+                            : ""}
+                        </small>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </>
+            ) : null}
+
+            {evidenceSources.length > 0 ? (
+              <>
+                <h4>来源</h4>
+                <ul>
+                  {evidenceSources.map((source) => (
+                    <li key={source.id}>
+                      {source.title}
+                      {source.edition === null ? "" : `（${source.edition}）`}
+                      ｜{source.license}
+                      {source.url === null ? "" : `｜${source.url}`}
+                    </li>
+                  ))}
+                </ul>
+              </>
+            ) : null}
+
+            {evidenceGaps.length > 0 ? (
+              <p role="note">
+                <small>数据缺失提示：{evidenceGaps.join("；")}</small>
+              </p>
+            ) : null}
+
             <button type="button" onClick={onCloseEvidence}>
               关闭
             </button>

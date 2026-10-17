@@ -266,3 +266,66 @@ export function rhymeCommonGroups(report: AnalysisResponse): {
   }
   return { status: "none", groupIds: [] };
 }
+
+export interface RelationSideView {
+  tokenId: string;
+  text: string | null;
+  line: number | null;
+  column: number | null;
+  startUtf16: number | null;
+  endUtf16: number | null;
+}
+
+export interface RelationView {
+  /** `nian` = 粘，`dui` = 对。 */
+  kind: "nian" | "dui";
+  kindLabel: "粘" | "对";
+  status: "pass" | "fail" | "uncertain" | "not_applicable" | "unsupported";
+  sides: RelationSideView[];
+  findingIds: string[];
+  /** 任一 tokenId 在报告中找不到时标记，供 UI 明确提示。 */
+  hasUnresolvedTokens: boolean;
+}
+
+/**
+ * 粘对关系：把 relation 的 tokenIds 解析成字位与位置。
+ *
+ * 报告里 relations 可能是空数组（当前 fixture 即为空）；空数组时返回空，
+ * 不补造关系，也不显示「已通过」。
+ */
+export function buildRelations(report: AnalysisResponse): RelationView[] {
+  const byId = new Map(report.poem.tokens.map((token) => [token.tokenId, token]));
+  return report.prosody.relations.map((relation) => {
+    let hasUnresolvedTokens = false;
+    const sides: RelationSideView[] = relation.tokenIds.map((tokenId) => {
+      const token = byId.get(tokenId);
+      if (token === undefined) {
+        hasUnresolvedTokens = true;
+        return {
+          tokenId,
+          text: null,
+          line: null,
+          column: null,
+          startUtf16: null,
+          endUtf16: null,
+        };
+      }
+      return {
+        tokenId: token.tokenId,
+        text: token.text,
+        line: token.line,
+        column: token.column,
+        startUtf16: token.startUtf16,
+        endUtf16: token.endUtf16,
+      };
+    });
+    return {
+      kind: relation.kind,
+      kindLabel: relation.kind === "nian" ? "粘" : "对",
+      status: relation.status,
+      sides,
+      findingIds: relation.findingIds,
+      hasUnresolvedTokens,
+    };
+  });
+}

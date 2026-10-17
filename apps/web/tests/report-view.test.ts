@@ -7,6 +7,7 @@
 import { describe, expect, it } from "vitest";
 import {
   buildFindings,
+  buildRelations,
   buildRhymeFeet,
   buildTokenSpectrum,
   findingGroup,
@@ -260,5 +261,88 @@ describe("buildRhymeFeet / rhymeCommonGroups", () => {
       expect(feet).toEqual([]);
       expect(state.status).toBe("unknown");
     }
+  });
+});
+
+describe("buildRelations", () => {
+  it("当前 fixture 没有关系时返回空，不补造", () => {
+    for (const name of scenarios) {
+      const report = loadMockScenario(name);
+      if (report.prosody.relations.length === 0) {
+        expect(buildRelations(report)).toEqual([]);
+      }
+    }
+  });
+
+  it("把 tokenId 解析成字位与位置，状态原样保留", () => {
+    const report = loadMockScenario("pass");
+    const patched = {
+      ...report,
+      prosody: {
+        ...report.prosody,
+        relations: [
+          {
+            kind: "nian" as const,
+            tokenIds: ["l1c1", "l2c1"],
+            status: "uncertain" as const,
+            findingIds: ["fixture:check"],
+          },
+          {
+            kind: "dui" as const,
+            tokenIds: ["l3c1", "l4c1"],
+            status: "fail" as const,
+            findingIds: [],
+          },
+        ],
+      },
+    };
+
+    const relations = buildRelations(patched);
+    expect(relations).toHaveLength(2);
+
+    const [nian, dui] = relations;
+    expect(nian!.kind).toBe("nian");
+    expect(nian!.kindLabel).toBe("粘");
+    expect(nian!.status).toBe("uncertain");
+    expect(nian!.findingIds).toEqual(["fixture:check"]);
+    expect(nian!.hasUnresolvedTokens).toBe(false);
+    expect(nian!.sides.map((side) => side.tokenId)).toEqual(["l1c1", "l2c1"]);
+    for (const side of nian!.sides) {
+      const token = report.poem.tokens.find((item) => item.tokenId === side.tokenId)!;
+      expect(side.text).toBe(token.text);
+      expect(side.line).toBe(token.line);
+      expect(side.column).toBe(token.column);
+      expect(
+        report.poem.originalText.slice(side.startUtf16!, side.endUtf16!),
+      ).toBe(side.text);
+    }
+
+    expect(dui!.kindLabel).toBe("对");
+    expect(dui!.status).toBe("fail");
+    expect(dui!.status).not.toBe("pass");
+  });
+
+  it("引用不到的字位被标记而不是静默丢弃", () => {
+    const report = loadMockScenario("pass");
+    const patched = {
+      ...report,
+      prosody: {
+        ...report.prosody,
+        relations: [
+          {
+            kind: "dui" as const,
+            tokenIds: ["l1c1", "l99c99"],
+            status: "pass" as const,
+            findingIds: [],
+          },
+        ],
+      },
+    };
+    const [relation] = buildRelations(patched);
+    expect(relation!.hasUnresolvedTokens).toBe(true);
+    expect(relation!.sides).toHaveLength(2);
+    const missing = relation!.sides.find((side) => side.tokenId === "l99c99")!;
+    expect(missing.text).toBeNull();
+    expect(missing.startUtf16).toBeNull();
   });
 });

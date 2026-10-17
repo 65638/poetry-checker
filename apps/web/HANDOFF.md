@@ -20,7 +20,7 @@
 | `apps/web/src/hooks/useCheckerStore.ts` | 新增 | `useSyncExternalStore` 绑定 |
 | `apps/web/src/utils/sha256.ts` | 新增 | 纯 TS 的 SHA-256（UTF-8 原文摘要，与服务端口径一致） |
 | `apps/web/src/main.tsx` | 覆盖 | 接管占位入口，接真实 HTTP transport 与开发容器 |
-| `apps/web/tests/*.test.ts` | 新增 | 129 项业务测试（api-client / store / export / concurrency / config / dev-scenarios / report-view） |
+| `apps/web/tests/*.test.ts` | 新增 | 148 项业务测试（api-client / store / export / concurrency / config / dev-scenarios / report-view / evidence） |
 | `fixtures/mocks/*.json`、`generate.ts`、`README.md` | 新增 | 五状态开发场景、错配场景与补充平面汉字场景，全部通过 Schema |
 | `docs/ui.md` | 新增 | 业务交互、失效规则、导出与测试结果 |
 
@@ -38,7 +38,7 @@ pnpm verify                  # exit 0
 
 - 合并前 `main` 基线：`e549194`；合并后：含 C 的验收测试与 B 的解析/选音模块
 - 合并后 `main` 独有 16 个提交，我的分支有 3 个提交，`git merge` **零冲突**
-- 合并后测试：**264 项 / 17 个文件**（135 项来自 main + 129 项本模块）
+- 合并后测试：**283 项 / 18 个文件**（135 项来自 main + 148 项本模块）
 - 冲突处理：本次无冲突；若有冲突，我只改 `apps/web/`、`fixtures/mocks/`、
   `docs/ui.md` 这些本人路径，根配置冲突交组长转 GLM
 
@@ -74,11 +74,11 @@ $env:PNPM_CONFIG_NODE_LINKER = 'hoisted'
 pnpm verify                            → exit 0
   $ eslint .                           → 通过
   $ tsc --noEmit && tsc --noEmit -p apps/web/tsconfig.json → 通过（两个项目都查）
-  $ vitest run                         → 264 passed / 17 files
+  $ vitest run                         → 283 passed / 18 files
   $ pnpm build && tsx scripts/generate-contracts.ts --check → 通过（8 个生成物一致）
 ```
 
-测试构成：**264 = 135（main 基线）+ 129（本模块新增）**。
+测试构成：**283 = 135（main 基线）+ 148（本模块新增）**。
 本模块单独跑：`vitest run apps/web/tests` → 80 passed。
 
 `pnpm verify` 的实际通过条件与原因见下节「环境说明」。
@@ -167,7 +167,7 @@ pnpm verify          # exit 0
 ```text
 $ eslint .                                    → 通过
 $ tsc --noEmit && tsc --noEmit -p apps/web/tsconfig.json → 通过
-$ vitest run                                  → 264 passed (17 files)
+$ vitest run                                  → 283 passed (18 files)
 $ pnpm build && tsx scripts/generate-contracts.ts --check → 通过（8 个生成物一致）
 ```
 
@@ -248,10 +248,29 @@ node-linker=hoisted
 前端定位以 **token 的 line/column** 为准，不照抄这个不一致坐标；
 已请示是否由 GLM/Codex 修正 fixture。
 
-测试：`report-view.test.ts` 23 项（五场景顺序与区间、韵脚标记、分组排序、
-只看需处理项、未知前缀、精确定位、补充平面汉字区间、共同归部）。
+测试：`report-view.test.ts` 26 项（五场景顺序与区间、韵脚标记、分组排序、
+只看需处理项、未知前缀、精确定位、补充平面汉字区间、共同归部、粘对关系）。
 
-### 5. 待装配（等两条分支进 main）
+### 5. 证据抽屉与粘对关系（D3）
+
+新增 `app/evidence.ts`，并把 `buildRelations` 加进 `reportView.ts`：
+
+- `buildTokenEvidence`：单个字位的候选、平仄、贡献标记、选中标记、释义、
+  今读、反切、韵部、相关诊断与规则卡。
+- **反切缺失显式标记** `fanqie.available=false`，UI 显示「该数据未提供反切」，
+  不虚构文本。
+- **引用不到的证据/韵部/规则卡会被列出**：`collectEvidenceGaps` 返回
+  `missingFanqie` / `unresolvedEvidenceIds` / `findingsWithoutRuleCard`，
+  UI 以「数据缺失提示」呈现，不静默丢弃。
+- `isUserSpecified` 标注用户指定读音，且**不修改报告原值**（有测试断言）。
+- `buildRelations`：`nian`/`dui` → 粘/对，解析字位与 UTF-16 区间；
+  引用不到的字位标 `hasUnresolvedTokens` 并以「未解析」呈现。
+  当前 fixture 的 `relations` 为**空数组**，UI 明示「未提供，不视为通过」。
+- 仍未做：反切/来源的外部链接跳转、长文献折叠、抽屉焦点陷阱（需 DOM 测试）。
+
+测试：`evidence.test.ts` 16 项 + `report-view.test.ts` 新增 3 项粘对。
+
+### 6. 待装配（等两条分支进 main）
 
 `feat/claude-presentation` 已核实：其 `apps/web/src/view-contract.ts` 与本分支
 **逐字节同内容**，`CheckerViewProps` 完全匹配，所以装配只需把 `main.tsx` 的
@@ -284,7 +303,7 @@ node-linker=hoisted
 - `git merge origin/feat/claude-presentation`：**零冲突**
 - 装配改动：`main.tsx` 仅两行（import 换成 `./presentation/CheckerView`、
   `return <CheckerView {...props} />`），`view-contract` 未改
-- `pnpm verify` → **exit 0**，264 项测试全过
+- `pnpm verify` → **exit 0**，283 项测试全过
 - `vite build` → 129 模块，新增 CSS 18.21 kB（视觉样式生效），JS 346.78 kB
 - 真实链路冒烟：页面 200 且引用 `#root`、`/src/main.tsx` 含 `CheckerView`
   且不含 `DevContainer`、`POST /api/v1/analyze` **200** 且 `summary.status=pass`、原文匹配
