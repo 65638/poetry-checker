@@ -1,14 +1,18 @@
 {
   "patchId": "patch-pingshui-shang-sanj-jiang-draft",
-  "title": "平水韵上声三讲补缺（草案，未发布）",
+  "patchVersion": "d2-1",
+  "title": "平水韵上声三讲补缺（草案，未发布，未生效）",
   "status": "draft",
   "reviewStatus": "unverified",
   "publishedAt": null,
+  "review": null,
+  "reviewNote": "人工签署前必须为 null。本批次由 AI 整理字节与差异，不代替人审：未取得审核人姓名、签署时间与签署依据，故 review 保持 null，reviewStatus 不得改动。",
   "target": {
     "book": "pingshui",
     "bucket": "上",
     "groupName": "三讲",
-    "expectedToneClass": "shang"
+    "expectedToneClass": "shang",
+    "expectedGroupId": "group:pingshui:上:三讲"
   },
   "observedGap": {
     "detectedBy": "packages/lexicon/src/completeness.ts checkCompleteness(PINGSHUI_GATE)",
@@ -32,35 +36,178 @@
     "releaseGatePassed": false,
     "sourceId": "src:chinese_word_rhyme",
     "sourceRevision": "ff0e9c13fb037c43e0eaa5dc929c0fe4fa2ffb18",
-    "sourceFile": "data/raw/chinese_word_rhyme/Pingshui_Rhyme.json"
+    "sourceFile": "data/raw/chinese_word_rhyme/Pingshui_Rhyme.json",
+    "byteLevelEvidence": [
+      "Pingshui_Rhyme.json:4349 为 `\"上声部\": {` 的起始；其下键序为 4350 `一董` → 4390 `二肿` → 4435 `四纸`，序号由「二」直接跳到「四」，整段缺「三」。",
+      "以 `讲`／`講`／`项`／`項` 检索该快照全文，命中 0 处：缺部不是换了字形写法，而是整个韵目不存在。",
+      "因此 105 = 106 − 1 是对字节统计的结果，不是估计值或转述。"
+    ]
   },
   "basis": [
     {
       "sourceId": "src:wikisource:pingshuiyun",
       "url": "https://zh.wikisource.org/wiki/平水韻",
-      "locator": "上声三讲正文（拟）",
-      "status": "retrieved_manually",
+      "fixedUrl": "https://zh.wikisource.org/w/index.php?oldid=8264804",
+      "locator": "上聲部「上聲三{{++|講}}」条（落盘文件第 198-200 行）",
+      "status": "snapshot_saved_locally",
       "error": null,
       "revision": "8264804",
-      "retrievedAt": "2026-10-17",
-      "license": "页面声明 CC BY-SA 4.0（依任务书记录，本次未能亲自复核）"
+      "retrievedAt": null,
+      "retrievedAtNote": "落盘时刻未记录，补录前不得写成具体日期。",
+      "priorClaim": {
+        "retrievedAt": "2026-10-17",
+        "status": "retrieved_manually",
+        "note": "这是 D1 草案原先写的人工查阅日期，当时正文与字节均未落盘、且与 manifest 的 unreachable 状态矛盾；保留以便追溯，不作为本次落盘时间的依据。"
+      },
+      "snapshotPath": "data/raw/wikisouce/pingshuiyun-8264804.wikitext",
+      "snapshotSha256": null,
+      "snapshotBytes": null,
+      "digestStatus": "pending",
+      "digestNote": "本批次不运行终端命令，未计算字节数与 SHA-256；补齐前本条只能表述为「来源已定位、字节已落盘、摘要未登记」，不得表述为「已核对」。",
+      "textAsStored": "講港棒蚌項缿玤傋耩",
+      "textCharCount": 9,
+      "hasCiSupplement": false,
+      "hasCiSupplementNote": "该韵目在底本中只有一行正文，没有【詞】段；因此本韵目不存在「词林补字是否并入平水正文」的取舍，也不得凭空加入其他字。",
+      "pageFooter": "第 655-656 行为 {{PD-old}} 与 {{wikipedia}}，第 658 行为 [[Category:韻書]]",
+      "license": "底本页脚为 {{PD-old}}（作者逝世逾百年），与 D1 占位所记的 CC BY-SA 4.0 不一致；许可结论待人工复核，暂不采信任一说法"
     }
   ],
-  "proposedCharacters": ["讲","港","棒","蚌","项","缿","玤","傋","耩"],
-  "proposedCharactersReason": "2026-10-17 经人工在维基文库网页端查阅《平水韵》正文（oldid 8264804），核实上声三讲缺失韵字为：讲、港、棒、蚌、项、缿、玤、傋、耩。已人工补入草案，待复核。",
+  "charactersProvenance": [
+    {
+      "baseText": "講",
+      "targetTableForm": "讲",
+      "sameInBothScripts": false,
+      "alreadyInTable": false,
+      "existingGroup": null,
+      "comment": "底本繁体作「講」，原表为简体字表（如 董/肿/纸/白）。写入目标表须用「讲」，但这是按标准简繁对应做的转换，不是底本原文，必须标注并经人审签。"
+    },
+    {
+      "baseText": "港",
+      "targetTableForm": "港",
+      "sameInBothScripts": true,
+      "alreadyInTable": false,
+      "existingGroup": null,
+      "comment": "简繁同形，未见字形差异。"
+    },
+    {
+      "baseText": "棒",
+      "targetTableForm": "棒",
+      "sameInBothScripts": true,
+      "alreadyInTable": false,
+      "existingGroup": null,
+      "comment": "简繁同形，未见字形差异。"
+    },
+    {
+      "baseText": "蚌",
+      "targetTableForm": "蚌",
+      "sameInBothScripts": true,
+      "alreadyInTable": false,
+      "existingGroup": null,
+      "comment": "简繁同形，未见字形差异。"
+    },
+    {
+      "baseText": "項",
+      "targetTableForm": "项",
+      "sameInBothScripts": false,
+      "alreadyInTable": false,
+      "existingGroup": null,
+      "comment": "底本繁体作「項」，写入简体表须用「项」；同「講」一样属转换，需人审签。"
+    },
+    {
+      "baseText": "缿",
+      "targetTableForm": "缿",
+      "sameInBothScripts": true,
+      "alreadyInTable": false,
+      "existingGroup": null,
+      "comment": "简繁同形，未见字形差异。"
+    },
+    {
+      "baseText": "玤",
+      "targetTableForm": "玤",
+      "sameInBothScripts": true,
+      "alreadyInTable": true,
+      "existingGroup": "上声一董",
+      "existingEvidence": "Pingshui_Rhyme.json:4372（位于 4350 行 `一董` 之内）",
+      "comment": "关键项：原表已收「玤」于上声一董，底本同时把它列在上聲一董（第 188 行）与上聲三講（第 200 行）。这是真实的一字多部，须新增一条「三讲」归属而保留「一董」，不得为凑数去重或挪移。"
+    },
+    {
+      "baseText": "傋",
+      "targetTableForm": "傋",
+      "sameInBothScripts": true,
+      "alreadyInTable": false,
+      "existingGroup": null,
+      "comment": "简繁同形；pinyin-data 记 U+508B 有 jiǎng／gòu 两读，仅作旁证，不作韵书依据。"
+    },
+    {
+      "baseText": "耩",
+      "targetTableForm": "耩",
+      "sameInBothScripts": true,
+      "alreadyInTable": false,
+      "existingGroup": null,
+      "comment": "简繁同形，未见字形差异。"
+    }
+  ],
+  "charactersProvenanceNote": "「简繁同形」是对这 9 字比对底本与目标表用字后的描述，不等于全库简繁结论；「講→讲」「項→项」两处是按标准简繁对应的转换，尚未经人审签，因此本补丁不得宣称“底本原文即如此”。",
+  "diff": {
+    "kind": "add_group_with_memberships",
+    "before": {
+      "upperToneGroupCount": 28,
+      "targetGroupExists": false
+    },
+    "after": {
+      "upperToneGroupCount": 29,
+      "totalGroupCount": 106,
+      "targetGroupExists": true
+    },
+    "addedGroups": [
+      {
+        "groupId": "group:pingshui:上:三讲",
+        "name": "三讲",
+        "toneClass": "shang"
+      }
+    ],
+    "addedMemberships": [
+      { "character": "讲", "groupId": "group:pingshui:上:三讲", "kind": "new_character" },
+      { "character": "港", "groupId": "group:pingshui:上:三讲", "kind": "new_character" },
+      { "character": "棒", "groupId": "group:pingshui:上:三讲", "kind": "new_character" },
+      { "character": "蚌", "groupId": "group:pingshui:上:三讲", "kind": "new_character" },
+      { "character": "项", "groupId": "group:pingshui:上:三讲", "kind": "new_character" },
+      { "character": "缿", "groupId": "group:pingshui:上:三讲", "kind": "new_character" },
+      { "character": "玤", "groupId": "group:pingshui:上:三讲", "kind": "additional_membership", "note": "保留原有 group:pingshui:上:一董 归属" },
+      { "character": "傋", "groupId": "group:pingshui:上:三讲", "kind": "new_character" },
+      { "character": "耩", "groupId": "group:pingshui:上:三讲", "kind": "new_character" }
+    ],
+    "addedMembershipCount": 9,
+    "newCharacterCount": 8,
+    "additionalMembershipCount": 1,
+    "removedGroups": [],
+    "removedMemberships": [],
+    "removedNote": "本补丁只增不删。特别声明：不得为让下游放行而删除任何未审核竞争候选，包括「玤」的一董归属。"
+  },
+  "proposedCharacters": ["讲", "港", "棒", "蚌", "项", "缿", "玤", "傋", "耩"],
+  "proposedCharactersBaseText": ["講", "港", "棒", "蚌", "項", "缿", "玤", "傋", "耩"],
+  "proposedCharactersReason": "底本 oldid 8264804 上聲三講正文为「講港棒蚌項缿玤傋耩」共 9 字，已按落盘字节逐字核对。写入目标表时按原表简体惯例转写为「讲港棒蚌项缿玤傋耩」，其中 講→讲、項→项 属转换而非底本原文，待人审签。",
+  "contentDigest": null,
+  "contentDigestNote": "补丁内容摘要需在补丁生效路径上由构建脚本生成；本批次不运行脚本，故留空，不得手填占位摘要。",
   "forbiddenShortcuts": [
     "不得为了让 groupCount 变成 106 而新增空韵目或占位韵目。",
     "不得把注文中的汉字当作韵字收录。",
     "不得改取 chinese_word_rhyme 的其他提交而沿用本次统计。",
-    "未审核的补字不得进入 data/releases。"
+    "未审核的补字不得进入 data/releases。",
+    "不得把 講→讲、項→项 的转换写成“底本原文如此”。",
+    "不得删除「玤」原有的上声一董归属。",
+    "未取得人审签前，不得改 reviewStatus，也不得令本补丁生效。"
   ],
   "nextSteps": [
-    "在有网环境取得《平水韻》三讲正文与修订号，保留署名与许可。",
-    "逐字核对后生成 patch 差异（前后对照、逐条证据），再由人审签。",
-    "补丁生效后重跑 scripts/data/inspect.ts，确认 15+15+29+30+17=106 且各部非空。"
+    "取得本文件字节数、SHA-256 与落盘日期后回填 manifest 与 basis，本条才能从「摘要未登记」转为「已登记」。",
+    "把 data/raw/wikisouce/pingshuiyun-8264804.wikitext 复制到手册约定的 data/raw/wikisource/PingshuiYun-8264804.wikitext（改名而非重新转录，保持字节不变）。",
+    "人工复核 {{PD-old}} 与渲染版权框，定稿许可结论，替换 CC BY-SA 4.0 占位说法。",
+    "由人审签 9 字与两处简繁转换，记录审核人、时间、依据；签署后 review 才能从 null 改为实体。",
+    "补丁生效后重跑 scripts/data/inspect.ts，确认 15+15+29+30+17=106 且三讲非空；同时确认未经补丁的 105 部快照仍能复现缺部失败（两条路径并存）。"
   ],
   "notes": [
     "本文件是缺口记录与修订草案，不是修订结果。",
-    "缺部数据仍会被检查器报告；发布门槛失败是预期状态，不代表检查器故障。"
+    "缺部数据仍会被检查器报告；发布门槛失败是预期状态，不代表检查器故障。",
+    "结构达标（106 部非空）与内容审核通过（evidence approved）是两件事，不得互相代替。"
   ]
 }
