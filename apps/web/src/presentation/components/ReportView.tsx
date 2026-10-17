@@ -98,7 +98,7 @@ export function ReportView(props: ReportViewProps) {
 
       <section aria-labelledby="pc-grid-heading">
         <h3 id="pc-grid-heading" className="pc-section-title">逐字平仄</h3>
-        <p className="pc-legend">「韵」= 韵脚　「?」= 读音待定　虚线框 = 声调未定　◆ = 诊断关联位置</p>
+        <p className="pc-legend">「韵」= 韵脚 · 「?」= 读音待定 · 虚线框 = 声调未定 · ◆ = 诊断关联位置</p>
         <ol ref={gridRef} className="pc-grid">
           {report.poem.lines.map((line) => (
             <li key={line.line} className="pc-line">
