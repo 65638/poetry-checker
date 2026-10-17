@@ -74,7 +74,7 @@ $env:PNPM_CONFIG_NODE_LINKER = 'hoisted'
 pnpm verify                            → exit 0
   $ eslint .                           → 通过
   $ tsc --noEmit && tsc --noEmit -p apps/web/tsconfig.json → 通过（两个项目都查）
-  $ vitest run                         → 410 passed / 28 files
+  $ vitest run                         → 431 passed / 30 files
   $ pnpm build && tsx scripts/generate-contracts.ts --check → 通过（8 个生成物一致）
 ```
 
@@ -167,7 +167,7 @@ pnpm verify          # exit 0
 ```text
 $ eslint .                                    → 通过
 $ tsc --noEmit && tsc --noEmit -p apps/web/tsconfig.json → 通过
-$ vitest run                                  → 410 passed (28 files)
+$ vitest run                                  → 431 passed (30 files)
 $ pnpm build && tsx scripts/generate-contracts.ts --check → 通过（8 个生成物一致）
 ```
 
@@ -335,7 +335,7 @@ origin/integrate @ 1b67a65  +  feat/d-d1-web @ 7520dde（mock 坐标修复）
 验证（合入 `origin/integrate` 后实测）：
 
 ```text
-pnpm verify                          → exit 0，410 项测试（28 文件）
+pnpm verify                          → exit 0，431 项测试（28 文件）
 vite build                           → 130 modules，CSS 18.23 kB（视觉样式生效）
 dev 冒烟                             → / 200、main.tsx 200、DevShell 200、
                                        presentation 200、tokens.css 200
