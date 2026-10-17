@@ -1,0 +1,192 @@
+{
+  "status": "draft_only_not_for_release",
+  "note": "规则卡草案（teaching-v1）。工程口径已由 Codex 于 2026-10-17 确认（ID、可变位、A 型小拗②、七言对句相救位置）；rule.version 按确认取字符串 \"1\"。文献版次、章节、页码仍由 C 人工核实之前，全部条目 reviewStatus=pending，不进入发布来源集合。",
+  "cards": [
+    {
+      "draftId": "draft-meter-position-v1",
+      "reviewStatus": "pending",
+      "status": "draft_only_not_for_release",
+      "rule": {
+        "id": "METER.POSITION",
+        "version": "1",
+        "name": "逐位平仄允许集合（含 A 型小拗说明）",
+        "scope": "四类近体模板的逐字位允许集合",
+        "statement": "比较字位有效平仄候选集合与模板允许集合：候选全集包含于允许集合为通过，两者完全不相交为失败，部分相交或存在未知候选为待复核；不得挑选合律读音。A 型句常格平声位（五言第三字、七言第五字）用仄时，按本规则集教学口径允许，state=pass、severity=info、resolvedBy=null，复用本条 Finding 说明小拗，不产生相互矛盾的 fail 记录。",
+        "limitations": [
+          "仅为基础模板允许集合，不能替代孤平、尾式与拗救约束",
+          "可变位（中）口径已确认为 teaching-v1 工程执行口径：五言 A 中仄中平仄、B 中平中仄平、C 中平中仄仄、D 中仄仄平平；七言 A 中平中仄中平仄、B 中仄中平中仄平、C 中仄中平中仄仄、D 中平中仄仄平平",
+          "A 型小拗仅覆盖五言第三字/七言第五字；不是 RESCUE.TEAO 特拗，也不覆盖出句第四字（七言第六字）等大拗",
+          "语文学出处与版本定位待人工核实"
+        ],
+        "evidenceIds": []
+      },
+      "sourceNeeded": ["待补真实底本、章节或页面定位", "A 型小拗允许口径的文献依据待人工核实"]
+    },
+    {
+      "draftId": "draft-rhyme-common-v1",
+      "reviewStatus": "pending",
+      "status": "draft_only_not_for_release",
+      "rule": {
+        "id": "RHYME.COMMON",
+        "version": "1",
+        "name": "全部必押韵脚公共归部",
+        "scope": "平声押韵的四类近体模板",
+        "statement": "检查所有必押韵脚在同一有效读音约束下的公共韵部；保留声调与归部的候选关联；信息不全时待复核。",
+        "limitations": [
+          "语文学出处及版本定位待人工核实",
+          "首句借韵策略另列"
+        ],
+        "evidenceIds": []
+      },
+      "sourceNeeded": ["待补真实底本、章节或页面定位", "首句借邻韵关系表待审核"]
+    },
+    {
+      "draftId": "draft-relation-dui-v1",
+      "reviewStatus": "pending",
+      "status": "draft_only_not_for_release",
+      "rule": {
+        "id": "RELATION.DUI",
+        "version": "1",
+        "name": "同联相对检查（失对）",
+        "scope": "四类近体模板相邻联",
+        "statement": "同联出句与对句关键节奏位平仄应相对；以第二字为主要判别点，结合五言二四、七言二四六及整句谱式；先识别已认可变格，再处理其对关系检查的影响；失败时说明失对。",
+        "limitations": [
+          "已认可变格不得机械重复报失对",
+          "七言扩展与变格位置口径待核定",
+          "语文学出处待人工核实"
+        ],
+        "evidenceIds": []
+      },
+      "sourceNeeded": ["待补真实底本、章节或页面定位"]
+    },
+    {
+      "draftId": "draft-relation-nian-v1",
+      "reviewStatus": "pending",
+      "status": "draft_only_not_for_release",
+      "rule": {
+        "id": "RELATION.NIAN",
+        "version": "1",
+        "name": "联间相粘检查（失粘）",
+        "scope": "四类近体模板相邻联之间",
+        "statement": "上联对句与下联出句关键节奏位平仄应相粘；以第二字为主要判别点，结合五言二四、七言二四六及整句谱式；失败时说明失粘。",
+        "limitations": [
+          "语文学出处待人工核实",
+          "与变格的关系口径待核定"
+        ],
+        "evidenceIds": []
+      },
+      "sourceNeeded": ["待补真实底本、章节或页面定位"]
+    },
+    {
+      "draftId": "draft-guping-narrow-v1",
+      "reviewStatus": "pending",
+      "status": "draft_only_not_for_release",
+      "rule": {
+        "id": "GUPING.NARROW",
+        "version": "1",
+        "name": "窄义孤平（B 型平收句）",
+        "scope": "B 型平收句",
+        "statement": "采用窄义口径：五言 ZPZZP，或七言对应后五字，在无相应救法时判定为孤平；不采用“整句只有一个平声”的宽口径，也不能仅因两个位置为“中”而放行。",
+        "limitations": [
+          "七言对应位置以“后五字”表述为准（Codex 2026-10-17 确认）",
+          "救法关系由 RESCUE.SELF 等另行表达",
+          "语文学出处待人工核实"
+        ],
+        "evidenceIds": []
+      },
+      "sourceNeeded": ["待补真实底本、章节或页面定位"]
+    },
+    {
+      "draftId": "draft-tail-sanping-v1",
+      "reviewStatus": "pending",
+      "status": "draft_only_not_for_release",
+      "rule": {
+        "id": "TAIL.SANPING",
+        "version": "1",
+        "name": "三平尾",
+        "scope": "按模板检查的近体句末三字",
+        "statement": "末三字全平为三平尾，明确违反时判定为 error。",
+        "limitations": [
+          "仅对按所选模板检查的近体句生效",
+          "语文学出处待人工核实"
+        ],
+        "evidenceIds": []
+      },
+      "sourceNeeded": ["待补真实底本、章节或页面定位"]
+    },
+    {
+      "draftId": "draft-tail-sanze-v1",
+      "reviewStatus": "pending",
+      "status": "draft_only_not_for_release",
+      "rule": {
+        "id": "TAIL.SANZE",
+        "version": "1",
+        "name": "三仄尾",
+        "scope": "按模板检查的近体句末三字",
+        "statement": "末三字全仄为三仄尾，明确出现时判定为 warning，不单独造成整诗 fail。",
+        "limitations": [
+          "仅对按所选模板检查的近体句生效",
+          "语文学出处待人工核实"
+        ],
+        "evidenceIds": []
+      },
+      "sourceNeeded": ["待补真实底本、章节或页面定位"]
+    },
+    {
+      "draftId": "draft-rescue-self-v1",
+      "reviewStatus": "pending",
+      "status": "draft_only_not_for_release",
+      "rule": {
+        "id": "RESCUE.SELF",
+        "version": "1",
+        "name": "孤平自救",
+        "scope": "B 型平收句",
+        "statement": "认可 B 型五言 ZPPZP（七言对应尾部）为孤平自救；须指出拗位与救位，不能把所有 B 型偏离都算已救；认可后保留原偏离与救位说明，将该偏离当前状态记为 pass/info 并关联本条规则卡。",
+        "limitations": [
+          "一条救法只解决它明确覆盖的偏离，不豁免全句或全诗其他错误",
+          "更宽跨句救法不在 P0 范围",
+          "语文学出处待人工核实"
+        ],
+        "evidenceIds": []
+      },
+      "sourceNeeded": ["待补真实底本、章节或页面定位"]
+    },
+    {
+      "draftId": "draft-rescue-teao-v1",
+      "reviewStatus": "pending",
+      "status": "draft_only_not_for_release",
+      "rule": {
+        "id": "RESCUE.TEAO",
+        "version": "1",
+        "name": "特拗",
+        "scope": "C 型句",
+        "statement": "认可 C 型五言 PPZPZ、七言对应“中仄平平仄平仄”为特拗；须匹配完整审核模式及其余约束后才认可，认可后不得对被认可位置重复硬报偏离；不能把 C 型特拗随意换成另一句型免检。",
+        "limitations": [
+          "七言完整模式的真实诗例与文献待核实",
+          "语文学出处待人工核实"
+        ],
+        "evidenceIds": []
+      },
+      "sourceNeeded": ["待补真实底本、章节或页面定位", "七言特拗完整模式需人工核对诗例"]
+    },
+    {
+      "draftId": "draft-rescue-duiju-v1",
+      "reviewStatus": "pending",
+      "status": "draft_only_not_for_release",
+      "rule": {
+        "id": "RESCUE.DUIJU",
+        "version": "1",
+        "name": "同联对句相救",
+        "scope": "同联 A/B 型",
+        "statement": "认可同联 A/B 型的对句相救：五言出句第 4 字（拗）对应对句第 3 字（救），七言出句第 6 字对应对句第 5 字（位置按五言核心后移两字）；必须是同一联的出句与对句，不能跨联配对。位置正确只是必要条件，不是完整救法判据。",
+        "limitations": [
+          "七言位置已确认（6↔5，Codex 2026-10-17），完整判据（前缀、完整后五字、其他固定位置、候选不确定性）留 D2 验收",
+          "更宽跨句救法不在 P0 范围",
+          "语文学出处待人工核实"
+        ],
+        "evidenceIds": []
+      },
+      "sourceNeeded": ["待补真实底本、章节或页面定位", "七言完整判据与真实诗例待人工核实"]
+    }
+  ]
+}
