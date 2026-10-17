@@ -238,6 +238,23 @@ node-linker=hoisted
 2. `main.tsx` 把 `<DevContainer {...props} />` 换成 `<CheckerView {...props} />`；
 3. `src/app/store.ts`、`src/api/`、`src/features/` 不动；视觉问题交设计方，业务缺陷回 D。
 
+### 装配预演已验证（2026-10-17）
+
+在**临时分支**（未提交、已删除）上把 `feat/claude-presentation`（`d1d5ddc`）
+合入本分支并完成装配，实测全绿，证明装配路径可行、无需改业务层：
+
+- `git merge origin/feat/claude-presentation`：**零冲突**
+- 装配改动：`main.tsx` 仅两行（import 换成 `./presentation/CheckerView`、
+  `return <CheckerView {...props} />`），`view-contract` 未改
+- `pnpm verify` → **exit 0**，235 项测试全过
+- `vite build` → 129 模块，新增 CSS 18.21 kB（视觉样式生效），JS 346.78 kB
+- 真实链路冒烟：页面 200 且引用 `#root`、`/src/main.tsx` 含 `CheckerView`
+  且不含 `DevContainer`、`POST /api/v1/analyze` **200** 且 `summary.status=pass`、原文匹配
+
+**临时分支与装配改动均已丢弃**，本分支保持 `DevContainer`——
+在展示分支进入 main 之前提前接会让构建失败（`presentation/` 不存在）。
+两条分支进 main 后，按上面第 1–3 步执行即可。
+
 ## 数据与规则版本
 
 - `schemaVersion`：`1.0`；`versions.data`：`fixture-only`；
