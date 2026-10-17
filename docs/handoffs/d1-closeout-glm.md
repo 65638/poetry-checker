@@ -21,3 +21,10 @@
 - Codex：codex/prosody-core-d2@14df990 列 D2 批次交 C 独立验收（未进本批）。
 - E：高吻合/选模修复、三首真实 API = D2。A 七字样本未经人工审核，不得绕过 B 的证据门槛。
 - 未运行：正式入口的五状态全矩阵人工点检（等 D 装配后由 D/E 走）、CI 云端结果以 Actions 页为准。
+
+## 终验追加（D1 完成宣告）
+- D 装配 feat/d-d3-assembly@53df57f（PR #5）并入 integrate：verify exit 0，410 测试 27+ 文件。
+- 浏览器实测：正式入口 main.tsx 渲染 CheckerView（印章/输入面板/韵书分段）✓；
+  输入→提交→HTTP mock→报告渲染闭环 ✓；375px 移动端渲染 ✓。
+  五状态覆盖 = D 的 dev-scenario 测试组 + presentation-preview 双视图终验（both在 410 内）；
+  键盘全矩阵留给 E 系统回归（focus-visible 样式已在 CSS 验证）。
