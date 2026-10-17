@@ -1,26 +1,49 @@
-import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { lookupCharacters, registerSnapshots } from "@poetry/lexicon";
-import type { ContextRule, RuleCard, WorkMetadata } from "@poetry/contracts";
+import { lookupCharacters, registerSnapshot } from "@poetry/lexicon";
+import type {
+  BookId,
+  ContextRule,
+  Evidence,
+  RuleCard,
+  SourceRecord,
+  WorkMetadata,
+} from "@poetry/contracts";
+import manifestJson from "./snapshot-manifest.json" with { type: "json" };
 
-/** 启动时只读装载的资源快照；请求内同一版本，不做热更新。 */
+/** 每库显式选定快照；不扫描目录（报告类 JSON 一律不注册），杜绝"最后读到谁"覆盖。 */
+interface ManifestEntry {
+  file: string;
+  reason: string;
+}
+
+const MANIFEST = manifestJson as Record<BookId, ManifestEntry>;
+
+export interface LoadedSnapshotInfo {
+  book: BookId;
+  dataVersion: string;
+  reviewStatus: string;
+  file: string;
+  /** 对外口径的主部数：平水=韵部数；词林/新韵=主部（声类子卷另计）。 */
+  mainGroups: number;
+  subGroups: number;
+}
+
 export interface Resources {
-  lexiconVersions: Record<string, string>;
-  /** 未审核版本仅允许显式开发联调，不冒充 release。 */
-  unverifiedVersions: string[];
+  snapshots: Record<string, LoadedSnapshotInfo>;
+  unverifiedBooks: BookId[];
+  evidenceRegistry: Evidence[];
+  sourceRegistry: SourceRecord[];
   contextRules: ContextRule[];
   ruleCards: RuleCard[];
   works: WorkMetadata[];
   ready: boolean;
   notReadyReasons: string[];
-  /** 已加载快照中出现的来源 ID（明细待证据快照发布）。 */
-  knownSourceIds: string[];
-  /** 每韵书真实韵部数（只报已装载的，不编造 106/19/14）。 */
-  groupCounts: Record<string, number>;
+  loadErrors: string[];
 }
 
-function findRepoRoot(): string {
+const ROOT = (function findRepoRoot(): string {
   let dir = dirname(fileURLToPath(import.meta.url));
   for (let i = 0; i < 6; i += 1) {
     if (existsSync(join(dir, "pnpm-workspace.yaml"))) return dir;
@@ -29,8 +52,7 @@ function findRepoRoot(): string {
     dir = parent;
   }
   throw new Error("未找到仓库根（pnpm-workspace.yaml）");
-}
-const ROOT = findRepoRoot();
+})();
 
 function readJsonArray<T>(rel: string): T[] {
   const p = join(ROOT, rel);
@@ -43,54 +65,84 @@ function readJsonArray<T>(rel: string): T[] {
   }
 }
 
-let cached: Resources | undefined;
-
-/** 进程内只装载一次：registerSnapshots 禁止重复注册同版本（A 的设计），
- * 且请求内使用同一版本快照符合冻结约定。 */
-export async function lookupCharactersByBook(char: string, book: "pingshui" | "cilin" | "xinyun", dataVersion: string) {
-  return lookupCharacters({ characters: [char], rhymeBook: book, dataVersion });
+function stableStringify(value: unknown): string {
+  if (value === null || typeof value !== "object") return JSON.stringify(value);
+  if (Array.isArray(value)) return `[${value.map(stableStringify).join(",")}]`;
+  const entries = Object.entries(value as Record<string, unknown>)
+    .filter(([, v]) => v !== undefined)
+    .sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0));
+  return `{${entries.map(([k, v]) => `${JSON.stringify(k)}:${stableStringify(v)}`).join(",")}}`;
 }
 
-export function loadResources(): Resources {
-  if (cached !== undefined) return cached;
-  cached = loadResourcesOnce();
-  return cached;
+function dedupeById<T extends { id: string }>(
+  items: readonly T[],
+  kind: string,
+  errors: string[],
+): T[] {
+  const map = new Map<string, T>();
+  for (const item of items) {
+    const prev = map.get(item.id);
+    if (prev !== undefined && stableStringify(prev) !== stableStringify(item)) {
+      errors.push(`资源冲突：${kind} ID ${item.id} 在不同快照中内容不一致`);
+      continue;
+    }
+    map.set(item.id, item);
+  }
+  return [...map.values()].sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
 }
 
 function loadResourcesOnce(): Resources {
   const notReadyReasons: string[] = [];
-  const knownSourceIds: string[] = [];
-  const groupCounts: Record<string, number> = {};
-  const unverifiedVersions: string[] = [];
-  const lexiconVersions: Record<string, string> = {};
+  const loadErrors: string[] = [];
+  const snapshots: Record<string, LoadedSnapshotInfo> = {};
+  const unverifiedBooks: BookId[] = [];
+  const evidence: Evidence[] = [];
+  const sources: SourceRecord[] = [];
 
-  const normDir = join(ROOT, "data", "normalized");
-  const inputs: unknown[] = [];
-  if (existsSync(normDir)) {
-    for (const f of readdirSync(normDir)) {
-      if (!f.endsWith(".json")) continue;
-      try {
-        inputs.push(JSON.parse(readFileSync(join(normDir, f), "utf8")));
-      } catch {
-        notReadyReasons.push(`data/normalized/${f} 解析失败`);
-      }
+  for (const book of Object.keys(MANIFEST) as BookId[]) {
+    const entry = MANIFEST[book];
+    const file = join(ROOT, "data", "normalized", entry.file);
+    if (!existsSync(file)) {
+      loadErrors.push(`manifest 条目缺失：${book} → ${entry.file}`);
+      continue;
+    }
+    let raw: unknown;
+    try {
+      raw = JSON.parse(readFileSync(file, "utf8"));
+    } catch (e) {
+      loadErrors.push(`manifest 条目解析失败：${book} → ${entry.file}（${String(e)}）`);
+      continue;
+    }
+    try {
+      const snap = registerSnapshot(raw as never);
+      const groups = snap.groups;
+      const main =
+        book === "pingshui"
+          ? groups.length
+          : new Set(groups.map((g) => g.id.split(":")[2])).size;
+      snapshots[book] = {
+        book,
+        dataVersion: snap.dataVersion,
+        reviewStatus: snap.reviewStatus,
+        file: entry.file,
+        mainGroups: main,
+        subGroups: groups.length,
+      };
+      if (snap.reviewStatus !== "approved") unverifiedBooks.push(book);
+      const bundle = raw as { evidence?: Evidence[]; sources?: SourceRecord[] };
+      if (Array.isArray(bundle.evidence)) evidence.push(...bundle.evidence);
+      if (Array.isArray(bundle.sources)) sources.push(...bundle.sources);
+    } catch (e) {
+      loadErrors.push(`manifest 条目注册失败：${book} → ${entry.file}（${String(e)}）`);
     }
   }
-  if (inputs.length > 0) {
-    // registerSnapshots 自带结构守卫；审核状态由 reviewStatus 携带
-    const registered = registerSnapshots(inputs as never[]);
-    for (const raw of inputs) {
-      const sources = (raw as { sources?: Array<{ id: string }> }).sources;
-      if (Array.isArray(sources)) knownSourceIds.push(...sources.map((s) => s.id));
-    }
-    for (const s of registered) {
-      lexiconVersions[s.book] = s.dataVersion;
-      groupCounts[s.book] = s.groups.length;
-      if (s.reviewStatus !== "approved") unverifiedVersions.push(s.dataVersion);
-    }
-  } else {
-    notReadyReasons.push("data/normalized 无可用韵书快照（A 未发布）");
-  }
+
+  if (loadErrors.length > 0) notReadyReasons.push(...loadErrors);
+  const missing = (Object.keys(MANIFEST) as BookId[]).filter((b) => snapshots[b] === undefined);
+  if (missing.length > 0) notReadyReasons.push(`韵书快照缺失：${missing.join("、")}`);
+
+  const evidenceRegistry = dedupeById(evidence, "evidence", loadErrors);
+  const sourceRegistry = dedupeById(sources, "source", loadErrors);
 
   const contextRules = readJsonArray<ContextRule>("data/context/rules.json");
   if (contextRules.length === 0) notReadyReasons.push("无已发布语境规则（B 的 data/context/rules.json）");
@@ -99,15 +151,53 @@ function loadResourcesOnce(): Resources {
   const ruleCards = readJsonArray<RuleCard>("rules/cards/teaching-v1.json");
   if (ruleCards.length === 0) notReadyReasons.push("无已发布规则卡（C 的 rules/cards/teaching-v1.json）");
 
+  const threeBooks = (["pingshui", "cilin", "xinyun"] as BookId[]).every(
+    (b) => snapshots[b] !== undefined,
+  );
+  const allApproved = threeBooks && unverifiedBooks.length === 0;
+  const ready =
+    threeBooks &&
+    allApproved &&
+    contextRules.length > 0 &&
+    works.length > 0 &&
+    ruleCards.length > 0 &&
+    loadErrors.length === 0;
+  if (threeBooks && !allApproved) {
+    notReadyReasons.push(
+      `快照未审核：${unverifiedBooks.join("、")}（开发联调可分析，发布门槛不放行）`,
+    );
+  }
+
   return {
-    lexiconVersions,
-    unverifiedVersions,
+    snapshots,
+    unverifiedBooks,
+    evidenceRegistry,
+    sourceRegistry,
     contextRules,
     ruleCards,
     works,
-    knownSourceIds: [...new Set(knownSourceIds)].sort(),
-    groupCounts,
-    ready: Object.keys(lexiconVersions).length > 0 && contextRules.length > 0 && works.length > 0 && ruleCards.length > 0,
+    ready,
     notReadyReasons,
+    loadErrors,
   };
+}
+
+let cached: Resources | undefined;
+
+/** 进程内只装载一次：registerSnapshot 禁止重复注册同版本，且请求内同一版本快照符合冻结约定。 */
+export function loadResources(): Resources {
+  if (cached === undefined) cached = loadResourcesOnce();
+  return cached;
+}
+
+export async function lookupCharactersByBook(
+  char: string,
+  book: BookId,
+  dataVersion: string,
+) {
+  return lookupCharacters({ characters: [char], rhymeBook: book, dataVersion });
+}
+
+export function lexiconVersion(book: BookId): string | undefined {
+  return loadResources().snapshots[book]?.dataVersion;
 }

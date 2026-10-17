@@ -42,7 +42,7 @@ function dataNotReady(reasons: string[]): OrchestrationResult {
 
 /** 按固定顺序编排真实分析；任何模块错误经约定映射，未知错误 500 不泄栈。 */
 export async function analyze(request: AnalyzeRequest, resources: Resources): Promise<OrchestrationResult> {
-  const dataVersion = resources.lexiconVersions[request.rhymeBook];
+  const dataVersion = resources.snapshots[request.rhymeBook]?.dataVersion;
   if (dataVersion === undefined) {
     return dataNotReady([
       `韵书 ${request.rhymeBook} 无已装载版本`,
@@ -69,9 +69,26 @@ export async function analyze(request: AnalyzeRequest, resources: Resources): Pr
       dataVersion,
     });
 
-    // 3. 证据装配：A 的 lookup 证据与 B 的语境证据按 ID 去重合并后传入
-    const mergedEvidence = dedupeById<Evidence>(lookup.evidence, []);
-    const mergedSources = dedupeById<SourceRecord>(lookup.sources, []);
+    // 3. 证据装配：A 的 lookup 证据与注册表按 ID 去重合并后传入。
+    // 同 ID 不同内容=资源冲突（冻结契约）：按数据未就绪 503 报告，不静默择一、不算服务端内部错。
+    let mergedEvidence: Evidence[];
+    let mergedSources: SourceRecord[];
+    try {
+      mergedEvidence = dedupeById<Evidence>(lookup.evidence, resources.evidenceRegistry);
+      mergedSources = dedupeById<SourceRecord>(lookup.sources, resources.sourceRegistry);
+    } catch (conflict) {
+      return {
+        kind: "error",
+        status: 503,
+        body: {
+          error: {
+            code: "DATA_NOT_READY",
+            message: `资源冲突（数据侧缺陷，待 A 修复）：${(conflict as Error).message}`,
+            fieldErrors: [],
+          },
+        },
+      };
+    }
     const annotated = resolveReadings({
       poem: parsed,
       lookup: { ...lookup, evidence: mergedEvidence, sources: mergedSources },
@@ -109,14 +126,14 @@ export async function analyze(request: AnalyzeRequest, resources: Resources): Pr
       versions: {
         data: dataVersion,
         rules: "teaching-v1",
-        context: "none-loaded",
-        works: "none-loaded",
+        context: resources.contextRules.length > 0 ? `context-rules:${resources.contextRules.length}` : "none-loaded",
+        works: resources.works.length > 0 ? `works:${resources.works.length}` : "none-loaded",
       },
       policy: {
         rhymeBook: request.rhymeBook,
         toneBasis: request.rhymeBook === "xinyun" ? "mandarin_base" : "historical",
         notice:
-          resources.unverifiedVersions.includes(dataVersion)
+          resources.snapshots[request.rhymeBook]?.reviewStatus !== "approved"
             ? "当前装载的是未审核样本快照，仅供开发联调，不作为发布结论。"
             : "",
       },
@@ -151,11 +168,20 @@ export async function analyze(request: AnalyzeRequest, resources: Resources): Pr
   }
 }
 
+function stableStringify(value: unknown): string {
+  if (value === null || typeof value !== "object") return JSON.stringify(value);
+  if (Array.isArray(value)) return `[${value.map(stableStringify).join(",")}]`;
+  const entries = Object.entries(value as Record<string, unknown>)
+    .filter(([, v]) => v !== undefined)
+    .sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0));
+  return `{${entries.map(([k, v]) => `${JSON.stringify(k)}:${stableStringify(v)}`).join(",")}}`;
+}
+
 function dedupeById<T extends { id: string }>(a: readonly T[], b: readonly T[]): T[] {
   const map = new Map<string, T>();
   for (const item of [...a, ...b]) {
     const prev = map.get(item.id);
-    if (prev !== undefined && JSON.stringify(prev) !== JSON.stringify(item)) {
+    if (prev !== undefined && stableStringify(prev) !== stableStringify(item)) {
       throw new Error(`资源冲突：ID ${item.id} 在不同来源中内容不一致`);
     }
     map.set(item.id, item);

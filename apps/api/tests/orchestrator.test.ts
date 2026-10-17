@@ -8,7 +8,7 @@ const req = (text = POEM, rhymeBook: AnalyzeRequest["rhymeBook"] = "pingshui"): 
   text, rhymeBook, genreHint: "auto", formHint: "auto", ruleSet: "teaching-v1", readingOverrides: [],
 });
 
-describe("真实编排（A 样本快照，当前为未审核数据）", () => {
+describe("真实编排（A 三库全量快照，均未审核）", () => {
   it("解析→查字→消歧链路真实执行；未审核证据被 B 门槛拦截为 503 DATA_NOT_READY（模块码可见）", async () => {
     const r = await analyze(req(), loadResources());
     expect(r.kind).toBe("error");
@@ -27,13 +27,12 @@ describe("真实编排（A 样本快照，当前为未审核数据）", () => {
     expect(JSON.stringify(a)).toBe(JSON.stringify(b));
   });
 
-  it("未装载韵书（词林）→ 503 列明 A 未发布", async () => {
+  it("词林全量已装载：真实编排执行至证据门槛，503 语义与平水一致", async () => {
     const r = await analyze(req(POEM, "cilin"), loadResources());
+    expect(r.kind).toBe("error");
     if (r.kind === "error") {
       expect(r.status).toBe(503);
-      expect(r.body.error.message).toContain("cilin");
-    } else {
-      throw new Error("词林不应有已装载快照");
+      expect(r.body.error.code).toBe("DATA_NOT_READY");
     }
   });
 });

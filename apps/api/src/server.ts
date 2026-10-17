@@ -79,7 +79,7 @@ export function buildApp(options?: { resources?: Resources }): FastifyInstance {
     return {
       status: "ready",
       versions: {
-        data: Object.values(resources.lexiconVersions).join(","),
+        data: Object.values(resources.snapshots).map((x) => `${x.book}=${x.dataVersion}`).join(","),
         rules: "teaching-v1",
         context: "none-loaded",
         works: "none-loaded",
@@ -91,18 +91,17 @@ export function buildApp(options?: { resources?: Resources }): FastifyInstance {
     if (!devMock) {
       return RhymeBooksResponseSchema.parse({
         books: (["pingshui", "cilin", "xinyun"] as const).map((id) => {
-          const version = resources.lexiconVersions[id];
+          const snap = resources.snapshots[id];
           return {
             id,
             name: id === "pingshui" ? "平水韵" : id === "cilin" ? "词林正韵" : "中华新韵",
-            dataVersion: version ?? "not-loaded",
-            groupCount: resources.groupCounts[id] ?? 0,
+            dataVersion: snap?.dataVersion ?? "not-loaded",
+            groupCount: snap?.mainGroups ?? 0,
             coverageNotice:
-              version === undefined
-                ? "未装载：等待正式发布包"
-                : resources.unverifiedVersions.includes(version)
-                  ? `已装载 ${resources.groupCounts[id]} 部（未审核快照，仅供开发联调）`
-                  : `已装载 ${resources.groupCounts[id]} 部`,
+              snap === undefined
+                ? "未装载：manifest 缺失或文件不可读"
+                : `${snap.reviewStatus === "approved" ? "已审核" : "未审核（开发联调口径）"}：主部 ${snap.mainGroups}` +
+                  (snap.subGroups !== snap.mainGroups ? `／声类子卷 ${snap.subGroups}` : ""),
           };
         }),
       });
@@ -144,7 +143,7 @@ export function buildApp(options?: { resources?: Resources }): FastifyInstance {
     if (book !== "pingshui" && book !== "cilin" && book !== "xinyun") {
       return reply.status(422).send(errorBody("VALIDATION_ERROR", "book 参数必须是三韵书之一"));
     }
-    const dataVersion = resources.lexiconVersions[book];
+    const dataVersion = resources.snapshots[book]?.dataVersion;
     if (dataVersion === undefined) {
       return reply.status(503).send(dataNotReady(`韵书 ${book} 无已装载版本`));
     }
@@ -160,17 +159,25 @@ export function buildApp(options?: { resources?: Resources }): FastifyInstance {
 
   app.get("/api/v1/rules/:ruleId", async (request, reply) => {
     if (devMock) return reply.status(503).send(dataNotReady("规则卡查询"));
+    if (resources.ruleCards.length === 0) {
+      return reply.status(503).send(dataNotReady("规则卡库未装载（C 的 rules/cards/teaching-v1.json 未发布）"));
+    }
     const { ruleId } = request.params as { ruleId: string };
     const rule = resources.ruleCards.find((r) => r.id === ruleId);
     if (rule === undefined) return reply.status(404).send(errorBody("NOT_FOUND", `已装载规则目录中不存在 ${ruleId}`));
-    return reply.send({ rule, evidence: [], sources: [] });
+    const evIds = new Set(rule.evidenceIds);
+    return reply.send({
+      rule,
+      evidence: resources.evidenceRegistry.filter((e) => evIds.has(e.id)),
+      sources: resources.sourceRegistry,
+    });
   });
 
   app.get("/api/v1/sources/:sourceId", async (request, reply) => {
     if (devMock) return reply.status(503).send(dataNotReady("来源查询"));
     const { sourceId } = request.params as { sourceId: string };
-    const known = new Set(resources.knownSourceIds);
-    if (!known.has(sourceId)) {
+    const known = resources.sourceRegistry.some((x) => x.id === sourceId);
+    if (!known) {
       return reply.status(404).send(errorBody("NOT_FOUND", `已加载资源中不存在来源 ${sourceId}`));
     }
     return reply.status(503).send(dataNotReady(`来源 ${sourceId} 的装载明细待 A 发布含证据快照后提供`));
