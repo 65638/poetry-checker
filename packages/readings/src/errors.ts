@@ -19,6 +19,11 @@ export const READINGS_ERROR_CODES = [
   "LOOKUP_CANDIDATE_DUPLICATE",
   /** 候选引用了 lookup.evidence 中不存在的证据 ID。 */
   "LOOKUP_EVIDENCE_UNKNOWN",
+  /**
+   * 某字位的候选全部没有已审核证据：契约无法表达“证据待核实”，只能报数据未就绪。
+   * 建议 GLM 映射为 503 DATA_NOT_READY，不得降级成 200。
+   */
+  "LOOKUP_EVIDENCE_UNVERIFIED",
   /** 同一位字被覆盖两次。 */
   "OVERRIDE_DUPLICATE_TOKEN",
   /** 覆盖指向了不属于本篇的字位。 */

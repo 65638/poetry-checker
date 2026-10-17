@@ -73,6 +73,18 @@ export function resolveReadings(input: ResolveReadingsInput): AnnotatedPoem {
       .filter((evidence) => evidence.reviewStatus === "approved")
       .map((evidence) => evidence.id),
   );
+  /**
+   * 语境规则只认 `kind = "context"` 的已审核证据。
+   * 候选自身的韵书归部证据（`rhyme_entry`）不能替代语境证据。
+   */
+  const approvedContextEvidenceIds = new Set(
+    lookup.evidence
+      .filter(
+        (evidence) =>
+          evidence.reviewStatus === "approved" && evidence.kind === "context",
+      )
+      .map((evidence) => evidence.id),
+  );
 
   const orderedTokens = [...poem.tokens].sort(
     (left, right) => left.line - right.line || left.column - right.column,
@@ -82,7 +94,7 @@ export function resolveReadings(input: ResolveReadingsInput): AnnotatedPoem {
     orderedTokens,
     contextRules,
     lookup.book,
-    approvedEvidenceIds,
+    approvedContextEvidenceIds,
   );
 
   const notices = poem.notices.map((notice) => ({ ...notice }));
@@ -290,19 +302,25 @@ function selectReading(input: {
     };
   }
 
-  // 4. 候选自身的证据必须已审核，才能支撑确定读音结论。
+  // 4. 候选自身的证据必须已审核，才能支撑结论。
+  //    全部候选都没有已审核证据时，冻结契约无法表达“证据待核实”（只有 resolved/ambiguous/unknown，
+  //    unknown 又等同于“未收录”，会误导下游）。因此报模块数据未就绪，不返回可被当成结论的状态。
+  //    注意：这里抛错而不是把有效候选清空——不通过丢弃未审核候选来缩小读音集合。
   const backed = candidates.filter((candidate) =>
     isEvidenceBacked(candidate, approvedEvidenceIds),
   );
   if (backed.length === 0) {
-    return {
-      effectiveCandidateIds: [],
-      readingStatus: "unknown",
-      selectedReadingId: null,
-      selectionMethod: "unresolved",
-      reason: `「${token.text}」的 ${candidates.length} 个候选都没有已审核证据：未经审核的证据不能支撑确定读音结论，按未知处理（候选仍完整保留在 candidates 中）`,
-      ruleEvidenceIds: [],
-    };
+    throw new ReadingsError(
+      "LOOKUP_EVIDENCE_UNVERIFIED",
+      `字位 ${token.tokenId}（${token.text}）的 ${candidates.length} 个候选都没有已审核证据：未审核证据不能支撑确定读音结论，也不能降级成 unknown 冒充“未收录”`,
+      {
+        tokenId: token.tokenId,
+        character: token.text,
+        candidateIds: candidates.map((candidate) => candidate.id).join(","),
+        book: lookup.book,
+        dataVersion: lookup.dataVersion,
+      },
+    );
   }
 
   // 5. 唯一候选：只有该候选自身证据已审核时才给 resolved。
@@ -504,7 +522,7 @@ function collectRuleHits(
   tokens: readonly ParsedToken[],
   contextRules: readonly ContextRule[],
   book: LookupResult["book"],
-  approvedEvidenceIds: ReadonlySet<string>,
+  approvedContextEvidenceIds: ReadonlySet<string>,
 ): RuleHits {
   const approved = new Map<string, RuleHit[]>();
   const unverified = new Map<string, RuleHit[]>();
@@ -526,7 +544,7 @@ function collectRuleHits(
     const characters = lineTokens.map((token) => token.text);
     for (const rule of applicableRules) {
       // 规则要生效，必须同时满足：自身已审核 + 引用的证据全部已审核且可解析。
-      const verdict = classifyRule(rule, approvedEvidenceIds);
+      const verdict = classifyRule(rule, approvedContextEvidenceIds);
       const bucket =
         verdict === "approved"
           ? approved
@@ -573,20 +591,24 @@ function collectRuleHits(
 /**
  * 规则能否参与自动选音。
  *
- * - `reviewStatus !== approved` → 不参与；
- * - 已审核，但 `evidenceIds` 为空、引用的证据在 lookup 里找不到、或未审核 → 不参与；
+ * - `reviewStatus !== approved` → 不参与（unverified 桶）；
+ * - 已审核，但 `evidenceIds` 为空、引用的证据在 lookup 里找不到、未审核、
+ *   或**用途不是 `context`**（例如拿候选自己的 `rhyme_entry` 顶替语境依据）→ 不参与
+ *   （insufficientEvidence 桶）；
  * - 两条都满足才允许选音。
  *
  * 三种情况都会记录命中，只是 notice code 不同，不会静默丢弃。
  */
 function classifyRule(
   rule: ContextRule,
-  approvedEvidenceIds: ReadonlySet<string>,
+  approvedContextEvidenceIds: ReadonlySet<string>,
 ): "approved" | "unverified" | "insufficient_evidence" {
   if (rule.reviewStatus !== "approved") return "unverified";
   const hasUsableEvidence =
     rule.evidenceIds.length > 0 &&
-    rule.evidenceIds.every((evidenceId) => approvedEvidenceIds.has(evidenceId));
+    rule.evidenceIds.every((evidenceId) =>
+      approvedContextEvidenceIds.has(evidenceId),
+    );
   return hasUsableEvidence ? "approved" : "insufficient_evidence";
 }
 
