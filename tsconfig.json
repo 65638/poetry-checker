@@ -12,8 +12,13 @@
       "@poetry/readings": [
         "./packages/readings/src/index.ts"
       ],
+<<<<<<< HEAD
       "@poetry/lexicon": [
         "./packages/lexicon/src/index.ts"
+=======
+      "@poetry/genre": [
+        "./packages/genre/src/index.ts"
+>>>>>>> origin/glm/genre-wiring
       ]
     }
   },
