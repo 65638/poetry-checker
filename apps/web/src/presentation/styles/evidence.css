@@ -8,7 +8,12 @@
 .pc-evidence__backdrop {
   position: absolute;
   inset: 0;
-  background: color-mix(in srgb, var(--pc-text) 40%, transparent);
+  background: var(--pc-backdrop);
+  animation: pc-backdrop-in var(--pc-dur-panel) var(--pc-ease-out);
+}
+
+@keyframes pc-backdrop-in {
+  from { opacity: 0; }
 }
 
 .pc-evidence__dialog {
@@ -20,16 +25,16 @@
   flex-direction: column;
   box-sizing: border-box;
   width: min(var(--pc-panel-width), calc(100vw - 2 * var(--pc-space-4)));
-  background: var(--pc-surface);
+  background: var(--pc-surface-sheet);
   border: 1px solid var(--pc-divider);
   border-radius: var(--pc-radius-panel);
-  box-shadow: 0 8px 32px color-mix(in srgb, var(--pc-text) 20%, transparent);
+  box-shadow: var(--pc-shadow-panel);
   overflow: hidden;
-  animation: pc-evidence-in var(--pc-dur-panel) ease-out;
+  animation: pc-evidence-in var(--pc-dur-panel) var(--pc-ease-out);
 }
 
 @keyframes pc-evidence-in {
-  from { opacity: 0; transform: translateX(16px); }
+  from { opacity: 0; transform: translateX(var(--pc-shift-panel)); }
 }
 
 .pc-evidence__header {
@@ -210,5 +215,5 @@
 }
 
 @keyframes pc-evidence-in-up {
-  from { opacity: 0; transform: translateY(16px); }
+  from { opacity: 0; transform: translateY(var(--pc-shift-panel)); }
 }
