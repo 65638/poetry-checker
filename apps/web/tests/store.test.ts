@@ -1,0 +1,412 @@
+/**
+ * 业务状态协调器测试：并发守卫、陈旧失效、换书清覆盖、选音归属、导出快照。
+ * 覆盖任务书 D-D1-02 / 03 / 04 / 06 / 07 / 09。
+ */
+import { describe, expect, it } from "vitest";
+import { CheckerStore } from "../src/app/store";
+import type { InputDraft } from "../src/view-contract";
+import {
+  deferred,
+  errorResponse,
+  loadMockScenario,
+  okResponse,
+  scenarioDraft,
+  scriptedTransport,
+  unabortableTransport,
+  type MockScenario,
+} from "./fixtures";
+
+function draftOf(scenario: MockScenario): InputDraft {
+  return scenarioDraft(scenario);
+}
+
+function makeStore(script: Array<Response | Promise<Response>>, draft = draftOf("pass")) {
+  const transport = scriptedTransport(script);
+  const store = new CheckerStore(draft, { transport });
+  return { store, transport };
+}
+
+describe("首次提交（D-D1-01 的状态层）", () => {
+  it("成功时写入 report/busy=false，并记录请求快照", async () => {
+    const { store, transport } = makeStore([okResponse(loadMockScenario("pass"))]);
+    await store.analyze();
+
+    const state = store.getState();
+    expect(state.report?.summary.status).toBe("pass");
+    expect(state.busy).toBe(false);
+    expect(state.error).toBeNull();
+    expect(state.stale).toBe(false);
+    expect(transport.calls[0]?.body).toMatchObject({
+      text: draftOf("pass").text,
+      rhymeBook: "pingshui",
+      ruleSet: "teaching-v1",
+      readingOverrides: [],
+    });
+  });
+
+  it("busy 在请求期间为 true，完成后为 false", async () => {
+    const pending = deferred<Response>();
+    const { store } = makeStore([pending.promise]);
+    const run = store.analyze();
+    expect(store.getState().busy).toBe(true);
+    pending.resolve(okResponse(loadMockScenario("pass")));
+    await run;
+    expect(store.getState().busy).toBe(false);
+  });
+
+  it("非法草稿不发送请求，给可恢复错误", async () => {
+    const { store, transport } = makeStore([okResponse(loadMockScenario("pass"))], {
+      text: "，，。",
+      rhymeBook: "pingshui",
+      genreHint: "auto",
+      formHint: "auto",
+    });
+    await store.analyze();
+    expect(transport.calls).toHaveLength(0);
+    expect(store.getState().error?.code).toBe("INVALID_DRAFT");
+    expect(store.getState().feedback).toBeNull();
+  });
+});
+
+describe("乱序响应（D-D1-02）", () => {
+  it("请求 A 慢、B 快：A 最后成功也不覆盖 B，且旧收尾不重开 busy", async () => {
+    // 两个请求的草稿相同，所以两份响应的正文都必须对应同一段原文。
+    // 用同一份 pass 报告，只把 B 的 summary 改成 needs_review 以区分来源。
+    const baseReport = loadMockScenario("pass");
+    const variantB: typeof baseReport = {
+      ...baseReport,
+      summary: {
+        status: "needs_review",
+        message: "B 响应的合成场景（同正文，仅改 summary）",
+      },
+    };
+
+    const slow = deferred<Response>();
+    const fast = deferred<Response>();
+    const transport = unabortableTransport([slow.promise, fast.promise]);
+    const store = new CheckerStore(draftOf("pass"), { transport });
+
+    const runA = store.analyze();
+    const runB = store.analyze();
+    expect(store.getState().busy).toBe(true);
+
+    fast.resolve(okResponse(variantB));
+    await runB;
+    expect(store.getState().report?.summary.status).toBe("needs_review");
+    expect(store.getState().busy).toBe(false);
+
+    // A 迟到成功：必须被丢弃，且不能重新打开 busy。
+    slow.resolve(okResponse(baseReport));
+    await runA;
+    expect(store.getState().report?.summary.status).toBe("needs_review");
+    expect(store.getState().busy).toBe(false);
+    expect(store.getState().error).toBeNull();
+  });
+
+  it("请求 A 慢、B 快：A 迟到失败也不能覆盖 B 的成功", async () => {
+    const slow = deferred<Response>();
+    const fast = deferred<Response>();
+    const transport = unabortableTransport([slow.promise, fast.promise]);
+    const store = new CheckerStore(draftOf("pass"), { transport });
+
+    const runA = store.analyze();
+    const runB = store.analyze();
+    fast.resolve(okResponse(loadMockScenario("pass")));
+    await runB;
+
+    slow.resolve(errorResponse("INTERNAL_ERROR", "服务内部错误", 500));
+    await runA;
+
+    expect(store.getState().report?.summary.status).toBe("pass");
+    expect(store.getState().error).toBeNull();
+    expect(store.getState().busy).toBe(false);
+  });
+
+  it("新请求开始时中止旧请求的 signal", async () => {
+    const baseReport = loadMockScenario("pass");
+    const variantB: typeof baseReport = {
+      ...baseReport,
+      summary: {
+        status: "needs_review",
+        message: "B 响应的合成场景（同正文，仅改 summary）",
+      },
+    };
+    const slow = deferred<Response>();
+    const fast = deferred<Response>();
+    const { store, transport } = makeStore([slow.promise, fast.promise]);
+
+    const runA = store.analyze();
+    const runB = store.analyze();
+    expect(transport.calls[0]?.signal?.aborted).toBe(true);
+    expect(transport.calls[1]?.signal?.aborted).toBe(false);
+
+    fast.resolve(okResponse(variantB));
+    slow.resolve(okResponse(baseReport));
+    await Promise.all([runA, runB]);
+    expect(store.getState().report?.summary.status).toBe("needs_review");
+  });
+});
+
+describe("陈旧结果与失效（D-D1-03）", () => {
+  it("请求未完成时只改正文：旧响应不成为当前报告", async () => {
+    const pending = deferred<Response>();
+    const { store } = makeStore([pending.promise], draftOf("pass"));
+
+    const run = store.analyze();
+    store.setDraft({ ...draftOf("pass"), text: `${draftOf("pass").text}\n仄仄平平仄` });
+    pending.resolve(okResponse(loadMockScenario("pass")));
+    await run;
+
+    const state = store.getState();
+    expect(state.report?.summary.status).toBe("pass");
+    // 报告对应的是提交时的正文，与当前草稿不一致 → stale。
+    expect(state.stale).toBe(true);
+    expect(state.selectedTokenId).toBeNull();
+    expect(state.selectedFindingId).toBeNull();
+    expect(state.overrides).toEqual([]);
+  });
+
+  it("改正文使旧报告失效并清空选音与选择", async () => {
+    const { store } = makeStore([okResponse(loadMockScenario("pass"))]);
+    await store.analyze();
+    store.selectFinding("fixture:check");
+    expect(store.getState().selectedFindingId).toBe("fixture:check");
+
+    store.setDraft({ ...draftOf("pass"), text: `${draftOf("pass").text}\n仄仄平平仄` });
+    expect(store.getState().stale).toBe(true);
+    expect(store.getState().selectedFindingId).toBeNull();
+    expect(store.getState().selectedTokenId).toBeNull();
+  });
+
+  it("正文改回与报告一致时 stale 自动解除", async () => {
+    const draft = draftOf("pass");
+    const { store } = makeStore([okResponse(loadMockScenario("pass"))], draft);
+    await store.analyze();
+    store.setDraft({ ...draft, text: `${draft.text}\n仄仄平平仄` });
+    expect(store.getState().stale).toBe(true);
+    store.setDraft({ ...draft });
+    expect(store.getState().stale).toBe(false);
+  });
+
+  it("换韵书清空旧覆盖与选择，旧候选不复用", async () => {
+    const pass = loadMockScenario("pass");
+    const { store } = makeStore([okResponse(pass)], draftOf("pass"));
+    await store.analyze();
+    store.selectToken("l1c1");
+    expect(store.getState().selectedTokenId).toBe("l1c1");
+
+    store.setDraft({ ...draftOf("pass"), rhymeBook: "xinyun" });
+    expect(store.getState().overrides).toEqual([]);
+    expect(store.getState().selectedTokenId).toBeNull();
+  });
+});
+
+describe("选音请求构造与归属校验（D-D1-05 / D-D1-06）", () => {
+  it("合法选音：请求携带当前 inputHash，且覆盖只保留该字位一条", async () => {
+    const pass = loadMockScenario("pass");
+    const transport = scriptedTransport([
+      okResponse(pass),
+      okResponse(loadMockScenario("needs_review")),
+    ]);
+    const store = new CheckerStore(draftOf("pass"), { transport });
+    await store.analyze();
+
+    const reportHash = store.getState().report?.inputHash;
+    const token = pass.poem.tokens[0];
+    expect(token).toBeDefined();
+    const candidate = token!.candidates[0];
+    expect(candidate).toBeDefined();
+
+    await store.chooseReading({
+      tokenId: token!.tokenId,
+      readingId: candidate!.id,
+    });
+
+    expect(transport.calls).toHaveLength(2);
+    const second = transport.calls[1]?.body as {
+      inputHash?: string;
+      readingOverrides: Array<{ tokenId: string; readingId: string }>;
+    };
+    expect(second.inputHash).toBe(reportHash);
+    expect(second.readingOverrides).toEqual([
+      { tokenId: token!.tokenId, readingId: candidate!.id },
+    ]);
+  });
+
+  it("同一字位重复选择只保留最新一条覆盖", async () => {
+    const pass = loadMockScenario("pass");
+    const token = pass.poem.tokens[0]!;
+    const twoToneToken = pass.poem.tokens.find(
+      (item) => item.candidates.length > 1,
+    ) ?? token;
+    const first = twoToneToken.candidates[0]!;
+    const second = twoToneToken.candidates[twoToneToken.candidates.length - 1]!;
+
+    const transport = scriptedTransport([
+      okResponse(pass),
+      okResponse(pass),
+      okResponse(pass),
+    ]);
+    const store = new CheckerStore(draftOf("pass"), { transport });
+    await store.analyze();
+
+    await store.chooseReading({ tokenId: twoToneToken.tokenId, readingId: first.id });
+    const afterFirst = store.getState().overrides.filter(
+      (item) => item.tokenId === twoToneToken.tokenId,
+    );
+    expect(afterFirst).toHaveLength(1);
+
+    if (first.id !== second.id) {
+      await store.chooseReading({ tokenId: twoToneToken.tokenId, readingId: second.id });
+      const afterSecond = store.getState().overrides.filter(
+        (item) => item.tokenId === twoToneToken.tokenId,
+      );
+      expect(afterSecond).toEqual([
+        { tokenId: twoToneToken.tokenId, readingId: second.id },
+      ]);
+    }
+  });
+
+  it("外字 readingId 不发请求，给可理解反馈", async () => {
+    const pass = loadMockScenario("pass");
+    const transport = scriptedTransport([okResponse(pass)]);
+    const store = new CheckerStore(draftOf("pass"), { transport });
+    await store.analyze();
+    const before = transport.calls.length;
+
+    await store.chooseReading({ tokenId: "l1c1", readingId: "fixture:reading:无:Z" });
+
+    expect(transport.calls.length).toBe(before);
+    expect(store.getState().feedback).toContain("不属于字位");
+  });
+
+  it("不属于当前报告的 tokenId 不发请求", async () => {
+    const pass = loadMockScenario("pass");
+    const transport = scriptedTransport([okResponse(pass)]);
+    const store = new CheckerStore(draftOf("pass"), { transport });
+    await store.analyze();
+    const before = transport.calls.length;
+
+    await store.chooseReading({ tokenId: "l9c9", readingId: "fixture:reading:平:P" });
+    expect(transport.calls.length).toBe(before);
+    expect(store.getState().feedback).toContain("不属于当前报告");
+  });
+
+  it("stale 报告选音被拒绝（业务层也拦，不只靠按钮禁用）", async () => {
+    const pass = loadMockScenario("pass");
+    const transport = scriptedTransport([okResponse(pass)]);
+    const store = new CheckerStore(draftOf("pass"), { transport });
+    await store.analyze();
+    store.setDraft({ ...draftOf("pass"), text: `${draftOf("pass").text}\n仄仄平平仄` });
+    const before = transport.calls.length;
+
+    const token = pass.poem.tokens[0]!;
+    await store.chooseReading({
+      tokenId: token.tokenId,
+      readingId: token.candidates[0]!.id,
+    });
+
+    expect(transport.calls.length).toBe(before);
+    expect(store.getState().feedback).toContain("已不对应当前输入");
+  });
+
+  it("busy 时选音被拒绝", async () => {
+    const pass = loadMockScenario("pass");
+    const pending = deferred<Response>();
+    const transport = scriptedTransport([okResponse(pass), pending.promise]);
+    const store = new CheckerStore(draftOf("pass"), { transport });
+    await store.analyze();
+
+    const token = pass.poem.tokens[0]!;
+    const run = store.analyze();
+    await store.chooseReading({
+      tokenId: token.tokenId,
+      readingId: token.candidates[0]!.id,
+    });
+    expect(store.getState().feedback).toContain("正在分析");
+
+    pending.resolve(okResponse(pass));
+    await run;
+  });
+});
+
+describe("导出与复制不重新判定（D-D1-10 状态层）", () => {
+  it("复制/导出使用报告快照，不读用户随后改过的草稿", async () => {
+    const pass = loadMockScenario("pass");
+    const written: string[] = [];
+    const downloaded: Array<{ filename: string; json: string }> = [];
+    const transport = scriptedTransport([okResponse(pass)]);
+    const store = new CheckerStore(draftOf("pass"), {
+      transport,
+      writeText: async (text) => {
+        written.push(text);
+      },
+      download: (filename, json) => {
+        downloaded.push({ filename, json });
+      },
+    });
+    await store.analyze();
+
+    // 用户随后改了草稿
+    store.setDraft({ ...draftOf("pass"), text: "完全不同的正文，含汉字。" });
+
+    await store.copySummary();
+    store.downloadReport();
+
+    // stale 时应阻止导出
+    expect(written).toHaveLength(0);
+    expect(downloaded).toHaveLength(0);
+    expect(store.getState().feedback).toContain("已阻止");
+  });
+
+  it("报告有效时导出包含原文、请求快照、版本与不确定项", async () => {
+    const pass = loadMockScenario("needs_review");
+    const downloaded: Array<{ filename: string; json: string }> = [];
+    const transport = scriptedTransport([okResponse(pass)]);
+    const store = new CheckerStore(draftOf("needs_review"), {
+      transport,
+      download: (filename, json) => {
+        downloaded.push({ filename, json });
+      },
+      writeText: async () => undefined,
+    });
+    await store.analyze();
+    store.downloadReport();
+
+    expect(downloaded).toHaveLength(1);
+    const payload = JSON.parse(downloaded[0]!.json) as {
+      originalText: string;
+      request: { text: string };
+      uncertainties: { ambiguousReadings: unknown[] };
+      report: { summary: { status: string } };
+    };
+    expect(payload.originalText).toBe(pass.poem.originalText);
+    expect(payload.request.text).toBe(pass.poem.originalText);
+    expect(payload.report.summary.status).toBe("needs_review");
+    expect(payload.uncertainties).toBeDefined();
+  });
+});
+
+describe("错误保留输入（D-D1-07 状态层）", () => {
+  it("503 后保留正文并给出可恢复错误，不显示缓存成功", async () => {
+    const pass = loadMockScenario("pass");
+    const transport = scriptedTransport([
+      okResponse(pass),
+      errorResponse("DATA_NOT_READY", "数据尚未接入", 503),
+    ]);
+    const store = new CheckerStore(draftOf("pass"), { transport });
+    await store.analyze();
+    expect(store.getState().report?.summary.status).toBe("pass");
+
+    const changed = { ...draftOf("pass"), text: `${draftOf("pass").text}\n仄仄平平仄` };
+    store.setDraft(changed);
+    await store.analyze();
+
+    const state = store.getState();
+    expect(state.draft.text).toBe(changed.text);
+    expect(state.error?.code).toBe("HTTP_503");
+    // 旧报告仍在，但必须标 stale 且不能当作本次成功。
+    expect(state.report?.summary.status).toBe("pass");
+    expect(state.stale).toBe(true);
+  });
+});
