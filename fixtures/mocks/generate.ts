@@ -44,19 +44,20 @@ function buildTokens(
   text: string,
   tonesPerToken: Tone[][],
 ): AnnotatedToken[] {
-  const chars = [...text];
   const tokens: AnnotatedToken[] = [];
-  let codePointIndex = 0;
 
   let line = 1;
   let column = 0;
-  for (const char of chars) {
-    const start = text.length - text.slice(codePointIndex).length;
-    // 用 slice 反推 UTF-16 偏移，避免手算代理对。
+  // 码点下标用于取声调；UTF-16 偏移用于切片，两者必须分开推进。
+  let codePointIndex = 0;
+  let utf16Offset = 0;
+  for (const char of text) {
+    const start = utf16Offset;
     if (char === "\n") {
       line += 1;
       column = 0;
       codePointIndex += 1;
+      utf16Offset += char.length;
       continue;
     }
     column += 1;
@@ -108,6 +109,7 @@ function buildTokens(
       evidenceIds: [`fixture:evidence:${evidenceKey}`],
     });
     codePointIndex += 1;
+    utf16Offset += char.length;
   }
   return tokens;
 }
@@ -142,28 +144,30 @@ interface ScenarioInput {
 }
 
 function buildScenario(input: ScenarioInput): AnalysisResponse {
-  const chars = [...input.text];
   const specs: TokenSpec[] = [];
   let line = 1;
   let column = 0;
-  let index = 0;
-  for (const char of chars) {
+  let codePointIndex = 0;
+  let utf16Offset = 0;
+  for (const char of input.text) {
     if (char === "\n") {
       line += 1;
       column = 0;
-      index += 1;
+      codePointIndex += 1;
+      utf16Offset += char.length;
       continue;
     }
     column += 1;
-    const start = input.text.length - input.text.slice(index).length;
+    const start = utf16Offset;
     specs.push({
       line,
       column,
       start,
       end: start + char.length,
-      effectiveTones: input.tones[index] ?? ["P"],
+      effectiveTones: input.tones[codePointIndex] ?? ["P"],
     });
-    index += 1;
+    codePointIndex += 1;
+    utf16Offset += char.length;
   }
   const tokens = buildTokens(input.text, input.tones);
   const inputHash = sha256(input.text);
@@ -420,6 +424,24 @@ write(
   }),
 );
 
+// 含补充平面汉字（BMP 之外）的合法报告。
+// 「𠀀」是一个 Unicode 码点、两个 UTF-16 码元；用来回归
+// 「字位数按码点计、切片按 UTF-16」这条坐标约定，防止合法报告被误拒。
+const supplementaryLine = "\u{20000}仄平平仄";
+write(
+  "supplementary",
+  buildScenario({
+    text: [supplementaryLine, L2, L3, L4].join("\n"),
+    tones: tonesFor(supplementaryLine, L2, L3, L4),
+    summaryStatus: "pass",
+    checkStatus: "pass",
+    genreFamily: "regulated",
+    applicability: "applicable",
+    rhymeTokenIds: ["l2c5", "l4c5"],
+    message: "合成 supplementary 场景：含补充平面汉字的合法报告",
+  }),
+);
+
 writeFileSync(
   join(OUT_DIR, "README.md"),
   [
@@ -436,6 +458,7 @@ writeFileSync(
     "| not_applicable.json | not_applicable | 古体，不适用近体规则 |",
     "| unsupported.json | unsupported | 未支持形式，不得显示通过 |",
     "| mismatch.json | pass | Schema 合法但行文本与字位错位，前端必须拒绝 |",
+    "| supplementary.json | pass | 含补充平面汉字（`𠀀`）的合法报告，按码点计字位 |",
     "",
     "所有正文均为 `平/仄` 字面量构造的合成文本，**不是**真实名篇，",
     "不得挂《登鹳雀楼》《静夜思》《黄鹤楼》的名字，也不得进入生产分析路径。",

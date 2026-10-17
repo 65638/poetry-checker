@@ -41,7 +41,7 @@ pnpm verify                           # 根：lint + 双 typecheck + 全量测�
 ```
 
 D1 实测结果（Node 24.19.0 / pnpm 11.25.0）：全量 **101 项测试通过**
-（36 基线 + 65 新增）、根与 web 的 `tsc --noEmit` 通过、`eslint .` 通过、
+（36 基线 + 80 新增）、根与 web 的 `tsc --noEmit` 通过、`eslint .` 通过、
 `vite build` 通过；`dev:api` + `dev:web` 真实冒烟通过。
 
 ## 开发场景
@@ -49,7 +49,8 @@ D1 实测结果（Node 24.19.0 / pnpm 11.25.0）：全量 **101 项测试通过*
 `fixtures/mocks/` 由 `node fixtures/mocks/generate.ts` 生成，全部通过
 `AnalysisResponseSchema`。合成正文用「平/仄」字面量构造，**不是真实名篇**，
 不进入生产分析路径。`mismatch.json` 故意让行文本与字位错位，仅用于验证
-前端会拒绝错配报告。
+前端会拒绝错配报告；`supplementary.json` 含补充平面汉字（`𠀀`），
+用于回归「字位按码点计、切片按 UTF-16」的坐标约定。
 
 生产入口 `src/main.tsx` 只使用真实 HTTP transport，不导入开发场景，
 请求失败时也不回退 mock。

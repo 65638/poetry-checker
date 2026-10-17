@@ -62,9 +62,14 @@ function statusToCode(status: number): ApiError["code"] {
 }
 
 /**
- * 语义核对：Schema 只保证结构合法，这里再确认「报告内部自洽」——
- * 字位切片的文本、行文本、以及行长必须一致。
- * 用来拦截「Schema 合法但行文本与字位错位」的响应（D-D1-08）。
+ * 语义核对：公共 Schema 已保证结构合法（含「originalText 切片 == token.text」），
+ * 这里补 Schema 不覆盖的**行级自洽**——行文本必须等于其字位文本的拼接，
+ * 且行内字位数必须按 **Unicode 码点** 计。
+ *
+ * 两套坐标必须分开：
+ * - `startUtf16` / `endUtf16` 是 **UTF-16 码元** 下标，用于切 `originalText`；
+ * - 字位数按 **Unicode 码点** 计，因此 `𠀀`（1 码点、2 码元）只能算一个字位。
+ * 误用 `String.length` 会把补充平面汉字算成两个，导致合法报告被误拒。
  */
 export function findInternalMismatch(report: {
   poem: {
@@ -75,9 +80,9 @@ export function findInternalMismatch(report: {
 }): string | null {
   const byTokenId = new Map(report.poem.tokens.map((token) => [token.tokenId, token]));
   for (const token of report.poem.tokens) {
-    const slice = report.poem.originalText.slice(token.startUtf16, token.endUtf16);
-    if (slice !== token.text) {
-      return `字位 ${token.tokenId} 的切片与声明文本不符`;
+    // 单个字位必须恰好是一个 Unicode 码点（不能是半个代理对，也不能是多字）。
+    if ([...token.text].length !== 1) {
+      return `字位 ${token.tokenId} 的文本不是单个 Unicode 码点`;
     }
   }
   for (const line of report.poem.lines) {
@@ -87,7 +92,8 @@ export function findInternalMismatch(report: {
     if (expected !== line.text) {
       return `第 ${line.line} 行的文本与字位组成不符`;
     }
-    if (line.text.length !== line.tokenIds.length) {
+    // 按码点计数，而非 UTF-16 码元数。
+    if ([...line.text].length !== line.tokenIds.length) {
       return `第 ${line.line} 行的字符数与字位数不符`;
     }
   }

@@ -11,6 +11,7 @@
 | not_applicable.json | not_applicable | 古体，不适用近体规则 |
 | unsupported.json | unsupported | 未支持形式，不得显示通过 |
 | mismatch.json | pass | Schema 合法但行文本与字位错位，前端必须拒绝 |
+| supplementary.json | pass | 含补充平面汉字（`𠀀`）的合法报告，按码点计字位 |
 
 所有正文均为 `平/仄` 字面量构造的合成文本，**不是**真实名篇，
 不得挂《登鹳雀楼》《静夜思》《黄鹤楼》的名字，也不得进入生产分析路径。

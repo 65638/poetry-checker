@@ -40,8 +40,8 @@ Vite/TS 配置、根配置、`packages/contracts`、`apps/api`、金标准。
 ## 执行命令与结果
 
 ```text
-vitest run apps/web/tests              → 65 passed
-vitest run                             → 101 passed（36 基线 + 65 新增）
+vitest run apps/web/tests              → 80 passed
+vitest run                             → 116 passed（36 基线 + 80 新增）
 tsc --noEmit                           → exit 0
 tsc --noEmit -p apps/web/tsconfig.json → exit 0
 eslint .                               → exit 0
@@ -60,6 +60,48 @@ POST /api/v1/analyze       → 200，summary.status=pass，poem.originalText 与
 
 **未执行**：DOM 组件测试（缺 jsdom/Testing Library）、E2E、375/768/1440px 视觉验收、
 真实三库与真实名篇、`pnpm verify` 完整串联（见下节环境说明）。
+
+## 审计批次修复（状态与字符）
+
+评审指出三项缺陷，均已修复并加独立回归。
+
+### 修复 1：汉字码点与 UTF-16 偏移分开
+
+**复现**：正文含补充平面汉字（如 `𠀀`，1 码点 = 2 UTF-16 码元）时，
+`findInternalMismatch` 用 `line.text.length` 与字位数比较，把该字算成 2 个字，
+合法报告被拒为 `RESPONSE_INPUT_MISMATCH`。
+
+**修复**：行长改为 `[...line.text].length`（码点）比较；`startUtf16/endUtf16`
+继续用于切片。生成器同步修正：码点下标取声调、UTF-16 偏移做切片，两者分开推进。
+
+**回归**：`fixtures/mocks/supplementary.json`（含 `𠀀` 的合法报告）；
+`api-client.test.ts` 断言该报告被接受，且真错位报告仍被拒绝。
+
+### 修复 2：选音提交与报告快照保持一致
+
+**复现**：`chooseReading` 先写 overrides 再发请求；重算失败时 `report`/
+`requestSnapshot` 还是旧的，`stale` 仍为 false，导出会输出「新覆盖 + 旧快照」。
+
+**修复**：状态拆成 `overrides`（= 成功报告的 `requestSnapshot.readingOverrides`）
+与 `pendingOverrides`（待提交）。成功时原子提交 report/requestSnapshot/overrides；
+失败或中止时 pending 回退到已生效覆盖；请求进行中禁止复制/导出。
+`stale` 只有唯一来源 `deriveStale`（当前草稿 vs 报告快照），失败路径不能手写。
+
+**回归**：成功→选音→503、成功→选音→网络失败、请求进行中三类场景，
+断言导出 `readingOverrides` 与 `request.readingOverrides` 始终一致。
+
+### 修复 3：编辑但不重新提交也要让旧响应失效
+
+**复现**：慢选音请求在途时只改正文（不重新提交），`runId` 不变，
+旧响应到达后仍会重写 report 与 overrides。
+
+**修复**：`setDraft` 对身份参数（正文/韵书/体裁/体式）变化调用
+`invalidateInFlight()`：递增请求身份并 abort；旧响应的成功、失败与收尾
+都因身份不匹配被丢弃。使用**忽略 abort** 的 transport 做回归，确保验证的是
+身份守卫而不是「恰好没发出请求」。
+
+**回归**：慢选音→改正文→旧响应返回（覆盖保持空）、改回原文也不复活、
+切韵书失效、形式参数变化失效、迟到失败不覆盖当前状态。
 
 ## 环境说明（Windows 符号链接）
 
@@ -88,6 +130,11 @@ node-linker=hoisted
 3. 示例入口正文为空：等待 E 提供审核后的来源与版本，不把合成 fixture 挂名真实名篇。
 4. 真实 API 的三库、真实名篇、选音生效待 D2；当前 mock 的限制见任务书第 8 节。
 5. 开发场景 `mismatch.json` 故意错位，仅用于验证前端拒绝；不得进入任何展示路径。
+   `supplementary.json` 含补充平面汉字，仅用于坐标回归。
+6. 本批未执行 DOM/E2E/真实名篇链路；示例正文仍等待 E 的来源与版本核验，
+   没有把合成数据挂名真实作品。
+7. 已具备转正式 PR 的条件需组长确认：验证只到本机实际执行，
+   未覆盖浏览器视觉与真实 API 链路。
 
 ## 集成方法
 

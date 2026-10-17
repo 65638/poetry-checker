@@ -21,7 +21,8 @@ export type MockScenario =
   | "needs_review"
   | "not_applicable"
   | "unsupported"
-  | "mismatch";
+  | "mismatch"
+  | "supplementary";
 
 export function loadMockScenario(name: MockScenario): AnalysisResponse {
   const raw = readFileSync(join(mocksDir, `${name}.json`), "utf8");

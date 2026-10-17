@@ -99,8 +99,8 @@
 
 | 命令（等价） | 结果 |
 | --- | --- |
-| `vitest run apps/web/tests` | 65 项通过 |
-| `vitest run`（全量） | **101 项通过**（36 基线 + 65 新增） |
+| `vitest run apps/web/tests` | 80 项通过 |
+| `vitest run`（全量） | **116 项通过**（36 基线 + 80 新增） |
 | `tsc --noEmit`（根） | 通过 |
 | `tsc --noEmit -p apps/web/tsconfig.json` | 通过 |
 | `eslint .` | 通过 |
@@ -109,6 +109,16 @@
 
 未执行：DOM 组件测试（缺 jsdom/Testing Library）、E2E、375/768/1440 视觉验收、
 真实三库与真实名篇。这些按任务书属于后续批次或设计方/E 的范围。
+
+## 8.1 审计修复（三项）
+
+| 编号 | 问题 | 修复策略 |
+| --- | --- | --- |
+| 修复 1 | 行长度用 `String.length`（UTF-16 码元）与字位数比较，`𠀀` 被算成 2，合法报告被误拒 | 行长统一按 `[...text].length`（码点）比较；UTF-16 下标仍用于切片。新增 `supplementary.json` 回归 |
+| 修复 2 | `chooseReading` 先改 overrides 再发请求，失败时导出会用「新覆盖 + 旧快照」 | 拆分 `overrides`（已成功报告的覆盖）与 `pendingOverrides`（待提交）；成功时原子提交 report/requestSnapshot/overrides；失败回退 pending；请求中禁止导出 |
+| 修复 3 | 编辑但不重提交时 `runId` 不变，在途选音响应迟到仍会改写 report/overrides | `setDraft` 对身份参数（正文/韵书/体裁/体式）变化递增请求身份并 abort；迟到响应由身份守卫丢弃，成功/失败/收尾都不写状态 |
+
+`stale` 只有唯一来源 `deriveStale`（当前草稿 vs 报告快照），任何失败路径都不能手写。
 
 ## 9. 待办
 

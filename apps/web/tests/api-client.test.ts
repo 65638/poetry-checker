@@ -186,6 +186,30 @@ describe("analyze 的错误映射（D-D1-07）", () => {
 });
 
 describe("analyze 拒绝不匹配的响应（D-D1-08）", () => {
+  it("含补充平面汉字的合法报告必须被接受（码点 vs UTF-16 分离）", async () => {
+    const report = loadMockScenario("supplementary");
+    const draft = scenarioDraft("supplementary");
+
+    // 前提：正文确实含补充平面汉字（1 码点 = 2 UTF-16 码元），
+    // 行长度按 UTF-16 length 会与字位数不等。
+    const supplementary = report.poem.tokens.find(
+      (token) => [...token.text].length === 1 && token.text.length === 2,
+    );
+    expect(supplementary).toBeDefined();
+    const line = report.poem.lines.find((item) =>
+      item.tokenIds.includes(supplementary!.tokenId),
+    );
+    expect(line).toBeDefined();
+    expect(line!.text.length).toBeGreaterThan(line!.tokenIds.length);
+
+    const transport = scriptedTransport([okResponse(report)]);
+    const outcome = await analyze(draft, transport);
+
+    expect(outcome.ok).toBe(true);
+    if (!outcome.ok) return;
+    expect(outcome.report.summary.status).toBe("pass");
+  });
+
   it("Schema 合法但原文与请求不同 → RESPONSE_INPUT_MISMATCH", async () => {
     const requestDraft = scenarioDraft("pass");
     const mismatchedReport = loadMockScenario("mismatch");
@@ -199,6 +223,36 @@ describe("analyze 拒绝不匹配的响应（D-D1-08）", () => {
     if (outcome.ok) return;
     expect(outcome.error.code).toBe("RESPONSE_INPUT_MISMATCH");
     expect(outcome.error.userMessage).toContain("不一致");
+  });
+
+  it("字位文本与切片不符由公共 Schema 拦截（业务层不重复实现）", async () => {
+    const report = loadMockScenario("pass");
+    const corrupted = structuredClone(report);
+    const target = corrupted.poem.tokens[0]!;
+    const source = corrupted.poem.tokens.find(
+      (token) => token.text !== target.text,
+    );
+    expect(source).toBeDefined();
+    target.text = source!.text;
+
+    const transport = scriptedTransport([okResponse(corrupted)]);
+    const outcome = await analyze(scenarioDraft("pass"), transport);
+
+    expect(outcome.ok).toBe(false);
+    if (outcome.ok) return;
+    // 公共 Schema 的 superRefine 已核对「originalText 切片 == token.text」。
+    expect(outcome.error.code).toBe("BAD_SCHEMA");
+  });
+
+  it("行文本与字位组成不符（Schema 合法）由业务层拦截", async () => {
+    const report = loadMockScenario("mismatch");
+    const transport = scriptedTransport([okResponse(report)]);
+    const outcome = await analyze(scenarioDraft("pass"), transport);
+
+    expect(outcome.ok).toBe(false);
+    if (outcome.ok) return;
+    expect(outcome.error.code).toBe("RESPONSE_INPUT_MISMATCH");
+    expect(outcome.error.message).toContain("行");
   });
 
   it("韵书与请求不同 → RESPONSE_BOOK_MISMATCH", async () => {

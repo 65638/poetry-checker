@@ -36,6 +36,21 @@ describe("开发场景自检", () => {
     expect(new Set(texts).size).toBe(texts.length);
   });
 
+  it("supplementary 场景含补充平面汉字，且字位按码点计", () => {
+    const report = loadMockScenario("supplementary");
+    const token = report.poem.tokens.find(
+      (item) => [...item.text].length === 1 && item.text.length === 2,
+    );
+    expect(token).toBeDefined();
+    const line = report.poem.lines.find((item) =>
+      item.tokenIds.includes(token!.tokenId),
+    );
+    expect(line).toBeDefined();
+    // 行文本的 UTF-16 长度会大于字位数，但码点数必须相等。
+    expect([...line!.text].length).toBe(line!.tokenIds.length);
+    expect(line!.text.length).toBeGreaterThan(line!.tokenIds.length);
+  });
+
   it("needs_review 场景确实含读音未定字位", () => {
     const report = loadMockScenario("needs_review");
     const unresolved = report.poem.tokens.filter(
