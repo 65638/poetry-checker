@@ -1,0 +1,28 @@
+{
+  "id": "golden-jingyesi-ps-v1",
+  "title": "静夜思",
+  "author": "李白",
+  "text": "床前明月光，疑是地上霜。举头望明月，低头思故乡。",
+  "sourceCandidates": [
+    {
+      "kind": "lead",
+      "value": null,
+      "note": "待查：全唐诗李白卷；此版为通行本，异文（如“床前看月光”）需另立版本登记"
+    }
+  ],
+  "request": {
+    "rhymeBook": "pingshui",
+    "genreHint": "auto",
+    "formHint": "auto",
+    "ruleSet": "teaching-v1",
+    "readingOverrides": []
+  },
+  "assertions": [
+    { "path": "genre.formFamily", "equals": "ancient" },
+    { "path": "genre.basisType", "equals": "reviewed_metadata" }
+  ],
+  "reviewStatus": "pending",
+  "reviewers": [],
+  "evidenceIds": [],
+  "notes": "本项目选取的古绝案例：接近体规则不适用，但不得把“任意四句五言不合谱”一律判古体。正文版本与体裁来源待人工核实。"
+}

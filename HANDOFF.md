@@ -200,3 +200,78 @@ React 19.3.1 / Vite 8.3.4 / plugin-react 6.1.2（registry 实查锁定）；web 
 本批内容边界：M2 解析与候选传播（B）、readings 包接线与 API 错误映射（GLM，14 个错误码显式映射，503 族统一 DATA_NOT_READY 错误体）。B 的证据门槛三连修（8e48d10 未审核证据不支撑确定读音 → 6e8eb16 显式数据未就绪 → d8b4ecf 堵住用户覆盖/规则选音/歧义保留三条绕过路径）全部包含。
 
 尚未包含：真实韵书字表（A）、体裁（E）、完整格律判定（Codex 下一批）、真实 API 编排（GLM，等前三者就绪）。analyze 仍为 fixture mock。
+
+---
+
+# E 交付：D1 体裁最小分支与金标准审核框架（2026-10-17）
+
+分支 `feat/e-d1-genre`（基线 `main` = `0a94212`；`contract-v1` 仍为 `9b27322`，**未改契约**）。
+
+## 已实现
+
+- `packages/genre/src/classify.ts`：`classifyGenre` 最小可靠分支——用户显式古体、显式近体形式、用户选择近体、
+  auto 的形制判定、特征完整度门槛、并列（<0.05）、关键可判率（<0.8）、`quality=needs_review`、排律/超支持形制。
+  `selectedTemplateId` 只在“唯一候选且四项特征齐全”时给出；其余一律 `null` 并保留候选。
+- `packages/genre/src/errors.ts`：`GENRE_ERROR_CODES` 与 `GenreError`；未实现分支抛 `GENRE_BRANCH_PENDING`
+  （`branch=auto-high-confidence`），**不用 uncertain 占位冒充完成**。
+- `packages/genre/src/golden-case.ts`：手写 GoldenCase 校验器（不依赖 zod 传递依赖），`approved` 必须有审核人与可解析证据；
+  批量校验拒绝重复 `id`；`request` 直接复用冻结的 `AnalyzeRequestSchema`。
+- `packages/genre/tests`：fixtures 与 24 项测试（E-D1-01 ~ E-D1-08 + 未实现分支/非法组合/排律/未知字过多/不可变/确定性）。
+- `tests/golden/cases/*.json`：登鹳雀楼、静夜思、黄鹤楼三首 **pending** 档案（结构有效、来源待核实、未运行）。
+- `data/works/`：候选登记与待审核清单，**0 条 approved**，不加载为元数据。
+- 文档：`docs/test-report.md`（运行台账）、`docs/limitations.md`（已知边界）、`tests/integration/acceptance-plan.md`（D2–D5 矩阵，全部未运行）。
+
+## 验证（实际结果）
+
+- `pnpm install --frozen-lockfile` exit 0（271 条锁定项）。
+- `pnpm verify` 改动前 exit 0（135 项）；改动后 exit 0（**159 项**，12 个测试文件）。
+- `pnpm exec vitest run packages/genre/tests`：2 文件 **24 项通过**。
+- `pnpm typecheck` exit 0；`pnpm exec eslint packages/genre` exit 0。
+- 环境：Node v24.21.0 / pnpm 11.25.0（任务书要求 24.19.0，`engines >=24 <25` 满足，已记录）。
+
+## 未做 / 待人工核实
+
+- **真实作品：3 首待审核、真实分析 0/3 未运行**（分开报，不因结构校验通过而视为已审核）。
+- auto 高吻合自动判定、`approved` 正文指纹匹配（D2）。
+- API 接线、错误码映射（GLM）；真实韵书/读音/格律（A/B/Codex）；前端展示（D）。
+- 三首正文的权威出处、异文版本、体裁依据、读音依据均待人工核实。
+
+## 待 GLM
+
+1. `packages/genre/package.json` 补 `exports` / `build` / `test` / `dependencies: @poetry/contracts` 与 `tsconfig.build.json`
+   （当前该包不能按包名被其它包导入，跨包导入依赖根链接与 tsconfig paths）。
+2. `GENRE_BRANCH_PENDING` 到 HTTP 状态的映射建议（应显式“未就绪”，不得捕获为成功或降级为 uncertain）。
+3. 若要求 GoldenCase 用 Zod，需为 genre 显式加 `zod` 依赖；当前为手写校验。
+
+---
+
+# E 追加：D2 已审核正文指纹匹配（2026-10-17）
+
+同一分支 `feat/e-d1-genre` 追加提交（未改契约、未触碰他人路径）。
+
+## 已实现
+
+- `packages/genre/src/fingerprint.ts`：`normalizeForFingerprint`（只保留汉字，去标点/空白，**不**做简繁转换与异文归并）
+  与 `fingerprintText`（规范化后 SHA-256）；`isHanCharacter` 与解析侧同判定、不引入跨包依赖。
+- `classifyGenre` 规则 3 落地：`approved` 元数据按 `approvedTextFingerprints` 精确匹配——
+  - 命中 1 条 → 采用其 formFamily/formId/historicalTags，`basisType=reviewed_metadata`，透传 `evidenceIds`；
+  - 命中多条 → `uncertain` 并列出命中 id（疑似异文/重复登记），交人工裁定；
+  - 无命中但有 approved 元数据 → 明确写入 reasons：“指纹与本诗不一致，未作为识别依据”；
+  - `unverified` 元数据一律不参与；用户显式选择优先于元数据。
+
+## 验证
+
+- `pnpm exec vitest run packages/genre/tests`：**29 项通过**（D1 的 24 + 指纹 5）。
+- `pnpm verify` exit 0：12 文件 **164 项**；`typecheck` / `prettier --check` 通过。
+
+## 仍待
+
+- 真实作品分析 0/3 未运行；异文规则、指纹版本管理、真实语料接入未做。
+- 高吻合自动判定分支仍抛 `GENRE_BRANCH_PENDING`（等核心补齐 relationFit/rhymeFit 与样本校准）。
+- 包配置与 API 接线仍待 GLM。
+
+## 交接单
+
+给组长的验收单（交付清单、行为规格、决策项、GLM/C 请求、复现步骤、回滚）见
+[`docs/handoffs/0005-e-genre-d1.md`](docs/handoffs/0005-e-genre-d1.md)；对应 PR
+[#4](https://github.com/65638/poetry-checker/pull/4)（draft）。
