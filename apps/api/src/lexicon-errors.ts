@@ -1,4 +1,14 @@
-import { isLexiconError, type LexiconErrorCode } from "@poetry/lexicon";
+import { isLexiconError } from "@poetry/lexicon";
+
+// A 未从包入口导出码联合（errors.ts 内部类型）；此处本地镜像六码。
+// A 新增错误码时此处与测试需同步（无运行时数组可穷尽，靠人工同步 + 测试清单）。
+type LexiconErrorCode =
+  | "LEXICON_INVALID_INPUT"
+  | "LEXICON_VERSION_NOT_FOUND"
+  | "LEXICON_BOOK_MISMATCH"
+  | "LEXICON_DUPLICATE_ID"
+  | "LEXICON_REFERENCE_UNRESOLVED"
+  | "LEXICON_INVALID_RESULT";
 
 /**
  * lexicon 错误码 → HTTP 映射（依据 packages/lexicon/src/errors.ts 语义）。
@@ -16,7 +26,7 @@ const LEXICON_HTTP_STATUS: Record<LexiconErrorCode, number> = {
 
 export function lexiconErrorStatus(code: string): number {
   if (Object.prototype.hasOwnProperty.call(LEXICON_HTTP_STATUS, code)) {
-    return LEXICON_HTTP_STATUS[code as LexiconErrorCode];
+    return LEXICON_HTTP_STATUS[code as LexiconErrorCode] as number;
   }
   if (code.startsWith("LEXICON_INVALID_") || code.startsWith("LEXICON_BOOK_")) return 422;
   if (code.startsWith("LEXICON_VERSION_")) return 503;

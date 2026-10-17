@@ -3,30 +3,13 @@
   "compilerOptions": {
     "noEmit": true,
     "paths": {
-      "@poetry/contracts": [
-        "./packages/contracts/src/index.ts"
-      ],
-      "@poetry/prosody": [
-        "./packages/prosody/src/index.ts"
-      ],
-      "@poetry/readings": [
-        "./packages/readings/src/index.ts"
-      ],
-      "@poetry/lexicon": [
-        "./packages/lexicon/src/index.ts"
-      "@poetry/genre": [
-        "./packages/genre/src/index.ts"
-      ]
+      "@poetry/contracts": ["./packages/contracts/src/index.ts"],
+      "@poetry/prosody": ["./packages/prosody/src/index.ts"],
+      "@poetry/readings": ["./packages/readings/src/index.ts"],
+      "@poetry/genre": ["./packages/genre/src/index.ts"],
+      "@poetry/lexicon": ["./packages/lexicon/src/index.ts"]
     }
   },
-  "include": [
-    "packages/**/*.ts",
-    "apps/api/**/*.ts",
-    "scripts/**/*.ts",
-    "vitest.config.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "**/dist"
-  ]
+  "include": ["packages/**/*.ts", "apps/api/**/*.ts", "scripts/**/*.ts", "vitest.config.ts"],
+  "exclude": ["node_modules", "**/dist"]
 }
