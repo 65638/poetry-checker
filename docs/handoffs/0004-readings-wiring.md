@@ -20,3 +20,10 @@
 ## 后续合入方式
 
 B 的证据修复推到 PR #3 后，组长将本分支合入 PR #3 分支（或将 B 新提交 rebase 到本分支），再整体走合并验收；也可在 B 完成后由组长做一次三方合并。冲突面预计为零：本分支只动 GLM 所有权路径，与 B 的 src/tests 无交集。
+
+## 增补（2026-10-17，同步 6e8eb16）
+
+- 同步 B 的 6e8eb16（证据门槛收紧为显式数据未就绪）后，READINGS_HTTP_STATUS 与测试 EXPECTED_STATUS 显式补 `LOOKUP_EVIDENCE_UNVERIFIED → 503`（B 在错误码注释中同此建议）。
+- 错误体约定对齐：503 族（LOOKUP_*、CONTEXT_RULE_*）code 统一为 `DATA_NOT_READY`，原始 readings 码保留在 message 前缀与 fieldErrors（`readingsCode` 字段）；500 族对齐 `INTERNAL_ERROR`；422 族保留具体 readings 码（契约已有 STALE_READING_OVERRIDE 先例）。
+- 测试改为同时覆盖：真实 `ReadingsError` 实例逐码映射（非仅字符串回退）、三族错误体约定、穷尽双向枚举检查保留。
+- 分支联合复验：pnpm verify exit 0，84 项测试全过。B 尚有两处证据检查绕过路径在修，PR #3 仍不合入；待最终组合 verify 通过后再处理合并。

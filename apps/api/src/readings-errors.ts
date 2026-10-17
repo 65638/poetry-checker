@@ -21,6 +21,7 @@ const READINGS_HTTP_STATUS: Record<ReadingsErrorCode, number> = {
   LOOKUP_CANDIDATE_BOOK_MISMATCH: 503,
   LOOKUP_CANDIDATE_DUPLICATE: 503,
   LOOKUP_EVIDENCE_UNKNOWN: 503,
+  LOOKUP_EVIDENCE_UNVERIFIED: 503,
   OVERRIDE_DUPLICATE_TOKEN: 422,
   OVERRIDE_TOKEN_UNKNOWN: 422,
   OVERRIDE_READING_UNKNOWN: 422,
@@ -55,16 +56,33 @@ export function toReadingsErrorResponse(
 ): ReadingsErrorResponse | null {
   if (!isReadingsError(error)) return null;
   const details: ReadingsErrorDetails = error.details;
+  const status = readingsErrorStatus(error.code);
+  // 错误体约定对齐：
+  // - 503 族（LOOKUP_*、CONTEXT_RULE_*）与既有数据未就绪响应一致，code 用 DATA_NOT_READY，
+  //   原始 readings 码保留在 message 前缀与 fieldErrors 中，便于定位（B 的 6e8eb16 注释同此建议）；
+  // - 500 族对齐服务端 INTERNAL_ERROR 约定；
+  // - 422 族保留具体 readings 码（契约已有 STALE_READING_OVERRIDE 这类具体 422 码的先例，
+  //   前端需要区分是哪类选音问题）。
+  const bodyCode =
+    status === 503 ? "DATA_NOT_READY" : status === 500 ? "INTERNAL_ERROR" : error.code;
   return {
-    status: readingsErrorStatus(error.code),
+    status,
     body: {
       error: {
-        code: error.code,
-        message: error.message,
-        fieldErrors: Object.entries(details).map(([path, message]) => ({
-          path,
-          message,
-        })),
+        code: bodyCode,
+        message:
+          status === 503 || status === 500
+            ? `${error.code}：${error.message}`
+            : error.message,
+        fieldErrors: [
+          ...Object.entries(details).map(([path, message]) => ({
+            path,
+            message,
+          })),
+          ...(status === 503
+            ? [{ path: "readingsCode", message: error.code }]
+            : []),
+        ],
       },
     },
   };
