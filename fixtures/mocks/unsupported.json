@@ -1,0 +1,1011 @@
+{
+  "schemaVersion": "1.0",
+  "inputHash": "40a07513649f272861068cf6830985862727ae2dbdc1de71f9d9e7128081a7f9",
+  "versions": {
+    "data": "fixture-only",
+    "rules": "teaching-v1",
+    "context": "fixture-only",
+    "works": "fixture-only"
+  },
+  "policy": {
+    "rhymeBook": "pingshui",
+    "toneBasis": "historical",
+    "notice": "合成开发场景，不用于真实格律判断"
+  },
+  "poem": {
+    "originalText": "仄仄平平仄\n平平仄仄平\n平平平仄仄\n仄仄仄平平\n",
+    "inputHash": "40a07513649f272861068cf6830985862727ae2dbdc1de71f9d9e7128081a7f9",
+    "lines": [
+      {
+        "line": 1,
+        "text": "仄仄平平仄",
+        "tokenIds": [
+          "l1c1",
+          "l1c2",
+          "l1c3",
+          "l1c4",
+          "l1c5"
+        ]
+      },
+      {
+        "line": 2,
+        "text": "平平仄仄平",
+        "tokenIds": [
+          "l2c1",
+          "l2c2",
+          "l2c3",
+          "l2c4",
+          "l2c5"
+        ]
+      },
+      {
+        "line": 3,
+        "text": "平平平仄仄",
+        "tokenIds": [
+          "l3c1",
+          "l3c2",
+          "l3c3",
+          "l3c4",
+          "l3c5"
+        ]
+      },
+      {
+        "line": 4,
+        "text": "仄仄仄平平",
+        "tokenIds": [
+          "l4c1",
+          "l4c2",
+          "l4c3",
+          "l4c4",
+          "l4c5"
+        ]
+      }
+    ],
+    "tokens": [
+      {
+        "tokenId": "l1c1",
+        "text": "仄",
+        "line": 1,
+        "column": 1,
+        "startUtf16": 0,
+        "endUtf16": 1,
+        "candidates": [
+          {
+            "id": "fixture:reading:仄:Z",
+            "character": "仄",
+            "book": "pingshui",
+            "toneClass": "ze_unspecified",
+            "tone": "Z",
+            "groupIds": [
+              "fixture:group:ze"
+            ],
+            "gloss": "合成开发场景，非韵书条目",
+            "modernReading": null,
+            "fanqie": null,
+            "evidenceIds": [
+              "fixture:evidence:ze"
+            ]
+          }
+        ],
+        "effectiveCandidateIds": [
+          "fixture:reading:仄:Z"
+        ],
+        "readingStatus": "resolved",
+        "selectedReadingId": "fixture:reading:仄:Z",
+        "selectionMethod": "unique",
+        "possibleTones": [
+          "Z"
+        ],
+        "toneStatus": "resolved",
+        "tone": "Z",
+        "reason": "合成开发场景",
+        "evidenceIds": [
+          "fixture:evidence:ze"
+        ]
+      },
+      {
+        "tokenId": "l1c2",
+        "text": "仄",
+        "line": 1,
+        "column": 2,
+        "startUtf16": 1,
+        "endUtf16": 2,
+        "candidates": [
+          {
+            "id": "fixture:reading:仄:Z",
+            "character": "仄",
+            "book": "pingshui",
+            "toneClass": "ze_unspecified",
+            "tone": "Z",
+            "groupIds": [
+              "fixture:group:ze"
+            ],
+            "gloss": "合成开发场景，非韵书条目",
+            "modernReading": null,
+            "fanqie": null,
+            "evidenceIds": [
+              "fixture:evidence:ze"
+            ]
+          }
+        ],
+        "effectiveCandidateIds": [
+          "fixture:reading:仄:Z"
+        ],
+        "readingStatus": "resolved",
+        "selectedReadingId": "fixture:reading:仄:Z",
+        "selectionMethod": "unique",
+        "possibleTones": [
+          "Z"
+        ],
+        "toneStatus": "resolved",
+        "tone": "Z",
+        "reason": "合成开发场景",
+        "evidenceIds": [
+          "fixture:evidence:ze"
+        ]
+      },
+      {
+        "tokenId": "l1c3",
+        "text": "平",
+        "line": 1,
+        "column": 3,
+        "startUtf16": 2,
+        "endUtf16": 3,
+        "candidates": [
+          {
+            "id": "fixture:reading:平:P",
+            "character": "平",
+            "book": "pingshui",
+            "toneClass": "ping",
+            "tone": "P",
+            "groupIds": [
+              "fixture:group:ping"
+            ],
+            "gloss": "合成开发场景，非韵书条目",
+            "modernReading": null,
+            "fanqie": null,
+            "evidenceIds": [
+              "fixture:evidence:ping"
+            ]
+          }
+        ],
+        "effectiveCandidateIds": [
+          "fixture:reading:平:P"
+        ],
+        "readingStatus": "resolved",
+        "selectedReadingId": "fixture:reading:平:P",
+        "selectionMethod": "unique",
+        "possibleTones": [
+          "P"
+        ],
+        "toneStatus": "resolved",
+        "tone": "P",
+        "reason": "合成开发场景",
+        "evidenceIds": [
+          "fixture:evidence:ping"
+        ]
+      },
+      {
+        "tokenId": "l1c4",
+        "text": "平",
+        "line": 1,
+        "column": 4,
+        "startUtf16": 3,
+        "endUtf16": 4,
+        "candidates": [
+          {
+            "id": "fixture:reading:平:P",
+            "character": "平",
+            "book": "pingshui",
+            "toneClass": "ping",
+            "tone": "P",
+            "groupIds": [
+              "fixture:group:ping"
+            ],
+            "gloss": "合成开发场景，非韵书条目",
+            "modernReading": null,
+            "fanqie": null,
+            "evidenceIds": [
+              "fixture:evidence:ping"
+            ]
+          }
+        ],
+        "effectiveCandidateIds": [
+          "fixture:reading:平:P"
+        ],
+        "readingStatus": "resolved",
+        "selectedReadingId": "fixture:reading:平:P",
+        "selectionMethod": "unique",
+        "possibleTones": [
+          "P"
+        ],
+        "toneStatus": "resolved",
+        "tone": "P",
+        "reason": "合成开发场景",
+        "evidenceIds": [
+          "fixture:evidence:ping"
+        ]
+      },
+      {
+        "tokenId": "l1c5",
+        "text": "仄",
+        "line": 1,
+        "column": 5,
+        "startUtf16": 4,
+        "endUtf16": 5,
+        "candidates": [
+          {
+            "id": "fixture:reading:仄:Z",
+            "character": "仄",
+            "book": "pingshui",
+            "toneClass": "ze_unspecified",
+            "tone": "Z",
+            "groupIds": [
+              "fixture:group:ze"
+            ],
+            "gloss": "合成开发场景，非韵书条目",
+            "modernReading": null,
+            "fanqie": null,
+            "evidenceIds": [
+              "fixture:evidence:ze"
+            ]
+          }
+        ],
+        "effectiveCandidateIds": [
+          "fixture:reading:仄:Z"
+        ],
+        "readingStatus": "resolved",
+        "selectedReadingId": "fixture:reading:仄:Z",
+        "selectionMethod": "unique",
+        "possibleTones": [
+          "Z"
+        ],
+        "toneStatus": "resolved",
+        "tone": "Z",
+        "reason": "合成开发场景",
+        "evidenceIds": [
+          "fixture:evidence:ze"
+        ]
+      },
+      {
+        "tokenId": "l2c1",
+        "text": "平",
+        "line": 2,
+        "column": 1,
+        "startUtf16": 6,
+        "endUtf16": 7,
+        "candidates": [
+          {
+            "id": "fixture:reading:平:P",
+            "character": "平",
+            "book": "pingshui",
+            "toneClass": "ping",
+            "tone": "P",
+            "groupIds": [
+              "fixture:group:ping"
+            ],
+            "gloss": "合成开发场景，非韵书条目",
+            "modernReading": null,
+            "fanqie": null,
+            "evidenceIds": [
+              "fixture:evidence:ping"
+            ]
+          }
+        ],
+        "effectiveCandidateIds": [
+          "fixture:reading:平:P"
+        ],
+        "readingStatus": "resolved",
+        "selectedReadingId": "fixture:reading:平:P",
+        "selectionMethod": "unique",
+        "possibleTones": [
+          "P"
+        ],
+        "toneStatus": "resolved",
+        "tone": "P",
+        "reason": "合成开发场景",
+        "evidenceIds": [
+          "fixture:evidence:ping"
+        ]
+      },
+      {
+        "tokenId": "l2c2",
+        "text": "平",
+        "line": 2,
+        "column": 2,
+        "startUtf16": 7,
+        "endUtf16": 8,
+        "candidates": [
+          {
+            "id": "fixture:reading:平:Z",
+            "character": "平",
+            "book": "pingshui",
+            "toneClass": "ze_unspecified",
+            "tone": "Z",
+            "groupIds": [
+              "fixture:group:ze"
+            ],
+            "gloss": "合成开发场景，非韵书条目",
+            "modernReading": null,
+            "fanqie": null,
+            "evidenceIds": [
+              "fixture:evidence:ze"
+            ]
+          }
+        ],
+        "effectiveCandidateIds": [
+          "fixture:reading:平:Z"
+        ],
+        "readingStatus": "resolved",
+        "selectedReadingId": "fixture:reading:平:Z",
+        "selectionMethod": "unique",
+        "possibleTones": [
+          "Z"
+        ],
+        "toneStatus": "resolved",
+        "tone": "Z",
+        "reason": "合成开发场景",
+        "evidenceIds": [
+          "fixture:evidence:ze"
+        ]
+      },
+      {
+        "tokenId": "l2c3",
+        "text": "仄",
+        "line": 2,
+        "column": 3,
+        "startUtf16": 8,
+        "endUtf16": 9,
+        "candidates": [
+          {
+            "id": "fixture:reading:仄:Z",
+            "character": "仄",
+            "book": "pingshui",
+            "toneClass": "ze_unspecified",
+            "tone": "Z",
+            "groupIds": [
+              "fixture:group:ze"
+            ],
+            "gloss": "合成开发场景，非韵书条目",
+            "modernReading": null,
+            "fanqie": null,
+            "evidenceIds": [
+              "fixture:evidence:ze"
+            ]
+          }
+        ],
+        "effectiveCandidateIds": [
+          "fixture:reading:仄:Z"
+        ],
+        "readingStatus": "resolved",
+        "selectedReadingId": "fixture:reading:仄:Z",
+        "selectionMethod": "unique",
+        "possibleTones": [
+          "Z"
+        ],
+        "toneStatus": "resolved",
+        "tone": "Z",
+        "reason": "合成开发场景",
+        "evidenceIds": [
+          "fixture:evidence:ze"
+        ]
+      },
+      {
+        "tokenId": "l2c4",
+        "text": "仄",
+        "line": 2,
+        "column": 4,
+        "startUtf16": 9,
+        "endUtf16": 10,
+        "candidates": [
+          {
+            "id": "fixture:reading:仄:P",
+            "character": "仄",
+            "book": "pingshui",
+            "toneClass": "ping",
+            "tone": "P",
+            "groupIds": [
+              "fixture:group:ping"
+            ],
+            "gloss": "合成开发场景，非韵书条目",
+            "modernReading": null,
+            "fanqie": null,
+            "evidenceIds": [
+              "fixture:evidence:ping"
+            ]
+          }
+        ],
+        "effectiveCandidateIds": [
+          "fixture:reading:仄:P"
+        ],
+        "readingStatus": "resolved",
+        "selectedReadingId": "fixture:reading:仄:P",
+        "selectionMethod": "unique",
+        "possibleTones": [
+          "P"
+        ],
+        "toneStatus": "resolved",
+        "tone": "P",
+        "reason": "合成开发场景",
+        "evidenceIds": [
+          "fixture:evidence:ping"
+        ]
+      },
+      {
+        "tokenId": "l2c5",
+        "text": "平",
+        "line": 2,
+        "column": 5,
+        "startUtf16": 10,
+        "endUtf16": 11,
+        "candidates": [
+          {
+            "id": "fixture:reading:平:P",
+            "character": "平",
+            "book": "pingshui",
+            "toneClass": "ping",
+            "tone": "P",
+            "groupIds": [
+              "fixture:group:ping"
+            ],
+            "gloss": "合成开发场景，非韵书条目",
+            "modernReading": null,
+            "fanqie": null,
+            "evidenceIds": [
+              "fixture:evidence:ping"
+            ]
+          }
+        ],
+        "effectiveCandidateIds": [
+          "fixture:reading:平:P"
+        ],
+        "readingStatus": "resolved",
+        "selectedReadingId": "fixture:reading:平:P",
+        "selectionMethod": "unique",
+        "possibleTones": [
+          "P"
+        ],
+        "toneStatus": "resolved",
+        "tone": "P",
+        "reason": "合成开发场景",
+        "evidenceIds": [
+          "fixture:evidence:ping"
+        ]
+      },
+      {
+        "tokenId": "l3c1",
+        "text": "平",
+        "line": 3,
+        "column": 1,
+        "startUtf16": 12,
+        "endUtf16": 13,
+        "candidates": [
+          {
+            "id": "fixture:reading:平:P",
+            "character": "平",
+            "book": "pingshui",
+            "toneClass": "ping",
+            "tone": "P",
+            "groupIds": [
+              "fixture:group:ping"
+            ],
+            "gloss": "合成开发场景，非韵书条目",
+            "modernReading": null,
+            "fanqie": null,
+            "evidenceIds": [
+              "fixture:evidence:ping"
+            ]
+          }
+        ],
+        "effectiveCandidateIds": [
+          "fixture:reading:平:P"
+        ],
+        "readingStatus": "resolved",
+        "selectedReadingId": "fixture:reading:平:P",
+        "selectionMethod": "unique",
+        "possibleTones": [
+          "P"
+        ],
+        "toneStatus": "resolved",
+        "tone": "P",
+        "reason": "合成开发场景",
+        "evidenceIds": [
+          "fixture:evidence:ping"
+        ]
+      },
+      {
+        "tokenId": "l3c2",
+        "text": "平",
+        "line": 3,
+        "column": 2,
+        "startUtf16": 13,
+        "endUtf16": 14,
+        "candidates": [
+          {
+            "id": "fixture:reading:平:Z",
+            "character": "平",
+            "book": "pingshui",
+            "toneClass": "ze_unspecified",
+            "tone": "Z",
+            "groupIds": [
+              "fixture:group:ze"
+            ],
+            "gloss": "合成开发场景，非韵书条目",
+            "modernReading": null,
+            "fanqie": null,
+            "evidenceIds": [
+              "fixture:evidence:ze"
+            ]
+          }
+        ],
+        "effectiveCandidateIds": [
+          "fixture:reading:平:Z"
+        ],
+        "readingStatus": "resolved",
+        "selectedReadingId": "fixture:reading:平:Z",
+        "selectionMethod": "unique",
+        "possibleTones": [
+          "Z"
+        ],
+        "toneStatus": "resolved",
+        "tone": "Z",
+        "reason": "合成开发场景",
+        "evidenceIds": [
+          "fixture:evidence:ze"
+        ]
+      },
+      {
+        "tokenId": "l3c3",
+        "text": "平",
+        "line": 3,
+        "column": 3,
+        "startUtf16": 14,
+        "endUtf16": 15,
+        "candidates": [
+          {
+            "id": "fixture:reading:平:Z",
+            "character": "平",
+            "book": "pingshui",
+            "toneClass": "ze_unspecified",
+            "tone": "Z",
+            "groupIds": [
+              "fixture:group:ze"
+            ],
+            "gloss": "合成开发场景，非韵书条目",
+            "modernReading": null,
+            "fanqie": null,
+            "evidenceIds": [
+              "fixture:evidence:ze"
+            ]
+          }
+        ],
+        "effectiveCandidateIds": [
+          "fixture:reading:平:Z"
+        ],
+        "readingStatus": "resolved",
+        "selectedReadingId": "fixture:reading:平:Z",
+        "selectionMethod": "unique",
+        "possibleTones": [
+          "Z"
+        ],
+        "toneStatus": "resolved",
+        "tone": "Z",
+        "reason": "合成开发场景",
+        "evidenceIds": [
+          "fixture:evidence:ze"
+        ]
+      },
+      {
+        "tokenId": "l3c4",
+        "text": "仄",
+        "line": 3,
+        "column": 4,
+        "startUtf16": 15,
+        "endUtf16": 16,
+        "candidates": [
+          {
+            "id": "fixture:reading:仄:Z",
+            "character": "仄",
+            "book": "pingshui",
+            "toneClass": "ze_unspecified",
+            "tone": "Z",
+            "groupIds": [
+              "fixture:group:ze"
+            ],
+            "gloss": "合成开发场景，非韵书条目",
+            "modernReading": null,
+            "fanqie": null,
+            "evidenceIds": [
+              "fixture:evidence:ze"
+            ]
+          }
+        ],
+        "effectiveCandidateIds": [
+          "fixture:reading:仄:Z"
+        ],
+        "readingStatus": "resolved",
+        "selectedReadingId": "fixture:reading:仄:Z",
+        "selectionMethod": "unique",
+        "possibleTones": [
+          "Z"
+        ],
+        "toneStatus": "resolved",
+        "tone": "Z",
+        "reason": "合成开发场景",
+        "evidenceIds": [
+          "fixture:evidence:ze"
+        ]
+      },
+      {
+        "tokenId": "l3c5",
+        "text": "仄",
+        "line": 3,
+        "column": 5,
+        "startUtf16": 16,
+        "endUtf16": 17,
+        "candidates": [
+          {
+            "id": "fixture:reading:仄:Z",
+            "character": "仄",
+            "book": "pingshui",
+            "toneClass": "ze_unspecified",
+            "tone": "Z",
+            "groupIds": [
+              "fixture:group:ze"
+            ],
+            "gloss": "合成开发场景，非韵书条目",
+            "modernReading": null,
+            "fanqie": null,
+            "evidenceIds": [
+              "fixture:evidence:ze"
+            ]
+          }
+        ],
+        "effectiveCandidateIds": [
+          "fixture:reading:仄:Z"
+        ],
+        "readingStatus": "resolved",
+        "selectedReadingId": "fixture:reading:仄:Z",
+        "selectionMethod": "unique",
+        "possibleTones": [
+          "Z"
+        ],
+        "toneStatus": "resolved",
+        "tone": "Z",
+        "reason": "合成开发场景",
+        "evidenceIds": [
+          "fixture:evidence:ze"
+        ]
+      },
+      {
+        "tokenId": "l4c1",
+        "text": "仄",
+        "line": 4,
+        "column": 1,
+        "startUtf16": 18,
+        "endUtf16": 19,
+        "candidates": [
+          {
+            "id": "fixture:reading:仄:P",
+            "character": "仄",
+            "book": "pingshui",
+            "toneClass": "ping",
+            "tone": "P",
+            "groupIds": [
+              "fixture:group:ping"
+            ],
+            "gloss": "合成开发场景，非韵书条目",
+            "modernReading": null,
+            "fanqie": null,
+            "evidenceIds": [
+              "fixture:evidence:ping"
+            ]
+          }
+        ],
+        "effectiveCandidateIds": [
+          "fixture:reading:仄:P"
+        ],
+        "readingStatus": "resolved",
+        "selectedReadingId": "fixture:reading:仄:P",
+        "selectionMethod": "unique",
+        "possibleTones": [
+          "P"
+        ],
+        "toneStatus": "resolved",
+        "tone": "P",
+        "reason": "合成开发场景",
+        "evidenceIds": [
+          "fixture:evidence:ping"
+        ]
+      },
+      {
+        "tokenId": "l4c2",
+        "text": "仄",
+        "line": 4,
+        "column": 2,
+        "startUtf16": 19,
+        "endUtf16": 20,
+        "candidates": [
+          {
+            "id": "fixture:reading:仄:P",
+            "character": "仄",
+            "book": "pingshui",
+            "toneClass": "ping",
+            "tone": "P",
+            "groupIds": [
+              "fixture:group:ping"
+            ],
+            "gloss": "合成开发场景，非韵书条目",
+            "modernReading": null,
+            "fanqie": null,
+            "evidenceIds": [
+              "fixture:evidence:ping"
+            ]
+          }
+        ],
+        "effectiveCandidateIds": [
+          "fixture:reading:仄:P"
+        ],
+        "readingStatus": "resolved",
+        "selectedReadingId": "fixture:reading:仄:P",
+        "selectionMethod": "unique",
+        "possibleTones": [
+          "P"
+        ],
+        "toneStatus": "resolved",
+        "tone": "P",
+        "reason": "合成开发场景",
+        "evidenceIds": [
+          "fixture:evidence:ping"
+        ]
+      },
+      {
+        "tokenId": "l4c3",
+        "text": "仄",
+        "line": 4,
+        "column": 3,
+        "startUtf16": 20,
+        "endUtf16": 21,
+        "candidates": [
+          {
+            "id": "fixture:reading:仄:P",
+            "character": "仄",
+            "book": "pingshui",
+            "toneClass": "ping",
+            "tone": "P",
+            "groupIds": [
+              "fixture:group:ping"
+            ],
+            "gloss": "合成开发场景，非韵书条目",
+            "modernReading": null,
+            "fanqie": null,
+            "evidenceIds": [
+              "fixture:evidence:ping"
+            ]
+          }
+        ],
+        "effectiveCandidateIds": [
+          "fixture:reading:仄:P"
+        ],
+        "readingStatus": "resolved",
+        "selectedReadingId": "fixture:reading:仄:P",
+        "selectionMethod": "unique",
+        "possibleTones": [
+          "P"
+        ],
+        "toneStatus": "resolved",
+        "tone": "P",
+        "reason": "合成开发场景",
+        "evidenceIds": [
+          "fixture:evidence:ping"
+        ]
+      },
+      {
+        "tokenId": "l4c4",
+        "text": "平",
+        "line": 4,
+        "column": 4,
+        "startUtf16": 21,
+        "endUtf16": 22,
+        "candidates": [
+          {
+            "id": "fixture:reading:平:P",
+            "character": "平",
+            "book": "pingshui",
+            "toneClass": "ping",
+            "tone": "P",
+            "groupIds": [
+              "fixture:group:ping"
+            ],
+            "gloss": "合成开发场景，非韵书条目",
+            "modernReading": null,
+            "fanqie": null,
+            "evidenceIds": [
+              "fixture:evidence:ping"
+            ]
+          }
+        ],
+        "effectiveCandidateIds": [
+          "fixture:reading:平:P"
+        ],
+        "readingStatus": "resolved",
+        "selectedReadingId": "fixture:reading:平:P",
+        "selectionMethod": "unique",
+        "possibleTones": [
+          "P"
+        ],
+        "toneStatus": "resolved",
+        "tone": "P",
+        "reason": "合成开发场景",
+        "evidenceIds": [
+          "fixture:evidence:ping"
+        ]
+      },
+      {
+        "tokenId": "l4c5",
+        "text": "平",
+        "line": 4,
+        "column": 5,
+        "startUtf16": 22,
+        "endUtf16": 23,
+        "candidates": [
+          {
+            "id": "fixture:reading:平:P",
+            "character": "平",
+            "book": "pingshui",
+            "toneClass": "ping",
+            "tone": "P",
+            "groupIds": [
+              "fixture:group:ping"
+            ],
+            "gloss": "合成开发场景，非韵书条目",
+            "modernReading": null,
+            "fanqie": null,
+            "evidenceIds": [
+              "fixture:evidence:ping"
+            ]
+          }
+        ],
+        "effectiveCandidateIds": [
+          "fixture:reading:平:P"
+        ],
+        "readingStatus": "resolved",
+        "selectedReadingId": "fixture:reading:平:P",
+        "selectionMethod": "unique",
+        "possibleTones": [
+          "P"
+        ],
+        "toneStatus": "resolved",
+        "tone": "P",
+        "reason": "合成开发场景",
+        "evidenceIds": [
+          "fixture:evidence:ping"
+        ]
+      }
+    ],
+    "quality": "ok",
+    "notices": [],
+    "book": "pingshui"
+  },
+  "genre": {
+    "formFamily": "unsupported",
+    "formId": null,
+    "historicalTags": [],
+    "applicability": "unsupported",
+    "basisType": "user",
+    "candidateTemplateIds": [],
+    "selectedTemplateId": null,
+    "reasons": [
+      "合成开发场景，不代表真实体裁判别"
+    ],
+    "evidenceIds": []
+  },
+  "prosody": {
+    "candidates": [],
+    "selectedTemplateId": null,
+    "checks": [
+      {
+        "id": "fixture:check",
+        "ruleId": "METER.POSITION",
+        "ruleVersion": "1",
+        "status": "unsupported",
+        "severity": "info",
+        "locations": [
+          {
+            "tokenId": "l1c1",
+            "line": 1,
+            "column": 1
+          }
+        ],
+        "expected": [
+          "Z"
+        ],
+        "observed": [
+          "P"
+        ],
+        "message": "合成 unsupported 场景：当前版本尚未支持该形式（仅结构验证）",
+        "templateId": null,
+        "evidenceIds": [],
+        "resolvedBy": null,
+        "relatedFindingIds": []
+      }
+    ],
+    "rhyme": {
+      "status": "unsupported",
+      "tokenIds": [],
+      "commonGroupIds": []
+    },
+    "relations": []
+  },
+  "provenance": {
+    "groups": [
+      {
+        "id": "fixture:group:ping",
+        "book": "pingshui",
+        "name": "合成平部",
+        "toneClass": "ping",
+        "evidenceIds": [
+          "fixture:evidence:ping"
+        ]
+      },
+      {
+        "id": "fixture:group:ze",
+        "book": "pingshui",
+        "name": "合成仄部",
+        "toneClass": "ze_unspecified",
+        "evidenceIds": [
+          "fixture:evidence:ze"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "fixture:source",
+        "title": "项目自建合成测试源（非韵书）",
+        "edition": "fixture-v1",
+        "url": null,
+        "license": "仅作项目接口测试",
+        "snapshotSha256": null,
+        "revision": null,
+        "retrievedAt": null
+      }
+    ],
+    "evidence": [
+      {
+        "id": "fixture:evidence:ping",
+        "sourceId": "fixture:source",
+        "kind": "rhyme_entry",
+        "locator": "synthetic/ping",
+        "assertion": "仅证明测试构造内的数据关联，不证明真实韵书归属",
+        "excerpt": null,
+        "reviewStatus": "approved"
+      },
+      {
+        "id": "fixture:evidence:ze",
+        "sourceId": "fixture:source",
+        "kind": "rhyme_entry",
+        "locator": "synthetic/ze",
+        "assertion": "仅证明测试构造内的数据关联，不证明真实韵书归属",
+        "excerpt": null,
+        "reviewStatus": "approved"
+      }
+    ],
+    "rules": [
+      {
+        "id": "METER.POSITION",
+        "version": "1",
+        "name": "逐位允许集合",
+        "scope": "合成接口场景",
+        "statement": "比较有效候选与允许平仄集合",
+        "limitations": [
+          "此 fixture 不执行真实判定"
+        ],
+        "evidenceIds": []
+      }
+    ]
+  },
+  "summary": {
+    "status": "unsupported",
+    "message": "合成 unsupported 场景：当前版本尚未支持该形式（仅结构验证）"
+  }
+}
