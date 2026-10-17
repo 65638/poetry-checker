@@ -428,6 +428,35 @@ export class CheckerStore {
     this.activeController?.abort();
   }
 
+  /**
+   * 用一个「已完成的计算结果」替换当前状态（不经 HTTP）。
+   *
+   * 这是通用装配入口，不含任何合成数据或开发文案；开发预览、
+   * 离线回放、未来的本地历史都可以复用它。调用方必须保证
+   * `request` 与 `report` 同源（典型来源是同一次成功响应）。
+   */
+  applySnapshot(input: {
+    draft: InputDraft;
+    report: AnalysisResponse;
+    request: AnalyzeRequest;
+    feedback?: string | null;
+  }): void {
+    this.invalidateInFlight();
+    this.commit({
+      draft: input.draft,
+      report: input.report,
+      requestSnapshot: input.request,
+      snapshotDraft: input.draft,
+      busy: false,
+      error: null,
+      feedback: input.feedback ?? null,
+      selectedTokenId: null,
+      selectedFindingId: null,
+      overrides: [],
+      pendingOverrides: [],
+    });
+  }
+
   /** 仅测试用：暴露请求身份以便断言旧响应被丢弃。 */
   get currentRunId(): number {
     return this.runId;

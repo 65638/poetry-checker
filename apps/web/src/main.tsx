@@ -5,6 +5,7 @@ import { CheckerStore } from "./app/store";
 import { DevContainer } from "./app/DevContainer";
 import { EXAMPLES } from "./app/examples";
 import { createRuntimeTransport, readWebEnv } from "./app/config";
+import type { DevScenarioId } from "./app/devScenarios";
 import { useCheckerStore } from "./hooks/useCheckerStore";
 import type { CheckerViewProps } from "./view-contract";
 
@@ -69,7 +70,26 @@ function App() {
     },
   };
 
-  return <DevContainer {...props} />;
+  // 开发场景入口只在开发构建挂载：fixture 与注入逻辑都通过动态 import 形成
+  // 独立 chunk，生产入口不传这个 prop，发布包不含合成数据与开发文案。
+  const devScenarioHandler = import.meta.env.DEV
+    ? (id: DevScenarioId) => {
+        void Promise.all([
+          import("./app/devScenarios"),
+          import("./app/devScenarioStore"),
+        ])
+          .then(async ([scenarios, devStore]) => {
+            const scenario = await scenarios.loadDevScenario(id, true);
+            devStore.applyDevReport(store, scenario.report);
+          })
+          .catch((cause: unknown) => {
+            // 开发期装载失败只提示，不伪造报告。
+            console.error("[dev-scenario] 装载失败", cause);
+          });
+      }
+    : undefined;
+
+  return <DevContainer {...props} onLoadDevScenario={devScenarioHandler} />;
 }
 
 const root = document.getElementById("root");

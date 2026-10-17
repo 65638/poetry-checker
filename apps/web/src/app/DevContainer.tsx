@@ -1,4 +1,4 @@
-import type { ChangeEvent } from "react";
+import { lazy, Suspense, type ChangeEvent } from "react";
 import type { CheckerViewProps } from "../view-contract";
 import {
   FORM_LABELS,
@@ -7,6 +7,13 @@ import {
   RHYME_BOOK_LABELS,
   codePointLength,
 } from "./examples";
+import type { DevScenarioId } from "./devScenarios";
+
+/** 场景选择器按需加载：生产包里只留这个 lazy 占位，不含场景文案。 */
+const DevScenarioSelector = lazy(async () => {
+  const mod = await import("./DevScenarioSelector");
+  return { default: mod.DevScenarioSelector };
+});
 
 /**
  * 临时纯文本开发容器（design 交付前的业务容器）。
@@ -15,9 +22,16 @@ import {
  * 也不导入 presentation 或添加全局 CSS。设计方交付 CheckerView 后，
  * 业务逻辑由 src/app/store 继续复用，本文件可整体替换。
  *
+ * `onLoadDevScenario` 是**可选**的开发入口：生产入口不传，选择器不渲染，
+ * fixture 与场景文案都不会进发布包（选择器与装载器都是动态 import）。
+ *
  * 原始正文按文本渲染（React 默认转义），不拼未消毒 HTML。
  */
-export function DevContainer(props: CheckerViewProps) {
+export interface DevContainerProps extends CheckerViewProps {
+  onLoadDevScenario?: (id: DevScenarioId) => void;
+}
+
+export function DevContainer(props: DevContainerProps) {
   const {
     draft,
     report,
@@ -37,6 +51,7 @@ export function DevContainer(props: CheckerViewProps) {
     onCloseEvidence,
     onCopySummary,
     onDownloadReport,
+    onLoadDevScenario,
   } = props;
 
   const selectedToken =
@@ -146,6 +161,12 @@ export function DevContainer(props: CheckerViewProps) {
             </button>
           ))}
         </p>
+
+        {onLoadDevScenario !== undefined ? (
+          <Suspense fallback={<p>正在加载开发场景…</p>}>
+            <DevScenarioSelector onLoad={onLoadDevScenario} />
+          </Suspense>
+        ) : null}
       </section>
 
       <section aria-labelledby="status-heading">

@@ -20,7 +20,7 @@
 | `apps/web/src/hooks/useCheckerStore.ts` | 新增 | `useSyncExternalStore` 绑定 |
 | `apps/web/src/utils/sha256.ts` | 新增 | 纯 TS 的 SHA-256（UTF-8 原文摘要，与服务端口径一致） |
 | `apps/web/src/main.tsx` | 覆盖 | 接管占位入口，接真实 HTTP transport 与开发容器 |
-| `apps/web/tests/*.test.ts` | 新增 | 100 项业务测试（api-client / store / export / concurrency / config） |
+| `apps/web/tests/*.test.ts` | 新增 | 106 项业务测试（api-client / store / export / concurrency / config / dev-scenarios） |
 | `fixtures/mocks/*.json`、`generate.ts`、`README.md` | 新增 | 五状态开发场景、错配场景与补充平面汉字场景，全部通过 Schema |
 | `docs/ui.md` | 新增 | 业务交互、失效规则、导出与测试结果 |
 
@@ -38,7 +38,7 @@ pnpm verify                  # exit 0
 
 - 合并前 `main` 基线：`e549194`；合并后：含 C 的验收测试与 B 的解析/选音模块
 - 合并后 `main` 独有 16 个提交，我的分支有 3 个提交，`git merge` **零冲突**
-- 合并后测试：**235 项 / 15 个文件**（135 项来自 main + 100 项本模块）
+- 合并后测试：**241 项 / 16 个文件**（135 项来自 main + 106 项本模块）
 - 冲突处理：本次无冲突；若有冲突，我只改 `apps/web/`、`fixtures/mocks/`、
   `docs/ui.md` 这些本人路径，根配置冲突交组长转 GLM
 
@@ -74,11 +74,11 @@ $env:PNPM_CONFIG_NODE_LINKER = 'hoisted'
 pnpm verify                            → exit 0
   $ eslint .                           → 通过
   $ tsc --noEmit && tsc --noEmit -p apps/web/tsconfig.json → 通过（两个项目都查）
-  $ vitest run                         → 235 passed / 15 files
+  $ vitest run                         → 241 passed / 16 files
   $ pnpm build && tsx scripts/generate-contracts.ts --check → 通过（8 个生成物一致）
 ```
 
-测试构成：**235 = 135（main 基线）+ 100（本模块新增）**。
+测试构成：**241 = 135（main 基线）+ 106（本模块新增）**。
 本模块单独跑：`vitest run apps/web/tests` → 80 passed。
 
 `pnpm verify` 的实际通过条件与原因见下节「环境说明」。
@@ -167,7 +167,7 @@ pnpm verify          # exit 0
 ```text
 $ eslint .                                    → 通过
 $ tsc --noEmit && tsc --noEmit -p apps/web/tsconfig.json → 通过
-$ vitest run                                  → 235 passed (15 files)
+$ vitest run                                  → 241 passed (16 files)
 $ pnpm build && tsx scripts/generate-contracts.ts --check → 通过（8 个生成物一致）
 ```
 
@@ -213,7 +213,25 @@ node-linker=hoisted
 - 失败 → 再提交成功：错误被清除
 - 失败后 `report` / `overrides` / `requestSnapshot` 三者仍描述同一次成功计算
 
-### 3. 待装配（等两条分支进 main）
+### 3. 五状态开发预览（任务书第 8 节）
+
+新增 `app/devScenarios.ts`、`app/devScenarios.data.ts`、`app/DevScenarioSelector.tsx`、
+`app/devScenarioStore.ts`，以及 store 的通用 `applySnapshot()`：
+
+- **不给 `AnalyzeRequest` 加 scenario 字段**；场景只在开发侧选择，切换时装载
+  fixture 自身的正文与韵书。
+- 装载走**动态 import**（`devScenarios` → `devScenarios.data` → fixture JSON 各自成 chunk），
+  生产入口只在 `import.meta.env.DEV` 时挂 `onLoadDevScenario`。
+- 未授权（`allowed=false`）装载直接抛 `DevScenarioUnavailable`；选择器 UI 也用
+  `React.lazy`，生产主包不含场景文案。
+- 已实测：生产构建两个 chunk 中均**无** fixture 数据
+  （`fixture:group` / `仄仄平平仄` 零命中）；fixture 仅作为独立 lazy chunk 的依赖存在，
+  且运行时被守卫拒绝。
+
+测试：`dev-scenarios.test.ts` 6 项（守卫、五场景标签、注入后三者同源、
+清空旧选择、注入后可直接导出、注入会中止在途请求）。
+
+### 4. 待装配（等两条分支进 main）
 
 `feat/claude-presentation` 已核实：其 `apps/web/src/view-contract.ts` 与本分支
 **逐字节同内容**，`CheckerViewProps` 完全匹配，所以装配只需把 `main.tsx` 的
@@ -246,7 +264,7 @@ node-linker=hoisted
 - `git merge origin/feat/claude-presentation`：**零冲突**
 - 装配改动：`main.tsx` 仅两行（import 换成 `./presentation/CheckerView`、
   `return <CheckerView {...props} />`），`view-contract` 未改
-- `pnpm verify` → **exit 0**，235 项测试全过
+- `pnpm verify` → **exit 0**，241 项测试全过
 - `vite build` → 129 模块，新增 CSS 18.21 kB（视觉样式生效），JS 346.78 kB
 - 真实链路冒烟：页面 200 且引用 `#root`、`/src/main.tsx` 含 `CheckerView`
   且不含 `DevContainer`、`POST /api/v1/analyze` **200** 且 `summary.status=pass`、原文匹配
