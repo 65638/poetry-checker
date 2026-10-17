@@ -79,8 +79,8 @@ React 19.3.1 / Vite 8.3.4 / plugin-react 6.1.2（registry 实查锁定）；web 
   `resolveReadings`（全候选保留、唯一/歧义/未知、用户覆盖校验、平仄双状态、已审核语境规则的最长匹配与冲突处理）。
 - `data/context`：规则格式与 4 条待审核语境（更/重/长/行），**0 条生效规则**，不编造候选 ID 与来源。
 - `docs/readings.md`：解析政策、选音优先级、notice/错误码表、实现边界。
-- 验证：`pnpm verify` 全绿，**75 个用例**（原 36 + readings 39）；单独 `packages/readings/tests` 39 个用例通过。
-- 评审后修复两项：① 候选证据未审核时不再输出确定读音——全部候选都无已审核证据则抛 `LOOKUP_EVIDENCE_UNVERIFIED`（数据未就绪，请 GLM 映射 503）；② 语境规则必须引用**存在、已审核且 `kind=context`** 的证据才能选音，否则不参与（新增 notice `CONTEXT_RULE_EVIDENCE_INSUFFICIENT`）。
+- 验证：`pnpm verify` 全绿，**79 个用例**（原 36 + readings 43）；单独 `packages/readings/tests` 43 个用例通过。
+- 评审后修复两项：① **统一证据门槛**——凡是进入 `effectiveCandidateIds` 的候选（覆盖/规则/冲突/唯一/歧义全路径）都必须有已审核证据，否则抛 `LOOKUP_EVIDENCE_UNVERIFIED`（数据未就绪，请 GLM 映射 503）；② 语境规则必须引用**存在、已审核且 `kind=context`** 的证据才能选音，否则不参与（新增 notice `CONTEXT_RULE_EVIDENCE_INSUFFICIENT`）。
 - 未做：真实字表接入、生产语境规则、覆盖率/准确率评测。
 - **待 GLM**：`packages/readings/package.json` 的 `exports`/`build`/`test` 与 `tsconfig.build.json` 申请
   （当前该包无法按包名被其它包导入）；错误码到 HTTP 状态的映射建议。

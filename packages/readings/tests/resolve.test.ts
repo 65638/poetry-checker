@@ -214,7 +214,7 @@ describe("resolveReadings：候选状态传播", () => {
     );
   });
 
-  it("FIX-1 多候选中仅部分证据未审核：仍全部保留，不能借证据缺口收窄", () => {
+  it("GATE 混合有效候选：任一有效候选缺已审核证据即抛数据未就绪", () => {
     const lookup = syntheticLookup({
       entries: [
         {
@@ -236,16 +236,52 @@ describe("resolveReadings：候选状态传播", () => {
         },
       ],
     });
-    const token = tokenOf(annotate({ poem: poemOf("更"), lookup }), "l1c1");
+    // 两个候选都会进入 effectiveCandidateIds 参与平仄推导，所以不能放行。
+    expectReadingsError(
+      () =>
+        resolveReadings({
+          poem: poemOf("更"),
+          lookup,
+          overrides: [],
+          contextRules: [],
+        }),
+      "LOOKUP_EVIDENCE_UNVERIFIED",
+    );
+  });
 
-    expect(token.readingStatus).toBe("ambiguous");
-    expect(token.selectedReadingId).toBeNull();
-    // 不能因为另一个候选“证据更全”就把它排除
-    expect(token.effectiveCandidateIds).toEqual([
-      "c-更-P-backed",
-      "c-更-Z-unverified",
-    ]);
-    expect(token.reason).toContain("未经审核");
+  it("GATE 两个候选同为仄，一个证据未审核：不能得出 toneStatus=resolved", () => {
+    const lookup = syntheticLookup({
+      entries: [
+        {
+          character: "重",
+          candidates: [
+            syntheticCandidate({
+              id: "c-重-Z-backed",
+              character: "重",
+              tone: "Z",
+              evidenceIds: [APPROVED_EVIDENCE.id],
+            }),
+            syntheticCandidate({
+              id: "c-重-Z-unverified",
+              character: "重",
+              tone: "Z",
+              evidenceIds: [UNVERIFIED_EVIDENCE.id],
+            }),
+          ],
+        },
+      ],
+    });
+    // 修复前：ambiguous + toneStatus=resolved=Z，等于用未审核候选定了平仄。
+    expectReadingsError(
+      () =>
+        resolveReadings({
+          poem: poemOf("重"),
+          lookup,
+          overrides: [],
+          contextRules: [],
+        }),
+      "LOOKUP_EVIDENCE_UNVERIFIED",
+    );
   });
 });
 
@@ -274,7 +310,7 @@ describe("resolveReadings：人工覆盖", () => {
     expect(token.evidenceIds).toEqual([APPROVED_EVIDENCE.id]);
   });
 
-  it("FIX-1 用户覆盖选中未审核候选：选择可见，但不会把未审核证据变成已审核证据", () => {
+  it("GATE 人工覆盖未审核候选：不得提前返回 resolved，同样抛数据未就绪", () => {
     const lookup = syntheticLookup({
       entries: [
         {
@@ -290,19 +326,47 @@ describe("resolveReadings：人工覆盖", () => {
         },
       ],
     });
+    // 修复前：覆盖路径提前返回 resolved，toneStatus 也变成 resolved。
+    expectReadingsError(
+      () =>
+        resolveReadings({
+          poem: poemOf("白"),
+          lookup,
+          overrides: [{ tokenId: "l1c1", readingId: "c-白-unverified" }],
+          contextRules: [],
+        }),
+      "LOOKUP_EVIDENCE_UNVERIFIED",
+    );
+  });
+
+  it("GATE 人工覆盖已审核候选：正常生效，且不把人工选择当学术证据", () => {
+    const lookup = syntheticLookup({
+      entries: [
+        {
+          character: "白",
+          candidates: [
+            syntheticCandidate({
+              id: "c-白-backed",
+              character: "白",
+              tone: "Z",
+              evidenceIds: [APPROVED_EVIDENCE.id],
+            }),
+          ],
+        },
+      ],
+    });
     const token = tokenOf(
       annotate({
         poem: poemOf("白"),
         lookup,
-        overrides: [{ tokenId: "l1c1", readingId: "c-白-unverified" }],
+        overrides: [{ tokenId: "l1c1", readingId: "c-白-backed" }],
       }),
       "l1c1",
     );
-
     expect(token.selectionMethod).toBe("user");
-    expect(token.selectedReadingId).toBe("c-白-unverified");
-    // 人工选择不是学术证据：未审核证据仍然不进 evidenceIds。
-    expect(token.evidenceIds).toEqual([]);
+    expect(token.readingStatus).toBe("resolved");
+    expect(token.toneStatus).toBe("resolved");
+    expect(token.evidenceIds).toEqual([APPROVED_EVIDENCE.id]);
   });
 
   it("B-D1-08 外字、不存在、越界与重复覆盖都给可识别错误", () => {
@@ -644,7 +708,7 @@ describe("resolveReadings：上下文规则", () => {
     );
   });
 
-  it("FIX-2 规则证据齐备但被选候选自身证据未审核：仍不 resolved", () => {
+  it("GATE 语境规则选中未审核候选：抛数据未就绪，不能只剩它去定平仄", () => {
     const lookupWithUnverifiedCandidate = syntheticLookup({
       entries: [
         {
@@ -673,20 +737,89 @@ describe("resolveReadings：上下文规则", () => {
       targetOffset: 0,
       selectCandidateIds: ["c-更-P-unverified"],
     });
-    const token = tokenOf(
-      annotate({
-        poem,
-        lookup: lookupWithUnverifiedCandidate,
-        contextRules: [rule],
-      }),
-      "l1c1",
+    // 修复前：readingStatus=ambiguous，但有效候选只剩未审核的那个，toneStatus 变成 resolved。
+    expectReadingsError(
+      () =>
+        resolveReadings({
+          poem,
+          lookup: lookupWithUnverifiedCandidate,
+          overrides: [],
+          contextRules: [rule],
+        }),
+      "LOOKUP_EVIDENCE_UNVERIFIED",
     );
+  });
 
-    expect(token.readingStatus).toBe("ambiguous");
-    expect(token.selectionMethod).toBe("unresolved");
-    expect(token.selectedReadingId).toBeNull();
-    expect(token.effectiveCandidateIds).toEqual(["c-更-P-unverified"]);
-    expect(token.reason).toContain("候选自身证据未经审核");
+  it("GATE 语境规则冲突且其中一个候选未审核：同样抛数据未就绪", () => {
+    const lookupWithUnverifiedCandidate = syntheticLookup({
+      entries: [
+        {
+          character: "更",
+          candidates: [
+            syntheticCandidate({
+              id: "c-更-P-back",
+              character: "更",
+              tone: "P",
+              evidenceIds: [APPROVED_EVIDENCE.id],
+            }),
+            syntheticCandidate({
+              id: "c-更-Z-unverified",
+              character: "更",
+              tone: "Z",
+              evidenceIds: [UNVERIFIED_EVIDENCE.id],
+            }),
+          ],
+        },
+      ],
+    });
+    const ruleA = contextRule({
+      id: "r-conflict-back",
+      target: "更",
+      exactPhrases: ["更上一层楼"],
+      targetOffset: 0,
+      selectCandidateIds: ["c-更-P-back"],
+    });
+    const ruleB = contextRule({
+      id: "r-conflict-unverified",
+      target: "更",
+      exactPhrases: ["更上一层楼"],
+      targetOffset: 0,
+      selectCandidateIds: ["c-更-Z-unverified"],
+    });
+    expectReadingsError(
+      () =>
+        resolveReadings({
+          poem,
+          lookup: lookupWithUnverifiedCandidate,
+          overrides: [],
+          contextRules: [ruleA, ruleB],
+        }),
+      "LOOKUP_EVIDENCE_UNVERIFIED",
+    );
+  });
+
+  it("GATE 完整审核依据的正向路径：规则选音、平仄 resolved、证据完整保留", () => {
+    const rule = contextRule({
+      id: "r-fully-reviewed",
+      target: "更",
+      exactPhrases: ["更上一层楼"],
+      targetOffset: 0,
+      selectCandidateIds: ["c-更-P"],
+      evidenceIds: [RULE_EVIDENCE.id],
+    });
+    const result = annotate({ poem, lookup, contextRules: [rule] });
+    const token = tokenOf(result, "l1c1");
+
+    expect(token.readingStatus).toBe("resolved");
+    expect(token.selectionMethod).toBe("context_rule");
+    expect(token.selectedReadingId).toBe("c-更-P");
+    expect(token.effectiveCandidateIds).toEqual(["c-更-P"]);
+    expect(token.toneStatus).toBe("resolved");
+    expect(token.tone).toBe("P");
+    // 证据必须保留：候选自身的归部证据 + 规则的语境证据
+    expect(token.evidenceIds).toContain(APPROVED_EVIDENCE.id);
+    expect(token.evidenceIds).toContain(RULE_EVIDENCE.id);
+    expect(token.reason).toContain("r-fully-reviewed");
   });
 });
 

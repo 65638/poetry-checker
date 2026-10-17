@@ -20,8 +20,14 @@ export const READINGS_ERROR_CODES = [
   /** 候选引用了 lookup.evidence 中不存在的证据 ID。 */
   "LOOKUP_EVIDENCE_UNKNOWN",
   /**
-   * 某字位的候选全部没有已审核证据：契约无法表达“证据待核实”，只能报数据未就绪。
-   * 建议 GLM 映射为 503 DATA_NOT_READY，不得降级成 200。
+   * 参与读音/平仄/归部推导的候选缺已审核证据：契约无法表达“证据待核实”，只能报数据未就绪。
+   *
+   * 不只是“原始候选全部未审核”这一种情况，还包括：
+   * - 用户覆盖选中的候选没有已审核证据；
+   * - 已审核语境规则（含规则冲突保留的候选）实际选中的候选没有已审核证据；
+   * - 保留歧义时进入 effectiveCandidateIds 的某些候选没有已审核证据。
+   *
+   * 建议 GLM 映射为 503 DATA_NOT_READY，不得降级成 200，也不得改写成 unknown。
    */
   "LOOKUP_EVIDENCE_UNVERIFIED",
   /** 同一位字被覆盖两次。 */

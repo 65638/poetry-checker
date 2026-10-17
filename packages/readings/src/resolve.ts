@@ -108,7 +108,6 @@ export function resolveReadings(input: ResolveReadingsInput): AnnotatedPoem {
       token,
       candidates,
       lookup,
-      approvedEvidenceIds,
       overrideReadingId: overrideByTokenId.get(token.tokenId),
       approvedHits: ruleHits.approved.get(token.tokenId) ?? [],
     });
@@ -116,6 +115,16 @@ export function resolveReadings(input: ResolveReadingsInput): AnnotatedPoem {
     const effectiveCandidates = candidates.filter((candidate) =>
       selection.effectiveCandidateIds.includes(candidate.id),
     );
+    // 统一证据门槛：凡是会参与读音/平仄/归部推导的候选（即 effectiveCandidateIds 里的每一个），
+    // 都必须有已审核证据。覆盖、语境规则、规则冲突、唯一候选、保留歧义全部走这一处检查，
+    // 不做分支级特判，避免再出现"某条路径提前返回确定状态"的漏洞。
+    assertEffectiveCandidatesBacked({
+      token,
+      selection,
+      effectiveCandidates,
+      approvedEvidenceIds,
+      lookup,
+    });
     const toneState = deriveToneState(effectiveCandidates);
     const evidenceIds = uniqueInOrder([
       ...effectiveCandidates.flatMap((candidate) => candidate.evidenceIds),
@@ -184,18 +193,10 @@ function selectReading(input: {
   token: ParsedToken;
   candidates: readonly ReadingCandidate[];
   lookup: LookupResult;
-  approvedEvidenceIds: ReadonlySet<string>;
   overrideReadingId: string | undefined;
   approvedHits: readonly RuleHit[];
 }): Selection {
-  const {
-    token,
-    candidates,
-    lookup,
-    approvedEvidenceIds,
-    overrideReadingId,
-    approvedHits,
-  } = input;
+  const { token, candidates, lookup, overrideReadingId, approvedHits } = input;
   const candidateIds = new Set(candidates.map((candidate) => candidate.id));
 
   // 1. 用户覆盖优先；但必须指向当前原字、当前韵书下真实存在的候选。
@@ -250,29 +251,16 @@ function selectReading(input: {
     );
 
     if (selected.size === 1) {
-      const only = [...selected][0];
-      const selectedCandidate =
-        only === undefined
-          ? undefined
-          : candidates.find((candidate) => candidate.id === only);
-      if (only !== undefined && selectedCandidate !== undefined) {
-        // 规则给了选择理由，但被选候选自身证据未审核时，仍不能给确定读音。
-        if (isEvidenceBacked(selectedCandidate, approvedEvidenceIds)) {
-          return {
-            effectiveCandidateIds: [only],
-            readingStatus: "resolved",
-            selectedReadingId: only,
-            selectionMethod: "context_rule",
-            reason: `命中已审核语境规则 ${ruleIds.join("、")}「${phrases.join("、")}」（${senses.join("；")}），选定候选 ${only}`,
-            ruleEvidenceIds,
-          };
-        }
+      const only = [...selected].sort()[0];
+      if (only !== undefined) {
+        // 候选证据是否已审核，由调用方的统一门槛 assertEffectiveCandidatesBacked 负责，
+        // 这里只管选出候选，不再做分支级判断。
         return {
           effectiveCandidateIds: [only],
-          readingStatus: "ambiguous",
-          selectedReadingId: null,
-          selectionMethod: "unresolved",
-          reason: `语境规则 ${ruleIds.join("、")} 指向候选 ${only}，但该候选自身证据未经审核：不据此确定读音`,
+          readingStatus: "resolved",
+          selectedReadingId: only,
+          selectionMethod: "context_rule",
+          reason: `命中已审核语境规则 ${ruleIds.join("、")}「${phrases.join("、")}」（${senses.join("；")}），选定候选 ${only}`,
           ruleEvidenceIds,
         };
       }
@@ -302,28 +290,7 @@ function selectReading(input: {
     };
   }
 
-  // 4. 候选自身的证据必须已审核，才能支撑结论。
-  //    全部候选都没有已审核证据时，冻结契约无法表达“证据待核实”（只有 resolved/ambiguous/unknown，
-  //    unknown 又等同于“未收录”，会误导下游）。因此报模块数据未就绪，不返回可被当成结论的状态。
-  //    注意：这里抛错而不是把有效候选清空——不通过丢弃未审核候选来缩小读音集合。
-  const backed = candidates.filter((candidate) =>
-    isEvidenceBacked(candidate, approvedEvidenceIds),
-  );
-  if (backed.length === 0) {
-    throw new ReadingsError(
-      "LOOKUP_EVIDENCE_UNVERIFIED",
-      `字位 ${token.tokenId}（${token.text}）的 ${candidates.length} 个候选都没有已审核证据：未审核证据不能支撑确定读音结论，也不能降级成 unknown 冒充“未收录”`,
-      {
-        tokenId: token.tokenId,
-        character: token.text,
-        candidateIds: candidates.map((candidate) => candidate.id).join(","),
-        book: lookup.book,
-        dataVersion: lookup.dataVersion,
-      },
-    );
-  }
-
-  // 5. 唯一候选：只有该候选自身证据已审核时才给 resolved。
+  // 4. 唯一候选。
   if (candidates.length === 1) {
     const only = candidates[0];
     if (only === undefined) {
@@ -339,27 +306,59 @@ function selectReading(input: {
       readingStatus: "resolved",
       selectedReadingId: only.id,
       selectionMethod: "unique",
-      reason: `唯一候选 ${only.id}：候选自身证据已审核，平仄按该候选推导`,
+      reason: `唯一候选 ${only.id}：平仄按该候选推导`,
       ruleEvidenceIds: [],
     };
   }
 
-  // 6. 多个候选：全部保留。证据缺口不能用来收窄候选。
+  // 5. 多个候选：全部保留，不用证据缺口收窄。
   const allIds = candidates.map((candidate) => candidate.id);
-  const unbackedIds = candidates
-    .filter((candidate) => !isEvidenceBacked(candidate, approvedEvidenceIds))
-    .map((candidate) => candidate.id);
   return {
     effectiveCandidateIds: allIds,
     readingStatus: "ambiguous",
     selectedReadingId: null,
     selectionMethod: "unresolved",
-    reason:
-      unbackedIds.length === 0
-        ? `保留 ${allIds.length} 个候选（${allIds.join("、")}）：当前语境证据不足，不给确定读音`
-        : `保留 ${allIds.length} 个候选（${allIds.join("、")}）：其中 ${unbackedIds.join("、")} 的证据未经审核，不能据此收窄读音`,
+    reason: `保留 ${allIds.length} 个候选（${allIds.join("、")}）：当前语境证据不足，不给确定读音`,
     ruleEvidenceIds: [],
   };
+}
+
+/**
+ * 统一证据门槛：**凡是进入 `effectiveCandidateIds` 的候选都必须有已审核证据**。
+ *
+ * 这一处覆盖所有会参与后续平仄/归部推导的路径：
+ * 用户覆盖、已审核语境规则、同优先级规则冲突、唯一候选、保留歧义。
+ * 任一有效候选缺已审核证据即抛 `LOOKUP_EVIDENCE_UNVERIFIED`（数据未就绪）。
+ *
+ * 不用 `unknown` 顶替：`unknown` 与“未收录”无法区分，等于换个方式放行；
+ * 也不清空 `effectiveCandidateIds`：那会通过丢弃未审核候选缩小读音集合。
+ */
+function assertEffectiveCandidatesBacked(input: {
+  token: ParsedToken;
+  selection: Selection;
+  effectiveCandidates: readonly ReadingCandidate[];
+  approvedEvidenceIds: ReadonlySet<string>;
+  lookup: LookupResult;
+}): void {
+  const { token, selection, effectiveCandidates, approvedEvidenceIds, lookup } =
+    input;
+  const missing = effectiveCandidates
+    .filter((candidate) => !isEvidenceBacked(candidate, approvedEvidenceIds))
+    .map((candidate) => candidate.id);
+  if (missing.length === 0) return;
+
+  throw new ReadingsError(
+    "LOOKUP_EVIDENCE_UNVERIFIED",
+    `字位 ${token.tokenId}（${token.text}）参与读音/平仄推导的候选 ${missing.join("、")} 没有已审核证据（选择方式 ${selection.selectionMethod}）：未审核或缺失的证据不能支撑读音、平仄或归部结论，按数据未就绪处理`,
+    {
+      tokenId: token.tokenId,
+      character: token.text,
+      candidateIds: missing.join(","),
+      selectionMethod: selection.selectionMethod,
+      book: lookup.book,
+      dataVersion: lookup.dataVersion,
+    },
+  );
 }
 
 /** 候选能否支撑确定结论：至少要有一条已审核证据。 */

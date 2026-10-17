@@ -13,7 +13,7 @@
 | `packages/readings/src/index.ts`          | 公共导出                                                          |
 | `packages/readings/tests/fixtures.ts`     | 合成 `LookupResult`/证据/规则（全部标 synthetic）                 |
 | `packages/readings/tests/parse.test.ts`   | 解析与位置用例（10 个）                                           |
-| `packages/readings/tests/resolve.test.ts` | 候选传播与覆盖用例（29 个）                                       |
+| `packages/readings/tests/resolve.test.ts` | 候选传播与覆盖用例（33 个）                                       |
 | `packages/readings/README.md`             | 调用方式与边界                                                    |
 | `packages/readings/HANDOFF.md`            | 本文件                                                            |
 | `data/context/README.md`                  | 规则格式、匹配口径、待审队列用法                                  |
@@ -43,54 +43,67 @@
 候选引用不存在证据抛 `LOOKUP_EVIDENCE_UNKNOWN`；非白名单符号（数字）逐字 notice 而不被吞掉；
 `々`(U+3005)/`〻`/康熙部首不建字位（否则后续列整体错位），而 `〇`(U+3007) 仍是表意汉字、照常建字位。
 
-## 2.1 评审要求的两项修复
+## 2.1 证据门槛修复（两轮）
+
+### 第一轮（`8e48d10` → `6e8eb16`）：候选证据与规则证据
 
 **FIX-1 未审核的候选证据不能支撑确定读音结论。**
-
 旧行为（审计复现点）：唯一候选即使没有任何已审核证据也返回 `readingStatus=resolved` →
 下游得到 `toneStatus=resolved`、`quality=ok`，仅 `reason` 写“待核实”挡不住下游。
 
-新行为：候选必须**至少有一条 approved 证据**才算“可支撑”。
-
-| 情形                                      | 新结果                                                             |
-| ----------------------------------------- | ------------------------------------------------------------------ |
-| 唯一候选且证据已审核                      | `resolved` / `unique`（不变）                                      |
-| 唯一候选但证据未审核或 `evidenceIds` 为空 | **抛 `LOOKUP_EVIDENCE_UNVERIFIED`**，不返回任何 `readingStatus`    |
-| 全部候选都不可支撑                        | 同上，抛数据未就绪错误                                             |
-| 多候选中部分不可支撑                      | 仍 `ambiguous` 并**保留全部候选**；`reason` 点名哪些候选证据未审核 |
-
-为什么抛错而不是返回 `unknown`：冻结契约只有 `resolved/ambiguous/unknown`，没有“证据待核实”；
-用 `unknown` 顶替会把“已收录但未审核”显示成“未收录”，下游无法区分，等于换个方式放行。
-所以按**数据未就绪**处理，请 GLM 映射 503（见第 6 节）。未擅改契约。
-
-关键取舍：**不用证据缺口收窄候选**——部分候选不可支撑时全部保留，绝不在剩余候选上假造“唯一候选”。
-
-用例：`FIX-1 唯一候选全部依据未审核`（断言抛错）、`FIX-1 候选证据为空数组`（断言抛错）、
-`FIX-1 多候选中仅部分证据未审核`、`FIX-1 用户覆盖选中未审核候选`（证据不晋升）。
-
 **FIX-2 语境规则证据要先验，不可事后过滤。**
-
 旧行为（审计复现点）：只看 `rule.reviewStatus === "approved"`。规则标 approved 但引用不存在或未审核的
 语境证据时仍确定选音；候选自身的韵书归部证据被当作语境依据。
 
-新行为：规则要生效必须同时满足——
+### 第二轮（本提交）：统一门槛，堵住两条绕过路径
 
-1. `reviewStatus === "approved"`；
-2. `evidenceIds` 非空；
-3. 每条都能在 `lookup.evidence` 解析到；
-4. 每条都是 `approved`；
-5. **每条 `kind === "context"`**（`rhyme_entry` 等归部证据不能顶替语境依据）。
+复验指出的两个残留漏洞，根因是同一个：**证据检查只做在“唯一候选”分支上**，
+覆盖路径与规则路径都能在检查之前返回确定状态。
 
-任一不满足即不参与选音，命中记录为 `CONTEXT_RULE_EVIDENCE_INSUFFICIENT` notice
-（与未审核规则的 `CONTEXT_RULE_UNVERIFIED_IGNORED` 区分，不静默丢弃、也不事后过滤候选）。
+1. **用户覆盖未审核候选**：覆盖分支提前返回 `resolved`，`toneStatus` 也变 `resolved`。
+2. **合法规则选中未审核候选**：`readingStatus=ambiguous` 看着没问题，但 `effectiveCandidateIds`
+   只剩那个未审核候选，平仄照旧从它推出来 → `toneStatus=resolved`。
 
-另加一道闸：即使规则证据齐备，若规则指向的**候选自身**没有已审核证据，也不给 `resolved`，
-退回 `ambiguous` 且 `effectiveCandidateIds` 只留该候选。
+修法：把检查提到**所有分支之后、推导平仄之前**，只做一次：
 
-用例：`FIX-2 规则证据为空`、`FIX-2 规则证据未审核`、`FIX-2 规则证据在 lookup 中缺失`、
-`FIX-2 规则引用已审核但非语境用途的证据`、`FIX-2 规则证据齐备但被选候选自身证据未审核`。
+> **凡是进入 `effectiveCandidateIds` 的候选（即会参与读音、平仄、归部推导的候选），
+> 都必须至少有一条已审核证据；否则抛 `LOOKUP_EVIDENCE_UNVERIFIED`。**
 
-口径已同步到 `docs/readings.md` §4.2 状态矩阵、§4.3 证据口径、§4.4、§4.6 规则执行、notice 表与错误码表。
+覆盖、语境规则、规则冲突、唯一候选、保留歧义共用这一处检查，不再有分支级特判。
+没有只改 `readingStatus`、没有只改 `reason`、没有清空 `evidenceIds`、没有改冻结 Schema。
+
+| 情形                                      | 结果                                                                         |
+| ----------------------------------------- | ---------------------------------------------------------------------------- |
+| 有效候选全部有已审核证据                  | 正常推导（唯一候选 `resolved`，多候选 `ambiguous`，规则命中 `context_rule`） |
+| 唯一候选但证据未审核 / `evidenceIds` 为空 | 抛 `LOOKUP_EVIDENCE_UNVERIFIED`                                              |
+| 多候选中有任一未审核                      | 抛错（不再返回 `ambiguous`，因为平仄仍会从这些候选推出来）                   |
+| 用户覆盖指向未审核候选                    | 抛错（人工选择不是学术证据）                                                 |
+| 语境规则/规则冲突选中未审核候选           | 抛错（规则合法 ≠ 候选有依据）                                                |
+
+为什么抛错而不是 `unknown`：冻结契约只有 `resolved/ambiguous/unknown`，没有“证据待核实”；
+`unknown` 与“未收录”无法区分，等于换个方式放行。也不清空 `effectiveCandidateIds`：
+那会通过丢弃未审核候选缩小读音集合，在剩余候选上假造“唯一候选”。
+
+**规则证据门槛**（`classifyRule`，保持第二轮结论）：规则要生效必须
+`reviewStatus=approved` + `evidenceIds` 非空 + 每条可在 `lookup.evidence` 解析 + 全部 `approved`
+
+- **每条 `kind="context"`**；不满足则不参与选音并记 `CONTEXT_RULE_EVIDENCE_INSUFFICIENT`。
+
+### 用例（`describe: resolveReadings：候选状态传播` 与 `语境规则`）
+
+| 用例                                                | 断言                                                                         |
+| --------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `GATE 人工覆盖未审核候选`                           | 抛 `LOOKUP_EVIDENCE_UNVERIFIED`                                              |
+| `GATE 人工覆盖已审核候选`                           | `user` + `toneStatus=resolved`，证据保留                                     |
+| `GATE 语境规则选中未审核候选`                       | 抛错（此前是 ambiguous + toneStatus resolved）                               |
+| `GATE 语境规则冲突且其中一个候选未审核`             | 抛错                                                                         |
+| `GATE 混合有效候选`                                 | 抛错                                                                         |
+| `GATE 两个候选同为仄，一个证据未审核`               | 抛错（此前 toneStatus=resolved=Z）                                           |
+| `GATE 完整审核依据的正向路径`                       | `context_rule` + `toneStatus=resolved` + 候选与规则证据都在 `evidenceIds` 里 |
+| `FIX-1 唯一候选全部依据未审核` / `候选证据为空数组` | 抛错                                                                         |
+| `FIX-2 规则证据为空/未审核/缺失/非语境用途`         | 规则不生效，`ambiguous`，留 notice                                           |
+
+口径已同步到 `docs/readings.md` §4.2 状态矩阵、§4.3 证据口径、§4.4、§4.5 覆盖校验、§4.6 规则执行、notice 表与错误码表。
 
 ## 3. 实际命令与结果
 
@@ -100,7 +113,7 @@
 $ pnpm verify
 $ eslint .                        → 通过
 $ tsc --noEmit && tsc --noEmit -p apps/web/tsconfig.json → 通过
-$ vitest run                      → 6 个文件 / 75 个用例全通过（其中 readings 2 文件 / 39 用例）
+$ vitest run                      → 6 个文件 / 79 个用例全通过（其中 readings 2 文件 / 43 用例）
 $ pnpm build && tsx scripts/generate-contracts.ts --check → 通过（8 个契约/模板文件一致）
 退出码 0
 ```
@@ -110,8 +123,8 @@ $ pnpm build && tsx scripts/generate-contracts.ts --check → 通过（8 个契�
 ```text
 $ node node_modules/vitest/vitest.mjs run packages/readings/tests
  ✓ packages/readings/tests/parse.test.ts (10 tests)
- ✓ packages/readings/tests/resolve.test.ts (29 tests)
- Test Files 2 passed / Tests 39 passed
+ ✓ packages/readings/tests/resolve.test.ts (33 tests)
+ Test Files 2 passed / Tests 43 passed
 ```
 
 **未运行**：`pnpm --filter @poetry/readings test`（该脚本不存在，见第 6 节申请）；没有 `todo` 跳过的用例。
@@ -152,8 +165,9 @@ $ node node_modules/vitest/vitest.mjs run packages/readings/tests
 2. **缺少真实字表**：所有候选来自合成 fixture；真实覆盖情况未知。
 3. **语境规则无一条生效**：缺 A 的稳定候选 ID、缺可定位来源、缺人工审核。队列里 4 条只能算问题清单。
 4. **“证据待核实”只能靠异常路径表达**：契约没有该状态位，`unknown` 又与“未收录”无法区分，
-   因此全部候选都无已审核证据时抛 `LOOKUP_EVIDENCE_UNVERIFIED`，由 API 映射 503。
-   代价是只要本篇有一个字位证据未审核，整次分析就失败——这是有意的 fail-closed，等 A 补审核后可恢复。
+   因此只要有效候选缺已审核证据就抛 `LOOKUP_EVIDENCE_UNVERIFIED`，由 API 映射 503。
+   该码不只表示“原始候选全部未审核”，也覆盖“被覆盖选中 / 被规则选中 / 冲突保留的候选未审核”。
+   代价是只要本篇有一个字位踩到，整次分析就失败——这是有意的 fail-closed，等 A 补审核后恢复。
    已在 `docs/readings.md` §7 提出可选契约变更（新增“待核实”状态位）。
 5. **未做跨句/分词匹配**：只有同句内精确短语。
 6. **未做覆盖率/准确率**：没有留出验证，不报百分比。
@@ -189,7 +203,8 @@ $ node node_modules/vitest/vitest.mjs run packages/readings/tests
 - `OVERRIDE_*` → 422；`CONTEXT_RULE_INVALID`/`CONTEXT_RULE_STALE`/`LOOKUP_*` → 503；
   `POEM_TOKEN_*` → 500（服务端自身 bug）。
 - **`LOOKUP_EVIDENCE_UNVERIFIED` 必须映射为 503 `DATA_NOT_READY`**，不得降级成 200，也不得当成
-  `unknown` 正常返回——它是“证据未审核”的唯一表达方式。
+  `unknown` 正常返回——它是“候选证据未审核”的唯一表达方式。触发面包括：原始候选全未审核、
+  用户覆盖选中的候选未审核、语境规则或冲突保留的候选未审核。
 - `CONTEXT_RULES_PENDING` 是保留码：若将来关闭规则执行，遇到 approved 规则必须显式抛此码，
   **不能**被 API 转成 200。
 
