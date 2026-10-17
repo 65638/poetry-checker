@@ -11,6 +11,9 @@
       ],
       "@poetry/readings": [
         "./packages/readings/src/index.ts"
+      ],
+      "@poetry/lexicon": [
+        "./packages/lexicon/src/index.ts"
       ]
     }
   },
