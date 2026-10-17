@@ -1,6 +1,9 @@
 # Web 交接记录：D1 视图契约与业务状态基础
 
-日期：2026-10-17（D1）。执行者：队员 D + DeepSeek。基线 `main` = `e549194`，
+日期：2026-10-17（D1）。执行者：队员 D + DeepSeek。
+
+**基线**：分支创建时 `main` = `e549194`；已按组长要求合并 `origin/main`
+（合入 C 的验收测试与 B 的解析/选音模块）。当前基线见下方「基线同步」一节。
 `contract-v1` = `9b27322`。分支 `feat/d-d1-web`。
 
 ## 变更文件
@@ -17,12 +20,37 @@
 | `apps/web/src/hooks/useCheckerStore.ts` | 新增 | `useSyncExternalStore` 绑定 |
 | `apps/web/src/utils/sha256.ts` | 新增 | 纯 TS 的 SHA-256（UTF-8 原文摘要，与服务端口径一致） |
 | `apps/web/src/main.tsx` | 覆盖 | 接管占位入口，接真实 HTTP transport 与开发容器 |
-| `apps/web/tests/*.test.ts` | 新增 | 65 项业务测试（api-client / store / export） |
-| `fixtures/mocks/*.json`、`generate.ts`、`README.md` | 新增 | 五状态开发场景与错配场景，全部通过 Schema |
+| `apps/web/tests/*.test.ts` | 新增 | 80 项业务测试（api-client / store / export） |
+| `fixtures/mocks/*.json`、`generate.ts`、`README.md` | 新增 | 五状态开发场景、错配场景与补充平面汉字场景，全部通过 Schema |
 | `docs/ui.md` | 新增 | 业务交互、失效规则、导出与测试结果 |
 
 未改动：`presentation/`、`public/design/`、`docs/design/`、包清单、lockfile、
 Vite/TS 配置、根配置、`packages/contracts`、`apps/api`、金标准。
+
+## 基线同步（响应组长要求）
+
+```text
+git fetch origin
+git merge origin/main        # 无冲突，30 个文件、+5067 行，全部来自他人模块
+pnpm install --frozen-lockfile
+pnpm verify                  # exit 0
+```
+
+- 合并前 `main` 基线：`e549194`；合并后：含 C 的验收测试与 B 的解析/选音模块
+- 合并后 `main` 独有 16 个提交，我的分支有 3 个提交，`git merge` **零冲突**
+- 合并后测试：**215 项 / 13 个文件**（135 项来自 main + 80 项本模块）
+- 冲突处理：本次无冲突；若有冲突，我只改 `apps/web/`、`fixtures/mocks/`、
+  `docs/ui.md` 这些本人路径，根配置冲突交组长转 GLM
+
+## ⚠️ 类型检查命令更正
+
+此前文档里写“`tsc --noEmit` 通过”是**误导性的**：根 `tsconfig.json` 的 `include`
+只含 `packages/**/*.ts`、`apps/api/**/*.ts`、`scripts/**/*.ts`、`vitest.config.ts`，
+**不含 `apps/web`**。裸跑 `tsc --noEmit` 根本不会检查 TSX。
+
+TSX 的实际检查由 `pnpm verify` 串联的第二个项目承担：
+`tsc --noEmit && tsc --noEmit -p apps/web/tsconfig.json`。
+因此本模块的验收标准统一为 **`pnpm verify`**，不再单独引用裸 `tsc`。
 
 ## 完成用例
 
@@ -39,15 +67,19 @@ Vite/TS 配置、根配置、`packages/contracts`、`apps/api`、金标准。
 
 ## 执行命令与结果
 
+合并 `origin/main` 后（本机需 `PNPM_CONFIG_NODE_LINKER=hoisted`，原因见下节）：
+
 ```text
-vitest run apps/web/tests              → 80 passed
-vitest run                             → 116 passed（36 基线 + 80 新增）
-tsc --noEmit                           → exit 0
-tsc --noEmit -p apps/web/tsconfig.json → exit 0
-eslint .                               → exit 0
-vite build（apps/web）                 → exit 0，118 modules，dist/index.html + assets
-$env:PNPM_CONFIG_NODE_LINKER='hoisted'; pnpm verify → exit 0（lint/typecheck/test/build/生成物 全通过）
+$env:PNPM_CONFIG_NODE_LINKER = 'hoisted'
+pnpm verify                            → exit 0
+  $ eslint .                           → 通过
+  $ tsc --noEmit && tsc --noEmit -p apps/web/tsconfig.json → 通过（两个项目都查）
+  $ vitest run                         → 215 passed / 13 files
+  $ pnpm build && tsx scripts/generate-contracts.ts --check → 通过（8 个生成物一致）
 ```
+
+测试构成：**215 = 135（合并进来的 main 基线）+ 80（本模块新增）**。
+本模块单独跑：`vitest run apps/web/tests` → 80 passed。
 
 `pnpm verify` 的实际通过条件与原因见下节「环境说明」。
 

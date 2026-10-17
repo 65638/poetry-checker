@@ -37,12 +37,17 @@ pnpm dev:web     # 127.0.0.1:5173，代理 /api、/healthz、/readyz → 3000
 pnpm --filter @poetry/web test        # 业务测试
 pnpm --filter @poetry/web typecheck   # TSX 类型检查
 pnpm --filter @poetry/web build       # 生产构建
-pnpm verify                           # 根：lint + 双 typecheck + 全量测试 + 生成物一致性
+pnpm verify                           # 根：lint + 双 tsconfig 类型检查 + 全量测试 + 构建 + 生成物核对
 ```
 
-D1 实测结果（Node 24.19.0 / pnpm 11.25.0）：全量 **101 项测试通过**
-（36 基线 + 80 新增）、根与 web 的 `tsc --noEmit` 通过、`eslint .` 通过、
-`vite build` 通过；`dev:api` + `dev:web` 真实冒烟通过。
+> ⚠️ 裸 `tsc --noEmit` 只跑根 tsconfig，**不含 `apps/web`**（其 `include` 只有
+> `packages/**`、`apps/api/**`、`scripts/**`、`vitest.config.ts`）。TSX 的类型
+> 检查必须用 `pnpm verify` 或上面的 `--filter @poetry/web typecheck`。
+
+D1 实测结果（合并 `origin/main` 后，Node 24.19.0 / pnpm 11.25.0）：
+**`pnpm verify` exit 0** —— lint、双 tsconfig 类型检查、**215 项测试**
+（135 来自 main + 80 本模块，13 个文件）、构建、生成物一致性全部通过；
+`dev:api` + `dev:web` 真实冒烟通过。
 
 ## 开发场景
 

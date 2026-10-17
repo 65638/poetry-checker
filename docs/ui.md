@@ -95,18 +95,22 @@
 
 ## 8. 实际执行的验证
 
-在 Node `24.19.0` / pnpm `11.25.0` 的检出上实际执行：
+在 Node `24.19.0` / pnpm `11.25.0` 的检出上实际执行（已合并 `origin/main`）：
 
 | 命令（等价） | 结果 |
 | --- | --- |
-| `vitest run apps/web/tests` | 80 项通过 |
-| `vitest run`（全量） | **116 项通过**（36 基线 + 80 新增） |
-| `tsc --noEmit`（根） | 通过 |
-| `tsc --noEmit -p apps/web/tsconfig.json` | 通过 |
-| `eslint .` | 通过 |
-| `vite build`（apps/web） | 通过，118 模块，dist 产出 |
-| `pnpm verify`（需 `PNPM_CONFIG_NODE_LINKER=hoisted`） | **exit 0**：lint、双 typecheck、116 项测试、构建、生成物一致性全部通过 |
+| `vitest run apps/web/tests` | 80 项通过（本模块） |
+| `vitest run`（全量） | **215 项通过 / 13 文件**（135 来自 main + 80 本模块） |
+| `pnpm verify`（需 `PNPM_CONFIG_NODE_LINKER=hoisted`） | **exit 0**：lint、双 tsconfig 类型检查、215 项测试、构建、生成物一致性全部通过 |
 | 真实链路冒烟 | `GET /` 200、`/src/main.tsx` 200、`/healthz` 200、`/readyz` 200、`POST /api/v1/analyze` 200 且 `summary.status=pass`、原文匹配 |
+
+### 类型检查注意
+
+裸 `tsc --noEmit` **只跑根 tsconfig**，其 `include` 为
+`packages/**/*.ts`、`apps/api/**/*.ts`、`scripts/**/*.ts`、`vitest.config.ts`，
+**不含 `apps/web`**。TSX 的类型检查由 `pnpm verify` 串联的
+`tsc --noEmit -p apps/web/tsconfig.json` 承担。因此本模块统一以 `pnpm verify`
+作为验收命令，不单独引用裸 `tsc`。
 
 `pnpm verify` 需要环境变量是因为本机 pnpm 在 `node_modules/.pnpm` 建符号链接会
 `ERR_PNPM_EPERM`；`verify` 内部会触发一次依赖检查并重新 install，命令行参数传不进去。
