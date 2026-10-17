@@ -47,6 +47,9 @@ importers:
       '@poetry/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
+      '@poetry/readings':
+        specifier: workspace:*
+        version: link:../../packages/readings
       fastify:
         specifier: 5.1.0
         version: 5.1.0
@@ -92,7 +95,11 @@ importers:
         specifier: workspace:*
         version: link:../contracts
 
-  packages/readings: {}
+  packages/readings:
+    dependencies:
+      '@poetry/contracts':
+        specifier: workspace:*
+        version: link:../contracts
 
 packages:
 

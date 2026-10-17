@@ -8,6 +8,9 @@
       ],
       "@poetry/prosody": [
         "./packages/prosody/src/index.ts"
+      ],
+      "@poetry/readings": [
+        "./packages/readings/src/index.ts"
       ]
     }
   },
