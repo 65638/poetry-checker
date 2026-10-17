@@ -2,5 +2,19 @@
   "name": "@poetry/genre",
   "version": "0.1.0",
   "private": true,
-  "type": "module"
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "development": "./src/index.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "vitest run --root ../.. packages/genre/tests"
+  },
+  "dependencies": {
+    "@poetry/contracts": "workspace:*"
+  }
 }

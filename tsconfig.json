@@ -11,6 +11,9 @@
       ],
       "@poetry/readings": [
         "./packages/readings/src/index.ts"
+      ],
+      "@poetry/genre": [
+        "./packages/genre/src/index.ts"
       ]
     }
   },
