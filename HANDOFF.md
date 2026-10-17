@@ -164,3 +164,9 @@ React 19.3.1 / Vite 8.3.4 / plugin-react 6.1.2（registry 实查锁定）；web 
 - 真实作品分析 0/3 未运行；异文规则、指纹版本管理、真实语料接入未做。
 - 高吻合自动判定分支仍抛 `GENRE_BRANCH_PENDING`（等核心补齐 relationFit/rhymeFit 与样本校准）。
 - 包配置与 API 接线仍待 GLM。
+
+## 交接单
+
+给组长的验收单（交付清单、行为规格、决策项、GLM/C 请求、复现步骤、回滚）见
+[`docs/handoffs/0005-e-genre-d1.md`](docs/handoffs/0005-e-genre-d1.md)；对应 PR
+[#4](https://github.com/65638/poetry-checker/pull/4)（draft）。
