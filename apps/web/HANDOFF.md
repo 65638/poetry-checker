@@ -38,7 +38,7 @@ pnpm verify                  # exit 0
 
 - 合并前 `main` 基线：`e549194`；合并后：含 C 的验收测试与 B 的解析/选音模块
 - 合并后 `main` 独有 16 个提交，我的分支有 3 个提交，`git merge` **零冲突**
-- 合并后测试：**306 项 / 19 个文件**（135 项来自 main + 171 项本模块）
+- 合并后测试：**410 项 / 28 个文件**（integrate 基线 387 + mock 修复新增）
 - 冲突处理：本次无冲突；若有冲突，我只改 `apps/web/`、`fixtures/mocks/`、
   `docs/ui.md` 这些本人路径，根配置冲突交组长转 GLM
 
@@ -74,11 +74,11 @@ $env:PNPM_CONFIG_NODE_LINKER = 'hoisted'
 pnpm verify                            → exit 0
   $ eslint .                           → 通过
   $ tsc --noEmit && tsc --noEmit -p apps/web/tsconfig.json → 通过（两个项目都查）
-  $ vitest run                         → 306 passed / 19 files
+  $ vitest run                         → 410 passed / 28 files
   $ pnpm build && tsx scripts/generate-contracts.ts --check → 通过（8 个生成物一致）
 ```
 
-测试构成：**306 = 135（main 基线）+ 171（本模块新增）**。
+测试构成：**410（含 A/B/C/E 模块与 web 业务层）**。
 本模块单独跑：`vitest run apps/web/tests` → 80 passed。
 
 `pnpm verify` 的实际通过条件与原因见下节「环境说明」。
@@ -167,7 +167,7 @@ pnpm verify          # exit 0
 ```text
 $ eslint .                                    → 通过
 $ tsc --noEmit && tsc --noEmit -p apps/web/tsconfig.json → 通过
-$ vitest run                                  → 306 passed (19 files)
+$ vitest run                                  → 410 passed (28 files)
 $ pnpm build && tsx scripts/generate-contracts.ts --check → 通过（8 个生成物一致）
 ```
 
@@ -309,16 +309,16 @@ node-linker=hoisted
 
 ### 正式装配（已提交，分支 `feat/d-d3-assembly`）
 
-GLM 要求的「同时含两边的集成分支」尚不存在（`origin/main` 仍为 `0a94212`，
-不含 `presentation/`）。为交付可保留的装配提交，本人在本地建立了可复现的集成基线：
+GLM 提供了集成分支 **`origin/integrate`**（`1b67a65`：含 Claude 展示切片 `b0f9dcc`、
+我的业务底座 `27a9684`、E 体裁与接线修复，387 测试）。装配分支已合入该基线：
 
 ```text
-基线：feat/d-d1-web @ 7520dde  +  origin/feat/claude-presentation @ b0f9dcc
-      → 本地 merge e5d2b79（零冲突）
+origin/integrate @ 1b67a65  +  feat/d-d1-web @ 7520dde（mock 坐标修复）
+  → merge（零冲突）
 装配：main.tsx 生产分支渲染 CheckerView；开发壳 DevShell 单独承载场景选择器
 ```
 
-- **契约核对**：合入前逐字节比对 `apps/web/src/view-contract.ts`，两边**完全一致**，
+- **契约核对**：`apps/web/src/view-contract.ts` 与 `origin/integrate` **逐字节一致**，
   字段列表 `Compare-Object` 无差异；未新建第二份类型。
 - **Props 边界**：`CheckerViewProps` 没有 `onLoadDevScenario`，因此
   **没有**给展示组件加新 prop。开发场景入口放在新增的 `app/DevShell.tsx`：
@@ -332,18 +332,22 @@ GLM 要求的「同时含两边的集成分支」尚不存在（`origin/main` �
 - **业务逻辑零改动**：`CheckerStore`、API transport、并发/取消、`stale`、
   选音重检全部保留；仅 `main.tsx` 换渲染目标，新增 `DevShell.tsx`。
 
-验证（在集成基线上）：
+验证（合入 `origin/integrate` 后实测）：
 
 ```text
-pnpm verify                          → exit 0，306 项测试（19 文件）
+pnpm verify                          → exit 0，410 项测试（28 文件）
 vite build                           → 130 modules，CSS 18.23 kB（视觉样式生效）
-dev 冒烟                             → / 200、main.tsx 200、DevShell 200、presentation 200
+dev 冒烟                             → / 200、main.tsx 200、DevShell 200、
+                                       presentation 200、tokens.css 200
 HTTP mock + contracts/pass 正文      → 200，summary=pass，原文匹配，finding 坐标自洽
 HTTP mock + contracts/fail 正文      → 200，summary=fail，原文匹配
 ```
 
+410 项 = integrate 记录的 387 + 我的 mock 修复新增的 fixture-integrity 等
+（含 A/B/C/E 各模块与 web 业务测试）。
+
 **未执行**：真实浏览器点击验收（无 DOM/E2E 依赖，未装 jsdom/Testing Library）、
-375/1440 视觉与键盘现查、真实 API 联调。
+375/1440 视觉与键盘现查、真实 API 联调。这些不因为 `pnpm verify` 通过就算通过。
 
 ### 关于 HTTP mock 的五状态限制（实测结论）
 
