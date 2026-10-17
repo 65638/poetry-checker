@@ -13,7 +13,7 @@
 | `packages/readings/src/index.ts`          | 公共导出                                                          |
 | `packages/readings/tests/fixtures.ts`     | 合成 `LookupResult`/证据/规则（全部标 synthetic）                 |
 | `packages/readings/tests/parse.test.ts`   | 解析与位置用例（10 个）                                           |
-| `packages/readings/tests/resolve.test.ts` | 候选传播与覆盖用例（21 个）                                       |
+| `packages/readings/tests/resolve.test.ts` | 候选传播与覆盖用例（27 个）                                       |
 | `packages/readings/README.md`             | 调用方式与边界                                                    |
 | `packages/readings/HANDOFF.md`            | 本文件                                                            |
 | `data/context/README.md`                  | 规则格式、匹配口径、待审队列用法                                  |
@@ -43,6 +43,38 @@
 候选引用不存在证据抛 `LOOKUP_EVIDENCE_UNKNOWN`；非白名单符号（数字）逐字 notice 而不被吞掉；
 `々`(U+3005)/`〻`/康熙部首不建字位（否则后续列整体错位），而 `〇`(U+3007) 仍是表意汉字、照常建字位。
 
+## 2.1 评审要求的两项修复
+
+**FIX-1 未审核的候选证据不能支撑确定读音结论。**
+
+旧行为：唯一候选即使没有任何已审核证据也返回 `resolved` + `selectionMethod=unique`，只在 `reason` 里加一句提醒。
+新行为：候选必须**至少有一条 approved 证据**才算“可支撑”：
+
+| 情形                                      | 新结果                                                                                                             |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| 唯一候选且证据已审核                      | `resolved` / `unique`                                                                                              |
+| 唯一候选但证据未审核或 `evidenceIds` 为空 | `unknown`、`selectedReadingId=null`、`effectiveCandidateIds=[]`、`possibleTones=[]`；候选仍完整保留在 `candidates` |
+| 全部候选都不可支撑                        | 同上（未知），`reason` 说明证据未经审核                                                                            |
+| 多候选中部分不可支撑                      | 仍 `ambiguous` 并**保留全部候选**；`reason` 点名哪些候选证据未审核                                                 |
+
+关键取舍：**不用证据缺口收窄候选**。两个候选里只有一个带已审核证据时，不能据此排除另一个，
+那会把“没登记证据”误判成“读音不成立”。
+用例：`FIX-1 唯一候选但证据未审核`、`FIX-1 候选证据为空数组`、`FIX-1 多候选中仅部分证据未审核`。
+
+**FIX-2 语境规则引用的证据缺失或未审核时，不能自动确定选音。**
+
+旧行为：只看 `rule.reviewStatus === "approved"`，不看 `rule.evidenceIds` 是否可解析、是否已审核。
+新行为：规则要生效必须同时满足——自身 `approved`，且 `evidenceIds` 非空、每条都能在 `lookup.evidence` 解析到、
+并且全部 `approved`。任一不满足即不参与选音，命中记录为 `CONTEXT_RULE_EVIDENCE_INSUFFICIENT` notice
+（与未审核规则的 `CONTEXT_RULE_UNVERIFIED_IGNORED` 区分开，不静默丢弃）。
+
+另加一道闸：即使规则证据齐备，若规则指向的**候选自身**没有已审核证据，也不给 `resolved`，
+退回 `ambiguous` 且 `effectiveCandidateIds` 只留该候选。
+用例：`FIX-2 规则证据为空`、`FIX-2 规则证据未审核`、`FIX-2 规则证据在 lookup 中缺失`、
+`FIX-2 规则证据齐备但被选候选自身证据未审核`。
+
+口径已同步到 `docs/readings.md` §4.2 状态矩阵、§4.3 证据口径、§4.6 规则执行与 notice 表。
+
 ## 3. 实际命令与结果
 
 环境：Windows + 本机 Node **24.21.0**（仓库 `.node-version` 为 24.19.0，差一个补丁版本）、pnpm **11.25.0**（与 `packageManager` 一致）。
@@ -51,7 +83,7 @@
 $ pnpm verify
 $ eslint .                        → 通过
 $ tsc --noEmit && tsc --noEmit -p apps/web/tsconfig.json → 通过
-$ vitest run                      → 6 个文件 / 67 个用例全通过（其中 readings 2 文件 / 31 用例）
+$ vitest run                      → 6 个文件 / 73 个用例全通过（其中 readings 2 文件 / 37 用例）
 $ pnpm build && tsx scripts/generate-contracts.ts --check → 通过（8 个契约/模板文件一致）
 退出码 0
 ```
@@ -61,8 +93,8 @@ $ pnpm build && tsx scripts/generate-contracts.ts --check → 通过（8 个契�
 ```text
 $ node node_modules/vitest/vitest.mjs run packages/readings/tests
  ✓ packages/readings/tests/parse.test.ts (10 tests)
- ✓ packages/readings/tests/resolve.test.ts (21 tests)
- Test Files 2 passed / Tests 31 passed
+ ✓ packages/readings/tests/resolve.test.ts (27 tests)
+ Test Files 2 passed / Tests 37 passed
 ```
 
 **未运行**：`pnpm --filter @poetry/readings test`（该脚本不存在，见第 6 节申请）；没有 `todo` 跳过的用例。
@@ -96,8 +128,8 @@ $ node node_modules/vitest/vitest.mjs run packages/readings/tests
    在补齐前 C/API 只能按相对路径引用，无法 `import ... from "@poetry/readings"`。
 2. **缺少真实字表**：所有候选来自合成 fixture；真实覆盖情况未知。
 3. **语境规则无一条生效**：缺 A 的稳定候选 ID、缺可定位来源、缺人工审核。队列里 4 条只能算问题清单。
-4. **`unverified` 证据与“唯一候选”的契约张力**：单候选且证据未审核时，Schema 没有“待核实”状态位，
-   目前用 `reason` 明确标注 + `evidenceIds` 为空表达，并已在 `docs/readings.md` 第 6 节提出可选契约变更。
+4. **`unknown` 承担了“证据待核实”的语义**：证据未审核时本模块只能返回 `unknown`（契约没有“待核实”状态位）。
+   代价是“未收录”与“未核实”在下游都表现为 `unknown`，只能靠 `reason` 区分；已在 `docs/readings.md` §7 提出可选契约变更。
 5. **未做跨句/分词匹配**：只有同句内精确短语。
 6. **未做覆盖率/准确率**：没有留出验证，不报百分比。
 7. **Node 补丁版本差异**：本机 24.21.0 而仓库锁 24.19.0，未观察到差异，正式验收建议在 24.19.0 复核。

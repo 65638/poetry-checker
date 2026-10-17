@@ -158,7 +158,7 @@ describe("resolveReadings：候选状态传播", () => {
     expect(token.tone).toBeNull();
   });
 
-  it("唯一候选但证据未审核：结论标为待核实，不把未核实来源计入已审核证据", () => {
+  it("FIX-1 唯一候选但证据未审核：不给确定读音，按未知处理", () => {
     const lookup = syntheticLookup({
       entries: [
         {
@@ -176,10 +176,74 @@ describe("resolveReadings：候选状态传播", () => {
     });
     const token = tokenOf(annotate({ poem: poemOf("白"), lookup }), "l1c1");
 
-    expect(token.readingStatus).toBe("resolved");
-    expect(token.selectionMethod).toBe("unique");
+    expect(token.readingStatus).toBe("unknown");
+    expect(token.selectionMethod).toBe("unresolved");
+    expect(token.selectedReadingId).toBeNull();
+    expect(token.effectiveCandidateIds).toEqual([]);
+    expect(token.possibleTones).toEqual([]);
+    expect(token.toneStatus).toBe("unknown");
+    expect(token.tone).toBeNull();
+    expect(token.reason).toContain("未经审核");
+    // 候选本身仍完整保留，只是不参与结论
+    expect(token.candidates.map((candidate) => candidate.id)).toEqual([
+      "c-白-unverified",
+    ]);
     expect(token.evidenceIds).toEqual([]);
-    expect(token.reason).toContain("待核实");
+  });
+
+  it("FIX-1 候选证据为空数组时同样不能支撑确定结论", () => {
+    const lookup = syntheticLookup({
+      entries: [
+        {
+          character: "白",
+          candidates: [
+            syntheticCandidate({
+              id: "c-白-no-evidence",
+              character: "白",
+              tone: "P",
+              evidenceIds: [],
+            }),
+          ],
+        },
+      ],
+    });
+    const token = tokenOf(annotate({ poem: poemOf("白"), lookup }), "l1c1");
+    expect(token.readingStatus).toBe("unknown");
+    expect(token.effectiveCandidateIds).toEqual([]);
+  });
+
+  it("FIX-1 多候选中仅部分证据未审核：仍全部保留，不能借证据缺口收窄", () => {
+    const lookup = syntheticLookup({
+      entries: [
+        {
+          character: "更",
+          candidates: [
+            syntheticCandidate({
+              id: "c-更-P-backed",
+              character: "更",
+              tone: "P",
+              evidenceIds: [APPROVED_EVIDENCE.id],
+            }),
+            syntheticCandidate({
+              id: "c-更-Z-unverified",
+              character: "更",
+              tone: "Z",
+              evidenceIds: [UNVERIFIED_EVIDENCE.id],
+            }),
+          ],
+        },
+      ],
+    });
+    const token = tokenOf(annotate({ poem: poemOf("更"), lookup }), "l1c1");
+
+    expect(token.readingStatus).toBe("ambiguous");
+    expect(token.selectedReadingId).toBeNull();
+    // 不能因为另一个候选“证据更全”就把它排除
+    expect(token.effectiveCandidateIds).toEqual([
+      "c-更-P-backed",
+      "c-更-Z-unverified",
+    ]);
+    expect(token.reason).toContain("未经审核");
   });
 });
 
@@ -467,6 +531,109 @@ describe("resolveReadings：上下文规则", () => {
     );
     expect(token.readingStatus).toBe("ambiguous");
     expect(token.selectionMethod).toBe("unresolved");
+  });
+
+  it("FIX-2 规则已审核但 evidenceIds 为空：不选音并留 notice", () => {
+    const rule = contextRule({
+      id: "r-no-evidence",
+      target: "更",
+      exactPhrases: ["更上一层楼"],
+      targetOffset: 0,
+      selectCandidateIds: ["c-更-P"],
+      evidenceIds: [],
+    });
+    const result = annotate({ poem, lookup, contextRules: [rule] });
+    const token = tokenOf(result, "l1c1");
+
+    expect(token.readingStatus).toBe("ambiguous");
+    expect(token.selectionMethod).toBe("unresolved");
+    expect(token.selectedReadingId).toBeNull();
+    expect(result.notices.map((notice) => notice.code)).toContain(
+      "CONTEXT_RULE_EVIDENCE_INSUFFICIENT",
+    );
+  });
+
+  it("FIX-2 规则证据未审核：不选音并留 notice", () => {
+    const rule = contextRule({
+      id: "r-unverified-evidence",
+      target: "更",
+      exactPhrases: ["更上一层楼"],
+      targetOffset: 0,
+      selectCandidateIds: ["c-更-P"],
+      evidenceIds: [UNVERIFIED_EVIDENCE.id],
+    });
+    const result = annotate({ poem, lookup, contextRules: [rule] });
+    const token = tokenOf(result, "l1c1");
+
+    expect(token.readingStatus).toBe("ambiguous");
+    expect(token.selectionMethod).toBe("unresolved");
+    expect(result.notices.map((notice) => notice.code)).toContain(
+      "CONTEXT_RULE_EVIDENCE_INSUFFICIENT",
+    );
+  });
+
+  it("FIX-2 规则证据在 lookup 中缺失：不选音并留 notice", () => {
+    const rule = contextRule({
+      id: "r-missing-evidence",
+      target: "更",
+      exactPhrases: ["更上一层楼"],
+      targetOffset: 0,
+      selectCandidateIds: ["c-更-P"],
+      evidenceIds: ["ev-不存在"],
+    });
+    const result = annotate({ poem, lookup, contextRules: [rule] });
+    const token = tokenOf(result, "l1c1");
+
+    expect(token.readingStatus).toBe("ambiguous");
+    expect(token.selectionMethod).toBe("unresolved");
+    expect(result.notices.map((notice) => notice.code)).toContain(
+      "CONTEXT_RULE_EVIDENCE_INSUFFICIENT",
+    );
+  });
+
+  it("FIX-2 规则证据齐备但被选候选自身证据未审核：仍不 resolved", () => {
+    const lookupWithUnverifiedCandidate = syntheticLookup({
+      entries: [
+        {
+          character: "更",
+          candidates: [
+            syntheticCandidate({
+              id: "c-更-P-unverified",
+              character: "更",
+              tone: "P",
+              evidenceIds: [UNVERIFIED_EVIDENCE.id],
+            }),
+            syntheticCandidate({
+              id: "c-更-Z-backed",
+              character: "更",
+              tone: "Z",
+              evidenceIds: [APPROVED_EVIDENCE.id],
+            }),
+          ],
+        },
+      ],
+    });
+    const rule = contextRule({
+      id: "r-select-unverified-candidate",
+      target: "更",
+      exactPhrases: ["更上一层楼"],
+      targetOffset: 0,
+      selectCandidateIds: ["c-更-P-unverified"],
+    });
+    const token = tokenOf(
+      annotate({
+        poem,
+        lookup: lookupWithUnverifiedCandidate,
+        contextRules: [rule],
+      }),
+      "l1c1",
+    );
+
+    expect(token.readingStatus).toBe("ambiguous");
+    expect(token.selectionMethod).toBe("unresolved");
+    expect(token.selectedReadingId).toBeNull();
+    expect(token.effectiveCandidateIds).toEqual(["c-更-P-unverified"]);
+    expect(token.reason).toContain("候选自身证据未经审核");
   });
 });
 
