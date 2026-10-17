@@ -23,8 +23,9 @@
 - 实有 105 部：上平 15 / 下平 15 / 上 28 / 去 30 / 入 17；应有 上 29。
 - 缺：**上声三讲**。`data/patches/pingshui-shang-sanj-jiang.draft.json` 的 `proposedCharacters`
   已由人工在维基文库网页端肉眼核实并补录 9 字：讲、港、棒、蚌、项、缿、玤、傋、耩。
-  **未留存 oldid 凭证**（未取得可定位修订号，无 wikitext 快照），故补丁维持
-  `status: draft`、`reviewStatus: unverified`，**未生效、未进 `data/releases`**。
+  **已获取并填入维基文库对应页面的修订号（oldid）：8264804**
+  （固定链接 `https://zh.wikisource.org/w/index.php?oldid=8264804`）；wikitext 快照尚未落盘。
+  补丁仍维持 `status: draft`、`reviewStatus: unverified`，**未生效、未进 `data/releases`**。
 - 原表内部重复：85 个韵部里存在同字重复（例如“一东”里“同”“筒”各出现两次），
   导入时按“同字同部”去重：原表条目 10,671 → 候选 10,378。
 - 多归部：1,823 个字出现在两个及以上韵部（“中”在“一东”与“一送”等），全部保留，不压平。

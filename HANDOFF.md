@@ -140,23 +140,23 @@ React 19.3.1 / Vite 8.3.4 / plugin-react 6.1.2（registry 实查锁定）；web 
   不进入 `data/raw`，也不参与 `snapshotSha256` 覆盖。
 - 与原表 `chinese_word_rhyme` 固定提交逐字一致（八庚段起 3387 行、二十四敬段起 8490 行等）。
 
-### 上声三讲补缺：9 字已人工肉眼核实并补录，但**未定稿生效**
+### 上声三讲补缺：9 字已人工肉眼核实并补录，oldid 已取得，但**未定稿生效**
 
 - 已由人工在维基文库网页端**肉眼核实**并补录 9 字：讲、港、棒、蚌、项、缿、玤、傋、耩
   （`data/patches/pingshui-shang-sanj-jiang.draft.json` → `proposedCharacters`）。
-- **未留存 oldid 凭证**：未取得可定位修订号，也无 wikitext 快照；该页面当时不可达，
-  故无法提供固定链接与许可页脚原文。
+- **已获取并填入维基文库对应页面的修订号（oldid）：8264804**
+  （固定链接 `https://zh.wikisource.org/w/index.php?oldid=8264804`）。
 - 因此补丁维持 `status: draft`、`reviewStatus: unverified`，**未生效、未进 `data/releases`**；
   平水仍按 **105/106** 记录，`releaseGatePassed` 仍为 `false`。
-- 后续：取得 oldid 与页面许可声明 → 保存 wikitext 快照 → 重跑 `scripts/data/inspect.ts`
+- 后续：保存 wikitext 快照到 `data/raw/wikisource/` → 重跑 `scripts/data/inspect.ts`
   确认 15+15+29+30+17=106 且三讲非空 → 人审签后才可改 `reviewStatus`。
 
 ## 未完成 / 明确未做
 
 1. 全量三库导入、106/19/14 发布验收：**0 条发布级审核**，全部转 D2；人工抽样已完成 7 条（七字），
    其余 278+60 队列未开始（当前 7/338）。
-2. 平水三讲：9 字已由人工肉眼核实并补入草案，但**未留存 oldid 凭证**，补丁仍 `draft`/`unverified`，
-   未生效；平水仍记 105/106（见「人工核验」节）。
+2. 平水三讲：9 字已由人工肉眼核实并补入草案，oldid 已取得（8264804），但补丁仍
+   `draft`/`unverified`、未生效；平水仍记 105/106（见「人工核验」节）。
 3. 新韵“一”冲突：只登记与分列，未裁决。
 4. 十四韵规则权威出处：**未取得**，状态 `unverified`（`er → 十二齐` 也在待核实）。
 5. 已提交 `24e42ce` 并推送 `feat/a-d1-lexicon`；草稿 PR 待开（不自行合入）。
@@ -168,7 +168,7 @@ React 19.3.1 / Vite 8.3.4 / plugin-react 6.1.2（registry 实查锁定）；web 
 | 词林 / 新韵门槛 | CILIN_GATE、XINYUN_GATE 只在合成数据上验证过常量形状（19/33、14/56） | 没有真实快照，门槛从未在真实数据上跑过 |
 | 发布包统计 | data/releases/README.md 的「19 部 33 子卷齐全无空卷」「56 子卷 / 41,803 字形」 | 仅为文档断言，无测试覆盖 |
 | 七字真实小样本 | 人工审核 7 / 7（搜韵网，2026-10-17） | 只与搜韵网核对，未与《平水韻》权威文本逐字对照 |
-| 平水 106 部门槛 | 三讲 9 字已人工肉眼核实并补入草案，但无 oldid 凭证 | 补丁仍 draft/unverified，未生效，106 未真正校验通过 |
+| 平水 106 部门槛 | 三讲 9 字已人工肉眼核实并补入草案，oldid 8264804 已取得 | 补丁仍 draft/unverified，未生效，106 未真正校验通过 |
 | 新韵十四韵规则 | rulesProvenance.status = unverified | 规则文本、发布机构、版次均未取得 |
 | 上游许可 | 仅核对仓库 LICENSE 声明 | 转载字表的上游授权链未核实，不得称“可商用” |
 
