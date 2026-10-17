@@ -1,0 +1,163 @@
+{
+  "queueVersion": "2026-10-17.d1",
+  "owner": "B",
+  "reviewStatus": "unverified",
+  "note": "待审核语境清单，不是 ContextRule[]，运行时不得加载。selectCandidateIds 为空是因为 A 尚未交付真实稳定候选 ID；不编造 ID。sourceStatus 为「尚未查到」的条目只记录待查问题，不构成语言学结论。现代读音只作为检索线索，不能直接当作古韵义项。",
+  "candidateIdStatus": "awaiting-a-stable-candidate-ids",
+  "items": [
+    {
+      "id": "rq-geng-adverb-vs-night-watch",
+      "target": "更",
+      "book": "pingshui",
+      "phrases": [
+        {
+          "phrase": "更上一层楼",
+          "targetOffset": 0,
+          "senseQuestion": "「更加/再」副词义的语境；是否对应仄声读音，需要古韵证据而不是现代拼音"
+        },
+        {
+          "phrase": "三更",
+          "targetOffset": 0,
+          "senseQuestion": "夜间计时单位义；传统读平声的说法需可定位来源核实"
+        },
+        {
+          "phrase": "更衣",
+          "targetOffset": 0,
+          "senseQuestion": "「更换」义的语境；与「三更」是否同一声类待查"
+        },
+        {
+          "phrase": "更改",
+          "targetOffset": 0,
+          "senseQuestion": "「改变」义的语境；与副词义「更」是否同音待查"
+        }
+      ],
+      "positiveExamples": [
+        "「更上一层楼」：目标字位于句首，短语内偏移 0",
+        "「三更」：目标字位于词首，短语内偏移 0"
+      ],
+      "negativeExamples": [
+        "「更上一层楼」的规则不得命中「三更」：两词义项不同，不能靠共享「更」字自动套用",
+        "单独的「更」字语境不足，不得仅凭字面选音"
+      ],
+      "selectCandidateIds": [],
+      "evidenceIds": [],
+      "sourceStatus": "尚未查到可定位来源（词书版次/页码/反切均未核）",
+      "decision": null,
+      "blockedBy": [
+        "缺少 A 的真实候选 ID",
+        "缺少可定位的义项证据",
+        "缺少人工审核"
+      ]
+    },
+    {
+      "id": "rq-zhong-repeat-vs-weight",
+      "target": "重",
+      "book": "pingshui",
+      "phrases": [
+        {
+          "phrase": "重山",
+          "targetOffset": 0,
+          "senseQuestion": "「层叠/重复」义；此义若与平声对应，需要反切或韵书条目证据"
+        },
+        {
+          "phrase": "重重",
+          "targetOffset": 0,
+          "senseQuestion": "叠用「重重」；同一短语内出现两个目标字，规则需拆成两条或固定偏移"
+        },
+        {
+          "phrase": "轻重",
+          "targetOffset": 1,
+          "senseQuestion": "「重量」义，目标字在短语偏移 1；与「重山」偏移不同，必须拆成独立规则"
+        }
+      ],
+      "positiveExamples": [
+        "「重山」「重重」目标偏移为 0；「轻重」目标偏移为 1"
+      ],
+      "negativeExamples": [
+        "同一条规则的短语偏移不一致时不得合并：「重山」（偏移 0）与「轻重」（偏移 1）必须拆规则",
+        "「重重」中两个目标字不能用一条规则同时覆盖"
+      ],
+      "selectCandidateIds": [],
+      "evidenceIds": [],
+      "sourceStatus": "尚未查到可定位来源",
+      "decision": null,
+      "blockedBy": [
+        "缺少 A 的真实候选 ID",
+        "缺少可定位的义项证据",
+        "缺少人工审核"
+      ]
+    },
+    {
+      "id": "rq-chang-length-vs-grow",
+      "target": "长",
+      "book": "pingshui",
+      "phrases": [
+        {
+          "phrase": "长安",
+          "targetOffset": 0,
+          "senseQuestion": "地名/长久义的读音归属待查；现代「cháng」不能直接等同古韵平声"
+        },
+        {
+          "phrase": "生长",
+          "targetOffset": 1,
+          "senseQuestion": "「生长」义，目标字在偏移 1；与现代第三声的对应关系需证据"
+        },
+        {
+          "phrase": "长者",
+          "targetOffset": 0,
+          "senseQuestion": "「长辈/年长」义，目标偏移 0；与「长」的其他义项是否同音待查"
+        }
+      ],
+      "positiveExamples": ["「生长」目标偏移 1；「长者」目标偏移 0"],
+      "negativeExamples": [
+        "不能用现代拼音声调反推古韵平仄：本条目在拿到反切/韵书证据前不得生成规则",
+        "「长安」与「长者」虽同以「长」开头，义项不同，不能共用一条规则"
+      ],
+      "selectCandidateIds": [],
+      "evidenceIds": [],
+      "sourceStatus": "尚未查到可定位来源",
+      "decision": null,
+      "blockedBy": [
+        "缺少 A 的真实候选 ID",
+        "缺少可定位的义项证据",
+        "缺少人工审核"
+      ]
+    },
+    {
+      "id": "rq-xing-walk-vs-row",
+      "target": "行",
+      "book": "pingshui",
+      "phrases": [
+        {
+          "phrase": "行人",
+          "targetOffset": 0,
+          "senseQuestion": "「行走/行人」义，现代读 xíng；古韵声类待查"
+        },
+        {
+          "phrase": "行列",
+          "targetOffset": 0,
+          "senseQuestion": "「行列/行业」义，现代读 háng；与 xíng 是否分属不同声类待查"
+        },
+        {
+          "phrase": "德行",
+          "targetOffset": 1,
+          "senseQuestion": "「德行」旧读 xìng 的说法需要可定位来源；目标字在偏移 1"
+        }
+      ],
+      "positiveExamples": ["「行人」「行列」目标偏移 0；「德行」目标偏移 1"],
+      "negativeExamples": [
+        "「行」单独出现时语境不足，必须保留来源给出的全部候选，不得默认一个读音",
+        "「德行」的旧读说法若拿不到来源，不得写成确定规则"
+      ],
+      "selectCandidateIds": [],
+      "evidenceIds": [],
+      "sourceStatus": "尚未查到可定位来源",
+      "decision": null,
+      "blockedBy": [
+        "缺少 A 的真实候选 ID",
+        "缺少可定位的义项证据",
+        "缺少人工审核"
+      ]
+    }
+  ]
+}
