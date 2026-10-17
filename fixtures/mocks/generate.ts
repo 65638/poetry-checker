@@ -2,7 +2,7 @@
 // 所有报告都用 AnalysisResponseSchema 校验后才写盘，保证一定通过公共契约。
 // 合成数据只用于开发预览与业务测试，不进入真实分析路径，也不挂真实名篇的名字。
 import { createHash } from "node:crypto";
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import {
@@ -139,8 +139,58 @@ interface ScenarioInput {
   applicability: "applicable" | "not_applicable" | "uncertain" | "unsupported";
   rhymeTokenIds: string[];
   message: string;
-  /** 故意制造的字位偏移错误，用于验证前端会拒绝错配报告。 */
+  /** 诊断定位的字位；必须存在，找不到时生成器直接失败。 */
+  checkTokenId?: string;
+  /** 诊断的期望平仄；缺省时由字样与状态推导，保证不与 observed 自相矛盾。 */
+  expectedTones?: Tone[];
+  /** 只用于 mismatch 场景：绕开行文本与字位的自洽校验。 */
   corruptLineOffset?: number;
+}
+
+/**
+ * 构造诊断。坐标一律取自实际 token，不允许硬编码行号/列号。
+ * 若引用的字位不存在，抛错而不是回退到某个默认位置。
+ */
+function buildCheck(
+  input: ScenarioInput,
+  tokens: AnnotatedToken[],
+): AnalysisResponse["prosody"]["checks"][number] {
+  const targetTokenId = input.checkTokenId ?? input.rhymeTokenIds[0];
+  if (targetTokenId === undefined) {
+    throw new Error("合成场景未指定诊断定位字位（checkTokenId / rhymeTokenIds 均为空）");
+  }
+  const token = tokens.find((item) => item.tokenId === targetTokenId);
+  if (token === undefined) {
+    throw new Error(
+      `合成场景的诊断引用了不存在的字位：${targetTokenId}（已有 ${tokens.length} 个字位）`,
+    );
+  }
+
+  // observed 取该字位实际的平仄，保证与报告本身不矛盾。
+  const observed: Tone[] = token.tone === null ? [] : [token.tone];
+  // expected 缺省时：fail 场景取相反平仄，其余场景与 observed 一致（不是「通过」）。
+  const expected: Tone[] =
+    input.expectedTones ??
+    (input.checkStatus === "fail"
+      ? observed.map((tone) => (tone === "P" ? "Z" : "P"))
+      : observed);
+
+  return {
+    id: "fixture:check",
+    ruleId: "METER.POSITION",
+    ruleVersion: "1",
+    status: input.checkStatus,
+    severity: input.checkStatus === "fail" ? "error" : "info",
+    // 坐标必须与 token 自身一致，否则前端定位会错位。
+    locations: [{ tokenId: token.tokenId, line: token.line, column: token.column }],
+    expected,
+    observed,
+    message: input.message,
+    templateId: null,
+    evidenceIds: [],
+    resolvedBy: null,
+    relatedFindingIds: [],
+  };
 }
 
 function buildScenario(input: ScenarioInput): AnalysisResponse {
@@ -203,23 +253,7 @@ function buildScenario(input: ScenarioInput): AnalysisResponse {
     prosody: {
       candidates: [],
       selectedTemplateId: null,
-      checks: [
-        {
-          id: "fixture:check",
-          ruleId: "METER.POSITION",
-          ruleVersion: "1",
-          status: input.checkStatus,
-          severity: input.checkStatus === "fail" ? "error" : "info",
-          locations: [{ tokenId: input.rhymeTokenIds[0] ?? "l1c1", line: 1, column: 1 }],
-          expected: ["Z"],
-          observed: ["P"],
-          message: input.message,
-          templateId: null,
-          evidenceIds: [],
-          resolvedBy: null,
-          relatedFindingIds: [],
-        },
-      ],
+      checks: [buildCheck(input, tokens)],
       rhyme: {
         status: input.checkStatus === "pass" ? "pass" : input.checkStatus,
         tokenIds: input.rhymeTokenIds,
@@ -389,6 +423,8 @@ write(
     genreFamily: "ancient",
     applicability: "not_applicable",
     rhymeTokenIds: [],
+    // 古体不判押韵，但诊断仍需指向一个真实字位（第 4 句第 2 字）。
+    checkTokenId: "l4c2",
     message: "合成 not_applicable 场景：古体不适用近体规则（仅结构验证）",
   }),
 );
@@ -404,6 +440,8 @@ write(
     genreFamily: "unsupported",
     applicability: "unsupported",
     rhymeTokenIds: [],
+    // 未支持形式不判押韵，诊断指向第 3 句第 3 字。
+    checkTokenId: "l3c3",
     message: "合成 unsupported 场景：当前版本尚未支持该形式（仅结构验证）",
   }),
 );
@@ -440,6 +478,141 @@ write(
     rhymeTokenIds: ["l2c5", "l4c5"],
     message: "合成 supplementary 场景：含补充平面汉字的合法报告",
   }),
+);
+
+// ---------------------------------------------------------------------------
+// 语义自检：写盘后重新读回，校验坐标与自洽性。
+// 不合法就让生成器失败，避免「Schema 通过但坐标错位」的 fixture 流出去。
+// ---------------------------------------------------------------------------
+
+interface CheckSemantics {
+  /** 行文本是否等于其字位文本拼接（mismatch 场景刻意打破）。 */
+  linesMatchTokens: boolean;
+  /** 每个 token 的 UTF-16 切片是否等于 token.text。 */
+  slicesMatch: boolean;
+  /** 所有 finding.locations 是否引用了存在且行列一致的 token。 */
+  locationsResolve: boolean;
+  /** 失败场景的 expected 与 observed 是否确实不同。 */
+  failIsContradictory: boolean;
+  /** 通过场景的 expected 与 observed 是否一致（不自我矛盾）。 */
+  passIsConsistent: boolean;
+}
+
+function checkSemantics(report: AnalysisResponse): CheckSemantics {
+  const byId = new Map(report.poem.tokens.map((token) => [token.tokenId, token]));
+
+  let slicesMatch = true;
+  for (const token of report.poem.tokens) {
+    const slice = report.poem.originalText.slice(token.startUtf16, token.endUtf16);
+    if (slice !== token.text) slicesMatch = false;
+    if ([...token.text].length !== 1) slicesMatch = false;
+  }
+
+  let linesMatchTokens = true;
+  for (const line of report.poem.lines) {
+    const expected = line.tokenIds
+      .map((id) => byId.get(id)?.text ?? "")
+      .join("");
+    if (expected !== line.text) linesMatchTokens = false;
+    if ([...line.text].length !== line.tokenIds.length) linesMatchTokens = false;
+  }
+
+  let locationsResolve = true;
+  for (const check of report.prosody.checks) {
+    for (const location of check.locations) {
+      const token = byId.get(location.tokenId);
+      if (token === undefined) {
+        locationsResolve = false;
+        continue;
+      }
+      if (token.line !== location.line || token.column !== location.column) {
+        locationsResolve = false;
+      }
+    }
+  }
+
+  const failCheck = report.prosody.checks.find((check) => check.status === "fail");
+  const failIsContradictory =
+    failCheck === undefined
+      ? true
+      : JSON.stringify([...failCheck.expected].sort()) !==
+        JSON.stringify([...failCheck.observed].sort());
+
+  const passCheck = report.prosody.checks.find((check) => check.status === "pass");
+  const passIsConsistent =
+    passCheck === undefined
+      ? true
+      : JSON.stringify([...passCheck.expected].sort()) ===
+        JSON.stringify([...passCheck.observed].sort());
+
+  return {
+    linesMatchTokens,
+    slicesMatch,
+    locationsResolve,
+    failIsContradictory,
+    passIsConsistent,
+  };
+}
+
+/** 合法场景（除 mismatch 外）必须全部满足。 */
+const LEGAL_SCENARIOS = [
+  "pass",
+  "fail",
+  "needs_review",
+  "not_applicable",
+  "unsupported",
+  "supplementary",
+] as const;
+/** 刻意非法的拒绝测试场景。 */
+const REJECT_SCENARIOS = ["mismatch"] as const;
+
+const problems: string[] = [];
+for (const name of LEGAL_SCENARIOS) {
+  const report = AnalysisResponseSchema.parse(
+    JSON.parse(readFileSync(join(OUT_DIR, `${name}.json`), "utf8")),
+  );
+  const semantics = checkSemantics(report);
+
+  if (!semantics.slicesMatch) problems.push(`${name}: 字位 UTF-16 切片与 token.text 不符`);
+  if (!semantics.linesMatchTokens) problems.push(`${name}: 行文本与字位组成不符`);
+  if (!semantics.locationsResolve) {
+    problems.push(`${name}: finding.locations 引用了不存在或行列不一致的 token`);
+  }
+  if (!semantics.failIsContradictory) {
+    problems.push(`${name}: fail 诊断的 expected 与 observed 相同（自相矛盾）`);
+  }
+  if (!semantics.passIsConsistent) {
+    problems.push(`${name}: pass 诊断的 expected 与 observed 不同（自相矛盾）`);
+  }
+
+  if (name === "supplementary") {
+    const hasSurrogatePair = report.poem.tokens.some(
+      (token) => [...token.text].length === 1 && token.text.length === 2,
+    );
+    if (!hasSurrogatePair) problems.push("supplementary: 未包含补充平面汉字");
+  }
+}
+
+for (const name of REJECT_SCENARIOS) {
+  const report = AnalysisResponseSchema.parse(
+    JSON.parse(readFileSync(join(OUT_DIR, `${name}.json`), "utf8")),
+  );
+  const semantics = checkSemantics(report);
+  if (semantics.linesMatchTokens) {
+    problems.push(`${name}: 应当保留行文本与字位错位，但它已经自洽了`);
+  }
+  if (!semantics.slicesMatch) {
+    problems.push(`${name}: token 切片本身也坏了，无法只测「行文本错位」`);
+  }
+}
+
+if (problems.length > 0) {
+  console.error("fixture 语义自检失败：");
+  for (const problem of problems) console.error(`  - ${problem}`);
+  process.exit(1);
+}
+console.log(
+  `fixture 语义自检通过：${LEGAL_SCENARIOS.length} 个合法场景 + ${REJECT_SCENARIOS.length} 个拒绝场景`,
 );
 
 writeFileSync(

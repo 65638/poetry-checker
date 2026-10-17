@@ -99,9 +99,9 @@
 
 | 命令（等价） | 结果 |
 | --- | --- |
-| `vitest run apps/web/tests` | 148 项通过（本模块） |
-| `vitest run`（全量） | **283 项通过 / 18 文件**（135 来自 main + 148 本模块） |
-| `pnpm verify`（需 `PNPM_CONFIG_NODE_LINKER=hoisted`） | **exit 0**：lint、双 tsconfig 类型检查、283 项测试、构建、生成物一致性全部通过 |
+| `vitest run apps/web/tests` | 171 项通过（本模块） |
+| `vitest run`（全量） | **306 项通过 / 19 文件**（135 来自 main + 171 本模块） |
+| `pnpm verify`（需 `PNPM_CONFIG_NODE_LINKER=hoisted`） | **exit 0**：lint、双 tsconfig 类型检查、306 项测试、构建、生成物一致性全部通过 |
 | 真实链路冒烟 | `GET /` 200、`/src/main.tsx` 200、`/healthz` 200、`/readyz` 200、`POST /api/v1/analyze` 200 且 `summary.status=pass`、原文匹配 |
 
 ### 类型检查注意

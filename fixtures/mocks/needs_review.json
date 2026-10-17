@@ -931,12 +931,12 @@
         "locations": [
           {
             "tokenId": "l2c5",
-            "line": 1,
-            "column": 1
+            "line": 2,
+            "column": 5
           }
         ],
         "expected": [
-          "Z"
+          "P"
         ],
         "observed": [
           "P"

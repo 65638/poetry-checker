@@ -20,7 +20,7 @@
 | `apps/web/src/hooks/useCheckerStore.ts` | 新增 | `useSyncExternalStore` 绑定 |
 | `apps/web/src/utils/sha256.ts` | 新增 | 纯 TS 的 SHA-256（UTF-8 原文摘要，与服务端口径一致） |
 | `apps/web/src/main.tsx` | 覆盖 | 接管占位入口，接真实 HTTP transport 与开发容器 |
-| `apps/web/tests/*.test.ts` | 新增 | 148 项业务测试（api-client / store / export / concurrency / config / dev-scenarios / report-view / evidence） |
+| `apps/web/tests/*.test.ts` | 新增 | 171 项业务测试（api-client / store / export / concurrency / config / dev-scenarios / report-view / evidence / fixture-integrity） |
 | `fixtures/mocks/*.json`、`generate.ts`、`README.md` | 新增 | 五状态开发场景、错配场景与补充平面汉字场景，全部通过 Schema |
 | `docs/ui.md` | 新增 | 业务交互、失效规则、导出与测试结果 |
 
@@ -38,7 +38,7 @@ pnpm verify                  # exit 0
 
 - 合并前 `main` 基线：`e549194`；合并后：含 C 的验收测试与 B 的解析/选音模块
 - 合并后 `main` 独有 16 个提交，我的分支有 3 个提交，`git merge` **零冲突**
-- 合并后测试：**283 项 / 18 个文件**（135 项来自 main + 148 项本模块）
+- 合并后测试：**306 项 / 19 个文件**（135 项来自 main + 171 项本模块）
 - 冲突处理：本次无冲突；若有冲突，我只改 `apps/web/`、`fixtures/mocks/`、
   `docs/ui.md` 这些本人路径，根配置冲突交组长转 GLM
 
@@ -74,11 +74,11 @@ $env:PNPM_CONFIG_NODE_LINKER = 'hoisted'
 pnpm verify                            → exit 0
   $ eslint .                           → 通过
   $ tsc --noEmit && tsc --noEmit -p apps/web/tsconfig.json → 通过（两个项目都查）
-  $ vitest run                         → 283 passed / 18 files
+  $ vitest run                         → 306 passed / 19 files
   $ pnpm build && tsx scripts/generate-contracts.ts --check → 通过（8 个生成物一致）
 ```
 
-测试构成：**283 = 135（main 基线）+ 148（本模块新增）**。
+测试构成：**306 = 135（main 基线）+ 171（本模块新增）**。
 本模块单独跑：`vitest run apps/web/tests` → 80 passed。
 
 `pnpm verify` 的实际通过条件与原因见下节「环境说明」。
@@ -167,7 +167,7 @@ pnpm verify          # exit 0
 ```text
 $ eslint .                                    → 通过
 $ tsc --noEmit && tsc --noEmit -p apps/web/tsconfig.json → 通过
-$ vitest run                                  → 283 passed (18 files)
+$ vitest run                                  → 306 passed (19 files)
 $ pnpm build && tsx scripts/generate-contracts.ts --check → 通过（8 个生成物一致）
 ```
 
@@ -243,10 +243,22 @@ node-linker=hoisted
 - `locateFinding`：finding → 精确字位 + UTF-16 半开区间，返回空数组而不是退回整段。
 - `buildRhymeFeet` / `rhymeCommonGroups`：韵脚与共同归部只取报告字段。
 
-**发现的数据异常**：`fixtures/mocks` 与 `fixtures/contracts` 的 `finding.locations`
-里 `line/column` 与 `tokenId` 不一致（如 `l2c5` 标成 `line 1, column 1`）。
-前端定位以 **token 的 line/column** 为准，不照抄这个不一致坐标；
-已请示是否由 GLM/Codex 修正 fixture。
+**已修复的数据异常**（mock 修复批次）：`fixtures/mocks` 的 `finding.locations`
+原先用 `rhymeTokenIds[0]` 当 tokenId，却硬写 `line: 1, column: 1`（如 `l2c5`
+被标成 line 1,column 1）。`generate.ts` 已改为:
+
+- 坐标一律取自实际 token 的 `line`/`column`（`buildCheck`）；
+- 引用不到 token 时**生成器直接失败**，不再回退 `?? "l1c1"`；
+- `expected`/`observed` 由该字位真实平仄推导，不再与场景无关
+  （原 `pass` 场景 observed 是 P 却显示通过，自相矛盾）；
+- 写盘后重新读回做**语义自检**：切片、行文本、坐标、fail 矛盾、pass 一致，
+  不通过则 `process.exit(1)`；
+- `mismatch.json` 保持「行文本与字位错位」的拒绝测试目的，自检要求它
+  **必须不自洽**，不套用合法场景规则去「修绿」。
+
+测试：`fixture-integrity.test.ts` 23 项固化上述约束
+（坐标一致、expected/observed 自洽、observed 等于真实平仄、
+补充平面汉字切片、mismatch 仍错位）。
 
 测试：`report-view.test.ts` 26 项（五场景顺序与区间、韵脚标记、分组排序、
 只看需处理项、未知前缀、精确定位、补充平面汉字区间、共同归部、粘对关系）。
@@ -303,7 +315,7 @@ node-linker=hoisted
 - `git merge origin/feat/claude-presentation`：**零冲突**
 - 装配改动：`main.tsx` 仅两行（import 换成 `./presentation/CheckerView`、
   `return <CheckerView {...props} />`），`view-contract` 未改
-- `pnpm verify` → **exit 0**，283 项测试全过
+- `pnpm verify` → **exit 0**，306 项测试全过
 - `vite build` → 129 模块，新增 CSS 18.21 kB（视觉样式生效），JS 346.78 kB
 - 真实链路冒烟：页面 200 且引用 `#root`、`/src/main.tsx` 含 `CheckerView`
   且不含 `DevContainer`、`POST /api/v1/analyze` **200** 且 `summary.status=pass`、原文匹配
