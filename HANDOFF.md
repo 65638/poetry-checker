@@ -107,18 +107,16 @@ React 19.3.1 / Vite 8.3.4 / plugin-react 6.1.2（registry 实查锁定）；web 
 - 新韵重建表：读音源 41,923 字形 / 53,457 读音 → 已归部 53,414、未映射 43、轻声丢弃 241、`er` 规则待核实影响 104；覆盖 41,803 字形 / 56 子卷全非空；业务内容摘要 `5e9bbd0a…b2ce84`。
 - 七字真实小样本：业务内容摘要 `1ec87329…617ab8`，重复生成一致；逐字归部与源表一致（白=入声十一陌、一=入声四质、更=八庚+二十四敬、流/楼=十一尤、雪=入声九屑、物=入声五物）。
 
-## 测试与验证（自动检查与人工审核分开写）
+## 测试与验证（用户本机终端实跑，2026-10-17，vitest 5.0.5）
 
-- **测试命令：通过 66，失败 0，未运行 0**（2026-10-17，vitest 5.0.5）：
-  `pnpm exec vitest run packages/lexicon/tests` → `Test Files 5 passed (5)`、`Tests 66 passed (66)`，覆盖 A-D1-01～A-D1-10。
-  “数据门槛失败（平水 105/106）”与“检查器测试通过”是两件事，见 `docs/data-quality.md` 第 1 节。
-- 类型检查：`node node_modules/typescript/bin/tsc --noEmit` → 0 错误（含 `packages/lexicon/tests` 与 `scripts/data`）。
-- ESLint：`node node_modules/eslint/bin/eslint.js packages/lexicon scripts/data` → 0 问题。
-- 来源摘要复核：`node scripts/data/fetch-sources.ts --check` → 8/8 与 `data/sources/manifest.json` 一致。
-- 数据脚本实跑：`inspect.ts` / `build-sample.ts` / `rebuild-xinyun.ts` 均实际运行，产出上文统计数字。
-- 说明：本批 AI 执行环境无法启动 vitest 进程，过程中另用 Node 直接执行了同源断言（21 组）做自检；
-  正式测试结果以上面的 66 项为准，两者不冲突。
-- 人工审核：**0 条**（七字小样本只做了机器对照），不因测试通过而视为已审核。
+- 包内测试：`pnpm exec vitest run packages/lexicon/tests` → Test Files 5 passed (5)、Tests 66 passed (66)，覆盖 A-D1-01～A-D1-10。
+- 全仓回归：`pnpm test` → Test Files 12 passed (12)、Tests 149 passed (149)，未造成 contracts/prosody/api 回归。
+- 类型检查：`pnpm typecheck` → 0 错误（含 apps/web/tsconfig.json 第二条 tsc）。
+- 静态检查：`pnpm lint` → 0 问题；`pnpm check:generated` → 8 个契约/模板核对通过，无漂移。
+- 来源摘要复核：`node scripts/data/fetch-sources.ts --check` → 8/8 与 manifest 一致，0 不一致。
+- 数据脚本实跑：inspect / build-sample / rebuild-xinyun 均实际运行，统计数字见上文。
+- 人工审核：**0 条**（七字小样本仅机器对照），不因测试通过视为已审核。
+- “数据门槛失败（平水 105/106）”与“检查器测试通过”是两件事：前者是数据事实，后者是代码行为。
 
 ## 未完成 / 明确未做
 
@@ -126,12 +124,23 @@ React 19.3.1 / Vite 8.3.4 / plugin-react 6.1.2（registry 实查锁定）；web 
 2. 平水三讲：只有缺口记录与草案，`proposedCharacters: null`（维基文库不可达，拒绝猜字）。
 3. 新韵“一”冲突：只登记与分列，未裁决。
 4. 十四韵规则权威出处：**未取得**，状态 `unverified`（`er → 十二齐` 也在待核实）。
-5. 未提交、未推送、未开 PR（见下条环境原因）。
+5. 已提交 `24e42ce` 并推送 `feat/a-d1-lexicon`；草稿 PR 待开（不自行合入）。
+
+## 未验证项（不得当成已通过）
+
+| 项 | 现状 | 为什么不算通过 |
+|---|---|---|
+| 词林 / 新韵门槛 | CILIN_GATE、XINYUN_GATE 只在合成数据上验证过常量形状（19/33、14/56） | 没有真实快照，门槛从未在真实数据上跑过 |
+| 发布包统计 | data/releases/README.md 的「19 部 33 子卷齐全无空卷」「56 子卷 / 41,803 字形」 | 仅为文档断言，无测试覆盖 |
+| 七字真实小样本 | 人工审核 0 / 7 | 只做了机器与原表对照，未与韵书权威文本核 |
+| 平水 106 部门槛 | 仅有「预期失败」断言 | 三讲正文未取得（unreachable），未真正通过 |
+| 新韵十四韵规则 | rulesProvenance.status = unverified | 规则文本、发布机构、版次均未取得 |
+| 上游许可 | 仅核对仓库 LICENSE 声明 | 转载字表的上游授权链未核实，不得称“可商用” |
 
 ## 执行环境限制与需要人工处理的事项
 
-1. **原检出目录已消失**：开工时的 `D:\新建文件夹 (2)\poetry-checker` 现已不存在；本次落盘目标为 `D:\a\poetry-checker`（`feat/a-d1-lexicon` @ `3080a1c`，已装 `node_modules`）。
-2. **GitHub 不可用**：`github.com` / `raw.githubusercontent.com` / `api.github.com` 的 TLS 叶子证书校验失败（`UNABLE_TO_VERIFY_LEAF_SIGNATURE`，schannel 侧 `SEC_E_NO_CREDENTIALS`），且无凭据。**因此无法 `git fetch/push`、无法推送分支与开 PR。** 来源改用 jsdelivr 取同一固定 ref，并用“提交/标签双侧摘要一致”约束内容。
+1. **原检出目录已消失**：开工时的 `D:\新建文件夹 (2)\poetry-checker` 现已不存在；本次落盘目标为 `D:\a\poetry-checker`（`feat/a-d1-lexicon`，本批从 `3080a1c` 起，现 HEAD `24e42ce`，已装 `node_modules`）。
+2. **AI 执行环境无法访问 GitHub**（TLS 叶子证书校验失败：`UNABLE_TO_VERIFY_LEAF_SIGNATURE`，schannel 侧 `SEC_E_NO_CREDENTIALS`）；实际推送由用户终端完成，已成功（`24e42ce` 已在 `origin/feat/a-d1-lexicon`）。来源快照取回因此改用 jsdelivr 的同一固定 ref，并用“提交/标签双侧摘要一致”约束内容。
 3. **维基文库不可达**（`UND_ERR_CONNECT_TIMEOUT`），《平水韻》《詞林正韻》正文与修订号未取得，记为 `unreachable` / 未核实。
 
 ## 给 B

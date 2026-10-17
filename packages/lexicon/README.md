@@ -128,7 +128,7 @@ pnpm exec vitest run packages/lexicon/tests
 
 实测（2026-10-17，vitest 5.0.5）：**5 个测试文件、66 项全部通过**（通过 66 / 失败 0 / 未运行 0）。
 
-> `pnpm --filter @poetry/lexicon test` 目前**还不存在**；包清单与脚本需 GLM 补，见 `HANDOFF.md`。
+> `pnpm --filter @poetry/lexicon test` 目前**还不存在**；包清单与脚本需 GLM 补，见仓库根 `HANDOFF.md`。
 
 ## 依赖与限制
 
