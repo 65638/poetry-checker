@@ -95,13 +95,14 @@ resolveReadings(input: {
 `quality` 只有 `ok` / `needs_review`。任一以下情况降级为 `needs_review`：
 非白名单非字位内容、疑似标题、无边界长串、全文无汉字。
 
-| notice code                       | 何时产生                                              | 是否降级                       |
-| --------------------------------- | ----------------------------------------------------- | ------------------------------ |
-| `PARSE_UNSUPPORTED_CHARACTER`     | 白名单外的非字位内容（含重复记号、部首）              | 是                             |
-| `PARSE_NO_HAN_TEXT`               | 全文没有汉字（空串/纯标点）                           | 是（且 lines/tokens 为空数组） |
-| `PARSE_SUSPECTED_TITLE`           | 首行汉字数 ≤ 8 且严格短于第二行                       | 是                             |
-| `PARSE_LINE_SPLIT_UNCERTAIN`      | 全文无任何句边界且汉字数 > 7                          | 是                             |
-| `CONTEXT_RULE_UNVERIFIED_IGNORED` | 未审核语境规则命中某字位（由 `resolveReadings` 追加） | 否                             |
+| notice code                          | 何时产生                                              | 是否降级                       |
+| ------------------------------------ | ----------------------------------------------------- | ------------------------------ |
+| `PARSE_UNSUPPORTED_CHARACTER`        | 白名单外的非字位内容（含重复记号、部首）              | 是                             |
+| `PARSE_NO_HAN_TEXT`                  | 全文没有汉字（空串/纯标点）                           | 是（且 lines/tokens 为空数组） |
+| `PARSE_SUSPECTED_TITLE`              | 首行汉字数 ≤ 8 且严格短于第二行                       | 是                             |
+| `PARSE_LINE_SPLIT_UNCERTAIN`         | 全文无任何句边界且汉字数 > 7                          | 是                             |
+| `CONTEXT_RULE_UNVERIFIED_IGNORED`    | 未审核语境规则命中某字位（由 `resolveReadings` 追加） | 否                             |
+| `CONTEXT_RULE_EVIDENCE_INSUFFICIENT` | 规则已审核但证据缺失/未审核，命中后不参与选音（同上） | 否                             |
 
 ### 3.5 启发式只提示，不下结论
 
@@ -129,24 +130,28 @@ resolveReadings(input: {
 ### 4.1 优先级（固定，不可调换）
 
 1. **用户覆盖**（`selectionMethod = "user"`）
-2. **已审核语境规则**（`"context_rule"`，只有 `reviewStatus = "approved"` 参与）
-3. **唯一候选**（`"unique"`）
+2. **已审核语境规则**（`"context_rule"`；需 `reviewStatus = "approved"` **且**规则证据齐备）
+3. **唯一候选**（`"unique"`；需该候选自身证据已审核）
 4. **保留歧义**（`"unresolved"`）
 
 “出现在押韵位”“更贴近某个模板”“哪个读音更合律”——都不是判音证据，本模块不读这些信息。
 
 ### 4.2 状态矩阵
 
-| 输入情形              | readingStatus | selected | selectionMethod | possibleTones  | toneStatus  | tone       |
-| --------------------- | ------------- | -------- | --------------- | -------------- | ----------- | ---------- |
-| 没有候选              | `unknown`     | `null`   | `unresolved`    | `[]`           | `unknown`   | `null`     |
-| 唯一候选              | `resolved`    | 该候选   | `unique`        | 该候选声调     | 按候选      | 按候选     |
-| 多个候选含 P、Z       | `ambiguous`   | `null`   | `unresolved`    | `["P","Z"]`    | `ambiguous` | `null`     |
-| 两个不同读音但同为 Z  | `ambiguous`   | `null`   | `unresolved`    | `["Z"]`        | `resolved`  | `"Z"`      |
-| 已知 P + 声调未知候选 | `ambiguous`   | `null`   | `unresolved`    | `["P"]`        | `unknown`   | `null`     |
-| 合法用户覆盖          | `resolved`    | 用户所选 | `user`          | 按所选候选     | 按所选候选  | 按所选候选 |
-| 规则全部命中同一候选  | `resolved`    | 该候选   | `context_rule`  | 按该候选       | 按该候选    | 按该候选   |
-| 同优先级规则冲突      | `ambiguous`   | `null`   | `unresolved`    | 按保留候选合集 | 按合集      | 按合集     |
+| 输入情形                     | readingStatus | selected | selectionMethod | possibleTones  | toneStatus  | tone       |
+| ---------------------------- | ------------- | -------- | --------------- | -------------- | ----------- | ---------- |
+| 没有候选                     | `unknown`     | `null`   | `unresolved`    | `[]`           | `unknown`   | `null`     |
+| 唯一候选且证据已审核         | `resolved`    | 该候选   | `unique`        | 该候选声调     | 按候选      | 按候选     |
+| 唯一候选但证据未审核/为空    | `unknown`     | `null`   | `unresolved`    | `[]`           | `unknown`   | `null`     |
+| 多个候选含 P、Z              | `ambiguous`   | `null`   | `unresolved`    | `["P","Z"]`    | `ambiguous` | `null`     |
+| 两个不同读音但同为 Z         | `ambiguous`   | `null`   | `unresolved`    | `["Z"]`        | `resolved`  | `"Z"`      |
+| 已知 P + 声调未知候选        | `ambiguous`   | `null`   | `unresolved`    | `["P"]`        | `unknown`   | `null`     |
+| 多候选中部分证据未审核       | `ambiguous`   | `null`   | `unresolved`    | 按全部候选     | 按全部候选  | 按全部候选 |
+| 合法用户覆盖                 | `resolved`    | 用户所选 | `user`          | 按所选候选     | 按所选候选  | 按所选候选 |
+| 规则命中同一候选且证据齐备   | `resolved`    | 该候选   | `context_rule`  | 按该候选       | 按该候选    | 按该候选   |
+| 规则证据不足 / 未审核        | `ambiguous`   | `null`   | `unresolved`    | 按全部候选     | 按全部候选  | 按全部候选 |
+| 规则证据齐备但候选自身未审核 | `ambiguous`   | `null`   | `unresolved`    | 按该候选       | 按该候选    | 按该候选   |
+| 同优先级规则冲突             | `ambiguous`   | `null`   | `unresolved`    | 按保留候选合集 | 按合集      | 按合集     |
 
 平仄推导规则（与 `AnnotatedTokenSchema` 的 refinement 完全一致）：
 
@@ -165,13 +170,29 @@ resolveReadings(input: {
   它仍保留在 `lookup.evidence` / provenance 中供待核查展示。
 - 用户覆盖不是学术证据：覆盖后字位 `evidenceIds` 仍只来自候选与规则，`reason` 写明“人工覆盖，非系统推断”。
 
+**证据同时决定能否下结论**（不只是显示）：
+
+| 情形                                            | 结论                                                                               |
+| ----------------------------------------------- | ---------------------------------------------------------------------------------- |
+| 候选的 `evidenceIds` 里至少有一条 approved 证据 | 该候选“可支撑”确定结论                                                             |
+| 候选的 `evidenceIds` 为空，或全部是 unverified  | 该候选**不可**支撑确定结论                                                         |
+| 全部候选都不可支撑                              | `readingStatus = unknown`、`effectiveCandidateIds = []`，`reason` 说明证据未经审核 |
+| 部分候选不可支撑（候选数 > 1）                  | 仍 `ambiguous` 并**保留全部候选**；`reason` 点名哪些候选证据未审核                 |
+| 规则指向的候选自身不可支撑                      | 不给 `resolved`，退回 `ambiguous`（`effectiveCandidateIds` 只留该候选）            |
+
+关键约束：**证据缺口不能用来收窄候选**。两个候选里只有一个带已审核证据时，不能据此排除另一个——
+那会把“没登记证据”误当成“读音不成立”。
+
 ### 4.4 唯一候选不等于已核实事实
 
-只有一个候选时 `readingStatus = resolved`（当前取值确实唯一），但如果该候选**没有任何已审核证据**，
-`reason` 会明确写“该候选尚无已审核证据，只能作为待核实结论”，且 `evidenceIds` 为空。
+只有一个候选时，只有在该候选**自身证据已审核**的前提下才给 `readingStatus = resolved`（`selectionMethod = unique`）。
 
-> 这是一个已知的契约张力：`AnnotatedToken` 没有“待核实”状态位。D1 用 `reason` + 空 `evidenceIds`
-> 表达；已向 GLM 提出可选方案（见第 6、7 节），在契约变更前不擅自加字段。
+若该候选没有已审核证据，则不给确定读音：`readingStatus = unknown`、`selectedReadingId = null`、
+`effectiveCandidateIds = []`、`possibleTones = []`、`toneStatus = unknown`。候选仍完整保留在 `candidates` 中，
+`reason` 写明“未经审核的证据不能支撑确定读音结论”。
+
+> 契约张力：`AnnotatedToken` 没有“待核实”状态位，`unknown` 是唯一能表达“暂不可断言”的取值。
+> 宁可让 C/E 看到 `unknown`，也不把未核实来源说成确定事实。可选契约变更见第 7 节。
 
 ### 4.5 用户覆盖校验
 
@@ -195,9 +216,14 @@ resolveReadings(input: {
 3. **最长优先**：同一字位被多条规则命中时，只保留短语码点最长的那一组。
 4. **同长冲突**：最长相同的规则选中不同候选时，保留全部被选候选，`ambiguous` + `unresolved`，`reason` 写明冲突规则 ID。
 5. **只认 `approved`**：`unverified` 规则命中会被记录为 `CONTEXT_RULE_UNVERIFIED_IGNORED` notice，不改变读音。
-6. **只认本韵书**：`rule.book` 与 `lookup.book` 不同的规则不参与本次分析。
-7. **规则与数据脱节即报错**：生效规则指向当前字不存在的候选 → `CONTEXT_RULE_STALE`（不静默失效）。
-8. **结构自相矛盾即报错**：无短语、`selectCandidateIds` 为空、`targetOffset` 越界、`target` 与短语不符 → `CONTEXT_RULE_INVALID`。
+6. **规则证据必须齐备**：`reviewStatus = approved` 还不够——`evidenceIds` 必须非空、每条都能在
+   `lookup.evidence` 中解析到、且全部是 `approved`。任一不满足即视为证据不足，不参与选音，
+   命中记录为 `CONTEXT_RULE_EVIDENCE_INSUFFICIENT` notice。
+7. **被选候选自身也要可支撑**：即使规则证据齐备，如果规则指向的候选自身没有已审核证据，也不给 `resolved`，
+   退回 `ambiguous` 且 `effectiveCandidateIds` 只留该候选。
+8. **只认本韵书**：`rule.book` 与 `lookup.book` 不同的规则不参与本次分析。
+9. **规则与数据脱节即报错**：生效规则指向当前字不存在的候选 → `CONTEXT_RULE_STALE`（不静默失效）。
+10. **结构自相矛盾即报错**：无短语、`selectCandidateIds` 为空、`targetOffset` 越界、`target` 与短语不符 → `CONTEXT_RULE_INVALID`。
 
 ## 5. 错误码（模块内部，交 GLM 映射）
 

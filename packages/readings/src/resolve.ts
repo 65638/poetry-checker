@@ -13,7 +13,10 @@ import { ReadingsError } from "./errors.js";
 
 /** AnnotatedPoem 新增的 notice code；不允许未审核规则静默生效或静默消失。 */
 export const CONTEXT_NOTICE_CODES = [
+  /** 规则自身 reviewStatus 不是 approved。 */
   "CONTEXT_RULE_UNVERIFIED_IGNORED",
+  /** 规则已审核，但它引用的证据缺失或未审核，仍不能选音。 */
+  "CONTEXT_RULE_EVIDENCE_INSUFFICIENT",
 ] as const;
 
 export type ContextNoticeCode = (typeof CONTEXT_NOTICE_CODES)[number];
@@ -38,7 +41,10 @@ interface RuleHit {
 
 interface RuleHits {
   approved: Map<string, RuleHit[]>;
+  /** 规则自身 reviewStatus 不是 approved。 */
   unverified: Map<string, RuleHit[]>;
+  /** 规则已审核，但引用的证据缺失或未审核。 */
+  insufficientEvidence: Map<string, RuleHit[]>;
 }
 
 interface Selection {
@@ -72,7 +78,12 @@ export function resolveReadings(input: ResolveReadingsInput): AnnotatedPoem {
     (left, right) => left.line - right.line || left.column - right.column,
   );
   const overrideByTokenId = indexOverrides(overrides, orderedTokens);
-  const ruleHits = collectRuleHits(orderedTokens, contextRules, lookup.book);
+  const ruleHits = collectRuleHits(
+    orderedTokens,
+    contextRules,
+    lookup.book,
+    approvedEvidenceIds,
+  );
 
   const notices = poem.notices.map((notice) => ({ ...notice }));
   const tokenById = new Map(
@@ -122,6 +133,20 @@ export function resolveReadings(input: ResolveReadingsInput): AnnotatedPoem {
       notices.push({
         code: "CONTEXT_RULE_UNVERIFIED_IGNORED",
         message: `未审核语境规则 ${hit.ruleId} 命中「${hit.phrase}」：reviewStatus=unverified，不参与自动选音`,
+        startUtf16: token.startUtf16,
+        endUtf16: token.endUtf16,
+      });
+    }
+  }
+
+  // 规则本身已审核，但引用的证据缺失或未审核：同样不能自动确定读音。
+  for (const [tokenId, hits] of ruleHits.insufficientEvidence) {
+    const token = tokenById.get(tokenId);
+    if (token === undefined) continue;
+    for (const hit of hits) {
+      notices.push({
+        code: "CONTEXT_RULE_EVIDENCE_INSUFFICIENT",
+        message: `语境规则 ${hit.ruleId} 命中「${hit.phrase}」，但它引用的证据缺失或未经审核：不参与自动选音`,
         startUtf16: token.startUtf16,
         endUtf16: token.endUtf16,
       });
@@ -214,13 +239,28 @@ function selectReading(input: {
 
     if (selected.size === 1) {
       const only = [...selected][0];
-      if (only !== undefined) {
+      const selectedCandidate =
+        only === undefined
+          ? undefined
+          : candidates.find((candidate) => candidate.id === only);
+      if (only !== undefined && selectedCandidate !== undefined) {
+        // 规则给了选择理由，但被选候选自身证据未审核时，仍不能给确定读音。
+        if (isEvidenceBacked(selectedCandidate, approvedEvidenceIds)) {
+          return {
+            effectiveCandidateIds: [only],
+            readingStatus: "resolved",
+            selectedReadingId: only,
+            selectionMethod: "context_rule",
+            reason: `命中已审核语境规则 ${ruleIds.join("、")}「${phrases.join("、")}」（${senses.join("；")}），选定候选 ${only}`,
+            ruleEvidenceIds,
+          };
+        }
         return {
           effectiveCandidateIds: [only],
-          readingStatus: "resolved",
-          selectedReadingId: only,
-          selectionMethod: "context_rule",
-          reason: `命中已审核语境规则 ${ruleIds.join("、")}「${phrases.join("、")}」（${senses.join("；")}），选定候选 ${only}`,
+          readingStatus: "ambiguous",
+          selectedReadingId: null,
+          selectionMethod: "unresolved",
+          reason: `语境规则 ${ruleIds.join("、")} 指向候选 ${only}，但该候选自身证据未经审核：不据此确定读音`,
           ruleEvidenceIds,
         };
       }
@@ -250,7 +290,22 @@ function selectReading(input: {
     };
   }
 
-  // 4. 唯一候选：仍要标明证据是否已审核，不把未核实来源说成确定事实。
+  // 4. 候选自身的证据必须已审核，才能支撑确定读音结论。
+  const backed = candidates.filter((candidate) =>
+    isEvidenceBacked(candidate, approvedEvidenceIds),
+  );
+  if (backed.length === 0) {
+    return {
+      effectiveCandidateIds: [],
+      readingStatus: "unknown",
+      selectedReadingId: null,
+      selectionMethod: "unresolved",
+      reason: `「${token.text}」的 ${candidates.length} 个候选都没有已审核证据：未经审核的证据不能支撑确定读音结论，按未知处理（候选仍完整保留在 candidates 中）`,
+      ruleEvidenceIds: [],
+    };
+  }
+
+  // 5. 唯一候选：只有该候选自身证据已审核时才给 resolved。
   if (candidates.length === 1) {
     const only = candidates[0];
     if (only === undefined) {
@@ -261,31 +316,42 @@ function selectReading(input: {
         { tokenId: token.tokenId },
       );
     }
-    const hasApprovedEvidence = only.evidenceIds.some((evidenceId) =>
-      approvedEvidenceIds.has(evidenceId),
-    );
     return {
       effectiveCandidateIds: [only.id],
       readingStatus: "resolved",
       selectedReadingId: only.id,
       selectionMethod: "unique",
-      reason: hasApprovedEvidence
-        ? `唯一候选 ${only.id}：当前取值唯一，平仄按该候选推导`
-        : `唯一候选 ${only.id}：该候选尚无已审核证据，只能作为待核实结论，不得当作已核实的发布事实`,
+      reason: `唯一候选 ${only.id}：候选自身证据已审核，平仄按该候选推导`,
       ruleEvidenceIds: [],
     };
   }
 
-  // 5. 多个候选：全部保留，等 D2 的语境证据或用户覆盖。
+  // 6. 多个候选：全部保留。证据缺口不能用来收窄候选。
   const allIds = candidates.map((candidate) => candidate.id);
+  const unbackedIds = candidates
+    .filter((candidate) => !isEvidenceBacked(candidate, approvedEvidenceIds))
+    .map((candidate) => candidate.id);
   return {
     effectiveCandidateIds: allIds,
     readingStatus: "ambiguous",
     selectedReadingId: null,
     selectionMethod: "unresolved",
-    reason: `保留 ${allIds.length} 个候选（${allIds.join("、")}）：当前语境证据不足，不给确定读音`,
+    reason:
+      unbackedIds.length === 0
+        ? `保留 ${allIds.length} 个候选（${allIds.join("、")}）：当前语境证据不足，不给确定读音`
+        : `保留 ${allIds.length} 个候选（${allIds.join("、")}）：其中 ${unbackedIds.join("、")} 的证据未经审核，不能据此收窄读音`,
     ruleEvidenceIds: [],
   };
+}
+
+/** 候选能否支撑确定结论：至少要有一条已审核证据。 */
+function isEvidenceBacked(
+  candidate: ReadingCandidate,
+  approvedEvidenceIds: ReadonlySet<string>,
+): boolean {
+  return candidate.evidenceIds.some((evidenceId) =>
+    approvedEvidenceIds.has(evidenceId),
+  );
 }
 
 /**
@@ -438,9 +504,11 @@ function collectRuleHits(
   tokens: readonly ParsedToken[],
   contextRules: readonly ContextRule[],
   book: LookupResult["book"],
+  approvedEvidenceIds: ReadonlySet<string>,
 ): RuleHits {
   const approved = new Map<string, RuleHit[]>();
   const unverified = new Map<string, RuleHit[]>();
+  const insufficientEvidence = new Map<string, RuleHit[]>();
 
   const applicableRules = contextRules.filter((rule) => rule.book === book);
   for (const rule of applicableRules) {
@@ -457,6 +525,14 @@ function collectRuleHits(
   for (const lineTokens of tokensByLine.values()) {
     const characters = lineTokens.map((token) => token.text);
     for (const rule of applicableRules) {
+      // 规则要生效，必须同时满足：自身已审核 + 引用的证据全部已审核且可解析。
+      const verdict = classifyRule(rule, approvedEvidenceIds);
+      const bucket =
+        verdict === "approved"
+          ? approved
+          : verdict === "unverified"
+            ? unverified
+            : insufficientEvidence;
       for (const phrase of rule.exactPhrases) {
         const phraseCharacters = [...phrase];
         if (phraseCharacters.length === 0) continue;
@@ -483,8 +559,6 @@ function collectRuleHits(
             selectCandidateIds: rule.selectCandidateIds,
             evidenceIds: rule.evidenceIds,
           };
-          const bucket =
-            rule.reviewStatus === "approved" ? approved : unverified;
           const existing = bucket.get(targetToken.tokenId);
           if (existing === undefined) bucket.set(targetToken.tokenId, [hit]);
           else existing.push(hit);
@@ -493,7 +567,27 @@ function collectRuleHits(
     }
   }
 
-  return { approved, unverified };
+  return { approved, unverified, insufficientEvidence };
+}
+
+/**
+ * 规则能否参与自动选音。
+ *
+ * - `reviewStatus !== approved` → 不参与；
+ * - 已审核，但 `evidenceIds` 为空、引用的证据在 lookup 里找不到、或未审核 → 不参与；
+ * - 两条都满足才允许选音。
+ *
+ * 三种情况都会记录命中，只是 notice code 不同，不会静默丢弃。
+ */
+function classifyRule(
+  rule: ContextRule,
+  approvedEvidenceIds: ReadonlySet<string>,
+): "approved" | "unverified" | "insufficient_evidence" {
+  if (rule.reviewStatus !== "approved") return "unverified";
+  const hasUsableEvidence =
+    rule.evidenceIds.length > 0 &&
+    rule.evidenceIds.every((evidenceId) => approvedEvidenceIds.has(evidenceId));
+  return hasUsableEvidence ? "approved" : "insufficient_evidence";
 }
 
 function assertRuleStructure(rule: ContextRule): void {
