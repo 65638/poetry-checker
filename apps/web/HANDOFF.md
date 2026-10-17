@@ -307,22 +307,57 @@ node-linker=hoisted
 2. `main.tsx` 把 `<DevContainer {...props} />` 换成 `<CheckerView {...props} />`；
 3. `src/app/store.ts`、`src/api/`、`src/features/` 不动；视觉问题交设计方，业务缺陷回 D。
 
-### 装配预演已验证（2026-10-17）
+### 正式装配（已提交，分支 `feat/d-d3-assembly`）
 
-在**临时分支**（未提交、已删除）上把 `feat/claude-presentation`（`d1d5ddc`）
-合入本分支并完成装配，实测全绿，证明装配路径可行、无需改业务层：
+GLM 要求的「同时含两边的集成分支」尚不存在（`origin/main` 仍为 `0a94212`，
+不含 `presentation/`）。为交付可保留的装配提交，本人在本地建立了可复现的集成基线：
 
-- `git merge origin/feat/claude-presentation`：**零冲突**
-- 装配改动：`main.tsx` 仅两行（import 换成 `./presentation/CheckerView`、
-  `return <CheckerView {...props} />`），`view-contract` 未改
-- `pnpm verify` → **exit 0**，306 项测试全过
-- `vite build` → 129 模块，新增 CSS 18.21 kB（视觉样式生效），JS 346.78 kB
-- 真实链路冒烟：页面 200 且引用 `#root`、`/src/main.tsx` 含 `CheckerView`
-  且不含 `DevContainer`、`POST /api/v1/analyze` **200** 且 `summary.status=pass`、原文匹配
+```text
+基线：feat/d-d1-web @ 7520dde  +  origin/feat/claude-presentation @ b0f9dcc
+      → 本地 merge e5d2b79（零冲突）
+装配：main.tsx 生产分支渲染 CheckerView；开发壳 DevShell 单独承载场景选择器
+```
 
-**临时分支与装配改动均已丢弃**，本分支保持 `DevContainer`——
-在展示分支进入 main 之前提前接会让构建失败（`presentation/` 不存在）。
-两条分支进 main 后，按上面第 1–3 步执行即可。
+- **契约核对**：合入前逐字节比对 `apps/web/src/view-contract.ts`，两边**完全一致**，
+  字段列表 `Compare-Object` 无差异；未新建第二份类型。
+- **Props 边界**：`CheckerViewProps` 没有 `onLoadDevScenario`，因此
+  **没有**给展示组件加新 prop。开发场景入口放在新增的 `app/DevShell.tsx`：
+  它渲染 `<CheckerView {...props} />`（原样 props），并在旁边单独挂
+  `<DevScenarioSelector />`。
+- **生产不夹带合成数据**：`DevShell` 用**变量化动态 import**
+  （`/* @vite-ignore */` + 路径变量）加载，打包器无法静态分析，
+  生产构建不再产出 dev chunk。实测生产产物只有
+  `index.html` / `index-*.js` (349 kB) / `index-*.css` (18.2 kB) / `paper-grain.svg`，
+  **无任何 dev chunk**，`fixture:group` 与合成正文零命中。
+- **业务逻辑零改动**：`CheckerStore`、API transport、并发/取消、`stale`、
+  选音重检全部保留；仅 `main.tsx` 换渲染目标，新增 `DevShell.tsx`。
+
+验证（在集成基线上）：
+
+```text
+pnpm verify                          → exit 0，306 项测试（19 文件）
+vite build                           → 130 modules，CSS 18.23 kB（视觉样式生效）
+dev 冒烟                             → / 200、main.tsx 200、DevShell 200、presentation 200
+HTTP mock + contracts/pass 正文      → 200，summary=pass，原文匹配，finding 坐标自洽
+HTTP mock + contracts/fail 正文      → 200，summary=fail，原文匹配
+```
+
+**未执行**：真实浏览器点击验收（无 DOM/E2E 依赖，未装 jsdom/Testing Library）、
+375/1440 视觉与键盘现查、真实 API 联调。
+
+### 关于 HTTP mock 的五状态限制（实测结论）
+
+`apps/api` 的 mock 只装载 `fixtures/contracts`，而其中
+`pass` / `needs_review` / `not_applicable` / `unsupported` 的**正文完全相同**，
+`fail` 是唯一不同的一首。因此：
+
+- 用 `contracts/pass` 正文请求 → 稳定命中 `pass`；
+- 用 `contracts/fail` 正文请求 → 稳定命中 `fail`；
+- 用 `fixtures/mocks` 的正文请求 → 匹配不到，回退 `needs_review` 模板，
+  其正文与请求不同，前端会正确地拒绝为 `RESPONSE_INPUT_MISMATCH`。
+
+所以**五状态预览必须走开发场景注入**（`DevShell`），不能靠 HTTP mock；
+而「走一次 HTTP mock」用 `contracts/pass` 正文即可满足。此限制已按实记录。
 
 ## 数据与规则版本
 
