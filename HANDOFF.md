@@ -207,4 +207,31 @@ React 19.3.1 / Vite 8.3.4 / plugin-react 6.1.2（registry 实查锁定）；web 
 
 ## D2 第一步
 
-取得维基文库《平水韻》三讲正文与修订号（有网环境）→ 出补丁差异并人审 → 让平水达到 106 部且逐部非空；同时把 `chinese_word_rhyme` 原表全量导入成发布候选（词林 19 部、新韵重建 56 子卷），再接 `data:build` / `data:check` 与 278+60 抽样。
+三讲正文与修订号已取得（oldid `8264804`，9 字已人工肉眼核实并补录，但 wikitext 快照与许可页脚转录未完成，补丁仍 draft/unverified）→ 出补丁差异并人审 → 让平水达到 106 部且逐部非空；同时把 `chinese_word_rhyme` 原表全量导入成发布候选（词林 19 部、新韵重建 56 子卷），再接 `data:build` / `data:check` 与 278+60 抽样。
+
+---
+
+# B 交付：D1 解析与候选传播（2026-10-17）
+
+分支 `feat/b-d1-readings`（基线 `e549194`，`contract-v1` 仍为 `9b27322`，未改契约）；PR #3（→ `main`，未自行合并）。
+
+- `packages/readings`：实现 `parseText`（分句、码点遍历、UTF-16 半开区间、SHA-256、notice、排版白名单）与
+  `resolveReadings`（全候选保留、唯一/歧义/未知、用户覆盖校验、平仄双状态、已审核语境规则的最长匹配与冲突处理）。
+- `data/context`：规则格式与 4 条待审核语境（更/重/长/行），**0 条生效规则**，不编造候选 ID 与来源。
+- `docs/readings.md`：解析政策、选音优先级、notice/错误码表、实现边界。
+- 验证：`pnpm verify` 全绿，**79 个用例**（原 36 + readings 43）；单独 `packages/readings/tests` 43 个用例通过。
+- 评审后修复两项：① **统一证据门槛**——凡是进入 `effectiveCandidateIds` 的候选（覆盖/规则/冲突/唯一/歧义全路径）都必须有已审核证据，否则抛 `LOOKUP_EVIDENCE_UNVERIFIED`（数据未就绪，请 GLM 映射 503）；② 语境规则必须引用**存在、已审核且 `kind=context`** 的证据才能选音，否则不参与（新增 notice `CONTEXT_RULE_EVIDENCE_INSUFFICIENT`）。
+- 未做：真实字表接入、生产语境规则、覆盖率/准确率评测。
+- **待 GLM**：`packages/readings/package.json` 的 `exports`/`build`/`test` 与 `tsconfig.build.json` 申请
+  （当前该包无法按包名被其它包导入）；错误码到 HTTP 状态的映射建议。
+- 明细与复现差异见 [`packages/readings/HANDOFF.md`](packages/readings/HANDOFF.md)。
+
+---
+
+# 批次合入：B 的解析/选音模块 + 接线（PR #3，2026-10-17）
+
+汇合版本：main `3080a1c` + B `feat/b-d1-readings` `d8b4ecf` + `glm/readings-wiring` `da4e4f7`，双方修改全部保留（两次 merge commit）。GLM 本地复验 `pnpm verify` exit 0：10 个测试文件、135 项测试全过，与 Codex 隔离联合验收结论一致。
+
+本批内容边界：M2 解析与候选传播（B）、readings 包接线与 API 错误映射（GLM，14 个错误码显式映射，503 族统一 DATA_NOT_READY 错误体）。B 的证据门槛三连修（8e48d10 未审核证据不支撑确定读音 → 6e8eb16 显式数据未就绪 → d8b4ecf 堵住用户覆盖/规则选音/歧义保留三条绕过路径）全部包含。
+
+本批尚未包含：真实韵书字表（A 的 D1 见本文件「A 交付：D1」节，随 A 的 PR 合入）、体裁（E）、完整格律判定（Codex 下一批）、真实 API 编排（GLM，等前三者就绪）。analyze 仍为 fixture mock。
