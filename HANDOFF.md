@@ -85,3 +85,13 @@ React 19.3.1 / Vite 8.3.4 / plugin-react 6.1.2（registry 实查锁定）；web 
 - **待 GLM**：`packages/readings/package.json` 的 `exports`/`build`/`test` 与 `tsconfig.build.json` 申请
   （当前该包无法按包名被其它包导入）；错误码到 HTTP 状态的映射建议。
 - 明细与复现差异见 [`packages/readings/HANDOFF.md`](packages/readings/HANDOFF.md)。
+
+---
+
+# 批次合入：B 的解析/选音模块 + 接线（PR #3，2026-10-17）
+
+汇合版本：main `3080a1c` + B `feat/b-d1-readings` `d8b4ecf` + `glm/readings-wiring` `da4e4f7`，双方修改全部保留（两次 merge commit）。GLM 本地复验 `pnpm verify` exit 0：10 个测试文件、135 项测试全过，与 Codex 隔离联合验收结论一致。
+
+本批内容边界：M2 解析与候选传播（B）、readings 包接线与 API 错误映射（GLM，14 个错误码显式映射，503 族统一 DATA_NOT_READY 错误体）。B 的证据门槛三连修（8e48d10 未审核证据不支撑确定读音 → 6e8eb16 显式数据未就绪 → d8b4ecf 堵住用户覆盖/规则选音/歧义保留三条绕过路径）全部包含。
+
+尚未包含：真实韵书字表（A）、体裁（E）、完整格律判定（Codex 下一批）、真实 API 编排（GLM，等前三者就绪）。analyze 仍为 fixture mock。
