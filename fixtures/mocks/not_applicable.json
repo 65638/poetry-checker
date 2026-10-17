@@ -912,16 +912,16 @@
         "severity": "info",
         "locations": [
           {
-            "tokenId": "l1c1",
-            "line": 1,
-            "column": 1
+            "tokenId": "l4c2",
+            "line": 4,
+            "column": 2
           }
         ],
         "expected": [
           "Z"
         ],
         "observed": [
-          "P"
+          "Z"
         ],
         "message": "合成 not_applicable 场景：古体不适用近体规则（仅结构验证）",
         "templateId": null,

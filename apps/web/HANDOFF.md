@@ -20,7 +20,7 @@
 | `apps/web/src/hooks/useCheckerStore.ts` | 新增 | `useSyncExternalStore` 绑定 |
 | `apps/web/src/utils/sha256.ts` | 新增 | 纯 TS 的 SHA-256（UTF-8 原文摘要，与服务端口径一致） |
 | `apps/web/src/main.tsx` | 覆盖 | 接管占位入口，接真实 HTTP transport 与开发容器 |
-| `apps/web/tests/*.test.ts` | 新增 | 148 项业务测试（api-client / store / export / concurrency / config / dev-scenarios / report-view / evidence） |
+| `apps/web/tests/*.test.ts` | 新增 | 171 项业务测试（api-client / store / export / concurrency / config / dev-scenarios / report-view / evidence / fixture-integrity） |
 | `fixtures/mocks/*.json`、`generate.ts`、`README.md` | 新增 | 五状态开发场景、错配场景与补充平面汉字场景，全部通过 Schema |
 | `docs/ui.md` | 新增 | 业务交互、失效规则、导出与测试结果 |
 
@@ -38,7 +38,7 @@ pnpm verify                  # exit 0
 
 - 合并前 `main` 基线：`e549194`；合并后：含 C 的验收测试与 B 的解析/选音模块
 - 合并后 `main` 独有 16 个提交，我的分支有 3 个提交，`git merge` **零冲突**
-- 合并后测试：**283 项 / 18 个文件**（135 项来自 main + 148 项本模块）
+- 合并后测试：**410 项 / 28 个文件**（integrate 基线 387 + mock 修复新增）
 - 冲突处理：本次无冲突；若有冲突，我只改 `apps/web/`、`fixtures/mocks/`、
   `docs/ui.md` 这些本人路径，根配置冲突交组长转 GLM
 
@@ -74,11 +74,11 @@ $env:PNPM_CONFIG_NODE_LINKER = 'hoisted'
 pnpm verify                            → exit 0
   $ eslint .                           → 通过
   $ tsc --noEmit && tsc --noEmit -p apps/web/tsconfig.json → 通过（两个项目都查）
-  $ vitest run                         → 283 passed / 18 files
+  $ vitest run                         → 410 passed / 28 files
   $ pnpm build && tsx scripts/generate-contracts.ts --check → 通过（8 个生成物一致）
 ```
 
-测试构成：**283 = 135（main 基线）+ 148（本模块新增）**。
+测试构成：**410（含 A/B/C/E 模块与 web 业务层）**。
 本模块单独跑：`vitest run apps/web/tests` → 80 passed。
 
 `pnpm verify` 的实际通过条件与原因见下节「环境说明」。
@@ -167,7 +167,7 @@ pnpm verify          # exit 0
 ```text
 $ eslint .                                    → 通过
 $ tsc --noEmit && tsc --noEmit -p apps/web/tsconfig.json → 通过
-$ vitest run                                  → 283 passed (18 files)
+$ vitest run                                  → 410 passed (28 files)
 $ pnpm build && tsx scripts/generate-contracts.ts --check → 通过（8 个生成物一致）
 ```
 
@@ -243,10 +243,22 @@ node-linker=hoisted
 - `locateFinding`：finding → 精确字位 + UTF-16 半开区间，返回空数组而不是退回整段。
 - `buildRhymeFeet` / `rhymeCommonGroups`：韵脚与共同归部只取报告字段。
 
-**发现的数据异常**：`fixtures/mocks` 与 `fixtures/contracts` 的 `finding.locations`
-里 `line/column` 与 `tokenId` 不一致（如 `l2c5` 标成 `line 1, column 1`）。
-前端定位以 **token 的 line/column** 为准，不照抄这个不一致坐标；
-已请示是否由 GLM/Codex 修正 fixture。
+**已修复的数据异常**（mock 修复批次）：`fixtures/mocks` 的 `finding.locations`
+原先用 `rhymeTokenIds[0]` 当 tokenId，却硬写 `line: 1, column: 1`（如 `l2c5`
+被标成 line 1,column 1）。`generate.ts` 已改为:
+
+- 坐标一律取自实际 token 的 `line`/`column`（`buildCheck`）；
+- 引用不到 token 时**生成器直接失败**，不再回退 `?? "l1c1"`；
+- `expected`/`observed` 由该字位真实平仄推导，不再与场景无关
+  （原 `pass` 场景 observed 是 P 却显示通过，自相矛盾）；
+- 写盘后重新读回做**语义自检**：切片、行文本、坐标、fail 矛盾、pass 一致，
+  不通过则 `process.exit(1)`；
+- `mismatch.json` 保持「行文本与字位错位」的拒绝测试目的，自检要求它
+  **必须不自洽**，不套用合法场景规则去「修绿」。
+
+测试：`fixture-integrity.test.ts` 23 项固化上述约束
+（坐标一致、expected/observed 自洽、observed 等于真实平仄、
+补充平面汉字切片、mismatch 仍错位）。
 
 测试：`report-view.test.ts` 26 项（五场景顺序与区间、韵脚标记、分组排序、
 只看需处理项、未知前缀、精确定位、补充平面汉字区间、共同归部、粘对关系）。
@@ -295,22 +307,61 @@ node-linker=hoisted
 2. `main.tsx` 把 `<DevContainer {...props} />` 换成 `<CheckerView {...props} />`；
 3. `src/app/store.ts`、`src/api/`、`src/features/` 不动；视觉问题交设计方，业务缺陷回 D。
 
-### 装配预演已验证（2026-10-17）
+### 正式装配（已提交，分支 `feat/d-d3-assembly`）
 
-在**临时分支**（未提交、已删除）上把 `feat/claude-presentation`（`d1d5ddc`）
-合入本分支并完成装配，实测全绿，证明装配路径可行、无需改业务层：
+GLM 提供了集成分支 **`origin/integrate`**（`1b67a65`：含 Claude 展示切片 `b0f9dcc`、
+我的业务底座 `27a9684`、E 体裁与接线修复，387 测试）。装配分支已合入该基线：
 
-- `git merge origin/feat/claude-presentation`：**零冲突**
-- 装配改动：`main.tsx` 仅两行（import 换成 `./presentation/CheckerView`、
-  `return <CheckerView {...props} />`），`view-contract` 未改
-- `pnpm verify` → **exit 0**，283 项测试全过
-- `vite build` → 129 模块，新增 CSS 18.21 kB（视觉样式生效），JS 346.78 kB
-- 真实链路冒烟：页面 200 且引用 `#root`、`/src/main.tsx` 含 `CheckerView`
-  且不含 `DevContainer`、`POST /api/v1/analyze` **200** 且 `summary.status=pass`、原文匹配
+```text
+origin/integrate @ 1b67a65  +  feat/d-d1-web @ 7520dde（mock 坐标修复）
+  → merge（零冲突）
+装配：main.tsx 生产分支渲染 CheckerView；开发壳 DevShell 单独承载场景选择器
+```
 
-**临时分支与装配改动均已丢弃**，本分支保持 `DevContainer`——
-在展示分支进入 main 之前提前接会让构建失败（`presentation/` 不存在）。
-两条分支进 main 后，按上面第 1–3 步执行即可。
+- **契约核对**：`apps/web/src/view-contract.ts` 与 `origin/integrate` **逐字节一致**，
+  字段列表 `Compare-Object` 无差异；未新建第二份类型。
+- **Props 边界**：`CheckerViewProps` 没有 `onLoadDevScenario`，因此
+  **没有**给展示组件加新 prop。开发场景入口放在新增的 `app/DevShell.tsx`：
+  它渲染 `<CheckerView {...props} />`（原样 props），并在旁边单独挂
+  `<DevScenarioSelector />`。
+- **生产不夹带合成数据**：`DevShell` 用**变量化动态 import**
+  （`/* @vite-ignore */` + 路径变量）加载，打包器无法静态分析，
+  生产构建不再产出 dev chunk。实测生产产物只有
+  `index.html` / `index-*.js` (349 kB) / `index-*.css` (18.2 kB) / `paper-grain.svg`，
+  **无任何 dev chunk**，`fixture:group` 与合成正文零命中。
+- **业务逻辑零改动**：`CheckerStore`、API transport、并发/取消、`stale`、
+  选音重检全部保留；仅 `main.tsx` 换渲染目标，新增 `DevShell.tsx`。
+
+验证（合入 `origin/integrate` 后实测）：
+
+```text
+pnpm verify                          → exit 0，410 项测试（28 文件）
+vite build                           → 130 modules，CSS 18.23 kB（视觉样式生效）
+dev 冒烟                             → / 200、main.tsx 200、DevShell 200、
+                                       presentation 200、tokens.css 200
+HTTP mock + contracts/pass 正文      → 200，summary=pass，原文匹配，finding 坐标自洽
+HTTP mock + contracts/fail 正文      → 200，summary=fail，原文匹配
+```
+
+410 项 = integrate 记录的 387 + 我的 mock 修复新增的 fixture-integrity 等
+（含 A/B/C/E 各模块与 web 业务测试）。
+
+**未执行**：真实浏览器点击验收（无 DOM/E2E 依赖，未装 jsdom/Testing Library）、
+375/1440 视觉与键盘现查、真实 API 联调。这些不因为 `pnpm verify` 通过就算通过。
+
+### 关于 HTTP mock 的五状态限制（实测结论）
+
+`apps/api` 的 mock 只装载 `fixtures/contracts`，而其中
+`pass` / `needs_review` / `not_applicable` / `unsupported` 的**正文完全相同**，
+`fail` 是唯一不同的一首。因此：
+
+- 用 `contracts/pass` 正文请求 → 稳定命中 `pass`；
+- 用 `contracts/fail` 正文请求 → 稳定命中 `fail`；
+- 用 `fixtures/mocks` 的正文请求 → 匹配不到，回退 `needs_review` 模板，
+  其正文与请求不同，前端会正确地拒绝为 `RESPONSE_INPUT_MISMATCH`。
+
+所以**五状态预览必须走开发场景注入**（`DevShell`），不能靠 HTTP mock；
+而「走一次 HTTP mock」用 `contracts/pass` 正文即可满足。此限制已按实记录。
 
 ## 数据与规则版本
 

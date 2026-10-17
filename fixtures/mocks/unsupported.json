@@ -912,16 +912,16 @@
         "severity": "info",
         "locations": [
           {
-            "tokenId": "l1c1",
-            "line": 1,
-            "column": 1
+            "tokenId": "l3c3",
+            "line": 3,
+            "column": 3
           }
         ],
         "expected": [
           "Z"
         ],
         "observed": [
-          "P"
+          "Z"
         ],
         "message": "合成 unsupported 场景：当前版本尚未支持该形式（仅结构验证）",
         "templateId": null,

@@ -1,13 +1,13 @@
-import { useMemo } from "react";
+import { lazy, Suspense, useMemo } from "react";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { CheckerStore } from "./app/store";
-import { DevContainer } from "./app/DevContainer";
+import { CheckerView } from "./presentation/CheckerView";
 import { EXAMPLES } from "./app/examples";
 import { createRuntimeTransport, readWebEnv } from "./app/config";
-import type { DevScenarioId } from "./app/devScenarios";
 import { useCheckerStore } from "./hooks/useCheckerStore";
 import type { CheckerViewProps } from "./view-contract";
+import type { DevShell as DevShellComponent } from "./app/DevShell";
 
 /** 空草稿：韵书默认为平水韵，体裁与体式自动。 */
 const EMPTY_DRAFT = {
@@ -16,6 +16,21 @@ const EMPTY_DRAFT = {
   genreHint: "auto" as const,
   formHint: "auto" as const,
 };
+
+/**
+ * 开发壳按需加载。
+ *
+ * 路径用变量包一层，让打包器**无法静态分析**这个 import：
+ * 生产构建就不会为开发壳及其依赖（fixture 装载器、场景文案）产出 chunk。
+ * 运行时它在生产里也不会被执行（下面 `import.meta.env.DEV` 为 false）。
+ */
+const devShellModulePath = "./app/DevShell";
+const DevShell = lazy(async () => {
+  const mod: { DevShell: typeof DevShellComponent } = await import(
+    /* @vite-ignore */ devShellModulePath
+  );
+  return { default: mod.DevShell };
+});
 
 function App() {
   // 生产入口走 resolveApiConfig：只接受 http transport，
@@ -44,11 +59,7 @@ function App() {
     },
     onLoadExample: (exampleId) => {
       const example = EXAMPLES.find((item) => item.id === exampleId);
-      store.loadExample(
-        exampleId,
-        example?.text ?? "",
-        state.draft,
-      );
+      store.loadExample(exampleId, example?.text ?? "", state.draft);
     },
     onSelectToken: (tokenId) => {
       store.selectToken(tokenId);
@@ -70,26 +81,17 @@ function App() {
     },
   };
 
-  // 开发场景入口只在开发构建挂载：fixture 与注入逻辑都通过动态 import 形成
-  // 独立 chunk，生产入口不传这个 prop，发布包不含合成数据与开发文案。
-  const devScenarioHandler = import.meta.env.DEV
-    ? (id: DevScenarioId) => {
-        void Promise.all([
-          import("./app/devScenarios"),
-          import("./app/devScenarioStore"),
-        ])
-          .then(async ([scenarios, devStore]) => {
-            const scenario = await scenarios.loadDevScenario(id, true);
-            devStore.applyDevReport(store, scenario.report);
-          })
-          .catch((cause: unknown) => {
-            // 开发期装载失败只提示，不伪造报告。
-            console.error("[dev-scenario] 装载失败", cause);
-          });
-      }
-    : undefined;
+  // 开发预览：CheckerView 原样接收 props；开发场景选择器由 DevShell 单独承载，
+  // 不给展示组件加任何未约定的 prop。
+  if (import.meta.env.DEV) {
+    return (
+      <Suspense fallback={<main>正在加载开发壳…</main>}>
+        <DevShell />
+      </Suspense>
+    );
+  }
 
-  return <DevContainer {...props} onLoadDevScenario={devScenarioHandler} />;
+  return <CheckerView {...props} />;
 }
 
 const root = document.getElementById("root");
