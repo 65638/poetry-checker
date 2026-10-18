@@ -4,74 +4,29 @@
   "reviewedAt": "2026-10-18",
   "reviewer": "A同学（队员 A 本人）",
   "method": "人工在搜韵网网页端逐字核对韵部归属，非机器比对",
+  "supersededBy": "data/reviews/j03-batch1-human-review.json",
+  "supersedeNote": "J03 第一批人审（2026-10-18，组长通知）已把 白/一/更/流/雪/物 升为通过；「楼」因 楼↔樓 异体映射未补齐而留 pending。本文件保留最初 7 字（8 候选）的核对过程以便追溯，最终结论以 j03-batch1-human-review.json 为准。",
   "dataVersion": "sample-pingshui-cwr-ff0e9c1-d1",
   "sourceRevision": "ff0e9c13fb037c43e0eaa5dc929c0fe4fa2ffb18",
   "scope": "候选级核验：下列 7 个字的韵部归属与声类。本记录**不**代表其所属韵部的部级 evidence 已审核。",
+  "finalStatusByCharacter": {
+    "白": "approved（J03）",
+    "一": "approved（J03）；新韵侧 yī/yí/yì 冲突仍待裁决",
+    "更": "approved（J03，平/去两读同时通过）",
+    "流": "approved（J03）",
+    "楼": "pending（J03 未列入；阻塞项：楼↔樓 异体映射）",
+    "雪": "approved（J03）",
+    "物": "approved（J03）"
+  },
   "items": [
-    {
-      "character": "更",
-      "candidateId": "pingshui:更:ping:八庚",
-      "groupId": "group:pingshui:下平:八庚",
-      "toneClass": "ping",
-      "humanVerdict": "confirmed",
-      "note": "平声读 gēng，如「更改」「五更」"
-    },
-    {
-      "character": "更",
-      "candidateId": "pingshui:更:qu:二十四敬",
-      "groupId": "group:pingshui:去:二十四敬",
-      "toneClass": "qu",
-      "humanVerdict": "confirmed",
-      "note": "去声读 gèng，如「更加」。与平声并存，两读均保留，不择一"
-    },
-    {
-      "character": "白",
-      "candidateId": "pingshui:白:ru:入声十一陌",
-      "groupId": "group:pingshui:入:入声十一陌",
-      "toneClass": "ru",
-      "humanVerdict": "confirmed",
-      "note": "中古入声，今读阳平；古今声类分列，不按整部映射"
-    },
-    {
-      "character": "一",
-      "candidateId": "pingshui:一:ru:入声四质",
-      "groupId": "group:pingshui:入:入声四质",
-      "toneClass": "ru",
-      "humanVerdict": "confirmed",
-      "note": "中古入声；新韵侧另有 yī/yí/yì 三读冲突，见 data/patches/xinyun-yi-conflict.draft.json"
-    },
-    {
-      "character": "流",
-      "candidateId": "pingshui:流:ping:十一尤",
-      "groupId": "group:pingshui:下平:十一尤",
-      "toneClass": "ping",
-      "humanVerdict": "confirmed",
-      "note": ""
-    },
-    {
-      "character": "楼",
-      "candidateId": "pingshui:楼:ping:十一尤",
-      "groupId": "group:pingshui:下平:十一尤",
-      "toneClass": "ping",
-      "humanVerdict": "confirmed",
-      "note": ""
-    },
-    {
-      "character": "雪",
-      "candidateId": "pingshui:雪:ru:入声九屑",
-      "groupId": "group:pingshui:入:入声九屑",
-      "toneClass": "ru",
-      "humanVerdict": "confirmed",
-      "note": "中古入声，今读上声"
-    },
-    {
-      "character": "物",
-      "candidateId": "pingshui:物:ru:入声五物",
-      "groupId": "group:pingshui:入:入声五物",
-      "toneClass": "ru",
-      "humanVerdict": "confirmed",
-      "note": "中古入声，今读去声"
-    }
+    { "character": "更", "candidateId": "pingshui:更:ping:八庚", "groupId": "group:pingshui:下平:八庚", "toneClass": "ping", "humanVerdict": "confirmed", "note": "平声读 gēng，如「更改」「五更」" },
+    { "character": "更", "candidateId": "pingshui:更:qu:二十四敬", "groupId": "group:pingshui:去:二十四敬", "toneClass": "qu", "humanVerdict": "confirmed", "note": "去声读 gèng，如「更加」。与平声并存，两读均保留，不择一" },
+    { "character": "白", "candidateId": "pingshui:白:ru:入声十一陌", "groupId": "group:pingshui:入:入声十一陌", "toneClass": "ru", "humanVerdict": "confirmed", "note": "中古入声，今读阳平；古今声类分列，不按整部映射" },
+    { "character": "一", "candidateId": "pingshui:一:ru:入声四质", "groupId": "group:pingshui:入:入声四质", "toneClass": "ru", "humanVerdict": "confirmed", "note": "中古入声；新韵侧另有 yī/yí/yì 三读冲突，见 data/patches/xinyun-yi-conflict.draft.json" },
+    { "character": "流", "candidateId": "pingshui:流:ping:十一尤", "groupId": "group:pingshui:下平:十一尤", "toneClass": "ping", "humanVerdict": "confirmed", "note": "" },
+    { "character": "楼", "candidateId": "pingshui:楼:ping:十一尤", "groupId": "group:pingshui:下平:十一尤", "toneClass": "ping", "humanVerdict": "pending", "note": "J03 未列入通过范围；阻塞项为 楼↔樓 异体映射补齐（见 data/variants/variant-edges-d2.json）" },
+    { "character": "雪", "candidateId": "pingshui:雪:ru:入声九屑", "groupId": "group:pingshui:入:入声九屑", "toneClass": "ru", "humanVerdict": "confirmed", "note": "中古入声，今读上声" },
+    { "character": "物", "candidateId": "pingshui:物:ru:入声五物", "groupId": "group:pingshui:入:入声五物", "toneClass": "ru", "humanVerdict": "confirmed", "note": "中古入声，今读去声" }
   ],
   "notApproved": {
     "evidenceIds": [
@@ -83,14 +38,10 @@
       "ev:pingshui:入:入声九屑",
       "ev:pingshui:入:入声五物"
     ],
-    "reason": "每条 evidence 是**部级断言**（该韵部共收录 N 个字形，如八庚 197 条 / 194 字形）。本次人工核验只覆盖上述 8 条候选归属，不覆盖整部全部字形，故这 7 条 evidence 的 reviewStatus 保持 unverified，不得由 7 字推广为整部批准。",
+    "reason": "每条 evidence 是**部级断言**（该韵部共收录 N 个字形，如八庚 197 条 / 194 字形）。人工核验只覆盖上述候选归属，不覆盖整部全部字形，故这 7 条 evidence 的 reviewStatus 保持 unverified。",
     "whatWouldApprove": "逐部抽足样本并按 AGENTS.md 第 1 条四栏口径登记，或整部逐字核对后另立记录。"
   },
   "conclusion": "candidate_membership_verified",
   "evidenceStatusUnchanged": true,
-  "snapshotStatusUnchanged": true,
-  "notes": [
-    "本记录只提升『候选归属经人核』这一事实的可追溯性，不改变任何 reviewStatus 字段。",
-    "「更」的双候选是本批重点：平/去两读经人工确认后仍并存，供 B 按语境消歧，lexicon 不代选。"
-  ]
+  "snapshotStatusUnchanged": true
 }

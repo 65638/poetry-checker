@@ -1,0 +1,106 @@
+{
+  "edgesId": "variant-edges-d2",
+  "title": "简繁/异体候选边（D2，待人审签）",
+  "status": "pending_review",
+  "reviewStatus": "unverified",
+  "createdAt": "2026-10-18",
+  "policy": {
+    "whatThisIs": "字形之间的**候选关联**，用于把繁体或异体查询词映射到当前字表实际收录的字形。",
+    "whatThisIsNot": [
+      "不是等价合并：不合并候选、不改写原表、不覆盖任何既有归属。",
+      "不是自动生效的别名表：未人审签前，查询返回值不得据此伪造命中。",
+      "不是简繁转换表：不做逐字机械转换，边必须逐条给出依据。"
+    ],
+    "consumption": "消费方（B/API）必须先读取本文件并校验 status=approved 才可启用；当前为 pending_review，故等效于「未启用」。",
+    "futureWork": "全库简繁覆盖方案见 docs/handoffs/0008-a-j03-batch1-approval-and-variant-plan.md。"
+  },
+  "edges": [
+    {
+      "id": "edge-樓-楼",
+      "from": "樓",
+      "fromCodePoint": "U+6A13",
+      "to": "楼",
+      "toCodePoint": "U+697C",
+      "relation": "traditional_to_simplified",
+      "basis": "实测：四张原表（Pingshui/Cilin/Xinyun/Xinyun_FourRhyme_Edition）均收「楼」、均不收「樓」。正文若出现繁体「樓」当前会进 missing。",
+      "locators": [
+        "data/raw/chinese_word_rhyme/Pingshui_Rhyme.json（下平十一尤，收「楼」）",
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json（收「楼」）"
+      ],
+      "status": "pending_review",
+      "blockingDefect": "组长 J03 缺陷项 ①：楼↔樓 异体映射补齐",
+      "note": "补齐后「樓」可经本边定位到「楼」的候选；**不得**把「樓」写成新候选、也不得覆盖「楼」的归属。"
+    },
+    {
+      "id": "edge-餘-余",
+      "from": "餘",
+      "fromCodePoint": "U+9918",
+      "to": "余",
+      "toCodePoint": "U+4F59",
+      "relation": "traditional_to_simplified",
+      "basis": "繁体底本区分「余」（第一人称）与「餘」（剩余）；cwr 简体词林表整表未收「余」，收「馀」(U+9980)。",
+      "locators": [
+        "data/raw/wikisource/PingshuiYun-8264804.wikitext（上平聲六魚含「余予譽輿餘…」）",
+        "data/raw/chinese_word_rhyme/Pingshui_Rhyme.json:848（余）、:852（馀）",
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json:1344（馀）"
+      ],
+      "status": "pending_review",
+      "note": "「余」与「餘」在繁体底本中本非同一字，本边仅用于查询召回，**不得**据此认定二者义项相同。"
+    },
+    {
+      "id": "edge-馀-余",
+      "from": "馀",
+      "fromCodePoint": "U+9980",
+      "to": "余",
+      "toCodePoint": "U+4F59",
+      "relation": "variant_form",
+      "basis": "「馀」是 cwr 简体表对「餘」所用的写法；词林表只用此形，导致正文「余」查不到。",
+      "locators": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json:1344"
+      ],
+      "status": "pending_review",
+      "note": "同上：仅召回用，不等价合并。"
+    },
+    {
+      "id": "edge-講-讲",
+      "from": "講",
+      "fromCodePoint": "U+8B1B",
+      "to": "讲",
+      "toCodePoint": "U+8BB2",
+      "relation": "traditional_to_simplified",
+      "basis": "上声三讲补丁已按此转换写入简体表，且已在补丁 charactersProvenance 中逐字登记。",
+      "locators": [
+        "data/raw/wikisource/PingshuiYun-8264804.wikitext 第 200 行",
+        "data/patches/pingshui-shang-sanj-jiang.draft.json → charactersProvenance"
+      ],
+      "status": "applied_in_patch",
+      "note": "该转换已在三讲补丁内落地并经人审签（2026-10-18，A同学），此处仅登记成边以便统一消费。"
+    },
+    {
+      "id": "edge-項-项",
+      "from": "項",
+      "fromCodePoint": "U+9805",
+      "to": "项",
+      "toCodePoint": "U+9879",
+      "relation": "traditional_to_simplified",
+      "basis": "同上，三讲补丁已按此转换写入简体表。",
+      "locators": [
+        "data/raw/wikisource/PingshuiYun-8264804.wikitext 第 200 行",
+        "data/patches/pingshui-shang-sanj-jiang.draft.json → charactersProvenance"
+      ],
+      "status": "applied_in_patch",
+      "note": "同上。"
+    }
+  ],
+  "summary": {
+    "total": 5,
+    "pending_review": 3,
+    "applied_in_patch": 2,
+    "approved": 0
+  },
+  "notes": [
+    "本文件不参与任何 snapshot 的 dataVersion，也不改变现有查询结果。",
+    "启用条件：status 改为 approved 且记录审核人/时间/依据，并由消费方显式开启。",
+    "禁用行为：用本文件直接改写原表、生成新候选、或让「樓」看起来像被收录。"
+  ]
+}
