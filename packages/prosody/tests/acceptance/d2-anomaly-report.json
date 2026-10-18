@@ -1051,6 +1051,10 @@
         "commonGroupIds": [
           "group:pingshui:下平:十一尤"
         ]
+      },
+      "closure": {
+        "ok": true,
+        "problems": []
       }
     },
     "jingyesi": {
@@ -2131,6 +2135,10 @@
         "commonGroupIds": [
           "group:pingshui:下平:七阳"
         ]
+      },
+      "closure": {
+        "ok": true,
+        "problems": []
       }
     },
     "huanghelou": {
@@ -4984,6 +4992,10 @@
         "commonGroupIds": [
           "group:pingshui:下平:十一尤"
         ]
+      },
+      "closure": {
+        "ok": true,
+        "problems": []
       }
     }
   }

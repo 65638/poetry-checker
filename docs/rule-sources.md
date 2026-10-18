@@ -179,6 +179,8 @@
 | 静夜思 | **无 formId/applicability 断言** | 默认 `wujue-ping-rhymed` | 37 | 9 | 3（望/思/乡） | 按近体判定：METER 2 fail + 1 uncertain、RELATION 2 dui + 2 nian fail、RHYME uncertain（七阳）、TAIL.SANZE uncertain → 与「古绝」口径一致，但 golden 缺断言 |
 | 黄鹤楼 | qilv / applicable | `qilv-ping-unrhymed` | 97 | 11 | 6（乘/空/不/汉/乡） | METER 2 fail + 2 uncertain、粘 1 fail、对 3 fail + 1 uncertain、TAIL 三平/三仄各 1 uncertain、RESCUE.SELF uncertain（related=3）；押韵 pass（楼/悠/洲/愁→下平十一尤）→ 与「半古半律、特殊拗律」一致 |
 
+**真实报告闭合复核**：三份报告均通过 `checkReportClosure`（problems=0）：ruleId 均属 10 个固定 ID、`ruleVersion="1"`、`resolvedBy` 仅救法 ID、`relatedFindingIds`/`relations.findingIds`/`rhyme.tokenIds`/`locations.tokenId` 全部可解析（生成物 `d2-anomaly-report.json` 的 `cases.*.closure` 字段）。
+
 **异常汇总（供组长圈定人审）**：
 
 | ID | 异常 | 涉及 | 建议处理 |

@@ -6,7 +6,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { registerSnapshot, lookupCharacters } from "@poetry/lexicon";
 import { parseText } from "@poetry/readings";
-import { matchTemplates, evaluateProsody } from "@poetry/prosody";
+import { matchTemplates, evaluateProsody, checkReportClosure } from "@poetry/prosody";
 
 const OUT = process.argv[2] ?? "packages/prosody/tests/acceptance/d2-anomaly-report.json";
 const readJson = (p: string): any => JSON.parse(readFileSync(p, "utf8"));
@@ -102,6 +102,7 @@ for (const name of CASES) {
     rhyme: report.rhyme,
     score: report.score,
     evaluatedKeyRate: report.evaluatedKeyRate,
+    closure: checkReportClosure(report, poem),
   };
 }
 
@@ -112,5 +113,7 @@ const summary = Object.entries(out.cases as Record<string, any>).map(([name, c])
   checks: c.checks.length,
   nonPass: c.checks.filter((x: any) => x.status !== "pass").length,
   unresolved: c.tokens.filter((t: any) => t.toneStatus !== "resolved").length,
+  closureOk: c.closure.ok,
+  closureProblems: c.closure.problems.length,
 }));
 console.log(JSON.stringify({ dataVersion, summary }, null, 2));
