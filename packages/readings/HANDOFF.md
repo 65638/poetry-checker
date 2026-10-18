@@ -329,10 +329,10 @@ $ pnpm verify
 
 ---
 
-# D3：全量数据复核与审核优先清单（2026-10-17，分支 `feat/b-d3-full-coverage`）
+# D3：全量数据复核与审核优先清单（2026-10-17，分支 `feat/b-d3-full-coverage`，PR #10）
 
-A 的 D2 全量表已进 `main`（`data/normalized/pingshui.full-d2.json`，8240 字 / 10387 候选 / 106 部；词林、新韵全量同批）。
-本批把覆盖脚本切到全量表，并按 `AGENTS.md` 数据纪律拆成四栏统计。
+A 的 D2 全量表已进 `main`。本批使用 `apps/api/src/snapshot-manifest.json` 声明的平水快照 `pingshui.full-d2-patched.json`（8240 字 / 10387 候选 / 106 部，含上声三讲补缺）；105 部版 `pingshui.full-d2.json` 不在 API 清单内，只作对照。
+本批把覆盖脚本切到 API 清单声明的平水快照（`pingshui.full-d2-patched.json`，106 部），并按 `AGENTS.md` 数据纪律拆成四栏统计。
 
 ## 17. 复核结论
 
