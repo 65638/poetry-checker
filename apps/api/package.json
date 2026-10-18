@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@poetry/contracts": "workspace:*",
+    "@poetry/genre": "workspace:*",
+    "@poetry/lexicon": "workspace:*",
     "@poetry/readings": "workspace:*",
     "fastify": "5.1.0"
   }

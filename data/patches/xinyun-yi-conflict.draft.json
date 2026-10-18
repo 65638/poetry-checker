@@ -1,0 +1,50 @@
+{
+  "patchId": "patch-xinyun-yi-conflict-draft",
+  "title": "中华新韵“一”的多声调冲突（草案，未裁决）",
+  "status": "draft",
+  "reviewStatus": "unverified",
+  "target": {
+    "book": "xinyun",
+    "character": "一"
+  },
+  "observed": {
+    "candidateTableFourTones": {
+      "sourceId": "src:chinese_word_rhyme",
+      "sourceRevision": "ff0e9c13fb037c43e0eaa5dc929c0fe4fa2ffb18",
+      "file": "data/raw/chinese_word_rhyme/Xinyun_Rhyme_FourRhyme_Edition.json",
+      "memberships": ["十二齐·阴平", "十二齐·去声"]
+    },
+    "candidateTableCoarse": {
+      "file": "data/raw/chinese_word_rhyme/Xinyun_Rhyme.json",
+      "memberships": ["十二齐·平", "十二齐·仄"]
+    },
+    "pinyinData": {
+      "sourceId": "src:pinyin-data",
+      "sourceRevision": "fa9761fff402f8560196b1ba085c437c52b56d7c",
+      "readings": ["yī", "yí", "yì"],
+      "mappedTo": ["十二齐·阴平", "十二齐·阳平", "十二齐·去声"]
+    },
+    "pingshui": {
+      "sourceId": "src:chinese_word_rhyme",
+      "file": "data/raw/chinese_word_rhyme/Pingshui_Rhyme.json",
+      "memberships": ["入声四质"],
+      "note": "旧韵入声属仄；与新韵读音处理分开存证，不整部映射。"
+    }
+  },
+  "analysis": {
+    "hypothesis": "yí（如在去声字前）与 yì 属“一/不”语流变调，不是独立本调；本调应为 yī（阴平）。",
+    "status": "待核实",
+    "blockingGap": "十四韵规则文本与变调处理口径（是否收录变调读音）未取得权威出处，本机网络不可达维基文库。",
+    "consequenceIfWrong": "若把变调当本调，会把“一”判成仄，直接影响格律判定，因此不得默认采用。"
+  },
+  "resolution": null,
+  "resolutionRules": [
+    "不得静默删去任一声调候选。",
+    "不得把语流变调作为默认格律声调。",
+    "无法判定时保留多候选，交由上下文规则或人工选音处理，并在报告里列为冲突。"
+  ],
+  "nextSteps": [
+    "取得十四韵规则与变调口径的可定位文本后复核。",
+    "复核结论写入 patches 并在人审签后再生效进重建表。"
+  ]
+}

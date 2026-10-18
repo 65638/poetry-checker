@@ -6,4 +6,6 @@
 - [Claude 英文任务书](../team/17_Claude_Frontend_Design_Brief_EN.md)：可单独发送，含英文设计说明、类型和验收。
 - [D 业务任务书](../team/14_队员D_前端任务书.md)：容器、API、选音、导出和测试。
 
-设计方后续在此目录提交 visual-spec.md、实际预览/截图记录和 HANDOFF.md。当前没有这些实际成果，不将本入口说明计为视觉验收。
+- [视觉规格与 UI01–UI08 记录](visual-spec.md)：token 数值、对比度计算与本轮未执行项。
+
+设计方后续在此目录提交实际预览/截图记录和 HANDOFF.md。visual-spec.md 中的对比度为计算值，不计为视觉验收。

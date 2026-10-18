@@ -47,6 +47,12 @@ importers:
       '@poetry/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
+      '@poetry/genre':
+        specifier: workspace:*
+        version: link:../../packages/genre
+      '@poetry/lexicon':
+        specifier: workspace:*
+        version: link:../../packages/lexicon
       '@poetry/readings':
         specifier: workspace:*
         version: link:../../packages/readings
@@ -85,9 +91,17 @@ importers:
         specifier: 4.6.7
         version: 4.6.7
 
-  packages/genre: {}
+  packages/genre:
+    dependencies:
+      '@poetry/contracts':
+        specifier: workspace:*
+        version: link:../contracts
 
-  packages/lexicon: {}
+  packages/lexicon:
+    dependencies:
+      '@poetry/contracts':
+        specifier: workspace:*
+        version: link:../contracts
 
   packages/prosody:
     dependencies:

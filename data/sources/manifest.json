@@ -1,0 +1,151 @@
+{
+  "manifestVersion": "d1-1",
+  "updatedAt": "2026-10-17T12:26:28.017Z",
+  "maintainer": "队员 A / DeepSeek（D1 数据批次）",
+  "howToVerify": "node scripts/data/fetch-sources.ts --check 会按本文件登记的 snapshotSha256 重新校验 data/raw 下的字节；不一致即报错退出，不静默替换。",
+  "digestScope": "snapshotSha256 只覆盖原始快照字节；retrievedAt 等时间信息不参与业务内容摘要（见 packages/lexicon/src/digest.ts）。",
+  "environmentNotes": [
+    "本机到 github.com / raw.githubusercontent.com 的 TLS 证书链被中间人替换（UNABLE_TO_VERIFY_LEAF_SIGNATURE），直连校验失败；schannel 侧报 SEC_E_NO_CREDENTIALS。",
+    "因此静态文件改由 jsdelivr CDN 取同一固定提交/标签的文件；CDN 证书链正常，且同一文件在两个不同 ref（提交与标签）取回的 SHA-256 一致。",
+    "维基文库（zh.wikisource.org / zh.wikipedia.org）本机不可达（连接超时），其正文与修订号未取得，状态记为 unreachable。",
+    "未执行任何上游仓库脚本（crawler/*.py、Makefile 等），只取静态数据与许可文本。"
+  ],
+  "sources": [
+    {
+      "id": "src:chinese_word_rhyme",
+      "title": "chinese_word_rhyme（平水韵 / 词林正韵 / 中华新韵候选表原表）",
+      "repoUrl": "https://github.com/charlesix59/chinese_word_rhyme",
+      "revision": "ff0e9c13fb037c43e0eaa5dc929c0fe4fa2ffb18",
+      "revisionType": "commit（任务书给定的固定提交，未改用其他版本）",
+      "pinsNote": "统计与缺口结论只对本提交成立；换版本必须重跑 scripts/data/inspect.ts。",
+      "fetchedVia": [
+        "https://cdn.jsdelivr.net/gh/charlesix59/chinese_word_rhyme@ff0e9c13fb037c43e0eaa5dc929c0fe4fa2ffb18/<path>"
+      ],
+      "upstreamUrlPattern": "https://raw.githubusercontent.com/charlesix59/chinese_word_rhyme/ff0e9c13fb037c43e0eaa5dc929c0fe4fa2ffb18/<path>",
+      "retrievedAt": "2026-10-17T12:26:28.017Z",
+      "license": {
+        "declared": "MIT",
+        "declaredWhere": "仓库 LICENSE 文件（已快照）",
+        "verified": "仓库声明已核对；不构成对转载字表上游授权的证明"
+      },
+      "upstreamRightsTodo": [
+        "平水韵/词林正韵/中华新韵字表的上游出处与授权链未核实，可能在别处有版权或数据库权利。",
+        "未经核实前不得对外称“可商用”，不得作为发布数据的唯一依据。",
+        "中华新韵候选表仅作对照，已确认不作导入底本。"
+      ],
+      "files": [
+        {
+          "path": "data/raw/chinese_word_rhyme/Pingshui_Rhyme.json",
+          "bytes": 206515,
+          "snapshotSha256": "fd11164ca1b848eb6b777688d5d6628ce772d72d0a25a0efd12d6b58459c6e2e",
+          "purpose": "平水韵原表（5 卷 105 部，缺上声三讲）"
+        },
+        {
+          "path": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+          "bytes": 96054,
+          "snapshotSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+          "purpose": "词林正韵原表（19 部，前 14 部分平/仄，后 5 部入声）"
+        },
+        {
+          "path": "data/raw/chinese_word_rhyme/Xinyun_Rhyme.json",
+          "bytes": 100808,
+          "snapshotSha256": "0fc631bb1a413e6814525b08f0b449e77386abbdc98a1d93d52b6468e4c3f9ec",
+          "purpose": "中华新韵候选表（14 韵，平/仄二分，仅作对照）"
+        },
+        {
+          "path": "data/raw/chinese_word_rhyme/Xinyun_Rhyme_FourRhyme_Edition.json",
+          "bytes": 101508,
+          "snapshotSha256": "5eb85d59bd1fa513c0786b05cae50ea836718a871d72b2c6b0ddb3c85856540c",
+          "purpose": "中华新韵候选表四声版（14 韵 × 阴平/阳平/上声/去声，仅作对照）"
+        },
+        {
+          "path": "data/raw/chinese_word_rhyme/LICENSE",
+          "bytes": 1068,
+          "snapshotSha256": "e1464036d0f0ca738de9ebcb697b8faaf6dc2eafd193dc98555f23b409e87599",
+          "purpose": "上游许可文本快照"
+        },
+        {
+          "path": "data/raw/chinese_word_rhyme/README.md",
+          "bytes": 3921,
+          "snapshotSha256": "3e1c0861b7085f576c911d29d443e7ef1a1c7dc275b20fb010a842f6316372c3",
+          "purpose": "上游自述（含数据来源与抓取说明）"
+        }
+      ]
+    },
+    {
+      "id": "src:pinyin-data",
+      "title": "pinyin-data（现代读音源，用于中华新韵重建表）",
+      "repoUrl": "https://github.com/mozillazg/pinyin-data",
+      "revision": "fa9761fff402f8560196b1ba085c437c52b56d7c",
+      "revisionType": "tag v0.15.0 指向的提交（经 git ls-remote 解析；GitHub API 不可达）",
+      "revisionVerification": "同一文件分别在 @v0.15.0 与 @fa9761fff402f8560196b1ba085c437c52b56d7c 取回，SHA-256 与本地快照三者一致。",
+      "fetchedVia": [
+        "https://cdn.jsdelivr.net/gh/mozillazg/pinyin-data@v0.15.0/pinyin.txt",
+        "https://cdn.jsdelivr.net/gh/mozillazg/pinyin-data@fa9761fff402f8560196b1ba085c437c52b56d7c/pinyin.txt"
+      ],
+      "upstreamUrlPattern": "https://raw.githubusercontent.com/mozillazg/pinyin-data/fa9761fff402f8560196b1ba085c437c52b56d7c/<path>",
+      "retrievedAt": "2026-10-17T12:26:28.017Z",
+      "license": {
+        "declared": "MIT",
+        "declaredWhere": "仓库 LICENSE 文件（已快照）",
+        "verified": "仓库声明已核对；MIT 只覆盖该仓库的整理成果，不覆盖十四韵规则本身"
+      },
+      "upstreamRightsTodo": [
+        "pinyin-data 数据源自 Unihan / CC-CEDICT / 汉语大字典等，逐项上游授权未核实。",
+        "不得把 pinyin-data 的 MIT 当成“十四韵规则”的来源证明：规则出处另行待核实。"
+      ],
+      "files": [
+        {
+          "path": "data/raw/pinyin-data/pinyin.txt",
+          "bytes": 929764,
+          "snapshotSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+          "purpose": "现代读音主表（U+XXXX: 读音列表）"
+        },
+        {
+          "path": "data/raw/pinyin-data/LICENSE",
+          "bytes": 1076,
+          "snapshotSha256": "9c048697be2502a16e8bcb282d5d465a07295b2def0ffb05a269c5d39dbe1586",
+          "purpose": "上游许可文本快照"
+        }
+      ]
+    },
+    {
+      "id": "src:wikisource:pingshuiyun",
+      "title": "维基文库《平水韻》（拟用于上声三讲补缺依据）",
+      "repoUrl": "https://zh.wikisource.org/wiki/平水韻",
+      "revision": null,
+      "revisionType": "页面修订号未取得",
+      "status": "unreachable",
+      "error": "UND_ERR_CONNECT_TIMEOUT（zh.wikisource.org / zh.wikipedia.org 均连接超时）",
+      "retrievedAt": null,
+      "license": {
+        "declared": "页面声明 CC BY-SA 4.0（依任务书记录，本次未能亲自复核）",
+        "verified": "未核实"
+      },
+      "upstreamRightsTodo": [
+        "需在有网环境复核页面声明、修订号与署名要求后再使用。",
+        "使用其正文时必须保留来源、署名与许可，并保留可定位修订号。",
+        "注文中的汉字不得当作韵字收录。"
+      ],
+      "files": []
+    },
+    {
+      "id": "src:wikisource:cilinzhengyun",
+      "title": "维基文库《詞林正韻》（拟用于 19 部对照）",
+      "repoUrl": "https://zh.wikisource.org/wiki/詞林正韻",
+      "revision": null,
+      "revisionType": "页面修订号未取得",
+      "status": "unreachable",
+      "error": "UND_ERR_CONNECT_TIMEOUT（同上）",
+      "retrievedAt": null,
+      "license": {
+        "declared": "页面声明 CC BY-SA 4.0（依任务书记录，本次未能亲自复核）",
+        "verified": "未核实"
+      },
+      "upstreamRightsTodo": [
+        "只标仄声的记录必须保留 ze_unspecified，不得擅自补成某个具体古声类。"
+      ],
+      "files": []
+    }
+  ]
+}
