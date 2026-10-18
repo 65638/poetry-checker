@@ -185,6 +185,7 @@
   left: 100%;
   bottom: var(--pc-space-1);
   font-family: var(--pc-font-serif);
+  white-space: nowrap;
   color: var(--pc-text-muted);
   pointer-events: none;
 }
