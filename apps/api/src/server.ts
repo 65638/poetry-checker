@@ -87,8 +87,27 @@ export function buildApp(options?: { resources?: Resources }): FastifyInstance {
     };
   });
 
-  app.get("/api/v1/rhyme-books", async () =>
-    RhymeBooksResponseSchema.parse({
+  app.get("/api/v1/rhyme-books", async () => {
+    if (!devMock) {
+      return RhymeBooksResponseSchema.parse({
+        books: (["pingshui", "cilin", "xinyun"] as const).map((id) => {
+          const version = resources.lexiconVersions[id];
+          return {
+            id,
+            name: id === "pingshui" ? "平水韵" : id === "cilin" ? "词林正韵" : "中华新韵",
+            dataVersion: version ?? "not-loaded",
+            groupCount: resources.groupCounts[id] ?? 0,
+            coverageNotice:
+              version === undefined
+                ? "未装载：等待正式发布包"
+                : resources.unverifiedVersions.includes(version)
+                  ? `已装载 ${resources.groupCounts[id]} 部（未审核快照，仅供开发联调）`
+                  : `已装载 ${resources.groupCounts[id]} 部`,
+          };
+        }),
+      });
+    }
+    return RhymeBooksResponseSchema.parse({
       books: [
         {
           id: "pingshui",
@@ -112,8 +131,8 @@ export function buildApp(options?: { resources?: Resources }): FastifyInstance {
           coverageNotice: "开发 mock：真实字表由队员 A 接入后提供韵部数量",
         },
       ],
-    }),
-  );
+    });
+  });
 
   app.get("/api/v1/characters/:char", async (request, reply) => {
     if (devMock) return reply.status(503).send(dataNotReady("单字查询"));

@@ -16,6 +16,8 @@ export interface Resources {
   notReadyReasons: string[];
   /** 已加载快照中出现的来源 ID（明细待证据快照发布）。 */
   knownSourceIds: string[];
+  /** 每韵书真实韵部数（只报已装载的，不编造 106/19/14）。 */
+  groupCounts: Record<string, number>;
 }
 
 function findRepoRoot(): string {
@@ -58,6 +60,7 @@ export function loadResources(): Resources {
 function loadResourcesOnce(): Resources {
   const notReadyReasons: string[] = [];
   const knownSourceIds: string[] = [];
+  const groupCounts: Record<string, number> = {};
   const unverifiedVersions: string[] = [];
   const lexiconVersions: Record<string, string> = {};
 
@@ -82,6 +85,7 @@ function loadResourcesOnce(): Resources {
     }
     for (const s of registered) {
       lexiconVersions[s.book] = s.dataVersion;
+      groupCounts[s.book] = s.groups.length;
       if (s.reviewStatus !== "approved") unverifiedVersions.push(s.dataVersion);
     }
   } else {
@@ -102,6 +106,7 @@ function loadResourcesOnce(): Resources {
     ruleCards,
     works,
     knownSourceIds: [...new Set(knownSourceIds)].sort(),
+    groupCounts,
     ready: Object.keys(lexiconVersions).length > 0 && contextRules.length > 0 && works.length > 0 && ruleCards.length > 0,
     notReadyReasons,
   };
