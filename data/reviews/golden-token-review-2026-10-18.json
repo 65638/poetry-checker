@@ -1,7 +1,8 @@
 {
   "generatedBy": "packages/readings/scripts/golden-token-review.ts",
   "task": "B 逐字机器初审表（96 字位）",
-  "note": "本表是机器初审：只陈述快照事实与门禁结果，不给读音结论、不批准任何证据。人工备注仅复述 J03 第一批已确认的范围。",
+  "note": "本表只统计快照标记并做语境筛选前的候选证据预检；不调用 resolveReadings，不代替真实 API 结果或批准任何证据。人工备注引用 J03 第一批及第二批记录。当前批准清单存在候选/部级范围冲突，approved 数量不等于相同范围的人审完成。",
+  "machineOutcomeScope": "all-candidates-before-context",
   "book": "pingshui",
   "snapshot": "data/normalized/pingshui.full-d2-patched.json",
   "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-draft",
@@ -30,7 +31,11 @@
     "toneCriticalTokens": 10,
     "evidenceTotal": 106,
     "evidenceApproved": 8,
-    "tokensWithoutApprovedEvidence": 74
+    "tokensWithAnyApprovedEvidence": 22,
+    "tokensWithAllApprovedEvidence": 21,
+    "tokensWithMixedEvidence": 1,
+    "tokensWithoutApprovedEvidence": 74,
+    "candidatePrecheckBlockedTokens": 75
   },
   "works": [
     {
@@ -56,6 +61,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:白:ru:入声十一陌"
+          ],
+          "unbackedCandidateIds": [],
           "evidenceIds": [
             "ev:pingshui:入:入声十一陌"
           ],
@@ -63,7 +75,7 @@
             "入声十一陌"
           ],
           "machineOutcome": "would-resolve",
-          "machineNote": "候选唯一且证据已审核，可 resolved",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
           "humanNote": "J03 第一批确认该候选归属属实（范围仅限列明候选，不等于全部韵部获批）。"
         },
         {
@@ -85,6 +97,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:日:ru:入声四质"
+          ],
+          "unbackedCandidateIds": [],
           "evidenceIds": [
             "ev:pingshui:入:入声四质"
           ],
@@ -92,7 +111,7 @@
             "入声四质"
           ],
           "machineOutcome": "would-resolve",
-          "machineNote": "候选唯一且证据已审核，可 resolved",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
           "humanNote": ""
         },
         {
@@ -114,6 +133,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:依:ping:五微"
+          ],
           "evidenceIds": [
             "ev:pingshui:上平:五微"
           ],
@@ -121,7 +147,7 @@
             "五微"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:依:ping:五微",
           "humanNote": ""
         },
         {
@@ -143,6 +169,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:山:ping:十五删"
+          ],
           "evidenceIds": [
             "ev:pingshui:上平:十五删"
           ],
@@ -150,7 +183,7 @@
             "十五删"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:山:ping:十五删",
           "humanNote": ""
         },
         {
@@ -172,6 +205,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:尽:shang:十一轸"
+          ],
           "evidenceIds": [
             "ev:pingshui:上:十一轸"
           ],
@@ -179,7 +219,7 @@
             "十一轸"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:尽:shang:十一轸",
           "humanNote": ""
         },
         {
@@ -201,6 +241,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:黄:ping:七阳"
+          ],
           "evidenceIds": [
             "ev:pingshui:下平:七阳"
           ],
@@ -208,7 +255,7 @@
             "七阳"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:黄:ping:七阳",
           "humanNote": ""
         },
         {
@@ -230,6 +277,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:河:ping:五歌"
+          ],
           "evidenceIds": [
             "ev:pingshui:下平:五歌"
           ],
@@ -237,7 +291,7 @@
             "五歌"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:河:ping:五歌",
           "humanNote": ""
         },
         {
@@ -259,6 +313,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:入:ru:入声十四缉"
+          ],
           "evidenceIds": [
             "ev:pingshui:入:入声十四缉"
           ],
@@ -266,7 +327,7 @@
             "入声十四缉"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:入:ru:入声十四缉",
           "humanNote": ""
         },
         {
@@ -288,6 +349,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:海:shang:十贿"
+          ],
           "evidenceIds": [
             "ev:pingshui:上:十贿"
           ],
@@ -295,7 +363,7 @@
             "十贿"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:海:shang:十贿",
           "humanNote": ""
         },
         {
@@ -317,6 +385,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:流:ping:十一尤"
+          ],
+          "unbackedCandidateIds": [],
           "evidenceIds": [
             "ev:pingshui:下平:十一尤"
           ],
@@ -324,7 +399,7 @@
             "十一尤"
           ],
           "machineOutcome": "would-resolve",
-          "machineNote": "候选唯一且证据已审核，可 resolved",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
           "humanNote": "J03 第一批确认该候选归属属实（范围仅限列明候选）。"
         },
         {
@@ -346,6 +421,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:欲:ru:入声二沃"
+          ],
           "evidenceIds": [
             "ev:pingshui:入:入声二沃"
           ],
@@ -353,7 +435,7 @@
             "入声二沃"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:欲:ru:入声二沃",
           "humanNote": ""
         },
         {
@@ -375,6 +457,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:穷:ping:一东"
+          ],
           "evidenceIds": [
             "ev:pingshui:上平:一东"
           ],
@@ -382,7 +471,7 @@
             "一东"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:穷:ping:一东",
           "humanNote": ""
         },
         {
@@ -404,6 +493,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:千:ping:一先"
+          ],
           "evidenceIds": [
             "ev:pingshui:下平:一先"
           ],
@@ -411,7 +507,7 @@
             "一先"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:千:ping:一先",
           "humanNote": ""
         },
         {
@@ -435,6 +531,14 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:里:shang:四纸",
+            "pingshui:里:qu:四寘"
+          ],
           "evidenceIds": [
             "ev:pingshui:上:四纸",
             "ev:pingshui:去:四寘"
@@ -444,7 +548,7 @@
             "四寘"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/2 个候选有 approved 证据标记，未满足 pingshui:里:shang:四纸、pingshui:里:qu:四寘",
           "humanNote": ""
         },
         {
@@ -466,6 +570,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:目:ru:入声一屋"
+          ],
           "evidenceIds": [
             "ev:pingshui:入:入声一屋"
           ],
@@ -473,7 +584,7 @@
             "入声一屋"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:目:ru:入声一屋",
           "humanNote": ""
         },
         {
@@ -498,6 +609,14 @@
           ],
           "toneCritical": true,
           "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:更:ping:八庚",
+            "pingshui:更:qu:二十四敬"
+          ],
+          "unbackedCandidateIds": [],
           "evidenceIds": [
             "ev:pingshui:下平:八庚",
             "ev:pingshui:去:二十四敬"
@@ -508,7 +627,7 @@
           ],
           "machineOutcome": "would-ambiguous",
           "machineNote": "多候选含平含仄：读音与平仄均需消歧",
-          "humanNote": "J03 第一批确认「更两读」属实；未确认哪一义项对应哪一读音，故仍待语境证据。"
+          "humanNote": "J03 第一批确认两读；13_J03三首核心诗逐字人审_第二批.md §五第 1 条已裁定「更上一层楼」取去声二十四敬，语境规则已落库。"
         },
         {
           "work": "登鹳雀楼",
@@ -531,6 +650,14 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:上:shang:二十二养",
+            "pingshui:上:qu:二十三漾"
+          ],
           "evidenceIds": [
             "ev:pingshui:上:二十二养",
             "ev:pingshui:去:二十三漾"
@@ -540,7 +667,7 @@
             "二十三漾"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/2 个候选有 approved 证据标记，未满足 pingshui:上:shang:二十二养、pingshui:上:qu:二十三漾",
           "humanNote": ""
         },
         {
@@ -562,6 +689,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:一:ru:入声四质"
+          ],
+          "unbackedCandidateIds": [],
           "evidenceIds": [
             "ev:pingshui:入:入声四质"
           ],
@@ -569,7 +703,7 @@
             "入声四质"
           ],
           "machineOutcome": "would-resolve",
-          "machineNote": "候选唯一且证据已审核，可 resolved",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
           "humanNote": "J03 第一批确认该候选归属属实（范围仅限列明候选）。"
         },
         {
@@ -591,6 +725,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:层:ping:十蒸"
+          ],
           "evidenceIds": [
             "ev:pingshui:下平:十蒸"
           ],
@@ -598,7 +739,7 @@
             "十蒸"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:层:ping:十蒸",
           "humanNote": ""
         },
         {
@@ -620,6 +761,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:楼:ping:十一尤"
+          ],
+          "unbackedCandidateIds": [],
           "evidenceIds": [
             "ev:pingshui:下平:十一尤"
           ],
@@ -627,8 +775,8 @@
             "十一尤"
           ],
           "machineOutcome": "would-resolve",
-          "machineNote": "候选唯一且证据已审核，可 resolved",
-          "humanNote": "J03 第一批对「楼与樓」判为存疑，要求补异体关系与证据：不得因同部或已归档转为 approved。"
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": "13_J03三首核心诗逐字人审_第二批.md §二已记录组长同意楼↔樓异体映射，无需重复审核；按候选范围落实，不代表整个十一尤获批。"
         }
       ]
     },
@@ -655,6 +803,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:床:ping:七阳"
+          ],
           "evidenceIds": [
             "ev:pingshui:下平:七阳"
           ],
@@ -662,7 +817,7 @@
             "七阳"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:床:ping:七阳",
           "humanNote": ""
         },
         {
@@ -684,6 +839,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:前:ping:一先"
+          ],
           "evidenceIds": [
             "ev:pingshui:下平:一先"
           ],
@@ -691,7 +853,7 @@
             "一先"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:前:ping:一先",
           "humanNote": ""
         },
         {
@@ -713,6 +875,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:明:ping:八庚"
+          ],
+          "unbackedCandidateIds": [],
           "evidenceIds": [
             "ev:pingshui:下平:八庚"
           ],
@@ -720,7 +889,7 @@
             "八庚"
           ],
           "machineOutcome": "would-resolve",
-          "machineNote": "候选唯一且证据已审核，可 resolved",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
           "humanNote": ""
         },
         {
@@ -742,6 +911,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:月:ru:入声六月"
+          ],
           "evidenceIds": [
             "ev:pingshui:入:入声六月"
           ],
@@ -749,7 +925,7 @@
             "入声六月"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:月:ru:入声六月",
           "humanNote": ""
         },
         {
@@ -771,6 +947,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:光:ping:七阳"
+          ],
           "evidenceIds": [
             "ev:pingshui:下平:七阳"
           ],
@@ -778,7 +961,7 @@
             "七阳"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:光:ping:七阳",
           "humanNote": ""
         },
         {
@@ -800,6 +983,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:疑:ping:四支"
+          ],
           "evidenceIds": [
             "ev:pingshui:上平:四支"
           ],
@@ -807,7 +997,7 @@
             "四支"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:疑:ping:四支",
           "humanNote": ""
         },
         {
@@ -829,6 +1019,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:是:shang:四纸"
+          ],
           "evidenceIds": [
             "ev:pingshui:上:四纸"
           ],
@@ -836,7 +1033,7 @@
             "四纸"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:是:shang:四纸",
           "humanNote": ""
         },
         {
@@ -858,6 +1055,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:地:qu:四寘"
+          ],
           "evidenceIds": [
             "ev:pingshui:去:四寘"
           ],
@@ -865,7 +1069,7 @@
             "四寘"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:地:qu:四寘",
           "humanNote": ""
         },
         {
@@ -889,6 +1093,14 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:上:shang:二十二养",
+            "pingshui:上:qu:二十三漾"
+          ],
           "evidenceIds": [
             "ev:pingshui:上:二十二养",
             "ev:pingshui:去:二十三漾"
@@ -898,7 +1110,7 @@
             "二十三漾"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/2 个候选有 approved 证据标记，未满足 pingshui:上:shang:二十二养、pingshui:上:qu:二十三漾",
           "humanNote": ""
         },
         {
@@ -920,6 +1132,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:霜:ping:七阳"
+          ],
           "evidenceIds": [
             "ev:pingshui:下平:七阳"
           ],
@@ -927,7 +1146,7 @@
             "七阳"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:霜:ping:七阳",
           "humanNote": ""
         },
         {
@@ -949,6 +1168,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:举:shang:六语"
+          ],
           "evidenceIds": [
             "ev:pingshui:上:六语"
           ],
@@ -956,7 +1182,7 @@
             "六语"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:举:shang:六语",
           "humanNote": ""
         },
         {
@@ -978,6 +1204,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:头:ping:十一尤"
+          ],
+          "unbackedCandidateIds": [],
           "evidenceIds": [
             "ev:pingshui:下平:十一尤"
           ],
@@ -985,7 +1218,7 @@
             "十一尤"
           ],
           "machineOutcome": "would-resolve",
-          "machineNote": "候选唯一且证据已审核，可 resolved",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
           "humanNote": ""
         },
         {
@@ -1010,6 +1243,14 @@
           ],
           "toneCritical": true,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:望:ping:七阳",
+            "pingshui:望:qu:二十三漾"
+          ],
           "evidenceIds": [
             "ev:pingshui:下平:七阳",
             "ev:pingshui:去:二十三漾"
@@ -1019,7 +1260,7 @@
             "二十三漾"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/2 个候选有 approved 证据标记，未满足 pingshui:望:ping:七阳、pingshui:望:qu:二十三漾",
           "humanNote": ""
         },
         {
@@ -1041,6 +1282,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:明:ping:八庚"
+          ],
+          "unbackedCandidateIds": [],
           "evidenceIds": [
             "ev:pingshui:下平:八庚"
           ],
@@ -1048,7 +1296,7 @@
             "八庚"
           ],
           "machineOutcome": "would-resolve",
-          "machineNote": "候选唯一且证据已审核，可 resolved",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
           "humanNote": ""
         },
         {
@@ -1070,6 +1318,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:月:ru:入声六月"
+          ],
           "evidenceIds": [
             "ev:pingshui:入:入声六月"
           ],
@@ -1077,7 +1332,7 @@
             "入声六月"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:月:ru:入声六月",
           "humanNote": ""
         },
         {
@@ -1099,6 +1354,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:低:ping:八齐"
+          ],
           "evidenceIds": [
             "ev:pingshui:上平:八齐"
           ],
@@ -1106,7 +1368,7 @@
             "八齐"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:低:ping:八齐",
           "humanNote": ""
         },
         {
@@ -1128,6 +1390,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:头:ping:十一尤"
+          ],
+          "unbackedCandidateIds": [],
           "evidenceIds": [
             "ev:pingshui:下平:十一尤"
           ],
@@ -1135,7 +1404,7 @@
             "十一尤"
           ],
           "machineOutcome": "would-resolve",
-          "machineNote": "候选唯一且证据已审核，可 resolved",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
           "humanNote": ""
         },
         {
@@ -1160,6 +1429,14 @@
           ],
           "toneCritical": true,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:思:ping:四支",
+            "pingshui:思:qu:四寘"
+          ],
           "evidenceIds": [
             "ev:pingshui:上平:四支",
             "ev:pingshui:去:四寘"
@@ -1169,7 +1446,7 @@
             "四寘"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/2 个候选有 approved 证据标记，未满足 pingshui:思:ping:四支、pingshui:思:qu:四寘",
           "humanNote": ""
         },
         {
@@ -1191,6 +1468,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:故:qu:七遇"
+          ],
           "evidenceIds": [
             "ev:pingshui:去:七遇"
           ],
@@ -1198,7 +1482,7 @@
             "七遇"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:故:qu:七遇",
           "humanNote": ""
         },
         {
@@ -1223,6 +1507,14 @@
           ],
           "toneCritical": true,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:乡:ping:七阳",
+            "pingshui:乡:qu:二十三漾"
+          ],
           "evidenceIds": [
             "ev:pingshui:下平:七阳",
             "ev:pingshui:去:二十三漾"
@@ -1232,7 +1524,7 @@
             "二十三漾"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/2 个候选有 approved 证据标记，未满足 pingshui:乡:ping:七阳、pingshui:乡:qu:二十三漾",
           "humanNote": ""
         }
       ]
@@ -1261,7 +1553,16 @@
             "Z"
           ],
           "toneCritical": false,
-          "evidenceApproved": true,
+          "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": true,
+          "approvedCandidateIds": [
+            "pingshui:昔:ru:入声十一陌"
+          ],
+          "unbackedCandidateIds": [
+            "pingshui:昔:ru:入声十药"
+          ],
           "evidenceIds": [
             "ev:pingshui:入:入声十药",
             "ev:pingshui:入:入声十一陌"
@@ -1270,8 +1571,8 @@
             "入声十药",
             "入声十一陌"
           ],
-          "machineOutcome": "would-ambiguous",
-          "machineNote": "多候选但平仄已定（Z）：读音歧义、平仄可确定",
+          "machineOutcome": "blocked",
+          "machineNote": "候选预检阻断：1/2 个候选有 approved 证据标记，未满足 pingshui:昔:ru:入声十药",
           "humanNote": ""
         },
         {
@@ -1293,6 +1594,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:人:ping:十一真"
+          ],
           "evidenceIds": [
             "ev:pingshui:上平:十一真"
           ],
@@ -1300,7 +1608,7 @@
             "十一真"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:人:ping:十一真",
           "humanNote": ""
         },
         {
@@ -1322,6 +1630,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:已:shang:四纸"
+          ],
           "evidenceIds": [
             "ev:pingshui:上:四纸"
           ],
@@ -1329,7 +1644,7 @@
             "四纸"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:已:shang:四纸",
           "humanNote": ""
         },
         {
@@ -1354,6 +1669,14 @@
           ],
           "toneCritical": true,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:乘:ping:十蒸",
+            "pingshui:乘:qu:二十五径"
+          ],
           "evidenceIds": [
             "ev:pingshui:下平:十蒸",
             "ev:pingshui:去:二十五径"
@@ -1363,7 +1686,7 @@
             "二十五径"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/2 个候选有 approved 证据标记，未满足 pingshui:乘:ping:十蒸、pingshui:乘:qu:二十五径",
           "humanNote": ""
         },
         {
@@ -1385,6 +1708,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:黄:ping:七阳"
+          ],
           "evidenceIds": [
             "ev:pingshui:下平:七阳"
           ],
@@ -1392,7 +1722,7 @@
             "七阳"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:黄:ping:七阳",
           "humanNote": ""
         },
         {
@@ -1414,6 +1744,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:鹤:ru:入声十药"
+          ],
           "evidenceIds": [
             "ev:pingshui:入:入声十药"
           ],
@@ -1421,7 +1758,7 @@
             "入声十药"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:鹤:ru:入声十药",
           "humanNote": ""
         },
         {
@@ -1445,6 +1782,14 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:去:shang:六语",
+            "pingshui:去:qu:六御"
+          ],
           "evidenceIds": [
             "ev:pingshui:上:六语",
             "ev:pingshui:去:六御"
@@ -1454,7 +1799,7 @@
             "六御"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/2 个候选有 approved 证据标记，未满足 pingshui:去:shang:六语、pingshui:去:qu:六御",
           "humanNote": ""
         },
         {
@@ -1476,6 +1821,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:此:shang:四纸"
+          ],
           "evidenceIds": [
             "ev:pingshui:上:四纸"
           ],
@@ -1483,7 +1835,7 @@
             "四纸"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:此:shang:四纸",
           "humanNote": ""
         },
         {
@@ -1505,6 +1857,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:地:qu:四寘"
+          ],
           "evidenceIds": [
             "ev:pingshui:去:四寘"
           ],
@@ -1512,7 +1871,7 @@
             "四寘"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:地:qu:四寘",
           "humanNote": ""
         },
         {
@@ -1539,6 +1898,15 @@
           ],
           "toneCritical": true,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:空:ping:一东",
+            "pingshui:空:shang:一董",
+            "pingshui:空:qu:一送"
+          ],
           "evidenceIds": [
             "ev:pingshui:上平:一东",
             "ev:pingshui:上:一董",
@@ -1550,7 +1918,7 @@
             "一送"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/3 个候选有 approved 证据标记，未满足 pingshui:空:ping:一东、pingshui:空:shang:一董、pingshui:空:qu:一送",
           "humanNote": ""
         },
         {
@@ -1572,6 +1940,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:余:ping:六鱼"
+          ],
           "evidenceIds": [
             "ev:pingshui:上平:六鱼"
           ],
@@ -1579,7 +1954,7 @@
             "六鱼"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:余:ping:六鱼",
           "humanNote": ""
         },
         {
@@ -1601,6 +1976,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:黄:ping:七阳"
+          ],
           "evidenceIds": [
             "ev:pingshui:下平:七阳"
           ],
@@ -1608,7 +1990,7 @@
             "七阳"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:黄:ping:七阳",
           "humanNote": ""
         },
         {
@@ -1630,6 +2012,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:鹤:ru:入声十药"
+          ],
           "evidenceIds": [
             "ev:pingshui:入:入声十药"
           ],
@@ -1637,7 +2026,7 @@
             "入声十药"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:鹤:ru:入声十药",
           "humanNote": ""
         },
         {
@@ -1659,6 +2048,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:楼:ping:十一尤"
+          ],
+          "unbackedCandidateIds": [],
           "evidenceIds": [
             "ev:pingshui:下平:十一尤"
           ],
@@ -1666,8 +2062,8 @@
             "十一尤"
           ],
           "machineOutcome": "would-resolve",
-          "machineNote": "候选唯一且证据已审核，可 resolved",
-          "humanNote": "J03 第一批对「楼与樓」判为存疑，要求补异体关系与证据：不得因同部或已归档转为 approved。"
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": "13_J03三首核心诗逐字人审_第二批.md §二已记录组长同意楼↔樓异体映射，无需重复审核；按候选范围落实，不代表整个十一尤获批。"
         },
         {
           "work": "黄鹤楼",
@@ -1688,6 +2084,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:黄:ping:七阳"
+          ],
           "evidenceIds": [
             "ev:pingshui:下平:七阳"
           ],
@@ -1695,7 +2098,7 @@
             "七阳"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:黄:ping:七阳",
           "humanNote": ""
         },
         {
@@ -1717,6 +2120,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:鹤:ru:入声十药"
+          ],
           "evidenceIds": [
             "ev:pingshui:入:入声十药"
           ],
@@ -1724,7 +2134,7 @@
             "入声十药"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:鹤:ru:入声十药",
           "humanNote": ""
         },
         {
@@ -1746,6 +2156,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:一:ru:入声四质"
+          ],
+          "unbackedCandidateIds": [],
           "evidenceIds": [
             "ev:pingshui:入:入声四质"
           ],
@@ -1753,7 +2170,7 @@
             "入声四质"
           ],
           "machineOutcome": "would-resolve",
-          "machineNote": "候选唯一且证据已审核，可 resolved",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
           "humanNote": "J03 第一批确认该候选归属属实（范围仅限列明候选）。"
         },
         {
@@ -1777,6 +2194,14 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:去:shang:六语",
+            "pingshui:去:qu:六御"
+          ],
           "evidenceIds": [
             "ev:pingshui:上:六语",
             "ev:pingshui:去:六御"
@@ -1786,7 +2211,7 @@
             "六御"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/2 个候选有 approved 证据标记，未满足 pingshui:去:shang:六语、pingshui:去:qu:六御",
           "humanNote": ""
         },
         {
@@ -1811,6 +2236,14 @@
           ],
           "toneCritical": true,
           "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:不:ping:十一尤",
+            "pingshui:不:ru:入声五物"
+          ],
+          "unbackedCandidateIds": [],
           "evidenceIds": [
             "ev:pingshui:下平:十一尤",
             "ev:pingshui:入:入声五物"
@@ -1844,6 +2277,14 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:复:qu:二十六宥",
+            "pingshui:复:ru:入声一屋"
+          ],
           "evidenceIds": [
             "ev:pingshui:去:二十六宥",
             "ev:pingshui:入:入声一屋"
@@ -1853,7 +2294,7 @@
             "入声一屋"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/2 个候选有 approved 证据标记，未满足 pingshui:复:qu:二十六宥、pingshui:复:ru:入声一屋",
           "humanNote": ""
         },
         {
@@ -1875,6 +2316,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:返:shang:十三阮"
+          ],
           "evidenceIds": [
             "ev:pingshui:上:十三阮"
           ],
@@ -1882,7 +2330,7 @@
             "十三阮"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:返:shang:十三阮",
           "humanNote": ""
         },
         {
@@ -1904,6 +2352,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:白:ru:入声十一陌"
+          ],
+          "unbackedCandidateIds": [],
           "evidenceIds": [
             "ev:pingshui:入:入声十一陌"
           ],
@@ -1911,7 +2366,7 @@
             "入声十一陌"
           ],
           "machineOutcome": "would-resolve",
-          "machineNote": "候选唯一且证据已审核，可 resolved",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
           "humanNote": "J03 第一批确认该候选归属属实（范围仅限列明候选，不等于全部韵部获批）。"
         },
         {
@@ -1933,6 +2388,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:云:ping:十二文"
+          ],
           "evidenceIds": [
             "ev:pingshui:上平:十二文"
           ],
@@ -1940,7 +2402,7 @@
             "十二文"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:云:ping:十二文",
           "humanNote": ""
         },
         {
@@ -1962,6 +2424,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:千:ping:一先"
+          ],
           "evidenceIds": [
             "ev:pingshui:下平:一先"
           ],
@@ -1969,7 +2438,7 @@
             "一先"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:千:ping:一先",
           "humanNote": ""
         },
         {
@@ -1993,6 +2462,14 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:载:shang:十贿",
+            "pingshui:载:qu:十一队"
+          ],
           "evidenceIds": [
             "ev:pingshui:上:十贿",
             "ev:pingshui:去:十一队"
@@ -2002,7 +2479,7 @@
             "十一队"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/2 个候选有 approved 证据标记，未满足 pingshui:载:shang:十贿、pingshui:载:qu:十一队",
           "humanNote": ""
         },
         {
@@ -2029,6 +2506,15 @@
           ],
           "toneCritical": true,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:空:ping:一东",
+            "pingshui:空:shang:一董",
+            "pingshui:空:qu:一送"
+          ],
           "evidenceIds": [
             "ev:pingshui:上平:一东",
             "ev:pingshui:上:一董",
@@ -2040,7 +2526,7 @@
             "一送"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/3 个候选有 approved 证据标记，未满足 pingshui:空:ping:一东、pingshui:空:shang:一董、pingshui:空:qu:一送",
           "humanNote": ""
         },
         {
@@ -2062,6 +2548,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:悠:ping:十一尤"
+          ],
+          "unbackedCandidateIds": [],
           "evidenceIds": [
             "ev:pingshui:下平:十一尤"
           ],
@@ -2069,7 +2562,7 @@
             "十一尤"
           ],
           "machineOutcome": "would-resolve",
-          "machineNote": "候选唯一且证据已审核，可 resolved",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
           "humanNote": ""
         },
         {
@@ -2091,6 +2584,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:悠:ping:十一尤"
+          ],
+          "unbackedCandidateIds": [],
           "evidenceIds": [
             "ev:pingshui:下平:十一尤"
           ],
@@ -2098,7 +2598,7 @@
             "十一尤"
           ],
           "machineOutcome": "would-resolve",
-          "machineNote": "候选唯一且证据已审核，可 resolved",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
           "humanNote": ""
         },
         {
@@ -2120,6 +2620,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:晴:ping:八庚"
+          ],
+          "unbackedCandidateIds": [],
           "evidenceIds": [
             "ev:pingshui:下平:八庚"
           ],
@@ -2127,7 +2634,7 @@
             "八庚"
           ],
           "machineOutcome": "would-resolve",
-          "machineNote": "候选唯一且证据已审核，可 resolved",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
           "humanNote": ""
         },
         {
@@ -2149,6 +2656,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:川:ping:一先"
+          ],
           "evidenceIds": [
             "ev:pingshui:下平:一先"
           ],
@@ -2156,7 +2670,7 @@
             "一先"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:川:ping:一先",
           "humanNote": ""
         },
         {
@@ -2178,6 +2692,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:历:ru:入声十二锡"
+          ],
           "evidenceIds": [
             "ev:pingshui:入:入声十二锡"
           ],
@@ -2185,7 +2706,7 @@
             "入声十二锡"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:历:ru:入声十二锡",
           "humanNote": ""
         },
         {
@@ -2207,6 +2728,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:历:ru:入声十二锡"
+          ],
           "evidenceIds": [
             "ev:pingshui:入:入声十二锡"
           ],
@@ -2214,7 +2742,7 @@
             "入声十二锡"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:历:ru:入声十二锡",
           "humanNote": ""
         },
         {
@@ -2239,6 +2767,14 @@
           ],
           "toneCritical": true,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:汉:ping:十四寒",
+            "pingshui:汉:qu:十五翰"
+          ],
           "evidenceIds": [
             "ev:pingshui:上平:十四寒",
             "ev:pingshui:去:十五翰"
@@ -2248,7 +2784,7 @@
             "十五翰"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/2 个候选有 approved 证据标记，未满足 pingshui:汉:ping:十四寒、pingshui:汉:qu:十五翰",
           "humanNote": ""
         },
         {
@@ -2270,6 +2806,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:阳:ping:七阳"
+          ],
           "evidenceIds": [
             "ev:pingshui:下平:七阳"
           ],
@@ -2277,7 +2820,7 @@
             "七阳"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:阳:ping:七阳",
           "humanNote": ""
         },
         {
@@ -2301,6 +2844,14 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:树:shang:七麌",
+            "pingshui:树:qu:七遇"
+          ],
           "evidenceIds": [
             "ev:pingshui:上:七麌",
             "ev:pingshui:去:七遇"
@@ -2310,7 +2861,7 @@
             "七遇"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/2 个候选有 approved 证据标记，未满足 pingshui:树:shang:七麌、pingshui:树:qu:七遇",
           "humanNote": ""
         },
         {
@@ -2332,6 +2883,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:芳:ping:七阳"
+          ],
           "evidenceIds": [
             "ev:pingshui:下平:七阳"
           ],
@@ -2339,7 +2897,7 @@
             "七阳"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:芳:ping:七阳",
           "humanNote": ""
         },
         {
@@ -2361,6 +2919,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:草:shang:十九皓"
+          ],
           "evidenceIds": [
             "ev:pingshui:上:十九皓"
           ],
@@ -2368,7 +2933,7 @@
             "十九皓"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:草:shang:十九皓",
           "humanNote": ""
         },
         {
@@ -2390,6 +2955,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:萋:ping:八齐"
+          ],
           "evidenceIds": [
             "ev:pingshui:上平:八齐"
           ],
@@ -2397,7 +2969,7 @@
             "八齐"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:萋:ping:八齐",
           "humanNote": ""
         },
         {
@@ -2419,6 +2991,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:萋:ping:八齐"
+          ],
           "evidenceIds": [
             "ev:pingshui:上平:八齐"
           ],
@@ -2426,7 +3005,7 @@
             "八齐"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:萋:ping:八齐",
           "humanNote": ""
         },
         {
@@ -2448,6 +3027,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:鹦:ping:八庚"
+          ],
+          "unbackedCandidateIds": [],
           "evidenceIds": [
             "ev:pingshui:下平:八庚"
           ],
@@ -2455,7 +3041,7 @@
             "八庚"
           ],
           "machineOutcome": "would-resolve",
-          "machineNote": "候选唯一且证据已审核，可 resolved",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
           "humanNote": ""
         },
         {
@@ -2477,6 +3063,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:鹉:shang:七麌"
+          ],
           "evidenceIds": [
             "ev:pingshui:上:七麌"
           ],
@@ -2484,7 +3077,7 @@
             "七麌"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:鹉:shang:七麌",
           "humanNote": ""
         },
         {
@@ -2506,6 +3099,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:洲:ping:十一尤"
+          ],
+          "unbackedCandidateIds": [],
           "evidenceIds": [
             "ev:pingshui:下平:十一尤"
           ],
@@ -2513,7 +3113,7 @@
             "十一尤"
           ],
           "machineOutcome": "would-resolve",
-          "machineNote": "候选唯一且证据已审核，可 resolved",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
           "humanNote": ""
         },
         {
@@ -2535,6 +3135,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:日:ru:入声四质"
+          ],
+          "unbackedCandidateIds": [],
           "evidenceIds": [
             "ev:pingshui:入:入声四质"
           ],
@@ -2542,7 +3149,7 @@
             "入声四质"
           ],
           "machineOutcome": "would-resolve",
-          "machineNote": "候选唯一且证据已审核，可 resolved",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
           "humanNote": ""
         },
         {
@@ -2564,6 +3171,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:暮:qu:七遇"
+          ],
           "evidenceIds": [
             "ev:pingshui:去:七遇"
           ],
@@ -2571,7 +3185,7 @@
             "七遇"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:暮:qu:七遇",
           "humanNote": ""
         },
         {
@@ -2596,6 +3210,14 @@
           ],
           "toneCritical": true,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:乡:ping:七阳",
+            "pingshui:乡:qu:二十三漾"
+          ],
           "evidenceIds": [
             "ev:pingshui:下平:七阳",
             "ev:pingshui:去:二十三漾"
@@ -2605,7 +3227,7 @@
             "二十三漾"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/2 个候选有 approved 证据标记，未满足 pingshui:乡:ping:七阳、pingshui:乡:qu:二十三漾",
           "humanNote": ""
         },
         {
@@ -2627,6 +3249,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:关:ping:十五删"
+          ],
           "evidenceIds": [
             "ev:pingshui:上平:十五删"
           ],
@@ -2634,7 +3263,7 @@
             "十五删"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:关:ping:十五删",
           "humanNote": ""
         },
         {
@@ -2656,6 +3285,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:何:ping:五歌"
+          ],
           "evidenceIds": [
             "ev:pingshui:下平:五歌"
           ],
@@ -2663,7 +3299,7 @@
             "五歌"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:何:ping:五歌",
           "humanNote": ""
         },
         {
@@ -2687,6 +3323,14 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:处:shang:六语",
+            "pingshui:处:qu:六御"
+          ],
           "evidenceIds": [
             "ev:pingshui:上:六语",
             "ev:pingshui:去:六御"
@@ -2696,7 +3340,7 @@
             "六御"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/2 个候选有 approved 证据标记，未满足 pingshui:处:shang:六语、pingshui:处:qu:六御",
           "humanNote": ""
         },
         {
@@ -2718,6 +3362,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:是:shang:四纸"
+          ],
           "evidenceIds": [
             "ev:pingshui:上:四纸"
           ],
@@ -2725,7 +3376,7 @@
             "四纸"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:是:shang:四纸",
           "humanNote": ""
         },
         {
@@ -2747,6 +3398,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:烟:ping:一先"
+          ],
           "evidenceIds": [
             "ev:pingshui:下平:一先"
           ],
@@ -2754,7 +3412,7 @@
             "一先"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:烟:ping:一先",
           "humanNote": ""
         },
         {
@@ -2776,6 +3434,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:波:ping:五歌"
+          ],
           "evidenceIds": [
             "ev:pingshui:下平:五歌"
           ],
@@ -2783,7 +3448,7 @@
             "五歌"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:波:ping:五歌",
           "humanNote": ""
         },
         {
@@ -2805,6 +3470,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:江:ping:三江"
+          ],
           "evidenceIds": [
             "ev:pingshui:上平:三江"
           ],
@@ -2812,7 +3484,7 @@
             "三江"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:江:ping:三江",
           "humanNote": ""
         },
         {
@@ -2836,6 +3508,14 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:上:shang:二十二养",
+            "pingshui:上:qu:二十三漾"
+          ],
           "evidenceIds": [
             "ev:pingshui:上:二十二养",
             "ev:pingshui:去:二十三漾"
@@ -2845,7 +3525,7 @@
             "二十三漾"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/2 个候选有 approved 证据标记，未满足 pingshui:上:shang:二十二养、pingshui:上:qu:二十三漾",
           "humanNote": ""
         },
         {
@@ -2869,6 +3549,14 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:使:shang:四纸",
+            "pingshui:使:qu:四寘"
+          ],
           "evidenceIds": [
             "ev:pingshui:上:四纸",
             "ev:pingshui:去:四寘"
@@ -2878,7 +3566,7 @@
             "四寘"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/2 个候选有 approved 证据标记，未满足 pingshui:使:shang:四纸、pingshui:使:qu:四寘",
           "humanNote": ""
         },
         {
@@ -2900,6 +3588,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:人:ping:十一真"
+          ],
           "evidenceIds": [
             "ev:pingshui:上平:十一真"
           ],
@@ -2907,7 +3602,7 @@
             "十一真"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "门禁拦截：候选证据未审核（approved 0/106），不产出 readingStatus",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:人:ping:十一真",
           "humanNote": ""
         },
         {
@@ -2929,6 +3624,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:愁:ping:十一尤"
+          ],
+          "unbackedCandidateIds": [],
           "evidenceIds": [
             "ev:pingshui:下平:十一尤"
           ],
@@ -2936,7 +3638,7 @@
             "十一尤"
           ],
           "machineOutcome": "would-resolve",
-          "machineNote": "候选唯一且证据已审核，可 resolved",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
           "humanNote": ""
         }
       ]
@@ -2955,7 +3657,7 @@
         "P",
         "Z"
       ],
-      "humanNote": "J03 第一批确认「更两读」属实；未确认哪一义项对应哪一读音，故仍待语境证据。"
+      "humanNote": "J03 第一批确认两读；13_J03三首核心诗逐字人审_第二批.md §五第 1 条已裁定「更上一层楼」取去声二十四敬，语境规则已落库。"
     },
     {
       "work": "静夜思",
@@ -3091,6 +3793,7 @@
     "legacyDataVersion": "sample-pingshui-cwr-ff0e9c1-d1",
     "legacyCharacters": 7,
     "currentCharacters": 8240,
+    "currentCandidates": 10387,
     "note": "旧七字样本（白、一、更、流、楼、雪、物）不在 API 装载清单内；本表全部数据来自 106 部全量快照，不使用旧样本结果。"
   },
   "adjudications": [
@@ -3308,7 +4011,120 @@
     }
   ],
   "machineConclusion": {
-    "determinableNow": [],
+    "singleCandidateEvidenceReady": [
+      {
+        "work": "登鹳雀楼",
+        "tokenId": "l1c1",
+        "character": "白"
+      },
+      {
+        "work": "登鹳雀楼",
+        "tokenId": "l1c2",
+        "character": "日"
+      },
+      {
+        "work": "登鹳雀楼",
+        "tokenId": "l2c5",
+        "character": "流"
+      },
+      {
+        "work": "登鹳雀楼",
+        "tokenId": "l4c3",
+        "character": "一"
+      },
+      {
+        "work": "登鹳雀楼",
+        "tokenId": "l4c5",
+        "character": "楼"
+      },
+      {
+        "work": "静夜思",
+        "tokenId": "l1c3",
+        "character": "明"
+      },
+      {
+        "work": "静夜思",
+        "tokenId": "l3c2",
+        "character": "头"
+      },
+      {
+        "work": "静夜思",
+        "tokenId": "l3c4",
+        "character": "明"
+      },
+      {
+        "work": "静夜思",
+        "tokenId": "l4c2",
+        "character": "头"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l2c7",
+        "character": "楼"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l3c3",
+        "character": "一"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l4c1",
+        "character": "白"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l4c6",
+        "character": "悠"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l4c7",
+        "character": "悠"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l5c1",
+        "character": "晴"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l6c5",
+        "character": "鹦"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l6c7",
+        "character": "洲"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l7c1",
+        "character": "日"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l8c7",
+        "character": "愁"
+      }
+    ],
+    "candidatePrecheckByWork": [
+      {
+        "work": "登鹳雀楼",
+        "blockedTokens": 14,
+        "firstBlockedTokenId": "l1c3"
+      },
+      {
+        "work": "静夜思",
+        "blockedTokens": 16,
+        "firstBlockedTokenId": "l1c1"
+      },
+      {
+        "work": "黄鹤楼",
+        "blockedTokens": 45,
+        "firstBlockedTokenId": "l1c1"
+      }
+    ],
     "tiers": {
       "singleCandidate": 74,
       "multiSameTone": 12,
@@ -3327,7 +4143,7 @@
         "tones": [
           "Z"
         ],
-        "reason": "多个读音但平仄一致：读音保持 ambiguous，平仄可确定"
+        "reason": "无适用语境规则/用户覆盖时，须先满足所有有效候选的证据门槛，再保留读音 ambiguous；平仄一致不等于读音已消歧"
       },
       {
         "work": "登鹳雀楼",
@@ -3340,7 +4156,7 @@
         "tones": [
           "Z"
         ],
-        "reason": "多个读音但平仄一致：读音保持 ambiguous，平仄可确定"
+        "reason": "无适用语境规则/用户覆盖时，须先满足所有有效候选的证据门槛，再保留读音 ambiguous；平仄一致不等于读音已消歧"
       },
       {
         "work": "静夜思",
@@ -3353,7 +4169,7 @@
         "tones": [
           "Z"
         ],
-        "reason": "多个读音但平仄一致：读音保持 ambiguous，平仄可确定"
+        "reason": "无适用语境规则/用户覆盖时，须先满足所有有效候选的证据门槛，再保留读音 ambiguous；平仄一致不等于读音已消歧"
       },
       {
         "work": "黄鹤楼",
@@ -3366,7 +4182,7 @@
         "tones": [
           "Z"
         ],
-        "reason": "多个读音但平仄一致：读音保持 ambiguous，平仄可确定"
+        "reason": "无适用语境规则/用户覆盖时，须先满足所有有效候选的证据门槛，再保留读音 ambiguous；平仄一致不等于读音已消歧"
       },
       {
         "work": "黄鹤楼",
@@ -3379,7 +4195,7 @@
         "tones": [
           "Z"
         ],
-        "reason": "多个读音但平仄一致：读音保持 ambiguous，平仄可确定"
+        "reason": "无适用语境规则/用户覆盖时，须先满足所有有效候选的证据门槛，再保留读音 ambiguous；平仄一致不等于读音已消歧"
       },
       {
         "work": "黄鹤楼",
@@ -3392,7 +4208,7 @@
         "tones": [
           "Z"
         ],
-        "reason": "多个读音但平仄一致：读音保持 ambiguous，平仄可确定"
+        "reason": "无适用语境规则/用户覆盖时，须先满足所有有效候选的证据门槛，再保留读音 ambiguous；平仄一致不等于读音已消歧"
       },
       {
         "work": "黄鹤楼",
@@ -3405,7 +4221,7 @@
         "tones": [
           "Z"
         ],
-        "reason": "多个读音但平仄一致：读音保持 ambiguous，平仄可确定"
+        "reason": "无适用语境规则/用户覆盖时，须先满足所有有效候选的证据门槛，再保留读音 ambiguous；平仄一致不等于读音已消歧"
       },
       {
         "work": "黄鹤楼",
@@ -3418,7 +4234,7 @@
         "tones": [
           "Z"
         ],
-        "reason": "多个读音但平仄一致：读音保持 ambiguous，平仄可确定"
+        "reason": "无适用语境规则/用户覆盖时，须先满足所有有效候选的证据门槛，再保留读音 ambiguous；平仄一致不等于读音已消歧"
       },
       {
         "work": "黄鹤楼",
@@ -3431,7 +4247,7 @@
         "tones": [
           "Z"
         ],
-        "reason": "多个读音但平仄一致：读音保持 ambiguous，平仄可确定"
+        "reason": "无适用语境规则/用户覆盖时，须先满足所有有效候选的证据门槛，再保留读音 ambiguous；平仄一致不等于读音已消歧"
       },
       {
         "work": "黄鹤楼",
@@ -3444,7 +4260,7 @@
         "tones": [
           "Z"
         ],
-        "reason": "多个读音但平仄一致：读音保持 ambiguous，平仄可确定"
+        "reason": "无适用语境规则/用户覆盖时，须先满足所有有效候选的证据门槛，再保留读音 ambiguous；平仄一致不等于读音已消歧"
       },
       {
         "work": "黄鹤楼",
@@ -3457,7 +4273,7 @@
         "tones": [
           "Z"
         ],
-        "reason": "多个读音但平仄一致：读音保持 ambiguous，平仄可确定"
+        "reason": "无适用语境规则/用户覆盖时，须先满足所有有效候选的证据门槛，再保留读音 ambiguous；平仄一致不等于读音已消歧"
       },
       {
         "work": "黄鹤楼",
@@ -3470,13 +4286,14 @@
         "tones": [
           "Z"
         ],
-        "reason": "多个读音但平仄一致：读音保持 ambiguous，平仄可确定"
+        "reason": "无适用语境规则/用户覆盖时，须先满足所有有效候选的证据门槛，再保留读音 ambiguous；平仄一致不等于读音已消歧"
       }
     ],
     "note": [
-      "字位层面：22/96 个字位已有已审核候选证据，其余未审核；诗级结果仍被门禁拒绝——诗内只要有一处未审字位，resolveReadings 就不出结论。",
-      "证据到位后（结构性判断，不含义项裁定）：单候选字位可 resolved；平仄临界且已有裁定的字位由语境规则 resolved；多候选同调字位读音仍须 ambiguous、平仄可确定。",
-      "「楼」按 J03 第一批属存疑，即使其他证据获批也不得转 approved。"
+      "字位层面：任一候选有 approved 标记 22/96；全部候选有标记 21/96；已审/未审混合 1。均为快照标记统计，不扩张人审范围。",
+      "候选预检不应用语境规则。真实 resolveReadings 会先选择有效候选，再逐一检查证据；语境规则本身也需已审核的语境证据。整诗有任一有效候选缺依据时仍拒绝结果。",
+      "单候选且有证据的字位仅具备 resolved 的证据条件；多候选同调在无适用语境规则/用户覆盖时保留读音 ambiguous。两者都不代表整首诗已通过。",
+      "13_J03三首核心诗逐字人审_第二批.md §二已记录组长同意楼↔樓异体映射，无需重复审核；按候选范围落实，不代表整个十一尤获批。"
     ]
   }
 }

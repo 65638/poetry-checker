@@ -325,19 +325,18 @@ pnpm verify
 
 ### 9.2 三首固定正文的实测（分母=字位）
 
-| 作品     | 字位 | 有候选字位 | 缺字位 | 多候选字位 | 无已审核证据字位 | `resolveReadings` 结果                              |
+| 作品     | 字位 | 有候选字位 | 缺字位 | 多候选字位 | 候选预检阻断字位（语境筛选前） | `resolveReadings` 结果                              |
 | -------- | ---- | ---------- | ------ | ---------- | ---------------- | --------------------------------------------------- |
-| 登鹳雀楼 | 20   | 20         | 0      | 3          | 20               | 抛 `LOOKUP_EVIDENCE_UNVERIFIED`（首个拦截 l1c3 依） |
-| 静夜思   | 20   | 20         | 0      | 4          | 20               | 抛 `LOOKUP_EVIDENCE_UNVERIFIED`（首个拦截 l1c1 床） |
-| 黄鹤楼   | 56   | 56         | 0      | 15         | 56               | 抛 `LOOKUP_EVIDENCE_UNVERIFIED`（首个拦截 l1c1 昔） |
+| 登鹳雀楼 | 20   | 20         | 0      | 3          | 14               | 抛 `LOOKUP_EVIDENCE_UNVERIFIED`（首个拦截 l1c3 依） |
+| 静夜思   | 20   | 20         | 0      | 4          | 16               | 抛 `LOOKUP_EVIDENCE_UNVERIFIED`（首个拦截 l1c1 床） |
+| 黄鹤楼   | 56   | 56         | 0      | 15         | 45               | 抛 `LOOKUP_EVIDENCE_UNVERIFIED`（首个拦截 l1c1 昔） |
 
-生成命令见第 8 节；明细在 `data/context/d2-coverage-report.json` 与 `data/reviews/`。
+当前逐字报告由 `pnpm exec tsx packages/readings/scripts/golden-token-review.ts` 生成，见 `data/reviews/golden-token-review-2026-10-18.json/.md`；旧 `d2-coverage` 脚本仍读取七字样本，不作为本轮全量证据统计入口。整诗选音结果用 `context-smoke.ts` 复验。
 
 读法：
 
 - 字表覆盖已不是瓶颈：96/96 字位全部有候选。
-- 三首仍抛错，是因为**整库字位证据只有 8/106 条 approved**；门槛按字位拦截，
-  即使语境规则已审批，也要等该字位自身的归部证据审完才可能出结论。
+- 当前快照有 8/106 条证据带 approved 标记，不等于八部完成审核。字位层面任一候选有标记 22/96、全部候选有标记 21/96；「昔」的混合证据仍应阻断。三首仍有有效候选缺依据，规则获批不会替代候选证据；单字批准也不自动覆盖整部。
 - 因此本批次**没有**自动覆盖率、也没有读音准确率可报。
 
 ### 9.3 「更」的真实候选
