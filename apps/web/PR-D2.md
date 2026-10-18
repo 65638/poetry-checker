@@ -149,22 +149,64 @@ pnpm verify                                → exit 0
 
 ---
 
-## 六、未完成 / 未声称通过
+## 六、浏览器端并发 / 陈旧覆盖 / 导出验收（D2-02 · D2-03 · D2-09）
+
+为了精确控制延迟与响应内容，验收用一个**可控替身服务**（本地 `stub-api.mjs`，未入库），
+前端经 `VITE_API_BASE_URL` 直连；真实 Chrome + CDP，真实输入/点击/网络。
+**未改 `apps/api` 与仓库代码。**
+
+### D2-02 快速 A→B、A 迟到返回（替身：A 延迟 3000ms 返回 fail，B 延迟 100ms 返回 pass）
+
+| 检查 | 结果 |
+| --- | --- |
+| A、B 均成功提交 | PASS |
+| 请求期间 `busy=true` | PASS |
+| **最终只显示 B 的结果（通过）** | PASS —— A 迟到返回的「不合律」**没有覆盖** B |
+| `busy` 恢复 false | PASS |
+| `stale` 保持 false | PASS |
+
+A 的响应确实到达（延迟 3s），但被请求身份守卫丢弃。
+
+### D2-03 改原文后旧覆盖失效、stale 时阻止选音（needs_review 场景，歧义字位 `l4c1`）
+
+| 检查 | 结果 |
+| --- | --- |
+| 选音携带 `tokenId`/`readingId`/`inputHash` | PASS `[{tokenId:"l4c1",readingId:"fixture:reading:平:P"}]`，`inputHash=725a07b0b9…` |
+| 改正文后标 stale | PASS 横幅「此报告对应修改前的输入，结论可能已失效；请重新分析。」 |
+| **stale 时候选按钮被禁用** | PASS 未 stale 时 2 个「改用此读音」enabled；stale 后**均 disabled** |
+| **stale 时给出明确原因** | PASS「报告与当前输入不一致，请重新分析后再选音。」 |
+| stale 期间不发覆盖请求 | PASS 新增请求数 0 |
+
+阻止机制是**显式**的（禁用 + 文案），不是静默失效。
+
+### D2-09 复制摘要与 JSON 导出
+
+| 检查 | 结果 |
+| --- | --- |
+| 复制写入剪贴板 | PASS 长度 522，开头「诗格律检查器 · 分析摘要 / 结论：pass — 合成 pass 场景」 |
+| 下载写出 JSON | PASS `poetry-report-仄仄平平仄.json` |
+| 导出字段完整 | PASS `exportedAtVersion, originalText, request, inputHash, readingOverrides, uncertainties, report` |
+| 内容与当前报告一致 | PASS `report.status=pass`、`request.text == originalText`、四版本齐全 |
+| **stale 时阻止导出** | PASS 文件数 1 → 1，反馈「当前报告已不对应当前输入，已阻止导出。」 |
+
+**15/15 通过，无运行时错误。**
+
+---
+
+## 七、未完成 / 未声称通过
 
 | 编号 | 项 | 状态 |
 | --- | --- | --- |
 | D2-01 | 真实 API（非 fixture） | **未执行**。`main` 上 API 仍为 fixture mock，真实编排在 `glm/d2-real-api`；等合入后用一首已审核真实诗联调 |
-| D2-02 | 快速 A→B 请求、取消 | 单测覆盖；**浏览器端未做双请求时序** |
-| D2-03 | 改原文后旧覆盖失效再选新音 | 单测覆盖；**浏览器端未操作真实选音按钮** |
-| D2-09 | 复制/JSON 导出 | 单测覆盖；**浏览器端未点按钮验证剪贴板与下载** |
-| D2-06 | 点诊断/救法/来源 | 证据抽屉已验证；粘对/救位因 mock `relations` 为空无法验收 |
+| D2-06 | 粘对/救位定位 | 证据抽屉已验证；粘对因 mock `prosody.relations` 为空无法验收 |
+| D2-02 / D2-03 / D2-09 | 并发、陈旧覆盖、导出 | **已浏览器验收**，见上一节 |
 
 **DOM 测试依赖**：jsdom / React Testing Library 仍未安装，本批未改根 lockfile。
-本轮用 CDP 真实浏览器完成键盘矩阵，比 jsdom 更可信。
+本轮的浏览器验收（键盘矩阵、并发、导出）用 CDP 真实浏览器完成，比 jsdom 更可信。
 
 ---
 
-## 七、交 Codex 的展示缺口（未自行改视觉）
+## 八、交 Codex 的展示缺口（未自行改视觉）
 
 1. **DEV 面板按钮 25px**：`DevScenarioSelector` 内的场景按钮，建议 ≥32px 与正式控件一致。
 2. **`:focus-visible` 统一**：已确认字位/按钮有 `outline: solid 2px`，
@@ -174,11 +216,12 @@ pnpm verify                                → exit 0
 
 ---
 
-## 八、提交
+## 九、提交
 
 | SHA | 内容 |
 | --- | --- |
 | `289f96f` | 真实浏览器验收 + 白屏修复 + 375px 遮挡修复 + API 错误行为 13 项 |
 | `590138e` | DEV 场景 glob 修复 + 键盘矩阵 13 项 + 装载回归 8 项 |
+| `df49660` | 交接补两处自我更正并入库 PR 说明 |
 
 交接文档：`apps/web/HANDOFF-D2.md`（本轮增量）、`apps/web/HANDOFF.md`（D1 历史）。

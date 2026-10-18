@@ -99,10 +99,60 @@ hoisted 布局，需保证只有一份 React。建议 GLM 评估在 `pnpm-worksp
 
 | 编号 | 项 | 状态 |
 | --- | --- | --- |
-| D2-02 | 快速 A→B 请求、取消 | **单测覆盖**（store/concurrency 已有）；浏览器端未做双请求时序 |
-| D2-03 | 修改原文后旧覆盖失效再选新音 | **单测覆盖**；浏览器端未操作真实选音按钮 |
 | D2-01 | 真实 API（非 fixture） | **未执行**：main 上 API 仍是 fixture mock，真实编排在 `glm/d2-real-api` |
-| D2-09 | 复制/JSON 导出浏览器行为 | **单测覆盖**；浏览器端未点按钮验证剪贴板与下载 |
+| D2-02 | 快速 A→B 请求、取消 | **已浏览器验收**（见下节 D2-02） |
+| D2-03 | 修改原文后旧覆盖失效再选新音 | **已浏览器验收**（见下节 D2-03） |
+| D2-09 | 复制/JSON 导出 | **已浏览器验收**（见下节 D2-09） |
+| D2-06 | 粘对/救位定位 | 证据抽屉已验证；粘对因 mock `relations` 为空无法验收 |
+
+## 二·四、并发 / 陈旧覆盖 / 导出：浏览器端验收（D2-02 · D2-03 · D2-09）
+
+为了能精确控制延迟与响应内容，验收时用了一个**可控替身服务**
+（`stub-api.mjs`，只在本地工作区、不入库），前端通过 `VITE_API_BASE_URL`
+直连它；真实 Chrome + CDP 驱动，真实输入/点击/网络。**未改 `apps/api` 与仓库代码。**
+
+### D2-02 快速 A→B、A 迟到返回
+
+替身配置：请求 A 延迟 3000ms 返回 `fail`（不合律），请求 B 延迟 100ms 返回 `pass`。
+
+| 检查 | 结果 |
+| --- | --- |
+| A、B 均成功提交 | PASS |
+| 请求期间 `busy=true` | PASS |
+| **最终只显示 B 的结果（通过）** | PASS —— A 迟到返回的「不合律」**没有覆盖** B |
+| `busy` 恢复为 false | PASS |
+| `stale` 保持 false（正文与报告一致） | PASS |
+
+关键点：A 的响应确实到达了（延迟 3s 后返回），但被请求身份守卫丢弃，
+证明过期响应不会覆盖当前结果。
+
+### D2-03 改原文后旧覆盖失效、stale 时阻止选音
+
+装载 `needs_review` 场景（歧义字位 `l4c1`）：
+
+| 检查 | 结果 |
+| --- | --- |
+| 选音请求携带 `tokenId` / `readingId` / `inputHash` | PASS `overrides=[{tokenId:"l4c1",readingId:"fixture:reading:平:P"}]`，`inputHash=725a07b0b9…` |
+| 改正文后报告标记 stale | PASS 顶部横幅「此报告对应修改前的输入，结论可能已失效；请重新分析。」 |
+| **stale 时候选按钮被禁用** | PASS 未 stale 时 2 个「改用此读音」enabled；stale 后**均 disabled** |
+| **stale 时给出明确原因** | PASS 抽屉内「报告与当前输入不一致，请重新分析后再选音。」 |
+| stale 期间不发出覆盖请求 | PASS 新增请求数 0 |
+
+关键点：阻止机制是**显式**的（禁用 + 文案），不是静默失效。
+
+### D2-09 复制摘要与 JSON 导出
+
+| 检查 | 结果 |
+| --- | --- |
+| 复制摘要把内容写入剪贴板 | PASS 长度 522，开头「诗格律检查器 · 分析摘要 / 结论：pass — 合成 pass 场景」 |
+| 下载报告写出 JSON 文件 | PASS `poetry-report-仄仄平平仄.json` |
+| 导出字段完整 | PASS `exportedAtVersion, originalText, request, inputHash, readingOverrides, uncertainties, report` |
+| 导出内容与当前报告一致 | PASS `report.status=pass`、`request.text == originalText`、四版本齐全 |
+| **stale 时阻止导出** | PASS 文件数 1 → 1（未新增），反馈「当前报告已不对应当前输入，已阻止导出。」 |
+
+截图：`d2-02-latest-wins.png`、`d2-03-stale.png`、`d2-09-export.png`。
+
+**15/15 通过，无运行时错误。**
 
 ## 二·五、键盘矩阵（D2-07，真实按键事件）
 
@@ -214,11 +264,16 @@ pnpm verify
 
 1. **真实 API 联调**：等 `glm/d2-real-api` 合入后，用一首已审核真实诗跑 D2-01；
    届时确认 `versions.data` 不是 `fixture-only`、正文/韵书/版本一致。
-2. **浏览器端 D2-02/03/09**：双请求时序、真实选音按钮点击、剪贴板/下载按钮，
-   目前只有单测覆盖。
+2. **D2-06 粘对/救位**：`prosody.relations` 在 mock 中为空，UI 只能显示「未提供」；
+   真实数据到位后需验收定位与关联。
 3. **DOM 测试依赖**：jsdom + React Testing Library 仍未安装（**请 GLM 统一安装**，
-   我不改根 lockfile）。不过本轮的 CDP 真实浏览器键盘矩阵比 jsdom 更可信，
-   后续同类验收优先用浏览器。
+   我不改根 lockfile）。不过本轮的 CDP 真实浏览器验收（键盘矩阵、并发、导出）
+   比 jsdom 更可信，后续同类验收优先用浏览器。
 4. **E2E**：由 E 管理 `tests/e2e`；我只按约定补选择器/操作，不自建第二套框架。
-5. 浏览器验收脚本 `cdp-d2.mjs` / `cdp-keyboard.mjs` 若要长期保留，建议放到
-   `scripts/` 或 `tests/browser/`，但这两处不在我本批写入范围，等组长分配。
+5. 浏览器验收脚本（`cdp-d2.mjs`、`cdp-keyboard.mjs`、`cdp-accept.mjs`，
+   以及可控替身 `stub-api.mjs`）目前都在本地工作区、未入库。
+   若要长期保留，建议放到 `scripts/` 或 `tests/browser/`——这两处不在我本批写入范围，
+   等组长分配。它们不依赖 jsdom，只要求本机有 Chrome 与 Node ≥22（内置 WebSocket）。
+
+> 已完成：D2-02（并发/迟到响应）、D2-03（陈旧覆盖/阻止选音）、D2-09（复制/导出）
+> 的浏览器端验收，见「二·四」节。
