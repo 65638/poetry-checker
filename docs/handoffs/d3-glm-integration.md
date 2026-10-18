@@ -1,5 +1,14 @@
 # D3 GLM 总集成交接单（第一日：2026-10-19）
 
+## 批次一：已审作品特例层接线（完成，2026-10-19，integrate/d3 @3733912）
+
+- 合入：origin/codex/d3-reviewed-exceptions @63de97b（PR #13，merge 7087e4f）。
+- 接线（3733912）：C 公共导出（Codex 指定原文，GLM 代加解除阻塞，**C 复核+独立验收仍归 C**）；resources.ts 严格解析+装载校验（workId/指纹/作品形式/审批 approved-context/来源闭合/work_metadata 依据；坏文件入 loadErrors→503 不静默）；orchestrator 在 evaluateProsody 后、deriveSummary 前调用 applyReviewedWorkExceptions；versions.rules=teaching-v1+reviewed-works-v1。
+- 验证：**pnpm verify 47 文件/651 测试全绿**（Codex 57 + GLM HTTP 3）；九组合矩阵复跑平水三行 200/Schema pass；HTTP 真链路断言：l4c5-7 转 not_applicable/info（PPP/位置/resolvedBy=null/引用第 13 号第 8 条）、l4c5 METER 仍 fail/error、≥8 条 error 保持、**summary 仍如实 fail（未硬改 pass）**、特例登记恰 1 条 approved 装载零错误。
+- README：平水批准范围更正为三讲 1 部+83 候选（approved-evidence.json 实数）+特例状态行。
+- **推送受阻**：GitHub 502/远端挂起（远端 integrate/d3 停在 d8688e9，本地 7087e4f+3733912 待推），网络恢复后 `git push origin integrate/d3` 即可。
+- 待他人：C 公共导出复核+独立验收+TAIL.SANPING 规则卡说明补一般规则与精确适用范围之别；E 把该裁定纳入金标准（整诗仍 fail 的预期单独列）。
+
 ## 基线与分支
 
 - base：`f42172f`（D2 收口+三卡放行后的 main）
