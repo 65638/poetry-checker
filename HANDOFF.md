@@ -337,3 +337,46 @@ React 19.3.1 / Vite 8.3.4 / plugin-react 6.1.2（registry 实查锁定）；web 
 ---
 
 本批尚未包含：真实韵书字表（A 的 D1 见本文件「A 交付：D1」节，随 A 的 PR 合入）、体裁（E）、完整格律判定（Codex 下一批）、真实 API 编排（GLM，等前三者就绪）。analyze 仍为 fixture mock。
+
+---
+
+# E / D2 首批：作品元数据与《静夜思》版本决策（2026-10-18）
+
+完成：
+- 定《静夜思》正文版本：采用《唐诗三百首》系统（`床前明月光，疑是地上霜。举头望明月，低头思故乡。`），
+  指纹 `9d68fef608c1ae6010cfc3ddd7fb2429e60a861bab8c6453874c2adb16d0bdef`；
+  固定古绝身份：`formFamily=ancient`、`formId=null`、`historicalTags=["古绝","五言古体"]`、近体适用性 `not_applicable`。
+- 登记异文：宋刊《李太白文集》系统（`床前看月光…举头望山月`），指纹
+  `cc9d8fe1bcac368b135aa6a47c10d5676f0f6d5e57a021b478d57dcd89589826`；两版同为 20 字、差两处（明→看、明→山），
+  **不合并、不进 approvedTextFingerprints**。
+- 三首元数据草案 + 版本说明 + 异常清单 + 9 项机器验收用例。
+
+修改文件：
+- `data/works/metadata.json`（新增，3 条 unverified 裸数组）
+- `data/works/versions.md`（新增，正文/版本/异文/指纹/待核实）
+- `data/works/anomalies.md`（新增，G-101～G-108）
+- `data/works/README.md`、`data/works/review-queue.json`（更新）
+- `packages/genre/tests/works-metadata.test.ts`（新增 9 项）
+- `tests/integration/e2e/print-work-fingerprints.ts`（新增，指纹复算脚本）
+
+未完成：
+- J05 选模修复、J11 集成测试文件：**未开始**——任务书压缩包内无 J 编号定义，且核心基线 `b5457e4`/`14df990` 仍不在仓库，无法按新核心实现选模。需组长给 J 清单与核心分支。
+- 三首正文版次/页码（evidenceIds 仍为空）、古绝与特殊拗律的文献依据、乐府标签是否启用。
+- 高吻合自动判定（G-101）仍抛 `GENRE_BRANCH_PENDING`。
+
+异常清单：见 `data/works/anomalies.md`（G-101 高吻合未实现、G-102 版本冲突已决策、G-103 特殊拗律、G-104 证据全空、G-105 特征不全、G-106 古绝与五绝同形、G-107 乐府标签、G-108 异文同字数）。
+
+运行命令与真实结果：
+- `pnpm exec vitest run packages/genre/tests` → 3 文件 **38 项通过**（新增 works-metadata 9 项）
+- `pnpm verify` → exit 0，29 文件 **419 项通过**
+- 指纹复算：`node node_modules/tsx/dist/cli.mjs tests/integration/e2e/print-work-fingerprints.ts`
+
+下一步：
+1. 组长签字确认《静夜思》版本决策与古绝定性 → GLM 生成正式 `metadata.json`（approved + evidenceIds）。
+2. 给 J05/J11 的清单与核心分支，我按第二批指令实现选模修复与集成测试。
+3. 补齐三首出处版次页码后，三首档案才可转 approved。
+
+需要组长决策：
+- 《静夜思》采用《唐诗三百首》系统是否确认（影响 GLM 生成 metadata.json）。
+- 「乐府旧题」是否写入 `historicalTags`（AGENTS 第 5 条：乐府标签与形式分开）。
+- J05/J11 的定义与优先级。
