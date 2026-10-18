@@ -319,7 +319,7 @@ React 19.3.1 / Vite 8.3.4 / plugin-react 6.1.2（registry 实查锁定）；web 
 
 # B 交付：D2 真实数据联调与语境规则准备（2026-10-17）
 
-分支 `feat/b-d2-context`（基线 `main = 6375b35`，D1 已合入）。保留 D1 全部实现与证据门槛。
+分支 `feat/b-d2-context`（基线 `main = 6375b35`，D1 已合入），PR #8（draft）。保留 D1 全部实现与证据门槛。
 
 - **真实数据复现**：`packages/readings/scripts/d2-coverage.ts` 用 A 的 `sample-pingshui-cwr-ff0e9c1-d1`
   （7 字真实快照）对三首固定正文跑 parse → lookup → resolve。

@@ -258,7 +258,7 @@ const annotated = resolveReadings({
 
 ---
 
-# D2：真实数据联调与语境规则准备（2026-10-17，分支 `feat/b-d2-context`）
+# D2：真实数据联调与语境规则准备（2026-10-17，分支 `feat/b-d2-context`，PR #8）
 
 基线 `main = 6375b35`（D1 已合入）。**保留 D1 全部实现与门槛，没有重写模块。**
 
