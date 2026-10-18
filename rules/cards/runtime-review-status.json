@@ -1,5 +1,5 @@
 {
-  "note": "runtime RuleCard 是执行规则解释接口，没有审核状态字段；真实审核范围由本表与证据决定。原 draft 保留当时审批历史，不冒签其余7卡。",
+  "note": "runtime RuleCard 是执行规则解释接口，没有审核状态字段；真实审核范围由本表与证据决定。原 draft 保留当时审批历史，不冒签其余7卡。 2026-10-18 组长放行三张工程口径卡（RHYME.COMMON/TAIL.SANPING/TAIL.SANZE），对应 engineering-scope 证据升 approved。",
   "cards": [
     {
       "ruleId": "METER.POSITION",
@@ -10,10 +10,11 @@
     },
     {
       "ruleId": "RHYME.COMMON",
-      "reviewStatus": "partial-or-unverified",
+      "reviewStatus": "engineering-scope-released",
       "evidenceIds": [
         "ev:rule:RHYME.COMMON:engineering-scope"
-      ]
+      ],
+      "releaseNote": "组长 2026-10-18「放行」：接受工程教学口径（文献部分依据+等级为工程口径不声称文献规定），依据 13_ 第二批第 8 条。"
     },
     {
       "ruleId": "RELATION.DUI",
@@ -38,17 +39,19 @@
     },
     {
       "ruleId": "TAIL.SANPING",
-      "reviewStatus": "partial-or-unverified",
+      "reviewStatus": "engineering-scope-released",
       "evidenceIds": [
         "ev:rule:TAIL.SANPING:engineering-scope"
-      ]
+      ],
+      "releaseNote": "组长 2026-10-18「放行」：接受工程教学口径（文献部分依据+等级为工程口径不声称文献规定），依据 13_ 第二批第 8 条。"
     },
     {
       "ruleId": "TAIL.SANZE",
-      "reviewStatus": "partial-or-unverified",
+      "reviewStatus": "engineering-scope-released",
       "evidenceIds": [
         "ev:rule:TAIL.SANZE:engineering-scope"
-      ]
+      ],
+      "releaseNote": "组长 2026-10-18「放行」：接受工程教学口径（文献部分依据+等级为工程口径不声称文献规定），依据 13_ 第二批第 8 条。"
     },
     {
       "ruleId": "RESCUE.SELF",
