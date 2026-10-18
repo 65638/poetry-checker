@@ -5,9 +5,14 @@
   "text": "床前明月光，疑是地上霜。举头望明月，低头思故乡。",
   "sourceCandidates": [
     {
+      "kind": "located",
+      "value": "维基文库《靜夜思》oldid=8747585（C 的 docs/rule-sources.md §7.3）",
+      "note": "三版本记录：李太白全集＝牀前看月光…舉頭望山月；唐詩三百首＝牀前明月光…舉頭望明月；全唐詩＝牀前明月光…舉頭望山月。页注称历代《李太白全集》所收皆无「明」字。来源已定位、字节未留存，未登记 ev: 证据"
+    },
+    {
       "kind": "lead",
       "value": null,
-      "note": "待查：全唐诗李白卷；此版为通行本，异文（如“床前看月光”）需另立版本登记"
+      "note": "待查：三版各自的书名/卷次/版次/页码；「古绝」定性的文献依据；「乐府旧题」是否启用——均未核实，不编造"
     }
   ],
   "request": {
@@ -19,10 +24,12 @@
   },
   "assertions": [
     { "path": "genre.formFamily", "equals": "ancient" },
+    { "path": "genre.formId", "equals": null },
+    { "path": "genre.applicability", "equals": "not_applicable" },
     { "path": "genre.basisType", "equals": "reviewed_metadata" }
   ],
   "reviewStatus": "pending",
   "reviewers": [],
   "evidenceIds": [],
-  "notes": "本项目选取的古绝案例：接近体规则不适用，但不得把“任意四句五言不合谱”一律判古体。正文版本与体裁来源待人工核实。"
+  "notes": "E 已定版（2026-10-18）：采用《唐诗三百首》系统正文，指纹 9d68fef6…；宋刊《李太白全集》系统「牀前看月光…舉頭望山月」与全唐詩「牀前明月光…舉頭望山月」登记为异文、不合并。字位：首句第三字 明/看，第三句第四字 明/山。古绝不适用近体规则，但不得把「任意四句五言不合谱」一律判古体。以上断言是**待审预期**：结构校验通过 ≠ 真实 API 已通过，也 ≠ 人工审核通过。"
 }

@@ -1,6 +1,6 @@
 {
-  "schemaVersion": "d2-draft",
-  "note": "候选登记，非 approved 元数据。正文版本已定；来源版次/页码仍待核实，故 evidenceIds 为空。",
+  "schemaVersion": "d2-draft-2",
+  "note": "候选登记，非 approved 元数据。正文版本已由 E 定版（待组长签字）；来源已定位但字节未留存，故 evidenceIds 为空、reviewStatus 全为 unverified。metadata.json 由 E 维护，GLM 只负责 API 装载。",
   "items": [
     {
       "caseId": "golden-dengguanquelou-ps-v1",
@@ -12,7 +12,26 @@
       "formFamily": "regulated",
       "formId": "wujue",
       "historicalTags": ["五绝", "近体候选"],
-      "sourceLead": null,
+      "variants": [
+        {
+          "label": "「更上一重楼」系统",
+          "text": "白日依山尽，黄河入海流。欲穷千里目，更上一重楼。",
+          "fingerprint": "e0174ba2a4b39dad98eb8069a91e757eaf1a1035ce27a3602caa8be5d675fa57",
+          "differsAt": ["第四句第四字 层→重"],
+          "registeredAsSeparateWork": false
+        }
+      ],
+      "otherDifferences": [
+        "题名一作「鵲」",
+        "「入」一作「徹」",
+        "一作朱斌诗（《國秀集》）"
+      ],
+      "sourceRef": {
+        "locator": "维基文库《登鸛雀樓 (王之渙)》oldid=2648160",
+        "via": "C 的 docs/rule-sources.md §7.2（已核文本与异文）",
+        "bytesStored": false,
+        "evidenceIds": []
+      },
       "pendingItems": [
         "正文权威出处（书名/卷次/版次/页码）",
         "「更」为多音重点字位，属 B 的读音范围",
@@ -32,24 +51,40 @@
       "formFamily": "ancient",
       "formId": null,
       "historicalTags": ["古绝", "五言古体"],
-      "variant": {
-        "label": "宋刊《李太白文集》系统",
-        "text": "床前看月光，疑是地上霜。举头望山月，低头思故乡。",
-        "fingerprint": "cc9d8fe1bcac368b135aa6a47c10d5676f0f6d5e57a021b478d57dcd89589826",
-        "differsAt": ["首句第三字 明→看", "第三句第三字 明→山"],
-        "registeredAsSeparateWork": false
-      },
+      "variants": [
+        {
+          "label": "李太白全集（宋刊系统）",
+          "text": "床前看月光，疑是地上霜。举头望山月，低头思故乡。",
+          "fingerprint": "cc9d8fe1bcac368b135aa6a47c10d5676f0f6d5e57a021b478d57dcd89589826",
+          "differsAt": ["首句第三字 明→看", "第三句第四字 明→山"],
+          "registeredAsSeparateWork": false
+        },
+        {
+          "label": "全唐詩",
+          "text": "床前明月光，疑是地上霜。举头望山月，低头思故乡。",
+          "fingerprint": "f5ec10d48a3e746c2ef37e5007744367116f7668aa5065a7eafcca387d733cfc",
+          "differsAt": ["第三句第四字 明→山"],
+          "registeredAsSeparateWork": false
+        }
+      ],
       "versionDecision": {
         "decidedAt": "2026-10-18",
         "decidedBy": "队员 E（待组长签字）",
         "adopted": "《唐诗三百首》系统",
-        "reason": "与项目既有金标准文本一致；课本与选本通行；异文另存不合并"
+        "reason": "与项目既有金标准文本一致；课本与选本通行；三版差异属异文，采用一版并登记其余",
+        "correctionApplied": "第三句「望明月→望山月」为第四字（原误写第三字）；黄鹤楼首句异文为第五、六字"
       },
-      "sourceLead": null,
+      "sourceRef": {
+        "locator": "维基文库《靜夜思》oldid=8747585",
+        "via": "C 的 docs/rule-sources.md §7.3（状态：待确认，需 E 定版）",
+        "bytesStored": false,
+        "evidenceIds": []
+      },
       "pendingItems": [
-        "两个版本各自的书名/卷次/版次/页码",
+        "三版各自的书名/卷次/版次/页码",
         "「古绝」定性的文献依据",
-        "「乐府旧题」是否写入 historicalTags（AGENTS 第 5 条要求乐府标签与形式分开）"
+        "「乐府旧题」是否写入 historicalTags（AGENTS 第 5 条：乐府标签与形式分开）",
+        "「宋刊」具体刊本与卷次未核实，标待验证"
       ],
       "reviewStatus": "unverified",
       "reviewers": [],
@@ -65,14 +100,21 @@
       "formFamily": "regulated",
       "formId": "qilv",
       "historicalTags": ["七律", "特殊拗律", "半古半律"],
-      "variant": {
-        "label": "首句「昔人已乘白云去」系统",
-        "text": "昔人已乘白云去，此地空余黄鹤楼。黄鹤一去不复返，白云千载空悠悠。晴川历历汉阳树，芳草萋萋鹦鹉洲。日暮乡关何处是，烟波江上使人愁。",
-        "fingerprint": "737f6baae90975871af8241627898d4c43ce31fc8725500a597b88281f57a90a",
-        "differsAt": ["首句第六字 黄→白"],
-        "registeredAsSeparateWork": false
+      "variants": [
+        {
+          "label": "首句「昔人已乘白云去」系统",
+          "text": "昔人已乘白云去，此地空余黄鹤楼。黄鹤一去不复返，白云千载空悠悠。晴川历历汉阳树，芳草萋萋鹦鹉洲。日暮乡关何处是，烟波江上使人愁。",
+          "fingerprint": "737f6baae90975871af8241627898d4c43ce31fc8725500a597b88281f57a90a",
+          "differsAt": ["首句第五、六字 黄鹤→白云"],
+          "registeredAsSeparateWork": false
+        }
+      ],
+      "sourceRef": {
+        "locator": "维基文库《黃鶴樓 (崔顥)》oldid=2492584",
+        "via": "C 的 docs/rule-sources.md §7.4（已核文本与异文）",
+        "bytesStored": false,
+        "evidenceIds": []
       },
-      "sourceLead": null,
       "pendingItems": [
         "正文权威出处（书名/卷次/版次/页码）",
         "「特殊拗律/半古半律」需要规则卡或文献支撑",
