@@ -44,14 +44,8 @@
       "multiCandidateCharacters": [
         {
           "character": "更",
-          "candidateIds": [
-            "pingshui:更:ping:八庚",
-            "pingshui:更:qu:二十四敬"
-          ],
-          "tones": [
-            "P",
-            "Z"
-          ]
+          "candidateIds": ["pingshui:更:ping:八庚", "pingshui:更:qu:二十四敬"],
+          "tones": ["P", "Z"]
         }
       ],
       "resolveOutcome": {

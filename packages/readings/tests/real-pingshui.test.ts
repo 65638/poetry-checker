@@ -70,12 +70,11 @@ function work(caseId: string): WorkEntry {
 }
 
 /**
- * 按 `resolveReadings` 的门槛语义推导「第一个会被拦截的字位」：
- * 有候选，且**任一**有效候选缺已审核证据（缺字走 unknown，不算拦截）。
+ * 推导「第一个会被门槛拦截的字位」：有候选，且**任一**有效候选缺已审核证据
+ * （缺字走 unknown，不算拦截）。
  *
- * B 复核补：原改法把 l1c3「依」、l1c1「昔」写进断言，A 每批审核都会让它再红一次。
- * 改成按数据推导后，断言仍然检验同一件事——门槛恰在第一个未审字位触发，
- * 但不再与「此刻哪几个部已审」耦合。
+ * 期望完全来自数据（`lookup.evidence[].reviewStatus`），**不调用 resolveReadings**，
+ * 避免用被测函数自己生成预期。原实现把 l1c3 / l1c1 写死，A 每批审核都会让它再红一次。
  */
 function firstUnbackedToken(
   poem: ReturnType<typeof parseText>,
@@ -176,7 +175,7 @@ describe("B2-08 真实快照下的逐字状态", () => {
     expect(caught).toBeInstanceOf(ReadingsError);
     const error = caught as ReadingsError;
     expect(error.code).toBe("LOOKUP_EVIDENCE_UNVERIFIED");
-    // 拦截位置必须与数据推导一致，而不是写死的坐标
+    // 拦截位置必须与数据推导一致，而不是写死坐标
     expect(error.details.tokenId).toBe(expected.tokenId);
     expect(error.details.character).toBe(expected.text);
     expect(error.details.dataVersion).toBe(fullDataVersion);
@@ -210,9 +209,9 @@ describe("B2-08 真实快照下的逐字状态", () => {
     expect(error.code).toBe("LOOKUP_EVIDENCE_UNVERIFIED");
     expect(error.details.tokenId).toBe(expected.tokenId);
 
-    // 「已审候选不得掩盖未审竞争候选」：当首个拦截位是多候选且部分已审时，
-    // 这条用例直接把它钉住（当前正是「昔」）；全部审核通过后由
-    // resolve.test.ts 的「GATE 混合有效候选」合成用例继续守住该语义。
+    // 「已审候选不得掩盖未审竞争候选」：首个拦截位是多候选且部分已审时（当前正是「昔」），
+    // 真实数据直接钉住该语义；全部审完后由 resolve.test.ts 的
+    // 「GATE 混合有效候选」合成用例长期守护，不依赖真实数据的审核进度。
     if (expected.mixed) {
       expect(error.details.character).toBe(expected.text);
     }

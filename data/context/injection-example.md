@@ -1,4 +1,4 @@
-# 给 GLM：contextRules 的最小数据注入样例
+﻿# 给 GLM：contextRules 的最小数据注入样例
 
 本文件说明 API 层如何把语境规则及其证据装进 `resolveReadings` 的入参。
 形状示例见 [`injection-example.json`](./injection-example.json)——**其中 ID 带 `example` 前缀，不是真实审核数据**。
@@ -65,9 +65,9 @@ const annotated = resolveReadings({ poem, lookup, overrides, contextRules });
 ```text
 data/context/
   review-queue.json          # 待审清单（不是 ContextRule[]，运行时禁止加载）
-  rules.approved.json        # 已审核可生效的 ContextRule[]（尚未创建）
-  evidence.approved.json     # kind=context 的已审核证据
-  sources.approved.json      # 上述证据引用的来源
+  rules.json        # 已审核可生效的 ContextRule[]（尚未创建）
+  evidence.json     # kind=context 的已审核证据
+  sources.json      # 上述证据引用的来源
   versions.json              # { "context": "2026-10-17.d2" } → AnalysisResponse.versions.context
 ```
 
@@ -76,7 +76,7 @@ data/context/
 
 ## 当前实际状态
 
-- `rules.approved.json`：**不存在**。真实语境规则已审核 0 条。
+- `rules.json`：**不存在**。真实语境规则已审核 0 条。
 - `review-queue.json`：4 条待审条目，其中「更」已有真实候选 ID（见 `proposedSelectCandidateIds`），
   但义项证据与人工审核都还没有，`reviewStatus` 一律 `unverified`。
 - 因此当前 `resolveReadings` 的实际语境命中数恒为 0，这是正确结果，不是漏配。

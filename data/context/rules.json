@@ -1,0 +1,122 @@
+[
+  {
+    "id": "ctx-j03b2-01-deng-geng",
+    "target": "更",
+    "exactPhrases": ["更上一层楼"],
+    "targetOffset": 0,
+    "sense": "副词「再、又、愈加」义（非平声「更改/经历/更次」），裁定取去声二十四敬",
+    "book": "pingshui",
+    "selectCandidateIds": ["pingshui:更:qu:二十四敬"],
+    "negativeExamples": ["三更", "更改"],
+    "evidenceIds": ["ctx:j03b2:01"],
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "ctx-j03b2-02-jing-wang",
+    "target": "望",
+    "exactPhrases": ["望明月"],
+    "targetOffset": 0,
+    "sense": "动词「远看、凝望」义，近体通说取去声二十三漾",
+    "book": "pingshui",
+    "selectCandidateIds": ["pingshui:望:qu:二十三漾"],
+    "negativeExamples": ["名望", "望山月"],
+    "evidenceIds": ["ctx:j03b2:02"],
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "ctx-j03b2-03-jing-si",
+    "target": "思",
+    "exactPhrases": ["思故乡"],
+    "targetOffset": 0,
+    "sense": "带宾语「故乡」的动词「思念、怀想」义，取平声四支",
+    "book": "pingshui",
+    "selectCandidateIds": ["pingshui:思:ping:四支"],
+    "negativeExamples": ["秋思", "乡思"],
+    "evidenceIds": ["ctx:j03b2:03"],
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "ctx-j03b2-04-jing-xiang",
+    "target": "乡",
+    "exactPhrases": ["思故乡"],
+    "targetOffset": 2,
+    "sense": "名词「家乡、乡里」义，且居韵脚（与光霜同押七阳），取平声七阳",
+    "book": "pingshui",
+    "selectCandidateIds": ["pingshui:乡:ping:七阳"],
+    "negativeExamples": ["乡明而治", "飨"],
+    "evidenceIds": ["ctx:j03b2:04"],
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "ctx-j03b2-05-huang-cheng",
+    "target": "乘",
+    "exactPhrases": ["乘黄鹤"],
+    "targetOffset": 0,
+    "sense": "动词「乘坐、骑乘」义（非名词车乘），取平声十蒸",
+    "book": "pingshui",
+    "selectCandidateIds": ["pingshui:乘:ping:十蒸"],
+    "negativeExamples": ["千乘", "史乘"],
+    "evidenceIds": ["ctx:j03b2:05"],
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "ctx-j03b2-06-huang-kong-kongyu",
+    "target": "空",
+    "exactPhrases": ["空余黄鹤楼"],
+    "targetOffset": 0,
+    "sense": "副词「徒然、空自」义，取平声一东（去声孔隙、上声通孔皆不合句义）",
+    "book": "pingshui",
+    "selectCandidateIds": ["pingshui:空:ping:一东"],
+    "negativeExamples": ["孔隙", "空洞"],
+    "evidenceIds": ["ctx:j03b2:06"],
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "ctx-j03b2-07-huang-bu",
+    "target": "不",
+    "exactPhrases": ["不复返"],
+    "targetOffset": 0,
+    "sense": "否定副词义，取入声五物（平声十一尤为「否」之通假，专用于疑问句末）",
+    "book": "pingshui",
+    "selectCandidateIds": ["pingshui:不:ru:入声五物"],
+    "negativeExamples": ["当复如此不", "未知从今去"],
+    "evidenceIds": ["ctx:j03b2:07"],
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "ctx-j03b2-08-huang-kong-kongyou",
+    "target": "空",
+    "exactPhrases": ["空悠悠"],
+    "targetOffset": 0,
+    "sense": "副词「徒然」义，取平声一东；尾三字「空悠悠」为三平尾，作古风式律诗特征保留，不判出律",
+    "book": "pingshui",
+    "selectCandidateIds": ["pingshui:空:ping:一东"],
+    "negativeExamples": ["孔隙", "空洞"],
+    "evidenceIds": ["ctx:j03b2:08"],
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "ctx-j03b2-09-huang-han",
+    "target": "汉",
+    "exactPhrases": ["汉阳树"],
+    "targetOffset": 0,
+    "sense": "地名「汉阳」（汉水之阳）义，取去声十五翰；平声十四寒为罕见古读，不取",
+    "book": "pingshui",
+    "selectCandidateIds": ["pingshui:汉:qu:十五翰"],
+    "negativeExamples": ["星汉", "天河"],
+    "evidenceIds": ["ctx:j03b2:09"],
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "ctx-j03b2-10-huang-xiang",
+    "target": "乡",
+    "exactPhrases": ["乡关何处"],
+    "targetOffset": 0,
+    "sense": "名词「家乡」（乡关=故乡）义，取平声七阳",
+    "book": "pingshui",
+    "selectCandidateIds": ["pingshui:乡:ping:七阳"],
+    "negativeExamples": ["乡明而治", "飨"],
+    "evidenceIds": ["ctx:j03b2:10"],
+    "reviewStatus": "approved"
+  }
+]
