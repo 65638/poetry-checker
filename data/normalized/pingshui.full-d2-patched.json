@@ -168106,7 +168106,7 @@
       "locator": "data/raw/wikisource/PingshuiYun-8264804.wikitext 第 198-200 行（上聲三{{++|講}} / 講港棒蚌項缿玤傋耩）",
       "assertion": "维基文库《平水韻》oldid 8264804（data/raw/wikisource/PingshuiYun-8264804.wikitext 第 200 行）上聲三講正文为「講港棒蚌項缿玤傋耩」共 9 字，该韵目无【詞】段。底本为繁体，此处仅做繁→简转换（講→讲、項→项），不得声称底本原文即简体。「玤」原表已收于上声一董（Pingshui_Rhyme.json:4372），本补丁新增其三讲归属并保留原归属。",
       "excerpt": "講港棒蚌項缿玤傋耩",
-      "reviewStatus": "unverified"
+      "reviewStatus": "approved"
     }
   ],
   "sources": [

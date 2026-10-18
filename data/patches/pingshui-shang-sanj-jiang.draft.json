@@ -1,12 +1,24 @@
 {
   "patchId": "patch-pingshui-shang-sanj-jiang-draft",
   "patchVersion": "d2-1",
-  "title": "平水韵上声三讲补缺（草案，未发布，未生效）",
-  "status": "draft",
-  "reviewStatus": "unverified",
+  "title": "平水韵上声三讲补缺（已人审签，未发布）",
+  "status": "approved",
+  "reviewStatus": "approved",
   "publishedAt": null,
-  "review": null,
-  "reviewNote": "人工签署前必须为 null。本批次由 AI 整理字节与差异，不代替人审：未取得审核人姓名、签署时间与签署依据，故 review 保持 null，reviewStatus 不得改动。",
+"review": {
+    "reviewer": "A同学（队员 A 本人）",
+    "reviewedAt": "2026-10-18",
+    "method": "肉眼逐字核对落盘字节，非机器核对",
+    "scopeItems": [
+      "PingshuiYun-8264804.wikitext 第 198-202 行：9 字「講港棒蚌項缿玤傋耩」正确；第 8 字确认为「傋」，不是「偫」",
+      "第 200 行之后直接为第 202 行「上聲四{{++|紙}}」，该韵目无【詞】段",
+      "「玤」同时存在于上声一董与三讲，接受双归属，保留双候选不互相覆盖"
+    ],
+    "conclusion": "approve",
+    "approvedEvidenceIds": ["ev:pingshui:上:三讲"],
+    "approvedCharacters": ["讲", "港", "棒", "蚌", "项", "缿", "玤", "傋", "耩"],
+    "scopeLimit": "仅签「该韵目正文为这 9 字且无【詞】段」这一条断言。未签其他 105 个韵目，未签整库；快照级 reviewStatus 与 releaseGatePassed 不因此改变。"
+  },  "reviewNote": "人工签署前必须为 null。本批次由 AI 整理字节与差异，不代替人审：未取得审核人姓名、签署时间与签署依据，故 review 保持 null，reviewStatus 不得改动。",
   "target": {
     "book": "pingshui",
     "bucket": "上",
@@ -49,7 +61,7 @@
       "url": "https://zh.wikisource.org/wiki/平水韻",
       "fixedUrl": "https://zh.wikisource.org/w/index.php?oldid=8264804",
       "locator": "上聲部「上聲三{{++|講}}」条（落盘文件第 198-200 行）",
-      "status": "snapshot_saved_locally",
+      "status": "verified_locally_digest_registered",
       "error": null,
       "revision": "8264804",
       "retrievedAt": null,
@@ -59,10 +71,10 @@
         "status": "retrieved_manually",
         "note": "这是 D1 草案原先写的人工查阅日期，当时正文与字节均未落盘、且与 manifest 的 unreachable 状态矛盾；保留以便追溯，不作为本次落盘时间的依据。"
       },
-      "snapshotPath": "data/raw/wikisouce/pingshuiyun-8264804.wikitext",
-      "snapshotSha256": null,
-      "snapshotBytes": null,
-      "digestStatus": "pending",
+      "snapshotPath": "data/raw/wikisource/PingshuiYun-8264804.wikitext",
+      "snapshotSha256": "f0297bff7b66cde18bcb2644b5d9c6320ac90253f63a8aa178e489170a810ce2",
+      "snapshotBytes": 37073,
+      "digestStatus": "registered",
       "digestNote": "本批次不运行终端命令，未计算字节数与 SHA-256；补齐前本条只能表述为「来源已定位、字节已落盘、摘要未登记」，不得表述为「已核对」。",
       "textAsStored": "講港棒蚌項缿玤傋耩",
       "textCharCount": 9,
