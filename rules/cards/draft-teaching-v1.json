@@ -161,8 +161,12 @@
     },
     {
       "draftId": "draft-rescue-self-v1",
-      "reviewStatus": "pending",
-      "status": "draft_only_not_for_release",
+      "reviewStatus": "approved",
+      "status": "approved",
+      "reviewNote": "依据《12_J03人审记录_第一批》第三部分结论（同日续审）第 10 项（2026-10-18 组长人审）：「（六）拗救·（a）本句自救，印刷页 339」属实。记录已入库 docs/reviews/12_J03人审记录_第一批.md；证据 ev:rule:RESCUE.SELF:wangli15-p339（rules/evidence/teaching-v1.json，reviewStatus=approved）。未完成项：七言纯模式真实诗例（见 sourceNeeded）；不得因本条标记而宣称三库逐字人工审核完成。",
+      "citation": [
+        "王力文集·第15卷《诗词格律》第二章第三节（六）拗救·（a）本句自救，印刷页 339（PDF 346）"
+      ],
       "rule": {
         "id": "RESCUE.SELF",
         "version": "1",
@@ -172,20 +176,25 @@
         "limitations": [
           "一条救法只解决它明确覆盖的偏离，不豁免全句或全诗其他错误",
           "更宽跨句救法不在 P0 范围",
-          "语文学出处待人工核实"
+          "文献已核实（见 citation）；七言真实诗例仍待补"
         ],
-        "evidenceIds": []
+        "evidenceIds": [
+          "ev:rule:RESCUE.SELF:wangli15-p339"
+        ]
       },
       "sourceNeeded": [
-        "孤平自救 ZPPZP 的文献依据待核实",
         "七言 *ZZPPZP 对应论述与真实诗例待核实",
         "已救/未救边界（差一位不认定）的诗例与依据待人工核对"
       ]
     },
     {
       "draftId": "draft-rescue-teao-v1",
-      "reviewStatus": "pending",
-      "status": "draft_only_not_for_release",
+      "reviewStatus": "approved",
+      "status": "approved",
+      "reviewNote": "依据《12_J03人审记录_第一批》第三部分结论（同日续审）第 11 项（2026-10-18 组长人审）：「（五）特定的一种平仄格式，印刷页 336–338」属实。记录已入库 docs/reviews/12_J03人审记录_第一批.md；证据 ev:rule:RESCUE.TEAO:wangli15-p336-338（rules/evidence/teaching-v1.json，reviewStatus=approved）。未完成项：七言纯模式真实诗例（见 sourceNeeded）；不得因本条标记而宣称三库逐字人工审核完成。",
+      "citation": [
+        "王力文集·第15卷《诗词格律》第二章第三节（五）特定的一种平仄格式，印刷页 336–338（PDF 343–345）"
+      ],
       "rule": {
         "id": "RESCUE.TEAO",
         "version": "1",
@@ -193,21 +202,26 @@
         "scope": "C 型句",
         "statement": "认可 C 型五言 PPZPZ、七言对应“中仄平平仄平仄”为特拗；须匹配完整审核模式及其余约束后才认可，认可后不得对被认可位置重复硬报偏离；不能把 C 型特拗随意换成另一句型免检。",
         "limitations": [
-          "七言完整模式的真实诗例与文献待核实",
-          "语文学出处待人工核实"
+          "七言完整模式的真实诗例仍待核实",
+          "文献已核实（见 citation）"
         ],
-        "evidenceIds": []
+        "evidenceIds": [
+          "ev:rule:RESCUE.TEAO:wangli15-p336-338"
+        ]
       },
       "sourceNeeded": [
-        "特拗 PPZPZ 的文献依据待核实",
         "七言 *ZPPZPZ 完整模式与真实诗例待核实",
         "《黄鹤楼》相关诗例待人工核对"
       ]
     },
     {
       "draftId": "draft-rescue-duiju-v1",
-      "reviewStatus": "pending",
-      "status": "draft_only_not_for_release",
+      "reviewStatus": "approved",
+      "status": "approved",
+      "reviewNote": "依据《12_J03人审记录_第一批》第三部分结论（同日续审）第 12 项（2026-10-18 组长人审）：「（六）拗救·（b）对句相救，印刷页 339；实例页 340、341」属实。记录已入库 docs/reviews/12_J03人审记录_第一批.md；证据 ev:rule:RESCUE.DUIJU:wangli15-p339-341（rules/evidence/teaching-v1.json，reviewStatus=approved）。未完成项：七言纯模式真实诗例（见 sourceNeeded）；不得因本条标记而宣称三库逐字人工审核完成。",
+      "citation": [
+        "王力文集·第15卷《诗词格律》第二章第三节（六）拗救·（b）对句相救，印刷页 339；实例页 340（《赋得古原草送别》）、页 341（陆游《夜泊水村》）"
+      ],
       "rule": {
         "id": "RESCUE.DUIJU",
         "version": "1",
@@ -217,13 +231,14 @@
         "limitations": [
           "七言位置已确认（6↔5，Codex 2026-10-17），完整判据（前缀、完整后五字、其他固定位置、候选不确定性）留 D2 验收",
           "更宽跨句救法不在 P0 范围",
-          "语文学出处待人工核实"
+          "文献已核实（见 citation）；七言纯 (b) 模式实例为 (a)(b) 结合"
         ],
-        "evidenceIds": []
+        "evidenceIds": [
+          "ev:rule:RESCUE.DUIJU:wangli15-p339-341"
+        ]
       },
       "sourceNeeded": [
-        "五言对句相救 ZZPZZ/PPPZP 的文献依据与“野火烧不尽 / 春风吹又生”诗例出处待核实",
-        "七言 PPZZPZZ/ZZPPPZP 为合成测试材料，真实诗例与语文学依据待核实",
+        "七言纯 (b) 模式真实诗例待补（现有实例为 (a)(b) 结合）",
         "跨联不配对、错误前缀不放行的边界待人工核定"
       ]
     }
