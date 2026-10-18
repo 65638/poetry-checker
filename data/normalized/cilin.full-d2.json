@@ -86755,7 +86755,7 @@
   "evidence": [
     {
       "id": "ev:cilin:第一部:第一部·平声",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:cilin",
       "kind": "rhyme_entry",
       "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第一部/平声",
       "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第一部/平声 共收录 123 个字形（原表条目 125 条）；声类按来源标为 ping。",
@@ -86764,7 +86764,7 @@
     },
     {
       "id": "ev:cilin:第一部:第一部·仄声",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:cilin",
       "kind": "rhyme_entry",
       "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第一部/仄声",
       "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第一部/仄声 共收录 69 个字形（原表条目 71 条）；来源只标仄声，故保留 ze_unspecified，不臆补上声或去声。",
@@ -86773,7 +86773,7 @@
     },
     {
       "id": "ev:cilin:第二部:第二部·平声",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:cilin",
       "kind": "rhyme_entry",
       "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第二部/平声",
       "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第二部/平声 共收录 190 个字形（原表条目 190 条）；声类按来源标为 ping。",
@@ -86782,7 +86782,7 @@
     },
     {
       "id": "ev:cilin:第二部:第二部·仄声",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:cilin",
       "kind": "rhyme_entry",
       "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第二部/仄声",
       "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第二部/仄声 共收录 135 个字形（原表条目 142 条）；来源只标仄声，故保留 ze_unspecified，不臆补上声或去声。",
@@ -86791,7 +86791,7 @@
     },
     {
       "id": "ev:cilin:第三部:第三部·平声",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:cilin",
       "kind": "rhyme_entry",
       "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第三部/平声",
       "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第三部/平声 共收录 314 个字形（原表条目 319 条）；声类按来源标为 ping。",
@@ -86800,7 +86800,7 @@
     },
     {
       "id": "ev:cilin:第三部:第三部·仄声",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:cilin",
       "kind": "rhyme_entry",
       "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第三部/仄声",
       "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第三部/仄声 共收录 445 个字形（原表条目 464 条）；来源只标仄声，故保留 ze_unspecified，不臆补上声或去声。",
@@ -86809,7 +86809,7 @@
     },
     {
       "id": "ev:cilin:第四部:第四部·平声",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:cilin",
       "kind": "rhyme_entry",
       "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第四部/平声",
       "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第四部/平声 共收录 203 个字形（原表条目 205 条）；声类按来源标为 ping。",
@@ -86818,7 +86818,7 @@
     },
     {
       "id": "ev:cilin:第四部:第四部·仄声",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:cilin",
       "kind": "rhyme_entry",
       "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第四部/仄声",
       "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第四部/仄声 共收录 266 个字形（原表条目 278 条）；来源只标仄声，故保留 ze_unspecified，不臆补上声或去声。",
@@ -86827,7 +86827,7 @@
     },
     {
       "id": "ev:cilin:第五部:第五部·平声",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:cilin",
       "kind": "rhyme_entry",
       "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第五部/平声",
       "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第五部/平声 共收录 57 个字形（原表条目 58 条）；声类按来源标为 ping。",
@@ -86836,7 +86836,7 @@
     },
     {
       "id": "ev:cilin:第五部:第五部·仄声",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:cilin",
       "kind": "rhyme_entry",
       "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第五部/仄声",
       "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第五部/仄声 共收录 112 个字形（原表条目 116 条）；来源只标仄声，故保留 ze_unspecified，不臆补上声或去声。",
@@ -86845,7 +86845,7 @@
     },
     {
       "id": "ev:cilin:第六部:第六部·平声",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:cilin",
       "kind": "rhyme_entry",
       "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第六部/平声",
       "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第六部/平声 共收录 169 个字形（原表条目 169 条）；声类按来源标为 ping。",
@@ -86854,7 +86854,7 @@
     },
     {
       "id": "ev:cilin:第六部:第六部·仄声",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:cilin",
       "kind": "rhyme_entry",
       "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第六部/仄声",
       "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第六部/仄声 共收录 144 个字形（原表条目 151 条）；来源只标仄声，故保留 ze_unspecified，不臆补上声或去声。",
@@ -86863,7 +86863,7 @@
     },
     {
       "id": "ev:cilin:第七部:第七部·平声",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:cilin",
       "kind": "rhyme_entry",
       "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第七部/平声",
       "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第七部/平声 共收录 277 个字形（原表条目 281 条）；声类按来源标为 ping。",
@@ -86872,7 +86872,7 @@
     },
     {
       "id": "ev:cilin:第七部:第七部·仄声",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:cilin",
       "kind": "rhyme_entry",
       "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第七部/仄声",
       "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第七部/仄声 共收录 288 个字形（原表条目 325 条）；来源只标仄声，故保留 ze_unspecified，不臆补上声或去声。",
@@ -86881,7 +86881,7 @@
     },
     {
       "id": "ev:cilin:第八部:第八部·平声",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:cilin",
       "kind": "rhyme_entry",
       "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第八部/平声",
       "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第八部/平声 共收录 208 个字形（原表条目 208 条）；声类按来源标为 ping。",
@@ -86890,7 +86890,7 @@
     },
     {
       "id": "ev:cilin:第八部:第八部·仄声",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:cilin",
       "kind": "rhyme_entry",
       "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第八部/仄声",
       "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第八部/仄声 共收录 197 个字形（原表条目 210 条）；来源只标仄声，故保留 ze_unspecified，不臆补上声或去声。",
@@ -86899,7 +86899,7 @@
     },
     {
       "id": "ev:cilin:第九部:第九部·平声",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:cilin",
       "kind": "rhyme_entry",
       "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第九部/平声",
       "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第九部/平声 共收录 75 个字形（原表条目 75 条）；声类按来源标为 ping。",
@@ -86908,7 +86908,7 @@
     },
     {
       "id": "ev:cilin:第九部:第九部·仄声",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:cilin",
       "kind": "rhyme_entry",
       "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第九部/仄声",
       "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第九部/仄声 共收录 70 个字形（原表条目 71 条）；来源只标仄声，故保留 ze_unspecified，不臆补上声或去声。",
@@ -86917,7 +86917,7 @@
     },
     {
       "id": "ev:cilin:第十部:第十部·平声",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:cilin",
       "kind": "rhyme_entry",
       "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十部/平声",
       "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十部/平声 共收录 81 个字形（原表条目 82 条）；声类按来源标为 ping。",
@@ -86926,7 +86926,7 @@
     },
     {
       "id": "ev:cilin:第十部:第十部·仄声",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:cilin",
       "kind": "rhyme_entry",
       "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十部/仄声",
       "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十部/仄声 共收录 82 个字形（原表条目 86 条）；来源只标仄声，故保留 ze_unspecified，不臆补上声或去声。",
@@ -86935,7 +86935,7 @@
     },
     {
       "id": "ev:cilin:第十一部:第十一部·平声",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:cilin",
       "kind": "rhyme_entry",
       "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十一部/平声",
       "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十一部/平声 共收录 240 个字形（原表条目 243 条）；声类按来源标为 ping。",
@@ -86944,7 +86944,7 @@
     },
     {
       "id": "ev:cilin:第十一部:第十一部·仄声",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:cilin",
       "kind": "rhyme_entry",
       "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十一部/仄声",
       "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十一部/仄声 共收录 139 个字形（原表条目 146 条）；来源只标仄声，故保留 ze_unspecified，不臆补上声或去声。",
@@ -86953,7 +86953,7 @@
     },
     {
       "id": "ev:cilin:第十二部:第十二部·平声",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:cilin",
       "kind": "rhyme_entry",
       "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十二部/平声",
       "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十二部/平声 共收录 117 个字形（原表条目 119 条）；声类按来源标为 ping。",
@@ -86962,7 +86962,7 @@
     },
     {
       "id": "ev:cilin:第十二部:第十二部·仄声",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:cilin",
       "kind": "rhyme_entry",
       "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十二部/仄声",
       "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十二部/仄声 共收录 153 个字形（原表条目 157 条）；来源只标仄声，故保留 ze_unspecified，不臆补上声或去声。",
@@ -86971,7 +86971,7 @@
     },
     {
       "id": "ev:cilin:第十三部:第十三部·平声",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:cilin",
       "kind": "rhyme_entry",
       "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十三部/平声",
       "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十三部/平声 共收录 49 个字形（原表条目 51 条）；声类按来源标为 ping。",
@@ -86980,7 +86980,7 @@
     },
     {
       "id": "ev:cilin:第十三部:第十三部·仄声",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:cilin",
       "kind": "rhyme_entry",
       "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十三部/仄声",
       "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十三部/仄声 共收录 37 个字形（原表条目 42 条）；来源只标仄声，故保留 ze_unspecified，不臆补上声或去声。",
@@ -86989,7 +86989,7 @@
     },
     {
       "id": "ev:cilin:第十四部:第十四部·平声",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:cilin",
       "kind": "rhyme_entry",
       "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十四部/平声",
       "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十四部/平声 共收录 104 个字形（原表条目 105 条）；声类按来源标为 ping。",
@@ -86998,7 +86998,7 @@
     },
     {
       "id": "ev:cilin:第十四部:第十四部·仄声",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:cilin",
       "kind": "rhyme_entry",
       "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十四部/仄声",
       "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十四部/仄声 共收录 100 个字形（原表条目 108 条）；来源只标仄声，故保留 ze_unspecified，不臆补上声或去声。",
@@ -87007,7 +87007,7 @@
     },
     {
       "id": "ev:cilin:第十五部:第十五部·入声",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:cilin",
       "kind": "rhyme_entry",
       "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十五部/入声",
       "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十五部/入声 共收录 137 个字形（原表条目 139 条）；声类按来源标为 ru。",
@@ -87016,7 +87016,7 @@
     },
     {
       "id": "ev:cilin:第十六部:第十六部·入声",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:cilin",
       "kind": "rhyme_entry",
       "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十六部/入声",
       "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十六部/入声 共收录 137 个字形（原表条目 139 条）；声类按来源标为 ru。",
@@ -87025,7 +87025,7 @@
     },
     {
       "id": "ev:cilin:第十七部:第十七部·入声",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:cilin",
       "kind": "rhyme_entry",
       "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十七部/入声",
       "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十七部/入声 共收录 348 个字形（原表条目 350 条）；声类按来源标为 ru。",
@@ -87034,7 +87034,7 @@
     },
     {
       "id": "ev:cilin:第十八部:第十八部·入声",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:cilin",
       "kind": "rhyme_entry",
       "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十八部/入声",
       "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十八部/入声 共收录 274 个字形（原表条目 287 条）；声类按来源标为 ru。",
@@ -87043,7 +87043,7 @@
     },
     {
       "id": "ev:cilin:第十九部:第十九部·入声",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:cilin",
       "kind": "rhyme_entry",
       "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十九部/入声",
       "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十九部/入声 共收录 63 个字形（原表条目 63 条）；声类按来源标为 ru。",
@@ -87053,7 +87053,7 @@
   ],
   "sources": [
     {
-      "id": "src:chinese_word_rhyme",
+      "id": "src:chinese_word_rhyme:cilin",
       "title": "chinese_word_rhyme（Cilin_Rhyme.json）",
       "edition": "提交 ff0e9c13fb037c43e0eaa5dc929c0fe4fa2ffb18 · Cilin_Rhyme.json",
       "url": "https://raw.githubusercontent.com/charlesix59/chinese_word_rhyme/ff0e9c13fb037c43e0eaa5dc929c0fe4fa2ffb18/data/Cilin_Rhyme.json",

@@ -19,6 +19,17 @@ export type CwrRhymeTable = Record<string, Record<string, string[]>>;
 export interface CwrSourceOptions {
   /** 快照版本号，例如 pingshui-cwr-ff0e9c1-d1。 */
   dataVersion: string;
+  /**
+   * 来源记录 ID。**按库区分**，避免同一 ID 在不同库指向不同文件内容
+   * （平水与词林来自同一上游仓库的不同文件，共用 ID 会触发跨库来源冲突）。
+   * 省略时退回 DEFAULT_SOURCE_ID，仅为兼容既有测试。
+   */
+  sourceId?: string;
+  /**
+   * 已人审签的证据 ID 列表。命中的 evidence 记为 approved，其余保持 unverified。
+   * 由 data/reviews/approved-evidence.json 提供，脚本内不得硬编码审批结果。
+   */
+  approvedEvidenceIds?: readonly string[];
   /** 固定提交或标签。 */
   revision: string;
   /** 数据文件在仓库中的相对路径，用于生成 locator。 */
@@ -43,7 +54,7 @@ const BUCKET_MAP: Record<string, BucketMapping> = {
   入声部: { toneClass: "ru", short: "入" },
 };
 
-const SOURCE_ID = "src:chinese_word_rhyme";
+const DEFAULT_SOURCE_ID = "src:chinese_word_rhyme";
 
 function toneOf(toneClass: BucketMapping["toneClass"]): "P" | "Z" {
   return toneClass === "ping" ? "P" : "Z";
@@ -53,8 +64,9 @@ export function pingshuiSnapshotFromCwr(
   table: CwrRhymeTable,
   options: CwrSourceOptions,
 ): SnapshotInput {
+  const sourceId = options.sourceId ?? DEFAULT_SOURCE_ID;
   const source: SourceRecord = {
-    id: SOURCE_ID,
+    id: sourceId,
     title: "chinese_word_rhyme（Pingshui_Rhyme.json）",
     edition: `提交 ${options.revision}`,
     url: `https://raw.githubusercontent.com/charlesix59/chinese_word_rhyme/${options.revision}/${options.dataPath}`,
@@ -87,12 +99,15 @@ export function pingshuiSnapshotFromCwr(
       });
       evidence.push({
         id: evidenceId,
-        sourceId: SOURCE_ID,
+        sourceId,
         kind: "rhyme_entry",
         locator,
         assertion: `${locator} 共收录 ${unique.length} 个字形（原表条目 ${characters.length} 条）`,
         excerpt: null,
-        reviewStatus: "unverified",
+        reviewStatus:
+          options.approvedEvidenceIds?.includes(evidenceId) === true
+            ? "approved"
+            : "unverified",
       });
 
       for (const character of unique) {

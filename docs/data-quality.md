@@ -6,11 +6,11 @@
 
 | 项目                | 自动检查（可复现命令）                                         | 结果                                            | 人工审核                           |
 | ------------------- | -------------------------------------------------------------- | ----------------------------------------------- | ---------------------------------- |
-| 平水韵完整性        | `checkCompleteness(snapshot, PINGSHUI_GATE)`                   | 105/106，缺`三讲`，`releaseGatePassed=false`    | 未审核                             |
+| 平水韵完整性        | `checkCompleteness(snapshot, PINGSHUI_GATE)`                   | 原始 105/106 缺`三讲`；含三讲草案 106/106 无空部，两者 `releaseGatePassed=false` | **三讲 9 字已人审签**（2026-10-18，A同学）；其余 105 部未审 |
 | 词林正韵完整性      | `checkCompleteness(snapshot, CILIN_GATE)`                      | 33/33 子卷齐全、无空卷                          | 未审核                             |
 | 中华新韵重建完整性  | `checkCompleteness(rebuild, XINYUN_GATE)`                      | 56/56 子卷齐全（结构层面）                      | 未审核，且规则出处待核实           |
 | 引用完整性          | `assertSnapshotIntegrity()`                                    | 悬空 evidence/group/source 均被拒（有反例测试） | —                                  |
-| 七字真实小样本      | `data/normalized/pingshui.sample-d1.json` + `lookupCharacters` | 与源表逐字一致                                  | **7/7 已人工核验**（搜韵网，2026-10-17；「更」平去两读已确认） |
+| 七字真实小样本      | `data/normalized/pingshui.sample-d1.json` + `lookupCharacters` | 与源表逐字一致                                  | **7 字/8 候选已人工核验**（搜韵网，2026-10-18；「更」平去两读已确认）；记录见 `data/reviews/pingshui-sample-d1-human-review.json`，**部级 evidence 仍未批准** |
 | 278 + 60 条人工抽样 | —                                                              | **7 条完成**                                    | 进行中                             |
 
 口径提醒：**数据门槛失败** 与 **检查器测试通过** 是两件事。缺三讲的源数据让“发布门槛”失败，

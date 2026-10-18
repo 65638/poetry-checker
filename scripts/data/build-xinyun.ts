@@ -11,6 +11,21 @@
  * - reviewStatus 固定 unverified；不写 data/releases；断言先于落盘。
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+
+/** 去掉调号、保留 ü（lü 不能并成 lu）；用于 modernReading.pinyin。 */
+const TONE_COMBINING_MARKS = new Set(["\u0304", "\u0301", "\u030C", "\u0300"]);
+function tonelessPinyin(raw: string): string {
+  const lowered = raw.trim().toLowerCase();
+  const numbered = /^([a-züv:]+)([1-5])$/u.exec(lowered);
+  if (numbered !== null) {
+    return (numbered[1] ?? "").replace(/u:|v/gu, "ü");
+  }
+  const stripped = [...lowered.normalize("NFD")]
+    .filter((mark) => !TONE_COMBINING_MARKS.has(mark))
+    .join("");
+  return stripped.normalize("NFC");
+}
+
 import path from "node:path";
 
 import type {
@@ -122,9 +137,12 @@ function main(): void {
 
   section("重建（规则 + 读音源）");
   const rows = parsePinyinFile(pinyinBytes.toString("utf8"));
-  const members = new Map<string, Set<string>>();
+  /** groupName → 字形 → 源读音集合（"无调号拼音#调值"）。保留每个具体读音，不把「同归部」当「同读音」。 */
+  const members = new Map<string, Map<string, Set<string>>>();
   const perCharacterGroups = new Map<string, Set<string>>();
   const unmappedReasons = new Map<string, number>();
+  /** 同 (字形, 子卷) 多个读音：候选只能承载一条 modernReading，其余必须列出，不得静默丢弃。 */
+  const readingCollisions: { character: string; groupName: string; readings: string[] }[] = [];
   let readings = 0;
   let mappedReadings = 0;
   let neutralReadings = 0;
@@ -166,8 +184,10 @@ function main(): void {
         continue;
       }
       const groupName = `${yun}·${toneName}`;
-      const bucket = members.get(groupName) ?? new Set<string>();
-      bucket.add(row.character);
+      const bucket = members.get(groupName) ?? new Map<string, Set<string>>();
+      const charReadings = bucket.get(row.character) ?? new Set<string>();
+      charReadings.add(`${tonelessPinyin(parsed.syllable.raw)}#${parsed.syllable.toneNumber}`);
+      bucket.set(row.character, charReadings);
       members.set(groupName, bucket);
       const groups = perCharacterGroups.get(row.character) ?? new Set<string>();
       groups.add(groupName);
@@ -215,7 +235,8 @@ function main(): void {
       check(false, `声调类 ${toneClass} 无对应平仄`);
       continue;
     }
-    const characters = [...(members.get(groupName) ?? new Set<string>())].sort();
+    const byCharacter = members.get(groupName) ?? new Map<string, Set<string>>();
+    const characters = [...byCharacter.keys()].sort();
     const groupId = `group:xinyun:${yun}:${groupName}`;
     const evidenceId = `ev:xinyun:${yun}:${groupName}`;
     const locator = `${PINYIN_REL}（${PINYIN_TAG}）+ 十四韵规则 ${XINYUN_RULES_VERSION} → ${groupName}`;
@@ -243,6 +264,13 @@ function main(): void {
       const id = makeCandidateId("xinyun", character, toneClass, groupName);
       if (seenCandidateIds.has(id)) continue;
       seenCandidateIds.add(id);
+      const readings = [
+        ...(byCharacter.get(character) ?? new Set<string>()),
+      ].sort();
+      const [pinyin = "", toneText = ""] = (readings[0] ?? "").split("#");
+      if (readings.length > 1) {
+         readingCollisions.push({ character, groupName, readings });
+      }
       candidates.push({
         id,
         character,
@@ -251,11 +279,44 @@ function main(): void {
         tone,
         groupIds: [groupId],
         gloss: null,
-        modernReading: null,
+        modernReading: {
+          pinyin,
+          toneNumber: Number(toneText) as 1 | 2 | 3 | 4 | 5,
+          evidenceIds: [evidenceId],
+        },
         fanqie: null,
         evidenceIds: [evidenceId],
       });
     }
+  }
+
+  if (readingCollisions.length > 0) {
+    const collisionPath = path.join(
+      ROOT,
+      "data",
+      "patches",
+      "xinyun-reading-collisions.dev.json",
+    );
+    writeFileSync(
+      collisionPath,
+      `${JSON.stringify(
+        {
+          title: "同(字形,子卷)多读音清单（候选只承载一条 modernReading，其余在此列明）",
+          generatedBy: "scripts/data/build-xinyun.ts",
+          note: "不得把「同归部」当成「同读音」：这些字形在该子卷下有多个源读音，未合并、未丢弃。",
+          count: readingCollisions.length,
+          items: readingCollisions,
+        },
+        null,
+        2,
+      )}\n`,
+      "utf8",
+    );
+    console.log(
+      `同(字,子卷)多读音 ${readingCollisions.length} 组，已写入 ${path.relative(ROOT, collisionPath)}`,
+    );
+  } else {
+    console.log("同(字,子卷)多读音 0 组");
   }
 
   const input: SnapshotInput = {
@@ -365,6 +426,43 @@ function main(): void {
     );
   }
 
+  // modernReading 必须承载具体源读音，且与声调类一致
+  const missingModern = snapshot.candidates.filter(
+    (candidate) => candidate.modernReading === null,
+  );
+  check(
+    missingModern.length === 0,
+    `全部候选都带 modernReading（缺失 ${missingModern.length} 条）`,
+  );
+  const toneMarkedPinyin = snapshot.candidates.filter((candidate) =>
+    /[\u0300-\u036f]/u.test(candidate.modernReading?.pinyin ?? ""),
+  );
+  check(
+    toneMarkedPinyin.length === 0,
+    `modernReading.pinyin 为去调号写法（带调号 ${toneMarkedPinyin.length} 条）`,
+  );
+  const expectedToneNumber: Record<string, number> = {
+    yinping: 1,
+    yangping: 2,
+    shang: 3,
+    qu: 4,
+  };
+  const toneNumberMismatch = snapshot.candidates.filter((candidate) => {
+    const expected = expectedToneNumber[candidate.toneClass];
+    return (
+      expected !== undefined && candidate.modernReading?.toneNumber !== expected
+    );
+  });
+  check(
+    toneNumberMismatch.length === 0,
+    `modernReading.toneNumber 与声调类一致（异常 ${toneNumberMismatch.length} 条）`,
+  );
+  check(
+    snapshot.candidates.every(
+      (candidate) => (candidate.modernReading?.pinyin ?? "") !== "",
+    ),
+    "modernReading.pinyin 均非空（不得用同归部代替同读音）",
+  );
   check(
     new Set(snapshot.candidates.map((candidate) => candidate.id)).size ===
       snapshot.candidates.length,

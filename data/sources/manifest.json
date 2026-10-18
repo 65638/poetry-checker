@@ -1,7 +1,7 @@
 {
-  "manifestVersion": "d2-1",
-  "updatedAt": "2026-10-17T12:26:28.017Z",
-  "updatedAtNote": "该时间戳仍是 d1-1 的登记时间。d2-1 本次只改 src:wikisource:pingshuiyun 一条（由“未取得”改为“已落盘、摘要待补”）；正文由用户在其本机浏览器取回，执行环境无法取得当前日期，故未改写时间戳，补录时请结合作业日期更新。",
+  "manifestVersion": "d2-2",
+  "updatedAt": "2026-10-18T00:00:00.000Z",
+  "updatedAtNote": "d2-2（2026-10-18）改两处：① src:wikisource:pingshuiyun 的 license 改为 workLayer / siteLayer / conclusion 双层结构，不再作单一许可结论；② 该来源 files[0] 的 path 由改名前的拼错路径纠正为 data/raw/wikisource/PingshuiYun-8264804.wikitext，并按落盘文件实测登记 bytes=37073、lines=658、SHA-256。updatedAt 只精确到日期（执行环境取不到当前时刻），时刻部分用 00:00:00Z 承载，不得当作精确时间引用。",
   "maintainer": "队员 A / DeepSeek（D1 数据批次）",
   "howToVerify": "node scripts/data/fetch-sources.ts --check 会按本文件登记的 snapshotSha256 重新校验 data/raw 下的字节；不一致即报错退出，不静默替换。",
   "digestScope": "snapshotSha256 只覆盖原始快照字节；retrievedAt 等时间信息不参与业务内容摘要（见 packages/lexicon/src/digest.ts）。",
@@ -122,26 +122,38 @@
       "retrievedAt": null,
       "retrievedAtNote": "落盘时刻未记录。补录前不得写成具体日期，也不得据此声称“已核对页面版权框”。",
       "license": {
-        "declaredInBytes": "{{PD-old}}、{{wikipedia}}",
-        "declaredWhere": "data/raw/wikisouce/pingshuiyun-8264804.wikitext 第 655-656 行页脚模板；另见第 658 行 [[Category:韻書]]",
-        "verified": "已按落盘字节核对页脚模板原文",
-        "conflictsWith": "任务书与 D1 占位声明都记的是 CC BY-SA 4.0，与落盘字节的 {{PD-old}} 不一致；不得再沿用 CC BY-SA 4.0 的表述",
-        "pendingReview": "{{PD-old}} 的适用条件（作者逝世逾百年）与渲染后的版权框需人工复核；复核前只记录字节事实，不下许可结论"
+        "workLayer": {
+          "declared": "{{PD-old}}（另有 {{wikipedia}}）",
+          "declaredWhere": "data/raw/wikisource/PingshuiYun-8264804.wikitext 第 655-656 行页脚模板；第 658 行 [[Category:韻書]]",
+          "meaning": "**作品本体层**：{{PD-old}} 指作者逝世逾百年，作品本身已进入公有领域。这是落盘字节里能直接读到的声明。",
+          "verified": "已按落盘字节核对页脚模板原文",
+          "status": "verified_by_bytes"
+        },
+        "siteLayer": {
+          "declared": "CC BY-SA 4.0",
+          "declaredWhere": "Wikimedia 站点条款（维基文库全站内容许可），**不写在页面模板里**，故落盘字节中查无此声明",
+          "meaning": "**站点整理层**：转载他人整理成果时的署名与相同方式共享义务；与作品层是否公有领域是两件事，不可互相替代。",
+          "verified": "未取得条款文本",
+          "status": "pendingReview"
+        },
+        "conclusion": "两层并存，**不作单一许可结论**：作品层 {{PD-old}} 已按字节核实；站点层 CC BY-SA 4.0 仅见于站方条款、条款文本未取得，署名与转载义务待人工确认。使用其正文时必须同时保留 oldid=8264804 与站点署名；两层均不构成“可商用”的证明。",
+        "resolution": "2026-10-18 与组长确认：两层不是矛盾、也不是笔误，故不作二选一；本文件按两层分别登记，docs/reviews/12_J03人审记录_第一批.md 的 CC BY-SA 4.0 表述属站点层，不需要修改。"
       },
       "upstreamRightsTodo": [
-        "人工复核页面版权框与 {{PD-old}} 适用条件后再定稿许可结论。",
+        "两层许可已分开登记（workLayer / siteLayer）；站点层条款文本未取得，署名与转载义务待人工确认。",
         "使用其正文时必须保留来源、署名与可定位修订号 oldid=8264804。",
         "注文中的汉字不得当作韵字收录；本页 {{++|…}} 标题行之后的字串为韵字正文，【詞】段为补字。"
       ],
       "files": [
         {
-          "path": "data/raw/wikisouce/pingshuiyun-8264804.wikitext",
-          "bytes": null,
-          "snapshotSha256": null,
-          "digestStatus": "pending",
-          "digestNote": "本批次执行环境被要求不运行终端命令，未能取得字节数与 SHA-256。未补齐前 fetch-sources.ts --check 不覆盖此条（该脚本只遍历内建 FETCH_PLAN 的 8 个 CDN 文件，且 expectedHashes 会跳过 null 摘要），因此不得以“--check 通过”推断本条已校验，也不得把本条计入已核对来源数。",
+          "path": "data/raw/wikisource/PingshuiYun-8264804.wikitext",
+          "bytes": 37073,
+          "snapshotSha256": "f0297bff7b66cde18bcb2644b5d9c6320ac90253f63a8aa178e489170a810ce2",
+          "lines": 658,
+          "digestStatus": "registered",
+          "digestNote": "字节数、行数与 SHA-256 于 2026-10-18 按落盘文件实测登记（与快照 src:wikisource:pingshuiyun 的 snapshotSha256 一致）。注意 fetch-sources.ts --check 仍只遍历内建 8 个 CDN 文件，不覆盖本条，因此本条须由 precheck-lexicon.ts 的 manifest 交叉核对来保障。",
           "purpose": "《平水韻》全本 wikitext（繁体，106 韵）；上声三讲正文为「講港棒蚌項缿玤傋耩」",
-          "namingDeviation": "目录名落盘为 wikisouce（少一个 r）、文件名为小写，与 D2 执行手册约定的 data/raw/wikisource/PingshuiYun-8264804.wikitext 不一致。改路径必须保持字节不变（改名而非重新转录）。"
+          "namingNote": "该文件已由用户从旧路径 data/raw/wikisouce/pingshuiyun-8264804.wikitext（少一个 r、小写）**改名**至此规范路径，字节未变。"
         }
       ]
     },

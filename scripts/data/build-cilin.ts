@@ -44,7 +44,7 @@ const RAW_REL = "data/raw/chinese_word_rhyme/Cilin_Rhyme.json";
 const OUT_REL = "data/normalized/cilin.full-d2.json";
 const DATA_VERSION = "cilin-cwr-ff0e9c1-d2-full";
 const CWR_REVISION = "ff0e9c13fb037c43e0eaa5dc929c0fe4fa2ffb18";
-const SOURCE_ID = "src:chinese_word_rhyme";
+const SOURCE_ID = "src:chinese_word_rhyme:cilin";
 
 /** 词林子卷声类 → 契约声类与本调。 */
 const TONE_MAP: Readonly<
