@@ -10,6 +10,16 @@
       "snapshotSha256": null,
       "revision": null,
       "retrievedAt": null
+    },
+    {
+      "id": "src:project:teaching-v1-policy",
+      "title": "teaching-v1 规则执行约定（项目工程口径）",
+      "edition": "已冻结十规则ID及基础模板",
+      "url": null,
+      "license": "项目内部规则说明；不替代韵书或学术专著",
+      "snapshotSha256": "94354470b7f1da46c329114169d1ab511671cb832f2127ae5d6d759c410e9a88",
+      "revision": null,
+      "retrievedAt": null
     }
   ],
   "evidence": [
@@ -39,6 +49,69 @@
       "assertion": "出句第四字（七言第六字）拗时，在对句第三字（七言第五字）用平声补偿；须同联",
       "excerpt": null,
       "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:rule:METER.POSITION:wangli15-p339-342-343",
+      "sourceId": "src:wangli:wenji15",
+      "kind": "dictionary",
+      "locator": "第二章第三节（六）半拗页339及（七）一三五不论页342–343；docs/rule-sources.md §9.5/9.6/13，C 已签",
+      "assertion": "奇位可变受句式、孤平与尾式制约；A 型小拗 info 是本项目已冻结教学口径。",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:rule:RHYME.COMMON:engineering-scope",
+      "sourceId": "src:project:teaching-v1-policy",
+      "kind": "dictionary",
+      "locator": "docs/rule-sources.md §11；docs/reviews/12_J03人审记录_第一批.md 流/楼归部；完整出处待核",
+      "assertion": "同部交集为 teaching-v1 执行策略；流/楼十一尤已有 J03 证据；三库完整映射与邻韵通押未全量审核。",
+      "excerpt": null,
+      "reviewStatus": "unverified"
+    },
+    {
+      "id": "ev:rule:RELATION.DUI:wangli15-p333-334",
+      "sourceId": "src:wangli:wenji15",
+      "kind": "dictionary",
+      "locator": "第二章第三节（三）粘对，页333–334；docs/rule-sources.md §9.7/13，C 已签",
+      "assertion": "同联关键节奏位相对；具体变格交互按本项目已实现范围解释。",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:rule:RELATION.NIAN:wangli15-p334",
+      "sourceId": "src:wangli:wenji15",
+      "kind": "dictionary",
+      "locator": "第二章第三节（三）粘对，页334；docs/rule-sources.md §9.7/13，C 已签",
+      "assertion": "上联对句与下联出句关键节奏位相粘。",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:rule:GUPING.NARROW:wangli15-p335-336",
+      "sourceId": "src:wangli:wenji15",
+      "kind": "dictionary",
+      "locator": "第二章第三节（四）孤平，页335–336（含平脚句脚注）；docs/rule-sources.md §9.1/13，C 已签",
+      "assertion": "采用平脚句的窄义孤平；不把所有整句单平都归入本规则。",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:rule:TAIL.SANPING:engineering-scope",
+      "sourceId": "src:wangli:wenji15",
+      "kind": "dictionary",
+      "locator": "docs/rule-sources.md §9.9/13，印刷页371–372（部分依据）；J03 第一批第三部分备注",
+      "assertion": "王力页371–372只提供古体尾式的部分依据；近体检查及 error/warning 等级是工程教学口径，不声称文献规定该等级。",
+      "excerpt": null,
+      "reviewStatus": "unverified"
+    },
+    {
+      "id": "ev:rule:TAIL.SANZE:engineering-scope",
+      "sourceId": "src:wangli:wenji15",
+      "kind": "dictionary",
+      "locator": "docs/rule-sources.md §9.9/13，印刷页371–372（部分依据）；J03 第一批第三部分备注",
+      "assertion": "王力页371–372只提供古体尾式的部分依据；近体检查及 error/warning 等级是工程教学口径，不声称文献规定该等级。",
+      "excerpt": null,
+      "reviewStatus": "unverified"
     }
   ]
 }

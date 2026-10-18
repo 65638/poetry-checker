@@ -1,5 +1,5 @@
 {
-  "manifestVersion": "d2-2",
+  "manifestVersion": "d2-3",
   "updatedAt": "2026-10-18T00:00:00.000Z",
   "updatedAtNote": "d2-2（2026-10-18）改两处：① src:wikisource:pingshuiyun 的 license 改为 workLayer / siteLayer / conclusion 双层结构，不再作单一许可结论；② 该来源 files[0] 的 path 由改名前的拼错路径纠正为 data/raw/wikisource/PingshuiYun-8264804.wikitext，并按落盘文件实测登记 bytes=37073、lines=658、SHA-256。updatedAt 只精确到日期（执行环境取不到当前时刻），时刻部分用 00:00:00Z 承载，不得当作精确时间引用。",
   "maintainer": "队员 A / DeepSeek（D1 数据批次）",
@@ -174,6 +174,66 @@
         "只标仄声的记录必须保留 ze_unspecified，不得擅自补成某个具体古声类。"
       ],
       "files": []
+    },
+    {
+      "id": "src:wikisource:work:dengguanquelou",
+      "title": "维基文库《登鹳雀楼》固定修订",
+      "url": "https://zh.wikisource.org/w/index.php?title=%E7%99%BB%E9%B8%9B%E9%9B%80%E6%A8%93_(%E7%8E%8B%E4%B9%8B%E6%B8%99)&oldid=2648160",
+      "revision": "2648160",
+      "retrievedAt": "2026-10-18T08:47:13.486Z",
+      "license": {
+        "workLayer": "古诗原文公有领域",
+        "siteLayer": "维基文库 CC BY-SA 页面；具体第三方内容另核",
+        "conclusion": "原文快照用于可追溯核对"
+      },
+      "files": [
+        {
+          "path": "data/raw/works/dengguanquelou-2648160.wikitext",
+          "bytes": 999,
+          "snapshotSha256": "372a0e661b402fa6e3df2bbd2f02360972fd90fab9cc1829e20d942467c865a9",
+          "purpose": "三首固定版本正文与异文核对"
+        }
+      ]
+    },
+    {
+      "id": "src:wikisource:work:jingyesi",
+      "title": "维基文库《静夜思》固定修订",
+      "url": "https://zh.wikisource.org/w/index.php?title=%E9%9D%9C%E5%A4%9C%E6%80%9D&oldid=8747585",
+      "revision": "8747585",
+      "retrievedAt": "2026-10-18T08:47:13.379Z",
+      "license": {
+        "workLayer": "古诗原文公有领域",
+        "siteLayer": "维基文库 CC BY-SA 页面；具体第三方内容另核",
+        "conclusion": "原文快照用于可追溯核对"
+      },
+      "files": [
+        {
+          "path": "data/raw/works/jingyesi-8747585.wikitext",
+          "bytes": 1015,
+          "snapshotSha256": "16dfda854ca163a2b0230d2a7f322cae82acbba3ddca0fbacc2e32c0d537de01",
+          "purpose": "三首固定版本正文与异文核对"
+        }
+      ]
+    },
+    {
+      "id": "src:wikisource:work:huanghelou",
+      "title": "维基文库《黄鹤楼》固定修订",
+      "url": "https://zh.wikisource.org/w/index.php?title=%E9%BB%83%E9%B6%B4%E6%A8%93_(%E5%B4%94%E9%A1%A5)&oldid=2492584",
+      "revision": "2492584",
+      "retrievedAt": "2026-10-18T08:47:13.480Z",
+      "license": {
+        "workLayer": "古诗原文公有领域",
+        "siteLayer": "维基文库 CC BY-SA 页面；具体第三方内容另核",
+        "conclusion": "原文快照用于可追溯核对"
+      },
+      "files": [
+        {
+          "path": "data/raw/works/huanghelou-2492584.wikitext",
+          "bytes": 730,
+          "snapshotSha256": "e6e66503c45822fa0cf56fa7547866a3c044c411bda16e71db2b8a31e868fe34",
+          "purpose": "三首固定版本正文与异文核对"
+        }
+      ]
     }
   ]
 }

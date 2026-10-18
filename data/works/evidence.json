@@ -1,0 +1,29 @@
+[
+  {
+    "id": "ev:work:dengguanquelou:j03",
+    "sourceId": "src:wikisource:work:dengguanquelou",
+    "kind": "work_metadata",
+    "locator": "data/raw/works/dengguanquelou-2648160.wikitext；oldid=2648160；正文及体裁分类；审核 docs/reviews/12_J03人审记录_第一批.md；docs/reviews/13_J03三首核心诗逐字人审_第二批.md；docs/rule-sources.md",
+    "assertion": "采用已批准正文指纹 33836d104644fd0bd8ae71d6b67a631eff28c6a857a6c5b8f6a644f25d2892ca；作者 王之涣；体裁 regulated/wujue。正文版本/体裁来自已有 J03 与 C 记录，非按出律反推。来源繁体与采用简体的逐字差异见 data/works/review-closure.json。",
+    "excerpt": null,
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "ev:work:jingyesi:j03",
+    "sourceId": "src:wikisource:work:jingyesi",
+    "kind": "work_metadata",
+    "locator": "data/raw/works/jingyesi-8747585.wikitext；oldid=8747585；唐詩三百首段；审核 docs/reviews/12_J03人审记录_第一批.md；docs/reviews/13_J03三首核心诗逐字人审_第二批.md；docs/rule-sources.md",
+    "assertion": "采用已批准正文指纹 9d68fef608c1ae6010cfc3ddd7fb2429e60a861bab8c6453874c2adb16d0bdef；作者 李白；体裁 ancient/古绝。正文版本/体裁来自已有 J03 与 C 记录，非按出律反推。来源繁体与采用简体的逐字差异见 data/works/review-closure.json。",
+    "excerpt": null,
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "ev:work:huanghelou:j03",
+    "sourceId": "src:wikisource:work:huanghelou",
+    "kind": "work_metadata",
+    "locator": "data/raw/works/huanghelou-2492584.wikitext；oldid=2492584；正文及体裁分类；审核 docs/reviews/12_J03人审记录_第一批.md；docs/reviews/13_J03三首核心诗逐字人审_第二批.md；docs/rule-sources.md",
+    "assertion": "采用已批准正文指纹 7b65737ca79258301a2dd35cd880c41020415945c1ea006478eaf816edbf47a2；作者 崔颢；体裁 regulated/qilv。正文版本/体裁来自已有 J03 与 C 记录，非按出律反推。来源繁体与采用简体的逐字差异见 data/works/review-closure.json。",
+    "excerpt": null,
+    "reviewStatus": "approved"
+  }
+]

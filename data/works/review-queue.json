@@ -1,6 +1,6 @@
 {
   "schemaVersion": "d2-draft-2",
-  "note": "候选登记，非 approved 元数据。正文版本已由 E 定版（待组长签字）；来源已定位但字节未留存，故 evidenceIds 为空、reviewStatus 全为 unverified。metadata.json 由 E 维护，GLM 只负责 API 装载。",
+  "note": "三首固定版本原文已取回；依据已有 J03/C 记录落实正文、作者、体裁与选版。原文繁体保留；采用简体的差异逐项登记 review-closure.json。逐字韵部审批单独统计。",
   "items": [
     {
       "caseId": "golden-dengguanquelou-ps-v1",
@@ -11,13 +11,18 @@
       "fingerprint": "33836d104644fd0bd8ae71d6b67a631eff28c6a857a6c5b8f6a644f25d2892ca",
       "formFamily": "regulated",
       "formId": "wujue",
-      "historicalTags": ["五绝", "近体候选"],
+      "historicalTags": [
+        "五绝",
+        "近体候选"
+      ],
       "variants": [
         {
           "label": "「更上一重楼」系统",
           "text": "白日依山尽，黄河入海流。欲穷千里目，更上一重楼。",
           "fingerprint": "e0174ba2a4b39dad98eb8069a91e757eaf1a1035ce27a3602caa8be5d675fa57",
-          "differsAt": ["第四句第四字 层→重"],
+          "differsAt": [
+            "第四句第四字 层→重"
+          ],
           "registeredAsSeparateWork": false
         }
       ],
@@ -29,17 +34,23 @@
       "sourceRef": {
         "locator": "维基文库《登鸛雀樓 (王之渙)》oldid=2648160",
         "via": "C 的 docs/rule-sources.md §7.2（已核文本与异文）",
-        "bytesStored": false,
-        "evidenceIds": []
+        "bytesStored": true,
+        "evidenceIds": [
+          "ev:work:dengguanquelou:j03"
+        ],
+        "path": "data/raw/works/dengguanquelou-2648160.wikitext",
+        "snapshotSha256": "372a0e661b402fa6e3df2bbd2f02360972fd90fab9cc1829e20d942467c865a9"
       },
       "pendingItems": [
-        "正文权威出处（书名/卷次/版次/页码）",
-        "「更」为多音重点字位，属 B 的读音范围",
-        "古体/近体定性的文献依据"
+        "逐字归部证据及未审竞争候选详见 data/reviews/golden-token-review-2026-10-18.md；不属于本文本/体裁审批"
       ],
-      "reviewStatus": "unverified",
-      "reviewers": [],
-      "evidenceIds": []
+      "reviewStatus": "approved",
+      "reviewers": [
+        "原件记载：组长 J03 / C；Codex 仅落库"
+      ],
+      "evidenceIds": [
+        "ev:work:dengguanquelou:j03"
+      ]
     },
     {
       "caseId": "golden-jingyesi-ps-v1",
@@ -50,20 +61,28 @@
       "fingerprint": "9d68fef608c1ae6010cfc3ddd7fb2429e60a861bab8c6453874c2adb16d0bdef",
       "formFamily": "ancient",
       "formId": null,
-      "historicalTags": ["古绝", "五言古体"],
+      "historicalTags": [
+        "古绝",
+        "五言古体"
+      ],
       "variants": [
         {
           "label": "李太白全集（宋刊系统）",
           "text": "床前看月光，疑是地上霜。举头望山月，低头思故乡。",
           "fingerprint": "cc9d8fe1bcac368b135aa6a47c10d5676f0f6d5e57a021b478d57dcd89589826",
-          "differsAt": ["首句第三字 明→看", "第三句第四字 明→山"],
+          "differsAt": [
+            "首句第三字 明→看",
+            "第三句第四字 明→山"
+          ],
           "registeredAsSeparateWork": false
         },
         {
           "label": "全唐詩",
           "text": "床前明月光，疑是地上霜。举头望山月，低头思故乡。",
           "fingerprint": "f5ec10d48a3e746c2ef37e5007744367116f7668aa5065a7eafcca387d733cfc",
-          "differsAt": ["第三句第四字 明→山"],
+          "differsAt": [
+            "第三句第四字 明→山"
+          ],
           "registeredAsSeparateWork": false
         }
       ],
@@ -77,18 +96,23 @@
       "sourceRef": {
         "locator": "维基文库《靜夜思》oldid=8747585",
         "via": "C 的 docs/rule-sources.md §7.3（状态：待确认，需 E 定版）",
-        "bytesStored": false,
-        "evidenceIds": []
+        "bytesStored": true,
+        "evidenceIds": [
+          "ev:work:jingyesi:j03"
+        ],
+        "path": "data/raw/works/jingyesi-8747585.wikitext",
+        "snapshotSha256": "16dfda854ca163a2b0230d2a7f322cae82acbba3ddca0fbacc2e32c0d537de01"
       },
       "pendingItems": [
-        "三版各自的书名/卷次/版次/页码",
-        "「古绝」定性的文献依据",
-        "「乐府旧题」是否写入 historicalTags（AGENTS 第 5 条：乐府标签与形式分开）",
-        "「宋刊」具体刊本与卷次未核实，标待验证"
+        "逐字归部证据及未审竞争候选详见 data/reviews/golden-token-review-2026-10-18.md；不属于本文本/体裁审批"
       ],
-      "reviewStatus": "unverified",
-      "reviewers": [],
-      "evidenceIds": []
+      "reviewStatus": "approved",
+      "reviewers": [
+        "原件记载：组长 J03 / C；Codex 仅落库"
+      ],
+      "evidenceIds": [
+        "ev:work:jingyesi:j03"
+      ]
     },
     {
       "caseId": "golden-huanghelou-ps-v1",
@@ -99,30 +123,42 @@
       "fingerprint": "7b65737ca79258301a2dd35cd880c41020415945c1ea006478eaf816edbf47a2",
       "formFamily": "regulated",
       "formId": "qilv",
-      "historicalTags": ["七律", "特殊拗律", "半古半律"],
+      "historicalTags": [
+        "七律",
+        "特殊拗律",
+        "半古半律"
+      ],
       "variants": [
         {
           "label": "首句「昔人已乘白云去」系统",
           "text": "昔人已乘白云去，此地空余黄鹤楼。黄鹤一去不复返，白云千载空悠悠。晴川历历汉阳树，芳草萋萋鹦鹉洲。日暮乡关何处是，烟波江上使人愁。",
           "fingerprint": "737f6baae90975871af8241627898d4c43ce31fc8725500a597b88281f57a90a",
-          "differsAt": ["首句第五、六字 黄鹤→白云"],
+          "differsAt": [
+            "首句第五、六字 黄鹤→白云"
+          ],
           "registeredAsSeparateWork": false
         }
       ],
       "sourceRef": {
         "locator": "维基文库《黃鶴樓 (崔顥)》oldid=2492584",
         "via": "C 的 docs/rule-sources.md §7.4（已核文本与异文）",
-        "bytesStored": false,
-        "evidenceIds": []
+        "bytesStored": true,
+        "evidenceIds": [
+          "ev:work:huanghelou:j03"
+        ],
+        "path": "data/raw/works/huanghelou-2492584.wikitext",
+        "snapshotSha256": "e6e66503c45822fa0cf56fa7547866a3c044c411bda16e71db2b8a31e868fe34"
       },
       "pendingItems": [
-        "正文权威出处（书名/卷次/版次/页码）",
-        "「特殊拗律/半古半律」需要规则卡或文献支撑",
-        "首句异文是否另立条目"
+        "逐字归部证据及未审竞争候选详见 data/reviews/golden-token-review-2026-10-18.md；不属于本文本/体裁审批"
       ],
-      "reviewStatus": "unverified",
-      "reviewers": [],
-      "evidenceIds": []
+      "reviewStatus": "approved",
+      "reviewers": [
+        "原件记载：组长 J03 / C；Codex 仅落库"
+      ],
+      "evidenceIds": [
+        "ev:work:huanghelou:j03"
+      ]
     }
   ]
 }

@@ -44,7 +44,7 @@ function baseCase(overrides: Record<string, unknown> = {}): unknown {
 }
 
 describe("GoldenCase 结构校验", () => {
-  it("E-D1-09 三首核心作品档案：结构有效，但仍为 pending 且未运行真实分析", () => {
+  it("三首预期按既有审批落库；审批状态不代表真实 API 已通过", () => {
     const cases = readCases();
     const result = validateGoldenCases(cases);
 
@@ -52,16 +52,16 @@ describe("GoldenCase 结构校验", () => {
     expect(result.ok).toBe(true);
     expect(result.values).toHaveLength(3);
     for (const value of result.values) {
-      expect(value.reviewStatus).toBe("pending");
-      expect(value.reviewers).toEqual([]);
-      expect(value.evidenceIds).toEqual([]);
+      expect(value.reviewStatus).toBe("approved");
+      expect(value.reviewers.length).toBeGreaterThan(0);
+      expect(value.evidenceIds.length).toBeGreaterThan(0);
       expect(value.notes.length).toBeGreaterThan(0);
     }
-    // 两个数量分开报：结构 3/3 通过，已审核 0/3。
+    // 结构、预期审批、真实 API 通过是三个不同统计，API 另跑 scripts/probe-d2-api.ts。
     const approved = result.values.filter(
       (value) => value.reviewStatus === "approved",
     );
-    expect(approved).toHaveLength(0);
+    expect(approved).toHaveLength(3);
   });
 
   it("缺必填字段的用例被拒绝", () => {

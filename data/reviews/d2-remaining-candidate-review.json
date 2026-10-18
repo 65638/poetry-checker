@@ -1,0 +1,18 @@
+{
+  "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3",
+  "scope": "三首固定正文经已审语境规则约束后的候选；AI 原文字形对照不是人工批准，不更改 evidence.reviewStatus",
+  "source": {
+    "path": "data/raw/wikisource/PingshuiYun-8264804.wikitext",
+    "sha256": "f0297bff7b66cde18bcb2644b5d9c6320ac90253f63a8aa178e489170a810ce2",
+    "revision": "8264804"
+  },
+  "stats": {
+    "tokens": 96,
+    "effectiveCandidatesBackedPositions": 96,
+    "blockedPositions": 0,
+    "uniquePendingCandidates": 0,
+    "sourceMatchedCandidates": 0,
+    "sourceDiscrepancies": 0
+  },
+  "items": []
+}

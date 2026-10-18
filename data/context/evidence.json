@@ -1,0 +1,101 @@
+[
+  {
+    "id": "ctx:j03b2:01",
+    "sourceId": "src:j03-review-batch2",
+    "kind": "context",
+    "locator": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md §五 第 1 条",
+    "assertion": "「更上一层楼」之「更」为副词义「再、又、愈加」，非平声「更改/经历/更次」，裁定取去声二十四敬（pingshui:更:qu:二十四敬）",
+    "excerpt": null,
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "ctx:j03b2:02",
+    "sourceId": "src:j03-review-batch2",
+    "kind": "context",
+    "locator": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md §五 第 2 条",
+    "assertion": "「举头望明月」之「望」为动词「远看、凝望」，近体通说取去声二十三漾（pingshui:望:qu:二十三漾）；本条为十处中唯一义可两通者，标注为通说裁定",
+    "excerpt": null,
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "ctx:j03b2:03",
+    "sourceId": "src:j03-review-batch2",
+    "kind": "context",
+    "locator": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md §五 第 3 条",
+    "assertion": "「低头思故乡」之「思」带宾语，为动词「思念、怀想」，取平声四支（pingshui:思:ping:四支）；去声多作名词情思",
+    "excerpt": null,
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "ctx:j03b2:04",
+    "sourceId": "src:j03-review-batch2",
+    "kind": "context",
+    "locator": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md §五 第 4 条",
+    "assertion": "「故乡」之「乡」为名词家乡义，取平声七阳（pingshui:乡:ping:七阳）；乡居韵脚与光、霜同押，平韵诗韵脚必平",
+    "excerpt": null,
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "ctx:j03b2:05",
+    "sourceId": "src:j03-review-batch2",
+    "kind": "context",
+    "locator": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md §五 第 5 条",
+    "assertion": "「昔人已乘黄鹤去」之「乘」为动词「乘坐、骑乘」，取平声十蒸（pingshui:乘:ping:十蒸）；去声为名词车乘/史乘",
+    "excerpt": null,
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "ctx:j03b2:06",
+    "sourceId": "src:j03-review-batch2",
+    "kind": "context",
+    "locator": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md §五 第 6 条",
+    "assertion": "「此地空余黄鹤楼」之「空」为副词「徒然、空自」，取平声一东（pingshui:空:ping:一东）；去声孔隙、上声通孔皆不合句义",
+    "excerpt": null,
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "ctx:j03b2:07",
+    "sourceId": "src:j03-review-batch2",
+    "kind": "context",
+    "locator": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md §五 第 7 条",
+    "assertion": "「黄鹤一去不复返」之「不」为否定副词，取入声五物（pingshui:不:ru:入声五物）；平声十一尤为「否」之通假，专用于疑问句末",
+    "excerpt": null,
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "ctx:j03b2:08",
+    "sourceId": "src:j03-review-batch2",
+    "kind": "context",
+    "locator": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md §五 第 8 条",
+    "assertion": "「白云千载空悠悠」之「空」为副词徒然义，取平声一东（pingshui:空:ping:一东）；三平尾成立，作古风式律诗特征保留，不判出律",
+    "excerpt": null,
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "ctx:j03b2:09",
+    "sourceId": "src:j03-review-batch2",
+    "kind": "context",
+    "locator": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md §五 第 9 条",
+    "assertion": "「晴川历历汉阳树」之「汉」为地名汉阳义，取去声十五翰（pingshui:汉:qu:十五翰）；平声十四寒为罕见古读，不取",
+    "excerpt": null,
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "ctx:j03b2:10",
+    "sourceId": "src:j03-review-batch2",
+    "kind": "context",
+    "locator": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md §五 第 10 条",
+    "assertion": "「日暮乡关何处是」之「乡关」为名词故乡义，取平声七阳（pingshui:乡:ping:七阳）",
+    "excerpt": null,
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "ctx:d2-closeout:qianli",
+    "sourceId": "src:d2-closeout-review",
+    "kind": "context",
+    "locator": "docs/reviews/14_D2收口_候选批次与里字异常.md 实际裁定记录；data/reviews/d2-closeout-batch-approval.json；平水韵oldid8264804第204行上声四纸“里”，第382行去声四寘“裏”",
+    "assertion": "组长接受机器初审批次并裁定：仅在《登鹳雀楼》“欲穷千里目”的距离义中，里取pingshui:里:shang:四纸。去声四寘候选保留未审核，非为满足模板而删去竞争读音。",
+    "excerpt": null,
+    "reviewStatus": "approved"
+  }
+]

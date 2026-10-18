@@ -1,0 +1,253 @@
+{
+  "generatedBy": "packages/readings/scripts/d2-coverage.ts",
+  "note": "平仄取决于消歧的位置：候选里同时存在平与仄，选错会直接改变格律结论。按字位列出，供人工优先审核对应韵部证据。",
+  "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-draft",
+  "positions": [
+    {
+      "work": "登鹳雀楼",
+      "tokenId": "l4c1",
+      "character": "更",
+      "line": 4,
+      "column": 1,
+      "candidateIds": [
+        "pingshui:更:ping:八庚",
+        "pingshui:更:qu:二十四敬"
+      ],
+      "tones": [
+        "P",
+        "Z"
+      ],
+      "groupIds": [
+        "group:pingshui:下平:八庚",
+        "group:pingshui:去:二十四敬"
+      ],
+      "evidenceIds": [
+        "ev:pingshui:下平:八庚",
+        "ev:pingshui:去:二十四敬"
+      ],
+      "evidenceApproved": false
+    },
+    {
+      "work": "静夜思",
+      "tokenId": "l3c3",
+      "character": "望",
+      "line": 3,
+      "column": 3,
+      "candidateIds": [
+        "pingshui:望:ping:七阳",
+        "pingshui:望:qu:二十三漾"
+      ],
+      "tones": [
+        "P",
+        "Z"
+      ],
+      "groupIds": [
+        "group:pingshui:下平:七阳",
+        "group:pingshui:去:二十三漾"
+      ],
+      "evidenceIds": [
+        "ev:pingshui:下平:七阳",
+        "ev:pingshui:去:二十三漾"
+      ],
+      "evidenceApproved": false
+    },
+    {
+      "work": "静夜思",
+      "tokenId": "l4c3",
+      "character": "思",
+      "line": 4,
+      "column": 3,
+      "candidateIds": [
+        "pingshui:思:ping:四支",
+        "pingshui:思:qu:四寘"
+      ],
+      "tones": [
+        "P",
+        "Z"
+      ],
+      "groupIds": [
+        "group:pingshui:上平:四支",
+        "group:pingshui:去:四寘"
+      ],
+      "evidenceIds": [
+        "ev:pingshui:上平:四支",
+        "ev:pingshui:去:四寘"
+      ],
+      "evidenceApproved": false
+    },
+    {
+      "work": "静夜思",
+      "tokenId": "l4c5",
+      "character": "乡",
+      "line": 4,
+      "column": 5,
+      "candidateIds": [
+        "pingshui:乡:ping:七阳",
+        "pingshui:乡:qu:二十三漾"
+      ],
+      "tones": [
+        "P",
+        "Z"
+      ],
+      "groupIds": [
+        "group:pingshui:下平:七阳",
+        "group:pingshui:去:二十三漾"
+      ],
+      "evidenceIds": [
+        "ev:pingshui:下平:七阳",
+        "ev:pingshui:去:二十三漾"
+      ],
+      "evidenceApproved": false
+    },
+    {
+      "work": "黄鹤楼",
+      "tokenId": "l1c4",
+      "character": "乘",
+      "line": 1,
+      "column": 4,
+      "candidateIds": [
+        "pingshui:乘:ping:十蒸",
+        "pingshui:乘:qu:二十五径"
+      ],
+      "tones": [
+        "P",
+        "Z"
+      ],
+      "groupIds": [
+        "group:pingshui:下平:十蒸",
+        "group:pingshui:去:二十五径"
+      ],
+      "evidenceIds": [
+        "ev:pingshui:下平:十蒸",
+        "ev:pingshui:去:二十五径"
+      ],
+      "evidenceApproved": false
+    },
+    {
+      "work": "黄鹤楼",
+      "tokenId": "l2c3",
+      "character": "空",
+      "line": 2,
+      "column": 3,
+      "candidateIds": [
+        "pingshui:空:ping:一东",
+        "pingshui:空:qu:一送",
+        "pingshui:空:shang:一董"
+      ],
+      "tones": [
+        "P",
+        "Z"
+      ],
+      "groupIds": [
+        "group:pingshui:上平:一东",
+        "group:pingshui:去:一送",
+        "group:pingshui:上:一董"
+      ],
+      "evidenceIds": [
+        "ev:pingshui:上平:一东",
+        "ev:pingshui:去:一送",
+        "ev:pingshui:上:一董"
+      ],
+      "evidenceApproved": false
+    },
+    {
+      "work": "黄鹤楼",
+      "tokenId": "l3c5",
+      "character": "不",
+      "line": 3,
+      "column": 5,
+      "candidateIds": [
+        "pingshui:不:ping:十一尤",
+        "pingshui:不:ru:入声五物"
+      ],
+      "tones": [
+        "P",
+        "Z"
+      ],
+      "groupIds": [
+        "group:pingshui:下平:十一尤",
+        "group:pingshui:入:入声五物"
+      ],
+      "evidenceIds": [
+        "ev:pingshui:下平:十一尤",
+        "ev:pingshui:入:入声五物"
+      ],
+      "evidenceApproved": false
+    },
+    {
+      "work": "黄鹤楼",
+      "tokenId": "l4c5",
+      "character": "空",
+      "line": 4,
+      "column": 5,
+      "candidateIds": [
+        "pingshui:空:ping:一东",
+        "pingshui:空:qu:一送",
+        "pingshui:空:shang:一董"
+      ],
+      "tones": [
+        "P",
+        "Z"
+      ],
+      "groupIds": [
+        "group:pingshui:上平:一东",
+        "group:pingshui:去:一送",
+        "group:pingshui:上:一董"
+      ],
+      "evidenceIds": [
+        "ev:pingshui:上平:一东",
+        "ev:pingshui:去:一送",
+        "ev:pingshui:上:一董"
+      ],
+      "evidenceApproved": false
+    },
+    {
+      "work": "黄鹤楼",
+      "tokenId": "l5c5",
+      "character": "汉",
+      "line": 5,
+      "column": 5,
+      "candidateIds": [
+        "pingshui:汉:ping:十四寒",
+        "pingshui:汉:qu:十五翰"
+      ],
+      "tones": [
+        "P",
+        "Z"
+      ],
+      "groupIds": [
+        "group:pingshui:上平:十四寒",
+        "group:pingshui:去:十五翰"
+      ],
+      "evidenceIds": [
+        "ev:pingshui:上平:十四寒",
+        "ev:pingshui:去:十五翰"
+      ],
+      "evidenceApproved": false
+    },
+    {
+      "work": "黄鹤楼",
+      "tokenId": "l7c3",
+      "character": "乡",
+      "line": 7,
+      "column": 3,
+      "candidateIds": [
+        "pingshui:乡:ping:七阳",
+        "pingshui:乡:qu:二十三漾"
+      ],
+      "tones": [
+        "P",
+        "Z"
+      ],
+      "groupIds": [
+        "group:pingshui:下平:七阳",
+        "group:pingshui:去:二十三漾"
+      ],
+      "evidenceIds": [
+        "ev:pingshui:下平:七阳",
+        "ev:pingshui:去:二十三漾"
+      ],
+      "evidenceApproved": false
+    }
+  ]
+}

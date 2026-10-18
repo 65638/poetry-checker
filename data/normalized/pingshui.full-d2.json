@@ -1,5 +1,5 @@
 {
-  "dataVersion": "pingshui-cwr-ff0e9c1-d2-full",
+  "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-review3",
   "book": "pingshui",
   "reviewStatus": "unverified",
   "notice": "平水韵全量候选（105 部）：源自 chinese_word_rhyme 固定提交 ff0e9c13 的原表转载，仅登记韵部归属与声类；反切、义项、今读一律为 null。该提交上声仅 28 部、缺「三讲」，按纪律不用占位补齐，故发布门槛必然不通过（releaseGatePassed=false）。用途：复现「缺三讲 → 门槛失败」。reviewStatus=unverified，未经人审签，不得作为发布数据。",
@@ -417,7 +417,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:上平:一东"
+        "ev:pingshui:上平:一东",
+        "ev:candidate:pingshui:穷:ping:一东:d2-batch"
       ]
     },
     {
@@ -529,7 +530,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:上平:一东"
+        "ev:pingshui:上平:一东",
+        "ev:candidate:pingshui:空:ping:一东:j03"
       ]
     },
     {
@@ -4017,7 +4019,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:上平:三江"
+        "ev:pingshui:上平:三江",
+        "ev:candidate:pingshui:江:ping:三江:d2-batch"
       ]
     },
     {
@@ -5313,7 +5316,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:上平:四支"
+        "ev:pingshui:上平:四支",
+        "ev:candidate:pingshui:疑:ping:四支:d2-batch"
       ]
     },
     {
@@ -5425,7 +5429,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:上平:四支"
+        "ev:pingshui:上平:四支",
+        "ev:candidate:pingshui:思:ping:四支:j03"
       ]
     },
     {
@@ -12353,7 +12358,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:上平:五微"
+        "ev:pingshui:上平:五微",
+        "ev:candidate:pingshui:依:ping:五微:d2-batch"
       ]
     },
     {
@@ -13041,7 +13047,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:上平:六鱼"
+        "ev:pingshui:上平:六鱼",
+        "ev:candidate:pingshui:余:ping:六鱼:d2-batch"
       ]
     },
     {
@@ -19425,7 +19432,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:上平:八齐"
+        "ev:pingshui:上平:八齐",
+        "ev:candidate:pingshui:萋:ping:八齐:d2-batch"
       ]
     },
     {
@@ -19505,7 +19513,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:上平:八齐"
+        "ev:pingshui:上平:八齐",
+        "ev:candidate:pingshui:低:ping:八齐:d2-batch"
       ]
     },
     {
@@ -23809,7 +23818,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:上平:十一真"
+        "ev:pingshui:上平:十一真",
+        "ev:candidate:pingshui:人:ping:十一真:d2-batch"
       ]
     },
     {
@@ -26529,7 +26539,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:上平:十二文"
+        "ev:pingshui:上平:十二文",
+        "ev:candidate:pingshui:云:ping:十二文:d2-batch"
       ]
     },
     {
@@ -32561,7 +32572,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:上平:十五删"
+        "ev:pingshui:上平:十五删",
+        "ev:candidate:pingshui:关:ping:十五删:d2-batch"
       ]
     },
     {
@@ -32881,7 +32893,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:上平:十五删"
+        "ev:pingshui:上平:十五删",
+        "ev:candidate:pingshui:山:ping:十五删:d2-batch"
       ]
     },
     {
@@ -33489,7 +33502,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:下平:一先"
+        "ev:pingshui:下平:一先",
+        "ev:candidate:pingshui:前:ping:一先:d2-batch"
       ]
     },
     {
@@ -33505,7 +33519,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:下平:一先"
+        "ev:pingshui:下平:一先",
+        "ev:candidate:pingshui:千:ping:一先:d2-batch"
       ]
     },
     {
@@ -33649,7 +33664,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:下平:一先"
+        "ev:pingshui:下平:一先",
+        "ev:candidate:pingshui:烟:ping:一先:d2-batch"
       ]
     },
     {
@@ -34465,7 +34481,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:下平:一先"
+        "ev:pingshui:下平:一先",
+        "ev:candidate:pingshui:川:ping:一先:d2-batch"
       ]
     },
     {
@@ -43777,7 +43794,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:下平:五歌"
+        "ev:pingshui:下平:五歌",
+        "ev:candidate:pingshui:河:ping:五歌:d2-batch"
       ]
     },
     {
@@ -43841,7 +43859,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:下平:五歌"
+        "ev:pingshui:下平:五歌",
+        "ev:candidate:pingshui:波:ping:五歌:d2-batch"
       ]
     },
     {
@@ -43985,7 +44004,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:下平:五歌"
+        "ev:pingshui:下平:五歌",
+        "ev:candidate:pingshui:何:ping:五歌:d2-batch"
       ]
     },
     {
@@ -47889,7 +47909,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:下平:七阳"
+        "ev:pingshui:下平:七阳",
+        "ev:candidate:pingshui:阳:ping:七阳:d2-batch"
       ]
     },
     {
@@ -47953,7 +47974,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:下平:七阳"
+        "ev:pingshui:下平:七阳",
+        "ev:candidate:pingshui:乡:ping:七阳:j03"
       ]
     },
     {
@@ -47969,7 +47991,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:下平:七阳"
+        "ev:pingshui:下平:七阳",
+        "ev:candidate:pingshui:光:ping:七阳:d2-batch"
       ]
     },
     {
@@ -48081,7 +48104,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:下平:七阳"
+        "ev:pingshui:下平:七阳",
+        "ev:candidate:pingshui:芳:ping:七阳:d2-batch"
       ]
     },
     {
@@ -48177,7 +48201,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:下平:七阳"
+        "ev:pingshui:下平:七阳",
+        "ev:candidate:pingshui:霜:ping:七阳:d2-batch"
       ]
     },
     {
@@ -48321,7 +48346,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:下平:七阳"
+        "ev:pingshui:下平:七阳",
+        "ev:candidate:pingshui:床:ping:七阳:d2-batch"
       ]
     },
     {
@@ -48433,7 +48459,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:下平:七阳"
+        "ev:pingshui:下平:七阳",
+        "ev:candidate:pingshui:黄:ping:七阳:d2-batch"
       ]
     },
     {
@@ -52161,7 +52188,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:下平:八庚"
+        "ev:pingshui:下平:八庚",
+        "ev:candidate:pingshui:更:ping:八庚:j03"
       ]
     },
     {
@@ -52465,7 +52493,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:下平:八庚"
+        "ev:pingshui:下平:八庚",
+        "ev:candidate:pingshui:明:ping:八庚:d2-batch"
       ]
     },
     {
@@ -53041,7 +53070,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:下平:八庚"
+        "ev:pingshui:下平:八庚",
+        "ev:candidate:pingshui:晴:ping:八庚:d2-batch"
       ]
     },
     {
@@ -54049,7 +54079,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:下平:八庚"
+        "ev:pingshui:下平:八庚",
+        "ev:candidate:pingshui:鹦:ping:八庚:d2-batch"
       ]
     },
     {
@@ -57025,7 +57056,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:下平:十蒸"
+        "ev:pingshui:下平:十蒸",
+        "ev:candidate:pingshui:乘:ping:十蒸:j03"
       ]
     },
     {
@@ -57425,7 +57457,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:下平:十蒸"
+        "ev:pingshui:下平:十蒸",
+        "ev:candidate:pingshui:层:ping:十蒸:d2-batch"
       ]
     },
     {
@@ -58385,7 +58418,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:下平:十一尤"
+        "ev:pingshui:下平:十一尤",
+        "ev:candidate:pingshui:流:ping:十一尤:j03"
       ]
     },
     {
@@ -58561,7 +58595,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:下平:十一尤"
+        "ev:pingshui:下平:十一尤",
+        "ev:candidate:pingshui:悠:ping:十一尤:d2-batch"
       ]
     },
     {
@@ -58721,7 +58756,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:下平:十一尤"
+        "ev:pingshui:下平:十一尤",
+        "ev:candidate:pingshui:洲:ping:十一尤:d2-batch"
       ]
     },
     {
@@ -59025,7 +59061,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:下平:十一尤"
+        "ev:pingshui:下平:十一尤",
+        "ev:candidate:pingshui:愁:ping:十一尤:d2-batch"
       ]
     },
     {
@@ -59361,7 +59398,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:下平:十一尤"
+        "ev:pingshui:下平:十一尤",
+        "ev:candidate:pingshui:楼:ping:十一尤:j03"
       ]
     },
     {
@@ -59425,7 +59463,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:下平:十一尤"
+        "ev:pingshui:下平:十一尤",
+        "ev:candidate:pingshui:头:ping:十一尤:d2-batch"
       ]
     },
     {
@@ -68209,7 +68248,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:上:四纸"
+        "ev:pingshui:上:四纸",
+        "ev:candidate:pingshui:是:shang:四纸:d2-batch"
       ]
     },
     {
@@ -68497,7 +68537,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:上:四纸"
+        "ev:pingshui:上:四纸",
+        "ev:candidate:pingshui:此:shang:四纸:d2-batch"
       ]
     },
     {
@@ -69681,7 +69722,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:上:四纸"
+        "ev:pingshui:上:四纸",
+        "ev:candidate:pingshui:已:shang:四纸:d2-batch"
       ]
     },
     {
@@ -69825,7 +69867,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:上:四纸"
+        "ev:pingshui:上:四纸",
+        "ev:candidate:pingshui:使:shang:四纸:d2-batch"
       ]
     },
     {
@@ -69905,7 +69948,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:上:四纸"
+        "ev:pingshui:上:四纸",
+        "ev:candidate:pingshui:里:shang:四纸:d2-batch"
       ]
     },
     {
@@ -72913,7 +72957,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:上:六语"
+        "ev:pingshui:上:六语",
+        "ev:candidate:pingshui:处:shang:六语:d2-batch"
       ]
     },
     {
@@ -73297,7 +73342,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:上:六语"
+        "ev:pingshui:上:六语",
+        "ev:candidate:pingshui:举:shang:六语:d2-batch"
       ]
     },
     {
@@ -73761,7 +73807,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:上:六语"
+        "ev:pingshui:上:六语",
+        "ev:candidate:pingshui:去:shang:六语:d2-batch"
       ]
     },
     {
@@ -74209,7 +74256,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:上:七麌"
+        "ev:pingshui:上:七麌",
+        "ev:candidate:pingshui:树:shang:七麌:d2-batch"
       ]
     },
     {
@@ -75825,7 +75873,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:上:七麌"
+        "ev:pingshui:上:七麌",
+        "ev:candidate:pingshui:鹉:shang:七麌:d2-batch"
       ]
     },
     {
@@ -77569,7 +77618,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:上:十贿"
+        "ev:pingshui:上:十贿",
+        "ev:candidate:pingshui:海:shang:十贿:d2-batch"
       ]
     },
     {
@@ -77649,7 +77699,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:上:十贿"
+        "ev:pingshui:上:十贿",
+        "ev:candidate:pingshui:载:shang:十贿:d2-batch"
       ]
     },
     {
@@ -78673,7 +78724,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:上:十一轸"
+        "ev:pingshui:上:十一轸",
+        "ev:candidate:pingshui:尽:shang:十一轸:d2-batch"
       ]
     },
     {
@@ -80177,7 +80229,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:上:十三阮"
+        "ev:pingshui:上:十三阮",
+        "ev:candidate:pingshui:返:shang:十三阮:d2-batch"
       ]
     },
     {
@@ -87377,7 +87430,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:上:十九皓"
+        "ev:pingshui:上:十九皓",
+        "ev:candidate:pingshui:草:shang:十九皓:d2-batch"
       ]
     },
     {
@@ -91057,7 +91111,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:上:二十二养"
+        "ev:pingshui:上:二十二养",
+        "ev:candidate:pingshui:上:shang:二十二养:d2-batch"
       ]
     },
     {
@@ -99681,7 +99736,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:去:四寘"
+        "ev:pingshui:去:四寘",
+        "ev:candidate:pingshui:地:qu:四寘:d2-batch"
       ]
     },
     {
@@ -100113,7 +100169,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:去:四寘"
+        "ev:pingshui:去:四寘",
+        "ev:candidate:pingshui:使:qu:四寘:d2-batch"
       ]
     },
     {
@@ -104801,7 +104858,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:去:六御"
+        "ev:pingshui:去:六御",
+        "ev:candidate:pingshui:处:qu:六御:d2-batch"
       ]
     },
     {
@@ -104817,7 +104875,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:去:六御"
+        "ev:pingshui:去:六御",
+        "ev:candidate:pingshui:去:qu:六御:d2-batch"
       ]
     },
     {
@@ -105857,7 +105916,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:去:七遇"
+        "ev:pingshui:去:七遇",
+        "ev:candidate:pingshui:树:qu:七遇:d2-batch"
       ]
     },
     {
@@ -106161,7 +106221,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:去:七遇"
+        "ev:pingshui:去:七遇",
+        "ev:candidate:pingshui:故:qu:七遇:d2-batch"
       ]
     },
     {
@@ -106241,7 +106302,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:去:七遇"
+        "ev:pingshui:去:七遇",
+        "ev:candidate:pingshui:暮:qu:七遇:d2-batch"
       ]
     },
     {
@@ -113681,7 +113743,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:去:十一队"
+        "ev:pingshui:去:十一队",
+        "ev:candidate:pingshui:载:qu:十一队:d2-batch"
       ]
     },
     {
@@ -118273,7 +118336,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:去:十五翰"
+        "ev:pingshui:去:十五翰",
+        "ev:candidate:pingshui:汉:qu:十五翰:j03"
       ]
     },
     {
@@ -128049,7 +128113,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:去:二十三漾"
+        "ev:pingshui:去:二十三漾",
+        "ev:candidate:pingshui:上:qu:二十三漾:d2-batch"
       ]
     },
     {
@@ -128065,7 +128130,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:去:二十三漾"
+        "ev:pingshui:去:二十三漾",
+        "ev:candidate:pingshui:望:qu:二十三漾:j03"
       ]
     },
     {
@@ -130241,7 +130307,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:去:二十四敬"
+        "ev:pingshui:去:二十四敬",
+        "ev:candidate:pingshui:更:qu:二十四敬:j03"
       ]
     },
     {
@@ -131953,7 +132020,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:去:二十六宥"
+        "ev:pingshui:去:二十六宥",
+        "ev:candidate:pingshui:复:qu:二十六宥:d2-batch"
       ]
     },
     {
@@ -136401,7 +136469,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:入:入声一屋"
+        "ev:pingshui:入:入声一屋",
+        "ev:candidate:pingshui:目:ru:入声一屋:d2-batch"
       ]
     },
     {
@@ -136817,7 +136886,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:入:入声一屋"
+        "ev:pingshui:入:入声一屋",
+        "ev:candidate:pingshui:复:ru:入声一屋:d2-batch"
       ]
     },
     {
@@ -139601,7 +139671,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:入:入声二沃"
+        "ev:pingshui:入:入声二沃",
+        "ev:candidate:pingshui:欲:ru:入声二沃:d2-batch"
       ]
     },
     {
@@ -142193,7 +142264,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:入:入声四质"
+        "ev:pingshui:入:入声四质",
+        "ev:candidate:pingshui:日:ru:入声四质:d2-batch"
       ]
     },
     {
@@ -142305,7 +142377,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:入:入声四质"
+        "ev:pingshui:入:入声四质",
+        "ev:candidate:pingshui:一:ru:入声四质:j03"
       ]
     },
     {
@@ -144529,7 +144602,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:入:入声五物"
+        "ev:pingshui:入:入声五物",
+        "ev:candidate:pingshui:物:ru:入声五物:j03"
       ]
     },
     {
@@ -145009,7 +145083,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:入:入声五物"
+        "ev:pingshui:入:入声五物",
+        "ev:candidate:pingshui:不:ru:入声五物:j03"
       ]
     },
     {
@@ -145297,7 +145372,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:入:入声六月"
+        "ev:pingshui:入:入声六月",
+        "ev:candidate:pingshui:月:ru:入声六月:d2-batch"
       ]
     },
     {
@@ -149377,7 +149453,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:入:入声九屑"
+        "ev:pingshui:入:入声九屑",
+        "ev:candidate:pingshui:雪:ru:入声九屑:j03"
       ]
     },
     {
@@ -152129,7 +152206,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:入:入声十药"
+        "ev:pingshui:入:入声十药",
+        "ev:candidate:pingshui:鹤:ru:入声十药:d2-batch"
       ]
     },
     {
@@ -154625,7 +154703,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:入:入声十药"
+        "ev:pingshui:入:入声十药",
+        "ev:candidate:pingshui:昔:ru:入声十药:d2-batch"
       ]
     },
     {
@@ -154961,7 +155040,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:入:入声十一陌"
+        "ev:pingshui:入:入声十一陌",
+        "ev:candidate:pingshui:白:ru:入声十一陌:j03"
       ]
     },
     {
@@ -156049,7 +156129,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:入:入声十一陌"
+        "ev:pingshui:入:入声十一陌",
+        "ev:candidate:pingshui:昔:ru:入声十一陌:d2-batch"
       ]
     },
     {
@@ -157921,7 +158002,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:入:入声十二锡"
+        "ev:pingshui:入:入声十二锡",
+        "ev:candidate:pingshui:历:ru:入声十二锡:d2-batch"
       ]
     },
     {
@@ -161521,7 +161603,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:入:入声十四缉"
+        "ev:pingshui:入:入声十四缉",
+        "ev:candidate:pingshui:入:ru:入声十四缉:d2-batch"
       ]
     },
     {
@@ -167206,7 +167289,7 @@
       "locator": "data/Pingshui_Rhyme.json 下平声部/八庚",
       "assertion": "data/Pingshui_Rhyme.json 下平声部/八庚 共收录 194 个字形（原表条目 197 条）",
       "excerpt": null,
-      "reviewStatus": "approved"
+      "reviewStatus": "unverified"
     },
     {
       "id": "ev:pingshui:下平:九青",
@@ -167233,7 +167316,7 @@
       "locator": "data/Pingshui_Rhyme.json 下平声部/十一尤",
       "assertion": "data/Pingshui_Rhyme.json 下平声部/十一尤 共收录 249 个字形（原表条目 255 条）",
       "excerpt": null,
-      "reviewStatus": "approved"
+      "reviewStatus": "unverified"
     },
     {
       "id": "ev:pingshui:下平:十二侵",
@@ -167737,7 +167820,7 @@
       "locator": "data/Pingshui_Rhyme.json 去声部/二十四敬",
       "assertion": "data/Pingshui_Rhyme.json 去声部/二十四敬 共收录 59 个字形（原表条目 62 条）",
       "excerpt": null,
-      "reviewStatus": "approved"
+      "reviewStatus": "unverified"
     },
     {
       "id": "ev:pingshui:去:二十五径",
@@ -167827,7 +167910,7 @@
       "locator": "data/Pingshui_Rhyme.json 入声部/入声四质",
       "assertion": "data/Pingshui_Rhyme.json 入声部/入声四质 共收录 147 个字形（原表条目 158 条）",
       "excerpt": null,
-      "reviewStatus": "approved"
+      "reviewStatus": "unverified"
     },
     {
       "id": "ev:pingshui:入:入声五物",
@@ -167836,7 +167919,7 @@
       "locator": "data/Pingshui_Rhyme.json 入声部/入声五物",
       "assertion": "data/Pingshui_Rhyme.json 入声部/入声五物 共收录 48 个字形（原表条目 48 条）",
       "excerpt": null,
-      "reviewStatus": "approved"
+      "reviewStatus": "unverified"
     },
     {
       "id": "ev:pingshui:入:入声六月",
@@ -167872,7 +167955,7 @@
       "locator": "data/Pingshui_Rhyme.json 入声部/入声九屑",
       "assertion": "data/Pingshui_Rhyme.json 入声部/入声九屑 共收录 166 个字形（原表条目 173 条）",
       "excerpt": null,
-      "reviewStatus": "approved"
+      "reviewStatus": "unverified"
     },
     {
       "id": "ev:pingshui:入:入声十药",
@@ -167890,7 +167973,7 @@
       "locator": "data/Pingshui_Rhyme.json 入声部/入声十一陌",
       "assertion": "data/Pingshui_Rhyme.json 入声部/入声十一陌 共收录 186 个字形（原表条目 196 条）",
       "excerpt": null,
-      "reviewStatus": "approved"
+      "reviewStatus": "unverified"
     },
     {
       "id": "ev:pingshui:入:入声十二锡",
@@ -167945,6 +168028,753 @@
       "assertion": "data/Pingshui_Rhyme.json 入声部/入声十七洽 共收录 57 个字形（原表条目 59 条）",
       "excerpt": null,
       "reviewStatus": "unverified"
+    },
+    {
+      "id": "ev:candidate:pingshui:白:ru:入声十一陌:j03",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 入声部/入声十一陌；候选 pingshui:白:ru:入声十一陌；审核记录 docs/reviews/12_J03人审记录_第一批.md",
+      "assertion": "第一批候选归部核验通过；仅覆盖候选 pingshui:白:ru:入声十一陌，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:一:ru:入声四质:j03",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 入声部/入声四质；候选 pingshui:一:ru:入声四质；审核记录 docs/reviews/12_J03人审记录_第一批.md",
+      "assertion": "第一批候选归部核验通过；仅覆盖候选 pingshui:一:ru:入声四质，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:更:ping:八庚:j03",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 下平声部/八庚；候选 pingshui:更:ping:八庚；审核记录 docs/reviews/12_J03人审记录_第一批.md",
+      "assertion": "第一批候选归部核验通过；仅覆盖候选 pingshui:更:ping:八庚，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:更:qu:二十四敬:j03",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 去声部/二十四敬；候选 pingshui:更:qu:二十四敬；审核记录 docs/reviews/12_J03人审记录_第一批.md",
+      "assertion": "第一批候选归部核验通过；仅覆盖候选 pingshui:更:qu:二十四敬，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:流:ping:十一尤:j03",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 下平声部/十一尤；候选 pingshui:流:ping:十一尤；审核记录 docs/reviews/12_J03人审记录_第一批.md",
+      "assertion": "第一批候选归部核验通过；仅覆盖候选 pingshui:流:ping:十一尤，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:雪:ru:入声九屑:j03",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 入声部/入声九屑；候选 pingshui:雪:ru:入声九屑；审核记录 docs/reviews/12_J03人审记录_第一批.md",
+      "assertion": "第一批候选归部核验通过；仅覆盖候选 pingshui:雪:ru:入声九屑，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:物:ru:入声五物:j03",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 入声部/入声五物；候选 pingshui:物:ru:入声五物；审核记录 docs/reviews/12_J03人审记录_第一批.md",
+      "assertion": "第一批候选归部核验通过；仅覆盖候选 pingshui:物:ru:入声五物，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:楼:ping:十一尤:j03",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 下平声部/十一尤；候选 pingshui:楼:ping:十一尤；审核记录 docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+      "assertion": "第二批第二节追认楼↔樓及下平十一尤归属；仅覆盖候选 pingshui:楼:ping:十一尤，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:望:qu:二十三漾:j03",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 去声部/二十三漾；候选 pingshui:望:qu:二十三漾；审核记录 docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+      "assertion": "第二批第一/五节明确采纳的候选声类与归部；竞争候选仍保留，未获批者保持未审核；仅覆盖候选 pingshui:望:qu:二十三漾，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:思:ping:四支:j03",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 上平声部/四支；候选 pingshui:思:ping:四支；审核记录 docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+      "assertion": "第二批第一/五节明确采纳的候选声类与归部；竞争候选仍保留，未获批者保持未审核；仅覆盖候选 pingshui:思:ping:四支，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:乡:ping:七阳:j03",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 下平声部/七阳；候选 pingshui:乡:ping:七阳；审核记录 docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+      "assertion": "第二批第一/五节明确采纳的候选声类与归部；竞争候选仍保留，未获批者保持未审核；仅覆盖候选 pingshui:乡:ping:七阳，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:乘:ping:十蒸:j03",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 下平声部/十蒸；候选 pingshui:乘:ping:十蒸；审核记录 docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+      "assertion": "第二批第一/五节明确采纳的候选声类与归部；竞争候选仍保留，未获批者保持未审核；仅覆盖候选 pingshui:乘:ping:十蒸，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:空:ping:一东:j03",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 上平声部/一东；候选 pingshui:空:ping:一东；审核记录 docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+      "assertion": "第二批第一/五节明确采纳的候选声类与归部；竞争候选仍保留，未获批者保持未审核；仅覆盖候选 pingshui:空:ping:一东，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:不:ru:入声五物:j03",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 入声部/入声五物；候选 pingshui:不:ru:入声五物；审核记录 docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+      "assertion": "第二批第一/五节明确采纳的候选声类与归部；竞争候选仍保留，未获批者保持未审核；仅覆盖候选 pingshui:不:ru:入声五物，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:汉:qu:十五翰:j03",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 去声部/十五翰；候选 pingshui:汉:qu:十五翰；审核记录 docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+      "assertion": "第二批第一/五节明确采纳的候选声类与归部；竞争候选仍保留，未获批者保持未审核；仅覆盖候选 pingshui:汉:qu:十五翰，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:上:qu:二十三漾:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 去声部/二十三漾；候选 pingshui:上:qu:二十三漾；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：去聲二十三{{++|漾}}，第496行「上」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:上:qu:二十三漾，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:上:shang:二十二养:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 上声部/二十二养；候选 pingshui:上:shang:二十二养；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上聲二十二{{++|養}}，第312行「上」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:上:shang:二十二养，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:举:shang:六语:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 上声部/六语；候选 pingshui:举:shang:六语；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上聲六{{++|語}}，第216行「舉」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:举:shang:六语，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:云:ping:十二文:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 上平声部/十二文；候选 pingshui:云:ping:十二文；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上平聲十二{{++|文}}，第71行「云」、第71行「雲」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:云:ping:十二文，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:人:ping:十一真:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 上平声部/十一真；候选 pingshui:人:ping:十一真；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上平聲十一{{++|真}}，第65行「人」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:人:ping:十一真，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:低:ping:八齐:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 上平声部/八齐；候选 pingshui:低:ping:八齐；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上平聲八{{++|齊}}，第47行「低」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:低:ping:八齐，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:何:ping:五歌:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 下平声部/五歌；候选 pingshui:何:ping:五歌；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲五{{++|歌}}，第120行「何」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:何:ping:五歌，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:余:ping:六鱼:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 上平声部/六鱼；候选 pingshui:余:ping:六鱼；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上平聲六{{++|魚}}，第35行「余」、第35行「餘」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:余:ping:六鱼，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:使:qu:四寘:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 去声部/四寘；候选 pingshui:使:qu:四寘；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：去聲四{{++|寘}}，第382行「使」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:使:qu:四寘，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:使:shang:四纸:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 上声部/四纸；候选 pingshui:使:shang:四纸；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上聲四{{++|紙}}，第204行「使」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:使:shang:四纸，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:依:ping:五微:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 上平声部/五微；候选 pingshui:依:ping:五微；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上平聲五{{++|微}}，第29行「依」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:依:ping:五微，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:光:ping:七阳:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 下平声部/七阳；候选 pingshui:光:ping:七阳；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲七{{++|陽}}，第132行「光」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:光:ping:七阳，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:入:ru:入声十四缉:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 入声部/入声十四缉；候选 pingshui:入:ru:入声十四缉；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：入聲十四{{++|緝}}，第633行「入」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:入:ru:入声十四缉，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:关:ping:十五删:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 上平声部/十五删；候选 pingshui:关:ping:十五删；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上平聲十五{{++|刪}}，第89行「關」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:关:ping:十五删，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:前:ping:一先:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 下平声部/一先；候选 pingshui:前:ping:一先；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲一{{++|先}}，第96行「前」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:前:ping:一先，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:千:ping:一先:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 下平声部/一先；候选 pingshui:千:ping:一先；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲一{{++|先}}，第96行「千」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:千:ping:一先，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:历:ru:入声十二锡:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 入声部/入声十二锡；候选 pingshui:历:ru:入声十二锡；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：入聲十二{{++|錫}}，第619行「歷」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:历:ru:入声十二锡，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:去:qu:六御:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 去声部/六御；候选 pingshui:去:qu:六御；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：去聲六{{++|御}}，第394行「去」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:去:qu:六御，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:去:shang:六语:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 上声部/六语；候选 pingshui:去:shang:六语；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上聲六{{++|語}}，第216行「去」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:去:shang:六语，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:地:qu:四寘:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 去声部/四寘；候选 pingshui:地:qu:四寘；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：去聲四{{++|寘}}，第382行「地」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:地:qu:四寘，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:处:qu:六御:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 去声部/六御；候选 pingshui:处:qu:六御；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：去聲六{{++|御}}，第394行「處」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:处:qu:六御，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:处:shang:六语:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 上声部/六语；候选 pingshui:处:shang:六语；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上聲六{{++|語}}，第216行「處」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:处:shang:六语，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:复:qu:二十六宥:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 去声部/二十六宥；候选 pingshui:复:qu:二十六宥；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：去聲二十六{{++|宥}}，第516行「復」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:复:qu:二十六宥，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:复:ru:入声一屋:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 入声部/入声一屋；候选 pingshui:复:ru:入声一屋；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：入聲一{{++|屋}}，第549行「復」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:复:ru:入声一屋，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:头:ping:十一尤:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 下平声部/十一尤；候选 pingshui:头:ping:十一尤；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲十一{{++|尤}}，第156行「頭」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:头:ping:十一尤，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:尽:shang:十一轸:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 上声部/十一轸；候选 pingshui:尽:shang:十一轸；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上聲十一{{++|軫}}，第246行「盡」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:尽:shang:十一轸，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:层:ping:十蒸:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 下平声部/十蒸；候选 pingshui:层:ping:十蒸；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲十{{++|蒸}}，第150行「層」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:层:ping:十蒸，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:山:ping:十五删:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 上平声部/十五删；候选 pingshui:山:ping:十五删；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上平聲十五{{++|刪}}，第89行「山」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:山:ping:十五删，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:川:ping:一先:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 下平声部/一先；候选 pingshui:川:ping:一先；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲一{{++|先}}，第96行「川」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:川:ping:一先，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:已:shang:四纸:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 上声部/四纸；候选 pingshui:已:shang:四纸；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上聲四{{++|紙}}，第204行「已」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:已:shang:四纸，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:床:ping:七阳:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 下平声部/七阳；候选 pingshui:床:ping:七阳；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲七{{++|陽}}，第132行「床」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:床:ping:七阳，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:悠:ping:十一尤:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 下平声部/十一尤；候选 pingshui:悠:ping:十一尤；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲十一{{++|尤}}，第156行「悠」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:悠:ping:十一尤，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:愁:ping:十一尤:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 下平声部/十一尤；候选 pingshui:愁:ping:十一尤；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲十一{{++|尤}}，第156行「愁」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:愁:ping:十一尤，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:故:qu:七遇:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 去声部/七遇；候选 pingshui:故:qu:七遇；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：去聲七{{++|遇}}，第400行「故」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:故:qu:七遇，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:日:ru:入声四质:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 入声部/入声四质；候选 pingshui:日:ru:入声四质；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：入聲四{{++|質}}，第569行「日」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:日:ru:入声四质，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:明:ping:八庚:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 下平声部/八庚；候选 pingshui:明:ping:八庚；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲八{{++|庚}}，第138行「明」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:明:ping:八庚，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:昔:ru:入声十一陌:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 入声部/入声十一陌；候选 pingshui:昔:ru:入声十一陌；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：入聲十一{{++|陌}}，第613行「昔」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:昔:ru:入声十一陌，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:昔:ru:入声十药:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 入声部/入声十药；候选 pingshui:昔:ru:入声十药；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：入聲十{{++|藥}}，第605行「昔」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:昔:ru:入声十药，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:是:shang:四纸:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 上声部/四纸；候选 pingshui:是:shang:四纸；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上聲四{{++|紙}}，第204行「是」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:是:shang:四纸，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:晴:ping:八庚:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 下平声部/八庚；候选 pingshui:晴:ping:八庚；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲八{{++|庚}}，第138行「晴」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:晴:ping:八庚，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:暮:qu:七遇:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 去声部/七遇；候选 pingshui:暮:qu:七遇；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：去聲七{{++|遇}}，第400行「暮」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:暮:qu:七遇，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:月:ru:入声六月:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 入声部/入声六月；候选 pingshui:月:ru:入声六月；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：入聲六{{++|月}}，第581行「月」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:月:ru:入声六月，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:树:qu:七遇:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 去声部/七遇；候选 pingshui:树:qu:七遇；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：去聲七{{++|遇}}，第400行「樹」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:树:qu:七遇，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:树:shang:七麌:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 上声部/七麌；候选 pingshui:树:shang:七麌；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上聲七{{++|麌}}，第222行「樹」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:树:shang:七麌，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:欲:ru:入声二沃:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 入声部/入声二沃；候选 pingshui:欲:ru:入声二沃；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：入聲二{{++|沃}}，第555行「欲」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:欲:ru:入声二沃，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:此:shang:四纸:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 上声部/四纸；候选 pingshui:此:shang:四纸；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上聲四{{++|紙}}，第204行「此」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:此:shang:四纸，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:江:ping:三江:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 上平声部/三江；候选 pingshui:江:ping:三江；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上平聲三{{++|江}}，第17行「江」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:江:ping:三江，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:河:ping:五歌:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 下平声部/五歌；候选 pingshui:河:ping:五歌；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲五{{++|歌}}，第120行「河」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:河:ping:五歌，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:波:ping:五歌:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 下平声部/五歌；候选 pingshui:波:ping:五歌；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲五{{++|歌}}，第120行「波」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:波:ping:五歌，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:洲:ping:十一尤:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 下平声部/十一尤；候选 pingshui:洲:ping:十一尤；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲十一{{++|尤}}，第156行「洲」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:洲:ping:十一尤，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:海:shang:十贿:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 上声部/十贿；候选 pingshui:海:shang:十贿；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上聲十{{++|賄}}，第240行「海」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:海:shang:十贿，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:烟:ping:一先:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 下平声部/一先；候选 pingshui:烟:ping:一先；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲一{{++|先}}，第96行「煙」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:烟:ping:一先，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:疑:ping:四支:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 上平声部/四支；候选 pingshui:疑:ping:四支；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上平聲四{{++|支}}，第23行「疑」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:疑:ping:四支，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:目:ru:入声一屋:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 入声部/入声一屋；候选 pingshui:目:ru:入声一屋；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：入聲一{{++|屋}}，第549行「目」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:目:ru:入声一屋，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:穷:ping:一东:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 上平声部/一东；候选 pingshui:穷:ping:一东；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上平聲一{{++|東}}，第5行「窮」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:穷:ping:一东，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:芳:ping:七阳:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 下平声部/七阳；候选 pingshui:芳:ping:七阳；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲七{{++|陽}}，第132行「芳」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:芳:ping:七阳，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:草:shang:十九皓:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 上声部/十九皓；候选 pingshui:草:shang:十九皓；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上聲十九{{++|皓}}，第294行「草」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:草:shang:十九皓，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:萋:ping:八齐:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 上平声部/八齐；候选 pingshui:萋:ping:八齐；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上平聲八{{++|齊}}，第47行「萋」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:萋:ping:八齐，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:载:qu:十一队:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 去声部/十一队；候选 pingshui:载:qu:十一队；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：去聲十一{{++|隊}}，第424行「載」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:载:qu:十一队，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:载:shang:十贿:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 上声部/十贿；候选 pingshui:载:shang:十贿；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上聲十{{++|賄}}，第240行「載」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:载:shang:十贿，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:返:shang:十三阮:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 上声部/十三阮；候选 pingshui:返:shang:十三阮；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上聲十三{{++|阮}}，第258行「返」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:返:shang:十三阮，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:里:shang:四纸:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 上声部/四纸；候选 pingshui:里:shang:四纸；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上聲四{{++|紙}}，第204行「里」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:里:shang:四纸，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:阳:ping:七阳:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 下平声部/七阳；候选 pingshui:阳:ping:七阳；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲七{{++|陽}}，第132行「陽」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:阳:ping:七阳，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:霜:ping:七阳:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 下平声部/七阳；候选 pingshui:霜:ping:七阳；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲七{{++|陽}}，第132行「霜」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:霜:ping:七阳，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:鹉:shang:七麌:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 上声部/七麌；候选 pingshui:鹉:shang:七麌；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上聲七{{++|麌}}，第222行「鵡」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:鹉:shang:七麌，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:鹤:ru:入声十药:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 入声部/入声十药；候选 pingshui:鹤:ru:入声十药；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：入聲十{{++|藥}}，第605行「鶴」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:鹤:ru:入声十药，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:鹦:ping:八庚:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 下平声部/八庚；候选 pingshui:鹦:ping:八庚；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲八{{++|庚}}，第138行「鸚」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:鹦:ping:八庚，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:黄:ping:七阳:d2-batch",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 下平声部/七阳；候选 pingshui:黄:ping:七阳；审核记录 docs/reviews/14_D2收口_候选批次与里字异常.md；data/reviews/d2-closeout-batch-approval.json；data/reviews/d2-closeout-approved-source-batch.json",
+      "assertion": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲七{{++|陽}}，第132行「黃」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json；仅覆盖候选 pingshui:黄:ping:七阳，不批准所属整部。审核记录：组长（接受机器初审批次，非逐字人工核验），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
     }
   ],
   "sources": [

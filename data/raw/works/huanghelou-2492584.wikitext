@@ -1,0 +1,25 @@
+{{header
+| title    = 黃鶴樓
+| section  =
+| author   = 崔顥
+| times    = 唐
+| from     = 全唐詩/卷130
+| from2    = 唐詩三百首
+| from3    = 千家詩/卷四
+| from4    = 崔顥詩集
+| notes    = {{Textquality|75%}}
+}}{{楷體/raw}}
+<onlyinclude><poem class="Kaiti" style="text-align: center; font-size:120%;">
+昔人已乘{{另|黃鶴|白雲}}去，此地空餘黃鶴樓。
+黃鶴一去不復返，白雲千載空悠悠。
+晴川歷歷漢陽樹，芳草萋萋鸚鵡洲。
+日暮鄉關何處是？煙波江上使人愁。
+</poem></onlyinclude>
+
+{{唐朝作品}}
+[[Category:唐詩]]
+[[Category:七言律詩]]
+[[Category:黃鶴樓]]
+[[Category:武汉市]]
+[[vi:Hoàng Hạc lâu (Thôi Hiệu)]]
+[[Category:千家詩]]

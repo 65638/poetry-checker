@@ -1,4 +1,4 @@
-# @poetry/readings HANDOFF（D1 批次）
+﻿# @poetry/readings HANDOFF（D1 批次）
 
 日期：2026-10-17。执行者：队员 B / DeepSeek harness。分支：`feat/b-d1-readings`（基线 `e549194`，`contract-v1` = `9b27322`）；PR #3。
 状态：**D1 范围内的两个函数已实现并有实际测试通过**；真实字表、生产语境规则、覆盖率评测未做（见第 5 节）。
@@ -144,7 +144,7 @@ $ node node_modules/vitest/vitest.mjs run packages/readings/tests
 | ---------------------------- | ---------------------------------------------------------------------------------------------------------- |
 | 契约标签                     | `contract-v1` = `9b27322`（未改动契约）                                                                    |
 | `lookup.dataVersion`（测试） | `synthetic-d1`（合成，非发布数据）                                                                         |
-| 语境规则                     | **0 条生效**。`data/context/rules.approved.json` 未创建                                                    |
+| 语境规则                     | **0 条生效**。`data/context/rules.json` 未创建                                                             |
 | 待审队列                     | `data/context/review-queue.json` 4 条（更/重/长/行），`reviewStatus=unverified`，`selectCandidateIds` 为空 |
 
 **真实上下文规则目前已审核 0 条**：队列里那 4 条是待审问题清单，不是已覆盖的语境，
@@ -298,7 +298,7 @@ const annotated = resolveReadings({
 - 义项→候选对应（副词义→去声、夜间计时义→平声）仍是**待审假设**：`selectCandidateIds` 留空、
   `evidenceIds` 空、`reviewStatus=unverified`、`decision=null`、`proposalStatus=awaiting-linguistic-evidence`。
 - 「重/长/行」三条：真实快照根本没有这些字，`proposalStatus=awaiting-candidate-ids`。
-- `rules.approved.json` **仍未创建**——本批次真实语境规则 approved 数 = 0。
+- `rules.json` **仍未创建**——本批次真实语境规则 approved 数 = 0。
 
 ## 14. 需要上游答复的清单（审核请求）
 
@@ -326,3 +326,99 @@ $ pnpm verify
   真实数据接入后前端的可用性取决于 A 的审核进度，不是本模块能绕过的。
 - 规则只做同句内精确短语；不做分词、同义词、跨句指代。
 - 未做留出评测，因此不报准确率；也不把规则编写样本的命中率当泛化准确率。
+
+---
+
+# B-03：十处裁定转语境规则（2026-10-18，分支 eat/b-d2-rules）
+
+依据 `docs/reviews/13_J03三首核心诗逐字人审_第二批.md`（组长 2026-10-18 裁定，GLM 原样落录）。
+
+## 30. 交付
+
+| 文件                                            | 内容                                                                                  |
+| ----------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `data/context/rules.json`                       | 10 条 `ContextRule`，全部 `reviewStatus=approved`                                     |
+| `data/context/evidence.json`                    | 10 条 `kind="context"` 已审核证据（`ctx:j03b2:01..10`，来源 `src:j03-review-batch2`） |
+| `data/context/sources.json`                     | 上述证据的来源记录（指向人审记录）                                                    |
+| `packages/readings/scripts/context-smoke.ts`    | 端到端冒烟：按 API 口径合并语境证据后跑三首                                           |
+| `packages/readings/tests/rules.test.ts`         | 6 条规则校验（Schema / 证据用途 / 短语绑定 / 候选存在 / 反例）                        |
+| `packages/readings/tests/real-pingshui.test.ts` | 门槛断言的**数据驱动**版（见第 31 节）                                                |
+
+## 31. real-pingshui 断言改为数据驱动
+
+原版把 `l1c3`、`l1c1` 写死，A 每批审核都会让它再红一次。改为：
+
+- `firstUnbackedToken(poem, lookup)`：期望只从 `lookup.evidence[].reviewStatus` 推导，
+  **不调用 resolveReadings**，避免用被测函数生成预期；
+- 断言 `error.details.tokenId === expected.tokenId`，语义不变、不随审核进度碎；
+- 全部字位审完后自动转为「不应再拦截」的正向断言；
+- 「已审候选不得掩盖未审竞争候选」在真实数据仍由当前首个拦截位（昔，`expected.mixed`）钉住；
+  长期守护由 `resolve.test.ts` 的 **GATE 混合有效候选** 合成用例承担，与本批数据状态无关。
+
+## 32. 实测：规则就位但结论仍被数据阻塞
+
+`context-smoke.ts` 输出：
+
+```text
+规则 10 条；所选候选已有韵书证据 2 条，未审核 8 条
+  未审: 望(二十三漾) 思(四支) 乡(七阳) 乘(十蒸) 空(一东)×2 汉(十五翰) 乡(七阳)
+登鹳雀楼: 门禁拦截 LOOKUP_EVIDENCE_UNVERIFIED，首个拦截 l1c3「依」；命中 1 条规则
+静夜思  : 门禁拦截 LOOKUP_EVIDENCE_UNVERIFIED，首个拦截 l1c1「床」；命中 3 条规则
+黄鹤楼  : 门禁拦截 LOOKUP_EVIDENCE_UNVERIFIED，首个拦截 l1c1「昔」；命中 6 条规则
+```
+
+剩余依赖（2026-10-18 Codex 接管修正口径）：
+
+1. **快照中 8/106 条证据被标为 approved**；这是标记计数，不代表相应韵部完整获批，A 仍需修正候选/部级批准范围冲突。门槛按有效候选拦截；
+   三首的第一个未审字位分别是 依(五微)、床(七阳)、昔(入声十药)，与规则无关。
+2. **8 个裁定位置所选候选的归部证据尚未落实**，涉及二十三漾、四支、七阳、十蒸、一东、十五翰。A 应按 13_ 中已批准的候选范围落实，不把单字裁定扩大为整部批准，也不需要组长重审十处。
+3. **GLM 必须同时加载** `data/context/rules.json`、`evidence.json`、`sources.json`；仅合入规则文件不能完成语境证据接线。三首仍需其他字位的有效候选证据，不以追加上述六部为整诗通过条件。
+
+## 33. 未做 / 明确不做
+
+- 不改 `resolve.ts` / `parse.ts`：门槛与算法零改动。
+- 不改任何格律规则（模板、救法、规则卡）：本批只做选音。
+- 不删同字的其他读音候选：`rules.test.ts` 断言竞争候选仍在快照中。
+- 「望」按人审注记属通说裁定；若后续启用「古体优先古读」策略需降置信复核，届时规则应改 `unverified` 而非直接改候选。
+
+## 34. 验收
+
+```text
+$ pnpm --filter @poetry/readings test   → 4 文件 / 57 用例通过
+$ pnpm exec tsx packages/readings/scripts/context-smoke.ts → 见第 32 节
+$ pnpm verify                           → 退出码 0
+```
+
+## 35. 02_B 任务书必交项（同分支交付）
+
+| 必交项                   | 位置                                                                                                                |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------- |
+| 96 行逐字初审表（JSON）  | `data/reviews/golden-token-review-2026-10-18.json`                                                                  |
+| 同内容 Markdown 表       | `data/reviews/golden-token-review-2026-10-18.md`                                                                    |
+| 96/96 覆盖统计           | 表面「分母」行 + JSON `denominators`：96 字位全部有候选、缺字 0、多候选 22、平仄临界 10                             |
+| 可确定 vs 保持 ambiguous | MD「可确定 / 必须保持歧义」；JSON `machineConclusion`：12 个多候选同调字位必须保持读音 ambiguous，10 个临界位有裁定 |
+| 全量 vs 样本差异         | MD「版本差异」；JSON `versionDiff`：旧样本 7 字 vs 当前 8240 字                                                     |
+| 十处裁定的落点           | MD「已裁定的十处」；JSON `adjudications`（含 ruleId、裁定候选、被选候选韵书证据是否已审）                           |
+
+表由 `scripts/golden-token-review.ts` 生成，`tests/golden-review.test.ts`（7 条）守护：
+行数与分母、结论与证据状态一致、十处裁定都对得上规则、ambiguous 位置单列、数据版本。
+
+当前实测：`rows=96 covered=96 missing=0 multi=22 toneCritical=10 approved=8/106`。
+
+## 36. Codex 临时代修（组长授权，2026-10-18）
+
+基线 `96c507e`，交接见 `docs/handoffs/0011-codex-b-review-report-fix.md`。
+
+- 逐字报告拆分任一/全部/混合证据标记；当前为 22/21/1，「昔」正确标为 blocked。没有任何已审候选为 74 字位；含混合项的候选预检阻断为 75 字位。
+- 兼容字段 `row.evidenceApproved` 现在表示全部候选有证据，原“任一”语义使用 `anyCandidateEvidenceApproved`。报告明确预检不应用语境规则，不能代替真实 API；不修改公共契约。
+- `adjudications.candidateEvidenceApproved` 按裁定选中的 candidateId 查询；保留同字其他候选。
+- JSON/Markdown 重新生成，清理重复章节与写死的零计数；“更”“楼”引用已落库的后续裁定。
+- 回归独立读取原始快照，包含“昔”的真实样本、内存混合候选正反例、缺字 unknown 与生成物一致性检查。内存 fixture 不写入数据或审批记录。
+- 实跑：readings 5 文件 / 70 项通过；全仓 `pnpm verify` exit 0，39 文件 / 549 项通过，含 lint、类型检查、构建与生成物核对。
+- 待 GLM：集成 B 分支并同时加载三类语境资源；A 继续按候选范围落实归部证据。本轮未宣布三首真实 API 通过。
+
+## 18. Codex 接管收口（组长接受机器初审批次）
+
+2026-10-18：按组长“同意该批次与‘千里’裁定”落实第 11 条语境规则；固定句“欲穷千里目”中选择上声四纸，去声四寘竞争候选继续保留待核。68 条新增候选归部证据以批次方式批准，方法与原话见 data/reviews/d2-closeout-batch-approval.json，不称逐字人工核验。
+
+API 已加载规则/证据/来源，review3 三首真实 HTTP 均 200：登合律、静不适用、黄保留七律及常格偏离。96 字位有效候选依据齐备；同调多读保留读音歧义。全仓 44 文件 / 584 测试通过。之前各节的缺口与统计是历史状态，以 data/context/README.md、最新逐字报告及 docs/handoffs/0012-codex-d2-closeout.md 为准。全库未发布，集成后重启 API 再验。

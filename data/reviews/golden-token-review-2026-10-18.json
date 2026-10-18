@@ -1,0 +1,4691 @@
+{
+  "generatedBy": "packages/readings/scripts/golden-token-review.ts",
+  "task": "B 逐字机器初审表（96 字位）",
+  "note": "本表只统计快照标记并做语境筛选前的候选证据预检；不调用 resolveReadings，不代替真实 API 结果或批准任何证据。人工备注引用 J03 第一批及第二批记录。当前批准清单存在候选/部级范围冲突，approved 数量不等于相同范围的人审完成。",
+  "machineOutcomeScope": "all-candidates-before-context",
+  "book": "pingshui",
+  "snapshot": "data/normalized/pingshui.full-d2-patched.json",
+  "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3",
+  "snapshotReviewStatus": "unverified",
+  "apiManifestSnapshot": "pingshui.full-d2-patched.json",
+  "denominators": {
+    "unit": "token（格律字位）",
+    "tokens": 96,
+    "works": [
+      {
+        "title": "登鹳雀楼",
+        "tokens": 20
+      },
+      {
+        "title": "静夜思",
+        "tokens": 20
+      },
+      {
+        "title": "黄鹤楼",
+        "tokens": 56
+      }
+    ],
+    "coveredTokens": 96,
+    "missingTokens": 0,
+    "multiCandidateTokens": 22,
+    "toneCriticalTokens": 10,
+    "evidenceTotal": 189,
+    "evidenceApproved": 84,
+    "tokensWithAnyApprovedEvidence": 96,
+    "tokensWithAllApprovedEvidence": 86,
+    "tokensWithMixedEvidence": 10,
+    "tokensWithoutApprovedEvidence": 0,
+    "candidatePrecheckBlockedTokens": 10
+  },
+  "works": [
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "title": "登鹳雀楼",
+      "tokens": [
+        {
+          "work": "登鹳雀楼",
+          "caseId": "golden-dengguanquelou-ps-v1",
+          "line": 1,
+          "column": 1,
+          "tokenId": "l1c1",
+          "character": "白",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:白:ru:入声十一陌"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:白:ru:入声十一陌"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:入:入声十一陌",
+            "ev:candidate:pingshui:白:ru:入声十一陌:j03"
+          ],
+          "groupIds": [
+            "入声十一陌"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": "J03 第一批确认该候选归属属实（范围仅限列明候选，不等于全部韵部获批）。"
+        },
+        {
+          "work": "登鹳雀楼",
+          "caseId": "golden-dengguanquelou-ps-v1",
+          "line": 1,
+          "column": 2,
+          "tokenId": "l1c2",
+          "character": "日",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:日:ru:入声四质"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:日:ru:入声四质"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:入:入声四质",
+            "ev:candidate:pingshui:日:ru:入声四质:d2-batch"
+          ],
+          "groupIds": [
+            "入声四质"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "登鹳雀楼",
+          "caseId": "golden-dengguanquelou-ps-v1",
+          "line": 1,
+          "column": 3,
+          "tokenId": "l1c3",
+          "character": "依",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:依:ping:五微"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:依:ping:五微"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:上平:五微",
+            "ev:candidate:pingshui:依:ping:五微:d2-batch"
+          ],
+          "groupIds": [
+            "五微"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "登鹳雀楼",
+          "caseId": "golden-dengguanquelou-ps-v1",
+          "line": 1,
+          "column": 4,
+          "tokenId": "l1c4",
+          "character": "山",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:山:ping:十五删"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:山:ping:十五删"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:上平:十五删",
+            "ev:candidate:pingshui:山:ping:十五删:d2-batch"
+          ],
+          "groupIds": [
+            "十五删"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "登鹳雀楼",
+          "caseId": "golden-dengguanquelou-ps-v1",
+          "line": 1,
+          "column": 5,
+          "tokenId": "l1c5",
+          "character": "尽",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:尽:shang:十一轸"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:尽:shang:十一轸"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:上:十一轸",
+            "ev:candidate:pingshui:尽:shang:十一轸:d2-batch"
+          ],
+          "groupIds": [
+            "十一轸"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "登鹳雀楼",
+          "caseId": "golden-dengguanquelou-ps-v1",
+          "line": 2,
+          "column": 1,
+          "tokenId": "l2c1",
+          "character": "黄",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:黄:ping:七阳"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:黄:ping:七阳"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:下平:七阳",
+            "ev:candidate:pingshui:黄:ping:七阳:d2-batch"
+          ],
+          "groupIds": [
+            "七阳"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "登鹳雀楼",
+          "caseId": "golden-dengguanquelou-ps-v1",
+          "line": 2,
+          "column": 2,
+          "tokenId": "l2c2",
+          "character": "河",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:河:ping:五歌"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:河:ping:五歌"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:下平:五歌",
+            "ev:candidate:pingshui:河:ping:五歌:d2-batch"
+          ],
+          "groupIds": [
+            "五歌"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "登鹳雀楼",
+          "caseId": "golden-dengguanquelou-ps-v1",
+          "line": 2,
+          "column": 3,
+          "tokenId": "l2c3",
+          "character": "入",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:入:ru:入声十四缉"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:入:ru:入声十四缉"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:入:入声十四缉",
+            "ev:candidate:pingshui:入:ru:入声十四缉:d2-batch"
+          ],
+          "groupIds": [
+            "入声十四缉"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "登鹳雀楼",
+          "caseId": "golden-dengguanquelou-ps-v1",
+          "line": 2,
+          "column": 4,
+          "tokenId": "l2c4",
+          "character": "海",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:海:shang:十贿"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:海:shang:十贿"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:上:十贿",
+            "ev:candidate:pingshui:海:shang:十贿:d2-batch"
+          ],
+          "groupIds": [
+            "十贿"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "登鹳雀楼",
+          "caseId": "golden-dengguanquelou-ps-v1",
+          "line": 2,
+          "column": 5,
+          "tokenId": "l2c5",
+          "character": "流",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:流:ping:十一尤"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:流:ping:十一尤"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:下平:十一尤",
+            "ev:candidate:pingshui:流:ping:十一尤:j03"
+          ],
+          "groupIds": [
+            "十一尤"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": "J03 第一批确认该候选归属属实（范围仅限列明候选）。"
+        },
+        {
+          "work": "登鹳雀楼",
+          "caseId": "golden-dengguanquelou-ps-v1",
+          "line": 3,
+          "column": 1,
+          "tokenId": "l3c1",
+          "character": "欲",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:欲:ru:入声二沃"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:欲:ru:入声二沃"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:入:入声二沃",
+            "ev:candidate:pingshui:欲:ru:入声二沃:d2-batch"
+          ],
+          "groupIds": [
+            "入声二沃"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "登鹳雀楼",
+          "caseId": "golden-dengguanquelou-ps-v1",
+          "line": 3,
+          "column": 2,
+          "tokenId": "l3c2",
+          "character": "穷",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:穷:ping:一东"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:穷:ping:一东"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:上平:一东",
+            "ev:candidate:pingshui:穷:ping:一东:d2-batch"
+          ],
+          "groupIds": [
+            "一东"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "登鹳雀楼",
+          "caseId": "golden-dengguanquelou-ps-v1",
+          "line": 3,
+          "column": 3,
+          "tokenId": "l3c3",
+          "character": "千",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:千:ping:一先"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:千:ping:一先"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:下平:一先",
+            "ev:candidate:pingshui:千:ping:一先:d2-batch"
+          ],
+          "groupIds": [
+            "一先"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "登鹳雀楼",
+          "caseId": "golden-dengguanquelou-ps-v1",
+          "line": 3,
+          "column": 4,
+          "tokenId": "l3c4",
+          "character": "里",
+          "candidateCount": 2,
+          "candidateIds": [
+            "pingshui:里:shang:四纸",
+            "pingshui:里:qu:四寘"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z",
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": true,
+          "approvedCandidateIds": [
+            "pingshui:里:shang:四纸"
+          ],
+          "unbackedCandidateIds": [
+            "pingshui:里:qu:四寘"
+          ],
+          "evidenceIds": [
+            "ev:pingshui:上:四纸",
+            "ev:candidate:pingshui:里:shang:四纸:d2-batch",
+            "ev:pingshui:去:四寘"
+          ],
+          "groupIds": [
+            "四纸",
+            "四寘"
+          ],
+          "machineOutcome": "blocked",
+          "machineNote": "候选预检阻断：1/2 个候选有 approved 证据标记，未满足 pingshui:里:qu:四寘",
+          "humanNote": ""
+        },
+        {
+          "work": "登鹳雀楼",
+          "caseId": "golden-dengguanquelou-ps-v1",
+          "line": 3,
+          "column": 5,
+          "tokenId": "l3c5",
+          "character": "目",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:目:ru:入声一屋"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:目:ru:入声一屋"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:入:入声一屋",
+            "ev:candidate:pingshui:目:ru:入声一屋:d2-batch"
+          ],
+          "groupIds": [
+            "入声一屋"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "登鹳雀楼",
+          "caseId": "golden-dengguanquelou-ps-v1",
+          "line": 4,
+          "column": 1,
+          "tokenId": "l4c1",
+          "character": "更",
+          "candidateCount": 2,
+          "candidateIds": [
+            "pingshui:更:ping:八庚",
+            "pingshui:更:qu:二十四敬"
+          ],
+          "tones": [
+            "P",
+            "Z"
+          ],
+          "candidateTones": [
+            "P",
+            "Z"
+          ],
+          "toneCritical": true,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:更:ping:八庚",
+            "pingshui:更:qu:二十四敬"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:下平:八庚",
+            "ev:candidate:pingshui:更:ping:八庚:j03",
+            "ev:pingshui:去:二十四敬",
+            "ev:candidate:pingshui:更:qu:二十四敬:j03"
+          ],
+          "groupIds": [
+            "八庚",
+            "二十四敬"
+          ],
+          "machineOutcome": "would-ambiguous",
+          "machineNote": "多候选含平含仄：读音与平仄均需消歧",
+          "humanNote": "J03 第一批确认两读；13_J03三首核心诗逐字人审_第二批.md §五第 1 条已裁定「更上一层楼」取去声二十四敬，语境规则已落库。"
+        },
+        {
+          "work": "登鹳雀楼",
+          "caseId": "golden-dengguanquelou-ps-v1",
+          "line": 4,
+          "column": 2,
+          "tokenId": "l4c2",
+          "character": "上",
+          "candidateCount": 2,
+          "candidateIds": [
+            "pingshui:上:shang:二十二养",
+            "pingshui:上:qu:二十三漾"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z",
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:上:shang:二十二养",
+            "pingshui:上:qu:二十三漾"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:上:二十二养",
+            "ev:candidate:pingshui:上:shang:二十二养:d2-batch",
+            "ev:pingshui:去:二十三漾",
+            "ev:candidate:pingshui:上:qu:二十三漾:d2-batch"
+          ],
+          "groupIds": [
+            "二十二养",
+            "二十三漾"
+          ],
+          "machineOutcome": "would-ambiguous",
+          "machineNote": "多候选但平仄已定（Z）：读音歧义、平仄可确定",
+          "humanNote": ""
+        },
+        {
+          "work": "登鹳雀楼",
+          "caseId": "golden-dengguanquelou-ps-v1",
+          "line": 4,
+          "column": 3,
+          "tokenId": "l4c3",
+          "character": "一",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:一:ru:入声四质"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:一:ru:入声四质"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:入:入声四质",
+            "ev:candidate:pingshui:一:ru:入声四质:j03"
+          ],
+          "groupIds": [
+            "入声四质"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": "J03 第一批确认该候选归属属实（范围仅限列明候选）。"
+        },
+        {
+          "work": "登鹳雀楼",
+          "caseId": "golden-dengguanquelou-ps-v1",
+          "line": 4,
+          "column": 4,
+          "tokenId": "l4c4",
+          "character": "层",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:层:ping:十蒸"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:层:ping:十蒸"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:下平:十蒸",
+            "ev:candidate:pingshui:层:ping:十蒸:d2-batch"
+          ],
+          "groupIds": [
+            "十蒸"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "登鹳雀楼",
+          "caseId": "golden-dengguanquelou-ps-v1",
+          "line": 4,
+          "column": 5,
+          "tokenId": "l4c5",
+          "character": "楼",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:楼:ping:十一尤"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:楼:ping:十一尤"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:下平:十一尤",
+            "ev:candidate:pingshui:楼:ping:十一尤:j03"
+          ],
+          "groupIds": [
+            "十一尤"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": "13_J03三首核心诗逐字人审_第二批.md §二已记录组长同意楼↔樓异体映射，无需重复审核；按候选范围落实，不代表整个十一尤获批。"
+        }
+      ]
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "title": "静夜思",
+      "tokens": [
+        {
+          "work": "静夜思",
+          "caseId": "golden-jingyesi-ps-v1",
+          "line": 1,
+          "column": 1,
+          "tokenId": "l1c1",
+          "character": "床",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:床:ping:七阳"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:床:ping:七阳"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:下平:七阳",
+            "ev:candidate:pingshui:床:ping:七阳:d2-batch"
+          ],
+          "groupIds": [
+            "七阳"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "静夜思",
+          "caseId": "golden-jingyesi-ps-v1",
+          "line": 1,
+          "column": 2,
+          "tokenId": "l1c2",
+          "character": "前",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:前:ping:一先"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:前:ping:一先"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:下平:一先",
+            "ev:candidate:pingshui:前:ping:一先:d2-batch"
+          ],
+          "groupIds": [
+            "一先"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "静夜思",
+          "caseId": "golden-jingyesi-ps-v1",
+          "line": 1,
+          "column": 3,
+          "tokenId": "l1c3",
+          "character": "明",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:明:ping:八庚"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:明:ping:八庚"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:下平:八庚",
+            "ev:candidate:pingshui:明:ping:八庚:d2-batch"
+          ],
+          "groupIds": [
+            "八庚"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "静夜思",
+          "caseId": "golden-jingyesi-ps-v1",
+          "line": 1,
+          "column": 4,
+          "tokenId": "l1c4",
+          "character": "月",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:月:ru:入声六月"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:月:ru:入声六月"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:入:入声六月",
+            "ev:candidate:pingshui:月:ru:入声六月:d2-batch"
+          ],
+          "groupIds": [
+            "入声六月"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "静夜思",
+          "caseId": "golden-jingyesi-ps-v1",
+          "line": 1,
+          "column": 5,
+          "tokenId": "l1c5",
+          "character": "光",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:光:ping:七阳"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:光:ping:七阳"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:下平:七阳",
+            "ev:candidate:pingshui:光:ping:七阳:d2-batch"
+          ],
+          "groupIds": [
+            "七阳"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "静夜思",
+          "caseId": "golden-jingyesi-ps-v1",
+          "line": 2,
+          "column": 1,
+          "tokenId": "l2c1",
+          "character": "疑",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:疑:ping:四支"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:疑:ping:四支"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:上平:四支",
+            "ev:candidate:pingshui:疑:ping:四支:d2-batch"
+          ],
+          "groupIds": [
+            "四支"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "静夜思",
+          "caseId": "golden-jingyesi-ps-v1",
+          "line": 2,
+          "column": 2,
+          "tokenId": "l2c2",
+          "character": "是",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:是:shang:四纸"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:是:shang:四纸"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:上:四纸",
+            "ev:candidate:pingshui:是:shang:四纸:d2-batch"
+          ],
+          "groupIds": [
+            "四纸"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "静夜思",
+          "caseId": "golden-jingyesi-ps-v1",
+          "line": 2,
+          "column": 3,
+          "tokenId": "l2c3",
+          "character": "地",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:地:qu:四寘"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:地:qu:四寘"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:去:四寘",
+            "ev:candidate:pingshui:地:qu:四寘:d2-batch"
+          ],
+          "groupIds": [
+            "四寘"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "静夜思",
+          "caseId": "golden-jingyesi-ps-v1",
+          "line": 2,
+          "column": 4,
+          "tokenId": "l2c4",
+          "character": "上",
+          "candidateCount": 2,
+          "candidateIds": [
+            "pingshui:上:shang:二十二养",
+            "pingshui:上:qu:二十三漾"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z",
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:上:shang:二十二养",
+            "pingshui:上:qu:二十三漾"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:上:二十二养",
+            "ev:candidate:pingshui:上:shang:二十二养:d2-batch",
+            "ev:pingshui:去:二十三漾",
+            "ev:candidate:pingshui:上:qu:二十三漾:d2-batch"
+          ],
+          "groupIds": [
+            "二十二养",
+            "二十三漾"
+          ],
+          "machineOutcome": "would-ambiguous",
+          "machineNote": "多候选但平仄已定（Z）：读音歧义、平仄可确定",
+          "humanNote": ""
+        },
+        {
+          "work": "静夜思",
+          "caseId": "golden-jingyesi-ps-v1",
+          "line": 2,
+          "column": 5,
+          "tokenId": "l2c5",
+          "character": "霜",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:霜:ping:七阳"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:霜:ping:七阳"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:下平:七阳",
+            "ev:candidate:pingshui:霜:ping:七阳:d2-batch"
+          ],
+          "groupIds": [
+            "七阳"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "静夜思",
+          "caseId": "golden-jingyesi-ps-v1",
+          "line": 3,
+          "column": 1,
+          "tokenId": "l3c1",
+          "character": "举",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:举:shang:六语"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:举:shang:六语"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:上:六语",
+            "ev:candidate:pingshui:举:shang:六语:d2-batch"
+          ],
+          "groupIds": [
+            "六语"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "静夜思",
+          "caseId": "golden-jingyesi-ps-v1",
+          "line": 3,
+          "column": 2,
+          "tokenId": "l3c2",
+          "character": "头",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:头:ping:十一尤"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:头:ping:十一尤"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:下平:十一尤",
+            "ev:candidate:pingshui:头:ping:十一尤:d2-batch"
+          ],
+          "groupIds": [
+            "十一尤"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "静夜思",
+          "caseId": "golden-jingyesi-ps-v1",
+          "line": 3,
+          "column": 3,
+          "tokenId": "l3c3",
+          "character": "望",
+          "candidateCount": 2,
+          "candidateIds": [
+            "pingshui:望:ping:七阳",
+            "pingshui:望:qu:二十三漾"
+          ],
+          "tones": [
+            "P",
+            "Z"
+          ],
+          "candidateTones": [
+            "P",
+            "Z"
+          ],
+          "toneCritical": true,
+          "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": true,
+          "approvedCandidateIds": [
+            "pingshui:望:qu:二十三漾"
+          ],
+          "unbackedCandidateIds": [
+            "pingshui:望:ping:七阳"
+          ],
+          "evidenceIds": [
+            "ev:pingshui:下平:七阳",
+            "ev:pingshui:去:二十三漾",
+            "ev:candidate:pingshui:望:qu:二十三漾:j03"
+          ],
+          "groupIds": [
+            "七阳",
+            "二十三漾"
+          ],
+          "machineOutcome": "blocked",
+          "machineNote": "候选预检阻断：1/2 个候选有 approved 证据标记，未满足 pingshui:望:ping:七阳",
+          "humanNote": ""
+        },
+        {
+          "work": "静夜思",
+          "caseId": "golden-jingyesi-ps-v1",
+          "line": 3,
+          "column": 4,
+          "tokenId": "l3c4",
+          "character": "明",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:明:ping:八庚"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:明:ping:八庚"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:下平:八庚",
+            "ev:candidate:pingshui:明:ping:八庚:d2-batch"
+          ],
+          "groupIds": [
+            "八庚"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "静夜思",
+          "caseId": "golden-jingyesi-ps-v1",
+          "line": 3,
+          "column": 5,
+          "tokenId": "l3c5",
+          "character": "月",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:月:ru:入声六月"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:月:ru:入声六月"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:入:入声六月",
+            "ev:candidate:pingshui:月:ru:入声六月:d2-batch"
+          ],
+          "groupIds": [
+            "入声六月"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "静夜思",
+          "caseId": "golden-jingyesi-ps-v1",
+          "line": 4,
+          "column": 1,
+          "tokenId": "l4c1",
+          "character": "低",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:低:ping:八齐"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:低:ping:八齐"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:上平:八齐",
+            "ev:candidate:pingshui:低:ping:八齐:d2-batch"
+          ],
+          "groupIds": [
+            "八齐"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "静夜思",
+          "caseId": "golden-jingyesi-ps-v1",
+          "line": 4,
+          "column": 2,
+          "tokenId": "l4c2",
+          "character": "头",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:头:ping:十一尤"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:头:ping:十一尤"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:下平:十一尤",
+            "ev:candidate:pingshui:头:ping:十一尤:d2-batch"
+          ],
+          "groupIds": [
+            "十一尤"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "静夜思",
+          "caseId": "golden-jingyesi-ps-v1",
+          "line": 4,
+          "column": 3,
+          "tokenId": "l4c3",
+          "character": "思",
+          "candidateCount": 2,
+          "candidateIds": [
+            "pingshui:思:ping:四支",
+            "pingshui:思:qu:四寘"
+          ],
+          "tones": [
+            "P",
+            "Z"
+          ],
+          "candidateTones": [
+            "P",
+            "Z"
+          ],
+          "toneCritical": true,
+          "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": true,
+          "approvedCandidateIds": [
+            "pingshui:思:ping:四支"
+          ],
+          "unbackedCandidateIds": [
+            "pingshui:思:qu:四寘"
+          ],
+          "evidenceIds": [
+            "ev:pingshui:上平:四支",
+            "ev:candidate:pingshui:思:ping:四支:j03",
+            "ev:pingshui:去:四寘"
+          ],
+          "groupIds": [
+            "四支",
+            "四寘"
+          ],
+          "machineOutcome": "blocked",
+          "machineNote": "候选预检阻断：1/2 个候选有 approved 证据标记，未满足 pingshui:思:qu:四寘",
+          "humanNote": ""
+        },
+        {
+          "work": "静夜思",
+          "caseId": "golden-jingyesi-ps-v1",
+          "line": 4,
+          "column": 4,
+          "tokenId": "l4c4",
+          "character": "故",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:故:qu:七遇"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:故:qu:七遇"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:去:七遇",
+            "ev:candidate:pingshui:故:qu:七遇:d2-batch"
+          ],
+          "groupIds": [
+            "七遇"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "静夜思",
+          "caseId": "golden-jingyesi-ps-v1",
+          "line": 4,
+          "column": 5,
+          "tokenId": "l4c5",
+          "character": "乡",
+          "candidateCount": 2,
+          "candidateIds": [
+            "pingshui:乡:ping:七阳",
+            "pingshui:乡:qu:二十三漾"
+          ],
+          "tones": [
+            "P",
+            "Z"
+          ],
+          "candidateTones": [
+            "P",
+            "Z"
+          ],
+          "toneCritical": true,
+          "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": true,
+          "approvedCandidateIds": [
+            "pingshui:乡:ping:七阳"
+          ],
+          "unbackedCandidateIds": [
+            "pingshui:乡:qu:二十三漾"
+          ],
+          "evidenceIds": [
+            "ev:pingshui:下平:七阳",
+            "ev:candidate:pingshui:乡:ping:七阳:j03",
+            "ev:pingshui:去:二十三漾"
+          ],
+          "groupIds": [
+            "七阳",
+            "二十三漾"
+          ],
+          "machineOutcome": "blocked",
+          "machineNote": "候选预检阻断：1/2 个候选有 approved 证据标记，未满足 pingshui:乡:qu:二十三漾",
+          "humanNote": ""
+        }
+      ]
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "title": "黄鹤楼",
+      "tokens": [
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 1,
+          "column": 1,
+          "tokenId": "l1c1",
+          "character": "昔",
+          "candidateCount": 2,
+          "candidateIds": [
+            "pingshui:昔:ru:入声十药",
+            "pingshui:昔:ru:入声十一陌"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z",
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:昔:ru:入声十药",
+            "pingshui:昔:ru:入声十一陌"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:入:入声十药",
+            "ev:candidate:pingshui:昔:ru:入声十药:d2-batch",
+            "ev:pingshui:入:入声十一陌",
+            "ev:candidate:pingshui:昔:ru:入声十一陌:d2-batch"
+          ],
+          "groupIds": [
+            "入声十药",
+            "入声十一陌"
+          ],
+          "machineOutcome": "would-ambiguous",
+          "machineNote": "多候选但平仄已定（Z）：读音歧义、平仄可确定",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 1,
+          "column": 2,
+          "tokenId": "l1c2",
+          "character": "人",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:人:ping:十一真"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:人:ping:十一真"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:上平:十一真",
+            "ev:candidate:pingshui:人:ping:十一真:d2-batch"
+          ],
+          "groupIds": [
+            "十一真"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 1,
+          "column": 3,
+          "tokenId": "l1c3",
+          "character": "已",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:已:shang:四纸"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:已:shang:四纸"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:上:四纸",
+            "ev:candidate:pingshui:已:shang:四纸:d2-batch"
+          ],
+          "groupIds": [
+            "四纸"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 1,
+          "column": 4,
+          "tokenId": "l1c4",
+          "character": "乘",
+          "candidateCount": 2,
+          "candidateIds": [
+            "pingshui:乘:ping:十蒸",
+            "pingshui:乘:qu:二十五径"
+          ],
+          "tones": [
+            "P",
+            "Z"
+          ],
+          "candidateTones": [
+            "P",
+            "Z"
+          ],
+          "toneCritical": true,
+          "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": true,
+          "approvedCandidateIds": [
+            "pingshui:乘:ping:十蒸"
+          ],
+          "unbackedCandidateIds": [
+            "pingshui:乘:qu:二十五径"
+          ],
+          "evidenceIds": [
+            "ev:pingshui:下平:十蒸",
+            "ev:candidate:pingshui:乘:ping:十蒸:j03",
+            "ev:pingshui:去:二十五径"
+          ],
+          "groupIds": [
+            "十蒸",
+            "二十五径"
+          ],
+          "machineOutcome": "blocked",
+          "machineNote": "候选预检阻断：1/2 个候选有 approved 证据标记，未满足 pingshui:乘:qu:二十五径",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 1,
+          "column": 5,
+          "tokenId": "l1c5",
+          "character": "黄",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:黄:ping:七阳"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:黄:ping:七阳"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:下平:七阳",
+            "ev:candidate:pingshui:黄:ping:七阳:d2-batch"
+          ],
+          "groupIds": [
+            "七阳"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 1,
+          "column": 6,
+          "tokenId": "l1c6",
+          "character": "鹤",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:鹤:ru:入声十药"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:鹤:ru:入声十药"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:入:入声十药",
+            "ev:candidate:pingshui:鹤:ru:入声十药:d2-batch"
+          ],
+          "groupIds": [
+            "入声十药"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 1,
+          "column": 7,
+          "tokenId": "l1c7",
+          "character": "去",
+          "candidateCount": 2,
+          "candidateIds": [
+            "pingshui:去:shang:六语",
+            "pingshui:去:qu:六御"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z",
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:去:shang:六语",
+            "pingshui:去:qu:六御"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:上:六语",
+            "ev:candidate:pingshui:去:shang:六语:d2-batch",
+            "ev:pingshui:去:六御",
+            "ev:candidate:pingshui:去:qu:六御:d2-batch"
+          ],
+          "groupIds": [
+            "六语",
+            "六御"
+          ],
+          "machineOutcome": "would-ambiguous",
+          "machineNote": "多候选但平仄已定（Z）：读音歧义、平仄可确定",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 2,
+          "column": 1,
+          "tokenId": "l2c1",
+          "character": "此",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:此:shang:四纸"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:此:shang:四纸"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:上:四纸",
+            "ev:candidate:pingshui:此:shang:四纸:d2-batch"
+          ],
+          "groupIds": [
+            "四纸"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 2,
+          "column": 2,
+          "tokenId": "l2c2",
+          "character": "地",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:地:qu:四寘"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:地:qu:四寘"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:去:四寘",
+            "ev:candidate:pingshui:地:qu:四寘:d2-batch"
+          ],
+          "groupIds": [
+            "四寘"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 2,
+          "column": 3,
+          "tokenId": "l2c3",
+          "character": "空",
+          "candidateCount": 3,
+          "candidateIds": [
+            "pingshui:空:ping:一东",
+            "pingshui:空:shang:一董",
+            "pingshui:空:qu:一送"
+          ],
+          "tones": [
+            "P",
+            "Z"
+          ],
+          "candidateTones": [
+            "P",
+            "Z",
+            "Z"
+          ],
+          "toneCritical": true,
+          "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": true,
+          "approvedCandidateIds": [
+            "pingshui:空:ping:一东"
+          ],
+          "unbackedCandidateIds": [
+            "pingshui:空:shang:一董",
+            "pingshui:空:qu:一送"
+          ],
+          "evidenceIds": [
+            "ev:pingshui:上平:一东",
+            "ev:candidate:pingshui:空:ping:一东:j03",
+            "ev:pingshui:上:一董",
+            "ev:pingshui:去:一送"
+          ],
+          "groupIds": [
+            "一东",
+            "一董",
+            "一送"
+          ],
+          "machineOutcome": "blocked",
+          "machineNote": "候选预检阻断：1/3 个候选有 approved 证据标记，未满足 pingshui:空:shang:一董、pingshui:空:qu:一送",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 2,
+          "column": 4,
+          "tokenId": "l2c4",
+          "character": "余",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:余:ping:六鱼"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:余:ping:六鱼"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:上平:六鱼",
+            "ev:candidate:pingshui:余:ping:六鱼:d2-batch"
+          ],
+          "groupIds": [
+            "六鱼"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 2,
+          "column": 5,
+          "tokenId": "l2c5",
+          "character": "黄",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:黄:ping:七阳"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:黄:ping:七阳"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:下平:七阳",
+            "ev:candidate:pingshui:黄:ping:七阳:d2-batch"
+          ],
+          "groupIds": [
+            "七阳"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 2,
+          "column": 6,
+          "tokenId": "l2c6",
+          "character": "鹤",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:鹤:ru:入声十药"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:鹤:ru:入声十药"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:入:入声十药",
+            "ev:candidate:pingshui:鹤:ru:入声十药:d2-batch"
+          ],
+          "groupIds": [
+            "入声十药"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 2,
+          "column": 7,
+          "tokenId": "l2c7",
+          "character": "楼",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:楼:ping:十一尤"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:楼:ping:十一尤"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:下平:十一尤",
+            "ev:candidate:pingshui:楼:ping:十一尤:j03"
+          ],
+          "groupIds": [
+            "十一尤"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": "13_J03三首核心诗逐字人审_第二批.md §二已记录组长同意楼↔樓异体映射，无需重复审核；按候选范围落实，不代表整个十一尤获批。"
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 3,
+          "column": 1,
+          "tokenId": "l3c1",
+          "character": "黄",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:黄:ping:七阳"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:黄:ping:七阳"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:下平:七阳",
+            "ev:candidate:pingshui:黄:ping:七阳:d2-batch"
+          ],
+          "groupIds": [
+            "七阳"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 3,
+          "column": 2,
+          "tokenId": "l3c2",
+          "character": "鹤",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:鹤:ru:入声十药"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:鹤:ru:入声十药"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:入:入声十药",
+            "ev:candidate:pingshui:鹤:ru:入声十药:d2-batch"
+          ],
+          "groupIds": [
+            "入声十药"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 3,
+          "column": 3,
+          "tokenId": "l3c3",
+          "character": "一",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:一:ru:入声四质"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:一:ru:入声四质"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:入:入声四质",
+            "ev:candidate:pingshui:一:ru:入声四质:j03"
+          ],
+          "groupIds": [
+            "入声四质"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": "J03 第一批确认该候选归属属实（范围仅限列明候选）。"
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 3,
+          "column": 4,
+          "tokenId": "l3c4",
+          "character": "去",
+          "candidateCount": 2,
+          "candidateIds": [
+            "pingshui:去:shang:六语",
+            "pingshui:去:qu:六御"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z",
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:去:shang:六语",
+            "pingshui:去:qu:六御"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:上:六语",
+            "ev:candidate:pingshui:去:shang:六语:d2-batch",
+            "ev:pingshui:去:六御",
+            "ev:candidate:pingshui:去:qu:六御:d2-batch"
+          ],
+          "groupIds": [
+            "六语",
+            "六御"
+          ],
+          "machineOutcome": "would-ambiguous",
+          "machineNote": "多候选但平仄已定（Z）：读音歧义、平仄可确定",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 3,
+          "column": 5,
+          "tokenId": "l3c5",
+          "character": "不",
+          "candidateCount": 2,
+          "candidateIds": [
+            "pingshui:不:ping:十一尤",
+            "pingshui:不:ru:入声五物"
+          ],
+          "tones": [
+            "P",
+            "Z"
+          ],
+          "candidateTones": [
+            "P",
+            "Z"
+          ],
+          "toneCritical": true,
+          "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": true,
+          "approvedCandidateIds": [
+            "pingshui:不:ru:入声五物"
+          ],
+          "unbackedCandidateIds": [
+            "pingshui:不:ping:十一尤"
+          ],
+          "evidenceIds": [
+            "ev:pingshui:下平:十一尤",
+            "ev:pingshui:入:入声五物",
+            "ev:candidate:pingshui:不:ru:入声五物:j03"
+          ],
+          "groupIds": [
+            "十一尤",
+            "入声五物"
+          ],
+          "machineOutcome": "blocked",
+          "machineNote": "候选预检阻断：1/2 个候选有 approved 证据标记，未满足 pingshui:不:ping:十一尤",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 3,
+          "column": 6,
+          "tokenId": "l3c6",
+          "character": "复",
+          "candidateCount": 2,
+          "candidateIds": [
+            "pingshui:复:qu:二十六宥",
+            "pingshui:复:ru:入声一屋"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z",
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:复:qu:二十六宥",
+            "pingshui:复:ru:入声一屋"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:去:二十六宥",
+            "ev:candidate:pingshui:复:qu:二十六宥:d2-batch",
+            "ev:pingshui:入:入声一屋",
+            "ev:candidate:pingshui:复:ru:入声一屋:d2-batch"
+          ],
+          "groupIds": [
+            "二十六宥",
+            "入声一屋"
+          ],
+          "machineOutcome": "would-ambiguous",
+          "machineNote": "多候选但平仄已定（Z）：读音歧义、平仄可确定",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 3,
+          "column": 7,
+          "tokenId": "l3c7",
+          "character": "返",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:返:shang:十三阮"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:返:shang:十三阮"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:上:十三阮",
+            "ev:candidate:pingshui:返:shang:十三阮:d2-batch"
+          ],
+          "groupIds": [
+            "十三阮"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 4,
+          "column": 1,
+          "tokenId": "l4c1",
+          "character": "白",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:白:ru:入声十一陌"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:白:ru:入声十一陌"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:入:入声十一陌",
+            "ev:candidate:pingshui:白:ru:入声十一陌:j03"
+          ],
+          "groupIds": [
+            "入声十一陌"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": "J03 第一批确认该候选归属属实（范围仅限列明候选，不等于全部韵部获批）。"
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 4,
+          "column": 2,
+          "tokenId": "l4c2",
+          "character": "云",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:云:ping:十二文"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:云:ping:十二文"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:上平:十二文",
+            "ev:candidate:pingshui:云:ping:十二文:d2-batch"
+          ],
+          "groupIds": [
+            "十二文"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 4,
+          "column": 3,
+          "tokenId": "l4c3",
+          "character": "千",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:千:ping:一先"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:千:ping:一先"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:下平:一先",
+            "ev:candidate:pingshui:千:ping:一先:d2-batch"
+          ],
+          "groupIds": [
+            "一先"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 4,
+          "column": 4,
+          "tokenId": "l4c4",
+          "character": "载",
+          "candidateCount": 2,
+          "candidateIds": [
+            "pingshui:载:shang:十贿",
+            "pingshui:载:qu:十一队"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z",
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:载:shang:十贿",
+            "pingshui:载:qu:十一队"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:上:十贿",
+            "ev:candidate:pingshui:载:shang:十贿:d2-batch",
+            "ev:pingshui:去:十一队",
+            "ev:candidate:pingshui:载:qu:十一队:d2-batch"
+          ],
+          "groupIds": [
+            "十贿",
+            "十一队"
+          ],
+          "machineOutcome": "would-ambiguous",
+          "machineNote": "多候选但平仄已定（Z）：读音歧义、平仄可确定",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 4,
+          "column": 5,
+          "tokenId": "l4c5",
+          "character": "空",
+          "candidateCount": 3,
+          "candidateIds": [
+            "pingshui:空:ping:一东",
+            "pingshui:空:shang:一董",
+            "pingshui:空:qu:一送"
+          ],
+          "tones": [
+            "P",
+            "Z"
+          ],
+          "candidateTones": [
+            "P",
+            "Z",
+            "Z"
+          ],
+          "toneCritical": true,
+          "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": true,
+          "approvedCandidateIds": [
+            "pingshui:空:ping:一东"
+          ],
+          "unbackedCandidateIds": [
+            "pingshui:空:shang:一董",
+            "pingshui:空:qu:一送"
+          ],
+          "evidenceIds": [
+            "ev:pingshui:上平:一东",
+            "ev:candidate:pingshui:空:ping:一东:j03",
+            "ev:pingshui:上:一董",
+            "ev:pingshui:去:一送"
+          ],
+          "groupIds": [
+            "一东",
+            "一董",
+            "一送"
+          ],
+          "machineOutcome": "blocked",
+          "machineNote": "候选预检阻断：1/3 个候选有 approved 证据标记，未满足 pingshui:空:shang:一董、pingshui:空:qu:一送",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 4,
+          "column": 6,
+          "tokenId": "l4c6",
+          "character": "悠",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:悠:ping:十一尤"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:悠:ping:十一尤"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:下平:十一尤",
+            "ev:candidate:pingshui:悠:ping:十一尤:d2-batch"
+          ],
+          "groupIds": [
+            "十一尤"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 4,
+          "column": 7,
+          "tokenId": "l4c7",
+          "character": "悠",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:悠:ping:十一尤"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:悠:ping:十一尤"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:下平:十一尤",
+            "ev:candidate:pingshui:悠:ping:十一尤:d2-batch"
+          ],
+          "groupIds": [
+            "十一尤"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 5,
+          "column": 1,
+          "tokenId": "l5c1",
+          "character": "晴",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:晴:ping:八庚"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:晴:ping:八庚"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:下平:八庚",
+            "ev:candidate:pingshui:晴:ping:八庚:d2-batch"
+          ],
+          "groupIds": [
+            "八庚"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 5,
+          "column": 2,
+          "tokenId": "l5c2",
+          "character": "川",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:川:ping:一先"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:川:ping:一先"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:下平:一先",
+            "ev:candidate:pingshui:川:ping:一先:d2-batch"
+          ],
+          "groupIds": [
+            "一先"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 5,
+          "column": 3,
+          "tokenId": "l5c3",
+          "character": "历",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:历:ru:入声十二锡"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:历:ru:入声十二锡"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:入:入声十二锡",
+            "ev:candidate:pingshui:历:ru:入声十二锡:d2-batch"
+          ],
+          "groupIds": [
+            "入声十二锡"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 5,
+          "column": 4,
+          "tokenId": "l5c4",
+          "character": "历",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:历:ru:入声十二锡"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:历:ru:入声十二锡"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:入:入声十二锡",
+            "ev:candidate:pingshui:历:ru:入声十二锡:d2-batch"
+          ],
+          "groupIds": [
+            "入声十二锡"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 5,
+          "column": 5,
+          "tokenId": "l5c5",
+          "character": "汉",
+          "candidateCount": 2,
+          "candidateIds": [
+            "pingshui:汉:ping:十四寒",
+            "pingshui:汉:qu:十五翰"
+          ],
+          "tones": [
+            "P",
+            "Z"
+          ],
+          "candidateTones": [
+            "P",
+            "Z"
+          ],
+          "toneCritical": true,
+          "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": true,
+          "approvedCandidateIds": [
+            "pingshui:汉:qu:十五翰"
+          ],
+          "unbackedCandidateIds": [
+            "pingshui:汉:ping:十四寒"
+          ],
+          "evidenceIds": [
+            "ev:pingshui:上平:十四寒",
+            "ev:pingshui:去:十五翰",
+            "ev:candidate:pingshui:汉:qu:十五翰:j03"
+          ],
+          "groupIds": [
+            "十四寒",
+            "十五翰"
+          ],
+          "machineOutcome": "blocked",
+          "machineNote": "候选预检阻断：1/2 个候选有 approved 证据标记，未满足 pingshui:汉:ping:十四寒",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 5,
+          "column": 6,
+          "tokenId": "l5c6",
+          "character": "阳",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:阳:ping:七阳"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:阳:ping:七阳"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:下平:七阳",
+            "ev:candidate:pingshui:阳:ping:七阳:d2-batch"
+          ],
+          "groupIds": [
+            "七阳"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 5,
+          "column": 7,
+          "tokenId": "l5c7",
+          "character": "树",
+          "candidateCount": 2,
+          "candidateIds": [
+            "pingshui:树:shang:七麌",
+            "pingshui:树:qu:七遇"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z",
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:树:shang:七麌",
+            "pingshui:树:qu:七遇"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:上:七麌",
+            "ev:candidate:pingshui:树:shang:七麌:d2-batch",
+            "ev:pingshui:去:七遇",
+            "ev:candidate:pingshui:树:qu:七遇:d2-batch"
+          ],
+          "groupIds": [
+            "七麌",
+            "七遇"
+          ],
+          "machineOutcome": "would-ambiguous",
+          "machineNote": "多候选但平仄已定（Z）：读音歧义、平仄可确定",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 6,
+          "column": 1,
+          "tokenId": "l6c1",
+          "character": "芳",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:芳:ping:七阳"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:芳:ping:七阳"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:下平:七阳",
+            "ev:candidate:pingshui:芳:ping:七阳:d2-batch"
+          ],
+          "groupIds": [
+            "七阳"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 6,
+          "column": 2,
+          "tokenId": "l6c2",
+          "character": "草",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:草:shang:十九皓"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:草:shang:十九皓"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:上:十九皓",
+            "ev:candidate:pingshui:草:shang:十九皓:d2-batch"
+          ],
+          "groupIds": [
+            "十九皓"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 6,
+          "column": 3,
+          "tokenId": "l6c3",
+          "character": "萋",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:萋:ping:八齐"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:萋:ping:八齐"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:上平:八齐",
+            "ev:candidate:pingshui:萋:ping:八齐:d2-batch"
+          ],
+          "groupIds": [
+            "八齐"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 6,
+          "column": 4,
+          "tokenId": "l6c4",
+          "character": "萋",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:萋:ping:八齐"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:萋:ping:八齐"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:上平:八齐",
+            "ev:candidate:pingshui:萋:ping:八齐:d2-batch"
+          ],
+          "groupIds": [
+            "八齐"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 6,
+          "column": 5,
+          "tokenId": "l6c5",
+          "character": "鹦",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:鹦:ping:八庚"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:鹦:ping:八庚"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:下平:八庚",
+            "ev:candidate:pingshui:鹦:ping:八庚:d2-batch"
+          ],
+          "groupIds": [
+            "八庚"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 6,
+          "column": 6,
+          "tokenId": "l6c6",
+          "character": "鹉",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:鹉:shang:七麌"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:鹉:shang:七麌"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:上:七麌",
+            "ev:candidate:pingshui:鹉:shang:七麌:d2-batch"
+          ],
+          "groupIds": [
+            "七麌"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 6,
+          "column": 7,
+          "tokenId": "l6c7",
+          "character": "洲",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:洲:ping:十一尤"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:洲:ping:十一尤"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:下平:十一尤",
+            "ev:candidate:pingshui:洲:ping:十一尤:d2-batch"
+          ],
+          "groupIds": [
+            "十一尤"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 7,
+          "column": 1,
+          "tokenId": "l7c1",
+          "character": "日",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:日:ru:入声四质"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:日:ru:入声四质"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:入:入声四质",
+            "ev:candidate:pingshui:日:ru:入声四质:d2-batch"
+          ],
+          "groupIds": [
+            "入声四质"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 7,
+          "column": 2,
+          "tokenId": "l7c2",
+          "character": "暮",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:暮:qu:七遇"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:暮:qu:七遇"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:去:七遇",
+            "ev:candidate:pingshui:暮:qu:七遇:d2-batch"
+          ],
+          "groupIds": [
+            "七遇"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 7,
+          "column": 3,
+          "tokenId": "l7c3",
+          "character": "乡",
+          "candidateCount": 2,
+          "candidateIds": [
+            "pingshui:乡:ping:七阳",
+            "pingshui:乡:qu:二十三漾"
+          ],
+          "tones": [
+            "P",
+            "Z"
+          ],
+          "candidateTones": [
+            "P",
+            "Z"
+          ],
+          "toneCritical": true,
+          "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": true,
+          "approvedCandidateIds": [
+            "pingshui:乡:ping:七阳"
+          ],
+          "unbackedCandidateIds": [
+            "pingshui:乡:qu:二十三漾"
+          ],
+          "evidenceIds": [
+            "ev:pingshui:下平:七阳",
+            "ev:candidate:pingshui:乡:ping:七阳:j03",
+            "ev:pingshui:去:二十三漾"
+          ],
+          "groupIds": [
+            "七阳",
+            "二十三漾"
+          ],
+          "machineOutcome": "blocked",
+          "machineNote": "候选预检阻断：1/2 个候选有 approved 证据标记，未满足 pingshui:乡:qu:二十三漾",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 7,
+          "column": 4,
+          "tokenId": "l7c4",
+          "character": "关",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:关:ping:十五删"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:关:ping:十五删"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:上平:十五删",
+            "ev:candidate:pingshui:关:ping:十五删:d2-batch"
+          ],
+          "groupIds": [
+            "十五删"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 7,
+          "column": 5,
+          "tokenId": "l7c5",
+          "character": "何",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:何:ping:五歌"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:何:ping:五歌"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:下平:五歌",
+            "ev:candidate:pingshui:何:ping:五歌:d2-batch"
+          ],
+          "groupIds": [
+            "五歌"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 7,
+          "column": 6,
+          "tokenId": "l7c6",
+          "character": "处",
+          "candidateCount": 2,
+          "candidateIds": [
+            "pingshui:处:shang:六语",
+            "pingshui:处:qu:六御"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z",
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:处:shang:六语",
+            "pingshui:处:qu:六御"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:上:六语",
+            "ev:candidate:pingshui:处:shang:六语:d2-batch",
+            "ev:pingshui:去:六御",
+            "ev:candidate:pingshui:处:qu:六御:d2-batch"
+          ],
+          "groupIds": [
+            "六语",
+            "六御"
+          ],
+          "machineOutcome": "would-ambiguous",
+          "machineNote": "多候选但平仄已定（Z）：读音歧义、平仄可确定",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 7,
+          "column": 7,
+          "tokenId": "l7c7",
+          "character": "是",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:是:shang:四纸"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:是:shang:四纸"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:上:四纸",
+            "ev:candidate:pingshui:是:shang:四纸:d2-batch"
+          ],
+          "groupIds": [
+            "四纸"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 8,
+          "column": 1,
+          "tokenId": "l8c1",
+          "character": "烟",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:烟:ping:一先"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:烟:ping:一先"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:下平:一先",
+            "ev:candidate:pingshui:烟:ping:一先:d2-batch"
+          ],
+          "groupIds": [
+            "一先"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 8,
+          "column": 2,
+          "tokenId": "l8c2",
+          "character": "波",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:波:ping:五歌"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:波:ping:五歌"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:下平:五歌",
+            "ev:candidate:pingshui:波:ping:五歌:d2-batch"
+          ],
+          "groupIds": [
+            "五歌"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 8,
+          "column": 3,
+          "tokenId": "l8c3",
+          "character": "江",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:江:ping:三江"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:江:ping:三江"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:上平:三江",
+            "ev:candidate:pingshui:江:ping:三江:d2-batch"
+          ],
+          "groupIds": [
+            "三江"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 8,
+          "column": 4,
+          "tokenId": "l8c4",
+          "character": "上",
+          "candidateCount": 2,
+          "candidateIds": [
+            "pingshui:上:shang:二十二养",
+            "pingshui:上:qu:二十三漾"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z",
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:上:shang:二十二养",
+            "pingshui:上:qu:二十三漾"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:上:二十二养",
+            "ev:candidate:pingshui:上:shang:二十二养:d2-batch",
+            "ev:pingshui:去:二十三漾",
+            "ev:candidate:pingshui:上:qu:二十三漾:d2-batch"
+          ],
+          "groupIds": [
+            "二十二养",
+            "二十三漾"
+          ],
+          "machineOutcome": "would-ambiguous",
+          "machineNote": "多候选但平仄已定（Z）：读音歧义、平仄可确定",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 8,
+          "column": 5,
+          "tokenId": "l8c5",
+          "character": "使",
+          "candidateCount": 2,
+          "candidateIds": [
+            "pingshui:使:shang:四纸",
+            "pingshui:使:qu:四寘"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "candidateTones": [
+            "Z",
+            "Z"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:使:shang:四纸",
+            "pingshui:使:qu:四寘"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:上:四纸",
+            "ev:candidate:pingshui:使:shang:四纸:d2-batch",
+            "ev:pingshui:去:四寘",
+            "ev:candidate:pingshui:使:qu:四寘:d2-batch"
+          ],
+          "groupIds": [
+            "四纸",
+            "四寘"
+          ],
+          "machineOutcome": "would-ambiguous",
+          "machineNote": "多候选但平仄已定（Z）：读音歧义、平仄可确定",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 8,
+          "column": 6,
+          "tokenId": "l8c6",
+          "character": "人",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:人:ping:十一真"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:人:ping:十一真"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:上平:十一真",
+            "ev:candidate:pingshui:人:ping:十一真:d2-batch"
+          ],
+          "groupIds": [
+            "十一真"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        },
+        {
+          "work": "黄鹤楼",
+          "caseId": "golden-huanghelou-ps-v1",
+          "line": 8,
+          "column": 7,
+          "tokenId": "l8c7",
+          "character": "愁",
+          "candidateCount": 1,
+          "candidateIds": [
+            "pingshui:愁:ping:十一尤"
+          ],
+          "tones": [
+            "P"
+          ],
+          "candidateTones": [
+            "P"
+          ],
+          "toneCritical": false,
+          "evidenceApproved": true,
+          "anyCandidateEvidenceApproved": true,
+          "allCandidateEvidenceApproved": true,
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [
+            "pingshui:愁:ping:十一尤"
+          ],
+          "unbackedCandidateIds": [],
+          "evidenceIds": [
+            "ev:pingshui:下平:十一尤",
+            "ev:candidate:pingshui:愁:ping:十一尤:d2-batch"
+          ],
+          "groupIds": [
+            "十一尤"
+          ],
+          "machineOutcome": "would-resolve",
+          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "humanNote": ""
+        }
+      ]
+    }
+  ],
+  "toneCritical": [
+    {
+      "work": "登鹳雀楼",
+      "tokenId": "l4c1",
+      "character": "更",
+      "candidateIds": [
+        "pingshui:更:ping:八庚",
+        "pingshui:更:qu:二十四敬"
+      ],
+      "tones": [
+        "P",
+        "Z"
+      ],
+      "humanNote": "J03 第一批确认两读；13_J03三首核心诗逐字人审_第二批.md §五第 1 条已裁定「更上一层楼」取去声二十四敬，语境规则已落库。"
+    },
+    {
+      "work": "静夜思",
+      "tokenId": "l3c3",
+      "character": "望",
+      "candidateIds": [
+        "pingshui:望:ping:七阳",
+        "pingshui:望:qu:二十三漾"
+      ],
+      "tones": [
+        "P",
+        "Z"
+      ],
+      "humanNote": ""
+    },
+    {
+      "work": "静夜思",
+      "tokenId": "l4c3",
+      "character": "思",
+      "candidateIds": [
+        "pingshui:思:ping:四支",
+        "pingshui:思:qu:四寘"
+      ],
+      "tones": [
+        "P",
+        "Z"
+      ],
+      "humanNote": ""
+    },
+    {
+      "work": "静夜思",
+      "tokenId": "l4c5",
+      "character": "乡",
+      "candidateIds": [
+        "pingshui:乡:ping:七阳",
+        "pingshui:乡:qu:二十三漾"
+      ],
+      "tones": [
+        "P",
+        "Z"
+      ],
+      "humanNote": ""
+    },
+    {
+      "work": "黄鹤楼",
+      "tokenId": "l1c4",
+      "character": "乘",
+      "candidateIds": [
+        "pingshui:乘:ping:十蒸",
+        "pingshui:乘:qu:二十五径"
+      ],
+      "tones": [
+        "P",
+        "Z"
+      ],
+      "humanNote": ""
+    },
+    {
+      "work": "黄鹤楼",
+      "tokenId": "l2c3",
+      "character": "空",
+      "candidateIds": [
+        "pingshui:空:ping:一东",
+        "pingshui:空:shang:一董",
+        "pingshui:空:qu:一送"
+      ],
+      "tones": [
+        "P",
+        "Z"
+      ],
+      "humanNote": ""
+    },
+    {
+      "work": "黄鹤楼",
+      "tokenId": "l3c5",
+      "character": "不",
+      "candidateIds": [
+        "pingshui:不:ping:十一尤",
+        "pingshui:不:ru:入声五物"
+      ],
+      "tones": [
+        "P",
+        "Z"
+      ],
+      "humanNote": ""
+    },
+    {
+      "work": "黄鹤楼",
+      "tokenId": "l4c5",
+      "character": "空",
+      "candidateIds": [
+        "pingshui:空:ping:一东",
+        "pingshui:空:shang:一董",
+        "pingshui:空:qu:一送"
+      ],
+      "tones": [
+        "P",
+        "Z"
+      ],
+      "humanNote": ""
+    },
+    {
+      "work": "黄鹤楼",
+      "tokenId": "l5c5",
+      "character": "汉",
+      "candidateIds": [
+        "pingshui:汉:ping:十四寒",
+        "pingshui:汉:qu:十五翰"
+      ],
+      "tones": [
+        "P",
+        "Z"
+      ],
+      "humanNote": ""
+    },
+    {
+      "work": "黄鹤楼",
+      "tokenId": "l7c3",
+      "character": "乡",
+      "candidateIds": [
+        "pingshui:乡:ping:七阳",
+        "pingshui:乡:qu:二十三漾"
+      ],
+      "tones": [
+        "P",
+        "Z"
+      ],
+      "humanNote": ""
+    }
+  ],
+  "versionDiff": {
+    "legacySample": "data/normalized/pingshui.sample-d1.json",
+    "legacyDataVersion": "sample-pingshui-cwr-ff0e9c1-d1-review2",
+    "legacyCharacters": 7,
+    "currentCharacters": 8240,
+    "currentCandidates": 10387,
+    "note": "旧七字样本（白、一、更、流、楼、雪、物）不在 API 装载清单内；本表全部数据来自 106 部全量快照，不使用旧样本结果。"
+  },
+  "adjudications": [
+    {
+      "work": "登鹳雀楼",
+      "tokenId": "l4c1",
+      "target": "更",
+      "candidateIds": [
+        "pingshui:更:ping:八庚",
+        "pingshui:更:qu:二十四敬"
+      ],
+      "tones": [
+        "P",
+        "Z"
+      ],
+      "ruleId": "ctx-j03b2-01-deng-geng",
+      "adjudicatedCandidateId": "pingshui:更:qu:二十四敬",
+      "ruleEvidenceIds": [
+        "ctx:j03b2:01"
+      ],
+      "adjudicationSource": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+      "candidateEvidenceApproved": true,
+      "note": "裁定已落库为语境规则；若被选候选的韵书证据仍未审核，仍会被门禁拦截"
+    },
+    {
+      "work": "静夜思",
+      "tokenId": "l3c3",
+      "target": "望",
+      "candidateIds": [
+        "pingshui:望:ping:七阳",
+        "pingshui:望:qu:二十三漾"
+      ],
+      "tones": [
+        "P",
+        "Z"
+      ],
+      "ruleId": "ctx-j03b2-02-jing-wang",
+      "adjudicatedCandidateId": "pingshui:望:qu:二十三漾",
+      "ruleEvidenceIds": [
+        "ctx:j03b2:02"
+      ],
+      "adjudicationSource": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+      "candidateEvidenceApproved": true,
+      "note": "裁定已落库为语境规则；若被选候选的韵书证据仍未审核，仍会被门禁拦截"
+    },
+    {
+      "work": "静夜思",
+      "tokenId": "l4c3",
+      "target": "思",
+      "candidateIds": [
+        "pingshui:思:ping:四支",
+        "pingshui:思:qu:四寘"
+      ],
+      "tones": [
+        "P",
+        "Z"
+      ],
+      "ruleId": "ctx-j03b2-03-jing-si",
+      "adjudicatedCandidateId": "pingshui:思:ping:四支",
+      "ruleEvidenceIds": [
+        "ctx:j03b2:03"
+      ],
+      "adjudicationSource": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+      "candidateEvidenceApproved": true,
+      "note": "裁定已落库为语境规则；若被选候选的韵书证据仍未审核，仍会被门禁拦截"
+    },
+    {
+      "work": "静夜思",
+      "tokenId": "l4c5",
+      "target": "乡",
+      "candidateIds": [
+        "pingshui:乡:ping:七阳",
+        "pingshui:乡:qu:二十三漾"
+      ],
+      "tones": [
+        "P",
+        "Z"
+      ],
+      "ruleId": "ctx-j03b2-04-jing-xiang",
+      "adjudicatedCandidateId": "pingshui:乡:ping:七阳",
+      "ruleEvidenceIds": [
+        "ctx:j03b2:04"
+      ],
+      "adjudicationSource": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+      "candidateEvidenceApproved": true,
+      "note": "裁定已落库为语境规则；若被选候选的韵书证据仍未审核，仍会被门禁拦截"
+    },
+    {
+      "work": "黄鹤楼",
+      "tokenId": "l1c4",
+      "target": "乘",
+      "candidateIds": [
+        "pingshui:乘:ping:十蒸",
+        "pingshui:乘:qu:二十五径"
+      ],
+      "tones": [
+        "P",
+        "Z"
+      ],
+      "ruleId": "ctx-j03b2-05-huang-cheng",
+      "adjudicatedCandidateId": "pingshui:乘:ping:十蒸",
+      "ruleEvidenceIds": [
+        "ctx:j03b2:05"
+      ],
+      "adjudicationSource": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+      "candidateEvidenceApproved": true,
+      "note": "裁定已落库为语境规则；若被选候选的韵书证据仍未审核，仍会被门禁拦截"
+    },
+    {
+      "work": "黄鹤楼",
+      "tokenId": "l2c3",
+      "target": "空",
+      "candidateIds": [
+        "pingshui:空:ping:一东",
+        "pingshui:空:shang:一董",
+        "pingshui:空:qu:一送"
+      ],
+      "tones": [
+        "P",
+        "Z"
+      ],
+      "ruleId": "ctx-j03b2-06-huang-kong-kongyu",
+      "adjudicatedCandidateId": "pingshui:空:ping:一东",
+      "ruleEvidenceIds": [
+        "ctx:j03b2:06"
+      ],
+      "adjudicationSource": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+      "candidateEvidenceApproved": true,
+      "note": "裁定已落库为语境规则；若被选候选的韵书证据仍未审核，仍会被门禁拦截"
+    },
+    {
+      "work": "黄鹤楼",
+      "tokenId": "l3c5",
+      "target": "不",
+      "candidateIds": [
+        "pingshui:不:ping:十一尤",
+        "pingshui:不:ru:入声五物"
+      ],
+      "tones": [
+        "P",
+        "Z"
+      ],
+      "ruleId": "ctx-j03b2-07-huang-bu",
+      "adjudicatedCandidateId": "pingshui:不:ru:入声五物",
+      "ruleEvidenceIds": [
+        "ctx:j03b2:07"
+      ],
+      "adjudicationSource": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+      "candidateEvidenceApproved": true,
+      "note": "裁定已落库为语境规则；若被选候选的韵书证据仍未审核，仍会被门禁拦截"
+    },
+    {
+      "work": "黄鹤楼",
+      "tokenId": "l4c5",
+      "target": "空",
+      "candidateIds": [
+        "pingshui:空:ping:一东",
+        "pingshui:空:shang:一董",
+        "pingshui:空:qu:一送"
+      ],
+      "tones": [
+        "P",
+        "Z"
+      ],
+      "ruleId": "ctx-j03b2-08-huang-kong-kongyou",
+      "adjudicatedCandidateId": "pingshui:空:ping:一东",
+      "ruleEvidenceIds": [
+        "ctx:j03b2:08"
+      ],
+      "adjudicationSource": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+      "candidateEvidenceApproved": true,
+      "note": "裁定已落库为语境规则；若被选候选的韵书证据仍未审核，仍会被门禁拦截"
+    },
+    {
+      "work": "黄鹤楼",
+      "tokenId": "l5c5",
+      "target": "汉",
+      "candidateIds": [
+        "pingshui:汉:ping:十四寒",
+        "pingshui:汉:qu:十五翰"
+      ],
+      "tones": [
+        "P",
+        "Z"
+      ],
+      "ruleId": "ctx-j03b2-09-huang-han",
+      "adjudicatedCandidateId": "pingshui:汉:qu:十五翰",
+      "ruleEvidenceIds": [
+        "ctx:j03b2:09"
+      ],
+      "adjudicationSource": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+      "candidateEvidenceApproved": true,
+      "note": "裁定已落库为语境规则；若被选候选的韵书证据仍未审核，仍会被门禁拦截"
+    },
+    {
+      "work": "黄鹤楼",
+      "tokenId": "l7c3",
+      "target": "乡",
+      "candidateIds": [
+        "pingshui:乡:ping:七阳",
+        "pingshui:乡:qu:二十三漾"
+      ],
+      "tones": [
+        "P",
+        "Z"
+      ],
+      "ruleId": "ctx-j03b2-10-huang-xiang",
+      "adjudicatedCandidateId": "pingshui:乡:ping:七阳",
+      "ruleEvidenceIds": [
+        "ctx:j03b2:10"
+      ],
+      "adjudicationSource": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+      "candidateEvidenceApproved": true,
+      "note": "裁定已落库为语境规则；若被选候选的韵书证据仍未审核，仍会被门禁拦截"
+    }
+  ],
+  "machineConclusion": {
+    "singleCandidateEvidenceReady": [
+      {
+        "work": "登鹳雀楼",
+        "tokenId": "l1c1",
+        "character": "白"
+      },
+      {
+        "work": "登鹳雀楼",
+        "tokenId": "l1c2",
+        "character": "日"
+      },
+      {
+        "work": "登鹳雀楼",
+        "tokenId": "l1c3",
+        "character": "依"
+      },
+      {
+        "work": "登鹳雀楼",
+        "tokenId": "l1c4",
+        "character": "山"
+      },
+      {
+        "work": "登鹳雀楼",
+        "tokenId": "l1c5",
+        "character": "尽"
+      },
+      {
+        "work": "登鹳雀楼",
+        "tokenId": "l2c1",
+        "character": "黄"
+      },
+      {
+        "work": "登鹳雀楼",
+        "tokenId": "l2c2",
+        "character": "河"
+      },
+      {
+        "work": "登鹳雀楼",
+        "tokenId": "l2c3",
+        "character": "入"
+      },
+      {
+        "work": "登鹳雀楼",
+        "tokenId": "l2c4",
+        "character": "海"
+      },
+      {
+        "work": "登鹳雀楼",
+        "tokenId": "l2c5",
+        "character": "流"
+      },
+      {
+        "work": "登鹳雀楼",
+        "tokenId": "l3c1",
+        "character": "欲"
+      },
+      {
+        "work": "登鹳雀楼",
+        "tokenId": "l3c2",
+        "character": "穷"
+      },
+      {
+        "work": "登鹳雀楼",
+        "tokenId": "l3c3",
+        "character": "千"
+      },
+      {
+        "work": "登鹳雀楼",
+        "tokenId": "l3c5",
+        "character": "目"
+      },
+      {
+        "work": "登鹳雀楼",
+        "tokenId": "l4c3",
+        "character": "一"
+      },
+      {
+        "work": "登鹳雀楼",
+        "tokenId": "l4c4",
+        "character": "层"
+      },
+      {
+        "work": "登鹳雀楼",
+        "tokenId": "l4c5",
+        "character": "楼"
+      },
+      {
+        "work": "静夜思",
+        "tokenId": "l1c1",
+        "character": "床"
+      },
+      {
+        "work": "静夜思",
+        "tokenId": "l1c2",
+        "character": "前"
+      },
+      {
+        "work": "静夜思",
+        "tokenId": "l1c3",
+        "character": "明"
+      },
+      {
+        "work": "静夜思",
+        "tokenId": "l1c4",
+        "character": "月"
+      },
+      {
+        "work": "静夜思",
+        "tokenId": "l1c5",
+        "character": "光"
+      },
+      {
+        "work": "静夜思",
+        "tokenId": "l2c1",
+        "character": "疑"
+      },
+      {
+        "work": "静夜思",
+        "tokenId": "l2c2",
+        "character": "是"
+      },
+      {
+        "work": "静夜思",
+        "tokenId": "l2c3",
+        "character": "地"
+      },
+      {
+        "work": "静夜思",
+        "tokenId": "l2c5",
+        "character": "霜"
+      },
+      {
+        "work": "静夜思",
+        "tokenId": "l3c1",
+        "character": "举"
+      },
+      {
+        "work": "静夜思",
+        "tokenId": "l3c2",
+        "character": "头"
+      },
+      {
+        "work": "静夜思",
+        "tokenId": "l3c4",
+        "character": "明"
+      },
+      {
+        "work": "静夜思",
+        "tokenId": "l3c5",
+        "character": "月"
+      },
+      {
+        "work": "静夜思",
+        "tokenId": "l4c1",
+        "character": "低"
+      },
+      {
+        "work": "静夜思",
+        "tokenId": "l4c2",
+        "character": "头"
+      },
+      {
+        "work": "静夜思",
+        "tokenId": "l4c4",
+        "character": "故"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l1c2",
+        "character": "人"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l1c3",
+        "character": "已"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l1c5",
+        "character": "黄"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l1c6",
+        "character": "鹤"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l2c1",
+        "character": "此"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l2c2",
+        "character": "地"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l2c4",
+        "character": "余"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l2c5",
+        "character": "黄"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l2c6",
+        "character": "鹤"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l2c7",
+        "character": "楼"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l3c1",
+        "character": "黄"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l3c2",
+        "character": "鹤"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l3c3",
+        "character": "一"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l3c7",
+        "character": "返"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l4c1",
+        "character": "白"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l4c2",
+        "character": "云"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l4c3",
+        "character": "千"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l4c6",
+        "character": "悠"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l4c7",
+        "character": "悠"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l5c1",
+        "character": "晴"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l5c2",
+        "character": "川"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l5c3",
+        "character": "历"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l5c4",
+        "character": "历"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l5c6",
+        "character": "阳"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l6c1",
+        "character": "芳"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l6c2",
+        "character": "草"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l6c3",
+        "character": "萋"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l6c4",
+        "character": "萋"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l6c5",
+        "character": "鹦"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l6c6",
+        "character": "鹉"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l6c7",
+        "character": "洲"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l7c1",
+        "character": "日"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l7c2",
+        "character": "暮"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l7c4",
+        "character": "关"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l7c5",
+        "character": "何"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l7c7",
+        "character": "是"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l8c1",
+        "character": "烟"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l8c2",
+        "character": "波"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l8c3",
+        "character": "江"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l8c6",
+        "character": "人"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l8c7",
+        "character": "愁"
+      }
+    ],
+    "candidatePrecheckByWork": [
+      {
+        "work": "登鹳雀楼",
+        "blockedTokens": 1,
+        "firstBlockedTokenId": "l3c4"
+      },
+      {
+        "work": "静夜思",
+        "blockedTokens": 3,
+        "firstBlockedTokenId": "l3c3"
+      },
+      {
+        "work": "黄鹤楼",
+        "blockedTokens": 6,
+        "firstBlockedTokenId": "l1c4"
+      }
+    ],
+    "tiers": {
+      "singleCandidate": 74,
+      "multiSameTone": 12,
+      "multiToneCritical": 10,
+      "toneCriticalWithRule": 10
+    },
+    "mustRemainAmbiguous": [
+      {
+        "work": "登鹳雀楼",
+        "tokenId": "l3c4",
+        "character": "里",
+        "candidateIds": [
+          "pingshui:里:shang:四纸",
+          "pingshui:里:qu:四寘"
+        ],
+        "tones": [
+          "Z"
+        ],
+        "reason": "无适用语境规则/用户覆盖时，须先满足所有有效候选的证据门槛，再保留读音 ambiguous；平仄一致不等于读音已消歧"
+      },
+      {
+        "work": "登鹳雀楼",
+        "tokenId": "l4c2",
+        "character": "上",
+        "candidateIds": [
+          "pingshui:上:shang:二十二养",
+          "pingshui:上:qu:二十三漾"
+        ],
+        "tones": [
+          "Z"
+        ],
+        "reason": "无适用语境规则/用户覆盖时，须先满足所有有效候选的证据门槛，再保留读音 ambiguous；平仄一致不等于读音已消歧"
+      },
+      {
+        "work": "静夜思",
+        "tokenId": "l2c4",
+        "character": "上",
+        "candidateIds": [
+          "pingshui:上:shang:二十二养",
+          "pingshui:上:qu:二十三漾"
+        ],
+        "tones": [
+          "Z"
+        ],
+        "reason": "无适用语境规则/用户覆盖时，须先满足所有有效候选的证据门槛，再保留读音 ambiguous；平仄一致不等于读音已消歧"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l1c1",
+        "character": "昔",
+        "candidateIds": [
+          "pingshui:昔:ru:入声十药",
+          "pingshui:昔:ru:入声十一陌"
+        ],
+        "tones": [
+          "Z"
+        ],
+        "reason": "无适用语境规则/用户覆盖时，须先满足所有有效候选的证据门槛，再保留读音 ambiguous；平仄一致不等于读音已消歧"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l1c7",
+        "character": "去",
+        "candidateIds": [
+          "pingshui:去:shang:六语",
+          "pingshui:去:qu:六御"
+        ],
+        "tones": [
+          "Z"
+        ],
+        "reason": "无适用语境规则/用户覆盖时，须先满足所有有效候选的证据门槛，再保留读音 ambiguous；平仄一致不等于读音已消歧"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l3c4",
+        "character": "去",
+        "candidateIds": [
+          "pingshui:去:shang:六语",
+          "pingshui:去:qu:六御"
+        ],
+        "tones": [
+          "Z"
+        ],
+        "reason": "无适用语境规则/用户覆盖时，须先满足所有有效候选的证据门槛，再保留读音 ambiguous；平仄一致不等于读音已消歧"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l3c6",
+        "character": "复",
+        "candidateIds": [
+          "pingshui:复:qu:二十六宥",
+          "pingshui:复:ru:入声一屋"
+        ],
+        "tones": [
+          "Z"
+        ],
+        "reason": "无适用语境规则/用户覆盖时，须先满足所有有效候选的证据门槛，再保留读音 ambiguous；平仄一致不等于读音已消歧"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l4c4",
+        "character": "载",
+        "candidateIds": [
+          "pingshui:载:shang:十贿",
+          "pingshui:载:qu:十一队"
+        ],
+        "tones": [
+          "Z"
+        ],
+        "reason": "无适用语境规则/用户覆盖时，须先满足所有有效候选的证据门槛，再保留读音 ambiguous；平仄一致不等于读音已消歧"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l5c7",
+        "character": "树",
+        "candidateIds": [
+          "pingshui:树:shang:七麌",
+          "pingshui:树:qu:七遇"
+        ],
+        "tones": [
+          "Z"
+        ],
+        "reason": "无适用语境规则/用户覆盖时，须先满足所有有效候选的证据门槛，再保留读音 ambiguous；平仄一致不等于读音已消歧"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l7c6",
+        "character": "处",
+        "candidateIds": [
+          "pingshui:处:shang:六语",
+          "pingshui:处:qu:六御"
+        ],
+        "tones": [
+          "Z"
+        ],
+        "reason": "无适用语境规则/用户覆盖时，须先满足所有有效候选的证据门槛，再保留读音 ambiguous；平仄一致不等于读音已消歧"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l8c4",
+        "character": "上",
+        "candidateIds": [
+          "pingshui:上:shang:二十二养",
+          "pingshui:上:qu:二十三漾"
+        ],
+        "tones": [
+          "Z"
+        ],
+        "reason": "无适用语境规则/用户覆盖时，须先满足所有有效候选的证据门槛，再保留读音 ambiguous；平仄一致不等于读音已消歧"
+      },
+      {
+        "work": "黄鹤楼",
+        "tokenId": "l8c5",
+        "character": "使",
+        "candidateIds": [
+          "pingshui:使:shang:四纸",
+          "pingshui:使:qu:四寘"
+        ],
+        "tones": [
+          "Z"
+        ],
+        "reason": "无适用语境规则/用户覆盖时，须先满足所有有效候选的证据门槛，再保留读音 ambiguous；平仄一致不等于读音已消歧"
+      }
+    ],
+    "note": [
+      "字位层面：任一候选有 approved 标记 96/96；全部候选有标记 86/96；已审/未审混合 10。均为快照标记统计，不扩张人审范围。",
+      "候选预检不应用语境规则。真实 resolveReadings 会先选择有效候选，再逐一检查证据；语境规则本身也需已审核的语境证据。整诗有任一有效候选缺依据时仍拒绝结果。",
+      "单候选且有证据的字位仅具备 resolved 的证据条件；多候选同调在无适用语境规则/用户覆盖时保留读音 ambiguous。两者都不代表整首诗已通过。",
+      "13_J03三首核心诗逐字人审_第二批.md §二已记录组长同意楼↔樓异体映射，无需重复审核；按候选范围落实，不代表整个十一尤获批。"
+    ]
+  }
+}

@@ -18,6 +18,10 @@ import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  applyCandidateApprovals,
+  readCandidateApprovals,
+} from "./candidate-approvals.js";
 
 import type {
   Evidence,
@@ -57,8 +61,8 @@ const OUT_DIR = path.join(ROOT, "data", "normalized");
 const CWR_REVISION = "ff0e9c13fb037c43e0eaa5dc929c0fe4fa2ffb18";
 const CWR_DATA_PATH = "data/Pingshui_Rhyme.json";
 
-const A_VERSION = "pingshui-cwr-ff0e9c1-d2-full";
-const B_VERSION = "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-draft";
+const A_VERSION = "pingshui-cwr-ff0e9c1-d2-full-review3";
+const B_VERSION = "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3";
 
 /** 已核事实：落盘字节身份（由人在真实文件上核对后提供，此处只做回归断言）。 */
 const WIKITEXT_OLDID = "8264804";
@@ -102,6 +106,11 @@ function readApprovedEvidenceIds(): readonly string[] {
 }
 const SANJ_JIANG_EVIDENCE_REVIEW_STATUS = readSanJiangEvidenceReviewStatus();
 const APPROVED_EVIDENCE_IDS = readApprovedEvidenceIds();
+const CANDIDATE_APPROVALS = readCandidateApprovals(ROOT);
+const ALL_APPROVED_IDS = [
+  ...APPROVED_EVIDENCE_IDS,
+  ...CANDIDATE_APPROVALS.map((item) => item.evidenceId),
+];
 
 /** 底本（繁体）上声三讲正文，wikitext 第 200 行；该韵目无【詞】段。 */
 const SANJ_JIANG_BASE_TEXT = "講港棒蚌項缿玤傋耩";
@@ -131,7 +140,7 @@ const A_NOTICE =
 
 const B_NOTICE =
   "平水韵全量候选（106 部，含上声三讲补丁草案）：在 105 部快照上追加「三讲」9 条归属，" +
-  "结构可达 106 部且无空部；但补丁仍为 draft、全库 reviewStatus=unverified，未经人审签，" +
+  "结构可达 106 部且无空部；三讲已签，候选审批按独立证据落库；全库 reviewStatus=unverified，" +
   "releaseGatePassed 仍为 false，不得进 data/releases。" +
   `上声三讲底本为维基文库《平水韻》oldid ${WIKITEXT_OLDID} 的繁体正文「${SANJ_JIANG_BASE_TEXT}」` +
   "（该韵目无【詞】段）；底本为繁体，此处仅做繁→简转换（講→讲、項→项），" +
@@ -164,10 +173,7 @@ function multiGroupCharacterCount(
 ): number {
   const counts = new Map<string, number>();
   for (const candidate of candidates) {
-    counts.set(
-      candidate.character,
-      (counts.get(candidate.character) ?? 0) + 1,
-    );
+    counts.set(candidate.character, (counts.get(candidate.character) ?? 0) + 1);
   }
   return [...counts.values()].filter((count) => count > 1).length;
 }
@@ -195,9 +201,7 @@ function printReport(
     `unexpectedGroups：${report.unexpectedGroups.join(",") || "（无）"}`,
   );
   console.log(`候选数：${snapshot.candidates.length}`);
-  console.log(
-    `多归部字形数：${multiGroupCharacterCount(snapshot.candidates)}`,
-  );
+  console.log(`多归部字形数：${multiGroupCharacterCount(snapshot.candidates)}`);
   console.log(`韵部数（groups 数组）：${snapshot.groups.length}`);
   console.log(`证据数：${snapshot.evidence.length}`);
   console.log(
@@ -271,12 +275,11 @@ function buildSanJiangCandidates(): ReadingCandidate[] {
 
 function main(): void {
   section("输入检查（落盘字节身份）");
-  check(
-    existsSync(WIKITEXT_FILE),
-    `维基文库快照存在：${WIKITEXT_REL}`,
-  );
+  check(existsSync(WIKITEXT_FILE), `维基文库快照存在：${WIKITEXT_REL}`);
   if (!existsSync(WIKITEXT_FILE)) {
-    console.error("\n输入缺失，无法构建 106 部补丁路径；请先落盘维基文库正文。");
+    console.error(
+      "\n输入缺失，无法构建 106 部补丁路径；请先落盘维基文库正文。",
+    );
     process.exitCode = 1;
     return;
   }
@@ -286,10 +289,7 @@ function main(): void {
     wikitextBytes.length === WIKITEXT_BYTES,
     `字节数 ${wikitextBytes.length} == 登记值 ${WIKITEXT_BYTES}`,
   );
-  check(
-    sha256Bytes(wikitextBytes) === WIKITEXT_SHA256,
-    "SHA-256 与登记值一致",
-  );
+  check(sha256Bytes(wikitextBytes) === WIKITEXT_SHA256, "SHA-256 与登记值一致");
   check(
     countLines(wikitextText) === WIKITEXT_LINES,
     `行数 ${countLines(wikitextText)} == 登记值 ${WIKITEXT_LINES}`,
@@ -315,19 +315,22 @@ function main(): void {
   console.log(`原表 SHA-256：${sha256Bytes(cwrBytes)}`);
 
   // ---- A：105 部（缺三讲） ----
-  const aInputBase: SnapshotInput = {
-    ...pingshuiSnapshotFromCwr(table, {
-      dataVersion: A_VERSION,
-      sourceId: "src:chinese_word_rhyme:pingshui",
-      approvedEvidenceIds: APPROVED_EVIDENCE_IDS,
-      revision: CWR_REVISION,
-      dataPath: CWR_DATA_PATH,
-      snapshotSha256: sha256Bytes(cwrBytes),
-      retrievedAt: null,
-      license: "MIT（上游转载授权链未核实）",
-    }),
-    notice: A_NOTICE,
-  };
+  const aInputBase: SnapshotInput = applyCandidateApprovals(
+    {
+      ...pingshuiSnapshotFromCwr(table, {
+        dataVersion: A_VERSION,
+        sourceId: "src:chinese_word_rhyme:pingshui",
+        approvedEvidenceIds: APPROVED_EVIDENCE_IDS,
+        revision: CWR_REVISION,
+        dataPath: CWR_DATA_PATH,
+        snapshotSha256: sha256Bytes(cwrBytes),
+        retrievedAt: null,
+        license: "MIT（上游转载授权链未核实）",
+      }),
+      notice: A_NOTICE,
+    },
+    CANDIDATE_APPROVALS,
+  );
   const aSnapshot = defineSnapshot(aInputBase);
   const aReport = checkCompleteness(aSnapshot, PINGSHUI_GATE);
 
@@ -407,8 +410,7 @@ function main(): void {
   );
   const listedApproved = bSnapshot.evidence.filter(
     (item) =>
-      APPROVED_EVIDENCE_IDS.includes(item.id) ||
-      item.id === SANJ_JIANG_EVIDENCE_ID,
+      ALL_APPROVED_IDS.includes(item.id) || item.id === SANJ_JIANG_EVIDENCE_ID,
   );
   check(
     approvedEvidence.length === listedApproved.length,
@@ -416,8 +418,7 @@ function main(): void {
   );
   const unlistedApproved = approvedEvidence.filter(
     (item) =>
-      !APPROVED_EVIDENCE_IDS.includes(item.id) &&
-      item.id !== SANJ_JIANG_EVIDENCE_ID,
+      !ALL_APPROVED_IDS.includes(item.id) && item.id !== SANJ_JIANG_EVIDENCE_ID,
   );
   check(
     unlistedApproved.length === 0,
@@ -450,10 +451,7 @@ function main(): void {
   // 归属净增 9 条：8 新字 + 「玤」1 条新归属
   const membershipDelta =
     bSnapshot.candidates.length - aSnapshot.candidates.length;
-  check(
-    membershipDelta === 9,
-    `归属净增 9 条（实际 ${membershipDelta}）`,
-  );
+  check(membershipDelta === 9, `归属净增 9 条（实际 ${membershipDelta}）`);
 
   // 「玤」不得从一董删除
   const fenGroups = bSnapshot.candidates
@@ -472,10 +470,7 @@ function main(): void {
   const sanJiangMembers = bSnapshot.candidates.filter((candidate) =>
     candidate.groupIds.includes(SANJ_JIANG_GROUP_ID),
   ).length;
-  check(
-    sanJiangMembers === 9,
-    `三讲成员 9 条（实际 ${sanJiangMembers}）`,
-  );
+  check(sanJiangMembers === 9, `三讲成员 9 条（实际 ${sanJiangMembers}）`);
 
   // 候选 ID 唯一（defineSnapshot 已校验引用完整性，这里显式再确认 9 条新 ID）
   const newIds = SANJ_JIANG_CHARS.map((character) =>
@@ -486,10 +481,7 @@ function main(): void {
       SANJ_JIANG_NAME,
     ),
   );
-  check(
-    new Set(newIds).size === newIds.length,
-    "9 条三讲候选 ID 互不相同",
-  );
+  check(new Set(newIds).size === newIds.length, "9 条三讲候选 ID 互不相同");
   check(
     new Set(bSnapshot.candidates.map((candidate) => candidate.id)).size ===
       bSnapshot.candidates.length,

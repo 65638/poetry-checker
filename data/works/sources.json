@@ -1,0 +1,32 @@
+[
+  {
+    "id": "src:wikisource:work:dengguanquelou",
+    "title": "维基文库《登鹳雀楼》固定修订",
+    "edition": "采用主文及异文模板第一项",
+    "url": "https://zh.wikisource.org/w/index.php?title=%E7%99%BB%E9%B8%9B%E9%9B%80%E6%A8%93_(%E7%8E%8B%E4%B9%8B%E6%B8%99)&oldid=2648160",
+    "license": "古代诗作正文公有领域；维基文库页面编排按站点 CC BY-SA 条款，第三方素材另计",
+    "snapshotSha256": "372a0e661b402fa6e3df2bbd2f02360972fd90fab9cc1829e20d942467c865a9",
+    "revision": "2648160",
+    "retrievedAt": "2026-10-18T08:47:13.486Z"
+  },
+  {
+    "id": "src:wikisource:work:jingyesi",
+    "title": "维基文库《静夜思》固定修订",
+    "edition": "页面「唐詩三百首」版本",
+    "url": "https://zh.wikisource.org/w/index.php?title=%E9%9D%9C%E5%A4%9C%E6%80%9D&oldid=8747585",
+    "license": "古代诗作正文公有领域；维基文库页面编排按站点 CC BY-SA 条款，第三方素材另计",
+    "snapshotSha256": "16dfda854ca163a2b0230d2a7f322cae82acbba3ddca0fbacc2e32c0d537de01",
+    "revision": "8747585",
+    "retrievedAt": "2026-10-18T08:47:13.379Z"
+  },
+  {
+    "id": "src:wikisource:work:huanghelou",
+    "title": "维基文库《黄鹤楼》固定修订",
+    "edition": "采用主文及异文模板第一项",
+    "url": "https://zh.wikisource.org/w/index.php?title=%E9%BB%83%E9%B6%B4%E6%A8%93_(%E5%B4%94%E9%A1%A5)&oldid=2492584",
+    "license": "古代诗作正文公有领域；维基文库页面编排按站点 CC BY-SA 条款，第三方素材另计",
+    "snapshotSha256": "e6e66503c45822fa0cf56fa7547866a3c044c411bda16e71db2b8a31e868fe34",
+    "revision": "2492584",
+    "retrievedAt": "2026-10-18T08:47:13.480Z"
+  }
+]

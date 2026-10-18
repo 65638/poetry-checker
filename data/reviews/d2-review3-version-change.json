@@ -1,0 +1,29 @@
+{
+  "reason": "组长接受68条固定原文机器初审批次，并裁定固定句中“里”取上声四纸；竞争候选保留待核。",
+  "approvalRecord": "data/reviews/d2-closeout-batch-approval.json",
+  "previousCommit": "8f7439787a8b180b490270af6885b4cc34e116ef",
+  "versions": [
+    {
+      "path": "data/normalized/pingshui.full-d2.json",
+      "oldVersion": "pingshui-cwr-ff0e9c1-d2-full-review2",
+      "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-review3",
+      "sha256": "e2f7a467ccf7ceb63145483b0b9c2b1fc23b3c11a43f4f83cf76f83f2017644b",
+      "candidateCount": 10378,
+      "evidenceApproved": 83,
+      "evidenceTotal": 188
+    },
+    {
+      "path": "data/normalized/pingshui.full-d2-patched.json",
+      "oldVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review2",
+      "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3",
+      "sha256": "37a9e4681cad6a71d76468214907490854a543346dba2b54a5463a8fcb56da73",
+      "candidateCount": 10387,
+      "evidenceApproved": 84,
+      "evidenceTotal": 189
+    }
+  ],
+  "idMigration": "candidate/group/source及既有evidence IDs均保留；新增68个ev:candidate:*:d2-batch。新增ctx-d2-closeout-deng-qianli语境规则、ctx:d2-closeout:qianli证据及src:d2-closeout-review来源。",
+  "unchangedSample": "sample-pingshui-cwr-ff0e9c1-d1-review2；样本候选审批范围未变，不升版本。",
+  "releaseBoundary": "三首真实API局部验收；快照reviewStatus仍为unverified，不批准整部或全库。",
+  "restartRequired": "集成后重启API加载review3，关闭开发mock，重新提交输入；禁止沿用旧报告作为本批结果。"
+}

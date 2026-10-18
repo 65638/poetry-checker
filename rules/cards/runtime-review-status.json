@@ -1,0 +1,75 @@
+{
+  "note": "runtime RuleCard 是执行规则解释接口，没有审核状态字段；真实审核范围由本表与证据决定。原 draft 保留当时审批历史，不冒签其余7卡。",
+  "cards": [
+    {
+      "ruleId": "METER.POSITION",
+      "reviewStatus": "citation-reviewed-by-c",
+      "evidenceIds": [
+        "ev:rule:METER.POSITION:wangli15-p339-342-343"
+      ]
+    },
+    {
+      "ruleId": "RHYME.COMMON",
+      "reviewStatus": "partial-or-unverified",
+      "evidenceIds": [
+        "ev:rule:RHYME.COMMON:engineering-scope"
+      ]
+    },
+    {
+      "ruleId": "RELATION.DUI",
+      "reviewStatus": "citation-reviewed-by-c",
+      "evidenceIds": [
+        "ev:rule:RELATION.DUI:wangli15-p333-334"
+      ]
+    },
+    {
+      "ruleId": "RELATION.NIAN",
+      "reviewStatus": "citation-reviewed-by-c",
+      "evidenceIds": [
+        "ev:rule:RELATION.NIAN:wangli15-p334"
+      ]
+    },
+    {
+      "ruleId": "GUPING.NARROW",
+      "reviewStatus": "citation-reviewed-by-c",
+      "evidenceIds": [
+        "ev:rule:GUPING.NARROW:wangli15-p335-336"
+      ]
+    },
+    {
+      "ruleId": "TAIL.SANPING",
+      "reviewStatus": "partial-or-unverified",
+      "evidenceIds": [
+        "ev:rule:TAIL.SANPING:engineering-scope"
+      ]
+    },
+    {
+      "ruleId": "TAIL.SANZE",
+      "reviewStatus": "partial-or-unverified",
+      "evidenceIds": [
+        "ev:rule:TAIL.SANZE:engineering-scope"
+      ]
+    },
+    {
+      "ruleId": "RESCUE.SELF",
+      "reviewStatus": "approved-by-j03",
+      "evidenceIds": [
+        "ev:rule:RESCUE.SELF:wangli15-p339"
+      ]
+    },
+    {
+      "ruleId": "RESCUE.TEAO",
+      "reviewStatus": "approved-by-j03",
+      "evidenceIds": [
+        "ev:rule:RESCUE.TEAO:wangli15-p336-338"
+      ]
+    },
+    {
+      "ruleId": "RESCUE.DUIJU",
+      "reviewStatus": "approved-by-j03",
+      "evidenceIds": [
+        "ev:rule:RESCUE.DUIJU:wangli15-p339-341"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "dengguanquelou",
+    "url": "https://zh.wikisource.org/w/index.php?title=%E7%99%BB%E9%B8%9B%E9%9B%80%E6%A8%93_(%E7%8E%8B%E4%B9%8B%E6%B8%99)&oldid=2648160&action=raw",
+    "path": "data/raw/works/dengguanquelou-2648160.wikitext",
+    "bytes": 999,
+    "retrievedAt": "2026-10-18T08:47:13.486Z",
+    "status": "retrieved"
+  },
+  {
+    "id": "jingyesi",
+    "url": "https://zh.wikisource.org/w/index.php?title=%E9%9D%9C%E5%A4%9C%E6%80%9D&oldid=8747585&action=raw",
+    "path": "data/raw/works/jingyesi-8747585.wikitext",
+    "bytes": 1015,
+    "retrievedAt": "2026-10-18T08:47:13.379Z",
+    "status": "retrieved"
+  },
+  {
+    "id": "huanghelou",
+    "url": "https://zh.wikisource.org/w/index.php?title=%E9%BB%83%E9%B6%B4%E6%A8%93_(%E5%B4%94%E9%A1%A5)&oldid=2492584&action=raw",
+    "path": "data/raw/works/huanghelou-2492584.wikitext",
+    "bytes": 730,
+    "retrievedAt": "2026-10-18T08:47:13.480Z",
+    "status": "retrieved"
+  }
+]

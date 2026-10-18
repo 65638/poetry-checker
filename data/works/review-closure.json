@@ -1,0 +1,235 @@
+{
+  "basis": "existing-human-decisions",
+  "implementedBy": "Codex（落库与机器核对）",
+  "works": [
+    {
+      "workId": "work:dengguanquelou",
+      "fingerprint": "33836d104644fd0bd8ae71d6b67a631eff28c6a857a6c5b8f6a644f25d2892ca",
+      "adoptedText": "白日依山尽，黄河入海流。欲穷千里目，更上一层楼。",
+      "sourceText": "白日依山盡，黃河入海流。欲窮千里目，更上一層樓。",
+      "characterDifferences": [
+        {
+          "position": 5,
+          "source": "盡",
+          "adopted": "尽"
+        },
+        {
+          "position": 6,
+          "source": "黃",
+          "adopted": "黄"
+        },
+        {
+          "position": 12,
+          "source": "窮",
+          "adopted": "穷"
+        },
+        {
+          "position": 19,
+          "source": "層",
+          "adopted": "层"
+        },
+        {
+          "position": 20,
+          "source": "樓",
+          "adopted": "楼"
+        }
+      ],
+      "recordFiles": [
+        {
+          "path": "docs/reviews/12_J03人审记录_第一批.md",
+          "sha256": "6355ee3d087ef551f1a9e0f5d018e23d228be04c6a51b4d1445c23e67053b5ef"
+        },
+        {
+          "path": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+          "sha256": "0bfbf7bc78257a2297f647a052161cb9ef724b3ec324781809eaadcfc68da68b"
+        },
+        {
+          "path": "docs/rule-sources.md",
+          "sha256": "607d32557a5ab4b1bf38ff93e2938e84d5caa076cb8547194b4de6bf6e6f8d4a"
+        }
+      ],
+      "scope": "仅此固定正文/作者/体裁；不审批全韵库，不合并异文，不对用户输入自动简繁转换"
+    },
+    {
+      "workId": "work:jingyesi",
+      "fingerprint": "9d68fef608c1ae6010cfc3ddd7fb2429e60a861bab8c6453874c2adb16d0bdef",
+      "adoptedText": "床前明月光，疑是地上霜。举头望明月，低头思故乡。",
+      "sourceText": "牀前明月光，疑是地上霜。舉頭望明月，低頭思故鄉。",
+      "characterDifferences": [
+        {
+          "position": 1,
+          "source": "牀",
+          "adopted": "床"
+        },
+        {
+          "position": 11,
+          "source": "舉",
+          "adopted": "举"
+        },
+        {
+          "position": 12,
+          "source": "頭",
+          "adopted": "头"
+        },
+        {
+          "position": 17,
+          "source": "頭",
+          "adopted": "头"
+        },
+        {
+          "position": 20,
+          "source": "鄉",
+          "adopted": "乡"
+        }
+      ],
+      "recordFiles": [
+        {
+          "path": "docs/reviews/12_J03人审记录_第一批.md",
+          "sha256": "6355ee3d087ef551f1a9e0f5d018e23d228be04c6a51b4d1445c23e67053b5ef"
+        },
+        {
+          "path": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+          "sha256": "0bfbf7bc78257a2297f647a052161cb9ef724b3ec324781809eaadcfc68da68b"
+        },
+        {
+          "path": "docs/rule-sources.md",
+          "sha256": "607d32557a5ab4b1bf38ff93e2938e84d5caa076cb8547194b4de6bf6e6f8d4a"
+        }
+      ],
+      "scope": "仅此固定正文/作者/体裁；不审批全韵库，不合并异文，不对用户输入自动简繁转换"
+    },
+    {
+      "workId": "work:huanghelou",
+      "fingerprint": "7b65737ca79258301a2dd35cd880c41020415945c1ea006478eaf816edbf47a2",
+      "adoptedText": "昔人已乘黄鹤去，此地空余黄鹤楼。黄鹤一去不复返，白云千载空悠悠。晴川历历汉阳树，芳草萋萋鹦鹉洲。日暮乡关何处是，烟波江上使人愁。",
+      "sourceText": "昔人已乘黃鶴去，此地空餘黃鶴樓。黃鶴一去不復返，白雲千載空悠悠。晴川歷歷漢陽樹，芳草萋萋鸚鵡洲。日暮鄉關何處是，煙波江上使人愁。",
+      "characterDifferences": [
+        {
+          "position": 5,
+          "source": "黃",
+          "adopted": "黄"
+        },
+        {
+          "position": 6,
+          "source": "鶴",
+          "adopted": "鹤"
+        },
+        {
+          "position": 11,
+          "source": "餘",
+          "adopted": "余"
+        },
+        {
+          "position": 12,
+          "source": "黃",
+          "adopted": "黄"
+        },
+        {
+          "position": 13,
+          "source": "鶴",
+          "adopted": "鹤"
+        },
+        {
+          "position": 14,
+          "source": "樓",
+          "adopted": "楼"
+        },
+        {
+          "position": 15,
+          "source": "黃",
+          "adopted": "黄"
+        },
+        {
+          "position": 16,
+          "source": "鶴",
+          "adopted": "鹤"
+        },
+        {
+          "position": 20,
+          "source": "復",
+          "adopted": "复"
+        },
+        {
+          "position": 23,
+          "source": "雲",
+          "adopted": "云"
+        },
+        {
+          "position": 25,
+          "source": "載",
+          "adopted": "载"
+        },
+        {
+          "position": 31,
+          "source": "歷",
+          "adopted": "历"
+        },
+        {
+          "position": 32,
+          "source": "歷",
+          "adopted": "历"
+        },
+        {
+          "position": 33,
+          "source": "漢",
+          "adopted": "汉"
+        },
+        {
+          "position": 34,
+          "source": "陽",
+          "adopted": "阳"
+        },
+        {
+          "position": 35,
+          "source": "樹",
+          "adopted": "树"
+        },
+        {
+          "position": 40,
+          "source": "鸚",
+          "adopted": "鹦"
+        },
+        {
+          "position": 41,
+          "source": "鵡",
+          "adopted": "鹉"
+        },
+        {
+          "position": 45,
+          "source": "鄉",
+          "adopted": "乡"
+        },
+        {
+          "position": 46,
+          "source": "關",
+          "adopted": "关"
+        },
+        {
+          "position": 48,
+          "source": "處",
+          "adopted": "处"
+        },
+        {
+          "position": 50,
+          "source": "煙",
+          "adopted": "烟"
+        }
+      ],
+      "recordFiles": [
+        {
+          "path": "docs/reviews/12_J03人审记录_第一批.md",
+          "sha256": "6355ee3d087ef551f1a9e0f5d018e23d228be04c6a51b4d1445c23e67053b5ef"
+        },
+        {
+          "path": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+          "sha256": "0bfbf7bc78257a2297f647a052161cb9ef724b3ec324781809eaadcfc68da68b"
+        },
+        {
+          "path": "docs/rule-sources.md",
+          "sha256": "607d32557a5ab4b1bf38ff93e2938e84d5caa076cb8547194b4de6bf6e6f8d4a"
+        }
+      ],
+      "scope": "仅此固定正文/作者/体裁；不审批全韵库，不合并异文，不对用户输入自动简繁转换"
+    }
+  ]
+}

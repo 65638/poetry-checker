@@ -4,13 +4,30 @@ import { loadResources } from "../src/resources.js";
 import { analyze } from "../src/orchestrator.js";
 
 const POEM = "白日依山尽，黄河入海流。\n欲穷千里目，更上一层楼。";
-const req = (text = POEM, rhymeBook: AnalyzeRequest["rhymeBook"] = "pingshui"): AnalyzeRequest => ({
-  text, rhymeBook, genreHint: "auto", formHint: "auto", ruleSet: "teaching-v1", readingOverrides: [],
+const req = (
+  text = POEM,
+  rhymeBook: AnalyzeRequest["rhymeBook"] = "pingshui",
+): AnalyzeRequest => ({
+  text,
+  rhymeBook,
+  genreHint: "auto",
+  formHint: "auto",
+  ruleSet: "teaching-v1",
+  readingOverrides: [],
 });
 
-describe("真实编排（A 三库全量快照，均未审核）", () => {
-  it("解析→查字→消歧链路真实执行；未审核证据被 B 门槛拦截为 503 DATA_NOT_READY（模块码可见）", async () => {
+describe("真实编排（部分候选已审，全库仍未发布）", () => {
+  it("登鹳雀楼的全部有效候选证据齐备，真实编排返回合律", async () => {
     const r = await analyze(req(), loadResources());
+    expect(r.kind).toBe("ok");
+    if (r.kind !== "ok") return;
+    expect(r.response.summary.status).toBe("pass");
+    expect(r.response.prosody.selectedTemplateId).toBe("wujue-ze-unrhymed");
+    expect(r.response.prosody.rhyme.status).toBe("pass");
+  });
+
+  it("未审竞争候选仍被拦截；固定句语境不得泛化到单字", async () => {
+    const r = await analyze(req("里"), loadResources());
     expect(r.kind).toBe("error");
     if (r.kind !== "error") return;
     expect(r.status).toBe(503);
@@ -20,14 +37,14 @@ describe("真实编排（A 三库全量快照，均未审核）", () => {
     expect(JSON.stringify(r.body.error.fieldErrors)).toContain("tokenId");
   });
 
-  it("同一输入两次分析逐字节稳定（含 503 语义）", async () => {
+  it("同一输入两次分析逐字节稳定", async () => {
     const resources = loadResources();
     const a = await analyze(req(), resources);
     const b = await analyze(req(), resources);
     expect(JSON.stringify(a)).toBe(JSON.stringify(b));
   });
 
-  it("词林全量已装载：真实编排执行至证据门槛，503 语义与平水一致", async () => {
+  it("词林全量已装载：未审批范围仍在证据门槛返回 503", async () => {
     const r = await analyze(req(POEM, "cilin"), loadResources());
     expect(r.kind).toBe("error");
     if (r.kind === "error") {

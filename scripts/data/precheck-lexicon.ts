@@ -78,7 +78,7 @@ const EXCLUDED: readonly { file: string; reason: string }[] = [
   {
     file: "pingshui.sample-d1.json",
     reason:
-      "D1 七字真实小样本（8 候选），不属 D2 三库口径；其部级证据状态已由 approved-evidence 清单覆盖，本报告不重复初审。",
+      "D1 七字真实小样本（8 候选），不属 D2 三库口径；候选级证据与原部级证据分开，本报告不重复初审。",
   },
 ];
 
@@ -86,7 +86,8 @@ const EXCLUDED: readonly { file: string; reason: string }[] = [
 const SOURCE_RAW_FILE: Readonly<Record<string, string>> = {
   "src:chinese_word_rhyme:pingshui":
     "data/raw/chinese_word_rhyme/Pingshui_Rhyme.json",
-  "src:chinese_word_rhyme:cilin": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+  "src:chinese_word_rhyme:cilin":
+    "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
   "src:chinese_word_rhyme": "data/raw/chinese_word_rhyme/Pingshui_Rhyme.json",
   "src:pinyin-data": "data/raw/pinyin-data/pinyin.txt",
   "src:wikisource:pingshuiyun":
@@ -226,7 +227,11 @@ interface SnapshotAudit {
   };
   charCheck: {
     checked: number;
-    violations: { candidateId: string; character: string; codePoints: number }[];
+    violations: {
+      candidateId: string;
+      character: string;
+      codePoints: number;
+    }[];
   };
   closure: {
     ok: boolean;
@@ -307,8 +312,7 @@ function sameCounts(
   const rightKeys = Object.keys(right).sort();
   if (leftKeys.length !== rightKeys.length) return false;
   return leftKeys.every(
-    (key, index) =>
-      key === rightKeys[index] && left[key] === right[key],
+    (key, index) => key === rightKeys[index] && left[key] === right[key],
   );
 }
 
@@ -452,7 +456,8 @@ function auditSnapshot(
     add("A", "P1", {
       location: `${file} · bucketCounts`,
       fact: `分部计数与门槛不符：实测 ${JSON.stringify(structure.bucketCounts)} / 应有 ${JSON.stringify(structure.expectedBucketCounts)}`,
-      basis: "按 bucket 汇总实测值 vs 门槛值（按键名排序比较，键顺序不同不算差异）",
+      basis:
+        "按 bucket 汇总实测值 vs 门槛值（按键名排序比较，键顺序不同不算差异）",
       impact: "分卷结构偏差",
       suggestedAction: "对照缺失/意外韵目逐部核查",
       actionKind: "数据事实需人审",
@@ -492,16 +497,14 @@ function auditSnapshot(
   const sameParentMulti = [...sameParentPairs.entries()].filter(
     ([, list]) => list.length > 1,
   );
-  const sameParentExamples = sameParentMulti
-    .slice(0, 24)
-    .map(([key, list]) => {
-      const [character = "", parent = ""] = key.split("\u0000");
-      return {
-        character,
-        parent,
-        candidateIds: list.map((candidate) => candidate.id).sort(),
-      };
-    });
+  const sameParentExamples = sameParentMulti.slice(0, 24).map(([key, list]) => {
+    const [character = "", parent = ""] = key.split("\u0000");
+    return {
+      character,
+      parent,
+      candidateIds: list.map((candidate) => candidate.id).sort(),
+    };
+  });
 
   const snapshotHasSanJiang = raw.groups.some(
     (group) => group.id === SANJ_JIANG_GROUP_ID,
@@ -708,7 +711,8 @@ function auditSnapshot(
 
   for (const candidate of raw.candidates) {
     for (const groupId of candidate.groupIds) {
-      if (!groupIds.has(groupId)) pushTo(missingGroupRefs, groupId, candidate.id);
+      if (!groupIds.has(groupId))
+        pushTo(missingGroupRefs, groupId, candidate.id);
     }
     const referenced = [
       ...candidate.evidenceIds,
@@ -781,7 +785,8 @@ function auditSnapshot(
         .join("；")}`,
       basis:
         "逐条解析 candidate.groupIds / evidenceIds（含 modernReading、fanqie）、group.evidenceIds、evidence.sourceId",
-      impact: "下游按 ID 取不到对象，会抛 LEXICON_REFERENCE_UNRESOLVED 或静默缺信息",
+      impact:
+        "下游按 ID 取不到对象，会抛 LEXICON_REFERENCE_UNRESOLVED 或静默缺信息",
       suggestedAction: "修正生成逻辑，补齐引用或删除悬空引用",
       actionKind: "接线/脚本可修",
     });
@@ -866,7 +871,8 @@ function auditSnapshot(
         add("F", "P1", {
           location: `${file} · sources/${source.id}`,
           fact: `manifest 登记摘要与落盘字节不一致（manifest ${manifestDigest} / 实际 ${source.actualSha256}）`,
-          basis: "data/sources/manifest.json 的 files[].snapshotSha256 与重算值比对",
+          basis:
+            "data/sources/manifest.json 的 files[].snapshotSha256 与重算值比对",
           impact: "来源清单失真",
           suggestedAction: "更新 manifest 或在来源变更时走新版本",
           actionKind: "接线/脚本可修",
@@ -885,7 +891,8 @@ function auditSnapshot(
       basis:
         "SnapshotInput 结构无 generatorVersion/rulesVersion；平水与词林由 build-*.ts 直接生成，版本只能从脚本名推断",
       impact: "无法仅凭数据包回答「这份数据由哪版脚本产出」",
-      suggestedAction: "在 notice 或独立 descriptor 中登记脚本版本（不改快照 Schema）",
+      suggestedAction:
+        "在 notice 或独立 descriptor 中登记脚本版本（不改快照 Schema）",
       actionKind: "接线/脚本可修",
     });
   }
@@ -1017,8 +1024,7 @@ function computeReconciliation(audits: SnapshotAudit[]): Reconciliation {
   const toneNumberMismatch = withModernReading.filter((candidate) => {
     const expected = EXPECTED_TONE_NUMBER[candidate.toneClass];
     return (
-      expected !== undefined &&
-      candidate.modernReading?.toneNumber !== expected
+      expected !== undefined && candidate.modernReading?.toneNumber !== expected
     );
   }).length;
   // 调号字符：只认四个声调附加符（macron/acute/caron/grave）。
@@ -1059,7 +1065,9 @@ function computeReconciliation(audits: SnapshotAudit[]): Reconciliation {
     }
   }
 
-  const sample = readJson<RawSnapshot>("data/normalized/pingshui.sample-d1.json");
+  const sample = readJson<RawSnapshot>(
+    "data/normalized/pingshui.sample-d1.json",
+  );
   const approvedTable = [
     ...audits.map((audit) => ({
       file: audit.file,
@@ -1086,9 +1094,14 @@ function computeReconciliation(audits: SnapshotAudit[]): Reconciliation {
   const findApproved = (dataVersion: string) =>
     approvedTable.find((entry) => entry.dataVersion === dataVersion);
 
-  const patched = findApproved("pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-draft");
-  const plain = findApproved("pingshui-cwr-ff0e9c1-d2-full");
-  const sampleRow = findApproved("sample-pingshui-cwr-ff0e9c1-d1");
+  const patched = findApproved(
+    "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3",
+  );
+  const plain = findApproved("pingshui-cwr-ff0e9c1-d2-full-review3");
+  const sampleRow = findApproved("sample-pingshui-cwr-ff0e9c1-d1-review2");
+  const candidateCount =
+    readJson<{ candidateApprovals: unknown[] }>(APPROVED_FILE)
+      ?.candidateApprovals.length ?? 0;
 
   const matches: Reconciliation["matches"] = [
     {
@@ -1112,22 +1125,33 @@ function computeReconciliation(audits: SnapshotAudit[]): Reconciliation {
       ok: sourceIdsAcrossBooksDistinct,
     },
     {
-      claim: "④ 平水 106 部快照 evidence approved 8/106",
-      expected: "8 / 106",
-      actual: patched === undefined ? "未取得" : `${patched.approved} / ${patched.total}`,
-      ok: patched?.approved === 8 && patched?.total === 106,
+      claim: `④ 平水106部：三讲1条部级与${candidateCount}条候选证据`,
+      expected: `${candidateCount + 1} / ${candidateCount + 106}`,
+      actual:
+        patched === undefined
+          ? "未取得"
+          : `${patched.approved} / ${patched.total}`,
+      ok:
+        patched?.approved === candidateCount + 1 &&
+        patched?.total === candidateCount + 106,
     },
     {
-      claim: "④ 平水 105 部快照 evidence approved 7/105",
-      expected: "7 / 105",
-      actual: plain === undefined ? "未取得" : `${plain.approved} / ${plain.total}`,
-      ok: plain?.approved === 7 && plain?.total === 105,
+      claim: `④ 平水105部：${candidateCount}条候选证据，不批准所属整部`,
+      expected: `${candidateCount} / ${candidateCount + 105}`,
+      actual:
+        plain === undefined ? "未取得" : `${plain.approved} / ${plain.total}`,
+      ok:
+        plain?.approved === candidateCount &&
+        plain?.total === candidateCount + 105,
     },
     {
-      claim: "④ 七字样本证据 approved 7/7",
-      expected: "7 / 7",
-      actual: sampleRow === undefined ? "未取得" : `${sampleRow.approved} / ${sampleRow.total}`,
-      ok: sampleRow?.approved === 7 && sampleRow?.total === 7,
+      claim: "④ 七字样本：8条候选已审、7条原部级未审",
+      expected: "8 / 15",
+      actual:
+        sampleRow === undefined
+          ? "未取得"
+          : `${sampleRow.approved} / ${sampleRow.total}`,
+      ok: sampleRow?.approved === 8 && sampleRow?.total === 15,
     },
   ];
 
@@ -1163,17 +1187,17 @@ const MAPPING_DRAFT_FILE = `data/reviews/cilin-pingshui-mapping-draft-${REPORT_D
 const PINGSHUI_MAIN = "pingshui.full-d2-patched.json";
 const CILIN_FILE = "cilin.full-d2.json";
 
-/** 已登记的业务内容摘要（来源：docs/handoffs/0009-a-fix-source-id-and-modern-reading.md）。 */
+/** 已登记的业务内容摘要（每项注明登记来源）。 */
 const REGISTERED_DIGESTS: Readonly<
   Record<string, { digest: string; source: string }>
 > = {
   "pingshui.full-d2.json": {
-    digest: "ecf6c42466771b616cc611cb6ed265208145d73eb01f752ceca0cc2b625d8d1f",
-    source: "docs/handoffs/0009-a-fix-source-id-and-modern-reading.md",
+    digest: "60c416c8d0fe39fee07a82a2975ad0bbe1374b53985abb5a79f9723c04498f7e",
+    source: "docs/handoffs/0012-codex-d2-closeout.md",
   },
   "pingshui.full-d2-patched.json": {
-    digest: "4d75fc46d04ef87cf76f1db5ebf329e0353f0fac7c5d9ed98c7ebd27339d64ea",
-    source: "docs/handoffs/0009-a-fix-source-id-and-modern-reading.md",
+    digest: "6c9057412b85a3c7b4066f260e8d52b60b8be936c814380200f7ed9d7a71d6ef",
+    source: "docs/handoffs/0012-codex-d2-closeout.md",
   },
   "xinyun.full-d2.json": {
     digest: "4a68bd5782ec6e2de7e0682edca0a38534307f4dd28702db487875815c690ae5",
@@ -1231,12 +1255,20 @@ interface LayerMember {
 
 interface A1Result {
   ruleText: string;
-  layerTable: { pingshuiToneClass: string; layer: string; cilinToneClasses: string[] }[];
+  layerTable: {
+    pingshuiToneClass: string;
+    layer: string;
+    cilinToneClasses: string[];
+  }[];
   caliberDifference: string;
   universe: {
     pingshuiDistinctRaw: number;
     cilinDistinctRaw: number;
-    pingshuiNonHan: { count: number; characters: string[]; sampleIds: string[] };
+    pingshuiNonHan: {
+      count: number;
+      characters: string[];
+      sampleIds: string[];
+    };
     cilinNonHan: { count: number; characters: string[]; sampleIds: string[] };
     pingshuiHan: number;
     cilinHan: number;
@@ -1288,7 +1320,11 @@ interface CoverageResult {
 interface A2Entry {
   cilinOrdinal: string;
   statement: string;
-  candidatePingshuiGroups: { groupName: string; layer: string; sharedCharacters: number }[];
+  candidatePingshuiGroups: {
+    groupName: string;
+    layer: string;
+    sharedCharacters: number;
+  }[];
   sharedCharacterTotal: number;
   status: "unverified";
   basis: null;
@@ -1298,7 +1334,12 @@ interface A2Entry {
 interface SupplementResult {
   a1: A1Result;
   a1Coverage: CoverageResult;
-  a2: { file: string; entryCount: number; entries: A2Entry[]; headerNote: string };
+  a2: {
+    file: string;
+    entryCount: number;
+    entries: A2Entry[];
+    headerNote: string;
+  };
   b1: {
     rule: string;
     results: {
@@ -1341,7 +1382,9 @@ interface SupplementResult {
   };
 }
 
-function layerOfPingshuiToneClass(toneClass: string): "平" | "仄" | "入" | null {
+function layerOfPingshuiToneClass(
+  toneClass: string,
+): "平" | "仄" | "入" | null {
   const hit = LAYER_RULE.find((entry) => entry.pingshuiToneClass === toneClass);
   return hit?.layer ?? null;
 }
@@ -1413,9 +1456,15 @@ function computeA1(
   const cilinCharSet = new Set(cilinChars);
   const pingshuiCharSet = new Set(pingshuiChars);
 
-  const pingshuiOnly = pingshuiChars.filter((character) => !cilinCharSet.has(character));
-  const cilinOnly = cilinChars.filter((character) => !pingshuiCharSet.has(character));
-  const shared = pingshuiChars.filter((character) => cilinCharSet.has(character));
+  const pingshuiOnly = pingshuiChars.filter(
+    (character) => !cilinCharSet.has(character),
+  );
+  const cilinOnly = cilinChars.filter(
+    (character) => !pingshuiCharSet.has(character),
+  );
+  const shared = pingshuiChars.filter((character) =>
+    cilinCharSet.has(character),
+  );
 
   const inconsistentBySubtype: Record<string, number> = {};
   const missingByType: Record<string, number> = {};
@@ -1443,7 +1492,8 @@ function computeA1(
     ].sort();
 
     const leftGroupCount = new Set(left.map((member) => member.groupName)).size;
-    const rightGroupCount = new Set(right.map((member) => member.groupName)).size;
+    const rightGroupCount = new Set(right.map((member) => member.groupName))
+      .size;
     if (leftGroupCount !== rightGroupCount) {
       multiDiff += 1;
       if (multiSamples.length < 60) {
@@ -1468,12 +1518,13 @@ function computeA1(
         ? "词林多出层次"
         : "层次集合不同";
     const missingInCilin = leftLayers.filter((layer) => !rightSet.has(layer));
-    const missingInPingshui = rightLayers.filter((layer) => !leftSet.has(layer));
+    const missingInPingshui = rightLayers.filter(
+      (layer) => !leftSet.has(layer),
+    );
     const missingKey =
       subtype === "词林多出层次"
         ? missingInPingshui.map((layer) => `词林有平水无${layer}`).join("+")
-        : missingInCilin.map((layer) => `词林缺${layer}`).join("+") ||
-          "双向缺";
+        : missingInCilin.map((layer) => `词林缺${layer}`).join("+") || "双向缺";
     inconsistentBySubtype[subtype] = (inconsistentBySubtype[subtype] ?? 0) + 1;
     missingByType[missingKey] = (missingByType[missingKey] ?? 0) + 1;
     inconsistentDetails.push({
@@ -1488,7 +1539,10 @@ function computeA1(
   }
 
   // ---- A2 草案：只由「字级共现」导出，不做权威部次映射 ----
-  const draftByOrdinal = new Map<string, Map<string, { layer: string; chars: Set<string> }>>();
+  const draftByOrdinal = new Map<
+    string,
+    Map<string, { layer: string; chars: Set<string> }>
+  >();
   for (const candidate of cilin.candidates) {
     const layer = layerOfCilinToneClass(candidate.toneClass);
     if (layer === null) continue;
@@ -1500,7 +1554,10 @@ function computeA1(
         if (!allowedBuckets.includes(member.bucket)) continue;
         const perOrdinal = draftByOrdinal.get(ordinal) ?? new Map();
         const key = `${member.bucket}:${member.groupName}`;
-        const entry = perOrdinal.get(key) ?? { layer, chars: new Set<string>() };
+        const entry = perOrdinal.get(key) ?? {
+          layer,
+          chars: new Set<string>(),
+        };
         entry.chars.add(candidate.character);
         perOrdinal.set(key, entry);
         draftByOrdinal.set(ordinal, perOrdinal);
@@ -1519,9 +1576,9 @@ function computeA1(
       })
       .sort((left, right) => right.sharedCharacters - left.sharedCharacters);
     const total = new Set(
-      [...(draftByOrdinal.get(ordinal) ?? new Map()).values()].flatMap((value) => [
-        ...value.chars,
-      ]),
+      [...(draftByOrdinal.get(ordinal) ?? new Map()).values()].flatMap(
+        (value) => [...value.chars],
+      ),
     ).size;
     return {
       cilinOrdinal: ordinal,
@@ -1547,19 +1604,23 @@ function computeA1(
       if (!candidate.groupIds.includes(group.id)) continue;
       chars.add(candidate.character);
     }
-    const covered = [...chars].filter((character) => cilinHanSet.has(character)).length;
+    const covered = [...chars].filter((character) =>
+      cilinHanSet.has(character),
+    ).length;
     coverageRows.push({
       pingshuiGroupName: `${bucketOfGroupId(group.id)}:${group.name}`,
       bucket: bucketOfGroupId(group.id),
       characters: chars.size,
       coveredByCilin: covered,
       uncovered: chars.size - covered,
-      coverage: chars.size === 0 ? 0 : Number((covered / chars.size).toFixed(4)),
+      coverage:
+        chars.size === 0 ? 0 : Number((covered / chars.size).toFixed(4)),
     });
   }
   coverageRows.sort(
     (left, right) =>
-      right.uncovered - left.uncovered || (left.pingshuiGroupName < right.pingshuiGroupName ? -1 : 1),
+      right.uncovered - left.uncovered ||
+      (left.pingshuiGroupName < right.pingshuiGroupName ? -1 : 1),
   );
 
   const universePingshuiRaw = new Set(
@@ -1634,7 +1695,9 @@ function computeA1(
 function computeSupplement(): SupplementResult {
   const pingshuiRaw = readJson<RawSnapshot>(`data/normalized/${PINGSHUI_MAIN}`);
   const cilinRaw = readJson<RawSnapshot>(`data/normalized/${CILIN_FILE}`);
-  const xinyunRaw = readJson<RawSnapshot>("data/normalized/xinyun.full-d2.json");
+  const xinyunRaw = readJson<RawSnapshot>(
+    "data/normalized/xinyun.full-d2.json",
+  );
 
   const a1 =
     pingshuiRaw === null || cilinRaw === null
@@ -1722,11 +1785,13 @@ function computeSupplement(): SupplementResult {
     foundInYunshu: yunshuSnapshots.filter(
       (name) => snapshotChars.get(name)?.has(character) ?? false,
     ),
-    foundInXinyun: snapshotChars.get("xinyun.full-d2.json")?.has(character) ?? false,
+    foundInXinyun:
+      snapshotChars.get("xinyun.full-d2.json")?.has(character) ?? false,
   }));
   const effectiveMerges =
     (byStatus["approved"] ?? 0) +
-    traditionalFormProbe.filter((probe) => probe.foundInYunshu.length > 0).length;
+    traditionalFormProbe.filter((probe) => probe.foundInYunshu.length > 0)
+      .length;
   const xinyunHasTraditional = traditionalFormProbe.filter(
     (probe) => probe.foundInXinyun,
   ).length;
@@ -1839,11 +1904,16 @@ function emptyCoverage(): CoverageResult {
 
 function main(): void {
   section("输入核对");
-  const approvedFile = readJson<{ approvedEvidenceIds?: string[] }>(
-    APPROVED_FILE,
-  );
+  const approvedFile = readJson<{
+    approvedEvidenceIds?: string[];
+    candidateApprovals?: Array<{ evidenceId: string }>;
+    authorityNote?: string;
+  }>(APPROVED_FILE);
   if (approvedFile === null) fail(`缺少审批清单 ${APPROVED_FILE}`);
-  const approvedIds = new Set(approvedFile?.approvedEvidenceIds ?? []);
+  const approvedIds = new Set([
+    ...(approvedFile?.approvedEvidenceIds ?? []),
+    ...(approvedFile?.candidateApprovals ?? []).map((item) => item.evidenceId),
+  ]);
   console.log(`审批清单 approvedEvidenceIds：${approvedIds.size} 条`);
 
   const audits: SnapshotAudit[] = [];
@@ -1961,23 +2031,25 @@ function main(): void {
   });
 
   // 原 F-cross-002「12_J03人审记录未归档」**已关闭**：该记录已随 59be7af 入库。
-  // 保留一条 P3 提示，指出 approved-evidence.json 自身的 authorityNote 仍是旧措辞。
-  addCross(
-    "F",
-    "P3",
-    {
-      location: `${APPROVED_FILE} · authorityNote`,
-      fact:
-        "该字段仍写着「12_J03人审记录尚未归档进本仓库」，但 docs/reviews/12_J03人审记录_第一批.md 已随 59be7af 入库；" +
-        "旧编号 F-cross-002 的「未归档」异常因此**关闭**，本条仅作措辞滞后提示（编号加 b 以不与已关闭条混淆）",
-      basis: "仓库内 docs/reviews/12_J03人审记录_第一批.md 存在（34 行，含第一批结论表）",
-      impact: "仅文档措辞滞后，不影响 approved 集合；但会让读者以为依据缺失",
-      suggestedAction:
-        "下次动 approved-evidence.json 时把 authorityNote 指向 docs/reviews/12_J03人审记录_第一批.md（本次不改审批清单本身）",
-      actionKind: "接线/脚本可修",
-    },
-    "002b",
-  );
+  // 仅在当前字段仍含旧措辞时报告，不能把已修问题固定生成成新异常。
+  if (approvedFile?.authorityNote?.includes("尚未归档") === true)
+    addCross(
+      "F",
+      "P3",
+      {
+        location: `${APPROVED_FILE} · authorityNote`,
+        fact:
+          "该字段仍写着「12_J03人审记录尚未归档进本仓库」，但 docs/reviews/12_J03人审记录_第一批.md 已随 59be7af 入库；" +
+          "旧编号 F-cross-002 的「未归档」异常因此**关闭**，本条仅作措辞滞后提示（编号加 b 以不与已关闭条混淆）",
+        basis:
+          "仓库内 docs/reviews/12_J03人审记录_第一批.md 存在（34 行，含第一批结论表）",
+        impact: "仅文档措辞滞后，不影响 approved 集合；但会让读者以为依据缺失",
+        suggestedAction:
+          "下次动 approved-evidence.json 时把 authorityNote 指向 docs/reviews/12_J03人审记录_第一批.md（本次不改审批清单本身）",
+        actionKind: "接线/脚本可修",
+      },
+      "002b",
+    );
 
   // 词林非汉字垃圾条目（D 类：单码点但不是汉字）
   const nonHanCilin = supplement.a1.universe.cilinNonHan;
@@ -1990,8 +2062,7 @@ function main(): void {
         `示例候选 ID：${nonHanCilin.sampleIds.slice(0, 4).join("、")}`,
       basis:
         "以 \\p{Script=Han} 判定。这些条目都是**单码点**，所以「单码点校验」抓不到；但字符本身不是汉字，属解析/导入残留",
-      impact:
-        `污染字形统计（raw 去重 ${supplement.a1.universe.cilinDistinctRaw} vs 汉字 ${supplement.a1.universe.cilinHan}），并使 A1 交叉比对的字符全集虚高；用户永远查不到它们，但统计会被抬高`,
+      impact: `污染字形统计（raw 去重 ${supplement.a1.universe.cilinDistinctRaw} vs 汉字 ${supplement.a1.universe.cilinHan}），并使 A1 交叉比对的字符全集虚高；用户永远查不到它们，但统计会被抬高`,
       suggestedAction:
         "核对 Cilin_Rhyme.json 对应行；若为注文/括号解析残留，应在适配器导入层过滤（不改原表字义事实）",
       actionKind: "接线/脚本可修",
@@ -2039,7 +2110,8 @@ function main(): void {
       `只写在快照 notice 文本里（notice 命中：规则=${supplement.b3.noticeMentionsRules}、生成器=${supplement.b3.noticeMentionsGenerator}）；` +
       `pinyin-data revision=${supplement.b3.sourceRevision ?? "null"}、SHA-256 与落盘字节一致=${String(supplement.b3.pinyinDigestMatches)}；` +
       "但快照 Schema **没有** generatorVersion/rulesVersion 字段，机器无法结构化读取；平水/词林同样无该字段",
-    basis: "读四份快照的 notice 与 sources；SnapshotInput 类型定义无版本字段；pinyin.txt 字节重算比对",
+    basis:
+      "读四份快照的 notice 与 sources；SnapshotInput 类型定义无版本字段；pinyin.txt 字节重算比对",
     impact:
       "「同一 dataVersion 对应哪版脚本与规则」只能靠读文案回答，不能机器校验；" +
       "对方案 §2.1「检查生成器版本、规则版本和 pinyin-data SHA」只能给部分答案",
@@ -2048,7 +2120,7 @@ function main(): void {
     actionKind: "接线/脚本可修",
     affectedBooks: [
       "pingshui-cwr-ff0e9c1-d2-full",
-      "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-draft",
+      "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3",
       "cilin-cwr-ff0e9c1-d2-full",
       "xinyun-rebuild-d2-full",
     ],
@@ -2071,7 +2143,8 @@ function main(): void {
       "data/reviews/approved-evidence.json 第 10 条 + 三讲快照的 gate 结果；补丁字段与审批清单是两套记录，本报告并列呈现、不改动任一方",
     impact:
       "「三讲已生效」与「三讲仍是草案字段」两种说法都能在仓库里找到凭据，易被引述错",
-    suggestedAction: "对外统一按「字段值 + 审批实况」两栏表述；补丁字段保持原样",
+    suggestedAction:
+      "对外统一按「字段值 + 审批实况」两栏表述；补丁字段保持原样",
     actionKind: "数据事实需人审",
   });
 
@@ -2127,7 +2200,9 @@ function main(): void {
       `新韵重建：读音源字形 ${String(coverage?.sourceCharacters)}、读音 ${String(coverage?.readings)}；` +
       `未映射 ${String(coverage?.unmappedReadings)}（${unmappedEntries
         .map(([reason, value]) => `${reason} ${String(value.count)}`)
-        .join(" / ")}）；轻声丢弃 ${String(coverage?.neutralReadingsDropped)}；` +
+        .join(
+          " / ",
+        )}）；轻声丢弃 ${String(coverage?.neutralReadingsDropped)}；` +
       `er 等待核实规则影响 ${String(coverage?.ruleUnverifiedReadings)} 条`,
     basis: `取自 ${REBUILD_REPORT}（rebuild-xinyun.ts 的产物，可能滞后于 build-xinyun.ts）`,
     impact:
@@ -2167,7 +2242,12 @@ function main(): void {
     ...audits.flatMap((audit) => audit.anomalies),
     ...crossAnomalies,
   ];
-  const severityCounts: Record<Severity, number> = { P0: 0, P1: 0, P2: 0, P3: 0 };
+  const severityCounts: Record<Severity, number> = {
+    P0: 0,
+    P1: 0,
+    P2: 0,
+    P3: 0,
+  };
   for (const anomaly of allAnomalies) severityCounts[anomaly.severity] += 1;
 
   const anomalyTotals = {
@@ -2214,7 +2294,8 @@ function main(): void {
         path: "docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
         status: "已取得（空白工作表）",
         introducedBy: "fa1f466",
-        detail: "人工结论与审核人/时间均为 ____，见 §C4；不得从中读出任何批准。",
+        detail:
+          "人工结论与审核人/时间均为 ____，见 §C4；不得从中读出任何批准。",
       },
       {
         path: "docs/team/D2_审核任务书_2026-10-18/01_A_韵书数据与机器初审.md",
@@ -2239,7 +2320,7 @@ function main(): void {
         id: "F-cross-002（v1，已关闭）",
         finding: "审批依据文档 12_J03人审记录 未归档",
         resolution:
-          "已关闭：docs/reviews/12_J03人审记录_第一批.md 随 59be7af 入库。继任条目为 F-cross-002b（F-P3，仅提示 approved-evidence.json 的 authorityNote 措辞滞后），编号加 b 以免与本条混淆",
+          "已关闭：原件已归档；review2 同时修正 approved-evidence.json 的 authorityNote，F-cross-002b 措辞滞后亦关闭。",
       },
     ],
     unreconciledFigures: {
@@ -2255,9 +2336,8 @@ function main(): void {
       measured: {
         pingshuiPatchedRaw: supplement.a1.universe.pingshuiDistinctRaw,
         pingshui105Raw:
-          audits.find(
-            (audit) => audit.dataVersion === "pingshui-cwr-ff0e9c1-d2-full",
-          )?.candidates.distinctCharacters ?? 0,
+          audits.find((audit) => audit.file === "pingshui.full-d2.json")
+            ?.candidates.distinctCharacters ?? 0,
         cilinRaw: supplement.a1.universe.cilinDistinctRaw,
         cilinHan: supplement.a1.universe.cilinHan,
         allNormalizationsEqual: true,
@@ -2279,21 +2359,20 @@ function main(): void {
     statusSemantics: {
       aiInitialReviewStatus: "machine_checked",
       contractFieldUnchanged: true,
-      approvedEvidenceCount: 8,
+      approvedEvidenceCount: approvedIds.size,
       note:
         "按方案 §5：AI 初审通过结构/引用检查但未完成人工复核 → 本报告结论状态为 machine_checked。" +
         "human_reviewed / rejected 等中间状态只写在报告与审核记录里，" +
         "**不改契约字段 reviewStatus**（契约快照只有 approved / unverified）。" +
-        "四份快照 reviewStatus 一律保持 unverified；approved 只有 approved-evidence.json 落库的 8 条。",
+        "四份快照 reviewStatus 一律保持 unverified；approved 仅来自 approved-evidence.json 的部级及候选级精确范围。",
     },
     secondBatchWorksheet: {
       file: "docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
-      isBlankWorksheet: true,
+      isBlankWorksheet: false,
       evidence:
-        "九个异常字位与三首关键字的「人工结论 / 采哪个候选 / 说明 / 审核人·时间」均为 ____；仅「AI 备考（非依据）」段有文字",
-      newApproved: 0,
-      note:
-        "第二批**待组长填写**，当前新增 approved = 0 条。禁止把「AI 备考（非依据）」当成结论，也禁止据该表提升任何证据状态。",
+        "第二批第五节已载十处裁定；第二节作品选版与楼↔樓已裁。部分签字占位保留，不覆盖已归档电子裁定。",
+      newApproved: 8,
+      note: "第二批对应八个唯一选音候选（十处字位），已按精确候选落库；更在第一批已有批准。AI 备考不作依据，第六节整部批准指令已追加范围勘误。",
     },
     supplement,
     excluded: EXCLUDED,
@@ -2357,7 +2436,8 @@ function main(): void {
         command: "pnpm verify",
         executor: "A 侧在本机外部终端执行",
         exitCode: 0,
-        result: "28 files / 410 tests，7 of 8 projects 构建成功，8 契约/模板无漂移",
+        result:
+          "28 files / 410 tests，7 of 8 projects 构建成功，8 契约/模板无漂移",
         note: "同上；此为 D2 审核轮之前的实跑结果",
       },
       {
@@ -2368,7 +2448,8 @@ function main(): void {
         note: "等价于 pnpm verify 的 lint 关。此前本批新增脚本曾报 4 个 error（2×no-unused-vars、1×未用导入、1×no-misleading-character-class），已由 64b2652 修复",
       },
       {
-        command: "node_modules/.bin/tsc --noEmit && node_modules/.bin/tsc --noEmit -p apps/web/tsconfig.json",
+        command:
+          "node_modules/.bin/tsc --noEmit && node_modules/.bin/tsc --noEmit -p apps/web/tsconfig.json",
         executor: "A 侧在本执行环境",
         exitCode: 0,
         result: "两个 tsconfig 均 0 error",
@@ -2387,7 +2468,8 @@ function main(): void {
           "在它们更新前，全仓 vitest 与 pnpm verify 必然保持红——**这不是 A 侧数据错误**",
       },
       {
-        command: "pnpm build && tsx scripts/generate-contracts.ts --check（即 pnpm check:generated）",
+        command:
+          "pnpm build && tsx scripts/generate-contracts.ts --check（即 pnpm check:generated）",
         executor: "**未运行**",
         exitCode: null,
         result: "未运行",
@@ -2551,9 +2633,7 @@ function renderMarkdown(input: PrecheckOutput): string {
   push("");
   push("### 0-B. 计数口径说明（外部口径 8238 / 5036 与实测 8240 / 5033）");
   push("");
-  push(
-    `**结论：采用实测值。** ${input.unreconciledFigures.resolution}`,
-  );
+  push(`**结论：采用实测值。** ${input.unreconciledFigures.resolution}`);
   push("");
   push("| 项 | 外部顾问口径（已弃用） | 本报告实测（采用） |");
   push("|---|---|---|");
@@ -2566,7 +2646,8 @@ function renderMarkdown(input: PrecheckOutput): string {
   push("");
   push("已逐一排除的可能成因（均为实跑）：");
   push("");
-  for (const attempt of input.unreconciledFigures.attempts) push(`- ${attempt}`);
+  for (const attempt of input.unreconciledFigures.attempts)
+    push(`- ${attempt}`);
   push("");
   push(input.unreconciledFigures.conclusion);
   push("");
@@ -2584,7 +2665,7 @@ function renderMarkdown(input: PrecheckOutput): string {
   );
   push("");
   push(
-    `**第二批人审（13_）**：\`${input.secondBatchWorksheet.file}\` 确认为**空白工作表**（${input.secondBatchWorksheet.evidence}）。` +
+    `**第二批人审（13_）**：\`${input.secondBatchWorksheet.file}\` ${input.secondBatchWorksheet.isBlankWorksheet ? "为待填写工作表" : "已归档裁定"}（${input.secondBatchWorksheet.evidence}）。` +
       `**新增 approved = ${input.secondBatchWorksheet.newApproved} 条**。${input.secondBatchWorksheet.note}`,
   );
   push("");
@@ -2662,7 +2743,9 @@ function renderMarkdown(input: PrecheckOutput): string {
   push("| 候选 ID | pinyin | toneNumber |");
   push("|---|---|---|");
   for (const sample of input.reconciliation.modernReading.samples) {
-    push(`| \`${sample.candidateId}\` | ${sample.pinyin} | ${sample.toneNumber} |`);
+    push(
+      `| \`${sample.candidateId}\` | ${sample.pinyin} | ${sample.toneNumber} |`,
+    );
   }
   push("");
   push("### ③ 来源 ID 跨库拆分");
@@ -2692,7 +2775,7 @@ function renderMarkdown(input: PrecheckOutput): string {
   push(
     "**结论：②③④ 三项已消除 J07「词林 503」的硬阻塞原因** —— " +
       "③ 使平水/词林/新韵来源 ID 两两不同，`dedupeById` 不再触发跨库同 ID 不同内容冲突；" +
-      "② 使新韵候选具备可追溯读音；④ 使 8 条部级证据按审批清单落库。" +
+      "② 使新韵候选具备可追溯读音；④ 按1条部级、15条候选证据的审批范围落库。" +
       "但**快照 reviewStatus 仍为 unverified、词林 approved 仍 0/33**，" +
       "因此词林 503 只会从「来源冲突」性质转为「证据门槛」性质，**不是变成可用**。",
   );
@@ -2745,7 +2828,9 @@ function renderMarkdown(input: PrecheckOutput): string {
   push(`| 三层集合不一致 | **${input.supplement.a1.inconsistent}** |`);
   push(`| 平水有而词林无 | **${input.supplement.a1.pingshuiOnly.count}** |`);
   push(`| 词林有而平水无 | **${input.supplement.a1.cilinOnly.count}** |`);
-  push(`| 多归部个数差异（同字两侧韵部个数不等） | **${input.supplement.a1.multiMembershipDiff.count}** |`);
+  push(
+    `| 多归部个数差异（同字两侧韵部个数不等） | **${input.supplement.a1.multiMembershipDiff.count}** |`,
+  );
   push("");
   if (Object.keys(input.supplement.a1.missingByType).length > 0) {
     push("①「平水多出层次」再按缺层拆分：");
@@ -2816,7 +2901,9 @@ function renderMarkdown(input: PrecheckOutput): string {
   push("");
 
   const cilinExtra = detailsOf("词林多出层次");
-  push(`#### ② 词林多出层次（${cilinExtra.length} 条）—— 全 17 条中最值得看的 10 例`);
+  push(
+    `#### ② 词林多出层次（${cilinExtra.length} 条）—— 全 17 条中最值得看的 10 例`,
+  );
   push("");
   if (cilinExtra.length === 0) {
     push("（无）");
@@ -2932,7 +3019,9 @@ function renderMarkdown(input: PrecheckOutput): string {
     push(`| pending_review | \`${edge.id}\`：${edge.from}→${edge.to} |`);
   }
   push("");
-  push("繁体形探测（韵书表出现 = 有人借异体边塞字；新韵出现 = pinyin-data 逐码位重建的预期）：");
+  push(
+    "繁体形探测（韵书表出现 = 有人借异体边塞字；新韵出现 = pinyin-data 逐码位重建的预期）：",
+  );
   push("");
   push("| 繁体形 | 平水/词林（韵书表） | 新韵（重建表） |");
   push("|---|---|---|");
@@ -2950,11 +3039,21 @@ function renderMarkdown(input: PrecheckOutput): string {
   push("");
   push("| 项 | 值 | 能否机器读取 |");
   push("|---|---|---|");
-  push(`| 规则版本 | \`${String(input.supplement.b3.rulesVersion)}\` | 仅 notice 文本（命中=${input.supplement.b3.noticeMentionsRules}） |`);
-  push(`| 生成器版本 | \`${String(input.supplement.b3.generatorVersion)}\` | 仅 notice 文本（命中=${input.supplement.b3.noticeMentionsGenerator}） |`);
-  push(`| pinyin-data revision | \`${String(input.supplement.b3.sourceRevision)}\` | sources 记录（可读） |`);
-  push(`| pinyin.txt SHA-256 | \`${String(input.supplement.b3.sourceSnapshotSha256)}\` | sources 记录；与落盘字节一致=${String(input.supplement.b3.pinyinDigestMatches)} |`);
-  push(`| 结构化版本字段 | 无 | \`structuredVersionFields=${String(input.supplement.b3.structuredVersionFields)}\` |`);
+  push(
+    `| 规则版本 | \`${String(input.supplement.b3.rulesVersion)}\` | 仅 notice 文本（命中=${input.supplement.b3.noticeMentionsRules}） |`,
+  );
+  push(
+    `| 生成器版本 | \`${String(input.supplement.b3.generatorVersion)}\` | 仅 notice 文本（命中=${input.supplement.b3.noticeMentionsGenerator}） |`,
+  );
+  push(
+    `| pinyin-data revision | \`${String(input.supplement.b3.sourceRevision)}\` | sources 记录（可读） |`,
+  );
+  push(
+    `| pinyin.txt SHA-256 | \`${String(input.supplement.b3.sourceSnapshotSha256)}\` | sources 记录；与落盘字节一致=${String(input.supplement.b3.pinyinDigestMatches)} |`,
+  );
+  push(
+    `| 结构化版本字段 | 无 | \`structuredVersionFields=${String(input.supplement.b3.structuredVersionFields)}\` |`,
+  );
   push("");
   push(input.supplement.b3.verdict);
   push("");
@@ -3067,7 +3166,9 @@ function renderMarkdown(input: PrecheckOutput): string {
     0,
   );
   if (toneMismatchTotal === 0) {
-    push("✅ 四份快照按「平/阴阳平=P，上/去/入/仄未分=Z，neutral=null」比对，0 条不符。");
+    push(
+      "✅ 四份快照按「平/阴阳平=P，上/去/入/仄未分=Z，neutral=null」比对，0 条不符。",
+    );
   } else {
     for (const audit of input.snapshots) {
       if (audit.tone.toneVsToneClassMismatch.length === 0) continue;

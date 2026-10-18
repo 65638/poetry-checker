@@ -1,10 +1,10 @@
 {
   "approvalsId": "approved-evidence-d2",
-  "title": "已人审签的证据清单（构建脚本据此设置 evidence.reviewStatus）",
+  "title": "已获责任人确认的精确范围证据清单（含接受机器初审的批次，不统称逐字人审）",
   "updatedAt": "2026-10-18",
-  "authority": "组长 J03 第一批人审（引用 12_J03人审记录）+ 三讲人审签（A同学，2026-10-18）",
-  "authorityNote": "「12_J03人审记录」尚未归档进本仓库，见 data/reviews/j03-batch1-human-review.json 的 sourceDocArchiveTodo。",
-  "note": "本文件是**唯一**的证据审批来源。构建脚本读它来决定 evidence.reviewStatus；不得在脚本里硬编码，也不得直接改快照 JSON。未列入本文件的证据一律保持 unverified。",
+  "authority": "组长 J03 第一批人审（引用 12_J03人审记录）+ 三讲人审签（A同学，2026-10-18） + 14号候选批次确认（组长接受AI初审并裁定异常）",
+  "authorityNote": "审批原件已归档到 docs/reviews/12_J03人审记录_第一批.md 和 docs/reviews/13_J03三首核心诗逐字人审_第二批.md。候选审批仅证明所列字音归部，不覆盖所属整韵部。 后续有限批次见 data/reviews/d2-closeout-batch-approval.json，不得改称逐字人工审核。",
+  "note": "部级审批与候选级审批分开；构建脚本为每个已批准候选追加独立证据，原部级证据保持原审核范围。",
   "approved": [
     {
       "evidenceId": "ev:pingshui:上:三讲",
@@ -12,78 +12,986 @@
       "approvedBy": "A同学（队员 A 本人）",
       "approvedAt": "2026-10-18",
       "basis": "肉眼逐字核对 data/raw/wikisource/PingshuiYun-8264804.wikitext 第 198-202 行；9 字与无【詞】段确认",
-      "recordFiles": ["data/patches/pingshui-shang-sanj-jiang.draft.json", "docs/handoffs/0007-a-d2-human-review-signoff.md"]
-    },
-    {
-      "evidenceId": "ev:pingshui:下平:八庚",
-      "scope": "部级",
-      "approvedBy": "组长 J03 第一批人审",
-      "approvedAt": "2026-10-18",
-      "basis": "「更」平声归属经 J03 通过（下平八庚）",
-      "recordFiles": ["data/reviews/j03-batch1-human-review.json"]
-    },
-    {
-      "evidenceId": "ev:pingshui:去:二十四敬",
-      "scope": "部级",
-      "approvedBy": "组长 J03 第一批人审",
-      "approvedAt": "2026-10-18",
-      "basis": "「更」去声归属经 J03 通过（去声二十四敬）",
-      "recordFiles": ["data/reviews/j03-batch1-human-review.json"]
-    },
-    {
-      "evidenceId": "ev:pingshui:入:入声十一陌",
-      "scope": "部级",
-      "approvedBy": "组长 J03 第一批人审",
-      "approvedAt": "2026-10-18",
-      "basis": "「白」入声十一陌经 J03 通过",
-      "recordFiles": ["data/reviews/j03-batch1-human-review.json"]
-    },
-    {
-      "evidenceId": "ev:pingshui:入:入声四质",
-      "scope": "部级",
-      "approvedBy": "组长 J03 第一批人审",
-      "approvedAt": "2026-10-18",
-      "basis": "「一」入声四质经 J03 通过",
-      "recordFiles": ["data/reviews/j03-batch1-human-review.json"]
-    },
-    {
-      "evidenceId": "ev:pingshui:下平:十一尤",
-      "scope": "部级",
-      "approvedBy": "组长 J03 第一批人审",
-      "approvedAt": "2026-10-18",
-      "basis": "「流」「楼」下平十一尤经 J03 通过（本批把「楼」补入通过范围）",
-      "recordFiles": ["data/reviews/j03-batch1-human-review.json"]
-    },
-    {
-      "evidenceId": "ev:pingshui:入:入声九屑",
-      "scope": "部级",
-      "approvedBy": "组长 J03 第一批人审",
-      "approvedAt": "2026-10-18",
-      "basis": "「雪」入声九屑经 J03 通过",
-      "recordFiles": ["data/reviews/j03-batch1-human-review.json"]
-    },
-    {
-      "evidenceId": "ev:pingshui:入:入声五物",
-      "scope": "部级",
-      "approvedBy": "组长 J03 第一批人审",
-      "approvedAt": "2026-10-18",
-      "basis": "「物」入声五物经 J03 通过",
-      "recordFiles": ["data/reviews/j03-batch1-human-review.json"]
+      "recordFiles": [
+        "data/patches/pingshui-shang-sanj-jiang.draft.json",
+        "docs/handoffs/0007-a-d2-human-review-signoff.md"
+      ]
     }
   ],
   "approvedEvidenceIds": [
-    "ev:pingshui:上:三讲",
-    "ev:pingshui:下平:八庚",
-    "ev:pingshui:去:二十四敬",
-    "ev:pingshui:入:入声十一陌",
-    "ev:pingshui:入:入声四质",
-    "ev:pingshui:下平:十一尤",
-    "ev:pingshui:入:入声九屑",
-    "ev:pingshui:入:入声五物"
+    "ev:pingshui:上:三讲"
   ],
   "notApproved": {
     "count": "其余全部证据",
-    "reason": "词林 33 条、新韵 56 条、平水其余 98 条 evidence 均未人审，保持 unverified。",
+    "reason": "除三讲整部与 candidateApprovals 精确列举的候选外，其余归部证据均保持 unverified；三首平仄审批不自动批准所有竞争候选归部。",
     "snapshotLevelNote": "快照级 reviewStatus 仍为 unverified：部分证据 approved 不等于整库批准，releaseGatePassed 仍须为 false。"
-  }
+  },
+  "candidateApprovals": [
+    {
+      "candidateId": "pingshui:白:ru:入声十一陌",
+      "evidenceId": "ev:candidate:pingshui:白:ru:入声十一陌:j03",
+      "approvedBy": "组长 J03 已归档电子裁定（本次为裁定落库，不新增签名）",
+      "approvedAt": "2026-10-18",
+      "basis": "第一批候选归部核验通过",
+      "recordFiles": [
+        "docs/reviews/12_J03人审记录_第一批.md"
+      ]
+    },
+    {
+      "candidateId": "pingshui:一:ru:入声四质",
+      "evidenceId": "ev:candidate:pingshui:一:ru:入声四质:j03",
+      "approvedBy": "组长 J03 已归档电子裁定（本次为裁定落库，不新增签名）",
+      "approvedAt": "2026-10-18",
+      "basis": "第一批候选归部核验通过",
+      "recordFiles": [
+        "docs/reviews/12_J03人审记录_第一批.md"
+      ]
+    },
+    {
+      "candidateId": "pingshui:更:ping:八庚",
+      "evidenceId": "ev:candidate:pingshui:更:ping:八庚:j03",
+      "approvedBy": "组长 J03 已归档电子裁定（本次为裁定落库，不新增签名）",
+      "approvedAt": "2026-10-18",
+      "basis": "第一批候选归部核验通过",
+      "recordFiles": [
+        "docs/reviews/12_J03人审记录_第一批.md"
+      ]
+    },
+    {
+      "candidateId": "pingshui:更:qu:二十四敬",
+      "evidenceId": "ev:candidate:pingshui:更:qu:二十四敬:j03",
+      "approvedBy": "组长 J03 已归档电子裁定（本次为裁定落库，不新增签名）",
+      "approvedAt": "2026-10-18",
+      "basis": "第一批候选归部核验通过",
+      "recordFiles": [
+        "docs/reviews/12_J03人审记录_第一批.md"
+      ]
+    },
+    {
+      "candidateId": "pingshui:流:ping:十一尤",
+      "evidenceId": "ev:candidate:pingshui:流:ping:十一尤:j03",
+      "approvedBy": "组长 J03 已归档电子裁定（本次为裁定落库，不新增签名）",
+      "approvedAt": "2026-10-18",
+      "basis": "第一批候选归部核验通过",
+      "recordFiles": [
+        "docs/reviews/12_J03人审记录_第一批.md"
+      ]
+    },
+    {
+      "candidateId": "pingshui:雪:ru:入声九屑",
+      "evidenceId": "ev:candidate:pingshui:雪:ru:入声九屑:j03",
+      "approvedBy": "组长 J03 已归档电子裁定（本次为裁定落库，不新增签名）",
+      "approvedAt": "2026-10-18",
+      "basis": "第一批候选归部核验通过",
+      "recordFiles": [
+        "docs/reviews/12_J03人审记录_第一批.md"
+      ]
+    },
+    {
+      "candidateId": "pingshui:物:ru:入声五物",
+      "evidenceId": "ev:candidate:pingshui:物:ru:入声五物:j03",
+      "approvedBy": "组长 J03 已归档电子裁定（本次为裁定落库，不新增签名）",
+      "approvedAt": "2026-10-18",
+      "basis": "第一批候选归部核验通过",
+      "recordFiles": [
+        "docs/reviews/12_J03人审记录_第一批.md"
+      ]
+    },
+    {
+      "candidateId": "pingshui:楼:ping:十一尤",
+      "evidenceId": "ev:candidate:pingshui:楼:ping:十一尤:j03",
+      "approvedBy": "组长 J03 已归档电子裁定（本次为裁定落库，不新增签名）",
+      "approvedAt": "2026-10-18",
+      "basis": "第二批第二节追认楼↔樓及下平十一尤归属",
+      "recordFiles": [
+        "docs/reviews/13_J03三首核心诗逐字人审_第二批.md"
+      ]
+    },
+    {
+      "candidateId": "pingshui:望:qu:二十三漾",
+      "evidenceId": "ev:candidate:pingshui:望:qu:二十三漾:j03",
+      "approvedBy": "组长 J03 已归档电子裁定（本次为裁定落库，不新增签名）",
+      "approvedAt": "2026-10-18",
+      "basis": "第二批第一/五节明确采纳的候选声类与归部；竞争候选仍保留，未获批者保持未审核",
+      "recordFiles": [
+        "docs/reviews/13_J03三首核心诗逐字人审_第二批.md"
+      ]
+    },
+    {
+      "candidateId": "pingshui:思:ping:四支",
+      "evidenceId": "ev:candidate:pingshui:思:ping:四支:j03",
+      "approvedBy": "组长 J03 已归档电子裁定（本次为裁定落库，不新增签名）",
+      "approvedAt": "2026-10-18",
+      "basis": "第二批第一/五节明确采纳的候选声类与归部；竞争候选仍保留，未获批者保持未审核",
+      "recordFiles": [
+        "docs/reviews/13_J03三首核心诗逐字人审_第二批.md"
+      ]
+    },
+    {
+      "candidateId": "pingshui:乡:ping:七阳",
+      "evidenceId": "ev:candidate:pingshui:乡:ping:七阳:j03",
+      "approvedBy": "组长 J03 已归档电子裁定（本次为裁定落库，不新增签名）",
+      "approvedAt": "2026-10-18",
+      "basis": "第二批第一/五节明确采纳的候选声类与归部；竞争候选仍保留，未获批者保持未审核",
+      "recordFiles": [
+        "docs/reviews/13_J03三首核心诗逐字人审_第二批.md"
+      ]
+    },
+    {
+      "candidateId": "pingshui:乘:ping:十蒸",
+      "evidenceId": "ev:candidate:pingshui:乘:ping:十蒸:j03",
+      "approvedBy": "组长 J03 已归档电子裁定（本次为裁定落库，不新增签名）",
+      "approvedAt": "2026-10-18",
+      "basis": "第二批第一/五节明确采纳的候选声类与归部；竞争候选仍保留，未获批者保持未审核",
+      "recordFiles": [
+        "docs/reviews/13_J03三首核心诗逐字人审_第二批.md"
+      ]
+    },
+    {
+      "candidateId": "pingshui:空:ping:一东",
+      "evidenceId": "ev:candidate:pingshui:空:ping:一东:j03",
+      "approvedBy": "组长 J03 已归档电子裁定（本次为裁定落库，不新增签名）",
+      "approvedAt": "2026-10-18",
+      "basis": "第二批第一/五节明确采纳的候选声类与归部；竞争候选仍保留，未获批者保持未审核",
+      "recordFiles": [
+        "docs/reviews/13_J03三首核心诗逐字人审_第二批.md"
+      ]
+    },
+    {
+      "candidateId": "pingshui:不:ru:入声五物",
+      "evidenceId": "ev:candidate:pingshui:不:ru:入声五物:j03",
+      "approvedBy": "组长 J03 已归档电子裁定（本次为裁定落库，不新增签名）",
+      "approvedAt": "2026-10-18",
+      "basis": "第二批第一/五节明确采纳的候选声类与归部；竞争候选仍保留，未获批者保持未审核",
+      "recordFiles": [
+        "docs/reviews/13_J03三首核心诗逐字人审_第二批.md"
+      ]
+    },
+    {
+      "candidateId": "pingshui:汉:qu:十五翰",
+      "evidenceId": "ev:candidate:pingshui:汉:qu:十五翰:j03",
+      "approvedBy": "组长 J03 已归档电子裁定（本次为裁定落库，不新增签名）",
+      "approvedAt": "2026-10-18",
+      "basis": "第二批第一/五节明确采纳的候选声类与归部；竞争候选仍保留，未获批者保持未审核",
+      "recordFiles": [
+        "docs/reviews/13_J03三首核心诗逐字人审_第二批.md"
+      ]
+    },
+    {
+      "candidateId": "pingshui:上:qu:二十三漾",
+      "evidenceId": "ev:candidate:pingshui:上:qu:二十三漾:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：去聲二十三{{++|漾}}，第496行「上」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:上:shang:二十二养",
+      "evidenceId": "ev:candidate:pingshui:上:shang:二十二养:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上聲二十二{{++|養}}，第312行「上」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:举:shang:六语",
+      "evidenceId": "ev:candidate:pingshui:举:shang:六语:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上聲六{{++|語}}，第216行「舉」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:云:ping:十二文",
+      "evidenceId": "ev:candidate:pingshui:云:ping:十二文:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上平聲十二{{++|文}}，第71行「云」、第71行「雲」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:人:ping:十一真",
+      "evidenceId": "ev:candidate:pingshui:人:ping:十一真:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上平聲十一{{++|真}}，第65行「人」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:低:ping:八齐",
+      "evidenceId": "ev:candidate:pingshui:低:ping:八齐:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上平聲八{{++|齊}}，第47行「低」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:何:ping:五歌",
+      "evidenceId": "ev:candidate:pingshui:何:ping:五歌:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲五{{++|歌}}，第120行「何」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:余:ping:六鱼",
+      "evidenceId": "ev:candidate:pingshui:余:ping:六鱼:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上平聲六{{++|魚}}，第35行「余」、第35行「餘」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:使:qu:四寘",
+      "evidenceId": "ev:candidate:pingshui:使:qu:四寘:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：去聲四{{++|寘}}，第382行「使」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:使:shang:四纸",
+      "evidenceId": "ev:candidate:pingshui:使:shang:四纸:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上聲四{{++|紙}}，第204行「使」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:依:ping:五微",
+      "evidenceId": "ev:candidate:pingshui:依:ping:五微:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上平聲五{{++|微}}，第29行「依」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:光:ping:七阳",
+      "evidenceId": "ev:candidate:pingshui:光:ping:七阳:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲七{{++|陽}}，第132行「光」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:入:ru:入声十四缉",
+      "evidenceId": "ev:candidate:pingshui:入:ru:入声十四缉:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：入聲十四{{++|緝}}，第633行「入」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:关:ping:十五删",
+      "evidenceId": "ev:candidate:pingshui:关:ping:十五删:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上平聲十五{{++|刪}}，第89行「關」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:前:ping:一先",
+      "evidenceId": "ev:candidate:pingshui:前:ping:一先:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲一{{++|先}}，第96行「前」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:千:ping:一先",
+      "evidenceId": "ev:candidate:pingshui:千:ping:一先:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲一{{++|先}}，第96行「千」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:历:ru:入声十二锡",
+      "evidenceId": "ev:candidate:pingshui:历:ru:入声十二锡:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：入聲十二{{++|錫}}，第619行「歷」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:去:qu:六御",
+      "evidenceId": "ev:candidate:pingshui:去:qu:六御:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：去聲六{{++|御}}，第394行「去」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:去:shang:六语",
+      "evidenceId": "ev:candidate:pingshui:去:shang:六语:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上聲六{{++|語}}，第216行「去」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:地:qu:四寘",
+      "evidenceId": "ev:candidate:pingshui:地:qu:四寘:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：去聲四{{++|寘}}，第382行「地」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:处:qu:六御",
+      "evidenceId": "ev:candidate:pingshui:处:qu:六御:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：去聲六{{++|御}}，第394行「處」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:处:shang:六语",
+      "evidenceId": "ev:candidate:pingshui:处:shang:六语:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上聲六{{++|語}}，第216行「處」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:复:qu:二十六宥",
+      "evidenceId": "ev:candidate:pingshui:复:qu:二十六宥:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：去聲二十六{{++|宥}}，第516行「復」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:复:ru:入声一屋",
+      "evidenceId": "ev:candidate:pingshui:复:ru:入声一屋:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：入聲一{{++|屋}}，第549行「復」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:头:ping:十一尤",
+      "evidenceId": "ev:candidate:pingshui:头:ping:十一尤:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲十一{{++|尤}}，第156行「頭」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:尽:shang:十一轸",
+      "evidenceId": "ev:candidate:pingshui:尽:shang:十一轸:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上聲十一{{++|軫}}，第246行「盡」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:层:ping:十蒸",
+      "evidenceId": "ev:candidate:pingshui:层:ping:十蒸:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲十{{++|蒸}}，第150行「層」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:山:ping:十五删",
+      "evidenceId": "ev:candidate:pingshui:山:ping:十五删:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上平聲十五{{++|刪}}，第89行「山」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:川:ping:一先",
+      "evidenceId": "ev:candidate:pingshui:川:ping:一先:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲一{{++|先}}，第96行「川」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:已:shang:四纸",
+      "evidenceId": "ev:candidate:pingshui:已:shang:四纸:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上聲四{{++|紙}}，第204行「已」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:床:ping:七阳",
+      "evidenceId": "ev:candidate:pingshui:床:ping:七阳:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲七{{++|陽}}，第132行「床」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:悠:ping:十一尤",
+      "evidenceId": "ev:candidate:pingshui:悠:ping:十一尤:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲十一{{++|尤}}，第156行「悠」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:愁:ping:十一尤",
+      "evidenceId": "ev:candidate:pingshui:愁:ping:十一尤:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲十一{{++|尤}}，第156行「愁」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:故:qu:七遇",
+      "evidenceId": "ev:candidate:pingshui:故:qu:七遇:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：去聲七{{++|遇}}，第400行「故」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:日:ru:入声四质",
+      "evidenceId": "ev:candidate:pingshui:日:ru:入声四质:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：入聲四{{++|質}}，第569行「日」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:明:ping:八庚",
+      "evidenceId": "ev:candidate:pingshui:明:ping:八庚:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲八{{++|庚}}，第138行「明」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:昔:ru:入声十一陌",
+      "evidenceId": "ev:candidate:pingshui:昔:ru:入声十一陌:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：入聲十一{{++|陌}}，第613行「昔」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:昔:ru:入声十药",
+      "evidenceId": "ev:candidate:pingshui:昔:ru:入声十药:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：入聲十{{++|藥}}，第605行「昔」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:是:shang:四纸",
+      "evidenceId": "ev:candidate:pingshui:是:shang:四纸:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上聲四{{++|紙}}，第204行「是」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:晴:ping:八庚",
+      "evidenceId": "ev:candidate:pingshui:晴:ping:八庚:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲八{{++|庚}}，第138行「晴」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:暮:qu:七遇",
+      "evidenceId": "ev:candidate:pingshui:暮:qu:七遇:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：去聲七{{++|遇}}，第400行「暮」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:月:ru:入声六月",
+      "evidenceId": "ev:candidate:pingshui:月:ru:入声六月:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：入聲六{{++|月}}，第581行「月」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:树:qu:七遇",
+      "evidenceId": "ev:candidate:pingshui:树:qu:七遇:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：去聲七{{++|遇}}，第400行「樹」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:树:shang:七麌",
+      "evidenceId": "ev:candidate:pingshui:树:shang:七麌:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上聲七{{++|麌}}，第222行「樹」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:欲:ru:入声二沃",
+      "evidenceId": "ev:candidate:pingshui:欲:ru:入声二沃:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：入聲二{{++|沃}}，第555行「欲」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:此:shang:四纸",
+      "evidenceId": "ev:candidate:pingshui:此:shang:四纸:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上聲四{{++|紙}}，第204行「此」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:江:ping:三江",
+      "evidenceId": "ev:candidate:pingshui:江:ping:三江:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上平聲三{{++|江}}，第17行「江」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:河:ping:五歌",
+      "evidenceId": "ev:candidate:pingshui:河:ping:五歌:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲五{{++|歌}}，第120行「河」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:波:ping:五歌",
+      "evidenceId": "ev:candidate:pingshui:波:ping:五歌:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲五{{++|歌}}，第120行「波」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:洲:ping:十一尤",
+      "evidenceId": "ev:candidate:pingshui:洲:ping:十一尤:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲十一{{++|尤}}，第156行「洲」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:海:shang:十贿",
+      "evidenceId": "ev:candidate:pingshui:海:shang:十贿:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上聲十{{++|賄}}，第240行「海」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:烟:ping:一先",
+      "evidenceId": "ev:candidate:pingshui:烟:ping:一先:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲一{{++|先}}，第96行「煙」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:疑:ping:四支",
+      "evidenceId": "ev:candidate:pingshui:疑:ping:四支:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上平聲四{{++|支}}，第23行「疑」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:目:ru:入声一屋",
+      "evidenceId": "ev:candidate:pingshui:目:ru:入声一屋:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：入聲一{{++|屋}}，第549行「目」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:穷:ping:一东",
+      "evidenceId": "ev:candidate:pingshui:穷:ping:一东:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上平聲一{{++|東}}，第5行「窮」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:芳:ping:七阳",
+      "evidenceId": "ev:candidate:pingshui:芳:ping:七阳:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲七{{++|陽}}，第132行「芳」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:草:shang:十九皓",
+      "evidenceId": "ev:candidate:pingshui:草:shang:十九皓:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上聲十九{{++|皓}}，第294行「草」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:萋:ping:八齐",
+      "evidenceId": "ev:candidate:pingshui:萋:ping:八齐:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上平聲八{{++|齊}}，第47行「萋」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:载:qu:十一队",
+      "evidenceId": "ev:candidate:pingshui:载:qu:十一队:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：去聲十一{{++|隊}}，第424行「載」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:载:shang:十贿",
+      "evidenceId": "ev:candidate:pingshui:载:shang:十贿:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上聲十{{++|賄}}，第240行「載」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:返:shang:十三阮",
+      "evidenceId": "ev:candidate:pingshui:返:shang:十三阮:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上聲十三{{++|阮}}，第258行「返」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:里:shang:四纸",
+      "evidenceId": "ev:candidate:pingshui:里:shang:四纸:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上聲四{{++|紙}}，第204行「里」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:阳:ping:七阳",
+      "evidenceId": "ev:candidate:pingshui:阳:ping:七阳:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲七{{++|陽}}，第132行「陽」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:霜:ping:七阳",
+      "evidenceId": "ev:candidate:pingshui:霜:ping:七阳:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲七{{++|陽}}，第132行「霜」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:鹉:shang:七麌",
+      "evidenceId": "ev:candidate:pingshui:鹉:shang:七麌:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：上聲七{{++|麌}}，第222行「鵡」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:鹤:ru:入声十药",
+      "evidenceId": "ev:candidate:pingshui:鹤:ru:入声十药:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：入聲十{{++|藥}}，第605行「鶴」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:鹦:ping:八庚",
+      "evidenceId": "ev:candidate:pingshui:鹦:ping:八庚:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲八{{++|庚}}，第138行「鸚」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "pingshui:黄:ping:七阳",
+      "evidenceId": "ev:candidate:pingshui:黄:ping:七阳:d2-batch",
+      "approvedBy": "组长（接受机器初审批次，非逐字人工核验）",
+      "approvedAt": "2026-10-18",
+      "basis": "组长确认14号有限候选批次；固定维基文库 oldid=8264804 原文匹配：下平聲七{{++|陽}}，第132行「黃」；原检查及哈希冻结于 data/reviews/d2-closeout-approved-source-batch.json",
+      "recordFiles": [
+        "docs/reviews/14_D2收口_候选批次与里字异常.md",
+        "data/reviews/d2-closeout-batch-approval.json",
+        "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    }
+  ]
 }

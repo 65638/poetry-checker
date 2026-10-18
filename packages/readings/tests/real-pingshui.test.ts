@@ -1,11 +1,9 @@
 /**
  * B2-08：用 A 的真实快照跑三首固定正文，断言“当前实际状态”。
  *
- * 2026-10-18 起样本快照的 7 条部级证据已随 J03 第一批落库为 approved
- * （快照级 reviewStatus 仍为 unverified——部分批准不等于整库批准）；
- * 证据门槛语义不变：触发门槛的用例改用全量快照中仍未审核的部
- * （依=五微、山=十五删、尽=十一轸、人=十一真 等）。
- * 本改法由 A 在 @GLM @B 反馈中给出，GLM 代改，B 复核。
+ * 候选审批按 J03 和 D2 收口批次精确落库，全库仍为 unverified。
+ * 本组不加载语境规则，用当前数据推导未审有效候选的首个阻断位置；
+ * 完整语境接线后的三首成功回归在 apps/api/tests/golden-real.test.ts。
  */
 import { readFileSync } from "node:fs";
 import path from "node:path";
@@ -70,12 +68,11 @@ function work(caseId: string): WorkEntry {
 }
 
 /**
- * 按 `resolveReadings` 的门槛语义推导「第一个会被拦截的字位」：
- * 有候选，且**任一**有效候选缺已审核证据（缺字走 unknown，不算拦截）。
+ * 推导「第一个会被门槛拦截的字位」：有候选，且**任一**有效候选缺已审核证据
+ * （缺字走 unknown，不算拦截）。
  *
- * B 复核补：原改法把 l1c3「依」、l1c1「昔」写进断言，A 每批审核都会让它再红一次。
- * 改成按数据推导后，断言仍然检验同一件事——门槛恰在第一个未审字位触发，
- * 但不再与「此刻哪几个部已审」耦合。
+ * 期望完全来自数据（`lookup.evidence[].reviewStatus`），**不调用 resolveReadings**，
+ * 避免用被测函数自己生成预期。原实现把 l1c3 / l1c1 写死，A 每批审核都会让它再红一次。
  */
 function firstUnbackedToken(
   poem: ReturnType<typeof parseText>,
@@ -107,21 +104,43 @@ function firstUnbackedToken(
 }
 
 describe("B2-08 真实快照下的逐字状态", () => {
-  it("样本证据已随 J03 第一批全部 approved（样本 7/7；本诗命中 5 部全 approved），快照级仍 unverified——部分批准不等于整库批准", async () => {
-    const sampleEvidence = sample.evidence as Array<{ reviewStatus: string }>;
-    expect(sampleEvidence).toHaveLength(7);
+  it("样本按候选获批、原部级仍未审；部分批准不等于整库批准", async () => {
+    const sampleEvidence = sample.evidence as Array<{
+      id: string;
+      reviewStatus: string;
+    }>;
     expect(
-      sampleEvidence.every((evidence) => evidence.reviewStatus === "approved"),
+      sampleEvidence.filter(
+        (evidence) =>
+          evidence.id.startsWith("ev:candidate:") &&
+          evidence.reviewStatus === "approved",
+      ),
+    ).toHaveLength(8);
+    expect(
+      sampleEvidence
+        .filter((evidence) => !evidence.id.startsWith("ev:candidate:"))
+        .every((evidence) => evidence.reviewStatus === "unverified"),
     ).toBe(true);
     expect(String(sample.reviewStatus)).toBe("unverified");
 
     const lookup = await lookupFor(work("golden-dengguanquelou-ps-v1").text);
     expect(lookup.book).toBe("pingshui");
     expect(lookup.dataVersion).toBe(dataVersion);
-    // 登鹳雀楼在样本内命中 一更楼流白 → 四质/八庚/二十四敬/十一尤/十一陌 共 5 部
-    expect(lookup.evidence).toHaveLength(5);
+    for (const entry of lookup.entries) {
+      for (const candidate of entry.candidates) {
+        expect(
+          candidate.evidenceIds.some((id) =>
+            lookup.evidence.some(
+              (item) => item.id === id && item.reviewStatus === "approved",
+            ),
+          ),
+        ).toBe(true);
+      }
+    }
     expect(
-      lookup.evidence.every((evidence) => evidence.reviewStatus === "approved"),
+      lookup.evidence.some(
+        (evidence) => evidence.reviewStatus === "unverified",
+      ),
     ).toBe(true);
   });
 
@@ -153,7 +172,7 @@ describe("B2-08 真实快照下的逐字状态", () => {
     ]);
   });
 
-  it("登鹳雀楼（全量快照）：门槛恰在第一个未审字位拦截，位置由数据推导（当前为 l1c3 依=五微）", async () => {
+  it("登鹳雀楼（不加载语境）：在第一个未审竞争候选处拦截，位置由数据推导", async () => {
     const text = work("golden-dengguanquelou-ps-v1").text;
     const poem = parseText({ text });
     const lookup = await lookupFullFor(text);
@@ -176,13 +195,13 @@ describe("B2-08 真实快照下的逐字状态", () => {
     expect(caught).toBeInstanceOf(ReadingsError);
     const error = caught as ReadingsError;
     expect(error.code).toBe("LOOKUP_EVIDENCE_UNVERIFIED");
-    // 拦截位置必须与数据推导一致，而不是写死的坐标
+    // 拦截位置必须与数据推导一致，而不是写死坐标
     expect(error.details.tokenId).toBe(expected.tokenId);
     expect(error.details.character).toBe(expected.text);
     expect(error.details.dataVersion).toBe(fullDataVersion);
   });
 
-  it("黄鹤楼（全量快照）：46 字全收录、缺字 0；门槛在第一个未审字位拦截（当前为 l1c1 昔=十药未审+十一陌已审）", async () => {
+  it("黄鹤楼（不加载语境）：46 字全收录、缺字 0；未审竞争候选仍会拦截", async () => {
     const text = work("golden-huanghelou-ps-v1").text;
     const poem = parseText({ text });
     expect(poem.tokens).toHaveLength(56);
@@ -210,9 +229,9 @@ describe("B2-08 真实快照下的逐字状态", () => {
     expect(error.code).toBe("LOOKUP_EVIDENCE_UNVERIFIED");
     expect(error.details.tokenId).toBe(expected.tokenId);
 
-    // 「已审候选不得掩盖未审竞争候选」：当首个拦截位是多候选且部分已审时，
-    // 这条用例直接把它钉住（当前正是「昔」）；全部审核通过后由
-    // resolve.test.ts 的「GATE 混合有效候选」合成用例继续守住该语义。
+    // 「已审候选不得掩盖未审竞争候选」：首个拦截位是多候选且部分已审时，
+    // 真实数据直接钉住该语义；全部审完后由 resolve.test.ts 的
+    // 「GATE 混合有效候选」合成用例长期守护，不依赖真实数据的审核进度。
     if (expected.mixed) {
       expect(error.details.character).toBe(expected.text);
     }

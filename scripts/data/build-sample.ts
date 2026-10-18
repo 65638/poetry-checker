@@ -9,6 +9,10 @@ import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  applyCandidateApprovals,
+  readCandidateApprovals,
+} from "./candidate-approvals.js";
 
 import { pingshuiSnapshotFromCwr } from "../../packages/lexicon/src/adapters/chinese-word-rhyme.js";
 import {
@@ -34,7 +38,7 @@ export const SAMPLE_CHARACTERS = [
 ] as const;
 
 const REVISION = "ff0e9c13fb037c43e0eaa5dc929c0fe4fa2ffb18";
-const DATA_VERSION = "sample-pingshui-cwr-ff0e9c1-d1";
+const DATA_VERSION = "sample-pingshui-cwr-ff0e9c1-d1-review2";
 
 function readApprovedEvidenceIds(): readonly string[] {
   const file = path.join(ROOT, "data", "reviews", "approved-evidence.json");
@@ -57,16 +61,19 @@ function main(): void {
     Record<string, string[]>
   >;
 
-  const full = pingshuiSnapshotFromCwr(table, {
-    dataVersion: DATA_VERSION,
-    sourceId: "src:chinese_word_rhyme:pingshui",
-    approvedEvidenceIds: readApprovedEvidenceIds(),
-    revision: REVISION,
-    dataPath: "data/Pingshui_Rhyme.json",
-    snapshotSha256: sha256(bytes),
-    retrievedAt: null,
-    license: "MIT（上游转载授权待核实）",
-  });
+  const full = applyCandidateApprovals(
+    pingshuiSnapshotFromCwr(table, {
+      dataVersion: DATA_VERSION,
+      sourceId: "src:chinese_word_rhyme:pingshui",
+      approvedEvidenceIds: readApprovedEvidenceIds(),
+      revision: REVISION,
+      dataPath: "data/Pingshui_Rhyme.json",
+      snapshotSha256: sha256(bytes),
+      retrievedAt: null,
+      license: "MIT（上游转载授权待核实）",
+    }),
+    readCandidateApprovals(ROOT),
+  );
 
   const wanted = new Set<string>(SAMPLE_CHARACTERS);
   const candidates = full.candidates.filter((candidate) =>

@@ -1,5 +1,7 @@
 # 规则来源待审清单（C 维护，pending）
 
+> 2026-10-18 接管更新：运行规则卡 rules/cards/teaching-v1.json 已生成；原 draft 保留历史审批状态。3张救法卡采用 J03 依据，4张卡补 C 已签出处，RHYME/尾式保留完整审核限制。详见 rules/cards/runtime-review-status.json 与 docs/handoffs/0012-codex-d2-closeout.md。运行可查不代表所有学术扩展已获批。
+
 > 状态：**全部 pending**。本文件是交组长的人工审核清单，不是文献审核结论。
 > 规则：不编造版次、章节、页码、反切或诗例出处；核实到哪一步就写哪一步，未核实项保持 pending。
 > 与 `rules/cards/draft-teaching-v1.json`、`docs/rulebook.md` 同源维护。

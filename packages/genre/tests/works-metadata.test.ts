@@ -92,12 +92,12 @@ function poemFromClauses(clauses: string[]): AnnotatedPoem {
 }
 
 describe("data/works/metadata.json 自洽性", () => {
-  it("三条记录都通过 WorkMetadataSchema，且全部 unverified + 无证据", () => {
+  it("三条记录都通过 WorkMetadataSchema，已有审批均带作品证据", () => {
     const works = readMetadata();
     expect(works).toHaveLength(3);
     for (const work of works) {
-      expect(work.reviewStatus).toBe("unverified");
-      expect(work.evidenceIds).toEqual([]);
+      expect(work.reviewStatus).toBe("approved");
+      expect(work.evidenceIds).toHaveLength(1);
       expect(work.approvedTextFingerprints).toHaveLength(1);
     }
   });
@@ -163,7 +163,10 @@ describe("体裁判别与作品元数据的交互", () => {
     const result = classifyGenre({
       poem,
       candidates: [],
-      metadata: readMetadata(),
+      metadata: readMetadata().map((work) => ({
+        ...work,
+        reviewStatus: "unverified",
+      })),
       genreHint: "auto",
       formHint: "auto",
     });
