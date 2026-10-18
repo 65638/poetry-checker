@@ -30,7 +30,8 @@ pnpm verify
 - **代码检查**：pnpm verify 全绿（45 文件 / 591 测试，基线复验于 f42172f）。
 - **真实 API**：平水三首 200 + Schema pass + 金标准 3/3（GLM 实跑 `scripts/probe-d3-matrix.ts`，九组合表见 data/reviews/d3-g02-nine-combos.json）；词林/新韵六组合如实 503（LOOKUP_EVIDENCE_UNVERIFIED，等 D3 批次三 A/B 供数）。
 - **浏览器**：`pnpm dev` 双服务可用（healthz ok / web 200 / 代理真数据）；GLM 沙箱内 dev.mjs 的 node→cmd.exe spawn 受阻，用 dev:api/dev:web 分启绕行（真人环境不受影响，免 shell 加固列入 D3 待办）。
-- **数据批准**：平水=8 部+68 候选有限批（组长 actualReply 记录）+J03 两批十字位；三库快照级仍 unverified（整库审核为 D3 主线）。
+- **数据批准**：平水=三讲 1 部 + 83 条候选（J03 两批 + 有限批，登记于 data/reviews/approved-evidence.json，非全量审核）；三库快照级仍 unverified（整库审核为 D3 主线）。
+- **已审特例**：黄鹤楼 l4c5-7"空悠悠"三平尾按 13_ 第 8 条转 not_applicable/info（rules/exceptions/reviewed-works-v1.json，其余偏离保持原判、整诗仍如实 fail）。
 - **全库发布**：未发布；readyz 如实 503，唯一剩余门槛=三库快照级 approved。
 已知问题：黄鹤楼 l4c5”空悠悠”三平尾现报 fail/error，与 13_ 第二批第 8 条裁定（作特征保留不作 error）不一致——D3 批次一（Codex 特例适用层）待接入后修正。
 

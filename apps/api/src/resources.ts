@@ -3,6 +3,11 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { lookupCharacters, registerSnapshot } from "@poetry/lexicon";
 import {
+  parseReviewedWorkExceptions,
+  type ReviewedWorkException,
+} from "@poetry/prosody";
+import { fingerprintText } from "@poetry/genre";
+import {
   ContextRuleSchema,
   EvidenceSchema,
   RuleCardSchema,
@@ -45,6 +50,8 @@ export interface Resources {
   contextRules: ContextRule[];
   ruleCards: RuleCard[];
   works: WorkMetadata[];
+  /** D3 批次一：已审作品特例（rules/exceptions/reviewed-works-v1.json）。 */
+  reviewedWorkExceptions: ReviewedWorkException[];
   ready: boolean;
   notReadyReasons: string[];
   loadErrors: string[];
@@ -152,7 +159,94 @@ export function loadSupplementalResources(root: string) {
       RuleCardSchema,
       "rules/cards/teaching-v1.json",
     ),
+    reviewedWorkExceptions: loadReviewedWorkExceptions(read, errors),
   };
+}
+
+/** D3 批次一：rules/exceptions/reviewed-works-v1.json——严格解析；文件缺失/坏 JSON 由 read 记入 errors，坏结构在此记入。 */
+function loadReviewedWorkExceptions(
+  read: (rel: string) => unknown,
+  errors: string[],
+): ReviewedWorkException[] {
+  const rel = "rules/exceptions/reviewed-works-v1.json";
+  const raw = read(rel);
+  if (raw === undefined) return []; // read 已记录错误
+  try {
+    return parseReviewedWorkExceptions(raw);
+  } catch (e) {
+    errors.push(
+      `特例记录解析失败：${rel}（${e instanceof Error ? e.message : String(e)}）`,
+    );
+    return [];
+  }
+}
+
+/**
+ * D3 批次一装载校验（GLM）：workId 存在、指纹与 approvedLines 一致、
+ * 作品允许该指纹且形式相符、审批证据 approved/context 且来源可解析、
+ * 作品依据含 approved/work_metadata。unverified 记录不生效也不自动升级。
+ */
+export function validateReviewedWorkExceptions(
+  exceptions: readonly ReviewedWorkException[],
+  resources: Pick<
+    Resources,
+    "works" | "evidenceRegistry" | "sourceRegistry"
+  >,
+): string[] {
+  const errors: string[] = [];
+  const worksById = new Map(resources.works.map((w) => [w.id, w]));
+  const evidence = new Map(
+    resources.evidenceRegistry.map((item) => [item.id, item]),
+  );
+  const sources = new Set(resources.sourceRegistry.map((item) => item.id));
+  for (const ex of exceptions) {
+    const tag = `特例 ${ex.id}`;
+    if (ex.reviewStatus !== "approved") continue; // 不生效、不升级，仅装载
+    const work = worksById.get(ex.workId);
+    if (work === undefined) {
+      errors.push(`${tag} 引用的作品不存在：${ex.workId}`);
+      continue;
+    }
+    const joined = ex.approvedLines.join("");
+    if (fingerprintText(joined) !== ex.textFingerprint) {
+      errors.push(`${tag} 指纹与 approvedLines 不一致`);
+    }
+    if (!work.approvedTextFingerprints.includes(ex.textFingerprint)) {
+      errors.push(`${tag} 指纹不在作品 ${ex.workId} 的已审指纹内`);
+    }
+    if (work.formId !== ex.formId) {
+      errors.push(`${tag} 形式 ${ex.formId} 与作品申报 ${String(work.formId)} 不符`);
+    }
+    const approval = evidence.get(ex.approval.evidenceId);
+    if (approval === undefined) {
+      errors.push(`${tag} 缺少审批证据 ${ex.approval.evidenceId}`);
+    } else if (
+      approval.reviewStatus !== "approved" ||
+      approval.kind !== "context"
+    ) {
+      errors.push(
+        `${tag} 审批证据须为 approved/context：${ex.approval.evidenceId}`,
+      );
+    }
+    if (approval !== undefined && approval.sourceId !== ex.approval.sourceId) {
+      errors.push(`${tag} 审批来源与证据来源不符：${ex.approval.sourceId}`);
+    }
+    if (!sources.has(ex.approval.sourceId)) {
+      errors.push(`${tag} 缺少审批来源 ${ex.approval.sourceId}`);
+    }
+    const workEvidenceOk = work.evidenceIds.some((id) => {
+      const ev = evidence.get(id);
+      return (
+        ev !== undefined &&
+        ev.reviewStatus === "approved" &&
+        ev.kind === "work_metadata"
+      );
+    });
+    if (!workEvidenceOk) {
+      errors.push(`${tag} 的作品 ${ex.workId} 缺少 approved/work_metadata 依据`);
+    }
+  }
+  return errors;
 }
 
 /** 检查引用闭合；已审核语境和作品不能引用未审核/错误类别证据。 */
@@ -308,7 +402,8 @@ function loadResourcesOnce(): Resources {
   const evidenceRegistry = dedupeById(evidence, "evidence", loadErrors);
   const sourceRegistry = dedupeById(sources, "source", loadErrors);
 
-  const { contextRules, works, ruleCards } = supplemental;
+  const { contextRules, works, ruleCards, reviewedWorkExceptions } =
+    supplemental;
   if (contextRules.length === 0)
     notReadyReasons.push("无已发布语境规则（B 的 data/context/rules.json）");
   if (works.length === 0)
@@ -322,6 +417,13 @@ function loadResourcesOnce(): Resources {
       contextRules,
       works,
       ruleCards,
+    }),
+  );
+  loadErrors.push(
+    ...validateReviewedWorkExceptions(reviewedWorkExceptions, {
+      works,
+      evidenceRegistry,
+      sourceRegistry,
     }),
   );
   notReadyReasons.push(...loadErrors);
@@ -368,6 +470,7 @@ function loadResourcesOnce(): Resources {
     contextRules,
     ruleCards,
     works,
+    reviewedWorkExceptions,
     ready,
     notReadyReasons,
     loadErrors,

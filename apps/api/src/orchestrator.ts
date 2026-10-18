@@ -7,8 +7,8 @@ import {
 } from "@poetry/contracts";
 import { lookupCharacters } from "@poetry/lexicon";
 import { parseText, resolveReadings } from "@poetry/readings";
-import { matchTemplates, evaluateProsody } from "@poetry/prosody";
-import { classifyGenre } from "@poetry/genre";
+import { matchTemplates, evaluateProsody, applyReviewedWorkExceptions } from "@poetry/prosody";
+import { classifyGenre, fingerprintText } from "@poetry/genre";
 import { toReadingsErrorResponse } from "./readings-errors.js";
 import { toGenreErrorResponse } from "./genre-errors.js";
 import { toLexiconErrorResponse } from "./lexicon-errors.js";
@@ -142,13 +142,24 @@ export async function analyze(
       formHint: request.formHint,
     });
 
-    // 6. 完整格律判定
-    const prosody = evaluateProsody({
+    // 6. 完整格律判定 + 已审作品特例适用（D3 批次一：核心报告不变，
+    //    已审精确范围在 summary 前转换；其他偏离保持原判）
+    const coreReport = evaluateProsody({
       poem: annotated,
       candidates,
       selectedTemplateId: genre.selectedTemplateId,
       applicability: genre.applicability,
       ruleSet: request.ruleSet,
+    });
+    const prosody = applyReviewedWorkExceptions({
+      poem: annotated,
+      textFingerprint: fingerprintText(annotated.originalText),
+      genre,
+      report: coreReport,
+      works: resources.works,
+      exceptions: resources.reviewedWorkExceptions,
+      evidence: mergedEvidence,
+      sources: mergedSources,
     });
 
     // 7. 汇总（summary 按冻结契约由检查结果推导）
@@ -157,7 +168,7 @@ export async function analyze(
       inputHash: parsed.inputHash,
       versions: {
         data: dataVersion,
-        rules: "teaching-v1",
+        rules: "teaching-v1+reviewed-works-v1",
         context:
           resources.contextRules.length > 0
             ? `context-rules:${resources.contextRules.length}`

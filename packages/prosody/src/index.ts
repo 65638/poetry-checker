@@ -24,3 +24,14 @@ export type {
   ClosureProblem,
   ClosureResult,
 } from "./report/closure.js";
+// D3 批次一公共导出（代码为 Codex 在 docs/handoffs/d3-codex-exceptions.md
+// 指定原文；GLM 代加以解除 API 接线阻塞，C 复核后可自行调整措辞与位置）。
+export {
+  applyReviewedWorkExceptions,
+  parseReviewedWorkExceptions,
+  ReviewedWorkExceptionError,
+} from "./reviewed-exceptions/index.js";
+export type {
+  ApplyReviewedWorkExceptionsInput,
+  ReviewedWorkException,
+} from "./reviewed-exceptions/index.js";
