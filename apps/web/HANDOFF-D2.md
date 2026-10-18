@@ -260,15 +260,79 @@ pnpm verify
 > 原先列为缺口的「抽屉焦点陷阱与焦点返回」已在键盘矩阵中**实测通过**
 > （K8 焦点陷阱、K10 焦点返回 `l2c4 → l2c4`），不再是缺口。
 
+## 二·七、真实 API 联调（D2-01）：真实编排已接通，被数据审核门槛拦下
+
+**基线**：已合入 `origin/main`（`513d3f8`），含 `apps/api/src/orchestrator.ts` 真实编排
+（`parseText` → `lookupCharacters` → `resolveReadings` → `matchTemplates`
+→ `evaluateProsody` → `classifyGenre`）。`glm/d2-real-api` 已在 main 中（`Already up to date`）。
+
+### 实测结果
+
+- 真实 API 启动正常，`/healthz` 200；
+- `/readyz` **503**，发布门槛未满足：
+
+```text
+无已发布语境规则（B 的 data/context/rules.json）；
+无已发布作品元数据（E 的 data/works/metadata.json）；
+无已发布规则卡（C 的 rules/cards/teaching-v1.json）；
+快照未审核：pingshui、cilin、xinyun
+```
+
+- 用《登鹳雀楼》正文请求 `/api/v1/analyze` → **503**，body 精确到字位与证据 ID：
+
+```text
+LOOKUP_EVIDENCE_UNVERIFIED：字位 l1c1（白）参与读音/平仄推导的候选
+pingshui:白:ru:入声十一陌 没有已审核证据（选择方式 unique）
+```
+
+`dataVersion: pingshui-...-d2-full-sanj-jiang-draft`（**draft**，未过人审签）。
+
+**这是新版数据纪律的正确执行，不是缺陷**：`reviewStatus` 未 approved 的证据
+不得支撑读音/平仄/归部结论。D2-01 要的「真实分析结果」必须等 A 完成审核签后才能通过。
+
+### 由此发现并修复的前端缺陷
+
+服务端给出了「哪个字、哪条证据、哪个版本未审核」，但前端此前**只显示固定文案**
+「分析数据尚未就绪，请稍后重试」，原因被丢掉 —— 用户无从判断是等数据还是改输入。
+
+**修复**（`apps/web/src/api/errors.ts`，我方范围）：`ApiError.userMessage`
+保留行动建议并拼接服务端原因（`原因：…`）；>600 字符的 message 做抑制，
+避免把内部堆栈塞进 UI；422 仍内联原因不重复加前缀。
+
+复验，错误横幅现在为：
+
+```text
+分析未完成
+分析数据尚未就绪，请稍后重试。输入内容已保留。
+原因：LOOKUP_EVIDENCE_UNVERIFIED：字位 l1c1（白）…没有已审核证据…
+错误代码：HTTP_503
+```
+
+新增 `apps/web/tests/error-message-detail.test.ts` 7 项钉住该行为
+（503/500/404/413 保留原因、空 message 不出现空壳「原因：」、超长 message 被抑制、
+422 内联、网络错误不误说成报告问题）。
+
+截图：`d2-01-real-api-503.png`（修复前）、`d2-01-real-api-detail.png`（修复后）。
+
+### D2-01 结论
+
+| 检查 | 结果 |
+| --- | --- |
+| 前端走真实 API（非 fixture） | **已确认**：请求打到 3000，响应来自 orchestrator |
+| 真实编排端到端可用 | **已确认**：服务端完成校验与编排，在证据门槛处按契约返回 503 |
+| 报告正文/韵书/版本一致、无 fixture-only | **无法验收**：被 503 拦在报告生成之前 |
+| 前端把原因可执行地呈现 | **已修复并验收** |
+
+**D2-01 仍标为未完成**，阻塞方是 A 的快照审核（及 B/E/C 的已发布文件），不是前端代码。
+
 ## 六、待办
 
-1. **真实 API 联调**：等 `glm/d2-real-api` 合入后，用一首已审核真实诗跑 D2-01；
-   届时确认 `versions.data` 不是 `fixture-only`、正文/韵书/版本一致。
-2. **D2-06 粘对/救位**：`prosody.relations` 在 mock 中为空，UI 只能显示「未提供」；
-   真实数据到位后需验收定位与关联。
+1. **D2-01 复跑**：等 A 把快照转 `approved`、B/E/C 交付已发布文件后，
+   用《登鹳雀楼》重跑，确认 `versions.data` 不是 draft、正文/韵书/版本一致。
+2. **D2-06 粘对/救位**：真实编排已接 `evaluateProsody`，`relations` 是否非空取决于
+   Codex 核心覆盖；数据审核通过后一并验收。
 3. **DOM 测试依赖**：jsdom + React Testing Library 仍未安装（**请 GLM 统一安装**，
-   我不改根 lockfile）。不过本轮的 CDP 真实浏览器验收（键盘矩阵、并发、导出）
-   比 jsdom 更可信，后续同类验收优先用浏览器。
+   我不改根 lockfile）。本轮的 CDP 真实浏览器验收比 jsdom 更可信。
 4. **E2E**：由 E 管理 `tests/e2e`；我只按约定补选择器/操作，不自建第二套框架。
 5. 浏览器验收脚本（`cdp-d2.mjs`、`cdp-keyboard.mjs`、`cdp-accept.mjs`，
    以及可控替身 `stub-api.mjs`）目前都在本地工作区、未入库。
@@ -276,4 +340,4 @@ pnpm verify
    等组长分配。它们不依赖 jsdom，只要求本机有 Chrome 与 Node ≥22（内置 WebSocket）。
 
 > 已完成：D2-02（并发/迟到响应）、D2-03（陈旧覆盖/阻止选音）、D2-09（复制/导出）
-> 的浏览器端验收，见「二·四」节。
+> 的浏览器端验收见「二·四」节；真实 API 接通与错误可执行性见「二·七」节。
