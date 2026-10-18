@@ -8,6 +8,31 @@ D1 的实现与验证记录见 `HANDOFF.md`（同目录），本文件只记 D2 
 
 ## 一、本轮实测发现并修复的问题
 
+### 0. DEV 场景装载路径少一级（D1 遗留，静态检查抓不到）
+
+**现象**：点开发场景按钮无反应；控制台报
+
+```text
+[dev-scenario] 装载失败 DevScenarioUnavailable: 未找到开发场景：needs_review
+```
+
+**根因**：`app/devScenarios.data.ts` 的 `import.meta.glob` 写成
+`../../../fixtures/mocks/*.json`。从 `apps/web/src/app/` 出发只到
+`apps/fixtures/mocks`（不存在），应为 `../../../../fixtures/mocks/*.json`。
+
+**为什么 D1 没发现**：
+
+- `pnpm verify`、`tsc`、`vite build` 全部通过；
+- 生产构建时 glob 被折叠成空对象 `Object.assign({})`，所以「生产包不含 fixture」
+  这条断言一直是绿的；
+- 只有真实浏览器点一次场景按钮才会暴露。
+
+**修复**：路径改为四级，并加 `apps/web/tests/dev-scenario-loading.test.ts` 8 项，
+在 Vitest（同样走 Vite 的 glob 转换）里真实装载五个场景，钉住这条链路。
+
+**复验**：装载 needs_review 后 20 个字位、「待复核」结论、反馈文案
+「已装载开发合成场景；报告不代表真实格律结论。」均正确。
+
 ### 1. 真实浏览器白屏（D1 遗留，此前完全未发现）
 
 **现象**：Chrome headless 打开 dev 入口，`#root` 长度 0，页面全白；
@@ -74,11 +99,50 @@ hoisted 布局，需保证只有一份 React。建议 GLM 评估在 `pnpm-worksp
 
 | 编号 | 项 | 状态 |
 | --- | --- | --- |
-| D2-07 | Tab/Shift+Tab 完整顺序、焦点可见环、焦点陷阱、关闭后焦点返回 | **部分**：只验证了 focusable 数量、Escape 生效；未见焦点环样式与返回逻辑的逐项断言 |
 | D2-02 | 快速 A→B 请求、取消 | **单测覆盖**（store/concurrency 已有）；浏览器端未做双请求时序 |
 | D2-03 | 修改原文后旧覆盖失效再选新音 | **单测覆盖**；浏览器端未操作真实选音按钮 |
 | D2-01 | 真实 API（非 fixture） | **未执行**：main 上 API 仍是 fixture mock，真实编排在 `glm/d2-real-api` |
 | D2-09 | 复制/JSON 导出浏览器行为 | **单测覆盖**；浏览器端未点按钮验证剪贴板与下载 |
+
+## 二·五、键盘矩阵（D2-07，真实按键事件）
+
+第一版驱动脚本用 `keyDown + keyUp` 派发 Enter，结果字位按钮打不开抽屉。
+**用页面注入的原生 `<button>` 做对照后确认这是 CDP 用法问题**：只发
+`keyDown+keyUp` 不会触发原生 click，必须 `rawKeyDown → char(text) → keyUp`。
+换成正确序列后 Enter 激活恢复正常——**不是应用缺陷，已更正**。
+
+修正后用真实按键事件跑完整矩阵（`cdp-keyboard.mjs`）：
+
+| 编号 | 项 | 结果 |
+| --- | --- | --- |
+| K1 | 初始渲染 | PASS `#root`=2983 |
+| K2 | **Ctrl+Enter 提交** | PASS 20 字位，textarea 保持焦点 |
+| K3 | Tab 前进 | PASS `INPUT → 分析 → 登鹳雀楼 → 静夜思` |
+| K4 | **焦点可见** | PASS `outline: solid 2px` |
+| K5 | Shift+Tab 回退 | PASS `静夜思 → 登鹳雀楼` |
+| K6 | 聚焦字位 + **Enter** 开抽屉，焦点进入面板 | PASS `trigger=l2c4`、`focusInside=true`、`page inert=true` |
+| K7 | 模态语义 | PASS `aria-modal=true`、有可访问名称、初始焦点在关闭按钮 |
+| K8 | **焦点陷阱** | PASS 6 次 Tab 均在面板内 |
+| K9 | Escape 关闭 | PASS 抽屉关闭且 `page inert` 解除 |
+| K10 | **关闭后焦点返回触发字位** | PASS `l2c4 → l2c4`，`aria-label=第2句第4字「仄」，仄` |
+| K11 | Enter 激活分析按钮 | PASS |
+| K12 | 无残留键盘陷阱 | PASS |
+| K13 | 字位按钮 ARIA | PASS `aria-haspopup=dialog`、`aria-expanded=false`、可访问名称完整 |
+
+**13/13 通过，无运行时错误。** 截图 `kb2-01-submit.png`、`kb2-02-drawer.png`、
+`kb2-03-focus-return.png`。
+
+### 多候选抽屉的键盘可达性（用 needs_review 场景复验）
+
+装载 needs_review（歧义字位 `l4c1`，`aria-label` 含「未定，读音待定」）后：
+
+- 抽屉内可聚焦元素 **3 个**：`✕ 关闭` + 2 个「改用此读音」；
+- Tab 循环：候选1 → 候选2 → 关闭 → 候选1（**焦点陷阱正确，不是困死**）；
+- 无控制台错误。
+
+补充说明：单候选字位（如 `l2c4` 只有唯一生效候选）抽屉里只有「关闭」一个可聚焦
+元素，这是**正确行为**——展示层只在「未被选中的候选」上渲染选择按钮，
+唯一候选已生效时无需再选。曾误判为缺陷，已核实。
 
 ## 三、错误行为测试（D2-05）
 
@@ -100,7 +164,7 @@ hoisted 布局，需保证只有一份 React。建议 GLM 评估在 `pnpm-worksp
 pnpm verify
   $ eslint .                                        → 通过
   $ tsc --noEmit && tsc --noEmit -p apps/web/...    → 通过
-  $ vitest run                                      → 423 passed / 29 files
+  $ vitest run                                      → 431 passed / 30 files
   $ pnpm build && tsx scripts/generate-contracts.ts --check → 通过（8 个生成物）
 ```
 
