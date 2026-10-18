@@ -16,14 +16,26 @@ import type { Resources } from "./resources.js";
 
 export type OrchestrationResult =
   | { kind: "ok"; response: AnalysisResponse }
-  | { kind: "error"; status: number; body: { error: { code: string; message: string; fieldErrors: Array<{ path: string; message: string }> } } };
+  | {
+      kind: "error";
+      status: number;
+      body: {
+        error: {
+          code: string;
+          message: string;
+          fieldErrors: Array<{ path: string; message: string }>;
+        };
+      };
+    };
 
 function mapModuleError(error: unknown): OrchestrationResult | null {
   const mapped =
     toReadingsErrorResponse(error) ??
     toGenreErrorResponse(error) ??
     toLexiconErrorResponse(error);
-  return mapped === null ? null : { kind: "error", status: mapped.status, body: mapped.body };
+  return mapped === null
+    ? null
+    : { kind: "error", status: mapped.status, body: mapped.body };
 }
 
 function dataNotReady(reasons: string[]): OrchestrationResult {
@@ -41,7 +53,12 @@ function dataNotReady(reasons: string[]): OrchestrationResult {
 }
 
 /** 按固定顺序编排真实分析；任何模块错误经约定映射，未知错误 500 不泄栈。 */
-export async function analyze(request: AnalyzeRequest, resources: Resources): Promise<OrchestrationResult> {
+export async function analyze(
+  request: AnalyzeRequest,
+  resources: Resources,
+): Promise<OrchestrationResult> {
+  if (resources.loadErrors.length > 0)
+    return dataNotReady(resources.loadErrors);
   const dataVersion = resources.snapshots[request.rhymeBook]?.dataVersion;
   if (dataVersion === undefined) {
     return dataNotReady([
@@ -53,11 +70,20 @@ export async function analyze(request: AnalyzeRequest, resources: Resources): Pr
   try {
     // 1. 解析
     const parsed = parseText({ text: request.text });
-    if (parsed.inputHash !== request.inputHash && request.inputHash !== undefined) {
+    if (
+      parsed.inputHash !== request.inputHash &&
+      request.inputHash !== undefined
+    ) {
       return {
         kind: "error",
         status: 422,
-        body: { error: { code: "STALE_READING_OVERRIDE", message: "inputHash 与当前原文不一致", fieldErrors: [] } },
+        body: {
+          error: {
+            code: "STALE_READING_OVERRIDE",
+            message: "inputHash 与当前原文不一致",
+            fieldErrors: [],
+          },
+        },
       };
     }
 
@@ -74,8 +100,14 @@ export async function analyze(request: AnalyzeRequest, resources: Resources): Pr
     let mergedEvidence: Evidence[];
     let mergedSources: SourceRecord[];
     try {
-      mergedEvidence = dedupeById<Evidence>(lookup.evidence, resources.evidenceRegistry);
-      mergedSources = dedupeById<SourceRecord>(lookup.sources, resources.sourceRegistry);
+      mergedEvidence = dedupeById<Evidence>(
+        lookup.evidence,
+        resources.evidenceRegistry,
+      );
+      mergedSources = dedupeById<SourceRecord>(
+        lookup.sources,
+        resources.sourceRegistry,
+      );
     } catch (conflict) {
       return {
         kind: "error",
@@ -126,15 +158,22 @@ export async function analyze(request: AnalyzeRequest, resources: Resources): Pr
       versions: {
         data: dataVersion,
         rules: "teaching-v1",
-        context: resources.contextRules.length > 0 ? `context-rules:${resources.contextRules.length}` : "none-loaded",
-        works: resources.works.length > 0 ? `works:${resources.works.length}` : "none-loaded",
+        context:
+          resources.contextRules.length > 0
+            ? `context-rules:${resources.contextRules.length}`
+            : "none-loaded",
+        works:
+          resources.works.length > 0
+            ? `works:${resources.works.length}`
+            : "none-loaded",
       },
       policy: {
         rhymeBook: request.rhymeBook,
-        toneBasis: request.rhymeBook === "xinyun" ? "mandarin_base" : "historical",
+        toneBasis:
+          request.rhymeBook === "xinyun" ? "mandarin_base" : "historical",
         notice:
           resources.snapshots[request.rhymeBook]?.reviewStatus !== "approved"
-            ? "当前装载的是未审核样本快照，仅供开发联调，不作为发布结论。"
+            ? "当前韵书全库审核尚未完成；本次分析仅采用具备已审核证据的有效候选，不代表全库发布通过。"
             : "",
       },
       poem: annotated,
@@ -153,7 +192,13 @@ export async function analyze(request: AnalyzeRequest, resources: Resources): Pr
       return {
         kind: "error",
         status: 500,
-        body: { error: { code: "INTERNAL_ERROR", message: "出站响应未通过 AnalysisResponse 校验", fieldErrors: [] } },
+        body: {
+          error: {
+            code: "INTERNAL_ERROR",
+            message: "出站响应未通过 AnalysisResponse 校验",
+            fieldErrors: [],
+          },
+        },
       };
     }
     return { kind: "ok", response: checked.data };
@@ -163,7 +208,13 @@ export async function analyze(request: AnalyzeRequest, resources: Resources): Pr
     return {
       kind: "error",
       status: 500,
-      body: { error: { code: "INTERNAL_ERROR", message: "分析过程中发生未预期错误", fieldErrors: [] } },
+      body: {
+        error: {
+          code: "INTERNAL_ERROR",
+          message: "分析过程中发生未预期错误",
+          fieldErrors: [],
+        },
+      },
     };
   }
 }
@@ -177,7 +228,10 @@ function stableStringify(value: unknown): string {
   return `{${entries.map(([k, v]) => `${JSON.stringify(k)}:${stableStringify(v)}`).join(",")}}`;
 }
 
-function dedupeById<T extends { id: string }>(a: readonly T[], b: readonly T[]): T[] {
+function dedupeById<T extends { id: string }>(
+  a: readonly T[],
+  b: readonly T[],
+): T[] {
   const map = new Map<string, T>();
   for (const item of [...a, ...b]) {
     const prev = map.get(item.id);
@@ -186,7 +240,9 @@ function dedupeById<T extends { id: string }>(a: readonly T[], b: readonly T[]):
     }
     map.set(item.id, item);
   }
-  return [...map.values()].sort((x, y) => (x.id < y.id ? -1 : x.id > y.id ? 1 : 0));
+  return [...map.values()].sort((x, y) =>
+    x.id < y.id ? -1 : x.id > y.id ? 1 : 0,
+  );
 }
 
 function deriveSummary(
@@ -195,19 +251,33 @@ function deriveSummary(
   parseQuality: "ok" | "needs_review",
 ): AnalysisResponse["summary"] {
   if (genre.applicability === "unsupported") {
-    return { status: "unsupported", message: "当前版本尚不支持此形式或关键规则。" };
+    return {
+      status: "unsupported",
+      message: "当前版本尚不支持此形式或关键规则。",
+    };
   }
   if (genre.applicability === "not_applicable") {
-    return { status: "not_applicable", message: "该作品不适用近体规则；逐字音韵信息仍可查看。" };
+    return {
+      status: "not_applicable",
+      message: "该作品不适用近体规则；逐字音韵信息仍可查看。",
+    };
   }
-  const hardFail = prosody.checks.some((c) => c.status === "fail" && c.severity === "error" && c.resolvedBy === null);
+  const hardFail = prosody.checks.some(
+    (c) =>
+      c.status === "fail" && c.severity === "error" && c.resolvedBy === null,
+  );
   if (hardFail) {
     return { status: "fail", message: "存在明确违规项，详见诊断。" };
   }
-  const uncertain = prosody.checks.some((c) => c.status === "uncertain") ||
-    parseQuality === "needs_review" || prosody.selectedTemplateId === null;
+  const uncertain =
+    prosody.checks.some((c) => c.status === "uncertain") ||
+    parseQuality === "needs_review" ||
+    prosody.selectedTemplateId === null;
   if (uncertain) {
-    return { status: "needs_review", message: "部分读音、模板或依据未定，结论待复核。" };
+    return {
+      status: "needs_review",
+      message: "部分读音、模板或依据未定，结论待复核。",
+    };
   }
   return { status: "pass", message: "已实现规则内必检项通过。" };
 }

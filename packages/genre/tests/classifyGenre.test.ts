@@ -6,7 +6,7 @@
 import { GenreDecisionSchema } from "@poetry/contracts";
 import type { WorkMetadata } from "@poetry/contracts";
 import { describe, expect, it } from "vitest";
-import { classifyGenre, GenreError, GENRE_ERROR_CODES } from "../src/index.js";
+import { classifyGenre, GenreError } from "../src/index.js";
 import {
   makeAnnotatedPoem,
   makeCompleteCandidate,
@@ -243,28 +243,22 @@ describe("classifyGenre：auto 分支与特征门槛", () => {
   });
 });
 
-describe("classifyGenre：未实现分支与非法请求", () => {
-  it("高吻合自动判定分支：抛出 GENRE_BRANCH_PENDING，不用 uncertain 冒充", () => {
-    const call = () =>
-      classifyGenre({
-        poem: makeRegularPoem(4, 5),
-        candidates: [
-          makeCompleteCandidate({ id: "tpl-a", formId: "wujue", score: 0.95 }),
-        ],
-        metadata: NO_METADATA,
-        genreHint: "auto",
-        formHint: "auto",
-      });
+describe("classifyGenre：高吻合分支与非法请求", () => {
+  it("高吻合自动判定返回近体候选，仍由引擎检查合律", () => {
+    const result = classifyGenre({
+      poem: makeRegularPoem(4, 5),
+      candidates: [
+        makeCompleteCandidate({ id: "tpl-a", formId: "wujue", score: 0.95 }),
+      ],
+      metadata: NO_METADATA,
+      genreHint: "auto",
+      formHint: "auto",
+    });
 
-    try {
-      call();
-      expect.unreachable("高吻合分支应当抛出未实现错误");
-    } catch (error) {
-      expect(error).toBeInstanceOf(GenreError);
-      const genreError = error as GenreError;
-      expect(genreError.code).toBe(GENRE_ERROR_CODES[0]);
-      expect(genreError.branch).toBe("auto-high-confidence");
-    }
+    expect(result.formFamily).toBe("regulated");
+    expect(result.applicability).toBe("applicable");
+    expect(result.selectedTemplateId).toBe("tpl-a");
+    expect(result.basisType).toBe("heuristic");
   });
 
   it("古体 + 具体近体形式：非法请求，不产生自相矛盾结果", () => {

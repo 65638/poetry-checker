@@ -1,0 +1,31 @@
+{{header
+| title    = 登鸛{{另|雀|鵲}}樓
+| section  =
+| author   = 王之渙
+| times    = 唐
+| from     = 文苑英華 (四庫全書本)/卷0312
+| from2    = 御定全唐詩 (四庫全書本)/卷253
+| from3    = 國秀集 (四庫全書本)/卷下
+| type = 五言絕句
+| type2 = 唐詩
+| notes    = 一作[[Author:朱斌|朱斌]]詩，參見《國秀集》<br/>{{Textquality|100%}}
+| edition= yes
+}}
+<templatestyles src="楷體/style.css" />
+<center><div class="Kaiti" style=" font-size:150%; ">
+<onlyinclude><poem>
+白日依山盡，黃河入海流。<small><small><ref>「入」：《文苑英華》注「一作'''徹'''」</ref></small></small> 
+欲窮千里目，更上一{{另|層|重}}樓。
+</poem></onlyinclude>
+</sub></center>
+
+[[File:登鹳雀楼(王之涣).ogg|thumb|汉语普通话朗读]]
+{{唐朝作品}}
+
+[[Category:代表作品]]
+
+[[Category:千家詩]]
+
+[[Category:有声文献]]
+
+[[Category:中国大陆义务教育语文课标优秀诗文背诵推荐篇目（1~6年级）]]

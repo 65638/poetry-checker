@@ -3,20 +3,62 @@
   "reviewType": "candidate_membership_human_review",
   "reviewedAt": "2026-10-18",
   "authority": "组长 J03 第一批人审（引用 12_J03人审记录）",
-  "authorityNote": "「12_J03人审记录」目前**不在本仓库内**（全仓检索 J03 零命中）。本记录承接组长通知的审批结论，原记录归档后应把路径补进 sourceDocPath，不得虚构文件内容。",
-  "sourceDocPath": null,
-  "sourceDocArchiveTodo": "请组长或 E 将 12_J03人审记录 归档到 docs/reviews/ 或 data/reviews/，随后回填 sourceDocPath。",
+  "authorityNote": "历史第一批范围保留；原件已归档。楼的后续裁定见第二批，不改写第一批当时的待审结论。",
+  "sourceDocPath": "docs/reviews/12_J03人审记录_第一批.md",
+  "sourceDocArchiveTodo": null,
   "dataVersion": "sample-pingshui-cwr-ff0e9c1-d1",
   "scope": "候选级核验：下列字形的韵部归属与声类经 J03 人审通过。**不**代表所属韵部的部级 evidence 已审核。",
-  "approvedCharacters": ["白", "一", "更", "流", "雪", "物"],
+  "approvedCharacters": [
+    "白",
+    "一",
+    "更",
+    "流",
+    "雪",
+    "物"
+  ],
   "approvedCandidates": [
-    { "character": "白", "candidateId": "pingshui:白:ru:入声十一陌", "toneClass": "ru", "verdict": "approved" },
-    { "character": "一", "candidateId": "pingshui:一:ru:入声四质", "toneClass": "ru", "verdict": "approved" },
-    { "character": "更", "candidateId": "pingshui:更:ping:八庚", "toneClass": "ping", "verdict": "approved" },
-    { "character": "更", "candidateId": "pingshui:更:qu:二十四敬", "toneClass": "qu", "verdict": "approved" },
-    { "character": "流", "candidateId": "pingshui:流:ping:十一尤", "toneClass": "ping", "verdict": "approved" },
-    { "character": "雪", "candidateId": "pingshui:雪:ru:入声九屑", "toneClass": "ru", "verdict": "approved" },
-    { "character": "物", "candidateId": "pingshui:物:ru:入声五物", "toneClass": "ru", "verdict": "approved" }
+    {
+      "character": "白",
+      "candidateId": "pingshui:白:ru:入声十一陌",
+      "toneClass": "ru",
+      "verdict": "approved"
+    },
+    {
+      "character": "一",
+      "candidateId": "pingshui:一:ru:入声四质",
+      "toneClass": "ru",
+      "verdict": "approved"
+    },
+    {
+      "character": "更",
+      "candidateId": "pingshui:更:ping:八庚",
+      "toneClass": "ping",
+      "verdict": "approved"
+    },
+    {
+      "character": "更",
+      "candidateId": "pingshui:更:qu:二十四敬",
+      "toneClass": "qu",
+      "verdict": "approved"
+    },
+    {
+      "character": "流",
+      "candidateId": "pingshui:流:ping:十一尤",
+      "toneClass": "ping",
+      "verdict": "approved"
+    },
+    {
+      "character": "雪",
+      "candidateId": "pingshui:雪:ru:入声九屑",
+      "toneClass": "ru",
+      "verdict": "approved"
+    },
+    {
+      "character": "物",
+      "candidateId": "pingshui:物:ru:入声五物",
+      "toneClass": "ru",
+      "verdict": "approved"
+    }
   ],
   "pendingCharacters": [
     {
@@ -46,5 +88,12 @@
     "「更」的平/去两读同时通过，两条候选并存，供 B 按语境消歧。",
     "新韵侧「一」的 yī/yí/yì 冲突仍为未裁决状态，J03 通过的是平水归部，不是新韵映射。",
     "缺陷项（组长）：① 楼↔樓 异体映射补齐 ② 全库简繁覆盖方案。见 docs/handoffs/0008。"
-  ]
+  ],
+  "followUp": {
+    "recordFile": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+    "resolvedCharacters": [
+      "楼"
+    ],
+    "note": "第二批同意楼↔樓；候选证据已写入 approved-evidence.json。第一批 dataVersion 为当时样本版本，不冒充新全量版本审核。"
+  }
 }

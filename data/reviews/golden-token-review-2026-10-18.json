@@ -5,7 +5,7 @@
   "machineOutcomeScope": "all-candidates-before-context",
   "book": "pingshui",
   "snapshot": "data/normalized/pingshui.full-d2-patched.json",
-  "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-draft",
+  "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review2",
   "snapshotReviewStatus": "unverified",
   "apiManifestSnapshot": "pingshui.full-d2-patched.json",
   "denominators": {
@@ -29,13 +29,13 @@
     "missingTokens": 0,
     "multiCandidateTokens": 22,
     "toneCriticalTokens": 10,
-    "evidenceTotal": 106,
-    "evidenceApproved": 8,
-    "tokensWithAnyApprovedEvidence": 22,
-    "tokensWithAllApprovedEvidence": 21,
-    "tokensWithMixedEvidence": 1,
-    "tokensWithoutApprovedEvidence": 74,
-    "candidatePrecheckBlockedTokens": 75
+    "evidenceTotal": 121,
+    "evidenceApproved": 16,
+    "tokensWithAnyApprovedEvidence": 17,
+    "tokensWithAllApprovedEvidence": 8,
+    "tokensWithMixedEvidence": 9,
+    "tokensWithoutApprovedEvidence": 79,
+    "candidatePrecheckBlockedTokens": 88
   },
   "works": [
     {
@@ -69,7 +69,8 @@
           ],
           "unbackedCandidateIds": [],
           "evidenceIds": [
-            "ev:pingshui:入:入声十一陌"
+            "ev:pingshui:入:入声十一陌",
+            "ev:candidate:pingshui:白:ru:入声十一陌:j03"
           ],
           "groupIds": [
             "入声十一陌"
@@ -96,22 +97,22 @@
             "Z"
           ],
           "toneCritical": false,
-          "evidenceApproved": true,
-          "anyCandidateEvidenceApproved": true,
-          "allCandidateEvidenceApproved": true,
+          "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
           "mixedCandidateEvidence": false,
-          "approvedCandidateIds": [
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
             "pingshui:日:ru:入声四质"
           ],
-          "unbackedCandidateIds": [],
           "evidenceIds": [
             "ev:pingshui:入:入声四质"
           ],
           "groupIds": [
             "入声四质"
           ],
-          "machineOutcome": "would-resolve",
-          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "machineOutcome": "blocked",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:日:ru:入声四质",
           "humanNote": ""
         },
         {
@@ -393,7 +394,8 @@
           ],
           "unbackedCandidateIds": [],
           "evidenceIds": [
-            "ev:pingshui:下平:十一尤"
+            "ev:pingshui:下平:十一尤",
+            "ev:candidate:pingshui:流:ping:十一尤:j03"
           ],
           "groupIds": [
             "十一尤"
@@ -619,7 +621,9 @@
           "unbackedCandidateIds": [],
           "evidenceIds": [
             "ev:pingshui:下平:八庚",
-            "ev:pingshui:去:二十四敬"
+            "ev:candidate:pingshui:更:ping:八庚:j03",
+            "ev:pingshui:去:二十四敬",
+            "ev:candidate:pingshui:更:qu:二十四敬:j03"
           ],
           "groupIds": [
             "八庚",
@@ -697,7 +701,8 @@
           ],
           "unbackedCandidateIds": [],
           "evidenceIds": [
-            "ev:pingshui:入:入声四质"
+            "ev:pingshui:入:入声四质",
+            "ev:candidate:pingshui:一:ru:入声四质:j03"
           ],
           "groupIds": [
             "入声四质"
@@ -769,7 +774,8 @@
           ],
           "unbackedCandidateIds": [],
           "evidenceIds": [
-            "ev:pingshui:下平:十一尤"
+            "ev:pingshui:下平:十一尤",
+            "ev:candidate:pingshui:楼:ping:十一尤:j03"
           ],
           "groupIds": [
             "十一尤"
@@ -874,22 +880,22 @@
             "P"
           ],
           "toneCritical": false,
-          "evidenceApproved": true,
-          "anyCandidateEvidenceApproved": true,
-          "allCandidateEvidenceApproved": true,
+          "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
           "mixedCandidateEvidence": false,
-          "approvedCandidateIds": [
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
             "pingshui:明:ping:八庚"
           ],
-          "unbackedCandidateIds": [],
           "evidenceIds": [
             "ev:pingshui:下平:八庚"
           ],
           "groupIds": [
             "八庚"
           ],
-          "machineOutcome": "would-resolve",
-          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "machineOutcome": "blocked",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:明:ping:八庚",
           "humanNote": ""
         },
         {
@@ -1203,22 +1209,22 @@
             "P"
           ],
           "toneCritical": false,
-          "evidenceApproved": true,
-          "anyCandidateEvidenceApproved": true,
-          "allCandidateEvidenceApproved": true,
+          "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
           "mixedCandidateEvidence": false,
-          "approvedCandidateIds": [
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
             "pingshui:头:ping:十一尤"
           ],
-          "unbackedCandidateIds": [],
           "evidenceIds": [
             "ev:pingshui:下平:十一尤"
           ],
           "groupIds": [
             "十一尤"
           ],
-          "machineOutcome": "would-resolve",
-          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "machineOutcome": "blocked",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:头:ping:十一尤",
           "humanNote": ""
         },
         {
@@ -1243,24 +1249,26 @@
           ],
           "toneCritical": true,
           "evidenceApproved": false,
-          "anyCandidateEvidenceApproved": false,
+          "anyCandidateEvidenceApproved": true,
           "allCandidateEvidenceApproved": false,
-          "mixedCandidateEvidence": false,
-          "approvedCandidateIds": [],
-          "unbackedCandidateIds": [
-            "pingshui:望:ping:七阳",
+          "mixedCandidateEvidence": true,
+          "approvedCandidateIds": [
             "pingshui:望:qu:二十三漾"
+          ],
+          "unbackedCandidateIds": [
+            "pingshui:望:ping:七阳"
           ],
           "evidenceIds": [
             "ev:pingshui:下平:七阳",
-            "ev:pingshui:去:二十三漾"
+            "ev:pingshui:去:二十三漾",
+            "ev:candidate:pingshui:望:qu:二十三漾:j03"
           ],
           "groupIds": [
             "七阳",
             "二十三漾"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "候选预检阻断：0/2 个候选有 approved 证据标记，未满足 pingshui:望:ping:七阳、pingshui:望:qu:二十三漾",
+          "machineNote": "候选预检阻断：1/2 个候选有 approved 证据标记，未满足 pingshui:望:ping:七阳",
           "humanNote": ""
         },
         {
@@ -1281,22 +1289,22 @@
             "P"
           ],
           "toneCritical": false,
-          "evidenceApproved": true,
-          "anyCandidateEvidenceApproved": true,
-          "allCandidateEvidenceApproved": true,
+          "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
           "mixedCandidateEvidence": false,
-          "approvedCandidateIds": [
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
             "pingshui:明:ping:八庚"
           ],
-          "unbackedCandidateIds": [],
           "evidenceIds": [
             "ev:pingshui:下平:八庚"
           ],
           "groupIds": [
             "八庚"
           ],
-          "machineOutcome": "would-resolve",
-          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "machineOutcome": "blocked",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:明:ping:八庚",
           "humanNote": ""
         },
         {
@@ -1389,22 +1397,22 @@
             "P"
           ],
           "toneCritical": false,
-          "evidenceApproved": true,
-          "anyCandidateEvidenceApproved": true,
-          "allCandidateEvidenceApproved": true,
+          "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
           "mixedCandidateEvidence": false,
-          "approvedCandidateIds": [
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
             "pingshui:头:ping:十一尤"
           ],
-          "unbackedCandidateIds": [],
           "evidenceIds": [
             "ev:pingshui:下平:十一尤"
           ],
           "groupIds": [
             "十一尤"
           ],
-          "machineOutcome": "would-resolve",
-          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "machineOutcome": "blocked",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:头:ping:十一尤",
           "humanNote": ""
         },
         {
@@ -1429,16 +1437,18 @@
           ],
           "toneCritical": true,
           "evidenceApproved": false,
-          "anyCandidateEvidenceApproved": false,
+          "anyCandidateEvidenceApproved": true,
           "allCandidateEvidenceApproved": false,
-          "mixedCandidateEvidence": false,
-          "approvedCandidateIds": [],
+          "mixedCandidateEvidence": true,
+          "approvedCandidateIds": [
+            "pingshui:思:ping:四支"
+          ],
           "unbackedCandidateIds": [
-            "pingshui:思:ping:四支",
             "pingshui:思:qu:四寘"
           ],
           "evidenceIds": [
             "ev:pingshui:上平:四支",
+            "ev:candidate:pingshui:思:ping:四支:j03",
             "ev:pingshui:去:四寘"
           ],
           "groupIds": [
@@ -1446,7 +1456,7 @@
             "四寘"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "候选预检阻断：0/2 个候选有 approved 证据标记，未满足 pingshui:思:ping:四支、pingshui:思:qu:四寘",
+          "machineNote": "候选预检阻断：1/2 个候选有 approved 证据标记，未满足 pingshui:思:qu:四寘",
           "humanNote": ""
         },
         {
@@ -1507,16 +1517,18 @@
           ],
           "toneCritical": true,
           "evidenceApproved": false,
-          "anyCandidateEvidenceApproved": false,
+          "anyCandidateEvidenceApproved": true,
           "allCandidateEvidenceApproved": false,
-          "mixedCandidateEvidence": false,
-          "approvedCandidateIds": [],
+          "mixedCandidateEvidence": true,
+          "approvedCandidateIds": [
+            "pingshui:乡:ping:七阳"
+          ],
           "unbackedCandidateIds": [
-            "pingshui:乡:ping:七阳",
             "pingshui:乡:qu:二十三漾"
           ],
           "evidenceIds": [
             "ev:pingshui:下平:七阳",
+            "ev:candidate:pingshui:乡:ping:七阳:j03",
             "ev:pingshui:去:二十三漾"
           ],
           "groupIds": [
@@ -1524,7 +1536,7 @@
             "二十三漾"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "候选预检阻断：0/2 个候选有 approved 证据标记，未满足 pingshui:乡:ping:七阳、pingshui:乡:qu:二十三漾",
+          "machineNote": "候选预检阻断：1/2 个候选有 approved 证据标记，未满足 pingshui:乡:qu:二十三漾",
           "humanNote": ""
         }
       ]
@@ -1554,14 +1566,13 @@
           ],
           "toneCritical": false,
           "evidenceApproved": false,
-          "anyCandidateEvidenceApproved": true,
+          "anyCandidateEvidenceApproved": false,
           "allCandidateEvidenceApproved": false,
-          "mixedCandidateEvidence": true,
-          "approvedCandidateIds": [
-            "pingshui:昔:ru:入声十一陌"
-          ],
+          "mixedCandidateEvidence": false,
+          "approvedCandidateIds": [],
           "unbackedCandidateIds": [
-            "pingshui:昔:ru:入声十药"
+            "pingshui:昔:ru:入声十药",
+            "pingshui:昔:ru:入声十一陌"
           ],
           "evidenceIds": [
             "ev:pingshui:入:入声十药",
@@ -1572,7 +1583,7 @@
             "入声十一陌"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "候选预检阻断：1/2 个候选有 approved 证据标记，未满足 pingshui:昔:ru:入声十药",
+          "machineNote": "候选预检阻断：0/2 个候选有 approved 证据标记，未满足 pingshui:昔:ru:入声十药、pingshui:昔:ru:入声十一陌",
           "humanNote": ""
         },
         {
@@ -1669,16 +1680,18 @@
           ],
           "toneCritical": true,
           "evidenceApproved": false,
-          "anyCandidateEvidenceApproved": false,
+          "anyCandidateEvidenceApproved": true,
           "allCandidateEvidenceApproved": false,
-          "mixedCandidateEvidence": false,
-          "approvedCandidateIds": [],
+          "mixedCandidateEvidence": true,
+          "approvedCandidateIds": [
+            "pingshui:乘:ping:十蒸"
+          ],
           "unbackedCandidateIds": [
-            "pingshui:乘:ping:十蒸",
             "pingshui:乘:qu:二十五径"
           ],
           "evidenceIds": [
             "ev:pingshui:下平:十蒸",
+            "ev:candidate:pingshui:乘:ping:十蒸:j03",
             "ev:pingshui:去:二十五径"
           ],
           "groupIds": [
@@ -1686,7 +1699,7 @@
             "二十五径"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "候选预检阻断：0/2 个候选有 approved 证据标记，未满足 pingshui:乘:ping:十蒸、pingshui:乘:qu:二十五径",
+          "machineNote": "候选预检阻断：1/2 个候选有 approved 证据标记，未满足 pingshui:乘:qu:二十五径",
           "humanNote": ""
         },
         {
@@ -1898,17 +1911,19 @@
           ],
           "toneCritical": true,
           "evidenceApproved": false,
-          "anyCandidateEvidenceApproved": false,
+          "anyCandidateEvidenceApproved": true,
           "allCandidateEvidenceApproved": false,
-          "mixedCandidateEvidence": false,
-          "approvedCandidateIds": [],
+          "mixedCandidateEvidence": true,
+          "approvedCandidateIds": [
+            "pingshui:空:ping:一东"
+          ],
           "unbackedCandidateIds": [
-            "pingshui:空:ping:一东",
             "pingshui:空:shang:一董",
             "pingshui:空:qu:一送"
           ],
           "evidenceIds": [
             "ev:pingshui:上平:一东",
+            "ev:candidate:pingshui:空:ping:一东:j03",
             "ev:pingshui:上:一董",
             "ev:pingshui:去:一送"
           ],
@@ -1918,7 +1933,7 @@
             "一送"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "候选预检阻断：0/3 个候选有 approved 证据标记，未满足 pingshui:空:ping:一东、pingshui:空:shang:一董、pingshui:空:qu:一送",
+          "machineNote": "候选预检阻断：1/3 个候选有 approved 证据标记，未满足 pingshui:空:shang:一董、pingshui:空:qu:一送",
           "humanNote": ""
         },
         {
@@ -2056,7 +2071,8 @@
           ],
           "unbackedCandidateIds": [],
           "evidenceIds": [
-            "ev:pingshui:下平:十一尤"
+            "ev:pingshui:下平:十一尤",
+            "ev:candidate:pingshui:楼:ping:十一尤:j03"
           ],
           "groupIds": [
             "十一尤"
@@ -2164,7 +2180,8 @@
           ],
           "unbackedCandidateIds": [],
           "evidenceIds": [
-            "ev:pingshui:入:入声四质"
+            "ev:pingshui:入:入声四质",
+            "ev:candidate:pingshui:一:ru:入声四质:j03"
           ],
           "groupIds": [
             "入声四质"
@@ -2235,25 +2252,27 @@
             "Z"
           ],
           "toneCritical": true,
-          "evidenceApproved": true,
+          "evidenceApproved": false,
           "anyCandidateEvidenceApproved": true,
-          "allCandidateEvidenceApproved": true,
-          "mixedCandidateEvidence": false,
+          "allCandidateEvidenceApproved": false,
+          "mixedCandidateEvidence": true,
           "approvedCandidateIds": [
-            "pingshui:不:ping:十一尤",
             "pingshui:不:ru:入声五物"
           ],
-          "unbackedCandidateIds": [],
+          "unbackedCandidateIds": [
+            "pingshui:不:ping:十一尤"
+          ],
           "evidenceIds": [
             "ev:pingshui:下平:十一尤",
-            "ev:pingshui:入:入声五物"
+            "ev:pingshui:入:入声五物",
+            "ev:candidate:pingshui:不:ru:入声五物:j03"
           ],
           "groupIds": [
             "十一尤",
             "入声五物"
           ],
-          "machineOutcome": "would-ambiguous",
-          "machineNote": "多候选含平含仄：读音与平仄均需消歧",
+          "machineOutcome": "blocked",
+          "machineNote": "候选预检阻断：1/2 个候选有 approved 证据标记，未满足 pingshui:不:ping:十一尤",
           "humanNote": ""
         },
         {
@@ -2360,7 +2379,8 @@
           ],
           "unbackedCandidateIds": [],
           "evidenceIds": [
-            "ev:pingshui:入:入声十一陌"
+            "ev:pingshui:入:入声十一陌",
+            "ev:candidate:pingshui:白:ru:入声十一陌:j03"
           ],
           "groupIds": [
             "入声十一陌"
@@ -2506,17 +2526,19 @@
           ],
           "toneCritical": true,
           "evidenceApproved": false,
-          "anyCandidateEvidenceApproved": false,
+          "anyCandidateEvidenceApproved": true,
           "allCandidateEvidenceApproved": false,
-          "mixedCandidateEvidence": false,
-          "approvedCandidateIds": [],
+          "mixedCandidateEvidence": true,
+          "approvedCandidateIds": [
+            "pingshui:空:ping:一东"
+          ],
           "unbackedCandidateIds": [
-            "pingshui:空:ping:一东",
             "pingshui:空:shang:一董",
             "pingshui:空:qu:一送"
           ],
           "evidenceIds": [
             "ev:pingshui:上平:一东",
+            "ev:candidate:pingshui:空:ping:一东:j03",
             "ev:pingshui:上:一董",
             "ev:pingshui:去:一送"
           ],
@@ -2526,7 +2548,7 @@
             "一送"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "候选预检阻断：0/3 个候选有 approved 证据标记，未满足 pingshui:空:ping:一东、pingshui:空:shang:一董、pingshui:空:qu:一送",
+          "machineNote": "候选预检阻断：1/3 个候选有 approved 证据标记，未满足 pingshui:空:shang:一董、pingshui:空:qu:一送",
           "humanNote": ""
         },
         {
@@ -2547,22 +2569,22 @@
             "P"
           ],
           "toneCritical": false,
-          "evidenceApproved": true,
-          "anyCandidateEvidenceApproved": true,
-          "allCandidateEvidenceApproved": true,
+          "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
           "mixedCandidateEvidence": false,
-          "approvedCandidateIds": [
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
             "pingshui:悠:ping:十一尤"
           ],
-          "unbackedCandidateIds": [],
           "evidenceIds": [
             "ev:pingshui:下平:十一尤"
           ],
           "groupIds": [
             "十一尤"
           ],
-          "machineOutcome": "would-resolve",
-          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "machineOutcome": "blocked",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:悠:ping:十一尤",
           "humanNote": ""
         },
         {
@@ -2583,22 +2605,22 @@
             "P"
           ],
           "toneCritical": false,
-          "evidenceApproved": true,
-          "anyCandidateEvidenceApproved": true,
-          "allCandidateEvidenceApproved": true,
+          "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
           "mixedCandidateEvidence": false,
-          "approvedCandidateIds": [
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
             "pingshui:悠:ping:十一尤"
           ],
-          "unbackedCandidateIds": [],
           "evidenceIds": [
             "ev:pingshui:下平:十一尤"
           ],
           "groupIds": [
             "十一尤"
           ],
-          "machineOutcome": "would-resolve",
-          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "machineOutcome": "blocked",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:悠:ping:十一尤",
           "humanNote": ""
         },
         {
@@ -2619,22 +2641,22 @@
             "P"
           ],
           "toneCritical": false,
-          "evidenceApproved": true,
-          "anyCandidateEvidenceApproved": true,
-          "allCandidateEvidenceApproved": true,
+          "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
           "mixedCandidateEvidence": false,
-          "approvedCandidateIds": [
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
             "pingshui:晴:ping:八庚"
           ],
-          "unbackedCandidateIds": [],
           "evidenceIds": [
             "ev:pingshui:下平:八庚"
           ],
           "groupIds": [
             "八庚"
           ],
-          "machineOutcome": "would-resolve",
-          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "machineOutcome": "blocked",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:晴:ping:八庚",
           "humanNote": ""
         },
         {
@@ -2767,24 +2789,26 @@
           ],
           "toneCritical": true,
           "evidenceApproved": false,
-          "anyCandidateEvidenceApproved": false,
+          "anyCandidateEvidenceApproved": true,
           "allCandidateEvidenceApproved": false,
-          "mixedCandidateEvidence": false,
-          "approvedCandidateIds": [],
-          "unbackedCandidateIds": [
-            "pingshui:汉:ping:十四寒",
+          "mixedCandidateEvidence": true,
+          "approvedCandidateIds": [
             "pingshui:汉:qu:十五翰"
+          ],
+          "unbackedCandidateIds": [
+            "pingshui:汉:ping:十四寒"
           ],
           "evidenceIds": [
             "ev:pingshui:上平:十四寒",
-            "ev:pingshui:去:十五翰"
+            "ev:pingshui:去:十五翰",
+            "ev:candidate:pingshui:汉:qu:十五翰:j03"
           ],
           "groupIds": [
             "十四寒",
             "十五翰"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "候选预检阻断：0/2 个候选有 approved 证据标记，未满足 pingshui:汉:ping:十四寒、pingshui:汉:qu:十五翰",
+          "machineNote": "候选预检阻断：1/2 个候选有 approved 证据标记，未满足 pingshui:汉:ping:十四寒",
           "humanNote": ""
         },
         {
@@ -3026,22 +3050,22 @@
             "P"
           ],
           "toneCritical": false,
-          "evidenceApproved": true,
-          "anyCandidateEvidenceApproved": true,
-          "allCandidateEvidenceApproved": true,
+          "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
           "mixedCandidateEvidence": false,
-          "approvedCandidateIds": [
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
             "pingshui:鹦:ping:八庚"
           ],
-          "unbackedCandidateIds": [],
           "evidenceIds": [
             "ev:pingshui:下平:八庚"
           ],
           "groupIds": [
             "八庚"
           ],
-          "machineOutcome": "would-resolve",
-          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "machineOutcome": "blocked",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:鹦:ping:八庚",
           "humanNote": ""
         },
         {
@@ -3098,22 +3122,22 @@
             "P"
           ],
           "toneCritical": false,
-          "evidenceApproved": true,
-          "anyCandidateEvidenceApproved": true,
-          "allCandidateEvidenceApproved": true,
+          "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
           "mixedCandidateEvidence": false,
-          "approvedCandidateIds": [
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
             "pingshui:洲:ping:十一尤"
           ],
-          "unbackedCandidateIds": [],
           "evidenceIds": [
             "ev:pingshui:下平:十一尤"
           ],
           "groupIds": [
             "十一尤"
           ],
-          "machineOutcome": "would-resolve",
-          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "machineOutcome": "blocked",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:洲:ping:十一尤",
           "humanNote": ""
         },
         {
@@ -3134,22 +3158,22 @@
             "Z"
           ],
           "toneCritical": false,
-          "evidenceApproved": true,
-          "anyCandidateEvidenceApproved": true,
-          "allCandidateEvidenceApproved": true,
+          "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
           "mixedCandidateEvidence": false,
-          "approvedCandidateIds": [
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
             "pingshui:日:ru:入声四质"
           ],
-          "unbackedCandidateIds": [],
           "evidenceIds": [
             "ev:pingshui:入:入声四质"
           ],
           "groupIds": [
             "入声四质"
           ],
-          "machineOutcome": "would-resolve",
-          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "machineOutcome": "blocked",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:日:ru:入声四质",
           "humanNote": ""
         },
         {
@@ -3210,16 +3234,18 @@
           ],
           "toneCritical": true,
           "evidenceApproved": false,
-          "anyCandidateEvidenceApproved": false,
+          "anyCandidateEvidenceApproved": true,
           "allCandidateEvidenceApproved": false,
-          "mixedCandidateEvidence": false,
-          "approvedCandidateIds": [],
+          "mixedCandidateEvidence": true,
+          "approvedCandidateIds": [
+            "pingshui:乡:ping:七阳"
+          ],
           "unbackedCandidateIds": [
-            "pingshui:乡:ping:七阳",
             "pingshui:乡:qu:二十三漾"
           ],
           "evidenceIds": [
             "ev:pingshui:下平:七阳",
+            "ev:candidate:pingshui:乡:ping:七阳:j03",
             "ev:pingshui:去:二十三漾"
           ],
           "groupIds": [
@@ -3227,7 +3253,7 @@
             "二十三漾"
           ],
           "machineOutcome": "blocked",
-          "machineNote": "候选预检阻断：0/2 个候选有 approved 证据标记，未满足 pingshui:乡:ping:七阳、pingshui:乡:qu:二十三漾",
+          "machineNote": "候选预检阻断：1/2 个候选有 approved 证据标记，未满足 pingshui:乡:qu:二十三漾",
           "humanNote": ""
         },
         {
@@ -3623,22 +3649,22 @@
             "P"
           ],
           "toneCritical": false,
-          "evidenceApproved": true,
-          "anyCandidateEvidenceApproved": true,
-          "allCandidateEvidenceApproved": true,
+          "evidenceApproved": false,
+          "anyCandidateEvidenceApproved": false,
+          "allCandidateEvidenceApproved": false,
           "mixedCandidateEvidence": false,
-          "approvedCandidateIds": [
+          "approvedCandidateIds": [],
+          "unbackedCandidateIds": [
             "pingshui:愁:ping:十一尤"
           ],
-          "unbackedCandidateIds": [],
           "evidenceIds": [
             "ev:pingshui:下平:十一尤"
           ],
           "groupIds": [
             "十一尤"
           ],
-          "machineOutcome": "would-resolve",
-          "machineNote": "候选唯一且有 approved 证据标记，字位具备 resolved 的证据条件；整诗结果另验",
+          "machineOutcome": "blocked",
+          "machineNote": "候选预检阻断：0/1 个候选有 approved 证据标记，未满足 pingshui:愁:ping:十一尤",
           "humanNote": ""
         }
       ]
@@ -3790,7 +3816,7 @@
   ],
   "versionDiff": {
     "legacySample": "data/normalized/pingshui.sample-d1.json",
-    "legacyDataVersion": "sample-pingshui-cwr-ff0e9c1-d1",
+    "legacyDataVersion": "sample-pingshui-cwr-ff0e9c1-d1-review2",
     "legacyCharacters": 7,
     "currentCharacters": 8240,
     "currentCandidates": 10387,
@@ -3836,7 +3862,7 @@
         "ctx:j03b2:02"
       ],
       "adjudicationSource": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
-      "candidateEvidenceApproved": false,
+      "candidateEvidenceApproved": true,
       "note": "裁定已落库为语境规则；若被选候选的韵书证据仍未审核，仍会被门禁拦截"
     },
     {
@@ -3857,7 +3883,7 @@
         "ctx:j03b2:03"
       ],
       "adjudicationSource": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
-      "candidateEvidenceApproved": false,
+      "candidateEvidenceApproved": true,
       "note": "裁定已落库为语境规则；若被选候选的韵书证据仍未审核，仍会被门禁拦截"
     },
     {
@@ -3878,7 +3904,7 @@
         "ctx:j03b2:04"
       ],
       "adjudicationSource": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
-      "candidateEvidenceApproved": false,
+      "candidateEvidenceApproved": true,
       "note": "裁定已落库为语境规则；若被选候选的韵书证据仍未审核，仍会被门禁拦截"
     },
     {
@@ -3899,7 +3925,7 @@
         "ctx:j03b2:05"
       ],
       "adjudicationSource": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
-      "candidateEvidenceApproved": false,
+      "candidateEvidenceApproved": true,
       "note": "裁定已落库为语境规则；若被选候选的韵书证据仍未审核，仍会被门禁拦截"
     },
     {
@@ -3921,7 +3947,7 @@
         "ctx:j03b2:06"
       ],
       "adjudicationSource": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
-      "candidateEvidenceApproved": false,
+      "candidateEvidenceApproved": true,
       "note": "裁定已落库为语境规则；若被选候选的韵书证据仍未审核，仍会被门禁拦截"
     },
     {
@@ -3964,7 +3990,7 @@
         "ctx:j03b2:08"
       ],
       "adjudicationSource": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
-      "candidateEvidenceApproved": false,
+      "candidateEvidenceApproved": true,
       "note": "裁定已落库为语境规则；若被选候选的韵书证据仍未审核，仍会被门禁拦截"
     },
     {
@@ -3985,7 +4011,7 @@
         "ctx:j03b2:09"
       ],
       "adjudicationSource": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
-      "candidateEvidenceApproved": false,
+      "candidateEvidenceApproved": true,
       "note": "裁定已落库为语境规则；若被选候选的韵书证据仍未审核，仍会被门禁拦截"
     },
     {
@@ -4006,7 +4032,7 @@
         "ctx:j03b2:10"
       ],
       "adjudicationSource": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
-      "candidateEvidenceApproved": false,
+      "candidateEvidenceApproved": true,
       "note": "裁定已落库为语境规则；若被选候选的韵书证据仍未审核，仍会被门禁拦截"
     }
   ],
@@ -4016,11 +4042,6 @@
         "work": "登鹳雀楼",
         "tokenId": "l1c1",
         "character": "白"
-      },
-      {
-        "work": "登鹳雀楼",
-        "tokenId": "l1c2",
-        "character": "日"
       },
       {
         "work": "登鹳雀楼",
@@ -4038,26 +4059,6 @@
         "character": "楼"
       },
       {
-        "work": "静夜思",
-        "tokenId": "l1c3",
-        "character": "明"
-      },
-      {
-        "work": "静夜思",
-        "tokenId": "l3c2",
-        "character": "头"
-      },
-      {
-        "work": "静夜思",
-        "tokenId": "l3c4",
-        "character": "明"
-      },
-      {
-        "work": "静夜思",
-        "tokenId": "l4c2",
-        "character": "头"
-      },
-      {
         "work": "黄鹤楼",
         "tokenId": "l2c7",
         "character": "楼"
@@ -4071,57 +4072,22 @@
         "work": "黄鹤楼",
         "tokenId": "l4c1",
         "character": "白"
-      },
-      {
-        "work": "黄鹤楼",
-        "tokenId": "l4c6",
-        "character": "悠"
-      },
-      {
-        "work": "黄鹤楼",
-        "tokenId": "l4c7",
-        "character": "悠"
-      },
-      {
-        "work": "黄鹤楼",
-        "tokenId": "l5c1",
-        "character": "晴"
-      },
-      {
-        "work": "黄鹤楼",
-        "tokenId": "l6c5",
-        "character": "鹦"
-      },
-      {
-        "work": "黄鹤楼",
-        "tokenId": "l6c7",
-        "character": "洲"
-      },
-      {
-        "work": "黄鹤楼",
-        "tokenId": "l7c1",
-        "character": "日"
-      },
-      {
-        "work": "黄鹤楼",
-        "tokenId": "l8c7",
-        "character": "愁"
       }
     ],
     "candidatePrecheckByWork": [
       {
         "work": "登鹳雀楼",
-        "blockedTokens": 14,
-        "firstBlockedTokenId": "l1c3"
+        "blockedTokens": 15,
+        "firstBlockedTokenId": "l1c2"
       },
       {
         "work": "静夜思",
-        "blockedTokens": 16,
+        "blockedTokens": 20,
         "firstBlockedTokenId": "l1c1"
       },
       {
         "work": "黄鹤楼",
-        "blockedTokens": 45,
+        "blockedTokens": 53,
         "firstBlockedTokenId": "l1c1"
       }
     ],
@@ -4290,7 +4256,7 @@
       }
     ],
     "note": [
-      "字位层面：任一候选有 approved 标记 22/96；全部候选有标记 21/96；已审/未审混合 1。均为快照标记统计，不扩张人审范围。",
+      "字位层面：任一候选有 approved 标记 17/96；全部候选有标记 8/96；已审/未审混合 9。均为快照标记统计，不扩张人审范围。",
       "候选预检不应用语境规则。真实 resolveReadings 会先选择有效候选，再逐一检查证据；语境规则本身也需已审核的语境证据。整诗有任一有效候选缺依据时仍拒绝结果。",
       "单候选且有证据的字位仅具备 resolved 的证据条件；多候选同调在无适用语境规则/用户覆盖时保留读音 ambiguous。两者都不代表整首诗已通过。",
       "13_J03三首核心诗逐字人审_第二批.md §二已记录组长同意楼↔樓异体映射，无需重复审核；按候选范围落实，不代表整个十一尤获批。"

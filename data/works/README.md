@@ -1,5 +1,7 @@
 # data/works
 
+> 2026-10-18 接管更新：三首固定正文、作者、体裁已按已有 J03/C 记录落库，原文见 data/raw/works/，差异与审批原件哈希见 review-closure.json。下文为历史准备过程；当前状态以 metadata.json 与 review-closure.json 为准。逐字归部审批另计。
+
 负责人：队员 E / DeepSeek。状态：D2 首批——正文已定版（待组长签字），**0 条 approved**。
 **维护边界：本目录由 E 维护；GLM 只负责把 `metadata.json` 装进 API，不改条目内容。**
 

@@ -106,21 +106,43 @@ function firstUnbackedToken(
 }
 
 describe("B2-08 真实快照下的逐字状态", () => {
-  it("样本证据已随 J03 第一批全部 approved（样本 7/7；本诗命中 5 部全 approved），快照级仍 unverified——部分批准不等于整库批准", async () => {
-    const sampleEvidence = sample.evidence as Array<{ reviewStatus: string }>;
-    expect(sampleEvidence).toHaveLength(7);
+  it("样本按候选获批、原部级仍未审；部分批准不等于整库批准", async () => {
+    const sampleEvidence = sample.evidence as Array<{
+      id: string;
+      reviewStatus: string;
+    }>;
     expect(
-      sampleEvidence.every((evidence) => evidence.reviewStatus === "approved"),
+      sampleEvidence.filter(
+        (evidence) =>
+          evidence.id.startsWith("ev:candidate:") &&
+          evidence.reviewStatus === "approved",
+      ),
+    ).toHaveLength(8);
+    expect(
+      sampleEvidence
+        .filter((evidence) => !evidence.id.startsWith("ev:candidate:"))
+        .every((evidence) => evidence.reviewStatus === "unverified"),
     ).toBe(true);
     expect(String(sample.reviewStatus)).toBe("unverified");
 
     const lookup = await lookupFor(work("golden-dengguanquelou-ps-v1").text);
     expect(lookup.book).toBe("pingshui");
     expect(lookup.dataVersion).toBe(dataVersion);
-    // 登鹳雀楼在样本内命中 一更楼流白 → 四质/八庚/二十四敬/十一尤/十一陌 共 5 部
-    expect(lookup.evidence).toHaveLength(5);
+    for (const entry of lookup.entries) {
+      for (const candidate of entry.candidates) {
+        expect(
+          candidate.evidenceIds.some((id) =>
+            lookup.evidence.some(
+              (item) => item.id === id && item.reviewStatus === "approved",
+            ),
+          ),
+        ).toBe(true);
+      }
+    }
     expect(
-      lookup.evidence.every((evidence) => evidence.reviewStatus === "approved"),
+      lookup.evidence.some(
+        (evidence) => evidence.reviewStatus === "unverified",
+      ),
     ).toBe(true);
   });
 

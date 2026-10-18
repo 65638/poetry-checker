@@ -1,0 +1,3044 @@
+{
+  "mode": "real-no-fixture",
+  "dataVersions": {
+    "pingshui": {
+      "book": "pingshui",
+      "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review2",
+      "reviewStatus": "unverified",
+      "file": "pingshui.full-d2-patched.json",
+      "mainGroups": 106,
+      "subGroups": 106
+    },
+    "cilin": {
+      "book": "cilin",
+      "dataVersion": "cilin-cwr-ff0e9c1-d2-full",
+      "reviewStatus": "unverified",
+      "file": "cilin.full-d2.json",
+      "mainGroups": 19,
+      "subGroups": 33
+    },
+    "xinyun": {
+      "book": "xinyun",
+      "dataVersion": "xinyun-rebuild-d2-full",
+      "reviewStatus": "unverified",
+      "file": "xinyun.full-d2.json",
+      "mainGroups": 14,
+      "subGroups": 56
+    }
+  },
+  "loadErrors": [],
+  "goldenPassed": 0,
+  "goldenTotal": 3,
+  "readiness": {
+    "http": 503,
+    "body": {
+      "error": {
+        "code": "DATA_NOT_READY",
+        "message": "规则卡存在部分依据/待审核范围：RHYME.COMMON、TAIL.SANPING、TAIL.SANZE；快照未审核：pingshui、cilin、xinyun（开发联调可分析，发布门槛不放行）；资源或审核尚未就绪，详见 apps/api/README.md",
+        "fieldErrors": []
+      }
+    }
+  },
+  "approvedCharactersSmoke": {
+    "purpose": "真实已审字形接线输入，不是名篇验收",
+    "http": 200,
+    "body": {
+      "schemaVersion": "1.0",
+      "inputHash": "3b4e2fa8d3b2af9b55888e42eeb180c2b6ee0ce8c205b1aa114fba56f034e0fc",
+      "versions": {
+        "data": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review2",
+        "rules": "teaching-v1",
+        "context": "context-rules:10",
+        "works": "works:3"
+      },
+      "policy": {
+        "rhymeBook": "pingshui",
+        "toneBasis": "historical",
+        "notice": "当前韵书全库审核尚未完成；本次分析仅采用具备已审核证据的有效候选，不代表全库发布通过。"
+      },
+      "poem": {
+        "originalText": "白一更流楼雪物",
+        "inputHash": "3b4e2fa8d3b2af9b55888e42eeb180c2b6ee0ce8c205b1aa114fba56f034e0fc",
+        "lines": [
+          {
+            "line": 1,
+            "text": "白一更流楼雪物",
+            "tokenIds": [
+              "l1c1",
+              "l1c2",
+              "l1c3",
+              "l1c4",
+              "l1c5",
+              "l1c6",
+              "l1c7"
+            ]
+          }
+        ],
+        "tokens": [
+          {
+            "tokenId": "l1c1",
+            "text": "白",
+            "line": 1,
+            "column": 1,
+            "startUtf16": 0,
+            "endUtf16": 1,
+            "candidates": [
+              {
+                "id": "pingshui:白:ru:入声十一陌",
+                "character": "白",
+                "book": "pingshui",
+                "toneClass": "ru",
+                "tone": "Z",
+                "groupIds": [
+                  "group:pingshui:入:入声十一陌"
+                ],
+                "gloss": null,
+                "modernReading": null,
+                "fanqie": null,
+                "evidenceIds": [
+                  "ev:pingshui:入:入声十一陌",
+                  "ev:candidate:pingshui:白:ru:入声十一陌:j03"
+                ]
+              }
+            ],
+            "effectiveCandidateIds": [
+              "pingshui:白:ru:入声十一陌"
+            ],
+            "readingStatus": "resolved",
+            "selectedReadingId": "pingshui:白:ru:入声十一陌",
+            "selectionMethod": "unique",
+            "possibleTones": [
+              "Z"
+            ],
+            "toneStatus": "resolved",
+            "tone": "Z",
+            "reason": "唯一候选 pingshui:白:ru:入声十一陌：平仄按该候选推导",
+            "evidenceIds": [
+              "ev:candidate:pingshui:白:ru:入声十一陌:j03"
+            ]
+          },
+          {
+            "tokenId": "l1c2",
+            "text": "一",
+            "line": 1,
+            "column": 2,
+            "startUtf16": 1,
+            "endUtf16": 2,
+            "candidates": [
+              {
+                "id": "pingshui:一:ru:入声四质",
+                "character": "一",
+                "book": "pingshui",
+                "toneClass": "ru",
+                "tone": "Z",
+                "groupIds": [
+                  "group:pingshui:入:入声四质"
+                ],
+                "gloss": null,
+                "modernReading": null,
+                "fanqie": null,
+                "evidenceIds": [
+                  "ev:pingshui:入:入声四质",
+                  "ev:candidate:pingshui:一:ru:入声四质:j03"
+                ]
+              }
+            ],
+            "effectiveCandidateIds": [
+              "pingshui:一:ru:入声四质"
+            ],
+            "readingStatus": "resolved",
+            "selectedReadingId": "pingshui:一:ru:入声四质",
+            "selectionMethod": "unique",
+            "possibleTones": [
+              "Z"
+            ],
+            "toneStatus": "resolved",
+            "tone": "Z",
+            "reason": "唯一候选 pingshui:一:ru:入声四质：平仄按该候选推导",
+            "evidenceIds": [
+              "ev:candidate:pingshui:一:ru:入声四质:j03"
+            ]
+          },
+          {
+            "tokenId": "l1c3",
+            "text": "更",
+            "line": 1,
+            "column": 3,
+            "startUtf16": 2,
+            "endUtf16": 3,
+            "candidates": [
+              {
+                "id": "pingshui:更:ping:八庚",
+                "character": "更",
+                "book": "pingshui",
+                "toneClass": "ping",
+                "tone": "P",
+                "groupIds": [
+                  "group:pingshui:下平:八庚"
+                ],
+                "gloss": null,
+                "modernReading": null,
+                "fanqie": null,
+                "evidenceIds": [
+                  "ev:pingshui:下平:八庚",
+                  "ev:candidate:pingshui:更:ping:八庚:j03"
+                ]
+              },
+              {
+                "id": "pingshui:更:qu:二十四敬",
+                "character": "更",
+                "book": "pingshui",
+                "toneClass": "qu",
+                "tone": "Z",
+                "groupIds": [
+                  "group:pingshui:去:二十四敬"
+                ],
+                "gloss": null,
+                "modernReading": null,
+                "fanqie": null,
+                "evidenceIds": [
+                  "ev:pingshui:去:二十四敬",
+                  "ev:candidate:pingshui:更:qu:二十四敬:j03"
+                ]
+              }
+            ],
+            "effectiveCandidateIds": [
+              "pingshui:更:ping:八庚",
+              "pingshui:更:qu:二十四敬"
+            ],
+            "readingStatus": "ambiguous",
+            "selectedReadingId": null,
+            "selectionMethod": "unresolved",
+            "possibleTones": [
+              "P",
+              "Z"
+            ],
+            "toneStatus": "ambiguous",
+            "tone": null,
+            "reason": "保留 2 个候选（pingshui:更:ping:八庚、pingshui:更:qu:二十四敬）：当前语境证据不足，不给确定读音",
+            "evidenceIds": [
+              "ev:candidate:pingshui:更:ping:八庚:j03",
+              "ev:candidate:pingshui:更:qu:二十四敬:j03"
+            ]
+          },
+          {
+            "tokenId": "l1c4",
+            "text": "流",
+            "line": 1,
+            "column": 4,
+            "startUtf16": 3,
+            "endUtf16": 4,
+            "candidates": [
+              {
+                "id": "pingshui:流:ping:十一尤",
+                "character": "流",
+                "book": "pingshui",
+                "toneClass": "ping",
+                "tone": "P",
+                "groupIds": [
+                  "group:pingshui:下平:十一尤"
+                ],
+                "gloss": null,
+                "modernReading": null,
+                "fanqie": null,
+                "evidenceIds": [
+                  "ev:pingshui:下平:十一尤",
+                  "ev:candidate:pingshui:流:ping:十一尤:j03"
+                ]
+              }
+            ],
+            "effectiveCandidateIds": [
+              "pingshui:流:ping:十一尤"
+            ],
+            "readingStatus": "resolved",
+            "selectedReadingId": "pingshui:流:ping:十一尤",
+            "selectionMethod": "unique",
+            "possibleTones": [
+              "P"
+            ],
+            "toneStatus": "resolved",
+            "tone": "P",
+            "reason": "唯一候选 pingshui:流:ping:十一尤：平仄按该候选推导",
+            "evidenceIds": [
+              "ev:candidate:pingshui:流:ping:十一尤:j03"
+            ]
+          },
+          {
+            "tokenId": "l1c5",
+            "text": "楼",
+            "line": 1,
+            "column": 5,
+            "startUtf16": 4,
+            "endUtf16": 5,
+            "candidates": [
+              {
+                "id": "pingshui:楼:ping:十一尤",
+                "character": "楼",
+                "book": "pingshui",
+                "toneClass": "ping",
+                "tone": "P",
+                "groupIds": [
+                  "group:pingshui:下平:十一尤"
+                ],
+                "gloss": null,
+                "modernReading": null,
+                "fanqie": null,
+                "evidenceIds": [
+                  "ev:pingshui:下平:十一尤",
+                  "ev:candidate:pingshui:楼:ping:十一尤:j03"
+                ]
+              }
+            ],
+            "effectiveCandidateIds": [
+              "pingshui:楼:ping:十一尤"
+            ],
+            "readingStatus": "resolved",
+            "selectedReadingId": "pingshui:楼:ping:十一尤",
+            "selectionMethod": "unique",
+            "possibleTones": [
+              "P"
+            ],
+            "toneStatus": "resolved",
+            "tone": "P",
+            "reason": "唯一候选 pingshui:楼:ping:十一尤：平仄按该候选推导",
+            "evidenceIds": [
+              "ev:candidate:pingshui:楼:ping:十一尤:j03"
+            ]
+          },
+          {
+            "tokenId": "l1c6",
+            "text": "雪",
+            "line": 1,
+            "column": 6,
+            "startUtf16": 5,
+            "endUtf16": 6,
+            "candidates": [
+              {
+                "id": "pingshui:雪:ru:入声九屑",
+                "character": "雪",
+                "book": "pingshui",
+                "toneClass": "ru",
+                "tone": "Z",
+                "groupIds": [
+                  "group:pingshui:入:入声九屑"
+                ],
+                "gloss": null,
+                "modernReading": null,
+                "fanqie": null,
+                "evidenceIds": [
+                  "ev:pingshui:入:入声九屑",
+                  "ev:candidate:pingshui:雪:ru:入声九屑:j03"
+                ]
+              }
+            ],
+            "effectiveCandidateIds": [
+              "pingshui:雪:ru:入声九屑"
+            ],
+            "readingStatus": "resolved",
+            "selectedReadingId": "pingshui:雪:ru:入声九屑",
+            "selectionMethod": "unique",
+            "possibleTones": [
+              "Z"
+            ],
+            "toneStatus": "resolved",
+            "tone": "Z",
+            "reason": "唯一候选 pingshui:雪:ru:入声九屑：平仄按该候选推导",
+            "evidenceIds": [
+              "ev:candidate:pingshui:雪:ru:入声九屑:j03"
+            ]
+          },
+          {
+            "tokenId": "l1c7",
+            "text": "物",
+            "line": 1,
+            "column": 7,
+            "startUtf16": 6,
+            "endUtf16": 7,
+            "candidates": [
+              {
+                "id": "pingshui:物:ru:入声五物",
+                "character": "物",
+                "book": "pingshui",
+                "toneClass": "ru",
+                "tone": "Z",
+                "groupIds": [
+                  "group:pingshui:入:入声五物"
+                ],
+                "gloss": null,
+                "modernReading": null,
+                "fanqie": null,
+                "evidenceIds": [
+                  "ev:pingshui:入:入声五物",
+                  "ev:candidate:pingshui:物:ru:入声五物:j03"
+                ]
+              }
+            ],
+            "effectiveCandidateIds": [
+              "pingshui:物:ru:入声五物"
+            ],
+            "readingStatus": "resolved",
+            "selectedReadingId": "pingshui:物:ru:入声五物",
+            "selectionMethod": "unique",
+            "possibleTones": [
+              "Z"
+            ],
+            "toneStatus": "resolved",
+            "tone": "Z",
+            "reason": "唯一候选 pingshui:物:ru:入声五物：平仄按该候选推导",
+            "evidenceIds": [
+              "ev:candidate:pingshui:物:ru:入声五物:j03"
+            ]
+          }
+        ],
+        "quality": "ok",
+        "notices": [],
+        "book": "pingshui"
+      },
+      "genre": {
+        "formFamily": "unsupported",
+        "formId": null,
+        "historicalTags": [],
+        "applicability": "unsupported",
+        "basisType": "heuristic",
+        "candidateTemplateIds": [],
+        "selectedTemplateId": null,
+        "reasons": [
+          "形制不匹配四类近体支持形式（1 句、每句 7 字）",
+          "无已审核作品指纹匹配；形制不足以证明古体身份"
+        ],
+        "evidenceIds": []
+      },
+      "prosody": {
+        "candidates": [],
+        "selectedTemplateId": null,
+        "checks": [
+          {
+            "id": "METER.POSITION:unselected::template",
+            "ruleId": "METER.POSITION",
+            "ruleVersion": "1",
+            "status": "unsupported",
+            "severity": "warning",
+            "locations": [],
+            "expected": [
+              "确定且受支持的整诗模板"
+            ],
+            "observed": [],
+            "message": "形式、模板或结构不受支持，不能输出合律结论。",
+            "templateId": null,
+            "evidenceIds": [],
+            "resolvedBy": null,
+            "relatedFindingIds": []
+          }
+        ],
+        "rhyme": {
+          "status": "unsupported",
+          "tokenIds": [],
+          "commonGroupIds": []
+        },
+        "relations": []
+      },
+      "provenance": {
+        "groups": [
+          {
+            "id": "group:pingshui:下平:八庚",
+            "book": "pingshui",
+            "name": "八庚",
+            "toneClass": "ping",
+            "evidenceIds": [
+              "ev:pingshui:下平:八庚"
+            ]
+          },
+          {
+            "id": "group:pingshui:下平:十一尤",
+            "book": "pingshui",
+            "name": "十一尤",
+            "toneClass": "ping",
+            "evidenceIds": [
+              "ev:pingshui:下平:十一尤"
+            ]
+          },
+          {
+            "id": "group:pingshui:入:入声九屑",
+            "book": "pingshui",
+            "name": "入声九屑",
+            "toneClass": "ru",
+            "evidenceIds": [
+              "ev:pingshui:入:入声九屑"
+            ]
+          },
+          {
+            "id": "group:pingshui:入:入声五物",
+            "book": "pingshui",
+            "name": "入声五物",
+            "toneClass": "ru",
+            "evidenceIds": [
+              "ev:pingshui:入:入声五物"
+            ]
+          },
+          {
+            "id": "group:pingshui:入:入声十一陌",
+            "book": "pingshui",
+            "name": "入声十一陌",
+            "toneClass": "ru",
+            "evidenceIds": [
+              "ev:pingshui:入:入声十一陌"
+            ]
+          },
+          {
+            "id": "group:pingshui:入:入声四质",
+            "book": "pingshui",
+            "name": "入声四质",
+            "toneClass": "ru",
+            "evidenceIds": [
+              "ev:pingshui:入:入声四质"
+            ]
+          },
+          {
+            "id": "group:pingshui:去:二十四敬",
+            "book": "pingshui",
+            "name": "二十四敬",
+            "toneClass": "qu",
+            "evidenceIds": [
+              "ev:pingshui:去:二十四敬"
+            ]
+          }
+        ],
+        "sources": [
+          {
+            "id": "src:chinese_word_rhyme:cilin",
+            "title": "chinese_word_rhyme（Cilin_Rhyme.json）",
+            "edition": "提交 ff0e9c13fb037c43e0eaa5dc929c0fe4fa2ffb18 · Cilin_Rhyme.json",
+            "url": "https://raw.githubusercontent.com/charlesix59/chinese_word_rhyme/ff0e9c13fb037c43e0eaa5dc929c0fe4fa2ffb18/data/Cilin_Rhyme.json",
+            "license": "MIT（上游转载授权链未核实）",
+            "snapshotSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+            "revision": "ff0e9c13fb037c43e0eaa5dc929c0fe4fa2ffb18",
+            "retrievedAt": null
+          },
+          {
+            "id": "src:chinese_word_rhyme:pingshui",
+            "title": "chinese_word_rhyme（Pingshui_Rhyme.json）",
+            "edition": "提交 ff0e9c13fb037c43e0eaa5dc929c0fe4fa2ffb18",
+            "url": "https://raw.githubusercontent.com/charlesix59/chinese_word_rhyme/ff0e9c13fb037c43e0eaa5dc929c0fe4fa2ffb18/data/Pingshui_Rhyme.json",
+            "license": "MIT（上游转载授权链未核实）",
+            "snapshotSha256": "fd11164ca1b848eb6b777688d5d6628ce772d72d0a25a0efd12d6b58459c6e2e",
+            "revision": "ff0e9c13fb037c43e0eaa5dc929c0fe4fa2ffb18",
+            "retrievedAt": null
+          },
+          {
+            "id": "src:j03-review-batch2",
+            "title": "J03 三首核心诗逐字人审 · 第二批（2026-10-18）",
+            "edition": "组长对话提交、GLM 原样落录；审核人姓名与正式签字待补",
+            "url": null,
+            "license": "内部审核记录（工作表格电子填写）",
+            "snapshotSha256": null,
+            "revision": null,
+            "retrievedAt": null
+          },
+          {
+            "id": "src:pinyin-data",
+            "title": "pinyin-data（现代读音主表，用于中华新韵重建表）",
+            "edition": "v0.15.0（提交 fa9761fff402f8560196b1ba085c437c52b56d7c）",
+            "url": "https://raw.githubusercontent.com/mozillazg/pinyin-data/fa9761fff402f8560196b1ba085c437c52b56d7c/pinyin.txt",
+            "license": "MIT（只覆盖该仓库整理成果，不覆盖十四韵规则本身）",
+            "snapshotSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+            "revision": "fa9761fff402f8560196b1ba085c437c52b56d7c",
+            "retrievedAt": null
+          },
+          {
+            "id": "src:project:teaching-v1-policy",
+            "title": "teaching-v1 规则执行约定（项目工程口径）",
+            "edition": "已冻结十规则ID及基础模板",
+            "url": null,
+            "license": "项目内部规则说明；不替代韵书或学术专著",
+            "snapshotSha256": "94354470b7f1da46c329114169d1ab511671cb832f2127ae5d6d759c410e9a88",
+            "revision": null,
+            "retrievedAt": null
+          },
+          {
+            "id": "src:wangli:wenji15",
+            "title": "王力文集·第15卷《诗词格律》（C 本地扫描件 _sources/wangli15.pdf，未入库）",
+            "edition": null,
+            "url": null,
+            "license": "受版权保护的现代出版物；本仓库仅以章节页码定位与规则转述作为内部人工审核依据，不存储、不复制原文（excerpt 恒为 null）",
+            "snapshotSha256": null,
+            "revision": null,
+            "retrievedAt": null
+          },
+          {
+            "id": "src:wikisource:pingshuiyun",
+            "title": "维基文库《平水韻》（上声三讲补缺依据，底本为繁体）",
+            "edition": "维基文库页面 oldid 8264804",
+            "url": "https://zh.wikisource.org/w/index.php?oldid=8264804",
+            "license": "字节事实 {{PD-old}}+{{wikipedia}}（页脚第 655-656 行）；渲染版权框未核；可用性未定",
+            "snapshotSha256": "f0297bff7b66cde18bcb2644b5d9c6320ac90253f63a8aa178e489170a810ce2",
+            "revision": "8264804",
+            "retrievedAt": "2026-10-18T00:00:00.000Z"
+          },
+          {
+            "id": "src:wikisource:work:dengguanquelou",
+            "title": "维基文库《登鹳雀楼》固定修订",
+            "edition": "采用主文及异文模板第一项",
+            "url": "https://zh.wikisource.org/w/index.php?title=%E7%99%BB%E9%B8%9B%E9%9B%80%E6%A8%93_(%E7%8E%8B%E4%B9%8B%E6%B8%99)&oldid=2648160",
+            "license": "古代诗作正文公有领域；维基文库页面编排按站点 CC BY-SA 条款，第三方素材另计",
+            "snapshotSha256": "372a0e661b402fa6e3df2bbd2f02360972fd90fab9cc1829e20d942467c865a9",
+            "revision": "2648160",
+            "retrievedAt": "2026-10-18T08:47:13.486Z"
+          },
+          {
+            "id": "src:wikisource:work:huanghelou",
+            "title": "维基文库《黄鹤楼》固定修订",
+            "edition": "采用主文及异文模板第一项",
+            "url": "https://zh.wikisource.org/w/index.php?title=%E9%BB%83%E9%B6%B4%E6%A8%93_(%E5%B4%94%E9%A1%A5)&oldid=2492584",
+            "license": "古代诗作正文公有领域；维基文库页面编排按站点 CC BY-SA 条款，第三方素材另计",
+            "snapshotSha256": "e6e66503c45822fa0cf56fa7547866a3c044c411bda16e71db2b8a31e868fe34",
+            "revision": "2492584",
+            "retrievedAt": "2026-10-18T08:47:13.480Z"
+          },
+          {
+            "id": "src:wikisource:work:jingyesi",
+            "title": "维基文库《静夜思》固定修订",
+            "edition": "页面「唐詩三百首」版本",
+            "url": "https://zh.wikisource.org/w/index.php?title=%E9%9D%9C%E5%A4%9C%E6%80%9D&oldid=8747585",
+            "license": "古代诗作正文公有领域；维基文库页面编排按站点 CC BY-SA 条款，第三方素材另计",
+            "snapshotSha256": "16dfda854ca163a2b0230d2a7f322cae82acbba3ddca0fbacc2e32c0d537de01",
+            "revision": "8747585",
+            "retrievedAt": "2026-10-18T08:47:13.379Z"
+          }
+        ],
+        "evidence": [
+          {
+            "id": "ctx:j03b2:01",
+            "sourceId": "src:j03-review-batch2",
+            "kind": "context",
+            "locator": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md §五 第 1 条",
+            "assertion": "「更上一层楼」之「更」为副词义「再、又、愈加」，非平声「更改/经历/更次」，裁定取去声二十四敬（pingshui:更:qu:二十四敬）",
+            "excerpt": null,
+            "reviewStatus": "approved"
+          },
+          {
+            "id": "ctx:j03b2:02",
+            "sourceId": "src:j03-review-batch2",
+            "kind": "context",
+            "locator": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md §五 第 2 条",
+            "assertion": "「举头望明月」之「望」为动词「远看、凝望」，近体通说取去声二十三漾（pingshui:望:qu:二十三漾）；本条为十处中唯一义可两通者，标注为通说裁定",
+            "excerpt": null,
+            "reviewStatus": "approved"
+          },
+          {
+            "id": "ctx:j03b2:03",
+            "sourceId": "src:j03-review-batch2",
+            "kind": "context",
+            "locator": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md §五 第 3 条",
+            "assertion": "「低头思故乡」之「思」带宾语，为动词「思念、怀想」，取平声四支（pingshui:思:ping:四支）；去声多作名词情思",
+            "excerpt": null,
+            "reviewStatus": "approved"
+          },
+          {
+            "id": "ctx:j03b2:04",
+            "sourceId": "src:j03-review-batch2",
+            "kind": "context",
+            "locator": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md §五 第 4 条",
+            "assertion": "「故乡」之「乡」为名词家乡义，取平声七阳（pingshui:乡:ping:七阳）；乡居韵脚与光、霜同押，平韵诗韵脚必平",
+            "excerpt": null,
+            "reviewStatus": "approved"
+          },
+          {
+            "id": "ctx:j03b2:05",
+            "sourceId": "src:j03-review-batch2",
+            "kind": "context",
+            "locator": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md §五 第 5 条",
+            "assertion": "「昔人已乘黄鹤去」之「乘」为动词「乘坐、骑乘」，取平声十蒸（pingshui:乘:ping:十蒸）；去声为名词车乘/史乘",
+            "excerpt": null,
+            "reviewStatus": "approved"
+          },
+          {
+            "id": "ctx:j03b2:06",
+            "sourceId": "src:j03-review-batch2",
+            "kind": "context",
+            "locator": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md §五 第 6 条",
+            "assertion": "「此地空余黄鹤楼」之「空」为副词「徒然、空自」，取平声一东（pingshui:空:ping:一东）；去声孔隙、上声通孔皆不合句义",
+            "excerpt": null,
+            "reviewStatus": "approved"
+          },
+          {
+            "id": "ctx:j03b2:07",
+            "sourceId": "src:j03-review-batch2",
+            "kind": "context",
+            "locator": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md §五 第 7 条",
+            "assertion": "「黄鹤一去不复返」之「不」为否定副词，取入声五物（pingshui:不:ru:入声五物）；平声十一尤为「否」之通假，专用于疑问句末",
+            "excerpt": null,
+            "reviewStatus": "approved"
+          },
+          {
+            "id": "ctx:j03b2:08",
+            "sourceId": "src:j03-review-batch2",
+            "kind": "context",
+            "locator": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md §五 第 8 条",
+            "assertion": "「白云千载空悠悠」之「空」为副词徒然义，取平声一东（pingshui:空:ping:一东）；三平尾成立，作古风式律诗特征保留，不判出律",
+            "excerpt": null,
+            "reviewStatus": "approved"
+          },
+          {
+            "id": "ctx:j03b2:09",
+            "sourceId": "src:j03-review-batch2",
+            "kind": "context",
+            "locator": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md §五 第 9 条",
+            "assertion": "「晴川历历汉阳树」之「汉」为地名汉阳义，取去声十五翰（pingshui:汉:qu:十五翰）；平声十四寒为罕见古读，不取",
+            "excerpt": null,
+            "reviewStatus": "approved"
+          },
+          {
+            "id": "ctx:j03b2:10",
+            "sourceId": "src:j03-review-batch2",
+            "kind": "context",
+            "locator": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md §五 第 10 条",
+            "assertion": "「日暮乡关何处是」之「乡关」为名词故乡义，取平声七阳（pingshui:乡:ping:七阳）",
+            "excerpt": null,
+            "reviewStatus": "approved"
+          },
+          {
+            "id": "ev:candidate:pingshui:一:ru:入声四质:j03",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 入声部/入声四质；候选 pingshui:一:ru:入声四质；审核记录 docs/reviews/12_J03人审记录_第一批.md",
+            "assertion": "第一批候选归部核验通过；仅覆盖候选 pingshui:一:ru:入声四质，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+            "excerpt": null,
+            "reviewStatus": "approved"
+          },
+          {
+            "id": "ev:candidate:pingshui:不:ru:入声五物:j03",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 入声部/入声五物；候选 pingshui:不:ru:入声五物；审核记录 docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+            "assertion": "第二批第一/五节明确采纳的候选声类与归部；竞争候选仍保留，未获批者保持未审核；仅覆盖候选 pingshui:不:ru:入声五物，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+            "excerpt": null,
+            "reviewStatus": "approved"
+          },
+          {
+            "id": "ev:candidate:pingshui:乘:ping:十蒸:j03",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 下平声部/十蒸；候选 pingshui:乘:ping:十蒸；审核记录 docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+            "assertion": "第二批第一/五节明确采纳的候选声类与归部；竞争候选仍保留，未获批者保持未审核；仅覆盖候选 pingshui:乘:ping:十蒸，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+            "excerpt": null,
+            "reviewStatus": "approved"
+          },
+          {
+            "id": "ev:candidate:pingshui:乡:ping:七阳:j03",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 下平声部/七阳；候选 pingshui:乡:ping:七阳；审核记录 docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+            "assertion": "第二批第一/五节明确采纳的候选声类与归部；竞争候选仍保留，未获批者保持未审核；仅覆盖候选 pingshui:乡:ping:七阳，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+            "excerpt": null,
+            "reviewStatus": "approved"
+          },
+          {
+            "id": "ev:candidate:pingshui:思:ping:四支:j03",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上平声部/四支；候选 pingshui:思:ping:四支；审核记录 docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+            "assertion": "第二批第一/五节明确采纳的候选声类与归部；竞争候选仍保留，未获批者保持未审核；仅覆盖候选 pingshui:思:ping:四支，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+            "excerpt": null,
+            "reviewStatus": "approved"
+          },
+          {
+            "id": "ev:candidate:pingshui:更:ping:八庚:j03",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 下平声部/八庚；候选 pingshui:更:ping:八庚；审核记录 docs/reviews/12_J03人审记录_第一批.md",
+            "assertion": "第一批候选归部核验通过；仅覆盖候选 pingshui:更:ping:八庚，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+            "excerpt": null,
+            "reviewStatus": "approved"
+          },
+          {
+            "id": "ev:candidate:pingshui:更:qu:二十四敬:j03",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 去声部/二十四敬；候选 pingshui:更:qu:二十四敬；审核记录 docs/reviews/12_J03人审记录_第一批.md",
+            "assertion": "第一批候选归部核验通过；仅覆盖候选 pingshui:更:qu:二十四敬，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+            "excerpt": null,
+            "reviewStatus": "approved"
+          },
+          {
+            "id": "ev:candidate:pingshui:望:qu:二十三漾:j03",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 去声部/二十三漾；候选 pingshui:望:qu:二十三漾；审核记录 docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+            "assertion": "第二批第一/五节明确采纳的候选声类与归部；竞争候选仍保留，未获批者保持未审核；仅覆盖候选 pingshui:望:qu:二十三漾，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+            "excerpt": null,
+            "reviewStatus": "approved"
+          },
+          {
+            "id": "ev:candidate:pingshui:楼:ping:十一尤:j03",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 下平声部/十一尤；候选 pingshui:楼:ping:十一尤；审核记录 docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+            "assertion": "第二批第二节追认楼↔樓及下平十一尤归属；仅覆盖候选 pingshui:楼:ping:十一尤，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+            "excerpt": null,
+            "reviewStatus": "approved"
+          },
+          {
+            "id": "ev:candidate:pingshui:汉:qu:十五翰:j03",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 去声部/十五翰；候选 pingshui:汉:qu:十五翰；审核记录 docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+            "assertion": "第二批第一/五节明确采纳的候选声类与归部；竞争候选仍保留，未获批者保持未审核；仅覆盖候选 pingshui:汉:qu:十五翰，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+            "excerpt": null,
+            "reviewStatus": "approved"
+          },
+          {
+            "id": "ev:candidate:pingshui:流:ping:十一尤:j03",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 下平声部/十一尤；候选 pingshui:流:ping:十一尤；审核记录 docs/reviews/12_J03人审记录_第一批.md",
+            "assertion": "第一批候选归部核验通过；仅覆盖候选 pingshui:流:ping:十一尤，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+            "excerpt": null,
+            "reviewStatus": "approved"
+          },
+          {
+            "id": "ev:candidate:pingshui:物:ru:入声五物:j03",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 入声部/入声五物；候选 pingshui:物:ru:入声五物；审核记录 docs/reviews/12_J03人审记录_第一批.md",
+            "assertion": "第一批候选归部核验通过；仅覆盖候选 pingshui:物:ru:入声五物，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+            "excerpt": null,
+            "reviewStatus": "approved"
+          },
+          {
+            "id": "ev:candidate:pingshui:白:ru:入声十一陌:j03",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 入声部/入声十一陌；候选 pingshui:白:ru:入声十一陌；审核记录 docs/reviews/12_J03人审记录_第一批.md",
+            "assertion": "第一批候选归部核验通过；仅覆盖候选 pingshui:白:ru:入声十一陌，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+            "excerpt": null,
+            "reviewStatus": "approved"
+          },
+          {
+            "id": "ev:candidate:pingshui:空:ping:一东:j03",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上平声部/一东；候选 pingshui:空:ping:一东；审核记录 docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+            "assertion": "第二批第一/五节明确采纳的候选声类与归部；竞争候选仍保留，未获批者保持未审核；仅覆盖候选 pingshui:空:ping:一东，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+            "excerpt": null,
+            "reviewStatus": "approved"
+          },
+          {
+            "id": "ev:candidate:pingshui:雪:ru:入声九屑:j03",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 入声部/入声九屑；候选 pingshui:雪:ru:入声九屑；审核记录 docs/reviews/12_J03人审记录_第一批.md",
+            "assertion": "第一批候选归部核验通过；仅覆盖候选 pingshui:雪:ru:入声九屑，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+            "excerpt": null,
+            "reviewStatus": "approved"
+          },
+          {
+            "id": "ev:cilin:第一部:第一部·仄声",
+            "sourceId": "src:chinese_word_rhyme:cilin",
+            "kind": "rhyme_entry",
+            "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第一部/仄声",
+            "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第一部/仄声 共收录 69 个字形（原表条目 71 条）；来源只标仄声，故保留 ze_unspecified，不臆补上声或去声。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:cilin:第一部:第一部·平声",
+            "sourceId": "src:chinese_word_rhyme:cilin",
+            "kind": "rhyme_entry",
+            "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第一部/平声",
+            "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第一部/平声 共收录 123 个字形（原表条目 125 条）；声类按来源标为 ping。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:cilin:第七部:第七部·仄声",
+            "sourceId": "src:chinese_word_rhyme:cilin",
+            "kind": "rhyme_entry",
+            "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第七部/仄声",
+            "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第七部/仄声 共收录 288 个字形（原表条目 325 条）；来源只标仄声，故保留 ze_unspecified，不臆补上声或去声。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:cilin:第七部:第七部·平声",
+            "sourceId": "src:chinese_word_rhyme:cilin",
+            "kind": "rhyme_entry",
+            "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第七部/平声",
+            "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第七部/平声 共收录 277 个字形（原表条目 281 条）；声类按来源标为 ping。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:cilin:第三部:第三部·仄声",
+            "sourceId": "src:chinese_word_rhyme:cilin",
+            "kind": "rhyme_entry",
+            "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第三部/仄声",
+            "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第三部/仄声 共收录 445 个字形（原表条目 464 条）；来源只标仄声，故保留 ze_unspecified，不臆补上声或去声。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:cilin:第三部:第三部·平声",
+            "sourceId": "src:chinese_word_rhyme:cilin",
+            "kind": "rhyme_entry",
+            "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第三部/平声",
+            "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第三部/平声 共收录 314 个字形（原表条目 319 条）；声类按来源标为 ping。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:cilin:第九部:第九部·仄声",
+            "sourceId": "src:chinese_word_rhyme:cilin",
+            "kind": "rhyme_entry",
+            "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第九部/仄声",
+            "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第九部/仄声 共收录 70 个字形（原表条目 71 条）；来源只标仄声，故保留 ze_unspecified，不臆补上声或去声。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:cilin:第九部:第九部·平声",
+            "sourceId": "src:chinese_word_rhyme:cilin",
+            "kind": "rhyme_entry",
+            "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第九部/平声",
+            "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第九部/平声 共收录 75 个字形（原表条目 75 条）；声类按来源标为 ping。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:cilin:第二部:第二部·仄声",
+            "sourceId": "src:chinese_word_rhyme:cilin",
+            "kind": "rhyme_entry",
+            "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第二部/仄声",
+            "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第二部/仄声 共收录 135 个字形（原表条目 142 条）；来源只标仄声，故保留 ze_unspecified，不臆补上声或去声。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:cilin:第二部:第二部·平声",
+            "sourceId": "src:chinese_word_rhyme:cilin",
+            "kind": "rhyme_entry",
+            "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第二部/平声",
+            "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第二部/平声 共收录 190 个字形（原表条目 190 条）；声类按来源标为 ping。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:cilin:第五部:第五部·仄声",
+            "sourceId": "src:chinese_word_rhyme:cilin",
+            "kind": "rhyme_entry",
+            "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第五部/仄声",
+            "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第五部/仄声 共收录 112 个字形（原表条目 116 条）；来源只标仄声，故保留 ze_unspecified，不臆补上声或去声。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:cilin:第五部:第五部·平声",
+            "sourceId": "src:chinese_word_rhyme:cilin",
+            "kind": "rhyme_entry",
+            "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第五部/平声",
+            "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第五部/平声 共收录 57 个字形（原表条目 58 条）；声类按来源标为 ping。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:cilin:第八部:第八部·仄声",
+            "sourceId": "src:chinese_word_rhyme:cilin",
+            "kind": "rhyme_entry",
+            "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第八部/仄声",
+            "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第八部/仄声 共收录 197 个字形（原表条目 210 条）；来源只标仄声，故保留 ze_unspecified，不臆补上声或去声。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:cilin:第八部:第八部·平声",
+            "sourceId": "src:chinese_word_rhyme:cilin",
+            "kind": "rhyme_entry",
+            "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第八部/平声",
+            "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第八部/平声 共收录 208 个字形（原表条目 208 条）；声类按来源标为 ping。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:cilin:第六部:第六部·仄声",
+            "sourceId": "src:chinese_word_rhyme:cilin",
+            "kind": "rhyme_entry",
+            "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第六部/仄声",
+            "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第六部/仄声 共收录 144 个字形（原表条目 151 条）；来源只标仄声，故保留 ze_unspecified，不臆补上声或去声。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:cilin:第六部:第六部·平声",
+            "sourceId": "src:chinese_word_rhyme:cilin",
+            "kind": "rhyme_entry",
+            "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第六部/平声",
+            "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第六部/平声 共收录 169 个字形（原表条目 169 条）；声类按来源标为 ping。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:cilin:第十一部:第十一部·仄声",
+            "sourceId": "src:chinese_word_rhyme:cilin",
+            "kind": "rhyme_entry",
+            "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十一部/仄声",
+            "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十一部/仄声 共收录 139 个字形（原表条目 146 条）；来源只标仄声，故保留 ze_unspecified，不臆补上声或去声。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:cilin:第十一部:第十一部·平声",
+            "sourceId": "src:chinese_word_rhyme:cilin",
+            "kind": "rhyme_entry",
+            "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十一部/平声",
+            "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十一部/平声 共收录 240 个字形（原表条目 243 条）；声类按来源标为 ping。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:cilin:第十七部:第十七部·入声",
+            "sourceId": "src:chinese_word_rhyme:cilin",
+            "kind": "rhyme_entry",
+            "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十七部/入声",
+            "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十七部/入声 共收录 348 个字形（原表条目 350 条）；声类按来源标为 ru。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:cilin:第十三部:第十三部·仄声",
+            "sourceId": "src:chinese_word_rhyme:cilin",
+            "kind": "rhyme_entry",
+            "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十三部/仄声",
+            "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十三部/仄声 共收录 37 个字形（原表条目 42 条）；来源只标仄声，故保留 ze_unspecified，不臆补上声或去声。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:cilin:第十三部:第十三部·平声",
+            "sourceId": "src:chinese_word_rhyme:cilin",
+            "kind": "rhyme_entry",
+            "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十三部/平声",
+            "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十三部/平声 共收录 49 个字形（原表条目 51 条）；声类按来源标为 ping。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:cilin:第十九部:第十九部·入声",
+            "sourceId": "src:chinese_word_rhyme:cilin",
+            "kind": "rhyme_entry",
+            "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十九部/入声",
+            "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十九部/入声 共收录 63 个字形（原表条目 63 条）；声类按来源标为 ru。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:cilin:第十二部:第十二部·仄声",
+            "sourceId": "src:chinese_word_rhyme:cilin",
+            "kind": "rhyme_entry",
+            "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十二部/仄声",
+            "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十二部/仄声 共收录 153 个字形（原表条目 157 条）；来源只标仄声，故保留 ze_unspecified，不臆补上声或去声。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:cilin:第十二部:第十二部·平声",
+            "sourceId": "src:chinese_word_rhyme:cilin",
+            "kind": "rhyme_entry",
+            "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十二部/平声",
+            "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十二部/平声 共收录 117 个字形（原表条目 119 条）；声类按来源标为 ping。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:cilin:第十五部:第十五部·入声",
+            "sourceId": "src:chinese_word_rhyme:cilin",
+            "kind": "rhyme_entry",
+            "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十五部/入声",
+            "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十五部/入声 共收录 137 个字形（原表条目 139 条）；声类按来源标为 ru。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:cilin:第十八部:第十八部·入声",
+            "sourceId": "src:chinese_word_rhyme:cilin",
+            "kind": "rhyme_entry",
+            "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十八部/入声",
+            "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十八部/入声 共收录 274 个字形（原表条目 287 条）；声类按来源标为 ru。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:cilin:第十六部:第十六部·入声",
+            "sourceId": "src:chinese_word_rhyme:cilin",
+            "kind": "rhyme_entry",
+            "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十六部/入声",
+            "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十六部/入声 共收录 137 个字形（原表条目 139 条）；声类按来源标为 ru。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:cilin:第十四部:第十四部·仄声",
+            "sourceId": "src:chinese_word_rhyme:cilin",
+            "kind": "rhyme_entry",
+            "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十四部/仄声",
+            "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十四部/仄声 共收录 100 个字形（原表条目 108 条）；来源只标仄声，故保留 ze_unspecified，不臆补上声或去声。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:cilin:第十四部:第十四部·平声",
+            "sourceId": "src:chinese_word_rhyme:cilin",
+            "kind": "rhyme_entry",
+            "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十四部/平声",
+            "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十四部/平声 共收录 104 个字形（原表条目 105 条）；声类按来源标为 ping。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:cilin:第十部:第十部·仄声",
+            "sourceId": "src:chinese_word_rhyme:cilin",
+            "kind": "rhyme_entry",
+            "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十部/仄声",
+            "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十部/仄声 共收录 82 个字形（原表条目 86 条）；来源只标仄声，故保留 ze_unspecified，不臆补上声或去声。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:cilin:第十部:第十部·平声",
+            "sourceId": "src:chinese_word_rhyme:cilin",
+            "kind": "rhyme_entry",
+            "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十部/平声",
+            "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十部/平声 共收录 81 个字形（原表条目 82 条）；声类按来源标为 ping。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:cilin:第四部:第四部·仄声",
+            "sourceId": "src:chinese_word_rhyme:cilin",
+            "kind": "rhyme_entry",
+            "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第四部/仄声",
+            "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第四部/仄声 共收录 266 个字形（原表条目 278 条）；来源只标仄声，故保留 ze_unspecified，不臆补上声或去声。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:cilin:第四部:第四部·平声",
+            "sourceId": "src:chinese_word_rhyme:cilin",
+            "kind": "rhyme_entry",
+            "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第四部/平声",
+            "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第四部/平声 共收录 203 个字形（原表条目 205 条）；声类按来源标为 ping。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上:一董",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上声部/一董",
+            "assertion": "data/Pingshui_Rhyme.json 上声部/一董 共收录 38 个字形（原表条目 38 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上:七麌",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上声部/七麌",
+            "assertion": "data/Pingshui_Rhyme.json 上声部/七麌 共收录 157 个字形（原表条目 160 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上:三讲",
+            "sourceId": "src:wikisource:pingshuiyun",
+            "kind": "rhyme_entry",
+            "locator": "data/raw/wikisource/PingshuiYun-8264804.wikitext 第 198-200 行（上聲三{{++|講}} / 講港棒蚌項缿玤傋耩）",
+            "assertion": "维基文库《平水韻》oldid 8264804（data/raw/wikisource/PingshuiYun-8264804.wikitext 第 200 行）上聲三講正文为「講港棒蚌項缿玤傋耩」共 9 字，该韵目无【詞】段。底本为繁体，此处仅做繁→简转换（講→讲、項→项），不得声称底本原文即简体。「玤」原表已收于上声一董（Pingshui_Rhyme.json:4372），本补丁新增其三讲归属并保留原归属。",
+            "excerpt": "講港棒蚌項缿玤傋耩",
+            "reviewStatus": "approved"
+          },
+          {
+            "id": "ev:pingshui:上:九蟹",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上声部/九蟹",
+            "assertion": "data/Pingshui_Rhyme.json 上声部/九蟹 共收录 24 个字形（原表条目 26 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上:二十一马",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上声部/二十一马",
+            "assertion": "data/Pingshui_Rhyme.json 上声部/二十一马 共收录 53 个字形（原表条目 54 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上:二十七感",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上声部/二十七感",
+            "assertion": "data/Pingshui_Rhyme.json 上声部/二十七感 共收录 61 个字形（原表条目 63 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上:二十三梗",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上声部/二十三梗",
+            "assertion": "data/Pingshui_Rhyme.json 上声部/二十三梗 共收录 67 个字形（原表条目 69 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上:二十九豏",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上声部/二十九豏",
+            "assertion": "data/Pingshui_Rhyme.json 上声部/二十九豏 共收录 21 个字形（原表条目 22 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上:二十二养",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上声部/二十二养",
+            "assertion": "data/Pingshui_Rhyme.json 上声部/二十二养 共收录 107 个字形（原表条目 115 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上:二十五有",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上声部/二十五有",
+            "assertion": "data/Pingshui_Rhyme.json 上声部/二十五有 共收录 131 个字形（原表条目 134 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上:二十八琰",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上声部/二十八琰",
+            "assertion": "data/Pingshui_Rhyme.json 上声部/二十八琰 共收录 64 个字形（原表条目 66 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上:二十六寝",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上声部/二十六寝",
+            "assertion": "data/Pingshui_Rhyme.json 上声部/二十六寝 共收录 35 个字形（原表条目 36 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上:二十哿",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上声部/二十哿",
+            "assertion": "data/Pingshui_Rhyme.json 上声部/二十哿 共收录 67 个字形（原表条目 67 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上:二十四迥",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上声部/二十四迥",
+            "assertion": "data/Pingshui_Rhyme.json 上声部/二十四迥 共收录 38 个字形（原表条目 38 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上:二肿",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上声部/二肿",
+            "assertion": "data/Pingshui_Rhyme.json 上声部/二肿 共收录 42 个字形（原表条目 43 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上:五尾",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上声部/五尾",
+            "assertion": "data/Pingshui_Rhyme.json 上声部/五尾 共收录 37 个字形（原表条目 37 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上:八荠",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上声部/八荠",
+            "assertion": "data/Pingshui_Rhyme.json 上声部/八荠 共收录 45 个字形（原表条目 47 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上:六语",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上声部/六语",
+            "assertion": "data/Pingshui_Rhyme.json 上声部/六语 共收录 86 个字形（原表条目 87 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上:十一轸",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上声部/十一轸",
+            "assertion": "data/Pingshui_Rhyme.json 上声部/十一轸 共收录 64 个字形（原表条目 66 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上:十七筱",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上声部/十七筱",
+            "assertion": "data/Pingshui_Rhyme.json 上声部/十七筱 共收录 86 个字形（原表条目 92 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上:十三阮",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上声部/十三阮",
+            "assertion": "data/Pingshui_Rhyme.json 上声部/十三阮 共收录 84 个字形（原表条目 84 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上:十九皓",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上声部/十九皓",
+            "assertion": "data/Pingshui_Rhyme.json 上声部/十九皓 共收录 72 个字形（原表条目 73 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上:十二吻",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上声部/十二吻",
+            "assertion": "data/Pingshui_Rhyme.json 上声部/十二吻 共收录 30 个字形（原表条目 30 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上:十五潸",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上声部/十五潸",
+            "assertion": "data/Pingshui_Rhyme.json 上声部/十五潸 共收录 33 个字形（原表条目 34 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上:十八巧",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上声部/十八巧",
+            "assertion": "data/Pingshui_Rhyme.json 上声部/十八巧 共收录 26 个字形（原表条目 26 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上:十六铣",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上声部/十六铣",
+            "assertion": "data/Pingshui_Rhyme.json 上声部/十六铣 共收录 142 个字形（原表条目 144 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上:十四旱",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上声部/十四旱",
+            "assertion": "data/Pingshui_Rhyme.json 上声部/十四旱 共收录 57 个字形（原表条目 59 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上:十贿",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上声部/十贿",
+            "assertion": "data/Pingshui_Rhyme.json 上声部/十贿 共收录 69 个字形（原表条目 72 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上:四纸",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上声部/四纸",
+            "assertion": "data/Pingshui_Rhyme.json 上声部/四纸 共收录 235 个字形（原表条目 243 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上平:一东",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上平声部/一东",
+            "assertion": "data/Pingshui_Rhyme.json 上平声部/一东 共收录 152 个字形（原表条目 156 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上平:七虞",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上平声部/七虞",
+            "assertion": "data/Pingshui_Rhyme.json 上平声部/七虞 共收录 283 个字形（原表条目 295 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上平:三江",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上平声部/三江",
+            "assertion": "data/Pingshui_Rhyme.json 上平声部/三江 共收录 44 个字形（原表条目 44 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上平:九佳",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上平声部/九佳",
+            "assertion": "data/Pingshui_Rhyme.json 上平声部/九佳 共收录 47 个字形（原表条目 47 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上平:二冬",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上平声部/二冬",
+            "assertion": "data/Pingshui_Rhyme.json 上平声部/二冬 共收录 98 个字形（原表条目 101 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上平:五微",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上平声部/五微",
+            "assertion": "data/Pingshui_Rhyme.json 上平声部/五微 共收录 70 个字形（原表条目 71 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上平:八齐",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上平声部/八齐",
+            "assertion": "data/Pingshui_Rhyme.json 上平声部/八齐 共收录 115 个字形（原表条目 119 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上平:六鱼",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上平声部/六鱼",
+            "assertion": "data/Pingshui_Rhyme.json 上平声部/六鱼 共收录 117 个字形（原表条目 118 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上平:十一真",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上平声部/十一真",
+            "assertion": "data/Pingshui_Rhyme.json 上平声部/十一真 共收录 176 个字形（原表条目 177 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上平:十三元",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上平声部/十三元",
+            "assertion": "data/Pingshui_Rhyme.json 上平声部/十三元 共收录 155 个字形（原表条目 160 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上平:十二文",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上平声部/十二文",
+            "assertion": "data/Pingshui_Rhyme.json 上平声部/十二文 共收录 89 个字形（原表条目 93 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上平:十五删",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上平声部/十五删",
+            "assertion": "data/Pingshui_Rhyme.json 上平声部/十五删 共收录 60 个字形（原表条目 62 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上平:十四寒",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上平声部/十四寒",
+            "assertion": "data/Pingshui_Rhyme.json 上平声部/十四寒 共收录 134 个字形（原表条目 143 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上平:十灰",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上平声部/十灰",
+            "assertion": "data/Pingshui_Rhyme.json 上平声部/十灰 共收录 112 个字形（原表条目 116 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:上平:四支",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 上平声部/四支",
+            "assertion": "data/Pingshui_Rhyme.json 上平声部/四支 共收录 440 个字形（原表条目 452 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:下平:一先",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 下平声部/一先",
+            "assertion": "data/Pingshui_Rhyme.json 下平声部/一先 共收录 239 个字形（原表条目 245 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:下平:七阳",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 下平声部/七阳",
+            "assertion": "data/Pingshui_Rhyme.json 下平声部/七阳 共收录 266 个字形（原表条目 268 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:下平:三肴",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 下平声部/三肴",
+            "assertion": "data/Pingshui_Rhyme.json 下平声部/三肴 共收录 99 个字形（原表条目 99 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:下平:九青",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 下平声部/九青",
+            "assertion": "data/Pingshui_Rhyme.json 下平声部/九青 共收录 94 个字形（原表条目 94 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:下平:二萧",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 下平声部/二萧",
+            "assertion": "data/Pingshui_Rhyme.json 下平声部/二萧 共收录 194 个字形（原表条目 197 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:下平:五歌",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 下平声部/五歌",
+            "assertion": "data/Pingshui_Rhyme.json 下平声部/五歌 共收录 122 个字形（原表条目 122 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:下平:八庚",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 下平声部/八庚",
+            "assertion": "data/Pingshui_Rhyme.json 下平声部/八庚 共收录 194 个字形（原表条目 197 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:下平:六麻",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 下平声部/六麻",
+            "assertion": "data/Pingshui_Rhyme.json 下平声部/六麻 共收录 138 个字形（原表条目 144 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:下平:十一尤",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 下平声部/十一尤",
+            "assertion": "data/Pingshui_Rhyme.json 下平声部/十一尤 共收录 249 个字形（原表条目 255 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:下平:十三覃",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 下平声部/十三覃",
+            "assertion": "data/Pingshui_Rhyme.json 下平声部/十三覃 共收录 83 个字形（原表条目 84 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:下平:十二侵",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 下平声部/十二侵",
+            "assertion": "data/Pingshui_Rhyme.json 下平声部/十二侵 共收录 75 个字形（原表条目 79 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:下平:十五咸",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 下平声部/十五咸",
+            "assertion": "data/Pingshui_Rhyme.json 下平声部/十五咸 共收录 39 个字形（原表条目 42 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:下平:十四盐",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 下平声部/十四盐",
+            "assertion": "data/Pingshui_Rhyme.json 下平声部/十四盐 共收录 88 个字形（原表条目 93 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:下平:十蒸",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 下平声部/十蒸",
+            "assertion": "data/Pingshui_Rhyme.json 下平声部/十蒸 共收录 98 个字形（原表条目 101 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:下平:四豪",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 下平声部/四豪",
+            "assertion": "data/Pingshui_Rhyme.json 下平声部/四豪 共收录 108 个字形（原表条目 109 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:入:入声一屋",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 入声部/入声一屋",
+            "assertion": "data/Pingshui_Rhyme.json 入声部/入声一屋 共收录 188 个字形（原表条目 194 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:入:入声七曷",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 入声部/入声七曷",
+            "assertion": "data/Pingshui_Rhyme.json 入声部/入声七曷 共收录 91 个字形（原表条目 91 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:入:入声三觉",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 入声部/入声三觉",
+            "assertion": "data/Pingshui_Rhyme.json 入声部/入声三觉 共收录 93 个字形（原表条目 96 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:入:入声九屑",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 入声部/入声九屑",
+            "assertion": "data/Pingshui_Rhyme.json 入声部/入声九屑 共收录 166 个字形（原表条目 173 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:入:入声二沃",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 入声部/入声二沃",
+            "assertion": "data/Pingshui_Rhyme.json 入声部/入声二沃 共收录 83 个字形（原表条目 85 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:入:入声五物",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 入声部/入声五物",
+            "assertion": "data/Pingshui_Rhyme.json 入声部/入声五物 共收录 48 个字形（原表条目 48 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:入:入声八黠",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 入声部/入声八黠",
+            "assertion": "data/Pingshui_Rhyme.json 入声部/入声八黠 共收录 55 个字形（原表条目 57 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:入:入声六月",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 入声部/入声六月",
+            "assertion": "data/Pingshui_Rhyme.json 入声部/入声六月 共收录 107 个字形（原表条目 110 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:入:入声十一陌",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 入声部/入声十一陌",
+            "assertion": "data/Pingshui_Rhyme.json 入声部/入声十一陌 共收录 186 个字形（原表条目 196 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:入:入声十七洽",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 入声部/入声十七洽",
+            "assertion": "data/Pingshui_Rhyme.json 入声部/入声十七洽 共收录 57 个字形（原表条目 59 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:入:入声十三职",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 入声部/入声十三职",
+            "assertion": "data/Pingshui_Rhyme.json 入声部/入声十三职 共收录 131 个字形（原表条目 133 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:入:入声十二锡",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 入声部/入声十二锡",
+            "assertion": "data/Pingshui_Rhyme.json 入声部/入声十二锡 共收录 89 个字形（原表条目 92 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:入:入声十五合",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 入声部/入声十五合",
+            "assertion": "data/Pingshui_Rhyme.json 入声部/入声十五合 共收录 75 个字形（原表条目 76 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:入:入声十六叶",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 入声部/入声十六叶",
+            "assertion": "data/Pingshui_Rhyme.json 入声部/入声十六叶 共收录 92 个字形（原表条目 93 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:入:入声十四缉",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 入声部/入声十四缉",
+            "assertion": "data/Pingshui_Rhyme.json 入声部/入声十四缉 共收录 67 个字形（原表条目 68 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:入:入声十药",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 入声部/入声十药",
+            "assertion": "data/Pingshui_Rhyme.json 入声部/入声十药 共收录 182 个字形（原表条目 188 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:入:入声四质",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 入声部/入声四质",
+            "assertion": "data/Pingshui_Rhyme.json 入声部/入声四质 共收录 147 个字形（原表条目 158 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:去:一送",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 去声部/一送",
+            "assertion": "data/Pingshui_Rhyme.json 去声部/一送 共收录 37 个字形（原表条目 38 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:去:七遇",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 去声部/七遇",
+            "assertion": "data/Pingshui_Rhyme.json 去声部/七遇 共收录 156 个字形（原表条目 162 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:去:三十陷",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 去声部/三十陷",
+            "assertion": "data/Pingshui_Rhyme.json 去声部/三十陷 共收录 23 个字形（原表条目 23 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:去:三绛",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 去声部/三绛",
+            "assertion": "data/Pingshui_Rhyme.json 去声部/三绛 共收录 13 个字形（原表条目 13 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:去:九泰",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 去声部/九泰",
+            "assertion": "data/Pingshui_Rhyme.json 去声部/九泰 共收录 60 个字形（原表条目 60 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:去:二十一个",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 去声部/二十一个",
+            "assertion": "data/Pingshui_Rhyme.json 去声部/二十一个 共收录 50 个字形（原表条目 52 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:去:二十七沁",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 去声部/二十七沁",
+            "assertion": "data/Pingshui_Rhyme.json 去声部/二十七沁 共收录 38 个字形（原表条目 39 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:去:二十三漾",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 去声部/二十三漾",
+            "assertion": "data/Pingshui_Rhyme.json 去声部/二十三漾 共收录 102 个字形（原表条目 104 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:去:二十九艳",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 去声部/二十九艳",
+            "assertion": "data/Pingshui_Rhyme.json 去声部/二十九艳 共收录 50 个字形（原表条目 52 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:去:二十二祃",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 去声部/二十二祃",
+            "assertion": "data/Pingshui_Rhyme.json 去声部/二十二祃 共收录 69 个字形（原表条目 69 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:去:二十五径",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 去声部/二十五径",
+            "assertion": "data/Pingshui_Rhyme.json 去声部/二十五径 共收录 55 个字形（原表条目 56 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:去:二十八勘",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 去声部/二十八勘",
+            "assertion": "data/Pingshui_Rhyme.json 去声部/二十八勘 共收录 36 个字形（原表条目 40 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:去:二十六宥",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 去声部/二十六宥",
+            "assertion": "data/Pingshui_Rhyme.json 去声部/二十六宥 共收录 157 个字形（原表条目 163 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:去:二十号",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 去声部/二十号",
+            "assertion": "data/Pingshui_Rhyme.json 去声部/二十号 共收录 62 个字形（原表条目 64 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:去:二十四敬",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 去声部/二十四敬",
+            "assertion": "data/Pingshui_Rhyme.json 去声部/二十四敬 共收录 59 个字形（原表条目 62 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:去:二宋",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 去声部/二宋",
+            "assertion": "data/Pingshui_Rhyme.json 去声部/二宋 共收录 27 个字形（原表条目 27 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:去:五未",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 去声部/五未",
+            "assertion": "data/Pingshui_Rhyme.json 去声部/五未 共收录 48 个字形（原表条目 50 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:去:八霁",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 去声部/八霁",
+            "assertion": "data/Pingshui_Rhyme.json 去声部/八霁 共收录 199 个字形（原表条目 207 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:去:六御",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 去声部/六御",
+            "assertion": "data/Pingshui_Rhyme.json 去声部/六御 共收录 59 个字形（原表条目 60 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:去:十一队",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 去声部/十一队",
+            "assertion": "data/Pingshui_Rhyme.json 去声部/十一队 共收录 114 个字形（原表条目 117 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:去:十七霰",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 去声部/十七霰",
+            "assertion": "data/Pingshui_Rhyme.json 去声部/十七霰 共收录 153 个字形（原表条目 162 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:去:十三问",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 去声部/十三问",
+            "assertion": "data/Pingshui_Rhyme.json 去声部/十三问 共收录 40 个字形（原表条目 40 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:去:十九效",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 去声部/十九效",
+            "assertion": "data/Pingshui_Rhyme.json 去声部/十九效 共收录 43 个字形（原表条目 44 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:去:十二震",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 去声部/十二震",
+            "assertion": "data/Pingshui_Rhyme.json 去声部/十二震 共收录 87 个字形（原表条目 88 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:去:十五翰",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 去声部/十五翰",
+            "assertion": "data/Pingshui_Rhyme.json 去声部/十五翰 共收录 105 个字形（原表条目 109 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:去:十八啸",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 去声部/十八啸",
+            "assertion": "data/Pingshui_Rhyme.json 去声部/十八啸 共收录 85 个字形（原表条目 86 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:去:十六谏",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 去声部/十六谏",
+            "assertion": "data/Pingshui_Rhyme.json 去声部/十六谏 共收录 45 个字形（原表条目 46 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:去:十卦",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 去声部/十卦",
+            "assertion": "data/Pingshui_Rhyme.json 去声部/十卦 共收录 74 个字形（原表条目 75 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:去:十四愿",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 去声部/十四愿",
+            "assertion": "data/Pingshui_Rhyme.json 去声部/十四愿 共收录 52 个字形（原表条目 55 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:pingshui:去:四寘",
+            "sourceId": "src:chinese_word_rhyme:pingshui",
+            "kind": "rhyme_entry",
+            "locator": "data/Pingshui_Rhyme.json 去声部/四寘",
+            "assertion": "data/Pingshui_Rhyme.json 去声部/四寘 共收录 274 个字形（原表条目 283 条）",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:rule:GUPING.NARROW:wangli15-p335-336",
+            "sourceId": "src:wangli:wenji15",
+            "kind": "dictionary",
+            "locator": "第二章第三节（四）孤平，页335–336（含平脚句脚注）；docs/rule-sources.md §9.1/13，C 已签",
+            "assertion": "采用平脚句的窄义孤平；不把所有整句单平都归入本规则。",
+            "excerpt": null,
+            "reviewStatus": "approved"
+          },
+          {
+            "id": "ev:rule:METER.POSITION:wangli15-p339-342-343",
+            "sourceId": "src:wangli:wenji15",
+            "kind": "dictionary",
+            "locator": "第二章第三节（六）半拗页339及（七）一三五不论页342–343；docs/rule-sources.md §9.5/9.6/13，C 已签",
+            "assertion": "奇位可变受句式、孤平与尾式制约；A 型小拗 info 是本项目已冻结教学口径。",
+            "excerpt": null,
+            "reviewStatus": "approved"
+          },
+          {
+            "id": "ev:rule:RELATION.DUI:wangli15-p333-334",
+            "sourceId": "src:wangli:wenji15",
+            "kind": "dictionary",
+            "locator": "第二章第三节（三）粘对，页333–334；docs/rule-sources.md §9.7/13，C 已签",
+            "assertion": "同联关键节奏位相对；具体变格交互按本项目已实现范围解释。",
+            "excerpt": null,
+            "reviewStatus": "approved"
+          },
+          {
+            "id": "ev:rule:RELATION.NIAN:wangli15-p334",
+            "sourceId": "src:wangli:wenji15",
+            "kind": "dictionary",
+            "locator": "第二章第三节（三）粘对，页334；docs/rule-sources.md §9.7/13，C 已签",
+            "assertion": "上联对句与下联出句关键节奏位相粘。",
+            "excerpt": null,
+            "reviewStatus": "approved"
+          },
+          {
+            "id": "ev:rule:RESCUE.DUIJU:wangli15-p339-341",
+            "sourceId": "src:wangli:wenji15",
+            "kind": "dictionary",
+            "locator": "第二章第三节（六）拗救·（b）对句相救，印刷页 339；实例页 340（《赋得古原草送别》）、页 341（陆游《夜泊水村》）；人审 docs/reviews/12_J03人审记录_第一批.md 第三部分第 12 项（2026-10-18）",
+            "assertion": "出句第四字（七言第六字）拗时，在对句第三字（七言第五字）用平声补偿；须同联",
+            "excerpt": null,
+            "reviewStatus": "approved"
+          },
+          {
+            "id": "ev:rule:RESCUE.SELF:wangli15-p339",
+            "sourceId": "src:wangli:wenji15",
+            "kind": "dictionary",
+            "locator": "第二章第三节（六）拗救·（a）本句自救，印刷页 339（PDF 346）；人审 docs/reviews/12_J03人审记录_第一批.md 第三部分第 10 项（2026-10-18）",
+            "assertion": "五言「平平仄仄平」第一字用仄拗时，第三字补平自救，成「仄平平仄平」；七言对应「仄仄仄平平仄平」",
+            "excerpt": null,
+            "reviewStatus": "approved"
+          },
+          {
+            "id": "ev:rule:RESCUE.TEAO:wangli15-p336-338",
+            "sourceId": "src:wangli:wenji15",
+            "kind": "dictionary",
+            "locator": "第二章第三节（五）特定的一种平仄格式，印刷页 336–338（PDF 343–345）；人审 docs/reviews/12_J03人审记录_第一批.md 第三部分第 11 项（2026-10-18）",
+            "assertion": "五言「平平仄平仄」、七言「仄仄平平仄平仄」为特定平仄格式：五言第三四字、七言第五六字平仄互换，且五言第一字、七言第三字必须用平声",
+            "excerpt": null,
+            "reviewStatus": "approved"
+          },
+          {
+            "id": "ev:rule:RHYME.COMMON:engineering-scope",
+            "sourceId": "src:project:teaching-v1-policy",
+            "kind": "dictionary",
+            "locator": "docs/rule-sources.md §11；docs/reviews/12_J03人审记录_第一批.md 流/楼归部；完整出处待核",
+            "assertion": "同部交集为 teaching-v1 执行策略；流/楼十一尤已有 J03 证据；三库完整映射与邻韵通押未全量审核。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:rule:TAIL.SANPING:engineering-scope",
+            "sourceId": "src:wangli:wenji15",
+            "kind": "dictionary",
+            "locator": "docs/rule-sources.md §9.9/13，印刷页371–372（部分依据）；J03 第一批第三部分备注",
+            "assertion": "王力页371–372只提供古体尾式的部分依据；近体检查及 error/warning 等级是工程教学口径，不声称文献规定该等级。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:rule:TAIL.SANZE:engineering-scope",
+            "sourceId": "src:wangli:wenji15",
+            "kind": "dictionary",
+            "locator": "docs/rule-sources.md §9.9/13，印刷页371–372（部分依据）；J03 第一批第三部分备注",
+            "assertion": "王力页371–372只提供古体尾式的部分依据；近体检查及 error/warning 等级是工程教学口径，不声称文献规定该等级。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:work:dengguanquelou:j03",
+            "sourceId": "src:wikisource:work:dengguanquelou",
+            "kind": "work_metadata",
+            "locator": "data/raw/works/dengguanquelou-2648160.wikitext；oldid=2648160；正文及体裁分类；审核 docs/reviews/12_J03人审记录_第一批.md；docs/reviews/13_J03三首核心诗逐字人审_第二批.md；docs/rule-sources.md",
+            "assertion": "采用已批准正文指纹 33836d104644fd0bd8ae71d6b67a631eff28c6a857a6c5b8f6a644f25d2892ca；作者 王之涣；体裁 regulated/wujue。正文版本/体裁来自已有 J03 与 C 记录，非按出律反推。来源繁体与采用简体的逐字差异见 data/works/review-closure.json。",
+            "excerpt": null,
+            "reviewStatus": "approved"
+          },
+          {
+            "id": "ev:work:huanghelou:j03",
+            "sourceId": "src:wikisource:work:huanghelou",
+            "kind": "work_metadata",
+            "locator": "data/raw/works/huanghelou-2492584.wikitext；oldid=2492584；正文及体裁分类；审核 docs/reviews/12_J03人审记录_第一批.md；docs/reviews/13_J03三首核心诗逐字人审_第二批.md；docs/rule-sources.md",
+            "assertion": "采用已批准正文指纹 7b65737ca79258301a2dd35cd880c41020415945c1ea006478eaf816edbf47a2；作者 崔颢；体裁 regulated/qilv。正文版本/体裁来自已有 J03 与 C 记录，非按出律反推。来源繁体与采用简体的逐字差异见 data/works/review-closure.json。",
+            "excerpt": null,
+            "reviewStatus": "approved"
+          },
+          {
+            "id": "ev:work:jingyesi:j03",
+            "sourceId": "src:wikisource:work:jingyesi",
+            "kind": "work_metadata",
+            "locator": "data/raw/works/jingyesi-8747585.wikitext；oldid=8747585；唐詩三百首段；审核 docs/reviews/12_J03人审记录_第一批.md；docs/reviews/13_J03三首核心诗逐字人审_第二批.md；docs/rule-sources.md",
+            "assertion": "采用已批准正文指纹 9d68fef608c1ae6010cfc3ddd7fb2429e60a861bab8c6453874c2adb16d0bdef；作者 李白；体裁 ancient/古绝。正文版本/体裁来自已有 J03 与 C 记录，非按出律反推。来源繁体与采用简体的逐字差异见 data/works/review-closure.json。",
+            "excerpt": null,
+            "reviewStatus": "approved"
+          },
+          {
+            "id": "ev:xinyun:一麻:一麻·上声",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 一麻·上声",
+            "assertion": "按本调归部：一麻·上声 收录 307 个字形；声调类 shang → 平仄 Z。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:一麻:一麻·去声",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 一麻·去声",
+            "assertion": "按本调归部：一麻·去声 收录 948 个字形；声调类 qu → 平仄 Z。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:一麻:一麻·阳平",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 一麻·阳平",
+            "assertion": "按本调归部：一麻·阳平 收录 692 个字形；声调类 yangping → 平仄 P。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:一麻:一麻·阴平",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 一麻·阴平",
+            "assertion": "按本调归部：一麻·阴平 收录 787 个字形；声调类 yinping → 平仄 P。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:七尤:七尤·上声",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 七尤·上声",
+            "assertion": "按本调归部：七尤·上声 收录 459 个字形；声调类 shang → 平仄 Z。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:七尤:七尤·去声",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 七尤·去声",
+            "assertion": "按本调归部：七尤·去声 收录 667 个字形；声调类 qu → 平仄 Z。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:七尤:七尤·阳平",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 七尤·阳平",
+            "assertion": "按本调归部：七尤·阳平 收录 688 个字形；声调类 yangping → 平仄 P。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:七尤:七尤·阴平",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 七尤·阴平",
+            "assertion": "按本调归部：七尤·阴平 收录 632 个字形；声调类 yinping → 平仄 P。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:三皆:三皆·上声",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 三皆·上声",
+            "assertion": "按本调归部：三皆·上声 收录 96 个字形；声调类 shang → 平仄 Z。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:三皆:三皆·去声",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 三皆·去声",
+            "assertion": "按本调归部：三皆·去声 收录 1222 个字形；声调类 qu → 平仄 Z。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:三皆:三皆·阳平",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 三皆·阳平",
+            "assertion": "按本调归部：三皆·阳平 收录 859 个字形；声调类 yangping → 平仄 P。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:三皆:三皆·阴平",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 三皆·阴平",
+            "assertion": "按本调归部：三皆·阴平 收录 270 个字形；声调类 yinping → 平仄 P。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:九文:九文·上声",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 九文·上声",
+            "assertion": "按本调归部：九文·上声 收录 700 个字形；声调类 shang → 平仄 Z。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:九文:九文·去声",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 九文·去声",
+            "assertion": "按本调归部：九文·去声 收录 1078 个字形；声调类 qu → 平仄 Z。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:九文:九文·阳平",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 九文·阳平",
+            "assertion": "按本调归部：九文·阳平 收录 967 个字形；声调类 yangping → 平仄 P。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:九文:九文·阴平",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 九文·阴平",
+            "assertion": "按本调归部：九文·阴平 收录 1018 个字形；声调类 yinping → 平仄 P。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:二波:二波·上声",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 二波·上声",
+            "assertion": "按本调归部：二波·上声 收录 439 个字形；声调类 shang → 平仄 Z。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:二波:二波·去声",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 二波·去声",
+            "assertion": "按本调归部：二波·去声 收录 1732 个字形；声调类 qu → 平仄 Z。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:二波:二波·阳平",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 二波·阳平",
+            "assertion": "按本调归部：二波·阳平 收录 1418 个字形；声调类 yangping → 平仄 P。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:二波:二波·阴平",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 二波·阴平",
+            "assertion": "按本调归部：二波·阴平 收录 628 个字形；声调类 yinping → 平仄 P。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:五微:五微·上声",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 五微·上声",
+            "assertion": "按本调归部：五微·上声 收录 535 个字形；声调类 shang → 平仄 Z。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:五微:五微·去声",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 五微·去声",
+            "assertion": "按本调归部：五微·去声 收录 1205 个字形；声调类 qu → 平仄 Z。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:五微:五微·阳平",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 五微·阳平",
+            "assertion": "按本调归部：五微·阳平 收录 527 个字形；声调类 yangping → 平仄 P。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:五微:五微·阴平",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 五微·阴平",
+            "assertion": "按本调归部：五微·阴平 收录 553 个字形；声调类 yinping → 平仄 P。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:八寒:八寒·上声",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 八寒·上声",
+            "assertion": "按本调归部：八寒·上声 收录 1674 个字形；声调类 shang → 平仄 Z。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:八寒:八寒·去声",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 八寒·去声",
+            "assertion": "按本调归部：八寒·去声 收录 2260 个字形；声调类 qu → 平仄 Z。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:八寒:八寒·阳平",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 八寒·阳平",
+            "assertion": "按本调归部：八寒·阳平 收录 1819 个字形；声调类 yangping → 平仄 P。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:八寒:八寒·阴平",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 八寒·阴平",
+            "assertion": "按本调归部：八寒·阴平 收录 1685 个字形；声调类 yinping → 平仄 P。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:六豪:六豪·上声",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 六豪·上声",
+            "assertion": "按本调归部：六豪·上声 收录 758 个字形；声调类 shang → 平仄 Z。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:六豪:六豪·去声",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 六豪·去声",
+            "assertion": "按本调归部：六豪·去声 收录 1053 个字形；声调类 qu → 平仄 Z。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:六豪:六豪·阳平",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 六豪·阳平",
+            "assertion": "按本调归部：六豪·阳平 收录 826 个字形；声调类 yangping → 平仄 P。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:六豪:六豪·阴平",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 六豪·阴平",
+            "assertion": "按本调归部：六豪·阴平 收录 927 个字形；声调类 yinping → 平仄 P。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:十一庚:十一庚·上声",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十一庚·上声",
+            "assertion": "按本调归部：十一庚·上声 收录 853 个字形；声调类 shang → 平仄 Z。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:十一庚:十一庚·去声",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十一庚·去声",
+            "assertion": "按本调归部：十一庚·去声 收录 944 个字形；声调类 qu → 平仄 Z。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:十一庚:十一庚·阳平",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十一庚·阳平",
+            "assertion": "按本调归部：十一庚·阳平 收录 1668 个字形；声调类 yangping → 平仄 P。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:十一庚:十一庚·阴平",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十一庚·阴平",
+            "assertion": "按本调归部：十一庚·阴平 收录 1565 个字形；声调类 yinping → 平仄 P。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:十三支:十三支·上声",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十三支·上声",
+            "assertion": "按本调归部：十三支·上声 收录 281 个字形；声调类 shang → 平仄 Z。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:十三支:十三支·去声",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十三支·去声",
+            "assertion": "按本调归部：十三支·去声 收录 829 个字形；声调类 qu → 平仄 Z。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:十三支:十三支·阳平",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十三支·阳平",
+            "assertion": "按本调归部：十三支·阳平 收录 334 个字形；声调类 yangping → 平仄 P。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:十三支:十三支·阴平",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十三支·阴平",
+            "assertion": "按本调归部：十三支·阴平 收录 535 个字形；声调类 yinping → 平仄 P。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:十二齐:十二齐·上声",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十二齐·上声",
+            "assertion": "按本调归部：十二齐·上声 收录 923 个字形；声调类 shang → 平仄 Z。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:十二齐:十二齐·去声",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十二齐·去声",
+            "assertion": "按本调归部：十二齐·去声 收录 2934 个字形；声调类 qu → 平仄 Z。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:十二齐:十二齐·阳平",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十二齐·阳平",
+            "assertion": "按本调归部：十二齐·阳平 收录 1933 个字形；声调类 yangping → 平仄 P。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:十二齐:十二齐·阴平",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十二齐·阴平",
+            "assertion": "按本调归部：十二齐·阴平 收录 1270 个字形；声调类 yinping → 平仄 P。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:十唐:十唐·上声",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十唐·上声",
+            "assertion": "按本调归部：十唐·上声 收录 568 个字形；声调类 shang → 平仄 Z。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:十唐:十唐·去声",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十唐·去声",
+            "assertion": "按本调归部：十唐·去声 收录 674 个字形；声调类 qu → 平仄 Z。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:十唐:十唐·阳平",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十唐·阳平",
+            "assertion": "按本调归部：十唐·阳平 收录 705 个字形；声调类 yangping → 平仄 P。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:十唐:十唐·阴平",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十唐·阴平",
+            "assertion": "按本调归部：十唐·阴平 收录 791 个字形；声调类 yinping → 平仄 P。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:十四姑:十四姑·上声",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十四姑·上声",
+            "assertion": "按本调归部：十四姑·上声 收录 626 个字形；声调类 shang → 平仄 Z。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:十四姑:十四姑·去声",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十四姑·去声",
+            "assertion": "按本调归部：十四姑·去声 收录 1434 个字形；声调类 qu → 平仄 Z。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:十四姑:十四姑·阳平",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十四姑·阳平",
+            "assertion": "按本调归部：十四姑·阳平 收录 1093 个字形；声调类 yangping → 平仄 P。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:十四姑:十四姑·阴平",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十四姑·阴平",
+            "assertion": "按本调归部：十四姑·阴平 收录 722 个字形；声调类 yinping → 平仄 P。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:四开:四开·上声",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 四开·上声",
+            "assertion": "按本调归部：四开·上声 收录 246 个字形；声调类 shang → 平仄 Z。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:四开:四开·去声",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 四开·去声",
+            "assertion": "按本调归部：四开·去声 收录 726 个字形；声调类 qu → 平仄 Z。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:四开:四开·阳平",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 四开·阳平",
+            "assertion": "按本调归部：四开·阳平 收录 269 个字形；声调类 yangping → 平仄 P。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          },
+          {
+            "id": "ev:xinyun:四开:四开·阴平",
+            "sourceId": "src:pinyin-data",
+            "kind": "dictionary",
+            "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 四开·阴平",
+            "assertion": "按本调归部：四开·阴平 收录 256 个字形；声调类 yinping → 平仄 P。该归部为项目重建表结论，十四韵规则权威文本待核实。",
+            "excerpt": null,
+            "reviewStatus": "unverified"
+          }
+        ],
+        "rules": [
+          {
+            "id": "METER.POSITION",
+            "version": "1",
+            "name": "逐位平仄允许集合（含 A 型小拗说明）",
+            "scope": "四类近体模板的逐字位允许集合",
+            "statement": "比较字位有效平仄候选集合与模板允许集合：候选全集包含于允许集合为通过，两者完全不相交为失败，部分相交或存在未知候选为待复核；不得挑选合律读音。A 型句常格平声位（五言第三字、七言第五字）用仄时，按本规则集教学口径允许，state=pass、severity=info、resolvedBy=null，复用本条 Finding 说明小拗，不产生相互矛盾的 fail 记录。",
+            "limitations": [
+              "仅为基础模板允许集合，不能替代孤平、尾式与拗救约束",
+              "可变位（中）口径已确认为 teaching-v1 工程执行口径：五言 A 中仄中平仄、B 中平中仄平、C 中平中仄仄、D 中仄仄平平；七言 A 中平中仄中平仄、B 中仄中平中仄平、C 中仄中平中仄仄、D 中平中仄仄平平",
+              "A 型小拗仅覆盖五言第三字/七言第五字；不是 RESCUE.TEAO 特拗，也不覆盖出句第四字（七言第六字）等大拗",
+              "出处核验采用 C 已签记录；出版社/版次仍未补，不能宣称整卡全部扩展情形已人审。"
+            ],
+            "evidenceIds": [
+              "ev:rule:METER.POSITION:wangli15-p339-342-343"
+            ]
+          },
+          {
+            "id": "RHYME.COMMON",
+            "version": "1",
+            "name": "全部必押韵脚公共归部",
+            "scope": "平声押韵的四类近体模板",
+            "statement": "检查所有必押韵脚在同一有效读音约束下的公共韵部；保留声调与归部的候选关联；信息不全时待复核。",
+            "limitations": [
+              "语文学出处及版本定位待人工核实",
+              "首句借韵策略另列",
+              "同部交集为 teaching-v1 执行策略；流/楼十一尤已有 J03 证据；三库完整映射与邻韵通押未全量审核。"
+            ],
+            "evidenceIds": [
+              "ev:rule:RHYME.COMMON:engineering-scope"
+            ]
+          },
+          {
+            "id": "RELATION.DUI",
+            "version": "1",
+            "name": "同联相对检查（失对）",
+            "scope": "四类近体模板相邻联",
+            "statement": "同联出句与对句关键节奏位平仄应相对；以第二字为主要判别点，结合五言二四、七言二四六及整句谱式；先识别已认可变格，再处理其对关系检查的影响；失败时说明失对。",
+            "limitations": [
+              "已认可变格不得机械重复报失对",
+              "七言扩展与变格位置口径待核定",
+              "出处核验采用 C 已签记录；出版社/版次仍未补，不能宣称整卡全部扩展情形已人审。"
+            ],
+            "evidenceIds": [
+              "ev:rule:RELATION.DUI:wangli15-p333-334"
+            ]
+          },
+          {
+            "id": "RELATION.NIAN",
+            "version": "1",
+            "name": "联间相粘检查（失粘）",
+            "scope": "四类近体模板相邻联之间",
+            "statement": "上联对句与下联出句关键节奏位平仄应相粘；以第二字为主要判别点，结合五言二四、七言二四六及整句谱式；失败时说明失粘。",
+            "limitations": [
+              "与变格的关系口径待核定",
+              "出处核验采用 C 已签记录；出版社/版次仍未补，不能宣称整卡全部扩展情形已人审。"
+            ],
+            "evidenceIds": [
+              "ev:rule:RELATION.NIAN:wangli15-p334"
+            ]
+          },
+          {
+            "id": "GUPING.NARROW",
+            "version": "1",
+            "name": "窄义孤平（B 型平收句）",
+            "scope": "B 型平收句",
+            "statement": "采用窄义口径：五言 ZPZZP，或七言对应后五字，在无相应救法时判定为孤平；不采用“整句只有一个平声”的宽口径，也不能仅因两个位置为“中”而放行。",
+            "limitations": [
+              "七言对应位置以“后五字”表述为准（Codex 2026-10-17 确认）",
+              "救法关系由 RESCUE.SELF 等另行表达",
+              "出处核验采用 C 已签记录；出版社/版次仍未补，不能宣称整卡全部扩展情形已人审。"
+            ],
+            "evidenceIds": [
+              "ev:rule:GUPING.NARROW:wangli15-p335-336"
+            ]
+          },
+          {
+            "id": "TAIL.SANPING",
+            "version": "1",
+            "name": "三平尾",
+            "scope": "按模板检查的近体句末三字",
+            "statement": "末三字全平为三平尾，明确违反时判定为 error。",
+            "limitations": [
+              "仅对按所选模板检查的近体句生效",
+              "语文学出处待人工核实",
+              "王力页371–372只提供古体尾式的部分依据；近体检查及 error/warning 等级是工程教学口径，不声称文献规定该等级。"
+            ],
+            "evidenceIds": [
+              "ev:rule:TAIL.SANPING:engineering-scope"
+            ]
+          },
+          {
+            "id": "TAIL.SANZE",
+            "version": "1",
+            "name": "三仄尾",
+            "scope": "按模板检查的近体句末三字",
+            "statement": "末三字全仄为三仄尾，明确出现时判定为 warning，不单独造成整诗 fail。",
+            "limitations": [
+              "仅对按所选模板检查的近体句生效",
+              "语文学出处待人工核实",
+              "王力页371–372只提供古体尾式的部分依据；近体检查及 error/warning 等级是工程教学口径，不声称文献规定该等级。"
+            ],
+            "evidenceIds": [
+              "ev:rule:TAIL.SANZE:engineering-scope"
+            ]
+          },
+          {
+            "id": "RESCUE.SELF",
+            "version": "1",
+            "name": "孤平自救",
+            "scope": "B 型平收句",
+            "statement": "认可 B 型五言 ZPPZP（七言对应尾部）为孤平自救；须指出拗位与救位，不能把所有 B 型偏离都算已救；认可后保留原偏离与救位说明，将该偏离当前状态记为 pass/info 并关联本条规则卡。",
+            "limitations": [
+              "一条救法只解决它明确覆盖的偏离，不豁免全句或全诗其他错误",
+              "更宽跨句救法不在 P0 范围",
+              "文献已核实（见 citation）；七言真实诗例仍待补"
+            ],
+            "evidenceIds": [
+              "ev:rule:RESCUE.SELF:wangli15-p339"
+            ]
+          },
+          {
+            "id": "RESCUE.TEAO",
+            "version": "1",
+            "name": "特拗",
+            "scope": "C 型句",
+            "statement": "认可 C 型五言 PPZPZ、七言对应“中仄平平仄平仄”为特拗；须匹配完整审核模式及其余约束后才认可，认可后不得对被认可位置重复硬报偏离；不能把 C 型特拗随意换成另一句型免检。",
+            "limitations": [
+              "七言完整模式的真实诗例仍待核实",
+              "文献已核实（见 citation）"
+            ],
+            "evidenceIds": [
+              "ev:rule:RESCUE.TEAO:wangli15-p336-338"
+            ]
+          },
+          {
+            "id": "RESCUE.DUIJU",
+            "version": "1",
+            "name": "同联对句相救",
+            "scope": "同联 A/B 型",
+            "statement": "认可同联 A/B 型的对句相救：五言出句第 4 字（拗）对应对句第 3 字（救），七言出句第 6 字对应对句第 5 字（位置按五言核心后移两字）；必须是同一联的出句与对句，不能跨联配对。位置正确只是必要条件，不是完整救法判据。",
+            "limitations": [
+              "七言位置已确认（6↔5，Codex 2026-10-17），完整判据（前缀、完整后五字、其他固定位置、候选不确定性）留 D2 验收",
+              "更宽跨句救法不在 P0 范围",
+              "文献已核实（见 citation）；七言纯 (b) 模式实例为 (a)(b) 结合"
+            ],
+            "evidenceIds": [
+              "ev:rule:RESCUE.DUIJU:wangli15-p339-341"
+            ]
+          }
+        ]
+      },
+      "summary": {
+        "status": "unsupported",
+        "message": "当前版本尚不支持此形式或关键规则。"
+      }
+    }
+  },
+  "results": [
+    {
+      "title": "登鹳雀楼",
+      "http": 503,
+      "schemaValid": false,
+      "assertions": [
+        {
+          "path": "genre.formId",
+          "equals": "wujue",
+          "actual": null,
+          "pass": false
+        },
+        {
+          "path": "genre.applicability",
+          "equals": "applicable",
+          "actual": null,
+          "pass": false
+        }
+      ],
+      "body": {
+        "error": {
+          "code": "DATA_NOT_READY",
+          "message": "LOOKUP_EVIDENCE_UNVERIFIED：字位 l1c2（日）参与读音/平仄推导的候选 pingshui:日:ru:入声四质 没有已审核证据（选择方式 unique）：未审核或缺失的证据不能支撑读音、平仄或归部结论，按数据未就绪处理",
+          "fieldErrors": [
+            {
+              "path": "tokenId",
+              "message": "l1c2"
+            },
+            {
+              "path": "character",
+              "message": "日"
+            },
+            {
+              "path": "candidateIds",
+              "message": "pingshui:日:ru:入声四质"
+            },
+            {
+              "path": "selectionMethod",
+              "message": "unique"
+            },
+            {
+              "path": "book",
+              "message": "pingshui"
+            },
+            {
+              "path": "dataVersion",
+              "message": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review2"
+            },
+            {
+              "path": "readingsCode",
+              "message": "LOOKUP_EVIDENCE_UNVERIFIED"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "title": "静夜思",
+      "http": 503,
+      "schemaValid": false,
+      "assertions": [
+        {
+          "path": "genre.formFamily",
+          "equals": "ancient",
+          "actual": null,
+          "pass": false
+        },
+        {
+          "path": "genre.formId",
+          "equals": null,
+          "actual": null,
+          "pass": false
+        },
+        {
+          "path": "genre.applicability",
+          "equals": "not_applicable",
+          "actual": null,
+          "pass": false
+        },
+        {
+          "path": "genre.basisType",
+          "equals": "reviewed_metadata",
+          "actual": null,
+          "pass": false
+        }
+      ],
+      "body": {
+        "error": {
+          "code": "DATA_NOT_READY",
+          "message": "LOOKUP_EVIDENCE_UNVERIFIED：字位 l1c1（床）参与读音/平仄推导的候选 pingshui:床:ping:七阳 没有已审核证据（选择方式 unique）：未审核或缺失的证据不能支撑读音、平仄或归部结论，按数据未就绪处理",
+          "fieldErrors": [
+            {
+              "path": "tokenId",
+              "message": "l1c1"
+            },
+            {
+              "path": "character",
+              "message": "床"
+            },
+            {
+              "path": "candidateIds",
+              "message": "pingshui:床:ping:七阳"
+            },
+            {
+              "path": "selectionMethod",
+              "message": "unique"
+            },
+            {
+              "path": "book",
+              "message": "pingshui"
+            },
+            {
+              "path": "dataVersion",
+              "message": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review2"
+            },
+            {
+              "path": "readingsCode",
+              "message": "LOOKUP_EVIDENCE_UNVERIFIED"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "title": "黄鹤楼",
+      "http": 503,
+      "schemaValid": false,
+      "assertions": [
+        {
+          "path": "genre.formId",
+          "equals": "qilv",
+          "actual": null,
+          "pass": false
+        },
+        {
+          "path": "genre.historicalTags.1",
+          "equals": "特殊拗律",
+          "actual": null,
+          "pass": false
+        }
+      ],
+      "body": {
+        "error": {
+          "code": "DATA_NOT_READY",
+          "message": "LOOKUP_EVIDENCE_UNVERIFIED：字位 l1c1（昔）参与读音/平仄推导的候选 pingshui:昔:ru:入声十一陌、pingshui:昔:ru:入声十药 没有已审核证据（选择方式 unresolved）：未审核或缺失的证据不能支撑读音、平仄或归部结论，按数据未就绪处理",
+          "fieldErrors": [
+            {
+              "path": "tokenId",
+              "message": "l1c1"
+            },
+            {
+              "path": "character",
+              "message": "昔"
+            },
+            {
+              "path": "candidateIds",
+              "message": "pingshui:昔:ru:入声十一陌,pingshui:昔:ru:入声十药"
+            },
+            {
+              "path": "selectionMethod",
+              "message": "unresolved"
+            },
+            {
+              "path": "book",
+              "message": "pingshui"
+            },
+            {
+              "path": "dataVersion",
+              "message": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review2"
+            },
+            {
+              "path": "readingsCode",
+              "message": "LOOKUP_EVIDENCE_UNVERIFIED"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,2829 @@
+{
+  "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review2",
+  "scope": "三首固定正文经已审语境规则约束后的候选；AI 原文字形对照不是人工批准，不更改 evidence.reviewStatus",
+  "source": {
+    "path": "data/raw/wikisource/PingshuiYun-8264804.wikitext",
+    "sha256": "f0297bff7b66cde18bcb2644b5d9c6320ac90253f63a8aa178e489170a810ce2",
+    "revision": "8264804"
+  },
+  "stats": {
+    "tokens": 96,
+    "effectiveCandidatesBackedPositions": 17,
+    "blockedPositions": 79,
+    "uniquePendingCandidates": 69,
+    "sourceMatchedCandidates": 68,
+    "sourceDiscrepancies": 1
+  },
+  "items": [
+    {
+      "candidate": {
+        "id": "pingshui:上:qu:二十三漾",
+        "character": "上",
+        "book": "pingshui",
+        "toneClass": "qu",
+        "tone": "Z",
+        "groupIds": [
+          "group:pingshui:去:二十三漾"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:去:二十三漾"
+        ]
+      },
+      "positions": [
+        "登鹳雀楼/l4c2",
+        "静夜思/l2c4",
+        "黄鹤楼/l8c4"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:去:二十三漾",
+          "header": "去聲二十三{{++|漾}}",
+          "headerLine": 494,
+          "glyphs": [
+            "上"
+          ],
+          "matches": [
+            {
+              "glyph": "上",
+              "line": 496,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:上:shang:二十二养",
+        "character": "上",
+        "book": "pingshui",
+        "toneClass": "shang",
+        "tone": "Z",
+        "groupIds": [
+          "group:pingshui:上:二十二养"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:上:二十二养"
+        ]
+      },
+      "positions": [
+        "登鹳雀楼/l4c2",
+        "静夜思/l2c4",
+        "黄鹤楼/l8c4"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:上:二十二养",
+          "header": "上聲二十二{{++|養}}",
+          "headerLine": 310,
+          "glyphs": [
+            "上"
+          ],
+          "matches": [
+            {
+              "glyph": "上",
+              "line": 312,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:举:shang:六语",
+        "character": "举",
+        "book": "pingshui",
+        "toneClass": "shang",
+        "tone": "Z",
+        "groupIds": [
+          "group:pingshui:上:六语"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:上:六语"
+        ]
+      },
+      "positions": [
+        "静夜思/l3c1"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:上:六语",
+          "header": "上聲六{{++|語}}",
+          "headerLine": 214,
+          "glyphs": [
+            "举",
+            "舉"
+          ],
+          "matches": [
+            {
+              "glyph": "舉",
+              "line": 216,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:云:ping:十二文",
+        "character": "云",
+        "book": "pingshui",
+        "toneClass": "ping",
+        "tone": "P",
+        "groupIds": [
+          "group:pingshui:上平:十二文"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:上平:十二文"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l4c2"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:上平:十二文",
+          "header": "上平聲十二{{++|文}}",
+          "headerLine": 69,
+          "glyphs": [
+            "云",
+            "雲"
+          ],
+          "matches": [
+            {
+              "glyph": "云",
+              "line": 71,
+              "part": "正文"
+            },
+            {
+              "glyph": "雲",
+              "line": 71,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:人:ping:十一真",
+        "character": "人",
+        "book": "pingshui",
+        "toneClass": "ping",
+        "tone": "P",
+        "groupIds": [
+          "group:pingshui:上平:十一真"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:上平:十一真"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l1c2",
+        "黄鹤楼/l8c6"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:上平:十一真",
+          "header": "上平聲十一{{++|真}}",
+          "headerLine": 63,
+          "glyphs": [
+            "人"
+          ],
+          "matches": [
+            {
+              "glyph": "人",
+              "line": 65,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:低:ping:八齐",
+        "character": "低",
+        "book": "pingshui",
+        "toneClass": "ping",
+        "tone": "P",
+        "groupIds": [
+          "group:pingshui:上平:八齐"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:上平:八齐"
+        ]
+      },
+      "positions": [
+        "静夜思/l4c1"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:上平:八齐",
+          "header": "上平聲八{{++|齊}}",
+          "headerLine": 45,
+          "glyphs": [
+            "低"
+          ],
+          "matches": [
+            {
+              "glyph": "低",
+              "line": 47,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:何:ping:五歌",
+        "character": "何",
+        "book": "pingshui",
+        "toneClass": "ping",
+        "tone": "P",
+        "groupIds": [
+          "group:pingshui:下平:五歌"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:下平:五歌"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l7c5"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:下平:五歌",
+          "header": "下平聲五{{++|歌}}",
+          "headerLine": 118,
+          "glyphs": [
+            "何"
+          ],
+          "matches": [
+            {
+              "glyph": "何",
+              "line": 120,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:余:ping:六鱼",
+        "character": "余",
+        "book": "pingshui",
+        "toneClass": "ping",
+        "tone": "P",
+        "groupIds": [
+          "group:pingshui:上平:六鱼"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:上平:六鱼"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l2c4"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:上平:六鱼",
+          "header": "上平聲六{{++|魚}}",
+          "headerLine": 33,
+          "glyphs": [
+            "余",
+            "餘"
+          ],
+          "matches": [
+            {
+              "glyph": "余",
+              "line": 35,
+              "part": "正文"
+            },
+            {
+              "glyph": "餘",
+              "line": 35,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:使:qu:四寘",
+        "character": "使",
+        "book": "pingshui",
+        "toneClass": "qu",
+        "tone": "Z",
+        "groupIds": [
+          "group:pingshui:去:四寘"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:去:四寘"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l8c5"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:去:四寘",
+          "header": "去聲四{{++|寘}}",
+          "headerLine": 380,
+          "glyphs": [
+            "使"
+          ],
+          "matches": [
+            {
+              "glyph": "使",
+              "line": 382,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:使:shang:四纸",
+        "character": "使",
+        "book": "pingshui",
+        "toneClass": "shang",
+        "tone": "Z",
+        "groupIds": [
+          "group:pingshui:上:四纸"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:上:四纸"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l8c5"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:上:四纸",
+          "header": "上聲四{{++|紙}}",
+          "headerLine": 202,
+          "glyphs": [
+            "使"
+          ],
+          "matches": [
+            {
+              "glyph": "使",
+              "line": 204,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:依:ping:五微",
+        "character": "依",
+        "book": "pingshui",
+        "toneClass": "ping",
+        "tone": "P",
+        "groupIds": [
+          "group:pingshui:上平:五微"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:上平:五微"
+        ]
+      },
+      "positions": [
+        "登鹳雀楼/l1c3"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:上平:五微",
+          "header": "上平聲五{{++|微}}",
+          "headerLine": 27,
+          "glyphs": [
+            "依"
+          ],
+          "matches": [
+            {
+              "glyph": "依",
+              "line": 29,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:光:ping:七阳",
+        "character": "光",
+        "book": "pingshui",
+        "toneClass": "ping",
+        "tone": "P",
+        "groupIds": [
+          "group:pingshui:下平:七阳"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:下平:七阳"
+        ]
+      },
+      "positions": [
+        "静夜思/l1c5"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:下平:七阳",
+          "header": "下平聲七{{++|陽}}",
+          "headerLine": 130,
+          "glyphs": [
+            "光"
+          ],
+          "matches": [
+            {
+              "glyph": "光",
+              "line": 132,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:入:ru:入声十四缉",
+        "character": "入",
+        "book": "pingshui",
+        "toneClass": "ru",
+        "tone": "Z",
+        "groupIds": [
+          "group:pingshui:入:入声十四缉"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:入:入声十四缉"
+        ]
+      },
+      "positions": [
+        "登鹳雀楼/l2c3"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:入:入声十四缉",
+          "header": "入聲十四{{++|緝}}",
+          "headerLine": 631,
+          "glyphs": [
+            "入"
+          ],
+          "matches": [
+            {
+              "glyph": "入",
+              "line": 633,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:关:ping:十五删",
+        "character": "关",
+        "book": "pingshui",
+        "toneClass": "ping",
+        "tone": "P",
+        "groupIds": [
+          "group:pingshui:上平:十五删"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:上平:十五删"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l7c4"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:上平:十五删",
+          "header": "上平聲十五{{++|刪}}",
+          "headerLine": 87,
+          "glyphs": [
+            "关",
+            "關"
+          ],
+          "matches": [
+            {
+              "glyph": "關",
+              "line": 89,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:前:ping:一先",
+        "character": "前",
+        "book": "pingshui",
+        "toneClass": "ping",
+        "tone": "P",
+        "groupIds": [
+          "group:pingshui:下平:一先"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:下平:一先"
+        ]
+      },
+      "positions": [
+        "静夜思/l1c2"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:下平:一先",
+          "header": "下平聲一{{++|先}}",
+          "headerLine": 94,
+          "glyphs": [
+            "前"
+          ],
+          "matches": [
+            {
+              "glyph": "前",
+              "line": 96,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:千:ping:一先",
+        "character": "千",
+        "book": "pingshui",
+        "toneClass": "ping",
+        "tone": "P",
+        "groupIds": [
+          "group:pingshui:下平:一先"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:下平:一先"
+        ]
+      },
+      "positions": [
+        "登鹳雀楼/l3c3",
+        "黄鹤楼/l4c3"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:下平:一先",
+          "header": "下平聲一{{++|先}}",
+          "headerLine": 94,
+          "glyphs": [
+            "千"
+          ],
+          "matches": [
+            {
+              "glyph": "千",
+              "line": 96,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:历:ru:入声十二锡",
+        "character": "历",
+        "book": "pingshui",
+        "toneClass": "ru",
+        "tone": "Z",
+        "groupIds": [
+          "group:pingshui:入:入声十二锡"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:入:入声十二锡"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l5c3",
+        "黄鹤楼/l5c4"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:入:入声十二锡",
+          "header": "入聲十二{{++|錫}}",
+          "headerLine": 617,
+          "glyphs": [
+            "历",
+            "歷"
+          ],
+          "matches": [
+            {
+              "glyph": "歷",
+              "line": 619,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:去:qu:六御",
+        "character": "去",
+        "book": "pingshui",
+        "toneClass": "qu",
+        "tone": "Z",
+        "groupIds": [
+          "group:pingshui:去:六御"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:去:六御"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l1c7",
+        "黄鹤楼/l3c4"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:去:六御",
+          "header": "去聲六{{++|御}}",
+          "headerLine": 392,
+          "glyphs": [
+            "去"
+          ],
+          "matches": [
+            {
+              "glyph": "去",
+              "line": 394,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:去:shang:六语",
+        "character": "去",
+        "book": "pingshui",
+        "toneClass": "shang",
+        "tone": "Z",
+        "groupIds": [
+          "group:pingshui:上:六语"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:上:六语"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l1c7",
+        "黄鹤楼/l3c4"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:上:六语",
+          "header": "上聲六{{++|語}}",
+          "headerLine": 214,
+          "glyphs": [
+            "去"
+          ],
+          "matches": [
+            {
+              "glyph": "去",
+              "line": 216,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:地:qu:四寘",
+        "character": "地",
+        "book": "pingshui",
+        "toneClass": "qu",
+        "tone": "Z",
+        "groupIds": [
+          "group:pingshui:去:四寘"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:去:四寘"
+        ]
+      },
+      "positions": [
+        "静夜思/l2c3",
+        "黄鹤楼/l2c2"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:去:四寘",
+          "header": "去聲四{{++|寘}}",
+          "headerLine": 380,
+          "glyphs": [
+            "地"
+          ],
+          "matches": [
+            {
+              "glyph": "地",
+              "line": 382,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:处:qu:六御",
+        "character": "处",
+        "book": "pingshui",
+        "toneClass": "qu",
+        "tone": "Z",
+        "groupIds": [
+          "group:pingshui:去:六御"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:去:六御"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l7c6"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:去:六御",
+          "header": "去聲六{{++|御}}",
+          "headerLine": 392,
+          "glyphs": [
+            "处",
+            "處"
+          ],
+          "matches": [
+            {
+              "glyph": "處",
+              "line": 394,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:处:shang:六语",
+        "character": "处",
+        "book": "pingshui",
+        "toneClass": "shang",
+        "tone": "Z",
+        "groupIds": [
+          "group:pingshui:上:六语"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:上:六语"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l7c6"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:上:六语",
+          "header": "上聲六{{++|語}}",
+          "headerLine": 214,
+          "glyphs": [
+            "处",
+            "處"
+          ],
+          "matches": [
+            {
+              "glyph": "處",
+              "line": 216,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:复:qu:二十六宥",
+        "character": "复",
+        "book": "pingshui",
+        "toneClass": "qu",
+        "tone": "Z",
+        "groupIds": [
+          "group:pingshui:去:二十六宥"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:去:二十六宥"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l3c6"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:去:二十六宥",
+          "header": "去聲二十六{{++|宥}}",
+          "headerLine": 514,
+          "glyphs": [
+            "复",
+            "復"
+          ],
+          "matches": [
+            {
+              "glyph": "復",
+              "line": 516,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:复:ru:入声一屋",
+        "character": "复",
+        "book": "pingshui",
+        "toneClass": "ru",
+        "tone": "Z",
+        "groupIds": [
+          "group:pingshui:入:入声一屋"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:入:入声一屋"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l3c6"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:入:入声一屋",
+          "header": "入聲一{{++|屋}}",
+          "headerLine": 547,
+          "glyphs": [
+            "复",
+            "復"
+          ],
+          "matches": [
+            {
+              "glyph": "復",
+              "line": 549,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:头:ping:十一尤",
+        "character": "头",
+        "book": "pingshui",
+        "toneClass": "ping",
+        "tone": "P",
+        "groupIds": [
+          "group:pingshui:下平:十一尤"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:下平:十一尤"
+        ]
+      },
+      "positions": [
+        "静夜思/l3c2",
+        "静夜思/l4c2"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:下平:十一尤",
+          "header": "下平聲十一{{++|尤}}",
+          "headerLine": 154,
+          "glyphs": [
+            "头",
+            "頭"
+          ],
+          "matches": [
+            {
+              "glyph": "頭",
+              "line": 156,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:尽:shang:十一轸",
+        "character": "尽",
+        "book": "pingshui",
+        "toneClass": "shang",
+        "tone": "Z",
+        "groupIds": [
+          "group:pingshui:上:十一轸"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:上:十一轸"
+        ]
+      },
+      "positions": [
+        "登鹳雀楼/l1c5"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:上:十一轸",
+          "header": "上聲十一{{++|軫}}",
+          "headerLine": 244,
+          "glyphs": [
+            "尽",
+            "盡"
+          ],
+          "matches": [
+            {
+              "glyph": "盡",
+              "line": 246,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:层:ping:十蒸",
+        "character": "层",
+        "book": "pingshui",
+        "toneClass": "ping",
+        "tone": "P",
+        "groupIds": [
+          "group:pingshui:下平:十蒸"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:下平:十蒸"
+        ]
+      },
+      "positions": [
+        "登鹳雀楼/l4c4"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:下平:十蒸",
+          "header": "下平聲十{{++|蒸}}",
+          "headerLine": 148,
+          "glyphs": [
+            "层",
+            "層"
+          ],
+          "matches": [
+            {
+              "glyph": "層",
+              "line": 150,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:山:ping:十五删",
+        "character": "山",
+        "book": "pingshui",
+        "toneClass": "ping",
+        "tone": "P",
+        "groupIds": [
+          "group:pingshui:上平:十五删"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:上平:十五删"
+        ]
+      },
+      "positions": [
+        "登鹳雀楼/l1c4"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:上平:十五删",
+          "header": "上平聲十五{{++|刪}}",
+          "headerLine": 87,
+          "glyphs": [
+            "山"
+          ],
+          "matches": [
+            {
+              "glyph": "山",
+              "line": 89,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:川:ping:一先",
+        "character": "川",
+        "book": "pingshui",
+        "toneClass": "ping",
+        "tone": "P",
+        "groupIds": [
+          "group:pingshui:下平:一先"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:下平:一先"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l5c2"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:下平:一先",
+          "header": "下平聲一{{++|先}}",
+          "headerLine": 94,
+          "glyphs": [
+            "川"
+          ],
+          "matches": [
+            {
+              "glyph": "川",
+              "line": 96,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:已:shang:四纸",
+        "character": "已",
+        "book": "pingshui",
+        "toneClass": "shang",
+        "tone": "Z",
+        "groupIds": [
+          "group:pingshui:上:四纸"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:上:四纸"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l1c3"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:上:四纸",
+          "header": "上聲四{{++|紙}}",
+          "headerLine": 202,
+          "glyphs": [
+            "已"
+          ],
+          "matches": [
+            {
+              "glyph": "已",
+              "line": 204,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:床:ping:七阳",
+        "character": "床",
+        "book": "pingshui",
+        "toneClass": "ping",
+        "tone": "P",
+        "groupIds": [
+          "group:pingshui:下平:七阳"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:下平:七阳"
+        ]
+      },
+      "positions": [
+        "静夜思/l1c1"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:下平:七阳",
+          "header": "下平聲七{{++|陽}}",
+          "headerLine": 130,
+          "glyphs": [
+            "床",
+            "牀"
+          ],
+          "matches": [
+            {
+              "glyph": "床",
+              "line": 132,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:悠:ping:十一尤",
+        "character": "悠",
+        "book": "pingshui",
+        "toneClass": "ping",
+        "tone": "P",
+        "groupIds": [
+          "group:pingshui:下平:十一尤"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:下平:十一尤"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l4c6",
+        "黄鹤楼/l4c7"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:下平:十一尤",
+          "header": "下平聲十一{{++|尤}}",
+          "headerLine": 154,
+          "glyphs": [
+            "悠"
+          ],
+          "matches": [
+            {
+              "glyph": "悠",
+              "line": 156,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:愁:ping:十一尤",
+        "character": "愁",
+        "book": "pingshui",
+        "toneClass": "ping",
+        "tone": "P",
+        "groupIds": [
+          "group:pingshui:下平:十一尤"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:下平:十一尤"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l8c7"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:下平:十一尤",
+          "header": "下平聲十一{{++|尤}}",
+          "headerLine": 154,
+          "glyphs": [
+            "愁"
+          ],
+          "matches": [
+            {
+              "glyph": "愁",
+              "line": 156,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:故:qu:七遇",
+        "character": "故",
+        "book": "pingshui",
+        "toneClass": "qu",
+        "tone": "Z",
+        "groupIds": [
+          "group:pingshui:去:七遇"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:去:七遇"
+        ]
+      },
+      "positions": [
+        "静夜思/l4c4"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:去:七遇",
+          "header": "去聲七{{++|遇}}",
+          "headerLine": 398,
+          "glyphs": [
+            "故"
+          ],
+          "matches": [
+            {
+              "glyph": "故",
+              "line": 400,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:日:ru:入声四质",
+        "character": "日",
+        "book": "pingshui",
+        "toneClass": "ru",
+        "tone": "Z",
+        "groupIds": [
+          "group:pingshui:入:入声四质"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:入:入声四质"
+        ]
+      },
+      "positions": [
+        "登鹳雀楼/l1c2",
+        "黄鹤楼/l7c1"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:入:入声四质",
+          "header": "入聲四{{++|質}}",
+          "headerLine": 567,
+          "glyphs": [
+            "日"
+          ],
+          "matches": [
+            {
+              "glyph": "日",
+              "line": 569,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:明:ping:八庚",
+        "character": "明",
+        "book": "pingshui",
+        "toneClass": "ping",
+        "tone": "P",
+        "groupIds": [
+          "group:pingshui:下平:八庚"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:下平:八庚"
+        ]
+      },
+      "positions": [
+        "静夜思/l1c3",
+        "静夜思/l3c4"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:下平:八庚",
+          "header": "下平聲八{{++|庚}}",
+          "headerLine": 136,
+          "glyphs": [
+            "明"
+          ],
+          "matches": [
+            {
+              "glyph": "明",
+              "line": 138,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:昔:ru:入声十一陌",
+        "character": "昔",
+        "book": "pingshui",
+        "toneClass": "ru",
+        "tone": "Z",
+        "groupIds": [
+          "group:pingshui:入:入声十一陌"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:入:入声十一陌"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l1c1"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:入:入声十一陌",
+          "header": "入聲十一{{++|陌}}",
+          "headerLine": 611,
+          "glyphs": [
+            "昔"
+          ],
+          "matches": [
+            {
+              "glyph": "昔",
+              "line": 613,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:昔:ru:入声十药",
+        "character": "昔",
+        "book": "pingshui",
+        "toneClass": "ru",
+        "tone": "Z",
+        "groupIds": [
+          "group:pingshui:入:入声十药"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:入:入声十药"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l1c1"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:入:入声十药",
+          "header": "入聲十{{++|藥}}",
+          "headerLine": 603,
+          "glyphs": [
+            "昔"
+          ],
+          "matches": [
+            {
+              "glyph": "昔",
+              "line": 605,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:是:shang:四纸",
+        "character": "是",
+        "book": "pingshui",
+        "toneClass": "shang",
+        "tone": "Z",
+        "groupIds": [
+          "group:pingshui:上:四纸"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:上:四纸"
+        ]
+      },
+      "positions": [
+        "静夜思/l2c2",
+        "黄鹤楼/l7c7"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:上:四纸",
+          "header": "上聲四{{++|紙}}",
+          "headerLine": 202,
+          "glyphs": [
+            "是"
+          ],
+          "matches": [
+            {
+              "glyph": "是",
+              "line": 204,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:晴:ping:八庚",
+        "character": "晴",
+        "book": "pingshui",
+        "toneClass": "ping",
+        "tone": "P",
+        "groupIds": [
+          "group:pingshui:下平:八庚"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:下平:八庚"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l5c1"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:下平:八庚",
+          "header": "下平聲八{{++|庚}}",
+          "headerLine": 136,
+          "glyphs": [
+            "晴"
+          ],
+          "matches": [
+            {
+              "glyph": "晴",
+              "line": 138,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:暮:qu:七遇",
+        "character": "暮",
+        "book": "pingshui",
+        "toneClass": "qu",
+        "tone": "Z",
+        "groupIds": [
+          "group:pingshui:去:七遇"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:去:七遇"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l7c2"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:去:七遇",
+          "header": "去聲七{{++|遇}}",
+          "headerLine": 398,
+          "glyphs": [
+            "暮"
+          ],
+          "matches": [
+            {
+              "glyph": "暮",
+              "line": 400,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:月:ru:入声六月",
+        "character": "月",
+        "book": "pingshui",
+        "toneClass": "ru",
+        "tone": "Z",
+        "groupIds": [
+          "group:pingshui:入:入声六月"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:入:入声六月"
+        ]
+      },
+      "positions": [
+        "静夜思/l1c4",
+        "静夜思/l3c5"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:入:入声六月",
+          "header": "入聲六{{++|月}}",
+          "headerLine": 579,
+          "glyphs": [
+            "月"
+          ],
+          "matches": [
+            {
+              "glyph": "月",
+              "line": 581,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:树:qu:七遇",
+        "character": "树",
+        "book": "pingshui",
+        "toneClass": "qu",
+        "tone": "Z",
+        "groupIds": [
+          "group:pingshui:去:七遇"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:去:七遇"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l5c7"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:去:七遇",
+          "header": "去聲七{{++|遇}}",
+          "headerLine": 398,
+          "glyphs": [
+            "树",
+            "樹"
+          ],
+          "matches": [
+            {
+              "glyph": "樹",
+              "line": 400,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:树:shang:七麌",
+        "character": "树",
+        "book": "pingshui",
+        "toneClass": "shang",
+        "tone": "Z",
+        "groupIds": [
+          "group:pingshui:上:七麌"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:上:七麌"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l5c7"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:上:七麌",
+          "header": "上聲七{{++|麌}}",
+          "headerLine": 220,
+          "glyphs": [
+            "树",
+            "樹"
+          ],
+          "matches": [
+            {
+              "glyph": "樹",
+              "line": 222,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:欲:ru:入声二沃",
+        "character": "欲",
+        "book": "pingshui",
+        "toneClass": "ru",
+        "tone": "Z",
+        "groupIds": [
+          "group:pingshui:入:入声二沃"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:入:入声二沃"
+        ]
+      },
+      "positions": [
+        "登鹳雀楼/l3c1"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:入:入声二沃",
+          "header": "入聲二{{++|沃}}",
+          "headerLine": 553,
+          "glyphs": [
+            "欲"
+          ],
+          "matches": [
+            {
+              "glyph": "欲",
+              "line": 555,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:此:shang:四纸",
+        "character": "此",
+        "book": "pingshui",
+        "toneClass": "shang",
+        "tone": "Z",
+        "groupIds": [
+          "group:pingshui:上:四纸"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:上:四纸"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l2c1"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:上:四纸",
+          "header": "上聲四{{++|紙}}",
+          "headerLine": 202,
+          "glyphs": [
+            "此"
+          ],
+          "matches": [
+            {
+              "glyph": "此",
+              "line": 204,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:江:ping:三江",
+        "character": "江",
+        "book": "pingshui",
+        "toneClass": "ping",
+        "tone": "P",
+        "groupIds": [
+          "group:pingshui:上平:三江"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:上平:三江"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l8c3"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:上平:三江",
+          "header": "上平聲三{{++|江}}",
+          "headerLine": 15,
+          "glyphs": [
+            "江"
+          ],
+          "matches": [
+            {
+              "glyph": "江",
+              "line": 17,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:河:ping:五歌",
+        "character": "河",
+        "book": "pingshui",
+        "toneClass": "ping",
+        "tone": "P",
+        "groupIds": [
+          "group:pingshui:下平:五歌"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:下平:五歌"
+        ]
+      },
+      "positions": [
+        "登鹳雀楼/l2c2"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:下平:五歌",
+          "header": "下平聲五{{++|歌}}",
+          "headerLine": 118,
+          "glyphs": [
+            "河"
+          ],
+          "matches": [
+            {
+              "glyph": "河",
+              "line": 120,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:波:ping:五歌",
+        "character": "波",
+        "book": "pingshui",
+        "toneClass": "ping",
+        "tone": "P",
+        "groupIds": [
+          "group:pingshui:下平:五歌"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:下平:五歌"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l8c2"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:下平:五歌",
+          "header": "下平聲五{{++|歌}}",
+          "headerLine": 118,
+          "glyphs": [
+            "波"
+          ],
+          "matches": [
+            {
+              "glyph": "波",
+              "line": 120,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:洲:ping:十一尤",
+        "character": "洲",
+        "book": "pingshui",
+        "toneClass": "ping",
+        "tone": "P",
+        "groupIds": [
+          "group:pingshui:下平:十一尤"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:下平:十一尤"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l6c7"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:下平:十一尤",
+          "header": "下平聲十一{{++|尤}}",
+          "headerLine": 154,
+          "glyphs": [
+            "洲"
+          ],
+          "matches": [
+            {
+              "glyph": "洲",
+              "line": 156,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:海:shang:十贿",
+        "character": "海",
+        "book": "pingshui",
+        "toneClass": "shang",
+        "tone": "Z",
+        "groupIds": [
+          "group:pingshui:上:十贿"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:上:十贿"
+        ]
+      },
+      "positions": [
+        "登鹳雀楼/l2c4"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:上:十贿",
+          "header": "上聲十{{++|賄}}",
+          "headerLine": 238,
+          "glyphs": [
+            "海"
+          ],
+          "matches": [
+            {
+              "glyph": "海",
+              "line": 240,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:烟:ping:一先",
+        "character": "烟",
+        "book": "pingshui",
+        "toneClass": "ping",
+        "tone": "P",
+        "groupIds": [
+          "group:pingshui:下平:一先"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:下平:一先"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l8c1"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:下平:一先",
+          "header": "下平聲一{{++|先}}",
+          "headerLine": 94,
+          "glyphs": [
+            "烟",
+            "煙"
+          ],
+          "matches": [
+            {
+              "glyph": "煙",
+              "line": 96,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:疑:ping:四支",
+        "character": "疑",
+        "book": "pingshui",
+        "toneClass": "ping",
+        "tone": "P",
+        "groupIds": [
+          "group:pingshui:上平:四支"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:上平:四支"
+        ]
+      },
+      "positions": [
+        "静夜思/l2c1"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:上平:四支",
+          "header": "上平聲四{{++|支}}",
+          "headerLine": 21,
+          "glyphs": [
+            "疑"
+          ],
+          "matches": [
+            {
+              "glyph": "疑",
+              "line": 23,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:目:ru:入声一屋",
+        "character": "目",
+        "book": "pingshui",
+        "toneClass": "ru",
+        "tone": "Z",
+        "groupIds": [
+          "group:pingshui:入:入声一屋"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:入:入声一屋"
+        ]
+      },
+      "positions": [
+        "登鹳雀楼/l3c5"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:入:入声一屋",
+          "header": "入聲一{{++|屋}}",
+          "headerLine": 547,
+          "glyphs": [
+            "目"
+          ],
+          "matches": [
+            {
+              "glyph": "目",
+              "line": 549,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:穷:ping:一东",
+        "character": "穷",
+        "book": "pingshui",
+        "toneClass": "ping",
+        "tone": "P",
+        "groupIds": [
+          "group:pingshui:上平:一东"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:上平:一东"
+        ]
+      },
+      "positions": [
+        "登鹳雀楼/l3c2"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:上平:一东",
+          "header": "上平聲一{{++|東}}",
+          "headerLine": 3,
+          "glyphs": [
+            "穷",
+            "窮"
+          ],
+          "matches": [
+            {
+              "glyph": "窮",
+              "line": 5,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:芳:ping:七阳",
+        "character": "芳",
+        "book": "pingshui",
+        "toneClass": "ping",
+        "tone": "P",
+        "groupIds": [
+          "group:pingshui:下平:七阳"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:下平:七阳"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l6c1"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:下平:七阳",
+          "header": "下平聲七{{++|陽}}",
+          "headerLine": 130,
+          "glyphs": [
+            "芳"
+          ],
+          "matches": [
+            {
+              "glyph": "芳",
+              "line": 132,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:草:shang:十九皓",
+        "character": "草",
+        "book": "pingshui",
+        "toneClass": "shang",
+        "tone": "Z",
+        "groupIds": [
+          "group:pingshui:上:十九皓"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:上:十九皓"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l6c2"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:上:十九皓",
+          "header": "上聲十九{{++|皓}}",
+          "headerLine": 292,
+          "glyphs": [
+            "草"
+          ],
+          "matches": [
+            {
+              "glyph": "草",
+              "line": 294,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:萋:ping:八齐",
+        "character": "萋",
+        "book": "pingshui",
+        "toneClass": "ping",
+        "tone": "P",
+        "groupIds": [
+          "group:pingshui:上平:八齐"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:上平:八齐"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l6c3",
+        "黄鹤楼/l6c4"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:上平:八齐",
+          "header": "上平聲八{{++|齊}}",
+          "headerLine": 45,
+          "glyphs": [
+            "萋"
+          ],
+          "matches": [
+            {
+              "glyph": "萋",
+              "line": 47,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:载:qu:十一队",
+        "character": "载",
+        "book": "pingshui",
+        "toneClass": "qu",
+        "tone": "Z",
+        "groupIds": [
+          "group:pingshui:去:十一队"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:去:十一队"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l4c4"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:去:十一队",
+          "header": "去聲十一{{++|隊}}",
+          "headerLine": 422,
+          "glyphs": [
+            "载",
+            "載"
+          ],
+          "matches": [
+            {
+              "glyph": "載",
+              "line": 424,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:载:shang:十贿",
+        "character": "载",
+        "book": "pingshui",
+        "toneClass": "shang",
+        "tone": "Z",
+        "groupIds": [
+          "group:pingshui:上:十贿"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:上:十贿"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l4c4"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:上:十贿",
+          "header": "上聲十{{++|賄}}",
+          "headerLine": 238,
+          "glyphs": [
+            "载",
+            "載"
+          ],
+          "matches": [
+            {
+              "glyph": "載",
+              "line": 240,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:返:shang:十三阮",
+        "character": "返",
+        "book": "pingshui",
+        "toneClass": "shang",
+        "tone": "Z",
+        "groupIds": [
+          "group:pingshui:上:十三阮"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:上:十三阮"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l3c7"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:上:十三阮",
+          "header": "上聲十三{{++|阮}}",
+          "headerLine": 256,
+          "glyphs": [
+            "返"
+          ],
+          "matches": [
+            {
+              "glyph": "返",
+              "line": 258,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:里:qu:四寘",
+        "character": "里",
+        "book": "pingshui",
+        "toneClass": "qu",
+        "tone": "Z",
+        "groupIds": [
+          "group:pingshui:去:四寘"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:去:四寘"
+        ]
+      },
+      "positions": [
+        "登鹳雀楼/l3c4"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:去:四寘",
+          "header": "去聲四{{++|寘}}",
+          "headerLine": 380,
+          "glyphs": [
+            "里"
+          ],
+          "matches": []
+        }
+      ],
+      "machineStatus": "source_discrepancy",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:里:shang:四纸",
+        "character": "里",
+        "book": "pingshui",
+        "toneClass": "shang",
+        "tone": "Z",
+        "groupIds": [
+          "group:pingshui:上:四纸"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:上:四纸"
+        ]
+      },
+      "positions": [
+        "登鹳雀楼/l3c4"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:上:四纸",
+          "header": "上聲四{{++|紙}}",
+          "headerLine": 202,
+          "glyphs": [
+            "里"
+          ],
+          "matches": [
+            {
+              "glyph": "里",
+              "line": 204,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:阳:ping:七阳",
+        "character": "阳",
+        "book": "pingshui",
+        "toneClass": "ping",
+        "tone": "P",
+        "groupIds": [
+          "group:pingshui:下平:七阳"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:下平:七阳"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l5c6"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:下平:七阳",
+          "header": "下平聲七{{++|陽}}",
+          "headerLine": 130,
+          "glyphs": [
+            "阳",
+            "陽"
+          ],
+          "matches": [
+            {
+              "glyph": "陽",
+              "line": 132,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:霜:ping:七阳",
+        "character": "霜",
+        "book": "pingshui",
+        "toneClass": "ping",
+        "tone": "P",
+        "groupIds": [
+          "group:pingshui:下平:七阳"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:下平:七阳"
+        ]
+      },
+      "positions": [
+        "静夜思/l2c5"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:下平:七阳",
+          "header": "下平聲七{{++|陽}}",
+          "headerLine": 130,
+          "glyphs": [
+            "霜"
+          ],
+          "matches": [
+            {
+              "glyph": "霜",
+              "line": 132,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:鹉:shang:七麌",
+        "character": "鹉",
+        "book": "pingshui",
+        "toneClass": "shang",
+        "tone": "Z",
+        "groupIds": [
+          "group:pingshui:上:七麌"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:上:七麌"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l6c6"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:上:七麌",
+          "header": "上聲七{{++|麌}}",
+          "headerLine": 220,
+          "glyphs": [
+            "鹉",
+            "鵡"
+          ],
+          "matches": [
+            {
+              "glyph": "鵡",
+              "line": 222,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:鹤:ru:入声十药",
+        "character": "鹤",
+        "book": "pingshui",
+        "toneClass": "ru",
+        "tone": "Z",
+        "groupIds": [
+          "group:pingshui:入:入声十药"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:入:入声十药"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l1c6",
+        "黄鹤楼/l2c6",
+        "黄鹤楼/l3c2"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:入:入声十药",
+          "header": "入聲十{{++|藥}}",
+          "headerLine": 603,
+          "glyphs": [
+            "鹤",
+            "鶴"
+          ],
+          "matches": [
+            {
+              "glyph": "鶴",
+              "line": 605,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:鹦:ping:八庚",
+        "character": "鹦",
+        "book": "pingshui",
+        "toneClass": "ping",
+        "tone": "P",
+        "groupIds": [
+          "group:pingshui:下平:八庚"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:下平:八庚"
+        ]
+      },
+      "positions": [
+        "黄鹤楼/l6c5"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:下平:八庚",
+          "header": "下平聲八{{++|庚}}",
+          "headerLine": 136,
+          "glyphs": [
+            "鹦",
+            "鸚"
+          ],
+          "matches": [
+            {
+              "glyph": "鸚",
+              "line": 138,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    },
+    {
+      "candidate": {
+        "id": "pingshui:黄:ping:七阳",
+        "character": "黄",
+        "book": "pingshui",
+        "toneClass": "ping",
+        "tone": "P",
+        "groupIds": [
+          "group:pingshui:下平:七阳"
+        ],
+        "gloss": null,
+        "modernReading": null,
+        "fanqie": null,
+        "evidenceIds": [
+          "ev:pingshui:下平:七阳"
+        ]
+      },
+      "positions": [
+        "登鹳雀楼/l2c1",
+        "黄鹤楼/l1c5",
+        "黄鹤楼/l2c5",
+        "黄鹤楼/l3c1"
+      ],
+      "sourceChecks": [
+        {
+          "groupId": "group:pingshui:下平:七阳",
+          "header": "下平聲七{{++|陽}}",
+          "headerLine": 130,
+          "glyphs": [
+            "黄",
+            "黃"
+          ],
+          "matches": [
+            {
+              "glyph": "黃",
+              "line": 132,
+              "part": "正文"
+            }
+          ]
+        }
+      ],
+      "machineStatus": "source_character_found",
+      "verdict": "unverified"
+    }
+  ]
+}

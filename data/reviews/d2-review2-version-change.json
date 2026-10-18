@@ -1,0 +1,27 @@
+{
+  "reason": "单字审批误扩大到整部的范围修复；补入第二批已审候选。保持全部候选/韵部/来源ID，增加独立候选证据ID。",
+  "oldVersions": [
+    "pingshui-cwr-ff0e9c1-d2-full",
+    "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-draft",
+    "sample-pingshui-cwr-ff0e9c1-d1"
+  ],
+  "newVersions": [
+    {
+      "path": "data/normalized/pingshui.full-d2.json",
+      "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-review2",
+      "sha256": "e41d7a1649ab30fb2b5c03fb902c9c106f6b1ab782b45f6643b928d921341388"
+    },
+    {
+      "path": "data/normalized/pingshui.full-d2-patched.json",
+      "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review2",
+      "sha256": "d132560ac72ef3058f99f94911cb49afdd9979138c649eedc9d327d0904fd829"
+    },
+    {
+      "path": "data/normalized/pingshui.sample-d1.json",
+      "dataVersion": "sample-pingshui-cwr-ff0e9c1-d1-review2",
+      "sha256": "0913cb30df323565f8e4a27e8d60e3ad2726c22644c1bc1be359dda7eb66cff1"
+    }
+  ],
+  "idMigration": "candidate/group/source IDs 无迁移；旧部级 evidence ID 保留，除三讲外恢复 unverified；新增ID见 approved-evidence.json candidateApprovals。",
+  "restartRequired": "API 进程按快照版本缓存，集成后重启 API；旧 inputHash/override 依现有契约处理。"
+}

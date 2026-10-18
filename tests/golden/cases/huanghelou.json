@@ -5,9 +5,9 @@
   "text": "昔人已乘黄鹤去，此地空余黄鹤楼。黄鹤一去不复返，白云千载空悠悠。晴川历历汉阳树，芳草萋萋鹦鹉洲。日暮乡关何处是，烟波江上使人愁。",
   "sourceCandidates": [
     {
-      "kind": "lead",
-      "value": null,
-      "note": "待查：全唐诗崔颢卷；首句异文（“昔人已乘白云去”等）需另立版本登记"
+      "kind": "located",
+      "value": "data/raw/works/huanghelou-2492584.wikitext",
+      "note": "固定版本原文已落盘，来源SHA与简繁差异见 data/works/review-closure.json；仅固定正文与现有体裁断言获批。"
     }
   ],
   "request": {
@@ -18,11 +18,22 @@
     "readingOverrides": []
   },
   "assertions": [
-    { "path": "genre.formId", "equals": "qilv" },
-    { "path": "genre.historicalTags", "equals": "特殊拗律" }
+    {
+      "path": "genre.formId",
+      "equals": "qilv"
+    },
+    {
+      "path": "genre.historicalTags.1",
+      "equals": "特殊拗律"
+    }
   ],
-  "reviewStatus": "pending",
-  "reviewers": [],
-  "evidenceIds": [],
-  "notes": "候选预期：保留七律形式与特殊拗律说明；常格偏离应当可见，不得因出律改判古体免检，也不得让全文常格完美通过。正文与体裁依据待人工核实。"
+  "reviewStatus": "approved",
+  "reviewers": [
+    "组长 J03（2026-10-18 电子裁定，原件已归档）",
+    "C（文本及体裁来源核对，见 docs/rule-sources.md）"
+  ],
+  "evidenceIds": [
+    "ev:work:huanghelou:j03"
+  ],
+  "notes": "正文、作者、选版、体裁断言已有 J03/C 记录，现按原范围落库。reviewStatus=approved 表示这些预期经审核，不表示真实 API 已通过；全诗逐字归部证据仍待范围裁定，见 data/reviews/d2-remaining-candidate-review.md。异文保持独立、不合并；黄鹤楼保留特殊拗律标签，常格偏离仍须显示。"
 }

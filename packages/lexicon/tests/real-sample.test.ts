@@ -38,7 +38,7 @@ describe("真实七字小样本（平水，未审核）", () => {
     const snapshot = loadSnapshot();
     expect(snapshot.book).toBe("pingshui");
     expect(snapshot.reviewStatus).toBe("unverified");
-    expect(snapshot.dataVersion).toBe("sample-pingshui-cwr-ff0e9c1-d1");
+    expect(snapshot.dataVersion).toBe("sample-pingshui-cwr-ff0e9c1-d1-review2");
     expect(snapshot.sources[0]?.revision).toBe(
       "ff0e9c13fb037c43e0eaa5dc929c0fe4fa2ffb18",
     );
@@ -108,9 +108,10 @@ describe("真实七字小样本（平水，未审核）", () => {
     }
     for (const item of result.evidence) {
       expect(sourceIds.has(item.sourceId)).toBe(true);
-      // 本样本 7 个韵部的证据已经 J03 第一批人审签（见 data/reviews/approved-evidence.json），
-      // 因此这里断言 approved；快照级 reviewStatus 仍为 unverified（部分批准不等于整库批准）。
-      expect(item.reviewStatus).toBe("approved");
+      // 已审仅限具体候选，不将第一批单字结论扩张到整个韵部。
+      expect(item.reviewStatus).toBe(
+        item.id.startsWith("ev:candidate:") ? "approved" : "unverified",
+      );
     }
   });
 

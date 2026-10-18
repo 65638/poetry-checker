@@ -36,8 +36,11 @@ const NORMALIZED = path.join(ROOT, "data", "normalized");
 const EXPECTED: Readonly<
   Record<string, { groupCount: number; missingGroups: readonly string[] }>
 > = {
-  "pingshui-cwr-ff0e9c1-d2-full": { groupCount: 105, missingGroups: ["三讲"] },
-  "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-draft": {
+  "pingshui-cwr-ff0e9c1-d2-full-review2": {
+    groupCount: 105,
+    missingGroups: ["三讲"],
+  },
+  "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review2": {
     groupCount: 106,
     missingGroups: [],
   },
@@ -107,9 +110,7 @@ function main(): void {
     `发现 ${allJson.length} 个 JSON：${allJson.join(", ") || "（无）"}`,
   );
   if (skipped.length > 0) {
-    console.log(
-      `非快照 JSON（不参与快照检查，仅列出）：${skipped.join(", ")}`,
-    );
+    console.log(`非快照 JSON（不参与快照检查，仅列出）：${skipped.join(", ")}`);
   }
   if (files.length === 0) {
     fail("data/normalized 下没有可检查的快照");
@@ -183,7 +184,9 @@ function main(): void {
     }
 
     // 三讲补丁快照的专项复核：一字多部必须双向成立
-    if (snapshot.dataVersion === "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-draft") {
+    if (
+      snapshot.dataVersion === "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review2"
+    ) {
       const fenGroups = snapshot.candidates
         .filter((candidate) => candidate.character === PRE_EXISTING_CHARACTER)
         .flatMap((candidate) => candidate.groupIds);
@@ -224,7 +227,7 @@ function main(): void {
 
   finish(
     "全部落盘快照通过结构与门槛检查；注意：结构通过不等于内容审核通过，" +
-      "除三讲 1 条证据已人审签外，其余 evidence 均未审核；快照级 reviewStatus 仍为 unverified，" +
+      "已审仅限三讲整部及审批清单列出的具体候选；快照级 reviewStatus 仍为 unverified，" +
       "releaseGatePassed 仍为 false。",
   );
 }

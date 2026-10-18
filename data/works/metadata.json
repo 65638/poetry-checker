@@ -8,9 +8,14 @@
     ],
     "formFamily": "regulated",
     "formId": "wujue",
-    "historicalTags": ["五绝", "近体候选"],
-    "evidenceIds": [],
-    "reviewStatus": "unverified"
+    "historicalTags": [
+      "五绝",
+      "近体"
+    ],
+    "evidenceIds": [
+      "ev:work:dengguanquelou:j03"
+    ],
+    "reviewStatus": "approved"
   },
   {
     "id": "work:jingyesi",
@@ -21,9 +26,14 @@
     ],
     "formFamily": "ancient",
     "formId": null,
-    "historicalTags": ["古绝", "五言古体"],
-    "evidenceIds": [],
-    "reviewStatus": "unverified"
+    "historicalTags": [
+      "古绝",
+      "五言古体"
+    ],
+    "evidenceIds": [
+      "ev:work:jingyesi:j03"
+    ],
+    "reviewStatus": "approved"
   },
   {
     "id": "work:huanghelou",
@@ -34,8 +44,14 @@
     ],
     "formFamily": "regulated",
     "formId": "qilv",
-    "historicalTags": ["七律", "特殊拗律", "半古半律"],
-    "evidenceIds": [],
-    "reviewStatus": "unverified"
+    "historicalTags": [
+      "七律",
+      "特殊拗律",
+      "半古半律"
+    ],
+    "evidenceIds": [
+      "ev:work:huanghelou:j03"
+    ],
+    "reviewStatus": "approved"
   }
 ]

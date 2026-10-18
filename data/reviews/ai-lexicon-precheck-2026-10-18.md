@@ -23,7 +23,7 @@
 | 原编号 | 原发现 | 处置 |
 |---|---|---|
 | inputMissing（旧报告第 0 节） | AI初审_人工异常复核方案_2026-10-18.md 缺失 | 已关闭：方案随 59be7af 入库，已读全文并按其实施 |
-| F-cross-002（v1，已关闭） | 审批依据文档 12_J03人审记录 未归档 | 已关闭：docs/reviews/12_J03人审记录_第一批.md 随 59be7af 入库。继任条目为 F-cross-002b（F-P3，仅提示 approved-evidence.json 的 authorityNote 措辞滞后），编号加 b 以免与本条混淆 |
+| F-cross-002（v1，已关闭） | 审批依据文档 12_J03人审记录 未归档 | 已关闭：原件已归档；review2 同时修正 approved-evidence.json 的 authorityNote，F-cross-002b 措辞滞后亦关闭。 |
 
 ### 0-B. 计数口径说明（外部口径 8238 / 5036 与实测 8240 / 5033）
 
@@ -47,16 +47,16 @@
 
 **词林原表的 4 个非汉字垃圾已登记为 D 类 P1 异常**（见 §6 的 D 条目）：`[`(U+005B)、`]`(U+005D)、空格(U+0020)、`，`(U+FF0C)，分属第二部·仄声、第七部·仄声、第十八部·入声。它们都是单码点，故「单码点校验」抓不到；建议在**适配器导入层过滤**，不改原表字义事实。
 
-**状态口径（方案 §5）**：本报告的 AI 初审结论状态为 `machine_checked`；契约字段 `reviewStatus` **未被改动**，approved 证据仍为审批清单落库的 **8** 条。按方案 §5：AI 初审通过结构/引用检查但未完成人工复核 → 本报告结论状态为 machine_checked。human_reviewed / rejected 等中间状态只写在报告与审核记录里，**不改契约字段 reviewStatus**（契约快照只有 approved / unverified）。四份快照 reviewStatus 一律保持 unverified；approved 只有 approved-evidence.json 落库的 8 条。
+**状态口径（方案 §5）**：本报告的 AI 初审结论状态为 `machine_checked`；契约字段 `reviewStatus` **未被改动**，approved 证据仍为审批清单落库的 **16** 条。按方案 §5：AI 初审通过结构/引用检查但未完成人工复核 → 本报告结论状态为 machine_checked。human_reviewed / rejected 等中间状态只写在报告与审核记录里，**不改契约字段 reviewStatus**（契约快照只有 approved / unverified）。四份快照 reviewStatus 一律保持 unverified；approved 仅来自 approved-evidence.json 的部级及候选级精确范围。
 
-**第二批人审（13_）**：`docs/reviews/13_J03三首核心诗逐字人审_第二批.md` 确认为**空白工作表**（九个异常字位与三首关键字的「人工结论 / 采哪个候选 / 说明 / 审核人·时间」均为 ____；仅「AI 备考（非依据）」段有文字）。**新增 approved = 0 条**。第二批**待组长填写**，当前新增 approved = 0 条。禁止把「AI 备考（非依据）」当成结论，也禁止据该表提升任何证据状态。
+**第二批人审（13_）**：`docs/reviews/13_J03三首核心诗逐字人审_第二批.md` 确认为**空白工作表**（第二批第五节已载十处裁定；第二节作品选版与楼↔樓已裁。部分签字占位保留，不覆盖已归档电子裁定。）。**新增 approved = 8 条**。第二批对应八个唯一选音候选（十处字位），已按精确候选落库；更在第一批已有批准。AI 备考不作依据，第六节整部批准指令已追加范围勘误。
 
 ## 1. 口径表（组长只看这张）
 
 | 库 | dataVersion | 结构完整性 | 引用闭合 | 声类一致性 | 异常数 P0/P1/P2/P3 | 证据 approved | 发布门槛 |
 |---|---|---|---|---|---|---|---|
-| pingshui | `pingshui-cwr-ff0e9c1-d2-full` | ⚠ 105/106；缺 三讲；空 无；意外 无 | ✅ 四层闭合 | ✅ 三项全过 | 0/1/1/0 | 7/105 | **未通过** |
-| pingshui | `pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-draft` | ✅ 106/106，无缺部无空部 | ✅ 四层闭合 | ✅ 三项全过 | 0/0/1/0 | 8/106 | **未通过** |
+| pingshui | `pingshui-cwr-ff0e9c1-d2-full-review2` | ⚠ 105/106；缺 三讲；空 无；意外 无 | ✅ 四层闭合 | ✅ 三项全过 | 0/1/1/0 | 15/120 | **未通过** |
+| pingshui | `pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review2` | ✅ 106/106，无缺部无空部 | ✅ 四层闭合 | ✅ 三项全过 | 0/0/1/0 | 16/121 | **未通过** |
 | cilin | `cilin-cwr-ff0e9c1-d2-full` | ✅ 33/33，无缺部无空部 | ✅ 四层闭合 | ✅ 三项全过（ze_unspecified 2237） | 0/0/1/1 | 0/33 | **未通过** |
 | xinyun | `xinyun-rebuild-d2-full` | ✅ 56/56，无缺部无空部 | ✅ 四层闭合 | ✅ 三项全过 | 0/0/0/0 | 0/56 | **未通过** |
 
@@ -64,7 +64,7 @@
 
 已排除的快照：
 
-- `data/normalized/pingshui.sample-d1.json`：D1 七字真实小样本（8 候选），不属 D2 三库口径；其部级证据状态已由 approved-evidence 清单覆盖，本报告不重复初审。
+- `data/normalized/pingshui.sample-d1.json`：D1 七字真实小样本（8 候选），不属 D2 三库口径；候选级证据与原部级证据分开，本报告不重复初审。
 
 ## 1-B. 已完成项对账（②③④，全部实测）
 
@@ -75,9 +75,9 @@
 | ② 新韵 modernReading 缺失 0（占 51,608 条候选） | 缺失 0 / 51608 | **缺失 0 / 51608** | ✅ |
 | ② 同(字,子卷)多读音清单 1,508 组 | 1508 | **1508** | ✅ |
 | ③ 三库来源 ID 两两不同（词林不再与平水同 ID） | 互不相交 | **互不相交** | ✅ |
-| ④ 平水 106 部快照 evidence approved 8/106 | 8 / 106 | **8 / 106** | ✅ |
-| ④ 平水 105 部快照 evidence approved 7/105 | 7 / 105 | **7 / 105** | ✅ |
-| ④ 七字样本证据 approved 7/7 | 7 / 7 | **7 / 7** | ✅ |
+| ④ 平水106部：三讲1条部级与15条候选证据 | 16 / 121 | **16 / 121** | ✅ |
+| ④ 平水105部：15条候选证据，不批准所属整部 | 15 / 120 | **15 / 120** | ✅ |
+| ④ 七字样本：8条候选已审、7条原部级未审 | 8 / 15 | **8 / 15** | ✅ |
 
 ### ② 新韵 modernReading 回填
 
@@ -98,8 +98,8 @@
 
 | 库 | dataVersion | 来源 ID |
 |---|---|---|
-| pingshui | `pingshui-cwr-ff0e9c1-d2-full` | `src:chinese_word_rhyme:pingshui` |
-| pingshui | `pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-draft` | `src:chinese_word_rhyme:pingshui`、`src:wikisource:pingshuiyun` |
+| pingshui | `pingshui-cwr-ff0e9c1-d2-full-review2` | `src:chinese_word_rhyme:pingshui` |
+| pingshui | `pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review2` | `src:chinese_word_rhyme:pingshui`、`src:wikisource:pingshuiyun` |
 | cilin | `cilin-cwr-ff0e9c1-d2-full` | `src:chinese_word_rhyme:cilin` |
 | xinyun | `xinyun-rebuild-d2-full` | `src:pinyin-data` |
 
@@ -109,13 +109,13 @@
 
 | 快照 | dataVersion | approved / total |
 |---|---|---|
-| `pingshui.full-d2.json` | `pingshui-cwr-ff0e9c1-d2-full` | **7 / 105** |
-| `pingshui.full-d2-patched.json` | `pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-draft` | **8 / 106** |
+| `pingshui.full-d2.json` | `pingshui-cwr-ff0e9c1-d2-full-review2` | **15 / 120** |
+| `pingshui.full-d2-patched.json` | `pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review2` | **16 / 121** |
 | `cilin.full-d2.json` | `cilin-cwr-ff0e9c1-d2-full` | **0 / 33** |
 | `xinyun.full-d2.json` | `xinyun-rebuild-d2-full` | **0 / 56** |
-| `pingshui.sample-d1.json` | `sample-pingshui-cwr-ff0e9c1-d1` | **7 / 7** |
+| `pingshui.sample-d1.json` | `sample-pingshui-cwr-ff0e9c1-d1-review2` | **8 / 15** |
 
-**结论：②③④ 三项已消除 J07「词林 503」的硬阻塞原因** —— ③ 使平水/词林/新韵来源 ID 两两不同，`dedupeById` 不再触发跨库同 ID 不同内容冲突；② 使新韵候选具备可追溯读音；④ 使 8 条部级证据按审批清单落库。但**快照 reviewStatus 仍为 unverified、词林 approved 仍 0/33**，因此词林 503 只会从「来源冲突」性质转为「证据门槛」性质，**不是变成可用**。
+**结论：②③④ 三项已消除 J07「词林 503」的硬阻塞原因** —— ③ 使平水/词林/新韵来源 ID 两两不同，`dedupeById` 不再触发跨库同 ID 不同内容冲突；② 使新韵候选具备可追溯读音；④ 按1条部级、15条候选证据的审批范围落库。但**快照 reviewStatus 仍为 unverified、词林 approved 仍 0/33**，因此词林 503 只会从「来源冲突」性质转为「证据门槛」性质，**不是变成可用**。
 
 ## 1-C. A1 字级交叉核对（平水 106 部 × 词林 19 部，只做三分层）
 
@@ -177,7 +177,7 @@
 |---|---|---|---|---|---|
 | 临 | 仄/平 | 平 | 下平:十二侵(ping)<br>去:二十七沁(qu) | 第十三部·平声(ping) | ev:pingshui:下平:十二侵<br>ev:pingshui:去:二十七沁<br>|<br>ev:cilin:第十三部:第十三部·平声 |
 | 乐 | 仄/入 | 入 | 去:十九效(qu)<br>入:入声三觉(ru)<br>入:入声十药(ru) | 第十六部·入声(ru) | ev:pingshui:去:十九效<br>ev:pingshui:入:入声三觉<br>ev:pingshui:入:入声十药<br>|<br>ev:cilin:第十六部:第十六部·入声 |
-| 乡 | 仄/平 | 平 | 下平:七阳(ping)<br>去:二十三漾(qu) | 第二部·平声(ping) | ev:pingshui:下平:七阳<br>ev:pingshui:去:二十三漾<br>|<br>ev:cilin:第二部:第二部·平声 |
+| 乡 | 仄/平 | 平 | 下平:七阳(ping)<br>去:二十三漾(qu) | 第二部·平声(ping) | ev:candidate:pingshui:乡:ping:七阳:j03<br>ev:pingshui:下平:七阳<br>ev:pingshui:去:二十三漾<br>|<br>ev:cilin:第二部:第二部·平声 |
 | 亟 | 仄/入 | 入 | 去:四寘(qu)<br>入:入声十三职(ru) | 第十七部·入声(ru) | ev:pingshui:去:四寘<br>ev:pingshui:入:入声十三职<br>|<br>ev:cilin:第十七部:第十七部·入声 |
 | 亲 | 仄/平 | 平 | 上平:十一真(ping)<br>去:十二震(qu) | 第六部·平声(ping) | ev:pingshui:上平:十一真<br>ev:pingshui:去:十二震<br>|<br>ev:cilin:第六部:第六部·平声 |
 | 仙 | 仄/平 | 平 | 下平:一先(ping)<br>上:十三阮(shang) | 第七部·平声(ping) | ev:pingshui:下平:一先<br>ev:pingshui:上:十三阮<br>|<br>ev:cilin:第七部:第七部·平声 |
@@ -345,7 +345,7 @@
 
 ### data/normalized/pingshui.full-d2.json
 
-- dataVersion：`pingshui-cwr-ff0e9c1-d2-full`；book：pingshui；reviewStatus：**unverified**
+- dataVersion：`pingshui-cwr-ff0e9c1-d2-full-review2`；book：pingshui；reviewStatus：**unverified**
 - 韵部数 105 / 门槛 106；非空 105；空部 0；重复韵目 0
 - bucketCounts 实测 {"上平":15,"下平":15,"上":28,"去":30,"入":17} / 应有 {"上平":15,"下平":15,"上":29,"去":30,"入":17}
 - 缺失 三讲；意外 （无）
@@ -353,9 +353,9 @@
 - 同字同韵部多候选 0 组；同字同父级(卷/部/韵)多候选 547 组
 - 声类三项：toneClass↔部 不符 0；tone↔toneClass 不符 0；ze_unspecified 0 条 / 0 组 / 越界 0
 - 单码点校验：检查 10378 条，违规 0 条
-- 证据 105 条（approved 7 / unverified 98）；越权 approved 0；审批清单未命中 1 条，均属预期（跨库全局清单 + 105/106 部差异），不计为异常。
-- 业务内容摘要：`ecf6c42466771b616cc611cb6ed265208145d73eb01f752ceca0cc2b625d8d1f`
-- 规范化 JSON 摘要：`d5fe844691ec2b8a36f211ec4089c8fb5ee7b916050ceee29b8549548bf49bfc`
+- 证据 120 条（approved 15 / unverified 105）；越权 approved 0；审批清单未命中 1 条，均属预期（跨库全局清单 + 105/106 部差异），不计为异常。
+- 业务内容摘要：`4fe504dc8bda00b3a5698a8648631b7d2fd69bad953fe0f567abdf04488c07c8`
+- 规范化 JSON 摘要：`b8447207729ad06a4a7f29f81844fff9ffc979d514bea9a16a84667304dd815b`
 - 生成器/规则版本：（快照未登记） / （快照未登记）
 
 | 来源 ID | revision | sha256（登记） | 落盘文件 | 与字节一致 |
@@ -364,7 +364,7 @@
 
 ### data/normalized/pingshui.full-d2-patched.json
 
-- dataVersion：`pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-draft`；book：pingshui；reviewStatus：**unverified**
+- dataVersion：`pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review2`；book：pingshui；reviewStatus：**unverified**
 - 韵部数 106 / 门槛 106；非空 106；空部 0；重复韵目 0
 - bucketCounts 实测 {"上平":15,"下平":15,"上":29,"去":30,"入":17} / 应有 {"上平":15,"下平":15,"上":29,"去":30,"入":17}
 - 缺失 （无）；意外 （无）
@@ -372,9 +372,9 @@
 - 同字同韵部多候选 0 组；同字同父级(卷/部/韵)多候选 548 组
 - 声类三项：toneClass↔部 不符 0；tone↔toneClass 不符 0；ze_unspecified 0 条 / 0 组 / 越界 0
 - 单码点校验：检查 10387 条，违规 0 条
-- 证据 106 条（approved 8 / unverified 98）；越权 approved 0；审批清单 ID 在本快照内全部命中。
-- 业务内容摘要：`4d75fc46d04ef87cf76f1db5ebf329e0353f0fac7c5d9ed98c7ebd27339d64ea`
-- 规范化 JSON 摘要：`79cf631414e126a3145b733e66966abd21a0ad589e4a0c2d2cd2f6b3c6ede95c`
+- 证据 121 条（approved 16 / unverified 105）；越权 approved 0；审批清单 ID 在本快照内全部命中。
+- 业务内容摘要：`d5ec1a588f165d38feb93752021848ed7943f54c7118cc7933e560477323d501`
+- 规范化 JSON 摘要：`d74ff264bae20471884ab9bba5aa598637ce6b644a1d73652abf75af67c2bd6e`
 - 生成器/规则版本：（快照未登记） / （快照未登记）
 
 | 来源 ID | revision | sha256（登记） | 落盘文件 | 与字节一致 |
@@ -392,7 +392,7 @@
 - 同字同韵部多候选 0 组；同字同父级(卷/部/韵)多候选 205 组
 - 声类三项：toneClass↔部 不符 0；tone↔toneClass 不符 0；ze_unspecified 2237 条 / 14 组 / 越界 0
 - 单码点校验：检查 5403 条，违规 0 条
-- 证据 33 条（approved 0 / unverified 33）；越权 approved 0；审批清单未命中 8 条，均属预期（跨库全局清单 + 105/106 部差异），不计为异常。
+- 证据 33 条（approved 0 / unverified 33）；越权 approved 0；审批清单未命中 16 条，均属预期（跨库全局清单 + 105/106 部差异），不计为异常。
 - 业务内容摘要：`bcbeb62ada9a5b6a72e69dbdee844f10e0466b40fd46939b0b3e4f56f09d38e8`
 - 规范化 JSON 摘要：`949ef07b9968d57b5ccbc579a0ee25946c362fb269dcfdcb3a4b6018914f3927`
 - 生成器/规则版本：（快照未登记） / （快照未登记）
@@ -411,7 +411,7 @@
 - 同字同韵部多候选 0 组；同字同父级(卷/部/韵)多候选 4472 组
 - 声类三项：toneClass↔部 不符 0；tone↔toneClass 不符 0；ze_unspecified 0 条 / 0 组 / 越界 0
 - 单码点校验：检查 51608 条，违规 0 条
-- 证据 56 条（approved 0 / unverified 56）；越权 approved 0；审批清单未命中 8 条，均属预期（跨库全局清单 + 105/106 部差异），不计为异常。
+- 证据 56 条（approved 0 / unverified 56）；越权 approved 0；审批清单未命中 16 条，均属预期（跨库全局清单 + 105/106 部差异），不计为异常。
 - 业务内容摘要：`4a68bd5782ec6e2de7e0682edca0a38534307f4dd28702db487875815c690ae5`
 - 规范化 JSON 摘要：`e245829ae0eb7a5b72647d62cf379920e000f3e7bf6f61bf1735a1830de79af4`
 - 生成器/规则版本：xinyun-rebuild-gen/0.1.0 / xinyun-14-rules-d1
@@ -456,10 +456,10 @@
 
 ## 5. 专项实测：一字多部 / 多音
 
-- `pingshui-cwr-ff0e9c1-d2-full` · 「玤」：1 条候选 `pingshui:玤:shang:一董`；归属 `group:pingshui:上:一董`；双归属判据不适用于本库/本快照
-- `pingshui-cwr-ff0e9c1-d2-full` · 「一」：1 条候选 `pingshui:一:ru:入声四质`；归属 `group:pingshui:入:入声四质`；双归属判据不适用于本库/本快照
-- `pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-draft` · 「玤」：2 条候选 `pingshui:玤:shang:一董`、`pingshui:玤:shang:三讲`；归属 `group:pingshui:上:一董`、`group:pingshui:上:三讲`；**一董+三讲双归属成立（红线 3 通过）**
-- `pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-draft` · 「一」：1 条候选 `pingshui:一:ru:入声四质`；归属 `group:pingshui:入:入声四质`；双归属判据不适用于本库/本快照
+- `pingshui-cwr-ff0e9c1-d2-full-review2` · 「玤」：1 条候选 `pingshui:玤:shang:一董`；归属 `group:pingshui:上:一董`；双归属判据不适用于本库/本快照
+- `pingshui-cwr-ff0e9c1-d2-full-review2` · 「一」：1 条候选 `pingshui:一:ru:入声四质`；归属 `group:pingshui:入:入声四质`；双归属判据不适用于本库/本快照
+- `pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review2` · 「玤」：2 条候选 `pingshui:玤:shang:一董`、`pingshui:玤:shang:三讲`；归属 `group:pingshui:上:一董`、`group:pingshui:上:三讲`；**一董+三讲双归属成立（红线 3 通过）**
+- `pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review2` · 「一」：1 条候选 `pingshui:一:ru:入声四质`；归属 `group:pingshui:入:入声四质`；双归属判据不适用于本库/本快照
 - `cilin-cwr-ff0e9c1-d2-full` · 「一」：1 条候选 `cilin:一:ru:第十七部·入声`；归属 `group:cilin:第十七部:第十七部·入声`；双归属判据不适用于本库/本快照
 - `xinyun-rebuild-d2-full` · 「玤」：1 条候选 `xinyun:玤:qu:十唐·去声`；归属 `group:xinyun:十唐:十唐·去声`；双归属判据不适用于本库/本快照
 - `xinyun-rebuild-d2-full` · 「一」：3 条候选 `xinyun:一:qu:十二齐·去声`、`xinyun:一:yangping:十二齐·阳平`、`xinyun:一:yinping:十二齐·阴平`；归属 `group:xinyun:十二齐:十二齐·去声`、`group:xinyun:十二齐:十二齐·阳平`、`group:xinyun:十二齐:十二齐·阴平`；双归属判据不适用于本库/本快照
@@ -470,7 +470,7 @@
 
 分类：A 结构 / B 声类 / C 引用 / D 字符 / E 多音 / F 来源 / G 新韵特有 / H 三讲补丁。P0=会让下游出错；P1=数据缺口或接线缺陷；P2=口径/文档不一致；P3=提示。
 
-合计 **17** 条：P0=0 / P1=4 / P2=7 / P3=6
+合计 **16** 条：P0=0 / P1=4 / P2=7 / P3=5
 
 | 分类 | 条数 |
 |---|---|
@@ -479,7 +479,7 @@
 | C | 1 |
 | D | 2 |
 | E | 2 |
-| F | 7 |
+| F | 6 |
 | G | 1 |
 | H | 2 |
 
@@ -493,8 +493,8 @@
 |---|---|---|---|---|---|---|---|---|
 | A-pingshui-001 | A | pingshui | `data/normalized/pingshui.full-d2.json · groups` | 缺失韵目 1 个：三讲；连带结果：韵部 105/106，分部 {"上平":15,"下平":15,"上":28,"去":30,"入":17}（应有 {"上平":15,"下平":15,"上":29,"去":30,"入":17}） | checkCompleteness(平水韵（106 部）) 逐步比对核定韵目集合 | 该韵部下的字无法归部，按韵部查询会漏；结构门槛不通过 | 数据缺口，需补来源后重构建；不得新增空韵目凑数 | 数据事实需人审 |
 | C-cross-001 | C | cross | `scripts/data/inspect.ts:14（相对 import 使用 .js 扩展名）` | 验收命令 `node --conditions=development scripts/data/inspect.ts` 无法运行：ERR_MODULE_NOT_FOUND packages/lexicon/src/adapters/chinese-word-rhyme.js | Node 24 原生类型剥离不改写相对 import 的 .js→.ts；A 侧本机外部终端实测 EXIT=1；改用 tsx 入口后 EXIT=0 | 任务书第 5 步的验收命令之一本身不可用，易被误判为数据故障 | 把验收命令与文档统一为 `node node_modules/tsx/dist/cli.mjs scripts/data/inspect.ts`（只改脚本与文档） | 接线/脚本可修 |
-| D-cross-003 | D | cross<br>affected: `cilin-cwr-ff0e9c1-d2-full` | `cilin.full-d2.json · candidates` | 词林快照含 4 条**非汉字**候选：空格(U+0020)、[(U+5B)、](U+5D)、，(U+FF0C)；示例候选 ID：cilin:[:ze_unspecified:第二部·仄声、cilin:[:ze_unspecified:第七部·仄声、cilin:[:ru:第十八部·入声、cilin:]:ze_unspecified:第二部·仄声 | 以 \p{Script=Han} 判定。这些条目都是**单码点**，所以「单码点校验」抓不到；但字符本身不是汉字，属解析/导入残留 | 污染字形统计（raw 去重 5037 vs 汉字 5033），并使 A1 交叉比对的字符全集虚高；用户永远查不到它们，但统计会被抬高 | 核对 Cilin_Rhyme.json 对应行；若为注文/括号解析残留，应在适配器导入层过滤（不改原表字义事实） | 接线/脚本可修 |
-| G-cross-010 | G | cross | `data/patches/xinyun-rebuild-report.dev.json · coverage` | 新韵重建：读音源字形 41923、读音 53457；未映射 43（FINAL_NOT_IN_RULES 9 / UNKNOWN_LETTER 30 / VOWEL_LESS 4）；轻声丢弃 241；er 等待核实规则影响 104 条 | 取自 data/patches/xinyun-rebuild-report.dev.json（rebuild-xinyun.ts 的产物，可能滞后于 build-xinyun.ts） | 这些读音不进表：轻声本调不明未默认归平；未映射项是明确不收，不是补齐进度 | 保持现状（不猜补）；er→十二齐 口径待人审核实；需对齐最新构建可重跑 rebuild-xinyun.ts | 数据事实需人审 |
+| D-cross-002 | D | cross<br>affected: `cilin-cwr-ff0e9c1-d2-full` | `cilin.full-d2.json · candidates` | 词林快照含 4 条**非汉字**候选：空格(U+0020)、[(U+5B)、](U+5D)、，(U+FF0C)；示例候选 ID：cilin:[:ze_unspecified:第二部·仄声、cilin:[:ze_unspecified:第七部·仄声、cilin:[:ru:第十八部·入声、cilin:]:ze_unspecified:第二部·仄声 | 以 \p{Script=Han} 判定。这些条目都是**单码点**，所以「单码点校验」抓不到；但字符本身不是汉字，属解析/导入残留 | 污染字形统计（raw 去重 5037 vs 汉字 5033），并使 A1 交叉比对的字符全集虚高；用户永远查不到它们，但统计会被抬高 | 核对 Cilin_Rhyme.json 对应行；若为注文/括号解析残留，应在适配器导入层过滤（不改原表字义事实） | 接线/脚本可修 |
+| G-cross-009 | G | cross | `data/patches/xinyun-rebuild-report.dev.json · coverage` | 新韵重建：读音源字形 41923、读音 53457；未映射 43（FINAL_NOT_IN_RULES 9 / UNKNOWN_LETTER 30 / VOWEL_LESS 4）；轻声丢弃 241；er 等待核实规则影响 104 条 | 取自 data/patches/xinyun-rebuild-report.dev.json（rebuild-xinyun.ts 的产物，可能滞后于 build-xinyun.ts） | 这些读音不进表：轻声本调不明未默认归平；未映射项是明确不收，不是补齐进度 | 保持现状（不猜补）；er→十二齐 口径待人审核实；需对齐最新构建可重跑 rebuild-xinyun.ts | 数据事实需人审 |
 
 ### P2（7 条）
 
@@ -503,21 +503,20 @@
 | F-pingshui-002 | F | pingshui | `data/normalized/pingshui.full-d2.json · 快照头` | 快照未登记生成器/规则版本字段 | SnapshotInput 结构无 generatorVersion/rulesVersion；平水与词林由 build-*.ts 直接生成，版本只能从脚本名推断 | 无法仅凭数据包回答「这份数据由哪版脚本产出」 | 在 notice 或独立 descriptor 中登记脚本版本（不改快照 Schema） | 接线/脚本可修 |
 | F-pingshui-001 | F | pingshui | `data/normalized/pingshui.full-d2-patched.json · 快照头` | 快照未登记生成器/规则版本字段 | SnapshotInput 结构无 generatorVersion/rulesVersion；平水与词林由 build-*.ts 直接生成，版本只能从脚本名推断 | 无法仅凭数据包回答「这份数据由哪版脚本产出」 | 在 notice 或独立 descriptor 中登记脚本版本（不改快照 Schema） | 接线/脚本可修 |
 | F-cilin-002 | F | cilin | `data/normalized/cilin.full-d2.json · 快照头` | 快照未登记生成器/规则版本字段 | SnapshotInput 结构无 generatorVersion/rulesVersion；平水与词林由 build-*.ts 直接生成，版本只能从脚本名推断 | 无法仅凭数据包回答「这份数据由哪版脚本产出」 | 在 notice 或独立 descriptor 中登记脚本版本（不改快照 Schema） | 接线/脚本可修 |
-| F-cross-005 | F | cross | `data/sources/manifest.json · src:wikisource:pingshuiyun.license` | 该来源的许可为**两层**：作品层 {{PD-old}}（落盘字节第 655-656 行页脚，已核）；站点层 CC BY-SA 4.0（Wikimedia 站点条款，页面模板里没有，条款文本未取得）。manifest 已改为 workLayer / siteLayer / conclusion 三键分别登记，不作单一许可结论 | 字节实测（页脚模板）+ 组长 2026-10-18 定论：两层不是矛盾也不是笔误；站点层条款文本未取得 → pendingReview | 若只引任一层都会出错：只引 PD-old 会漏掉站点署名义务；只引 CC BY-SA 会与字节不符。两层均不构成「可商用」证明 | 保持双层登记；取得站点条款文本或确认署名方式后，仅更新 siteLayer.status，不改作品层 | 数据事实需人审 |
-| F-cross-006 | F | cross<br>affected: `pingshui-cwr-ff0e9c1-d2-full`<br>`pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-draft`<br>`cilin-cwr-ff0e9c1-d2-full`<br>`xinyun-rebuild-d2-full` | `data/normalized/*.json（快照头）· SnapshotInput 结构` | 新韵的规则版本 xinyun-14-rules-d1 与生成器版本 xinyun-rebuild-gen/0.1.0 只写在快照 notice 文本里（notice 命中：规则=true、生成器=true）；pinyin-data revision=fa9761fff402f8560196b1ba085c437c52b56d7c、SHA-256 与落盘字节一致=true；但快照 Schema **没有** generatorVersion/rulesVersion 字段，机器无法结构化读取；平水/词林同样无该字段 | 读四份快照的 notice 与 sources；SnapshotInput 类型定义无版本字段；pinyin.txt 字节重算比对 | 「同一 dataVersion 对应哪版脚本与规则」只能靠读文案回答，不能机器校验；对方案 §2.1「检查生成器版本、规则版本和 pinyin-data SHA」只能给部分答案 | 由 GLM 决定是否在快照外围加 descriptor（不改契约字段）；在此之前，版本以 notice 文本 + 本报告为准 | 接线/脚本可修 |
-| D-cross-009 | D | cross | `data/variants/variant-edges-d2.json` | 简繁/异体候选边共 5 条：pending_review 3 条（樓→楼、餘→余、馀→余）、applied_in_patch 2 条、approved 0 条 | 文件 summary 与 edges[].status 实测 | 未签边不生效：正文若写繁体（如「樓」）仍进 missing；已签边只属查询召回，不等于等价合并 | 按 0008 方案逐条人审签；签前不得让消费方启用 | 数据事实需人审 |
-| E-cross-011 | E | cross | `data/patches/xinyun-reading-collisions.dev.json` | 同(字形,子卷)多读音 1508 组（条目数 1508）：候选只承载一条 modernReading，其余在此列明 | 文件 count 与 items.length 实测 | 「同归部」不等于「同读音」：把子卷内多读音并成一条会丢真实读音 | 保留清单；下游需要多读音时按本清单取，不得合并 | 接线/脚本可修 |
+| F-cross-004 | F | cross | `data/sources/manifest.json · src:wikisource:pingshuiyun.license` | 该来源的许可为**两层**：作品层 {{PD-old}}（落盘字节第 655-656 行页脚，已核）；站点层 CC BY-SA 4.0（Wikimedia 站点条款，页面模板里没有，条款文本未取得）。manifest 已改为 workLayer / siteLayer / conclusion 三键分别登记，不作单一许可结论 | 字节实测（页脚模板）+ 组长 2026-10-18 定论：两层不是矛盾也不是笔误；站点层条款文本未取得 → pendingReview | 若只引任一层都会出错：只引 PD-old 会漏掉站点署名义务；只引 CC BY-SA 会与字节不符。两层均不构成「可商用」证明 | 保持双层登记；取得站点条款文本或确认署名方式后，仅更新 siteLayer.status，不改作品层 | 数据事实需人审 |
+| F-cross-005 | F | cross<br>affected: `pingshui-cwr-ff0e9c1-d2-full`<br>`pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review2`<br>`cilin-cwr-ff0e9c1-d2-full`<br>`xinyun-rebuild-d2-full` | `data/normalized/*.json（快照头）· SnapshotInput 结构` | 新韵的规则版本 xinyun-14-rules-d1 与生成器版本 xinyun-rebuild-gen/0.1.0 只写在快照 notice 文本里（notice 命中：规则=true、生成器=true）；pinyin-data revision=fa9761fff402f8560196b1ba085c437c52b56d7c、SHA-256 与落盘字节一致=true；但快照 Schema **没有** generatorVersion/rulesVersion 字段，机器无法结构化读取；平水/词林同样无该字段 | 读四份快照的 notice 与 sources；SnapshotInput 类型定义无版本字段；pinyin.txt 字节重算比对 | 「同一 dataVersion 对应哪版脚本与规则」只能靠读文案回答，不能机器校验；对方案 §2.1「检查生成器版本、规则版本和 pinyin-data SHA」只能给部分答案 | 由 GLM 决定是否在快照外围加 descriptor（不改契约字段）；在此之前，版本以 notice 文本 + 本报告为准 | 接线/脚本可修 |
+| D-cross-008 | D | cross | `data/variants/variant-edges-d2.json` | 简繁/异体候选边共 5 条：pending_review 3 条（樓→楼、餘→余、馀→余）、applied_in_patch 2 条、approved 0 条 | 文件 summary 与 edges[].status 实测 | 未签边不生效：正文若写繁体（如「樓」）仍进 missing；已签边只属查询召回，不等于等价合并 | 按 0008 方案逐条人审签；签前不得让消费方启用 | 数据事实需人审 |
+| E-cross-010 | E | cross | `data/patches/xinyun-reading-collisions.dev.json` | 同(字形,子卷)多读音 1508 组（条目数 1508）：候选只承载一条 modernReading，其余在此列明 | 文件 count 与 items.length 实测 | 「同归部」不等于「同读音」：把子卷内多读音并成一条会丢真实读音 | 保留清单；下游需要多读音时按本清单取，不得合并 | 接线/脚本可修 |
 
-### P3（6 条）
+### P3（5 条）
 
 | 异常 ID | 类 | 库 | 位置 | 事实 | 判定依据 | 影响面 | 建议动作 | 动作类型 |
 |---|---|---|---|---|---|---|---|---|
 | B-cilin-001 | B | cilin | `data/normalized/cilin.full-d2.json · candidates` | 词林 ze_unspecified 共 2237 条，分布于 14 个仄声子卷 | 统计 toneClass=ze_unspecified 的候选及其所在子卷 | 这些是「来源只标仄声」的如实记录：不得臆补成上声或去声；本次核出越界 0 条 | 保持现状；人审时只需确认来源确实只标仄 | 数据事实需人审 |
-| F-cross-002b | F | cross | `data/reviews/approved-evidence.json · authorityNote` | 该字段仍写着「12_J03人审记录尚未归档进本仓库」，但 docs/reviews/12_J03人审记录_第一批.md 已随 59be7af 入库；旧编号 F-cross-002 的「未归档」异常因此**关闭**，本条仅作措辞滞后提示（编号加 b 以不与已关闭条混淆） | 仓库内 docs/reviews/12_J03人审记录_第一批.md 存在（34 行，含第一批结论表） | 仅文档措辞滞后，不影响 approved 集合；但会让读者以为依据缺失 | 下次动 approved-evidence.json 时把 authorityNote 指向 docs/reviews/12_J03人审记录_第一批.md（本次不改审批清单本身） | 接线/脚本可修 |
-| F-cross-004 | F | cross | `docs/data-quality.md / HANDOFF.md（D1 期「字形数」表述）` | D1/handoff 记「平水字形 8,232」，本次实测 105 部快照去重字符 = 8232，**与 D1 一致、无漂移**；但词林 D1/inspect 记 5,037，其中含 4 条非汉字，汉字实为 5033 | raw / NFC / NFKC 三种去重方式结果完全相同（平水 106 部 8240、105 部 8232、词林 5037），可排除归一化重复；再按 \p{Script=Han} 过滤得词林 5033 | 同一「字形数」在不同文档可能指 raw（含非汉字）或汉字全集，跨文档比较会错位。这是口径未写明的漂移，不是数据错误 | 此后所有字形数一律注明口径（raw 含非汉字 / 汉字全集）；D1 的 8232 不需订正，词林 5,037 应补注「含 4 条非汉字」 | 接线/脚本可修 |
-| H-cross-007 | H | cross | `data/patches/pingshui-shang-sanj-jiang.draft.json` | 字段值 status=approved、reviewStatus=approved、review=非 null；审批实况：ev:pingshui:上:三讲 = approved（A 同学 2026-10-18 人审签）；快照 reviewStatus = unverified；releaseGatePassed = false | data/reviews/approved-evidence.json 第 10 条 + 三讲快照的 gate 结果；补丁字段与审批清单是两套记录，本报告并列呈现、不改动任一方 | 「三讲已生效」与「三讲仍是草案字段」两种说法都能在仓库里找到凭据，易被引述错 | 对外统一按「字段值 + 审批实况」两栏表述；补丁字段保持原样 | 数据事实需人审 |
-| H-cross-008 | H | cross | `data/patches/pingshui-shang-sanj-jiang.draft.json · diff` | 补丁净增新字形 8 个、新增归属 1 条；「玤」为一字多部（一董 + 三讲） | 补丁 diff 字段 + 三讲快照 spotCharacters 实测 | 若表述为「9 个新字」会与实测不符 | 对外统一表述为「8 新字形 + 1 新增归属」 | 接线/脚本可修 |
-| E-cross-012 | E | cross | `data/patches/xinyun-yi-conflict.draft.json` | 「一」语流变调冲突：resolution=null（未裁决），target=一 | 冲突登记文件实测；新韵快照中「一」保留全部候选 | 未裁决前不得默认采用任一声调，也不得删除竞争者 | 保持多候选；裁决需人审并记录依据 | 数据事实需人审 |
+| F-cross-003 | F | cross | `docs/data-quality.md / HANDOFF.md（D1 期「字形数」表述）` | D1/handoff 记「平水字形 8,232」，本次实测 105 部快照去重字符 = 8232，**与 D1 一致、无漂移**；但词林 D1/inspect 记 5,037，其中含 4 条非汉字，汉字实为 5033 | raw / NFC / NFKC 三种去重方式结果完全相同（平水 106 部 8240、105 部 8232、词林 5037），可排除归一化重复；再按 \p{Script=Han} 过滤得词林 5033 | 同一「字形数」在不同文档可能指 raw（含非汉字）或汉字全集，跨文档比较会错位。这是口径未写明的漂移，不是数据错误 | 此后所有字形数一律注明口径（raw 含非汉字 / 汉字全集）；D1 的 8232 不需订正，词林 5,037 应补注「含 4 条非汉字」 | 接线/脚本可修 |
+| H-cross-006 | H | cross | `data/patches/pingshui-shang-sanj-jiang.draft.json` | 字段值 status=approved、reviewStatus=approved、review=非 null；审批实况：ev:pingshui:上:三讲 = approved（A 同学 2026-10-18 人审签）；快照 reviewStatus = unverified；releaseGatePassed = false | data/reviews/approved-evidence.json 第 10 条 + 三讲快照的 gate 结果；补丁字段与审批清单是两套记录，本报告并列呈现、不改动任一方 | 「三讲已生效」与「三讲仍是草案字段」两种说法都能在仓库里找到凭据，易被引述错 | 对外统一按「字段值 + 审批实况」两栏表述；补丁字段保持原样 | 数据事实需人审 |
+| H-cross-007 | H | cross | `data/patches/pingshui-shang-sanj-jiang.draft.json · diff` | 补丁净增新字形 8 个、新增归属 1 条；「玤」为一字多部（一董 + 三讲） | 补丁 diff 字段 + 三讲快照 spotCharacters 实测 | 若表述为「9 个新字」会与实测不符 | 对外统一表述为「8 新字形 + 1 新增归属」 | 接线/脚本可修 |
+| E-cross-011 | E | cross | `data/patches/xinyun-yi-conflict.draft.json` | 「一」语流变调冲突：resolution=null（未裁决），target=一 | 冲突登记文件实测；新韵快照中「一」保留全部候选 | 未裁决前不得默认采用任一声调，也不得删除竞争者 | 保持多候选；裁决需人审并记录依据 | 数据事实需人审 |
 
 ## 7. 本报告能证明什么 / 不能证明什么
 

@@ -5,9 +5,9 @@
   "text": "白日依山尽，黄河入海流。欲穷千里目，更上一层楼。",
   "sourceCandidates": [
     {
-      "kind": "lead",
-      "value": null,
-      "note": "待查：全唐诗卷二百五十三王之涣名下；具体页码与版次未核实，不开列猜测 URL"
+      "kind": "located",
+      "value": "data/raw/works/dengguanquelou-2648160.wikitext",
+      "note": "固定版本原文已落盘，来源SHA与简繁差异见 data/works/review-closure.json；仅固定正文与现有体裁断言获批。"
     }
   ],
   "request": {
@@ -18,11 +18,22 @@
     "readingOverrides": []
   },
   "assertions": [
-    { "path": "genre.formId", "equals": "wujue" },
-    { "path": "genre.applicability", "equals": "applicable" }
+    {
+      "path": "genre.formId",
+      "equals": "wujue"
+    },
+    {
+      "path": "genre.applicability",
+      "equals": "applicable"
+    }
   ],
-  "reviewStatus": "pending",
-  "reviewers": [],
-  "evidenceIds": [],
-  "notes": "候选预期：五绝；平水韵流/楼同尤部，白/一为古入声。正文、体裁、读音与规则来源均待人工核实，尚未运行真实分析。"
+  "reviewStatus": "approved",
+  "reviewers": [
+    "组长 J03（2026-10-18 电子裁定，原件已归档）",
+    "C（文本及体裁来源核对，见 docs/rule-sources.md）"
+  ],
+  "evidenceIds": [
+    "ev:work:dengguanquelou:j03"
+  ],
+  "notes": "正文、作者、选版、体裁断言已有 J03/C 记录，现按原范围落库。reviewStatus=approved 表示这些预期经审核，不表示真实 API 已通过；全诗逐字归部证据仍待范围裁定，见 data/reviews/d2-remaining-candidate-review.md。异文保持独立、不合并；黄鹤楼保留特殊拗律标签，常格偏离仍须显示。"
 }

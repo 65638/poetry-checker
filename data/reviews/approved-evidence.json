@@ -3,8 +3,8 @@
   "title": "已人审签的证据清单（构建脚本据此设置 evidence.reviewStatus）",
   "updatedAt": "2026-10-18",
   "authority": "组长 J03 第一批人审（引用 12_J03人审记录）+ 三讲人审签（A同学，2026-10-18）",
-  "authorityNote": "「12_J03人审记录」尚未归档进本仓库，见 data/reviews/j03-batch1-human-review.json 的 sourceDocArchiveTodo。",
-  "note": "本文件是**唯一**的证据审批来源。构建脚本读它来决定 evidence.reviewStatus；不得在脚本里硬编码，也不得直接改快照 JSON。未列入本文件的证据一律保持 unverified。",
+  "authorityNote": "审批原件已归档到 docs/reviews/12_J03人审记录_第一批.md 和 docs/reviews/13_J03三首核心诗逐字人审_第二批.md。候选审批仅证明所列字音归部，不覆盖所属整韵部。",
+  "note": "部级审批与候选级审批分开；构建脚本为每个已批准候选追加独立证据，原部级证据保持原审核范围。",
   "approved": [
     {
       "evidenceId": "ev:pingshui:上:三讲",
@@ -12,78 +12,170 @@
       "approvedBy": "A同学（队员 A 本人）",
       "approvedAt": "2026-10-18",
       "basis": "肉眼逐字核对 data/raw/wikisource/PingshuiYun-8264804.wikitext 第 198-202 行；9 字与无【詞】段确认",
-      "recordFiles": ["data/patches/pingshui-shang-sanj-jiang.draft.json", "docs/handoffs/0007-a-d2-human-review-signoff.md"]
-    },
-    {
-      "evidenceId": "ev:pingshui:下平:八庚",
-      "scope": "部级",
-      "approvedBy": "组长 J03 第一批人审",
-      "approvedAt": "2026-10-18",
-      "basis": "「更」平声归属经 J03 通过（下平八庚）",
-      "recordFiles": ["data/reviews/j03-batch1-human-review.json"]
-    },
-    {
-      "evidenceId": "ev:pingshui:去:二十四敬",
-      "scope": "部级",
-      "approvedBy": "组长 J03 第一批人审",
-      "approvedAt": "2026-10-18",
-      "basis": "「更」去声归属经 J03 通过（去声二十四敬）",
-      "recordFiles": ["data/reviews/j03-batch1-human-review.json"]
-    },
-    {
-      "evidenceId": "ev:pingshui:入:入声十一陌",
-      "scope": "部级",
-      "approvedBy": "组长 J03 第一批人审",
-      "approvedAt": "2026-10-18",
-      "basis": "「白」入声十一陌经 J03 通过",
-      "recordFiles": ["data/reviews/j03-batch1-human-review.json"]
-    },
-    {
-      "evidenceId": "ev:pingshui:入:入声四质",
-      "scope": "部级",
-      "approvedBy": "组长 J03 第一批人审",
-      "approvedAt": "2026-10-18",
-      "basis": "「一」入声四质经 J03 通过",
-      "recordFiles": ["data/reviews/j03-batch1-human-review.json"]
-    },
-    {
-      "evidenceId": "ev:pingshui:下平:十一尤",
-      "scope": "部级",
-      "approvedBy": "组长 J03 第一批人审",
-      "approvedAt": "2026-10-18",
-      "basis": "「流」「楼」下平十一尤经 J03 通过（本批把「楼」补入通过范围）",
-      "recordFiles": ["data/reviews/j03-batch1-human-review.json"]
-    },
-    {
-      "evidenceId": "ev:pingshui:入:入声九屑",
-      "scope": "部级",
-      "approvedBy": "组长 J03 第一批人审",
-      "approvedAt": "2026-10-18",
-      "basis": "「雪」入声九屑经 J03 通过",
-      "recordFiles": ["data/reviews/j03-batch1-human-review.json"]
-    },
-    {
-      "evidenceId": "ev:pingshui:入:入声五物",
-      "scope": "部级",
-      "approvedBy": "组长 J03 第一批人审",
-      "approvedAt": "2026-10-18",
-      "basis": "「物」入声五物经 J03 通过",
-      "recordFiles": ["data/reviews/j03-batch1-human-review.json"]
+      "recordFiles": [
+        "data/patches/pingshui-shang-sanj-jiang.draft.json",
+        "docs/handoffs/0007-a-d2-human-review-signoff.md"
+      ]
     }
   ],
   "approvedEvidenceIds": [
-    "ev:pingshui:上:三讲",
-    "ev:pingshui:下平:八庚",
-    "ev:pingshui:去:二十四敬",
-    "ev:pingshui:入:入声十一陌",
-    "ev:pingshui:入:入声四质",
-    "ev:pingshui:下平:十一尤",
-    "ev:pingshui:入:入声九屑",
-    "ev:pingshui:入:入声五物"
+    "ev:pingshui:上:三讲"
   ],
   "notApproved": {
     "count": "其余全部证据",
-    "reason": "词林 33 条、新韵 56 条、平水其余 98 条 evidence 均未人审，保持 unverified。",
+    "reason": "除三讲整部与 candidateApprovals 精确列举的候选外，其余归部证据均保持 unverified；三首平仄审批不自动批准所有竞争候选归部。",
     "snapshotLevelNote": "快照级 reviewStatus 仍为 unverified：部分证据 approved 不等于整库批准，releaseGatePassed 仍须为 false。"
-  }
+  },
+  "candidateApprovals": [
+    {
+      "candidateId": "pingshui:白:ru:入声十一陌",
+      "evidenceId": "ev:candidate:pingshui:白:ru:入声十一陌:j03",
+      "approvedBy": "组长 J03 已归档电子裁定（本次为裁定落库，不新增签名）",
+      "approvedAt": "2026-10-18",
+      "basis": "第一批候选归部核验通过",
+      "recordFiles": [
+        "docs/reviews/12_J03人审记录_第一批.md"
+      ]
+    },
+    {
+      "candidateId": "pingshui:一:ru:入声四质",
+      "evidenceId": "ev:candidate:pingshui:一:ru:入声四质:j03",
+      "approvedBy": "组长 J03 已归档电子裁定（本次为裁定落库，不新增签名）",
+      "approvedAt": "2026-10-18",
+      "basis": "第一批候选归部核验通过",
+      "recordFiles": [
+        "docs/reviews/12_J03人审记录_第一批.md"
+      ]
+    },
+    {
+      "candidateId": "pingshui:更:ping:八庚",
+      "evidenceId": "ev:candidate:pingshui:更:ping:八庚:j03",
+      "approvedBy": "组长 J03 已归档电子裁定（本次为裁定落库，不新增签名）",
+      "approvedAt": "2026-10-18",
+      "basis": "第一批候选归部核验通过",
+      "recordFiles": [
+        "docs/reviews/12_J03人审记录_第一批.md"
+      ]
+    },
+    {
+      "candidateId": "pingshui:更:qu:二十四敬",
+      "evidenceId": "ev:candidate:pingshui:更:qu:二十四敬:j03",
+      "approvedBy": "组长 J03 已归档电子裁定（本次为裁定落库，不新增签名）",
+      "approvedAt": "2026-10-18",
+      "basis": "第一批候选归部核验通过",
+      "recordFiles": [
+        "docs/reviews/12_J03人审记录_第一批.md"
+      ]
+    },
+    {
+      "candidateId": "pingshui:流:ping:十一尤",
+      "evidenceId": "ev:candidate:pingshui:流:ping:十一尤:j03",
+      "approvedBy": "组长 J03 已归档电子裁定（本次为裁定落库，不新增签名）",
+      "approvedAt": "2026-10-18",
+      "basis": "第一批候选归部核验通过",
+      "recordFiles": [
+        "docs/reviews/12_J03人审记录_第一批.md"
+      ]
+    },
+    {
+      "candidateId": "pingshui:雪:ru:入声九屑",
+      "evidenceId": "ev:candidate:pingshui:雪:ru:入声九屑:j03",
+      "approvedBy": "组长 J03 已归档电子裁定（本次为裁定落库，不新增签名）",
+      "approvedAt": "2026-10-18",
+      "basis": "第一批候选归部核验通过",
+      "recordFiles": [
+        "docs/reviews/12_J03人审记录_第一批.md"
+      ]
+    },
+    {
+      "candidateId": "pingshui:物:ru:入声五物",
+      "evidenceId": "ev:candidate:pingshui:物:ru:入声五物:j03",
+      "approvedBy": "组长 J03 已归档电子裁定（本次为裁定落库，不新增签名）",
+      "approvedAt": "2026-10-18",
+      "basis": "第一批候选归部核验通过",
+      "recordFiles": [
+        "docs/reviews/12_J03人审记录_第一批.md"
+      ]
+    },
+    {
+      "candidateId": "pingshui:楼:ping:十一尤",
+      "evidenceId": "ev:candidate:pingshui:楼:ping:十一尤:j03",
+      "approvedBy": "组长 J03 已归档电子裁定（本次为裁定落库，不新增签名）",
+      "approvedAt": "2026-10-18",
+      "basis": "第二批第二节追认楼↔樓及下平十一尤归属",
+      "recordFiles": [
+        "docs/reviews/13_J03三首核心诗逐字人审_第二批.md"
+      ]
+    },
+    {
+      "candidateId": "pingshui:望:qu:二十三漾",
+      "evidenceId": "ev:candidate:pingshui:望:qu:二十三漾:j03",
+      "approvedBy": "组长 J03 已归档电子裁定（本次为裁定落库，不新增签名）",
+      "approvedAt": "2026-10-18",
+      "basis": "第二批第一/五节明确采纳的候选声类与归部；竞争候选仍保留，未获批者保持未审核",
+      "recordFiles": [
+        "docs/reviews/13_J03三首核心诗逐字人审_第二批.md"
+      ]
+    },
+    {
+      "candidateId": "pingshui:思:ping:四支",
+      "evidenceId": "ev:candidate:pingshui:思:ping:四支:j03",
+      "approvedBy": "组长 J03 已归档电子裁定（本次为裁定落库，不新增签名）",
+      "approvedAt": "2026-10-18",
+      "basis": "第二批第一/五节明确采纳的候选声类与归部；竞争候选仍保留，未获批者保持未审核",
+      "recordFiles": [
+        "docs/reviews/13_J03三首核心诗逐字人审_第二批.md"
+      ]
+    },
+    {
+      "candidateId": "pingshui:乡:ping:七阳",
+      "evidenceId": "ev:candidate:pingshui:乡:ping:七阳:j03",
+      "approvedBy": "组长 J03 已归档电子裁定（本次为裁定落库，不新增签名）",
+      "approvedAt": "2026-10-18",
+      "basis": "第二批第一/五节明确采纳的候选声类与归部；竞争候选仍保留，未获批者保持未审核",
+      "recordFiles": [
+        "docs/reviews/13_J03三首核心诗逐字人审_第二批.md"
+      ]
+    },
+    {
+      "candidateId": "pingshui:乘:ping:十蒸",
+      "evidenceId": "ev:candidate:pingshui:乘:ping:十蒸:j03",
+      "approvedBy": "组长 J03 已归档电子裁定（本次为裁定落库，不新增签名）",
+      "approvedAt": "2026-10-18",
+      "basis": "第二批第一/五节明确采纳的候选声类与归部；竞争候选仍保留，未获批者保持未审核",
+      "recordFiles": [
+        "docs/reviews/13_J03三首核心诗逐字人审_第二批.md"
+      ]
+    },
+    {
+      "candidateId": "pingshui:空:ping:一东",
+      "evidenceId": "ev:candidate:pingshui:空:ping:一东:j03",
+      "approvedBy": "组长 J03 已归档电子裁定（本次为裁定落库，不新增签名）",
+      "approvedAt": "2026-10-18",
+      "basis": "第二批第一/五节明确采纳的候选声类与归部；竞争候选仍保留，未获批者保持未审核",
+      "recordFiles": [
+        "docs/reviews/13_J03三首核心诗逐字人审_第二批.md"
+      ]
+    },
+    {
+      "candidateId": "pingshui:不:ru:入声五物",
+      "evidenceId": "ev:candidate:pingshui:不:ru:入声五物:j03",
+      "approvedBy": "组长 J03 已归档电子裁定（本次为裁定落库，不新增签名）",
+      "approvedAt": "2026-10-18",
+      "basis": "第二批第一/五节明确采纳的候选声类与归部；竞争候选仍保留，未获批者保持未审核",
+      "recordFiles": [
+        "docs/reviews/13_J03三首核心诗逐字人审_第二批.md"
+      ]
+    },
+    {
+      "candidateId": "pingshui:汉:qu:十五翰",
+      "evidenceId": "ev:candidate:pingshui:汉:qu:十五翰:j03",
+      "approvedBy": "组长 J03 已归档电子裁定（本次为裁定落库，不新增签名）",
+      "approvedAt": "2026-10-18",
+      "basis": "第二批第一/五节明确采纳的候选声类与归部；竞争候选仍保留，未获批者保持未审核",
+      "recordFiles": [
+        "docs/reviews/13_J03三首核心诗逐字人审_第二批.md"
+      ]
+    }
+  ]
 }

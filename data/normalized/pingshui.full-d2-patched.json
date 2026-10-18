@@ -1,8 +1,8 @@
 {
-  "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-draft",
+  "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review2",
   "book": "pingshui",
   "reviewStatus": "unverified",
-  "notice": "平水韵全量候选（106 部，含上声三讲补丁草案）：在 105 部快照上追加「三讲」9 条归属，结构可达 106 部且无空部；但补丁仍为 draft、全库 reviewStatus=unverified，未经人审签，releaseGatePassed 仍为 false，不得进 data/releases。上声三讲底本为维基文库《平水韻》oldid 8264804 的繁体正文「講港棒蚌項缿玤傋耩」（该韵目无【詞】段）；底本为繁体，此处仅做繁→简转换（講→讲、項→项），不得声称底本原文即简体。「玤」原已收于上声一董，本补丁只新增其「三讲」归属，未删除原归属。",
+  "notice": "平水韵全量候选（106 部，含上声三讲补丁草案）：在 105 部快照上追加「三讲」9 条归属，结构可达 106 部且无空部；三讲已签，候选审批按独立证据落库；全库 reviewStatus=unverified，releaseGatePassed 仍为 false，不得进 data/releases。上声三讲底本为维基文库《平水韻》oldid 8264804 的繁体正文「講港棒蚌項缿玤傋耩」（该韵目无【詞】段）；底本为繁体，此处仅做繁→简转换（講→讲、項→项），不得声称底本原文即简体。「玤」原已收于上声一董，本补丁只新增其「三讲」归属，未删除原归属。",
   "candidates": [
     {
       "id": "pingshui:东:ping:一东",
@@ -529,7 +529,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:上平:一东"
+        "ev:pingshui:上平:一东",
+        "ev:candidate:pingshui:空:ping:一东:j03"
       ]
     },
     {
@@ -5425,7 +5426,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:上平:四支"
+        "ev:pingshui:上平:四支",
+        "ev:candidate:pingshui:思:ping:四支:j03"
       ]
     },
     {
@@ -47953,7 +47955,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:下平:七阳"
+        "ev:pingshui:下平:七阳",
+        "ev:candidate:pingshui:乡:ping:七阳:j03"
       ]
     },
     {
@@ -52161,7 +52164,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:下平:八庚"
+        "ev:pingshui:下平:八庚",
+        "ev:candidate:pingshui:更:ping:八庚:j03"
       ]
     },
     {
@@ -57025,7 +57029,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:下平:十蒸"
+        "ev:pingshui:下平:十蒸",
+        "ev:candidate:pingshui:乘:ping:十蒸:j03"
       ]
     },
     {
@@ -58385,7 +58390,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:下平:十一尤"
+        "ev:pingshui:下平:十一尤",
+        "ev:candidate:pingshui:流:ping:十一尤:j03"
       ]
     },
     {
@@ -59361,7 +59367,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:下平:十一尤"
+        "ev:pingshui:下平:十一尤",
+        "ev:candidate:pingshui:楼:ping:十一尤:j03"
       ]
     },
     {
@@ -118273,7 +118280,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:去:十五翰"
+        "ev:pingshui:去:十五翰",
+        "ev:candidate:pingshui:汉:qu:十五翰:j03"
       ]
     },
     {
@@ -128065,7 +128073,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:去:二十三漾"
+        "ev:pingshui:去:二十三漾",
+        "ev:candidate:pingshui:望:qu:二十三漾:j03"
       ]
     },
     {
@@ -130241,7 +130250,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:去:二十四敬"
+        "ev:pingshui:去:二十四敬",
+        "ev:candidate:pingshui:更:qu:二十四敬:j03"
       ]
     },
     {
@@ -142305,7 +142315,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:入:入声四质"
+        "ev:pingshui:入:入声四质",
+        "ev:candidate:pingshui:一:ru:入声四质:j03"
       ]
     },
     {
@@ -144529,7 +144540,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:入:入声五物"
+        "ev:pingshui:入:入声五物",
+        "ev:candidate:pingshui:物:ru:入声五物:j03"
       ]
     },
     {
@@ -145009,7 +145021,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:入:入声五物"
+        "ev:pingshui:入:入声五物",
+        "ev:candidate:pingshui:不:ru:入声五物:j03"
       ]
     },
     {
@@ -149377,7 +149390,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:入:入声九屑"
+        "ev:pingshui:入:入声九屑",
+        "ev:candidate:pingshui:雪:ru:入声九屑:j03"
       ]
     },
     {
@@ -154961,7 +154975,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:pingshui:入:入声十一陌"
+        "ev:pingshui:入:入声十一陌",
+        "ev:candidate:pingshui:白:ru:入声十一陌:j03"
       ]
     },
     {
@@ -167359,7 +167374,7 @@
       "locator": "data/Pingshui_Rhyme.json 下平声部/八庚",
       "assertion": "data/Pingshui_Rhyme.json 下平声部/八庚 共收录 194 个字形（原表条目 197 条）",
       "excerpt": null,
-      "reviewStatus": "approved"
+      "reviewStatus": "unverified"
     },
     {
       "id": "ev:pingshui:下平:九青",
@@ -167386,7 +167401,7 @@
       "locator": "data/Pingshui_Rhyme.json 下平声部/十一尤",
       "assertion": "data/Pingshui_Rhyme.json 下平声部/十一尤 共收录 249 个字形（原表条目 255 条）",
       "excerpt": null,
-      "reviewStatus": "approved"
+      "reviewStatus": "unverified"
     },
     {
       "id": "ev:pingshui:下平:十二侵",
@@ -167890,7 +167905,7 @@
       "locator": "data/Pingshui_Rhyme.json 去声部/二十四敬",
       "assertion": "data/Pingshui_Rhyme.json 去声部/二十四敬 共收录 59 个字形（原表条目 62 条）",
       "excerpt": null,
-      "reviewStatus": "approved"
+      "reviewStatus": "unverified"
     },
     {
       "id": "ev:pingshui:去:二十五径",
@@ -167980,7 +167995,7 @@
       "locator": "data/Pingshui_Rhyme.json 入声部/入声四质",
       "assertion": "data/Pingshui_Rhyme.json 入声部/入声四质 共收录 147 个字形（原表条目 158 条）",
       "excerpt": null,
-      "reviewStatus": "approved"
+      "reviewStatus": "unverified"
     },
     {
       "id": "ev:pingshui:入:入声五物",
@@ -167989,7 +168004,7 @@
       "locator": "data/Pingshui_Rhyme.json 入声部/入声五物",
       "assertion": "data/Pingshui_Rhyme.json 入声部/入声五物 共收录 48 个字形（原表条目 48 条）",
       "excerpt": null,
-      "reviewStatus": "approved"
+      "reviewStatus": "unverified"
     },
     {
       "id": "ev:pingshui:入:入声六月",
@@ -168025,7 +168040,7 @@
       "locator": "data/Pingshui_Rhyme.json 入声部/入声九屑",
       "assertion": "data/Pingshui_Rhyme.json 入声部/入声九屑 共收录 166 个字形（原表条目 173 条）",
       "excerpt": null,
-      "reviewStatus": "approved"
+      "reviewStatus": "unverified"
     },
     {
       "id": "ev:pingshui:入:入声十药",
@@ -168043,7 +168058,7 @@
       "locator": "data/Pingshui_Rhyme.json 入声部/入声十一陌",
       "assertion": "data/Pingshui_Rhyme.json 入声部/入声十一陌 共收录 186 个字形（原表条目 196 条）",
       "excerpt": null,
-      "reviewStatus": "approved"
+      "reviewStatus": "unverified"
     },
     {
       "id": "ev:pingshui:入:入声十二锡",
@@ -168098,6 +168113,141 @@
       "assertion": "data/Pingshui_Rhyme.json 入声部/入声十七洽 共收录 57 个字形（原表条目 59 条）",
       "excerpt": null,
       "reviewStatus": "unverified"
+    },
+    {
+      "id": "ev:candidate:pingshui:白:ru:入声十一陌:j03",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 入声部/入声十一陌；候选 pingshui:白:ru:入声十一陌；审核记录 docs/reviews/12_J03人审记录_第一批.md",
+      "assertion": "第一批候选归部核验通过；仅覆盖候选 pingshui:白:ru:入声十一陌，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:一:ru:入声四质:j03",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 入声部/入声四质；候选 pingshui:一:ru:入声四质；审核记录 docs/reviews/12_J03人审记录_第一批.md",
+      "assertion": "第一批候选归部核验通过；仅覆盖候选 pingshui:一:ru:入声四质，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:更:ping:八庚:j03",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 下平声部/八庚；候选 pingshui:更:ping:八庚；审核记录 docs/reviews/12_J03人审记录_第一批.md",
+      "assertion": "第一批候选归部核验通过；仅覆盖候选 pingshui:更:ping:八庚，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:更:qu:二十四敬:j03",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 去声部/二十四敬；候选 pingshui:更:qu:二十四敬；审核记录 docs/reviews/12_J03人审记录_第一批.md",
+      "assertion": "第一批候选归部核验通过；仅覆盖候选 pingshui:更:qu:二十四敬，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:流:ping:十一尤:j03",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 下平声部/十一尤；候选 pingshui:流:ping:十一尤；审核记录 docs/reviews/12_J03人审记录_第一批.md",
+      "assertion": "第一批候选归部核验通过；仅覆盖候选 pingshui:流:ping:十一尤，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:雪:ru:入声九屑:j03",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 入声部/入声九屑；候选 pingshui:雪:ru:入声九屑；审核记录 docs/reviews/12_J03人审记录_第一批.md",
+      "assertion": "第一批候选归部核验通过；仅覆盖候选 pingshui:雪:ru:入声九屑，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:物:ru:入声五物:j03",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 入声部/入声五物；候选 pingshui:物:ru:入声五物；审核记录 docs/reviews/12_J03人审记录_第一批.md",
+      "assertion": "第一批候选归部核验通过；仅覆盖候选 pingshui:物:ru:入声五物，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:楼:ping:十一尤:j03",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 下平声部/十一尤；候选 pingshui:楼:ping:十一尤；审核记录 docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+      "assertion": "第二批第二节追认楼↔樓及下平十一尤归属；仅覆盖候选 pingshui:楼:ping:十一尤，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:望:qu:二十三漾:j03",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 去声部/二十三漾；候选 pingshui:望:qu:二十三漾；审核记录 docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+      "assertion": "第二批第一/五节明确采纳的候选声类与归部；竞争候选仍保留，未获批者保持未审核；仅覆盖候选 pingshui:望:qu:二十三漾，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:思:ping:四支:j03",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 上平声部/四支；候选 pingshui:思:ping:四支；审核记录 docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+      "assertion": "第二批第一/五节明确采纳的候选声类与归部；竞争候选仍保留，未获批者保持未审核；仅覆盖候选 pingshui:思:ping:四支，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:乡:ping:七阳:j03",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 下平声部/七阳；候选 pingshui:乡:ping:七阳；审核记录 docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+      "assertion": "第二批第一/五节明确采纳的候选声类与归部；竞争候选仍保留，未获批者保持未审核；仅覆盖候选 pingshui:乡:ping:七阳，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:乘:ping:十蒸:j03",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 下平声部/十蒸；候选 pingshui:乘:ping:十蒸；审核记录 docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+      "assertion": "第二批第一/五节明确采纳的候选声类与归部；竞争候选仍保留，未获批者保持未审核；仅覆盖候选 pingshui:乘:ping:十蒸，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:空:ping:一东:j03",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 上平声部/一东；候选 pingshui:空:ping:一东；审核记录 docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+      "assertion": "第二批第一/五节明确采纳的候选声类与归部；竞争候选仍保留，未获批者保持未审核；仅覆盖候选 pingshui:空:ping:一东，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:不:ru:入声五物:j03",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 入声部/入声五物；候选 pingshui:不:ru:入声五物；审核记录 docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+      "assertion": "第二批第一/五节明确采纳的候选声类与归部；竞争候选仍保留，未获批者保持未审核；仅覆盖候选 pingshui:不:ru:入声五物，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:pingshui:汉:qu:十五翰:j03",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
+      "kind": "rhyme_entry",
+      "locator": "data/Pingshui_Rhyme.json 去声部/十五翰；候选 pingshui:汉:qu:十五翰；审核记录 docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
+      "assertion": "第二批第一/五节明确采纳的候选声类与归部；竞争候选仍保留，未获批者保持未审核；仅覆盖候选 pingshui:汉:qu:十五翰，不批准所属整部。审核记录：组长 J03 已归档电子裁定（本次为裁定落库，不新增签名），2026-10-18",
+      "excerpt": null,
+      "reviewStatus": "approved"
     },
     {
       "id": "ev:pingshui:上:三讲",
