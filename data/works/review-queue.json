@@ -1,49 +1,84 @@
 {
-  "schemaVersion": "d1-draft",
-  "note": "候选登记，非 approved 元数据。来源定位与语言学依据均待人工核实。",
+  "schemaVersion": "d2-draft",
+  "note": "候选登记，非 approved 元数据。正文版本已定；来源版次/页码仍待核实，故 evidenceIds 为空。",
   "items": [
     {
       "caseId": "golden-dengguanquelou-ps-v1",
+      "workId": "work:dengguanquelou",
       "title": "登鹳雀楼",
       "author": "王之涣",
       "text": "白日依山尽，黄河入海流。欲穷千里目，更上一层楼。",
+      "fingerprint": "33836d104644fd0bd8ae71d6b67a631eff28c6a857a6c5b8f6a644f25d2892ca",
+      "formFamily": "regulated",
+      "formId": "wujue",
+      "historicalTags": ["五绝", "近体候选"],
       "sourceLead": null,
       "pendingItems": [
-        "正文版本与权威出处（书名/卷次/版次/页码）",
-        "体裁判定依据（五绝）的文献出处",
-        "平水韵流/楼同尤部、白/一为古入声的韵书依据"
+        "正文权威出处（书名/卷次/版次/页码）",
+        "「更」为多音重点字位，属 B 的读音范围",
+        "古体/近体定性的文献依据"
       ],
-      "reviewStatus": "pending",
+      "reviewStatus": "unverified",
       "reviewers": [],
       "evidenceIds": []
     },
     {
       "caseId": "golden-jingyesi-ps-v1",
+      "workId": "work:jingyesi",
       "title": "静夜思",
       "author": "李白",
       "text": "床前明月光，疑是地上霜。举头望明月，低头思故乡。",
+      "fingerprint": "9d68fef608c1ae6010cfc3ddd7fb2429e60a861bab8c6453874c2adb16d0bdef",
+      "formFamily": "ancient",
+      "formId": null,
+      "historicalTags": ["古绝", "五言古体"],
+      "variant": {
+        "label": "宋刊《李太白文集》系统",
+        "text": "床前看月光，疑是地上霜。举头望山月，低头思故乡。",
+        "fingerprint": "cc9d8fe1bcac368b135aa6a47c10d5676f0f6d5e57a021b478d57dcd89589826",
+        "differsAt": ["首句第三字 明→看", "第三句第三字 明→山"],
+        "registeredAsSeparateWork": false
+      },
+      "versionDecision": {
+        "decidedAt": "2026-10-18",
+        "decidedBy": "队员 E（待组长签字）",
+        "adopted": "《唐诗三百首》系统",
+        "reason": "与项目既有金标准文本一致；课本与选本通行；异文另存不合并"
+      },
       "sourceLead": null,
       "pendingItems": [
-        "通行本正文出处；异文（如“床前看月光”）另立版本",
-        "“古绝”体裁标记的依据",
-        "不得推广为“任意五言四句不合谱即古体”"
+        "两个版本各自的书名/卷次/版次/页码",
+        "「古绝」定性的文献依据",
+        "「乐府旧题」是否写入 historicalTags（AGENTS 第 5 条要求乐府标签与形式分开）"
       ],
-      "reviewStatus": "pending",
+      "reviewStatus": "unverified",
       "reviewers": [],
       "evidenceIds": []
     },
     {
       "caseId": "golden-huanghelou-ps-v1",
+      "workId": "work:huanghelou",
       "title": "黄鹤楼",
       "author": "崔颢",
       "text": "昔人已乘黄鹤去，此地空余黄鹤楼。黄鹤一去不复返，白云千载空悠悠。晴川历历汉阳树，芳草萋萋鹦鹉洲。日暮乡关何处是，烟波江上使人愁。",
+      "fingerprint": "7b65737ca79258301a2dd35cd880c41020415945c1ea006478eaf816edbf47a2",
+      "formFamily": "regulated",
+      "formId": "qilv",
+      "historicalTags": ["七律", "特殊拗律", "半古半律"],
+      "variant": {
+        "label": "首句「昔人已乘白云去」系统",
+        "text": "昔人已乘白云去，此地空余黄鹤楼。黄鹤一去不复返，白云千载空悠悠。晴川历历汉阳树，芳草萋萋鹦鹉洲。日暮乡关何处是，烟波江上使人愁。",
+        "fingerprint": "737f6baae90975871af8241627898d4c43ce31fc8725500a597b88281f57a90a",
+        "differsAt": ["首句第六字 黄→白"],
+        "registeredAsSeparateWork": false
+      },
       "sourceLead": null,
       "pendingItems": [
-        "正文出处；首句异文（“昔人已乘白云去”等）另立版本",
-        "七律形式与特殊拗律的文献依据",
-        "常格偏离的可见性要求：不得全绿，也不得改判古体"
+        "正文权威出处（书名/卷次/版次/页码）",
+        "「特殊拗律/半古半律」需要规则卡或文献支撑",
+        "首句异文是否另立条目"
       ],
-      "reviewStatus": "pending",
+      "reviewStatus": "unverified",
       "reviewers": [],
       "evidenceIds": []
     }

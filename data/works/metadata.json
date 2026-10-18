@@ -1,0 +1,41 @@
+[
+  {
+    "id": "work:dengguanquelou",
+    "title": "登鹳雀楼",
+    "author": "王之涣",
+    "approvedTextFingerprints": [
+      "33836d104644fd0bd8ae71d6b67a631eff28c6a857a6c5b8f6a644f25d2892ca"
+    ],
+    "formFamily": "regulated",
+    "formId": "wujue",
+    "historicalTags": ["五绝", "近体候选"],
+    "evidenceIds": [],
+    "reviewStatus": "unverified"
+  },
+  {
+    "id": "work:jingyesi",
+    "title": "静夜思",
+    "author": "李白",
+    "approvedTextFingerprints": [
+      "9d68fef608c1ae6010cfc3ddd7fb2429e60a861bab8c6453874c2adb16d0bdef"
+    ],
+    "formFamily": "ancient",
+    "formId": null,
+    "historicalTags": ["古绝", "五言古体"],
+    "evidenceIds": [],
+    "reviewStatus": "unverified"
+  },
+  {
+    "id": "work:huanghelou",
+    "title": "黄鹤楼",
+    "author": "崔颢",
+    "approvedTextFingerprints": [
+      "7b65737ca79258301a2dd35cd880c41020415945c1ea006478eaf816edbf47a2"
+    ],
+    "formFamily": "regulated",
+    "formId": "qilv",
+    "historicalTags": ["七律", "特殊拗律", "半古半律"],
+    "evidenceIds": [],
+    "reviewStatus": "unverified"
+  }
+]
