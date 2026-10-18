@@ -376,3 +376,101 @@ $ pnpm exec tsx packages/readings/scripts/d2-coverage.ts   → 退出码 0
 $ pnpm --filter @poetry/readings test                     → 3 文件 / 51 用例
 $ pnpm verify                                             → 退出码 0
 ```
+
+---
+
+# B-02：三首金标准逐字机器初审表（2026-10-18，PR #10 内追加）
+
+任务书：`02_B_文本读音与异常清单`。产出集中在 `data/reviews/`，未改 `resolve.ts` / `parse.ts`。
+
+## 21. 交付物
+
+| 交付                    | 位置                                               |
+| ----------------------- | -------------------------------------------------- |
+| 96 行逐字初审表（JSON） | `data/reviews/golden-token-review-2026-10-18.json` |
+| 同内容 Markdown 表      | `data/reviews/golden-token-review-2026-10-18.md`   |
+| 生成脚本                | `packages/readings/scripts/golden-token-review.ts` |
+| 结构守护用例（6 条）    | `packages/readings/tests/golden-review.test.ts`    |
+
+## 22. 分母与口径
+
+快照 `pingshui.full-d2-patched.json`（`dataVersion = pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-draft`，
+API `snapshot-manifest.json` 声明的当前 pingshui 快照）。
+
+| 指标                           | 值                                            |
+| ------------------------------ | --------------------------------------------- |
+| 字位总数                       | **96**（登鹳雀楼 20 / 静夜思 20 / 黄鹤楼 56） |
+| 有候选字位                     | 96                                            |
+| 缺字字位                       | 0                                             |
+| 多候选字位                     | 22                                            |
+| 其中平仄临界（候选含平又含仄） | **10**                                        |
+| 多候选但平仄同调               | 12                                            |
+| evidence approved              | **0 / 106**                                   |
+| 无已审核证据字位               | 96                                            |
+
+## 23. 机器结论：当前 0 个字位可确定
+
+证据未审核，`resolveReadings` 对三首全部按门禁拒绝（`LOOKUP_EVIDENCE_UNVERIFIED`）。
+表中 `machineOutcome` 一律为 `blocked`，不产出 `readingStatus` / `toneStatus`——这是正确结果，不是缺数据。
+
+证据获批后的**结构性**分档（不含义项裁定）：
+
+- 单候选 74 字位 → 可 `resolved`；
+- 多候选同调 12 字位 → 读音 `ambiguous`、平仄可确定；
+- 平仄临界 10 字位 → 读音与平仄都须消歧。
+
+## 24. 10 个高优先级多音异常（平仄取决于消歧）
+
+| 作品     | 字位 | 字  | 候选（平仄）                                                                        |
+| -------- | ---- | --- | ----------------------------------------------------------------------------------- |
+| 登鹳雀楼 | l4c1 | 更  | `pingshui:更:ping:八庚`(P) / `pingshui:更:qu:二十四敬`(Z)                           |
+| 静夜思   | l3c3 | 望  | `pingshui:望:ping:七阳`(P) / `pingshui:望:qu:二十三漾`(Z)                           |
+| 静夜思   | l4c3 | 思  | `pingshui:思:ping:四支`(P) / `pingshui:思:qu:四寘`(Z)                               |
+| 静夜思   | l4c5 | 乡  | `pingshui:乡:ping:七阳`(P) / `pingshui:乡:qu:二十三漾`(Z)                           |
+| 黄鹤楼   | l1c4 | 乘  | `pingshui:乘:ping:十蒸`(P) / `pingshui:乘:qu:二十五径`(Z)                           |
+| 黄鹤楼   | l2c3 | 空  | `pingshui:空:ping:一东`(P) / `pingshui:空:shang:一董`(Z) / `pingshui:空:qu:一送`(Z) |
+| 黄鹤楼   | l3c5 | 不  | `pingshui:不:ping:十一尤`(P) / `pingshui:不:ru:入声五物`(Z)                         |
+| 黄鹤楼   | l4c5 | 空  | 同 l2c3                                                                             |
+| 黄鹤楼   | l5c5 | 汉  | `pingshui:汉:ping:十四寒`(P) / `pingshui:汉:qu:十五翰`(Z)                           |
+| 黄鹤楼   | l7c3 | 乡  | 同静夜思 l4c5                                                                       |
+
+## 25. 上下文规则草案（待人工裁定）
+
+10 条草案的短语取「以目标字为中心、长度 3」的窗口（贴边向内收），仅为可审核起点；
+`selectCandidateIds` 与 `evidenceIds` **一律为空**，`reviewStatus=unverified`。
+义项↔候选的对应必须由人工给出可定位来源，AI 不填批准结论。
+
+「更」在 `data/context/review-queue.json` 中已有更细的分义草案（更上一层楼→去声假设 / 三更→平声假设），仍待义项证据。
+
+## 26. 人审范围提醒
+
+- J03 第一批确认「更两读」属实，但**未确认**哪一义项对应哪一读音。
+- J03 第一批对「楼与樓」判为**存疑**（要求补异体关系与证据）：即使其他证据获批，也不得据此转 approved。
+- 白、一、流、雪、物的候选归属已确认，但确认范围仅限列明候选，不等于所属韵部整体获批。
+
+## 27. 版本差异
+
+| 项          | 旧样本                           | 当前快照                                        |
+| ----------- | -------------------------------- | ----------------------------------------------- |
+| 文件        | `pingshui.sample-d1.json`        | `pingshui.full-d2-patched.json`                 |
+| dataVersion | `sample-pingshui-cwr-ff0e9c1-d1` | `pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-draft` |
+| 字数        | 7                                | 8240                                            |
+| 候选数      | 8                                | 10387                                           |
+| 三首覆盖    | 20 字位有候选 / 76 缺字          | **96 / 0**                                      |
+
+本表全部数据来自当前快照，未使用旧样本任何结果；旧样本只用于差异说明。
+
+## 28. 未到位的外部材料
+
+任务书要求先读 `docs/reviews/AI初审_人工异常复核方案_2026-10-18.md`，但该文件在本地、`origin/main`
+及所有远端分支中都不存在（`git log --all` 无记录）。本批按任务书正文、`docs/reviews/README.md`
+与 J03 人审记录的口径执行；若该方案另有格式要求，请补充后再对齐。
+
+## 29. 验收
+
+```text
+$ pnpm exec vitest run packages/readings/tests        → 4 文件 / 57 用例通过
+$ node node_modules/tsx/dist/cli.mjs packages/readings/scripts/d2-coverage.ts
+  → rows=96 covered=96 missing=0 multi=22 toneCritical=10 approved=0/106
+$ pnpm verify                                          → 退出码 0（见 CI 与本次提交记录）
+```
