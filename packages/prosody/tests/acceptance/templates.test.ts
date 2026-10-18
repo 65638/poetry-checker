@@ -123,9 +123,9 @@ describe("matchTemplates 行为验收（只验收候选特征，不断言“最�
     expect(top?.features.toneFit).toBe(1);
     expect(top?.evaluatedKeyRate).toBe(1);
     expect(top?.score).toBe(1);
-    // 当前底座边界：其余特征尚未实现，保持 null；实现后按 D2-matrix.md 更新本断言。
-    expect(top?.features.relationFit).toBeNull();
-    expect(top?.features.rhymeFit).toBeNull();
+    // D2 已实现粘对/押韵特征；本正格合成诗二者均为 1，对仗仍未支持。
+    expect(top?.features.relationFit).toBe(1);
+    expect(top?.features.rhymeFit).toBe(1);
     expect(top?.features.parallelismFit).toBeNull();
   });
 

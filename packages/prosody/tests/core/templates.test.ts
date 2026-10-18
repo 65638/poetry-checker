@@ -3,7 +3,6 @@ import {
   getTemplates,
   matchTemplatesCore,
   evaluateProsodyCore,
-  ProsodyNotImplementedError,
 } from "../../src/core/index.js";
 import { makeFixture } from "../../../contracts/tests/fixtures.js";
 
@@ -35,7 +34,7 @@ describe("整诗模板", () => {
     first[0]!.lineTypes[0] = "D";
     expect(getTemplates()[0]!.lineTypes[0]).toBe("A");
   });
-  it("未知关键位不算吻合；尚未实现特征保持 null", () => {
+  it("全部声调未知时，已实现特征也不能伪造满分", () => {
     const poem = makeFixture().poem;
     for (const token of poem.tokens) {
       token.possibleTones = [];
@@ -56,15 +55,17 @@ describe("整诗模板", () => {
       ),
     ).toBe(true);
   });
-  it("未实现完整判定时明确报错，不用空报告伪装通过", () => {
-    expect(() =>
-      evaluateProsodyCore({
-        poem: makeFixture().poem,
-        candidates: [],
-        selectedTemplateId: null,
-        applicability: "applicable",
-        ruleSet: "teaching-v1",
-      }),
-    ).toThrow(ProsodyNotImplementedError);
+  it("没有可用模板时明确不支持，不用空报告伪装通过", () => {
+    const report = evaluateProsodyCore({
+      poem: makeFixture().poem,
+      candidates: [],
+      selectedTemplateId: null,
+      applicability: "applicable",
+      ruleSet: "teaching-v1",
+    });
+    expect(report.rhyme.status).toBe("unsupported");
+    expect(report.checks.some((check) => check.status === "unsupported")).toBe(
+      true,
+    );
   });
 });
