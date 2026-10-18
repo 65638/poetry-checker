@@ -14,9 +14,9 @@
 
 | 案例 | 待核实内容 | 关联规则 | 状态 |
 |---|---|---|---|
-| 登鹳雀楼 | 五绝（wujue-ze-unrhymed）逐字平仄与 C 的核心输出一致；流/楼同属下平十一尤（任务书示例，需对照采用韵书）；白/一为古入声 | METER.POSITION、RHYME.COMMON | 文本与异文：**approved（C 2026-10-18，7.2）**；逐字平仄与古入声仍 pending |
-| 静夜思 | 审核版本身份为古绝（不适用近体规则）；逐字字音与归部保留 | 适用性 + RHYME.COMMON | 文本异文已核实（三版差异，7.3）；**版本选用（golden 用唐诗三百首文字）待 E 定版**；古绝身份仍 pending |
-| 黄鹤楼 | 七律形式与特殊拗律说明；常格偏离可见、不改判古体；特拗与孤平相关诗例核对 | RELATION.*、GUPING.NARROW、RESCUE.TEAO | 文本与异文：**approved（C 2026-10-18，7.4）**；特殊拗律与诗例仍 pending |
+| 登鹳雀楼 | 五绝（wujue-ze-unrhymed）逐字平仄与 C 的核心输出一致；流/楼同属下平十一尤（任务书示例，需对照采用韵书）；白/一为古入声 | METER.POSITION、RHYME.COMMON | 文本与异文：**approved（C 2026-10-18，7.2）**；**逐字平仄断言：approved（J03 第一批·第三部分第 9 项；记录已入库 `docs/reviews/12_J03人审记录_第一批.md`）**；古入声仍待 |
+| 静夜思 | 审核版本身份为古绝（不适用近体规则）；逐字字音与归部保留 | 适用性 + RHYME.COMMON | 文本异文已核实（三版差异，7.3）；**逐字平仄断言：approved（J03 第一批·第三部分第 9 项，按当前 golden 文本）**；**版本选用（golden 用唐诗三百首文字）待 E 定版**；古绝身份仍 pending |
+| 黄鹤楼 | 七律形式与特殊拗律说明；常格偏离可见、不改判古体；特拗与孤平相关诗例核对 | RELATION.*、GUPING.NARROW、RESCUE.TEAO | 文本与异文：**approved（C 2026-10-18，7.4）**；**逐字平仄断言：approved（J03 第一批·第三部分第 9 项）**；特殊拗律与诗例仍 pending |
 
 ## 3. 核心救法逐项
 
@@ -37,9 +37,9 @@
 | GUPING.NARROW | 窄义 ZPZZP 与“整句单平”宽口径的区分；七言后五字 | **已核实** §9.1（页 335–336；含脚注「犯孤平指的是平脚的句子」） | **approved**（C 2026-10-18） |
 | TAIL.SANPING | 三平尾为病的依据；与特拗/救法的边界 | **部分依据** §9.9（页 372）：「平平平…叫做三平调，是古体诗中最明显的特点」——只能证明三平调是古体特征；**近体「三平尾为病」的专条未见**（第 14 卷《汉语诗律学》已查第六节页 85、第八节页 108 起始亦未见，见 §9.10；未通检全卷） | **结案：部分依据**（C 2026-10-18 接受）；近体 error 等级为工程口径 |
 | TAIL.SANZE | 三仄尾“只作 warning”的等级依据 | **部分依据** §9.9（页 372）：「（c）仄仄仄」列为古体拗句三字尾之一；「只作 warning」的等级是本项目工程口径，文献未直接支持（§9.10 同查未见专条） | **结案：部分依据**（C 2026-10-18 接受）；warning 等级为工程口径 |
-| RESCUE.SELF | 见第 3 节 | **已核实** §9.3（页 339） | **approved**（C 2026-10-18） |
-| RESCUE.TEAO | 见第 3 节 | **已核实** §9.2（页 336–338） | **approved**（七言完整模式真实诗例仍待） |
-| RESCUE.DUIJU | 见第 3 节 | **已核实** §9.4（页 339；五言实例页 340《赋得古原草送别》） | **approved**（七言真实诗例仍待） |
+| RESCUE.SELF | 见第 3 节 | **已核实** §9.3（页 339） | **approved**（C 2026-10-18；**J03 第 10 项**；证据 `ev:rule:RESCUE.SELF:wangli15-p339`） |
+| RESCUE.TEAO | 见第 3 节 | **已核实** §9.2（页 336–338） | **approved**（C 2026-10-18；**J03 第 11 项**；证据 `ev:rule:RESCUE.TEAO:wangli15-p336-338`；七言完整模式真实诗例仍待） |
+| RESCUE.DUIJU | 见第 3 节 | **已核实** §9.4（页 339；五言实例页 340《赋得古原草送别》；七言实例页 341 陆游《夜泊水村》） | **approved**（C 2026-10-18；**J03 第 12 项**；证据 `ev:rule:RESCUE.DUIJU:wangli15-p339-341`；七言纯 (b) 实例仍待） |
 
 ## 5. 核实完成后的更新方式
 
@@ -56,6 +56,7 @@
 | 2026-10-18 | C（本人） | 黃鶴樓文本与异文（7.4） | 维基文库《黃鶴樓 (崔顥)》 https://zh.wikisource.org/w/index.php?title=黃鶴樓_(崔顥)&oldid=2492584 | 「昔人已乘黃鶴**一作白雲**去，此地空餘黃鶴樓……」；收录全唐詩/卷130、唐詩三百首、千家詩/卷四；分类七言律詩 | 与 golden `huanghelou.json` 一致；异文待 E 登记；**approved** |
 
 | 2026-10-18 | C（本人） | 王力《诗词格律》粘对/拗救/尾式等章节（9.1–9.9 全部 approved；9.10 为检索记录） | 《王力文集》第15卷扫描件（664 页；本地 `_sources/wangli15.pdf`）；第二章第三节（三）粘对 333–334、（四）孤平 335–336、（五）特定格式 336–338、（六）拗救 339（实例 340–341：白居易/许浑/苏轼/陆游）、（七）一三五不论 342–343；第六节（四）古体诗平仄 371–372（三平调定义）；PDF 页 = 印刷页 + 7（页脚核对）；页 340 起页眉误作「诗词格律概要」 | 见 §9 逐条摘录 | **9.1–9.9 approved**（C 2026-10-18 签字）；9.10 为第14卷检索记录（不作为独立依据）；出版社/印次待补；七言特拗真实诗例仍待 |
+| 2026-10-18 | 组长（人审记录 `docs/reviews/12_J03人审记录_第一批.md`，第三部分（同日续审）） | 三首案例断言（第 9 项）与三张救法卡 RESCUE.SELF/TEAO/DUIJU（第 10/11/12 项） | 记录已入库；A 的 `data/reviews/j03-batch1-human-review.json` 只是同一记录的**数据核验部分**（白/一/更/流/雪/物 通过、楼 pending、部级 evidence 不升），非完整记录。引用：王力文集第15卷《诗词格律》页 339（SELF）/ 336–338（TEAO）/ 339–341（DUIJU） | 见 §9.2/9.3/9.4/9.8 摘录 | 三张卡 approved 且 `evidenceIds` 已回填（`rules/evidence/teaching-v1.json`，三条均 approved）；三首断言 approved（第 9 项）；**TAIL.SANPING/SANZE 维持「部分依据」**；但 `rules/cards/teaching-v1.json` 发布注册表未建、其余 7 卡 pending → **发布门槛未达** |
 
 > 说明：本条只核实“平水韵下平十一尤含流、楼”这一事实；不代表 106 韵目完整性、词林/新韵数据或三首案例已审核。规则卡本体（`rules/cards/draft-teaching-v1.json`）仍保持 pending，待整体审核后统一转正式证据（届时同一 PR 更新卡片与相关测试）。
 
@@ -136,3 +137,83 @@
 - 9.10：第 14 卷《汉语诗律学（上）》已下载（923 页扫描件，本地 `_sources/wangli14.pdf`；PDF = 印刷页 + 11）；已查目录、第六节（页 85）、第八节（页 108）起始页，未见近体三平尾/三仄尾专条；未通检全卷，结论仅限已查页码。此条为**检索记录**，不作为独立依据。
 - 状态：**9.1–9.9 approved**（C 2026-10-18 签字）。
 - **《黄鹤楼》（（八）古风式的律诗，页 343 起）不收录于本节**：王力同章以《黄鹤楼》为例，论述「前半首是古风的格调，后半首才是律诗」，但这属 **E 的体裁/金标准范围**（`tests/golden/cases/huanghelou.json` 的 formFamily/formId/historicalTags 与「特殊拗律」说明），C 不越界登记。该定位作为**交接线索**提供给 E/组长。
+
+## 10. evidenceIds 回填结果（GLM 已落库，C 已回填）
+
+> 2026-10-18：GLM 在 `rules/evidence/teaching-v1.json` 落库三条 `ev:rule:*` 记录（`reviewStatus=approved`，locator 引用 `docs/reviews/12_J03人审记录_第一批.md` 第三部分第 10–12 项）；C 已把 ID 回填到对应规则卡的 `rule.evidenceIds`，由 `cards.test.ts` 断言「每个 evidenceId 都能解析且 approved」，不再出现「待建 ID」。
+
+| 规则卡 | 人审项 | evidenceId（已回填） | locator 摘要 |
+|---|---|---|---|
+| RESCUE.SELF | 第 10 项 | `ev:rule:RESCUE.SELF:wangli15-p339` | （六）拗救·（a）本句自救，印刷页 339（PDF 346） |
+| RESCUE.TEAO | 第 11 项 | `ev:rule:RESCUE.TEAO:wangli15-p336-338` | （五）特定的一种平仄格式，页 336–338（PDF 343–345） |
+| RESCUE.DUIJU | 第 12 项 | `ev:rule:RESCUE.DUIJU:wangli15-p339-341` | （六）拗救·（b）对句相救，页 339；实例 340/341 |
+| 三首案例平仄断言 | 第 9 项 | **尚无独立 evidence 记录** | 卡级证据已覆盖；如需按案例建记录，由 GLM 增补（C 只提供 locator，不代建） |
+
+**仍缺一步（发布门槛，不是本文档可代签）**：发布注册表 `rules/cards/teaching-v1.json` 尚不存在；API 侧 `loadResources` 的依据门槛要求它存在且 `unresolvedRuleEvidence()` 为空，因此当前 `provenance.rules` 为空、`/readyz` 仍报「无已发布规则卡」。
+
+## 11. 10 张规则卡检查报告（ruleId / version / evidenceIds）
+
+| ruleId | version | evidenceIds | 卡片状态 | 文献依据状态 | 人审项 |
+|---|---|---|---|---|---|
+| METER.POSITION | 1 | [] | pending / draft_only | §9.5 半拗（页 339）、§9.6 一三五不论（页 342–343），C 已签 | J03 第 9 项只批三首案例断言，**不批本卡** |
+| RHYME.COMMON | 1 | [] | pending / draft_only | 流/楼同属下平十一尤（§6）；词林 19 部待 A 交叉核对 | 无 |
+| RELATION.DUI | 1 | [] | pending / draft_only | §9.7 粘对（页 333–334），C 已签 | 无 |
+| RELATION.NIAN | 1 | [] | pending / draft_only | §9.7 粘对（页 334），C 已签 | 无 |
+| GUPING.NARROW | 1 | [] | pending / draft_only | §9.1 孤平（页 335–336，含「平脚句」脚注），C 已签 | 无 |
+| TAIL.SANPING | 1 | [] | pending / draft_only | §9.9 仅古体三平调（页 372）→「部分依据」，近体等级为工程口径 | 人审记录明确维持部分依据，不需人审 |
+| TAIL.SANZE | 1 | [] | pending / draft_only | §9.9 仄仄仄为古体拗句（页 372）→「部分依据」 | 同上 |
+| RESCUE.SELF | 1 | `ev:rule:RESCUE.SELF:wangli15-p339` | **approved** | §9.3（页 339）+ 第 10 项人审 | ✅ 第 10 项 |
+| RESCUE.TEAO | 1 | `ev:rule:RESCUE.TEAO:wangli15-p336-338` | **approved** | §9.2（页 336–338）+ 第 11 项人审 | ✅ 第 11 项 |
+| RESCUE.DUIJU | 1 | `ev:rule:RESCUE.DUIJU:wangli15-p339-341` | **approved** | §9.4（页 339，实例 340/341）+ 第 12 项人审 | ✅ 第 12 项 |
+
+**闭合检查结论**：3 张 approved 卡的 `evidenceIds` 均可在 `rules/evidence/teaching-v1.json` 解析且 `reviewStatus=approved`（`cards.test.ts` 断言）；其余 7 张 `evidenceIds=[]` 且待审，符合「无可定位来源保持 draft/pending」。`ruleId` 未新增/重命名，`version` 全为 `"1"`。
+
+## 12. 三首金标准异常清单（机器初审）
+
+> **生成方式**：`packages/prosody/scripts/d2-anomaly-report.mts`（真实 `@poetry/lexicon` + `@poetry/readings` + `@poetry/prosody`；输出 `packages/prosody/tests/acceptance/d2-anomaly-report.json`）。
+> **口径**：字位平仄由平水韵快照的**韵部声类**推导（平→P；上/去/入→Z），**未经 B 的语境消歧**；`dataVersion=pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-draft`（**unverified 快照**）。因此这是**机器初审**，不是最终读音、不是人审结论、不改变任何 `reviewStatus`。
+
+| 案例 | 金标准断言 | 选用模板 | checks | 非通过 | 未定字位 | 结论 |
+|---|---|---|---:|---:|---:|---|
+| 登鹳雀楼 | wujue / applicable | `wujue-ze-unrhymed` | 36 | **0** | 1（`l4c1` 更 P/Z） | 粘对 6 组全 pass；押韵 pass（流/楼→下平十一尤）；无孤平/尾式/救法异常；与「五绝、仄起不入韵」一致 |
+| 静夜思 | **无 formId/applicability 断言** | 默认 `wujue-ping-rhymed` | 37 | 9 | 3（望/思/乡） | 按近体判定：METER 2 fail + 1 uncertain、RELATION 2 dui + 2 nian fail、RHYME uncertain（七阳）、TAIL.SANZE uncertain → 与「古绝」口径一致，但 golden 缺断言 |
+| 黄鹤楼 | qilv / applicable | `qilv-ping-unrhymed` | 97 | 11 | 6（乘/空/不/汉/乡） | METER 2 fail + 2 uncertain、粘 1 fail、对 3 fail + 1 uncertain、TAIL 三平/三仄各 1 uncertain、RESCUE.SELF uncertain（related=3）；押韵 pass（楼/悠/洲/愁→下平十一尤）→ 与「半古半律、特殊拗律」一致 |
+
+**真实报告闭合复核**：三份报告均通过 `checkReportClosure`（problems=0）：ruleId 均属 10 个固定 ID、`ruleVersion="1"`、`resolvedBy` 仅救法 ID、`relatedFindingIds`/`relations.findingIds`/`rhyme.tokenIds`/`locations.tokenId` 全部可解析（生成物 `d2-anomaly-report.json` 的 `cases.*.closure` 字段）。
+
+**异常汇总（供组长圈定人审）**：
+
+| ID | 异常 | 涉及 | 建议处理 |
+|---|---|---|---|
+| A1 | `tests/golden/cases/jingyesi.json` **缺 `genre.applicability`/`formId` 断言**，机器会按近体打分并报 9 项出律 | E 的金标准 | 请 E 补 `not_applicable`（古绝）断言；C 不代改 E 文件 |
+| A2 | `RESCUE.SELF` 判定依赖「空」的平/仄：`空=P` 时「此地空余黄鹤楼」成 `*ZZPPZP` 自救；`空=Z` 则另有偏离 | 黄鹤楼 `l2c3` | 人审「空」后定；当前如实报 uncertain |
+| A3 | 「更/望/思/乡/乘/空/不/汉」全部为**双声类**（P/Z），与组长优先人审清单一致 | 三首 | 组长逐字复核；C 已给出候选 ID 与字位 |
+| A4 | 三平尾/三仄尾在未定字位语境下只报 `uncertain`（非 fail），符合「部分依据 + 工程等级」口径 | 静夜思 `l4c3–5`；黄鹤楼 `l3c5–7`、`l4c5–7` | 不需额外处理，等待人审字音后复算 |
+
+## 13. 文献引用状态表（章节 / 印刷页 / 来源状态）
+
+| 条目 | 章节 | 印刷页（PDF） | 来源 | 状态 |
+|---|---|---|---|---|
+| 9.1 孤平的避忌 | 第二章第三节（四） | 335–336（342–343） | 王力文集15卷《诗词格律》扫描件 | approved（C 2026-10-18 签） |
+| 9.2 特定的一种平仄格式 | 同上（五） | 336–338（343–345） | 同上 | approved（C）+ 第 11 项人审 |
+| 9.3 本句自救 | 同上（六）（a） | 339（346） | 同上 | approved（C）+ 第 10 项人审 |
+| 9.4 对句相救 | 同上（六）（b） | 339；实例 340–341（346–348） | 同上 | approved（C）+ 第 12 项人审 |
+| 9.5 半拗 | 同上（六）（c） | 339（346） | 同上 | approved（C） |
+| 9.6 一三五不论 | 同上（七） | 342–343（349–350） | 同上 | approved（C） |
+| 9.7 粘对 | 同上（三） | 333–334（340–341） | 同上 | approved（C） |
+| 9.8 七言拗救实例 | 同上（六） | 340–341（347–348） | 同上 | approved（C） |
+| 9.9 三平调 | 第二章第六节（四） | 371–372（378–379） | 同上 | 部分依据（古体特征已核实；近体等级为工程口径） |
+| 9.10 汉语诗律学检索 | 第 14 卷第六/八节 | 85、108（96、119） | 同上第 14 卷 | 检索记录（未通检，不作独立依据） |
+
+> 来源限制：王力文集为**受版权保护出版物**，仓库只存**章节 + 印刷页定位与规则转述**，不存原文、不复制原文（evidence 的 `excerpt` 恒为 null）；版次/印次仍待补（扫描件无版权页）。
+
+## 14. 代码测试通过 vs 文献人工审核通过（发布口径）
+
+| 类别 | 已完成 | 证据 | 可否据此宣称发布 |
+|---|---|---|---|
+| 代码测试 | C2-01..13 独立验收 32 项 + 闭合工具 3 项（acceptance 合计 83 项）；`pnpm verify` 全绿 | `tests/acceptance/`、HANDOFF、D2-matrix | ❌ 代码通过 ≠ 文献/数据审核通过 |
+| 文献核实（C 签） | 9.1–9.9（8 条直接依据 + 尾式 2 条部分依据） | 本文档 §9/§13 | ❌ 需人审范围界定 |
+| 人工审核（组长 J03） | 三首案例断言（第 9 项）+ 三张救法卡（第 10–12 项） | `docs/reviews/12_J03人审记录_第一批.md`；`rules/evidence/teaching-v1.json` | ❌ 仅覆盖上述范围，其余 7 卡与数据仍在 unverified |
+| 发布门槛 | **未达**：`rules/cards/teaching-v1.json` 未建；7 张卡 pending；三库快照仍 unverified；三首 golden `reviewStatus` 仍 pending | — | ❌ 不得宣称「三库逐字人工审核完成」或「发布完成」 |
+
+**结论**：本批完成的是「AI 初审 + 三张规则卡/三首断言的人工复核落库」；剩余 7 张卡、三库全量、静夜思版本、七言特拗诗例、出版社版次仍在未审核状态，按 09 清单继续列异常，不得用测试总数或 `approved` 标记冒充全量审核。

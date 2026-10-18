@@ -167156,7 +167156,7 @@
   "evidence": [
     {
       "id": "ev:pingshui:上平:一东",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上平声部/一东",
       "assertion": "data/Pingshui_Rhyme.json 上平声部/一东 共收录 152 个字形（原表条目 156 条）",
@@ -167165,7 +167165,7 @@
     },
     {
       "id": "ev:pingshui:上平:二冬",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上平声部/二冬",
       "assertion": "data/Pingshui_Rhyme.json 上平声部/二冬 共收录 98 个字形（原表条目 101 条）",
@@ -167174,7 +167174,7 @@
     },
     {
       "id": "ev:pingshui:上平:三江",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上平声部/三江",
       "assertion": "data/Pingshui_Rhyme.json 上平声部/三江 共收录 44 个字形（原表条目 44 条）",
@@ -167183,7 +167183,7 @@
     },
     {
       "id": "ev:pingshui:上平:四支",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上平声部/四支",
       "assertion": "data/Pingshui_Rhyme.json 上平声部/四支 共收录 440 个字形（原表条目 452 条）",
@@ -167192,7 +167192,7 @@
     },
     {
       "id": "ev:pingshui:上平:五微",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上平声部/五微",
       "assertion": "data/Pingshui_Rhyme.json 上平声部/五微 共收录 70 个字形（原表条目 71 条）",
@@ -167201,7 +167201,7 @@
     },
     {
       "id": "ev:pingshui:上平:六鱼",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上平声部/六鱼",
       "assertion": "data/Pingshui_Rhyme.json 上平声部/六鱼 共收录 117 个字形（原表条目 118 条）",
@@ -167210,7 +167210,7 @@
     },
     {
       "id": "ev:pingshui:上平:七虞",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上平声部/七虞",
       "assertion": "data/Pingshui_Rhyme.json 上平声部/七虞 共收录 283 个字形（原表条目 295 条）",
@@ -167219,7 +167219,7 @@
     },
     {
       "id": "ev:pingshui:上平:八齐",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上平声部/八齐",
       "assertion": "data/Pingshui_Rhyme.json 上平声部/八齐 共收录 115 个字形（原表条目 119 条）",
@@ -167228,7 +167228,7 @@
     },
     {
       "id": "ev:pingshui:上平:九佳",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上平声部/九佳",
       "assertion": "data/Pingshui_Rhyme.json 上平声部/九佳 共收录 47 个字形（原表条目 47 条）",
@@ -167237,7 +167237,7 @@
     },
     {
       "id": "ev:pingshui:上平:十灰",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上平声部/十灰",
       "assertion": "data/Pingshui_Rhyme.json 上平声部/十灰 共收录 112 个字形（原表条目 116 条）",
@@ -167246,7 +167246,7 @@
     },
     {
       "id": "ev:pingshui:上平:十一真",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上平声部/十一真",
       "assertion": "data/Pingshui_Rhyme.json 上平声部/十一真 共收录 176 个字形（原表条目 177 条）",
@@ -167255,7 +167255,7 @@
     },
     {
       "id": "ev:pingshui:上平:十二文",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上平声部/十二文",
       "assertion": "data/Pingshui_Rhyme.json 上平声部/十二文 共收录 89 个字形（原表条目 93 条）",
@@ -167264,7 +167264,7 @@
     },
     {
       "id": "ev:pingshui:上平:十三元",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上平声部/十三元",
       "assertion": "data/Pingshui_Rhyme.json 上平声部/十三元 共收录 155 个字形（原表条目 160 条）",
@@ -167273,7 +167273,7 @@
     },
     {
       "id": "ev:pingshui:上平:十四寒",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上平声部/十四寒",
       "assertion": "data/Pingshui_Rhyme.json 上平声部/十四寒 共收录 134 个字形（原表条目 143 条）",
@@ -167282,7 +167282,7 @@
     },
     {
       "id": "ev:pingshui:上平:十五删",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上平声部/十五删",
       "assertion": "data/Pingshui_Rhyme.json 上平声部/十五删 共收录 60 个字形（原表条目 62 条）",
@@ -167291,7 +167291,7 @@
     },
     {
       "id": "ev:pingshui:下平:一先",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 下平声部/一先",
       "assertion": "data/Pingshui_Rhyme.json 下平声部/一先 共收录 239 个字形（原表条目 245 条）",
@@ -167300,7 +167300,7 @@
     },
     {
       "id": "ev:pingshui:下平:二萧",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 下平声部/二萧",
       "assertion": "data/Pingshui_Rhyme.json 下平声部/二萧 共收录 194 个字形（原表条目 197 条）",
@@ -167309,7 +167309,7 @@
     },
     {
       "id": "ev:pingshui:下平:三肴",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 下平声部/三肴",
       "assertion": "data/Pingshui_Rhyme.json 下平声部/三肴 共收录 99 个字形（原表条目 99 条）",
@@ -167318,7 +167318,7 @@
     },
     {
       "id": "ev:pingshui:下平:四豪",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 下平声部/四豪",
       "assertion": "data/Pingshui_Rhyme.json 下平声部/四豪 共收录 108 个字形（原表条目 109 条）",
@@ -167327,7 +167327,7 @@
     },
     {
       "id": "ev:pingshui:下平:五歌",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 下平声部/五歌",
       "assertion": "data/Pingshui_Rhyme.json 下平声部/五歌 共收录 122 个字形（原表条目 122 条）",
@@ -167336,7 +167336,7 @@
     },
     {
       "id": "ev:pingshui:下平:六麻",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 下平声部/六麻",
       "assertion": "data/Pingshui_Rhyme.json 下平声部/六麻 共收录 138 个字形（原表条目 144 条）",
@@ -167345,7 +167345,7 @@
     },
     {
       "id": "ev:pingshui:下平:七阳",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 下平声部/七阳",
       "assertion": "data/Pingshui_Rhyme.json 下平声部/七阳 共收录 266 个字形（原表条目 268 条）",
@@ -167354,16 +167354,16 @@
     },
     {
       "id": "ev:pingshui:下平:八庚",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 下平声部/八庚",
       "assertion": "data/Pingshui_Rhyme.json 下平声部/八庚 共收录 194 个字形（原表条目 197 条）",
       "excerpt": null,
-      "reviewStatus": "unverified"
+      "reviewStatus": "approved"
     },
     {
       "id": "ev:pingshui:下平:九青",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 下平声部/九青",
       "assertion": "data/Pingshui_Rhyme.json 下平声部/九青 共收录 94 个字形（原表条目 94 条）",
@@ -167372,7 +167372,7 @@
     },
     {
       "id": "ev:pingshui:下平:十蒸",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 下平声部/十蒸",
       "assertion": "data/Pingshui_Rhyme.json 下平声部/十蒸 共收录 98 个字形（原表条目 101 条）",
@@ -167381,16 +167381,16 @@
     },
     {
       "id": "ev:pingshui:下平:十一尤",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 下平声部/十一尤",
       "assertion": "data/Pingshui_Rhyme.json 下平声部/十一尤 共收录 249 个字形（原表条目 255 条）",
       "excerpt": null,
-      "reviewStatus": "unverified"
+      "reviewStatus": "approved"
     },
     {
       "id": "ev:pingshui:下平:十二侵",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 下平声部/十二侵",
       "assertion": "data/Pingshui_Rhyme.json 下平声部/十二侵 共收录 75 个字形（原表条目 79 条）",
@@ -167399,7 +167399,7 @@
     },
     {
       "id": "ev:pingshui:下平:十三覃",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 下平声部/十三覃",
       "assertion": "data/Pingshui_Rhyme.json 下平声部/十三覃 共收录 83 个字形（原表条目 84 条）",
@@ -167408,7 +167408,7 @@
     },
     {
       "id": "ev:pingshui:下平:十四盐",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 下平声部/十四盐",
       "assertion": "data/Pingshui_Rhyme.json 下平声部/十四盐 共收录 88 个字形（原表条目 93 条）",
@@ -167417,7 +167417,7 @@
     },
     {
       "id": "ev:pingshui:下平:十五咸",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 下平声部/十五咸",
       "assertion": "data/Pingshui_Rhyme.json 下平声部/十五咸 共收录 39 个字形（原表条目 42 条）",
@@ -167426,7 +167426,7 @@
     },
     {
       "id": "ev:pingshui:上:一董",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上声部/一董",
       "assertion": "data/Pingshui_Rhyme.json 上声部/一董 共收录 38 个字形（原表条目 38 条）",
@@ -167435,7 +167435,7 @@
     },
     {
       "id": "ev:pingshui:上:二肿",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上声部/二肿",
       "assertion": "data/Pingshui_Rhyme.json 上声部/二肿 共收录 42 个字形（原表条目 43 条）",
@@ -167444,7 +167444,7 @@
     },
     {
       "id": "ev:pingshui:上:四纸",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上声部/四纸",
       "assertion": "data/Pingshui_Rhyme.json 上声部/四纸 共收录 235 个字形（原表条目 243 条）",
@@ -167453,7 +167453,7 @@
     },
     {
       "id": "ev:pingshui:上:五尾",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上声部/五尾",
       "assertion": "data/Pingshui_Rhyme.json 上声部/五尾 共收录 37 个字形（原表条目 37 条）",
@@ -167462,7 +167462,7 @@
     },
     {
       "id": "ev:pingshui:上:六语",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上声部/六语",
       "assertion": "data/Pingshui_Rhyme.json 上声部/六语 共收录 86 个字形（原表条目 87 条）",
@@ -167471,7 +167471,7 @@
     },
     {
       "id": "ev:pingshui:上:七麌",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上声部/七麌",
       "assertion": "data/Pingshui_Rhyme.json 上声部/七麌 共收录 157 个字形（原表条目 160 条）",
@@ -167480,7 +167480,7 @@
     },
     {
       "id": "ev:pingshui:上:八荠",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上声部/八荠",
       "assertion": "data/Pingshui_Rhyme.json 上声部/八荠 共收录 45 个字形（原表条目 47 条）",
@@ -167489,7 +167489,7 @@
     },
     {
       "id": "ev:pingshui:上:九蟹",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上声部/九蟹",
       "assertion": "data/Pingshui_Rhyme.json 上声部/九蟹 共收录 24 个字形（原表条目 26 条）",
@@ -167498,7 +167498,7 @@
     },
     {
       "id": "ev:pingshui:上:十贿",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上声部/十贿",
       "assertion": "data/Pingshui_Rhyme.json 上声部/十贿 共收录 69 个字形（原表条目 72 条）",
@@ -167507,7 +167507,7 @@
     },
     {
       "id": "ev:pingshui:上:十一轸",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上声部/十一轸",
       "assertion": "data/Pingshui_Rhyme.json 上声部/十一轸 共收录 64 个字形（原表条目 66 条）",
@@ -167516,7 +167516,7 @@
     },
     {
       "id": "ev:pingshui:上:十二吻",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上声部/十二吻",
       "assertion": "data/Pingshui_Rhyme.json 上声部/十二吻 共收录 30 个字形（原表条目 30 条）",
@@ -167525,7 +167525,7 @@
     },
     {
       "id": "ev:pingshui:上:十三阮",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上声部/十三阮",
       "assertion": "data/Pingshui_Rhyme.json 上声部/十三阮 共收录 84 个字形（原表条目 84 条）",
@@ -167534,7 +167534,7 @@
     },
     {
       "id": "ev:pingshui:上:十四旱",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上声部/十四旱",
       "assertion": "data/Pingshui_Rhyme.json 上声部/十四旱 共收录 57 个字形（原表条目 59 条）",
@@ -167543,7 +167543,7 @@
     },
     {
       "id": "ev:pingshui:上:十五潸",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上声部/十五潸",
       "assertion": "data/Pingshui_Rhyme.json 上声部/十五潸 共收录 33 个字形（原表条目 34 条）",
@@ -167552,7 +167552,7 @@
     },
     {
       "id": "ev:pingshui:上:十六铣",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上声部/十六铣",
       "assertion": "data/Pingshui_Rhyme.json 上声部/十六铣 共收录 142 个字形（原表条目 144 条）",
@@ -167561,7 +167561,7 @@
     },
     {
       "id": "ev:pingshui:上:十七筱",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上声部/十七筱",
       "assertion": "data/Pingshui_Rhyme.json 上声部/十七筱 共收录 86 个字形（原表条目 92 条）",
@@ -167570,7 +167570,7 @@
     },
     {
       "id": "ev:pingshui:上:十八巧",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上声部/十八巧",
       "assertion": "data/Pingshui_Rhyme.json 上声部/十八巧 共收录 26 个字形（原表条目 26 条）",
@@ -167579,7 +167579,7 @@
     },
     {
       "id": "ev:pingshui:上:十九皓",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上声部/十九皓",
       "assertion": "data/Pingshui_Rhyme.json 上声部/十九皓 共收录 72 个字形（原表条目 73 条）",
@@ -167588,7 +167588,7 @@
     },
     {
       "id": "ev:pingshui:上:二十哿",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上声部/二十哿",
       "assertion": "data/Pingshui_Rhyme.json 上声部/二十哿 共收录 67 个字形（原表条目 67 条）",
@@ -167597,7 +167597,7 @@
     },
     {
       "id": "ev:pingshui:上:二十一马",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上声部/二十一马",
       "assertion": "data/Pingshui_Rhyme.json 上声部/二十一马 共收录 53 个字形（原表条目 54 条）",
@@ -167606,7 +167606,7 @@
     },
     {
       "id": "ev:pingshui:上:二十二养",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上声部/二十二养",
       "assertion": "data/Pingshui_Rhyme.json 上声部/二十二养 共收录 107 个字形（原表条目 115 条）",
@@ -167615,7 +167615,7 @@
     },
     {
       "id": "ev:pingshui:上:二十三梗",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上声部/二十三梗",
       "assertion": "data/Pingshui_Rhyme.json 上声部/二十三梗 共收录 67 个字形（原表条目 69 条）",
@@ -167624,7 +167624,7 @@
     },
     {
       "id": "ev:pingshui:上:二十四迥",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上声部/二十四迥",
       "assertion": "data/Pingshui_Rhyme.json 上声部/二十四迥 共收录 38 个字形（原表条目 38 条）",
@@ -167633,7 +167633,7 @@
     },
     {
       "id": "ev:pingshui:上:二十五有",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上声部/二十五有",
       "assertion": "data/Pingshui_Rhyme.json 上声部/二十五有 共收录 131 个字形（原表条目 134 条）",
@@ -167642,7 +167642,7 @@
     },
     {
       "id": "ev:pingshui:上:二十六寝",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上声部/二十六寝",
       "assertion": "data/Pingshui_Rhyme.json 上声部/二十六寝 共收录 35 个字形（原表条目 36 条）",
@@ -167651,7 +167651,7 @@
     },
     {
       "id": "ev:pingshui:上:二十七感",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上声部/二十七感",
       "assertion": "data/Pingshui_Rhyme.json 上声部/二十七感 共收录 61 个字形（原表条目 63 条）",
@@ -167660,7 +167660,7 @@
     },
     {
       "id": "ev:pingshui:上:二十八琰",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上声部/二十八琰",
       "assertion": "data/Pingshui_Rhyme.json 上声部/二十八琰 共收录 64 个字形（原表条目 66 条）",
@@ -167669,7 +167669,7 @@
     },
     {
       "id": "ev:pingshui:上:二十九豏",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 上声部/二十九豏",
       "assertion": "data/Pingshui_Rhyme.json 上声部/二十九豏 共收录 21 个字形（原表条目 22 条）",
@@ -167678,7 +167678,7 @@
     },
     {
       "id": "ev:pingshui:去:一送",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 去声部/一送",
       "assertion": "data/Pingshui_Rhyme.json 去声部/一送 共收录 37 个字形（原表条目 38 条）",
@@ -167687,7 +167687,7 @@
     },
     {
       "id": "ev:pingshui:去:二宋",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 去声部/二宋",
       "assertion": "data/Pingshui_Rhyme.json 去声部/二宋 共收录 27 个字形（原表条目 27 条）",
@@ -167696,7 +167696,7 @@
     },
     {
       "id": "ev:pingshui:去:三绛",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 去声部/三绛",
       "assertion": "data/Pingshui_Rhyme.json 去声部/三绛 共收录 13 个字形（原表条目 13 条）",
@@ -167705,7 +167705,7 @@
     },
     {
       "id": "ev:pingshui:去:四寘",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 去声部/四寘",
       "assertion": "data/Pingshui_Rhyme.json 去声部/四寘 共收录 274 个字形（原表条目 283 条）",
@@ -167714,7 +167714,7 @@
     },
     {
       "id": "ev:pingshui:去:五未",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 去声部/五未",
       "assertion": "data/Pingshui_Rhyme.json 去声部/五未 共收录 48 个字形（原表条目 50 条）",
@@ -167723,7 +167723,7 @@
     },
     {
       "id": "ev:pingshui:去:六御",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 去声部/六御",
       "assertion": "data/Pingshui_Rhyme.json 去声部/六御 共收录 59 个字形（原表条目 60 条）",
@@ -167732,7 +167732,7 @@
     },
     {
       "id": "ev:pingshui:去:七遇",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 去声部/七遇",
       "assertion": "data/Pingshui_Rhyme.json 去声部/七遇 共收录 156 个字形（原表条目 162 条）",
@@ -167741,7 +167741,7 @@
     },
     {
       "id": "ev:pingshui:去:八霁",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 去声部/八霁",
       "assertion": "data/Pingshui_Rhyme.json 去声部/八霁 共收录 199 个字形（原表条目 207 条）",
@@ -167750,7 +167750,7 @@
     },
     {
       "id": "ev:pingshui:去:九泰",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 去声部/九泰",
       "assertion": "data/Pingshui_Rhyme.json 去声部/九泰 共收录 60 个字形（原表条目 60 条）",
@@ -167759,7 +167759,7 @@
     },
     {
       "id": "ev:pingshui:去:十卦",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 去声部/十卦",
       "assertion": "data/Pingshui_Rhyme.json 去声部/十卦 共收录 74 个字形（原表条目 75 条）",
@@ -167768,7 +167768,7 @@
     },
     {
       "id": "ev:pingshui:去:十一队",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 去声部/十一队",
       "assertion": "data/Pingshui_Rhyme.json 去声部/十一队 共收录 114 个字形（原表条目 117 条）",
@@ -167777,7 +167777,7 @@
     },
     {
       "id": "ev:pingshui:去:十二震",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 去声部/十二震",
       "assertion": "data/Pingshui_Rhyme.json 去声部/十二震 共收录 87 个字形（原表条目 88 条）",
@@ -167786,7 +167786,7 @@
     },
     {
       "id": "ev:pingshui:去:十三问",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 去声部/十三问",
       "assertion": "data/Pingshui_Rhyme.json 去声部/十三问 共收录 40 个字形（原表条目 40 条）",
@@ -167795,7 +167795,7 @@
     },
     {
       "id": "ev:pingshui:去:十四愿",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 去声部/十四愿",
       "assertion": "data/Pingshui_Rhyme.json 去声部/十四愿 共收录 52 个字形（原表条目 55 条）",
@@ -167804,7 +167804,7 @@
     },
     {
       "id": "ev:pingshui:去:十五翰",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 去声部/十五翰",
       "assertion": "data/Pingshui_Rhyme.json 去声部/十五翰 共收录 105 个字形（原表条目 109 条）",
@@ -167813,7 +167813,7 @@
     },
     {
       "id": "ev:pingshui:去:十六谏",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 去声部/十六谏",
       "assertion": "data/Pingshui_Rhyme.json 去声部/十六谏 共收录 45 个字形（原表条目 46 条）",
@@ -167822,7 +167822,7 @@
     },
     {
       "id": "ev:pingshui:去:十七霰",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 去声部/十七霰",
       "assertion": "data/Pingshui_Rhyme.json 去声部/十七霰 共收录 153 个字形（原表条目 162 条）",
@@ -167831,7 +167831,7 @@
     },
     {
       "id": "ev:pingshui:去:十八啸",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 去声部/十八啸",
       "assertion": "data/Pingshui_Rhyme.json 去声部/十八啸 共收录 85 个字形（原表条目 86 条）",
@@ -167840,7 +167840,7 @@
     },
     {
       "id": "ev:pingshui:去:十九效",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 去声部/十九效",
       "assertion": "data/Pingshui_Rhyme.json 去声部/十九效 共收录 43 个字形（原表条目 44 条）",
@@ -167849,7 +167849,7 @@
     },
     {
       "id": "ev:pingshui:去:二十号",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 去声部/二十号",
       "assertion": "data/Pingshui_Rhyme.json 去声部/二十号 共收录 62 个字形（原表条目 64 条）",
@@ -167858,7 +167858,7 @@
     },
     {
       "id": "ev:pingshui:去:二十一个",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 去声部/二十一个",
       "assertion": "data/Pingshui_Rhyme.json 去声部/二十一个 共收录 50 个字形（原表条目 52 条）",
@@ -167867,7 +167867,7 @@
     },
     {
       "id": "ev:pingshui:去:二十二祃",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 去声部/二十二祃",
       "assertion": "data/Pingshui_Rhyme.json 去声部/二十二祃 共收录 69 个字形（原表条目 69 条）",
@@ -167876,7 +167876,7 @@
     },
     {
       "id": "ev:pingshui:去:二十三漾",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 去声部/二十三漾",
       "assertion": "data/Pingshui_Rhyme.json 去声部/二十三漾 共收录 102 个字形（原表条目 104 条）",
@@ -167885,16 +167885,16 @@
     },
     {
       "id": "ev:pingshui:去:二十四敬",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 去声部/二十四敬",
       "assertion": "data/Pingshui_Rhyme.json 去声部/二十四敬 共收录 59 个字形（原表条目 62 条）",
       "excerpt": null,
-      "reviewStatus": "unverified"
+      "reviewStatus": "approved"
     },
     {
       "id": "ev:pingshui:去:二十五径",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 去声部/二十五径",
       "assertion": "data/Pingshui_Rhyme.json 去声部/二十五径 共收录 55 个字形（原表条目 56 条）",
@@ -167903,7 +167903,7 @@
     },
     {
       "id": "ev:pingshui:去:二十六宥",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 去声部/二十六宥",
       "assertion": "data/Pingshui_Rhyme.json 去声部/二十六宥 共收录 157 个字形（原表条目 163 条）",
@@ -167912,7 +167912,7 @@
     },
     {
       "id": "ev:pingshui:去:二十七沁",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 去声部/二十七沁",
       "assertion": "data/Pingshui_Rhyme.json 去声部/二十七沁 共收录 38 个字形（原表条目 39 条）",
@@ -167921,7 +167921,7 @@
     },
     {
       "id": "ev:pingshui:去:二十八勘",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 去声部/二十八勘",
       "assertion": "data/Pingshui_Rhyme.json 去声部/二十八勘 共收录 36 个字形（原表条目 40 条）",
@@ -167930,7 +167930,7 @@
     },
     {
       "id": "ev:pingshui:去:二十九艳",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 去声部/二十九艳",
       "assertion": "data/Pingshui_Rhyme.json 去声部/二十九艳 共收录 50 个字形（原表条目 52 条）",
@@ -167939,7 +167939,7 @@
     },
     {
       "id": "ev:pingshui:去:三十陷",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 去声部/三十陷",
       "assertion": "data/Pingshui_Rhyme.json 去声部/三十陷 共收录 23 个字形（原表条目 23 条）",
@@ -167948,7 +167948,7 @@
     },
     {
       "id": "ev:pingshui:入:入声一屋",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 入声部/入声一屋",
       "assertion": "data/Pingshui_Rhyme.json 入声部/入声一屋 共收录 188 个字形（原表条目 194 条）",
@@ -167957,7 +167957,7 @@
     },
     {
       "id": "ev:pingshui:入:入声二沃",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 入声部/入声二沃",
       "assertion": "data/Pingshui_Rhyme.json 入声部/入声二沃 共收录 83 个字形（原表条目 85 条）",
@@ -167966,7 +167966,7 @@
     },
     {
       "id": "ev:pingshui:入:入声三觉",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 入声部/入声三觉",
       "assertion": "data/Pingshui_Rhyme.json 入声部/入声三觉 共收录 93 个字形（原表条目 96 条）",
@@ -167975,25 +167975,25 @@
     },
     {
       "id": "ev:pingshui:入:入声四质",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 入声部/入声四质",
       "assertion": "data/Pingshui_Rhyme.json 入声部/入声四质 共收录 147 个字形（原表条目 158 条）",
       "excerpt": null,
-      "reviewStatus": "unverified"
+      "reviewStatus": "approved"
     },
     {
       "id": "ev:pingshui:入:入声五物",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 入声部/入声五物",
       "assertion": "data/Pingshui_Rhyme.json 入声部/入声五物 共收录 48 个字形（原表条目 48 条）",
       "excerpt": null,
-      "reviewStatus": "unverified"
+      "reviewStatus": "approved"
     },
     {
       "id": "ev:pingshui:入:入声六月",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 入声部/入声六月",
       "assertion": "data/Pingshui_Rhyme.json 入声部/入声六月 共收录 107 个字形（原表条目 110 条）",
@@ -168002,7 +168002,7 @@
     },
     {
       "id": "ev:pingshui:入:入声七曷",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 入声部/入声七曷",
       "assertion": "data/Pingshui_Rhyme.json 入声部/入声七曷 共收录 91 个字形（原表条目 91 条）",
@@ -168011,7 +168011,7 @@
     },
     {
       "id": "ev:pingshui:入:入声八黠",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 入声部/入声八黠",
       "assertion": "data/Pingshui_Rhyme.json 入声部/入声八黠 共收录 55 个字形（原表条目 57 条）",
@@ -168020,16 +168020,16 @@
     },
     {
       "id": "ev:pingshui:入:入声九屑",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 入声部/入声九屑",
       "assertion": "data/Pingshui_Rhyme.json 入声部/入声九屑 共收录 166 个字形（原表条目 173 条）",
       "excerpt": null,
-      "reviewStatus": "unverified"
+      "reviewStatus": "approved"
     },
     {
       "id": "ev:pingshui:入:入声十药",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 入声部/入声十药",
       "assertion": "data/Pingshui_Rhyme.json 入声部/入声十药 共收录 182 个字形（原表条目 188 条）",
@@ -168038,16 +168038,16 @@
     },
     {
       "id": "ev:pingshui:入:入声十一陌",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 入声部/入声十一陌",
       "assertion": "data/Pingshui_Rhyme.json 入声部/入声十一陌 共收录 186 个字形（原表条目 196 条）",
       "excerpt": null,
-      "reviewStatus": "unverified"
+      "reviewStatus": "approved"
     },
     {
       "id": "ev:pingshui:入:入声十二锡",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 入声部/入声十二锡",
       "assertion": "data/Pingshui_Rhyme.json 入声部/入声十二锡 共收录 89 个字形（原表条目 92 条）",
@@ -168056,7 +168056,7 @@
     },
     {
       "id": "ev:pingshui:入:入声十三职",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 入声部/入声十三职",
       "assertion": "data/Pingshui_Rhyme.json 入声部/入声十三职 共收录 131 个字形（原表条目 133 条）",
@@ -168065,7 +168065,7 @@
     },
     {
       "id": "ev:pingshui:入:入声十四缉",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 入声部/入声十四缉",
       "assertion": "data/Pingshui_Rhyme.json 入声部/入声十四缉 共收录 67 个字形（原表条目 68 条）",
@@ -168074,7 +168074,7 @@
     },
     {
       "id": "ev:pingshui:入:入声十五合",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 入声部/入声十五合",
       "assertion": "data/Pingshui_Rhyme.json 入声部/入声十五合 共收录 75 个字形（原表条目 76 条）",
@@ -168083,7 +168083,7 @@
     },
     {
       "id": "ev:pingshui:入:入声十六叶",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 入声部/入声十六叶",
       "assertion": "data/Pingshui_Rhyme.json 入声部/入声十六叶 共收录 92 个字形（原表条目 93 条）",
@@ -168092,7 +168092,7 @@
     },
     {
       "id": "ev:pingshui:入:入声十七洽",
-      "sourceId": "src:chinese_word_rhyme",
+      "sourceId": "src:chinese_word_rhyme:pingshui",
       "kind": "rhyme_entry",
       "locator": "data/Pingshui_Rhyme.json 入声部/入声十七洽",
       "assertion": "data/Pingshui_Rhyme.json 入声部/入声十七洽 共收录 57 个字形（原表条目 59 条）",
@@ -168106,12 +168106,12 @@
       "locator": "data/raw/wikisource/PingshuiYun-8264804.wikitext 第 198-200 行（上聲三{{++|講}} / 講港棒蚌項缿玤傋耩）",
       "assertion": "维基文库《平水韻》oldid 8264804（data/raw/wikisource/PingshuiYun-8264804.wikitext 第 200 行）上聲三講正文为「講港棒蚌項缿玤傋耩」共 9 字，该韵目无【詞】段。底本为繁体，此处仅做繁→简转换（講→讲、項→项），不得声称底本原文即简体。「玤」原表已收于上声一董（Pingshui_Rhyme.json:4372），本补丁新增其三讲归属并保留原归属。",
       "excerpt": "講港棒蚌項缿玤傋耩",
-      "reviewStatus": "unverified"
+      "reviewStatus": "approved"
     }
   ],
   "sources": [
     {
-      "id": "src:chinese_word_rhyme",
+      "id": "src:chinese_word_rhyme:pingshui",
       "title": "chinese_word_rhyme（Pingshui_Rhyme.json）",
       "edition": "提交 ff0e9c13fb037c43e0eaa5dc929c0fe4fa2ffb18",
       "url": "https://raw.githubusercontent.com/charlesix59/chinese_word_rhyme/ff0e9c13fb037c43e0eaa5dc929c0fe4fa2ffb18/data/Pingshui_Rhyme.json",

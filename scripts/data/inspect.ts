@@ -54,6 +54,7 @@ function pingshuiStats(): void {
   const snapshot = defineSnapshot(
     pingshuiSnapshotFromCwr(table, {
       dataVersion: "pingshui-cwr-ff0e9c1-d1",
+      sourceId: "src:chinese_word_rhyme:pingshui",
       revision: "ff0e9c13fb037c43e0eaa5dc929c0fe4fa2ffb18",
       dataPath: "data/Pingshui_Rhyme.json",
       snapshotSha256: sha256File(file),

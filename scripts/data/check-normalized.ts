@@ -76,10 +76,41 @@ function main(): void {
     finish("（无可用快照）");
     return;
   }
-  const files = readdirSync(NORMALIZED)
+  const allJson = readdirSync(NORMALIZED)
     .filter((name) => name.endsWith(".json"))
     .sort();
-  console.log(`发现 ${files.length} 个 JSON：${files.join(", ") || "（无）"}`);
+
+  /**
+   * 只把「快照」纳入检查。data/normalized 下还有覆盖报告类 JSON
+   * （如 works-coverage-d2.json），它们不是快照，反序列化会误报 LEXICON_INVALID_INPUT。
+   * 跳过的文件必须显式列出，不得静默忽略。
+   */
+  const isSnapshotFile = (name: string): boolean => {
+    try {
+      const parsed = JSON.parse(
+        readFileSync(path.join(NORMALIZED, name), "utf8"),
+      ) as Record<string, unknown>;
+      return (
+        typeof parsed.dataVersion === "string" &&
+        typeof parsed.book === "string" &&
+        Array.isArray(parsed.candidates) &&
+        Array.isArray(parsed.groups)
+      );
+    } catch {
+      return false;
+    }
+  };
+
+  const files = allJson.filter((name) => isSnapshotFile(name));
+  const skipped = allJson.filter((name) => !isSnapshotFile(name));
+  console.log(
+    `发现 ${allJson.length} 个 JSON：${allJson.join(", ") || "（无）"}`,
+  );
+  if (skipped.length > 0) {
+    console.log(
+      `非快照 JSON（不参与快照检查，仅列出）：${skipped.join(", ")}`,
+    );
+  }
   if (files.length === 0) {
     fail("data/normalized 下没有可检查的快照");
     finish("（无可用快照）");
@@ -193,7 +224,8 @@ function main(): void {
 
   finish(
     "全部落盘快照通过结构与门槛检查；注意：结构通过不等于内容审核通过，" +
-      "evidence 仍全部未审核，releaseGatePassed 仍为 false。",
+      "除三讲 1 条证据已人审签外，其余 evidence 均未审核；快照级 reviewStatus 仍为 unverified，" +
+      "releaseGatePassed 仍为 false。",
   );
 }
 

@@ -70,6 +70,39 @@ const WIKITEXT_LINES = 658;
  *  retrievedAt 由 digest.ts 的 withoutVolatileFields 剥离，不参与业务内容摘要。 */
 const WIKITEXT_RETRIEVED_AT = "2026-10-18T00:00:00.000Z";
 
+/** 三讲证据的审核状态由补丁文件的人审签结果决定（数据驱动，不硬编码）。 */
+function readSanJiangEvidenceReviewStatus(): "approved" | "unverified" {
+  const patchPath = path.join(
+    ROOT,
+    "data",
+    "patches",
+    "pingshui-shang-sanj-jiang.draft.json",
+  );
+  if (!existsSync(patchPath)) return "unverified";
+  const patch = JSON.parse(readFileSync(patchPath, "utf8")) as {
+    reviewStatus?: string;
+    review?: { conclusion?: string } | null;
+    publishedAt?: string | null;
+  };
+  const signed =
+    patch.reviewStatus === "approved" && patch.review?.conclusion === "approve";
+  // 补丁已人审签，但整库未 approved、也未发布；因此只升级该条证据的状态，
+  // 快照级 reviewStatus 与 releaseGatePassed 均不因此改变。
+  return signed ? "approved" : "unverified";
+}
+
+/** 从 data/reviews/approved-evidence.json 读取已人审签的证据 ID。 */
+function readApprovedEvidenceIds(): readonly string[] {
+  const file = path.join(ROOT, "data", "reviews", "approved-evidence.json");
+  if (!existsSync(file)) return [];
+  const parsed = JSON.parse(readFileSync(file, "utf8")) as {
+    approvedEvidenceIds?: string[];
+  };
+  return parsed.approvedEvidenceIds ?? [];
+}
+const SANJ_JIANG_EVIDENCE_REVIEW_STATUS = readSanJiangEvidenceReviewStatus();
+const APPROVED_EVIDENCE_IDS = readApprovedEvidenceIds();
+
 /** 底本（繁体）上声三讲正文，wikitext 第 200 行；该韵目无【詞】段。 */
 const SANJ_JIANG_BASE_TEXT = "講港棒蚌項缿玤傋耩";
 /** 繁→简 仅此两字不同形，其余七字简繁同形。 */
@@ -198,7 +231,7 @@ function buildSanJiangEvidence(): Evidence {
       `「${PRE_EXISTING_CHARACTER}」原表已收于上声一董（Pingshui_Rhyme.json:4372），` +
       "本补丁新增其三讲归属并保留原归属。",
     excerpt: SANJ_JIANG_BASE_TEXT,
-    reviewStatus: "unverified",
+    reviewStatus: SANJ_JIANG_EVIDENCE_REVIEW_STATUS,
   };
 }
 
@@ -285,6 +318,8 @@ function main(): void {
   const aInputBase: SnapshotInput = {
     ...pingshuiSnapshotFromCwr(table, {
       dataVersion: A_VERSION,
+      sourceId: "src:chinese_word_rhyme:pingshui",
+      approvedEvidenceIds: APPROVED_EVIDENCE_IDS,
       revision: CWR_REVISION,
       dataPath: CWR_DATA_PATH,
       snapshotSha256: sha256Bytes(cwrBytes),
@@ -358,7 +393,39 @@ function main(): void {
   check(
     aSnapshot.reviewStatus === "unverified" &&
       bSnapshot.reviewStatus === "unverified",
-    "两份 reviewStatus 均为 unverified（未被改动）",
+    "两份 reviewStatus 均为 unverified（整库未批准，未被改动）",
+  );
+  const sanJiangEvidence = bSnapshot.evidence.find(
+    (item) => item.id === SANJ_JIANG_EVIDENCE_ID,
+  );
+  check(
+    sanJiangEvidence?.reviewStatus === SANJ_JIANG_EVIDENCE_REVIEW_STATUS,
+    `三讲证据状态与补丁人审签结果一致（补丁=${SANJ_JIANG_EVIDENCE_REVIEW_STATUS}，证据=${sanJiangEvidence?.reviewStatus}）`,
+  );
+  const approvedEvidence = bSnapshot.evidence.filter(
+    (item) => item.reviewStatus === "approved",
+  );
+  const listedApproved = bSnapshot.evidence.filter(
+    (item) =>
+      APPROVED_EVIDENCE_IDS.includes(item.id) ||
+      item.id === SANJ_JIANG_EVIDENCE_ID,
+  );
+  check(
+    approvedEvidence.length === listedApproved.length,
+    `approved 证据数（${approvedEvidence.length}）等于审批清单命中数（${listedApproved.length}）`,
+  );
+  const unlistedApproved = approvedEvidence.filter(
+    (item) =>
+      !APPROVED_EVIDENCE_IDS.includes(item.id) &&
+      item.id !== SANJ_JIANG_EVIDENCE_ID,
+  );
+  check(
+    unlistedApproved.length === 0,
+    `审批清单之外的证据不得为 approved（实际 ${unlistedApproved.length} 条）`,
+  );
+  check(
+    approvedEvidence.length < bSnapshot.evidence.length,
+    `仍有 ${bSnapshot.evidence.length - approvedEvidence.length} 条证据为 unverified（部分批准不等于整库批准）`,
   );
 
   // 三讲 9 字：原表已有的只有「玤」，其余 8 个为新增

@@ -1,8 +1,11 @@
 /**
  * B2-08：用 A 的真实快照跑三首固定正文，断言“当前实际状态”。
  *
- * 这里**不追求全绿**：真实快照只有 7 个字、证据全部 unverified，
- * 所以正确的期望是“缺口清单准确 + 审核门槛生效”，而不是三首诗都标注成功。
+ * 2026-10-18 起样本快照的 7 条部级证据已随 J03 第一批落库为 approved
+ * （快照级 reviewStatus 仍为 unverified——部分批准不等于整库批准）；
+ * 证据门槛语义不变：触发门槛的用例改用全量快照中仍未审核的部
+ * （依=五微、山=十五删、尽=十一轸、人=十一真 等）。
+ * 本改法由 A 在 @GLM @B 反馈中给出，GLM 代改，B 复核。
  */
 import { readFileSync } from "node:fs";
 import path from "node:path";
@@ -29,11 +32,16 @@ function readJson<T>(relativePath: string): T {
 const sample = readJson<Record<string, unknown>>(
   "data/normalized/pingshui.sample-d1.json",
 );
+const full = readJson<Record<string, unknown>>(
+  "data/normalized/pingshui.full-d2-patched.json",
+);
 const works = readJson<{ items: WorkEntry[] }>(
   "data/works/review-queue.json",
 ).items;
 const lexicon = createLexicon([deserializeSnapshot(sample)]);
+const fullLexicon = createLexicon([deserializeSnapshot(full)]);
 const dataVersion = String(sample.dataVersion);
+const fullDataVersion = String(full.dataVersion);
 
 async function lookupFor(text: string): Promise<LookupResult> {
   const poem = parseText({ text });
@@ -45,6 +53,16 @@ async function lookupFor(text: string): Promise<LookupResult> {
   });
 }
 
+async function lookupFullFor(text: string): Promise<LookupResult> {
+  const poem = parseText({ text });
+  const characters = [...new Set(poem.tokens.map((token) => token.text))];
+  return fullLexicon.lookupCharacters({
+    characters,
+    rhymeBook: "pingshui",
+    dataVersion: fullDataVersion,
+  });
+}
+
 function work(caseId: string): WorkEntry {
   const found = works.find((item) => item.caseId === caseId);
   if (found === undefined) throw new Error(`找不到作品 ${caseId}`);
@@ -52,14 +70,22 @@ function work(caseId: string): WorkEntry {
 }
 
 describe("B2-08 真实快照下的逐字状态", () => {
-  it("真实快照本身是 unverified，且没有任何 approved 证据", async () => {
+  it("样本证据已随 J03 第一批全部 approved（样本 7/7；本诗命中 5 部全 approved），快照级仍 unverified——部分批准不等于整库批准", async () => {
+    const sampleEvidence = sample.evidence as Array<{ reviewStatus: string }>;
+    expect(sampleEvidence).toHaveLength(7);
+    expect(
+      sampleEvidence.every((evidence) => evidence.reviewStatus === "approved"),
+    ).toBe(true);
+    expect(String(sample.reviewStatus)).toBe("unverified");
+
     const lookup = await lookupFor(work("golden-dengguanquelou-ps-v1").text);
     expect(lookup.book).toBe("pingshui");
     expect(lookup.dataVersion).toBe(dataVersion);
-    expect(lookup.evidence.length).toBeGreaterThan(0);
+    // 登鹳雀楼在样本内命中 一更楼流白 → 四质/八庚/二十四敬/十一尤/十一陌 共 5 部
+    expect(lookup.evidence).toHaveLength(5);
     expect(
       lookup.evidence.every(
-        (evidence) => evidence.reviewStatus === "unverified",
+        (evidence) => evidence.reviewStatus === "approved",
       ),
     ).toBe(true);
   });
@@ -92,11 +118,11 @@ describe("B2-08 真实快照下的逐字状态", () => {
     ]);
   });
 
-  it("登鹳雀楼：证据未审核时抛 LOOKUP_EVIDENCE_UNVERIFIED，不返回伪确定标注", () => {
+  it("登鹳雀楼（全量快照）：白=十一陌、日=四质已审，依=五微未审——门槛在 l1c3 依 处拦截", () => {
     const text = work("golden-dengguanquelou-ps-v1").text;
     const poem = parseText({ text });
 
-    return lookupFor(text).then((lookup) => {
+    return lookupFullFor(text).then((lookup) => {
       let caught: unknown;
       try {
         resolveReadings({ poem, lookup, overrides: [], contextRules: [] });
@@ -106,28 +132,32 @@ describe("B2-08 真实快照下的逐字状态", () => {
       expect(caught).toBeInstanceOf(ReadingsError);
       const error = caught as ReadingsError;
       expect(error.code).toBe("LOOKUP_EVIDENCE_UNVERIFIED");
-      expect(error.details.tokenId).toBe("l1c1");
-      expect(error.details.character).toBe("白");
-      expect(error.details.dataVersion).toBe(dataVersion);
+      expect(error.details.tokenId).toBe("l1c3");
+      expect(error.details.character).toBe("依");
+      expect(error.details.dataVersion).toBe(fullDataVersion);
     });
   });
 
-  it("黄鹤楼：56 字位中仅 3 个有候选，同样按门槛报数据未就绪", async () => {
+  it("黄鹤楼（全量快照）：46 字全收录不再缺字；昔=双候选（十药未审+十一陌已审），未审竞争候选不被已审掩盖，l1c1 即拦截", async () => {
     const text = work("golden-huanghelou-ps-v1").text;
     const poem = parseText({ text });
     expect(poem.tokens).toHaveLength(56);
 
-    const lookup = await lookupFor(text);
-    expect(lookup.entries).toHaveLength(3);
-    // lookup.missing 按去重字数计：46 个不同字里 43 个未收录。
-    expect(lookup.missing).toHaveLength(43);
-    const missingTokens = poem.tokens.filter((token) =>
-      lookup.missing.includes(token.text),
-    ).length;
-    expect(missingTokens).toBe(53);
-    expect(() =>
-      resolveReadings({ poem, lookup, overrides: [], contextRules: [] }),
-    ).toThrowError(ReadingsError);
+    const lookup = await lookupFullFor(text);
+    // A 的覆盖报告称黄鹤楼 46/46：全量快照下没有缺字，缺字路径退场、证据门槛仍在。
+    expect(lookup.missing).toHaveLength(0);
+
+    let caught: unknown;
+    try {
+      resolveReadings({ poem, lookup, overrides: [], contextRules: [] });
+    } catch (error) {
+      caught = error;
+    }
+    expect(caught).toBeInstanceOf(ReadingsError);
+    const error = caught as ReadingsError;
+    expect(error.code).toBe("LOOKUP_EVIDENCE_UNVERIFIED");
+    expect(error.details.tokenId).toBe("l1c1");
+    expect(error.details.character).toBe("昔");
   });
 
   it("静夜思：全字缺收（missing）属于正常未知，不触发证据门槛", async () => {
