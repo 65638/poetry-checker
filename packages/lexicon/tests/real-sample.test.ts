@@ -108,7 +108,9 @@ describe("真实七字小样本（平水，未审核）", () => {
     }
     for (const item of result.evidence) {
       expect(sourceIds.has(item.sourceId)).toBe(true);
-      expect(item.reviewStatus).toBe("unverified");
+      // 本样本 7 个韵部的证据已经 J03 第一批人审签（见 data/reviews/approved-evidence.json），
+      // 因此这里断言 approved；快照级 reviewStatus 仍为 unverified（部分批准不等于整库批准）。
+      expect(item.reviewStatus).toBe("approved");
     }
   });
 

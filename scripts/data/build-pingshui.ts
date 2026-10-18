@@ -91,7 +91,17 @@ function readSanJiangEvidenceReviewStatus(): "approved" | "unverified" {
   return signed ? "approved" : "unverified";
 }
 
+/** 从 data/reviews/approved-evidence.json 读取已人审签的证据 ID。 */
+function readApprovedEvidenceIds(): readonly string[] {
+  const file = path.join(ROOT, "data", "reviews", "approved-evidence.json");
+  if (!existsSync(file)) return [];
+  const parsed = JSON.parse(readFileSync(file, "utf8")) as {
+    approvedEvidenceIds?: string[];
+  };
+  return parsed.approvedEvidenceIds ?? [];
+}
 const SANJ_JIANG_EVIDENCE_REVIEW_STATUS = readSanJiangEvidenceReviewStatus();
+const APPROVED_EVIDENCE_IDS = readApprovedEvidenceIds();
 
 /** 底本（繁体）上声三讲正文，wikitext 第 200 行；该韵目无【詞】段。 */
 const SANJ_JIANG_BASE_TEXT = "講港棒蚌項缿玤傋耩";
@@ -309,6 +319,7 @@ function main(): void {
     ...pingshuiSnapshotFromCwr(table, {
       dataVersion: A_VERSION,
       sourceId: "src:chinese_word_rhyme:pingshui",
+      approvedEvidenceIds: APPROVED_EVIDENCE_IDS,
       revision: CWR_REVISION,
       dataPath: CWR_DATA_PATH,
       snapshotSha256: sha256Bytes(cwrBytes),
@@ -391,10 +402,30 @@ function main(): void {
     sanJiangEvidence?.reviewStatus === SANJ_JIANG_EVIDENCE_REVIEW_STATUS,
     `三讲证据状态与补丁人审签结果一致（补丁=${SANJ_JIANG_EVIDENCE_REVIEW_STATUS}，证据=${sanJiangEvidence?.reviewStatus}）`,
   );
+  const approvedEvidence = bSnapshot.evidence.filter(
+    (item) => item.reviewStatus === "approved",
+  );
+  const listedApproved = bSnapshot.evidence.filter(
+    (item) =>
+      APPROVED_EVIDENCE_IDS.includes(item.id) ||
+      item.id === SANJ_JIANG_EVIDENCE_ID,
+  );
   check(
-    bSnapshot.evidence.filter((item) => item.reviewStatus === "approved").length ===
-      (SANJ_JIANG_EVIDENCE_REVIEW_STATUS === "approved" ? 1 : 0),
-    "只有三讲 1 条证据 approved，其余证据仍 unverified（不得批量升级）",
+    approvedEvidence.length === listedApproved.length,
+    `approved 证据数（${approvedEvidence.length}）等于审批清单命中数（${listedApproved.length}）`,
+  );
+  const unlistedApproved = approvedEvidence.filter(
+    (item) =>
+      !APPROVED_EVIDENCE_IDS.includes(item.id) &&
+      item.id !== SANJ_JIANG_EVIDENCE_ID,
+  );
+  check(
+    unlistedApproved.length === 0,
+    `审批清单之外的证据不得为 approved（实际 ${unlistedApproved.length} 条）`,
+  );
+  check(
+    approvedEvidence.length < bSnapshot.evidence.length,
+    `仍有 ${bSnapshot.evidence.length - approvedEvidence.length} 条证据为 unverified（部分批准不等于整库批准）`,
   );
 
   // 三讲 9 字：原表已有的只有「玤」，其余 8 个为新增

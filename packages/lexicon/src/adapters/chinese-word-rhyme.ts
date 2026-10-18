@@ -25,6 +25,11 @@ export interface CwrSourceOptions {
    * 省略时退回 DEFAULT_SOURCE_ID，仅为兼容既有测试。
    */
   sourceId?: string;
+  /**
+   * 已人审签的证据 ID 列表。命中的 evidence 记为 approved，其余保持 unverified。
+   * 由 data/reviews/approved-evidence.json 提供，脚本内不得硬编码审批结果。
+   */
+  approvedEvidenceIds?: readonly string[];
   /** 固定提交或标签。 */
   revision: string;
   /** 数据文件在仓库中的相对路径，用于生成 locator。 */
@@ -99,7 +104,10 @@ export function pingshuiSnapshotFromCwr(
         locator,
         assertion: `${locator} 共收录 ${unique.length} 个字形（原表条目 ${characters.length} 条）`,
         excerpt: null,
-        reviewStatus: "unverified",
+        reviewStatus:
+          options.approvedEvidenceIds?.includes(evidenceId) === true
+            ? "approved"
+            : "unverified",
       });
 
       for (const character of unique) {

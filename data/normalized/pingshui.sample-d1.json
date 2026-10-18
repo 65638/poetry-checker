@@ -206,7 +206,7 @@
       "locator": "data/Pingshui_Rhyme.json 下平声部/八庚",
       "assertion": "data/Pingshui_Rhyme.json 下平声部/八庚 共收录 194 个字形（原表条目 197 条）",
       "excerpt": null,
-      "reviewStatus": "unverified"
+      "reviewStatus": "approved"
     },
     {
       "id": "ev:pingshui:下平:十一尤",
@@ -215,7 +215,7 @@
       "locator": "data/Pingshui_Rhyme.json 下平声部/十一尤",
       "assertion": "data/Pingshui_Rhyme.json 下平声部/十一尤 共收录 249 个字形（原表条目 255 条）",
       "excerpt": null,
-      "reviewStatus": "unverified"
+      "reviewStatus": "approved"
     },
     {
       "id": "ev:pingshui:去:二十四敬",
@@ -224,7 +224,7 @@
       "locator": "data/Pingshui_Rhyme.json 去声部/二十四敬",
       "assertion": "data/Pingshui_Rhyme.json 去声部/二十四敬 共收录 59 个字形（原表条目 62 条）",
       "excerpt": null,
-      "reviewStatus": "unverified"
+      "reviewStatus": "approved"
     },
     {
       "id": "ev:pingshui:入:入声四质",
@@ -233,7 +233,7 @@
       "locator": "data/Pingshui_Rhyme.json 入声部/入声四质",
       "assertion": "data/Pingshui_Rhyme.json 入声部/入声四质 共收录 147 个字形（原表条目 158 条）",
       "excerpt": null,
-      "reviewStatus": "unverified"
+      "reviewStatus": "approved"
     },
     {
       "id": "ev:pingshui:入:入声五物",
@@ -242,7 +242,7 @@
       "locator": "data/Pingshui_Rhyme.json 入声部/入声五物",
       "assertion": "data/Pingshui_Rhyme.json 入声部/入声五物 共收录 48 个字形（原表条目 48 条）",
       "excerpt": null,
-      "reviewStatus": "unverified"
+      "reviewStatus": "approved"
     },
     {
       "id": "ev:pingshui:入:入声九屑",
@@ -251,7 +251,7 @@
       "locator": "data/Pingshui_Rhyme.json 入声部/入声九屑",
       "assertion": "data/Pingshui_Rhyme.json 入声部/入声九屑 共收录 166 个字形（原表条目 173 条）",
       "excerpt": null,
-      "reviewStatus": "unverified"
+      "reviewStatus": "approved"
     },
     {
       "id": "ev:pingshui:入:入声十一陌",
@@ -260,7 +260,7 @@
       "locator": "data/Pingshui_Rhyme.json 入声部/入声十一陌",
       "assertion": "data/Pingshui_Rhyme.json 入声部/入声十一陌 共收录 186 个字形（原表条目 196 条）",
       "excerpt": null,
-      "reviewStatus": "unverified"
+      "reviewStatus": "approved"
     }
   ],
   "sources": [
