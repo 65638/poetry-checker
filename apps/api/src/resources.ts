@@ -65,6 +65,37 @@ function readJsonArray<T>(rel: string): T[] {
   }
 }
 
+/** 规则卡证据包：{ sources, evidence }（rules/evidence/teaching-v1.json，GLM 维护）。 */
+interface RuleEvidenceBundle {
+  sources?: SourceRecord[];
+  evidence?: Evidence[];
+}
+
+function readRuleEvidenceBundle(rel: string): RuleEvidenceBundle {
+  const p = join(ROOT, rel);
+  if (!existsSync(p)) return {};
+  try {
+    return JSON.parse(readFileSync(p, "utf8")) as RuleEvidenceBundle;
+  } catch {
+    return {};
+  }
+}
+
+/** 规则卡引用的 evidenceIds 中未在证据注册表解析的 ID（排序稳定；空数组=闭合）。 */
+export function unresolvedRuleEvidence(
+  cards: readonly RuleCard[],
+  registry: readonly Evidence[],
+): string[] {
+  const known = new Set(registry.map((e) => e.id));
+  const missing = new Set<string>();
+  for (const card of cards) {
+    for (const id of card.evidenceIds) {
+      if (!known.has(id)) missing.add(id);
+    }
+  }
+  return [...missing].sort();
+}
+
 function stableStringify(value: unknown): string {
   if (value === null || typeof value !== "object") return JSON.stringify(value);
   if (Array.isArray(value)) return `[${value.map(stableStringify).join(",")}]`;
@@ -141,6 +172,10 @@ function loadResourcesOnce(): Resources {
   const missing = (Object.keys(MANIFEST) as BookId[]).filter((b) => snapshots[b] === undefined);
   if (missing.length > 0) notReadyReasons.push(`韵书快照缺失：${missing.join("、")}`);
 
+  const ruleEvidence = readRuleEvidenceBundle("rules/evidence/teaching-v1.json");
+  if (Array.isArray(ruleEvidence.evidence)) evidence.push(...ruleEvidence.evidence);
+  if (Array.isArray(ruleEvidence.sources)) sources.push(...ruleEvidence.sources);
+
   const evidenceRegistry = dedupeById(evidence, "evidence", loadErrors);
   const sourceRegistry = dedupeById(sources, "source", loadErrors);
 
@@ -150,6 +185,14 @@ function loadResourcesOnce(): Resources {
   if (works.length === 0) notReadyReasons.push("无已发布作品元数据（E 的 data/works/metadata.json）");
   const ruleCards = readJsonArray<RuleCard>("rules/cards/teaching-v1.json");
   if (ruleCards.length === 0) notReadyReasons.push("无已发布规则卡（C 的 rules/cards/teaching-v1.json）");
+  if (ruleCards.length > 0) {
+    const unresolved = unresolvedRuleEvidence(ruleCards, evidenceRegistry);
+    if (unresolved.length > 0) {
+      notReadyReasons.push(
+        `规则卡证据未解析（${unresolved.length} 个）：${unresolved.slice(0, 3).join("、")}${unresolved.length > 3 ? " 等" : ""}`,
+      );
+    }
+  }
 
   const threeBooks = (["pingshui", "cilin", "xinyun"] as BookId[]).every(
     (b) => snapshots[b] !== undefined,
