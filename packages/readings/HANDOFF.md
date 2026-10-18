@@ -1,4 +1,4 @@
-# @poetry/readings HANDOFF（D1 批次）
+﻿# @poetry/readings HANDOFF（D1 批次）
 
 日期：2026-10-17。执行者：队员 B / DeepSeek harness。分支：`feat/b-d1-readings`（基线 `e549194`，`contract-v1` = `9b27322`）；PR #3。
 状态：**D1 范围内的两个函数已实现并有实际测试通过**；真实字表、生产语境规则、覆盖率评测未做（见第 5 节）。
@@ -144,7 +144,7 @@ $ node node_modules/vitest/vitest.mjs run packages/readings/tests
 | ---------------------------- | ---------------------------------------------------------------------------------------------------------- |
 | 契约标签                     | `contract-v1` = `9b27322`（未改动契约）                                                                    |
 | `lookup.dataVersion`（测试） | `synthetic-d1`（合成，非发布数据）                                                                         |
-| 语境规则                     | **0 条生效**。`data/context/rules.approved.json` 未创建                                                    |
+| 语境规则                     | **0 条生效**。`data/context/rules.json` 未创建                                                             |
 | 待审队列                     | `data/context/review-queue.json` 4 条（更/重/长/行），`reviewStatus=unverified`，`selectCandidateIds` 为空 |
 
 **真实上下文规则目前已审核 0 条**：队列里那 4 条是待审问题清单，不是已覆盖的语境，
@@ -298,7 +298,7 @@ const annotated = resolveReadings({
 - 义项→候选对应（副词义→去声、夜间计时义→平声）仍是**待审假设**：`selectCandidateIds` 留空、
   `evidenceIds` 空、`reviewStatus=unverified`、`decision=null`、`proposalStatus=awaiting-linguistic-evidence`。
 - 「重/长/行」三条：真实快照根本没有这些字，`proposalStatus=awaiting-candidate-ids`。
-- `rules.approved.json` **仍未创建**——本批次真实语境规则 approved 数 = 0。
+- `rules.json` **仍未创建**——本批次真实语境规则 approved 数 = 0。
 
 ## 14. 需要上游答复的清单（审核请求）
 
@@ -326,3 +326,65 @@ $ pnpm verify
   真实数据接入后前端的可用性取决于 A 的审核进度，不是本模块能绕过的。
 - 规则只做同句内精确短语；不做分词、同义词、跨句指代。
 - 未做留出评测，因此不报准确率；也不把规则编写样本的命中率当泛化准确率。
+
+---
+
+# B-03：十处裁定转语境规则（2026-10-18，分支 eat/b-d2-rules）
+
+依据 `docs/reviews/13_J03三首核心诗逐字人审_第二批.md`（组长 2026-10-18 裁定，GLM 原样落录）。
+
+## 30. 交付
+
+| 文件                                            | 内容                                                                                  |
+| ----------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `data/context/rules.json`                       | 10 条 `ContextRule`，全部 `reviewStatus=approved`                                     |
+| `data/context/evidence.json`                    | 10 条 `kind="context"` 已审核证据（`ctx:j03b2:01..10`，来源 `src:j03-review-batch2`） |
+| `data/context/sources.json`                     | 上述证据的来源记录（指向人审记录）                                                    |
+| `packages/readings/scripts/context-smoke.ts`    | 端到端冒烟：按 API 口径合并语境证据后跑三首                                           |
+| `packages/readings/tests/rules.test.ts`         | 6 条规则校验（Schema / 证据用途 / 短语绑定 / 候选存在 / 反例）                        |
+| `packages/readings/tests/real-pingshui.test.ts` | 门槛断言的**数据驱动**版（见第 31 节）                                                |
+
+## 31. real-pingshui 断言改为数据驱动
+
+原版把 `l1c3`、`l1c1` 写死，A 每批审核都会让它再红一次。改为：
+
+- `firstUnbackedToken(poem, lookup)`：期望只从 `lookup.evidence[].reviewStatus` 推导，
+  **不调用 resolveReadings**，避免用被测函数生成预期；
+- 断言 `error.details.tokenId === expected.tokenId`，语义不变、不随审核进度碎；
+- 全部字位审完后自动转为「不应再拦截」的正向断言；
+- 「已审候选不得掩盖未审竞争候选」在真实数据仍由当前首个拦截位（昔，`expected.mixed`）钉住；
+  长期守护由 `resolve.test.ts` 的 **GATE 混合有效候选** 合成用例承担，与本批数据状态无关。
+
+## 32. 实测：规则就位但结论仍被数据阻塞
+
+`context-smoke.ts` 输出：
+
+```text
+规则 10 条；所选候选已有韵书证据 2 条，未审核 8 条
+  未审: 望(二十三漾) 思(四支) 乡(七阳) 乘(十蒸) 空(一东)×2 汉(十五翰) 乡(七阳)
+登鹳雀楼: 门禁拦截 LOOKUP_EVIDENCE_UNVERIFIED，首个拦截 l1c3「依」；命中 1 条规则
+静夜思  : 门禁拦截 LOOKUP_EVIDENCE_UNVERIFIED，首个拦截 l1c1「床」；命中 3 条规则
+黄鹤楼  : 门禁拦截 LOOKUP_EVIDENCE_UNVERIFIED，首个拦截 l1c1「昔」；命中 6 条规则
+```
+
+原因有两层，都不是 B 能修的：
+
+1. **整库字位证据只审了 8/106**。门槛按字位拦截，规则再准也要等该字位自身的归部证据审完；
+   三首的第一个未审字位分别是 依(五微)、床(七阳)、昔(入声十药)，与规则无关。
+2. **被裁候选的 6 部归部证据未落库**：去声二十三漾、上平四支、下平七阳、下平十蒸、上平一东、去声十五翰。
+   13\_ §六.1 已列给 A，等 A 追加后这 8 条规则才可能真正生效。
+
+## 33. 未做 / 明确不做
+
+- 不改 `resolve.ts` / `parse.ts`：门槛与算法零改动。
+- 不改任何格律规则（模板、救法、规则卡）：本批只做选音。
+- 不删同字的其他读音候选：`rules.test.ts` 断言竞争候选仍在快照中。
+- 「望」按人审注记属通说裁定；若后续启用「古体优先古读」策略需降置信复核，届时规则应改 `unverified` 而非直接改候选。
+
+## 34. 验收
+
+```text
+$ pnpm --filter @poetry/readings test   → 4 文件 / 57 用例通过
+$ pnpm exec tsx packages/readings/scripts/context-smoke.ts → 见第 32 节
+$ pnpm verify                           → 退出码 0
+```
