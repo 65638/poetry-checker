@@ -65,3 +65,14 @@
 ## D4 接续
 
 批次一（特例适用层接入+G03/G04 验收）→ 批次二（D 示例）→ 批次三（词林/新韵供数+G02 补六组合）→ 批次四（Claude 展示切片）→ G05-G08 与 README 持续更新。每天最后 30 分钟只联调与登记。
+
+## 批次一回传块（2026-10-19，按 02 号简报格式）
+
+- 集成分支 / base / head：integrate/d3 / f42172f / c781fb2
+- Codex 与 C 合入提交：63de97b（Codex 特例层）+ ebd3213（C PR #14，C01-C10 验收+导出+卡片；3ca3e58 为 63de97b 等价 cherry-pick，diff 核实无重复）
+- 装载/调用/版本改动：resources.ts 严格解析+装载校验→Resources.reviewedWorkExceptions；orchestrator evaluateProsody 后 deriveSummary 前调用；versions.rules=teaching-v1+reviewed-works-v1；rules/:ruleId 详情含特例审批证据
+- pnpm verify 实际结果：48 文件 / 664 测试 exit 0
+- 黄鹤楼目标 Finding 结果：l4c5-7 TAIL.SANPING=not_applicable/info（PPP 保留、resolvedBy=null、引用第 13 号第 8 条）；l4c5 METER 仍 fail/error；≥8 条 error 保留；summary 如实 fail
+- 九组合报告路径：data/reviews/d3-g02-nine-combos.json（平水 3×200/Schema pass；词林新韵 6×503 证据门槛）
+- 正式入口与进程版本：http://localhost:5173/ 正式入口 + tsx watch 热载 API（规则详情实测已含 ctx:j03b2:08）；页面复验截图 docs/design/preview/d3-batch1-huanghelou-real.png（结论不合律+特例条目+偏离全可见）
+- 未完成项 / 下一责任人：D 示例与页面补全（批次二）；A+B 词林/新韵供数+manifest（批次三）；Claude 展示切片（批次四）；E 金标准纳入特例预期；C 规则卡"一般规则 vs 精确适用"说明（PR #14 已含卡片更新，复核归 Codex/组长线）
