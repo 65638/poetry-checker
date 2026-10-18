@@ -388,3 +388,19 @@ $ pnpm --filter @poetry/readings test   → 4 文件 / 57 用例通过
 $ pnpm exec tsx packages/readings/scripts/context-smoke.ts → 见第 32 节
 $ pnpm verify                           → 退出码 0
 ```
+
+## 35. 02_B 任务书必交项（同分支交付）
+
+| 必交项                   | 位置                                                                                                                |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------- |
+| 96 行逐字初审表（JSON）  | `data/reviews/golden-token-review-2026-10-18.json`                                                                  |
+| 同内容 Markdown 表       | `data/reviews/golden-token-review-2026-10-18.md`                                                                    |
+| 96/96 覆盖统计           | 表面「分母」行 + JSON `denominators`：96 字位全部有候选、缺字 0、多候选 22、平仄临界 10                             |
+| 可确定 vs 保持 ambiguous | MD「可确定 / 必须保持歧义」；JSON `machineConclusion`：12 个多候选同调字位必须保持读音 ambiguous，10 个临界位有裁定 |
+| 全量 vs 样本差异         | MD「版本差异」；JSON `versionDiff`：旧样本 7 字 vs 当前 8240 字                                                     |
+| 十处裁定的落点           | MD「已裁定的十处」；JSON `adjudications`（含 ruleId、裁定候选、被选候选韵书证据是否已审）                           |
+
+表由 `scripts/golden-token-review.ts` 生成，`tests/golden-review.test.ts`（7 条）守护：
+行数与分母、结论与证据状态一致、十处裁定都对得上规则、ambiguous 位置单列、数据版本。
+
+当前实测：`rows=96 covered=96 missing=0 multi=22 toneCritical=10 approved=8/106`。
