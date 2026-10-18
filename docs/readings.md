@@ -267,7 +267,7 @@ resolveReadings(input: {
 ## 6. D1 明确未做（D2 起）
 
 1. ~~真实字表接入~~：D2 已接 A 的七字真实快照做联调；全量字表仍未交付（见第 9 节）。
-2. `data/context/rules.approved.json` 尚未创建：没有义项证据、没有人工审核，一条规则都不生效。
+2. `data/context/rules.json` 尚未创建：没有义项证据、没有人工审核，一条规则都不生效。
 3. 同义/近义词表、分词、跨句指代：不做，只有精确短语。
 4. 覆盖率与准确率：**只报带分母的事实统计**，不报读音准确率/自动覆盖率——没有已审核证据与已审核规则，
    任何比例都是拿未核实数据算出来的。
@@ -321,7 +321,7 @@ pnpm verify
 | 快照         | `data/normalized/pingshui.full-d2-patched.json`（= API `snapshot-manifest.json` 声明的当前 pingshui 快照），`dataVersion = pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-draft` |
 | 覆盖字数     | **8240 字 / 10387 候选 / 106 部**（API 清单快照，含上声三讲补缺；词林、新韵全量同批）                                                                                     |
 | 快照审核身份 | `reviewStatus: unverified`；**evidence approved = 0 / 106**                                                                                                               |
-| 语境规则     | **approved 0 条**；`rules.approved.json` 不存在                                                                                                                           |
+| 语境规则     | **approved 0 条**；`rules.json` 不存在                                                                                                                                    |
 
 > 按 AGENTS.md 数据纪律：结构完整性通过 ≠ 内容审核通过。上表最后一列才是决定能否出结论的一栏。
 

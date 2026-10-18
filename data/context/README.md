@@ -11,11 +11,21 @@
 | `injection-example.md/js`      | 给 GLM 的最小注入样例：语境证据如何并入 `lookup`                 | **否**。形状示例，ID 带 `example` 前缀                             |
 | `d2-coverage-report.json/md`   | 真实数据覆盖统计（四栏口径，带分母）                             | 否。报告产物                                                       |
 | `tone-critical-positions.json` | **平仄取决于消歧**的字位清单（候选含平又含仄），人工审核优先目标 | 否。报告产物                                                       |
-| `rules.approved.json`          | 已审核、可生效的 `ContextRule[]`                                 | 是。**尚未创建**，避免用未审核内容冒充审核结果                     |
+| `rules.json`                   | 已审核、可生效的 `ContextRule[]`                                 | 是。**尚未创建**，避免用未审核内容冒充审核结果                     |
 
 运行时只接受 `reviewStatus = "approved"` 的规则参与自动选音；`unverified` 规则命中时会被 `resolveReadings` 记录为
 `CONTEXT_RULE_UNVERIFIED_IGNORED` notice，不改变任何字位的读音。规则已审核但证据缺失/未审核/用途不是 `context` 时，
 记为 `CONTEXT_RULE_EVIDENCE_INSUFFICIENT` notice，同样不选音。
+
+## 与 API 装载器的约定（以 `apps/api/src/resources.ts` 为准）
+
+- 文件路径固定为 **`data/context/rules.json`**（API 里是硬编码路径，不叫 `rules.approved.json`）。
+- 该文件必须是 `ContextRule[]` 数组；数组为空会让 `ready` 判为 false，`notReadyReasons` 出现
+  「无已发布语境规则（B 的 data/context/rules.json）」。
+- `ready` 还要求：三本韵书快照全部 **approved**（A 的责任）、`data/works/metadata.json` 非空（E）、
+  `rules/cards/teaching-v1.json` 非空（C）。B 这一侧只能保证规则文件存在且合法。
+- 规则的 `evidenceIds` 指向的 `kind="context"` 证据，必须出现在 API 合并后的 `lookup.evidence` 里
+  （见 [`injection-example.md`](./injection-example.md)），否则规则会被判证据不足。
 
 ## D2 的真实数据状态
 
@@ -25,7 +35,7 @@
   但义项→候选的对应仍是待审推测，写在 `proposedSelectCandidateIds`，不是 `selectCandidateIds`。
 - 覆盖统计与缺口清单见 `d2-coverage-report.md`：三首固定正文共 96 字位，仅 8 字位有候选。
 
-## 为什么现在没有 rules.approved.json
+## 为什么现在没有 rules.json
 
 - 真实字表只覆盖 7 个字，三首诗中 88 个字位连候选都没有，`selectCandidateIds` 无从填写。
 - 即使是「更」，也还没有可定位的义项证据（韵书条目/字书义项/反切），只有现代读音线索；
@@ -63,6 +73,6 @@
 （“尚未查到”要如实写）、以及 `selectCandidateIds: []` + `candidateIdStatus`。
 
 处理顺序：A 交付候选 ID → 逐条补齐 `selectCandidateIds` → 找到可定位来源填 `evidenceIds` → 人工审核义项
-→ 通过后把该条移入 `rules.approved.json` 并置 `reviewStatus=approved` → 补一条正例与一条反例测试。
+→ 通过后把该条移入 `rules.json` 并置 `reviewStatus=approved` → 补一条正例与一条反例测试。
 
 D1 不追求凑满 60 个评测位置，也不报告未做留出验证的准确率。

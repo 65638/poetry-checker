@@ -144,7 +144,7 @@ $ node node_modules/vitest/vitest.mjs run packages/readings/tests
 | ---------------------------- | ---------------------------------------------------------------------------------------------------------- |
 | 契约标签                     | `contract-v1` = `9b27322`（未改动契约）                                                                    |
 | `lookup.dataVersion`（测试） | `synthetic-d1`（合成，非发布数据）                                                                         |
-| 语境规则                     | **0 条生效**。`data/context/rules.approved.json` 未创建                                                    |
+| 语境规则                     | **0 条生效**。`data/context/rules.json` 未创建                                                             |
 | 待审队列                     | `data/context/review-queue.json` 4 条（更/重/长/行），`reviewStatus=unverified`，`selectCandidateIds` 为空 |
 
 **真实上下文规则目前已审核 0 条**：队列里那 4 条是待审问题清单，不是已覆盖的语境，
@@ -298,7 +298,7 @@ const annotated = resolveReadings({
 - 义项→候选对应（副词义→去声、夜间计时义→平声）仍是**待审假设**：`selectCandidateIds` 留空、
   `evidenceIds` 空、`reviewStatus=unverified`、`decision=null`、`proposalStatus=awaiting-linguistic-evidence`。
 - 「重/长/行」三条：真实快照根本没有这些字，`proposalStatus=awaiting-candidate-ids`。
-- `rules.approved.json` **仍未创建**——本批次真实语境规则 approved 数 = 0。
+- `rules.json` **仍未创建**——本批次真实语境规则 approved 数 = 0。
 
 ## 14. 需要上游答复的清单（审核请求）
 
