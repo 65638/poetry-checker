@@ -1,27 +1,37 @@
 /**
- * D2 真实数据复现与覆盖统计（带分母）。
+ * 覆盖统计与「平仄取决于消歧」位置分析（带分母，按 AGENTS.md 四栏口径）。
  *
  *   node node_modules/tsx/dist/cli.mjs packages/readings/scripts/d2-coverage.ts
+ *   node node_modules/tsx/dist/cli.mjs packages/readings/scripts/d2-coverage.ts <快照相对路径>
  *
- * 数据来源只用仓库内真实快照 `data/normalized/pingshui.sample-d1.json`（七字真实小样本，
- * reviewStatus=unverified），正文取 `data/works/review-queue.json` 里 E 登记的三首固定正文。
+ * 默认用 `data/normalized/pingshui.full-d2-patched.json`——即 `apps/api/src/snapshot-manifest.json`
+ * 为 pingshui 声明的当前快照（106 部，含上声三讲补缺）。105 部版 `pingshui.full-d2.json`
+ * 不在 API 清单内，只在报告的版本说明里作对照。
+ * 正文取 `data/works/review-queue.json` 中 E 登记的三首固定正文。
  *
  * 本脚本**不绕过审核门槛**：证据未审核时 resolveReadings 会抛 LOOKUP_EVIDENCE_UNVERIFIED，
- * 这里如实记录该结果，并把缺口按字位统计出来，不产出“成功空候选”。
+ * 这里如实记录，并把缺口按字位统计出来，不产出“成功空候选”。
  *
- * 输出：data/context/d2-coverage-report.json 与同名 .md。
+ * 输出：
+ *   data/context/d2-coverage-report.json / .md
+ *   data/context/tone-critical-positions.json（平仄依赖消歧的位置清单，给人工审核用）
  */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import type { LookupResult } from "@poetry/contracts";
+import type { Tone } from "@poetry/contracts";
 
 import { parseText, resolveReadings, isReadingsError } from "../src/index.js";
 import { createLexicon, deserializeSnapshot } from "../../lexicon/src/index.js";
 
 const ROOT = path.resolve(fileURLToPath(new URL("../../..", import.meta.url)));
 const OUT_DIR = path.join(ROOT, "data", "context");
+const DEFAULT_SNAPSHOT = "data/normalized/pingshui.full-d2-patched.json";
+/** API 当前装载的平水快照，见 apps/api/src/snapshot-manifest.json。 */
+const API_MANIFEST_SNAPSHOT = "pingshui.full-d2-patched.json";
+/** 不在 API 清单内的 105 部版，仅用于版本差异说明。 */
+const LEGACY_SNAPSHOT = "pingshui.full-d2.json";
 
 interface WorkEntry {
   caseId: string;
@@ -29,6 +39,18 @@ interface WorkEntry {
   author: string | null;
   text: string;
   reviewStatus: string;
+}
+
+interface ToneCriticalPosition {
+  tokenId: string;
+  character: string;
+  line: number;
+  column: number;
+  candidateIds: string[];
+  tones: Array<Tone | null>;
+  groupIds: string[];
+  evidenceIds: string[];
+  evidenceApproved: boolean;
 }
 
 interface WorkReport {
@@ -39,13 +61,10 @@ interface WorkReport {
   coveredTokens: number;
   missingTokens: number;
   multiCandidateTokens: number;
+  toneCritical: ToneCriticalPosition[];
+  toneFixedMulti: ToneCriticalPosition[];
   tokensWithoutApprovedEvidence: number;
   missingCharacters: string[];
-  multiCandidateCharacters: Array<{
-    character: string;
-    candidateIds: string[];
-    tones: Array<string | null>;
-  }>;
   resolveOutcome:
     | { kind: "annotated" }
     | {
@@ -55,33 +74,17 @@ interface WorkReport {
         details: Record<string, string>;
       }
     | { kind: "error"; code: string | null; message: string };
-  contextRuleHits: number;
-  readingStatusCounts: Record<string, number> | null;
-  toneStatusCounts: Record<string, number> | null;
 }
 
 function readJson<T>(relativePath: string): T {
   return JSON.parse(readFileSync(path.join(ROOT, relativePath), "utf8")) as T;
 }
 
-function countBy(values: readonly string[]): Record<string, number> {
-  const counts: Record<string, number> = {};
-  for (const value of values) counts[value] = (counts[value] ?? 0) + 1;
-  return counts;
-}
-
-function approvedEvidenceIds(lookup: LookupResult): Set<string> {
-  return new Set(
-    lookup.evidence
-      .filter((evidence) => evidence.reviewStatus === "approved")
-      .map((evidence) => evidence.id),
-  );
-}
-
 async function analyseWork(
   lexicon: ReturnType<typeof createLexicon>,
   work: WorkEntry,
   dataVersion: string,
+  approved: ReadonlySet<string>,
 ): Promise<WorkReport> {
   const poem = parseText({ text: work.text });
   const characters = [...new Set(poem.tokens.map((token) => token.text))];
@@ -94,23 +97,13 @@ async function analyseWork(
   const candidatesByCharacter = new Map(
     lookup.entries.map((entry) => [entry.character, entry.candidates]),
   );
-  const approved = approvedEvidenceIds(lookup);
 
   let coveredTokens = 0;
   let missingTokens = 0;
   let multiCandidateTokens = 0;
   let tokensWithoutApprovedEvidence = 0;
-  const multiCandidateCharacters: WorkReport["multiCandidateCharacters"] = [];
-
-  for (const character of characters) {
-    const candidates = candidatesByCharacter.get(character);
-    if (candidates === undefined || candidates.length <= 1) continue;
-    multiCandidateCharacters.push({
-      character,
-      candidateIds: candidates.map((candidate) => candidate.id),
-      tones: candidates.map((candidate) => candidate.tone),
-    });
-  }
+  const toneCritical: ToneCriticalPosition[] = [];
+  const toneFixedMulti: ToneCriticalPosition[] = [];
 
   for (const token of poem.tokens) {
     const candidates = candidatesByCharacter.get(token.text);
@@ -119,31 +112,39 @@ async function analyseWork(
       continue;
     }
     coveredTokens += 1;
-    if (candidates.length > 1) multiCandidateTokens += 1;
-    const backed = candidates.some((candidate) =>
+
+    const tones = [...new Set(candidates.map((candidate) => candidate.tone))];
+    const knownTones = tones.filter((tone): tone is Tone => tone !== null);
+    const evidenceApproved = candidates.some((candidate) =>
       candidate.evidenceIds.some((id) => approved.has(id)),
     );
-    if (!backed) tokensWithoutApprovedEvidence += 1;
+    if (!evidenceApproved) tokensWithoutApprovedEvidence += 1;
+
+    const position: ToneCriticalPosition = {
+      tokenId: token.tokenId,
+      character: token.text,
+      line: token.line,
+      column: token.column,
+      candidateIds: candidates.map((candidate) => candidate.id),
+      tones,
+      groupIds: [...new Set(candidates.flatMap((c) => c.groupIds))],
+      evidenceIds: [
+        ...new Set(candidates.flatMap((candidate) => candidate.evidenceIds)),
+      ],
+      evidenceApproved,
+    };
+
+    if (candidates.length > 1) {
+      multiCandidateTokens += 1;
+      // 平仄取决于消歧：候选里既有平又有仄。
+      if (knownTones.length > 1) toneCritical.push(position);
+      else toneFixedMulti.push(position);
+    }
   }
 
   let resolveOutcome: WorkReport["resolveOutcome"];
-  let readingStatusCounts: Record<string, number> | null = null;
-  let toneStatusCounts: Record<string, number> | null = null;
-  const contextRuleHits = 0;
-
   try {
-    const annotated = resolveReadings({
-      poem,
-      lookup,
-      overrides: [],
-      contextRules: [],
-    });
-    readingStatusCounts = countBy(
-      annotated.tokens.map((token) => token.readingStatus),
-    );
-    toneStatusCounts = countBy(
-      annotated.tokens.map((token) => token.toneStatus),
-    );
+    resolveReadings({ poem, lookup, overrides: [], contextRules: [] });
     resolveOutcome = { kind: "annotated" };
   } catch (error) {
     if (isReadingsError(error)) {
@@ -170,20 +171,17 @@ async function analyseWork(
     coveredTokens,
     missingTokens,
     multiCandidateTokens,
+    toneCritical,
+    toneFixedMulti,
     tokensWithoutApprovedEvidence,
     missingCharacters: [...lookup.missing].sort(),
-    multiCandidateCharacters,
     resolveOutcome,
-    contextRuleHits,
-    readingStatusCounts,
-    toneStatusCounts,
   };
 }
 
 async function main(): Promise<void> {
-  const sample = readJson<Record<string, unknown>>(
-    "data/normalized/pingshui.sample-d1.json",
-  );
+  const snapshotPath = process.argv[2] ?? DEFAULT_SNAPSHOT;
+  const sample = readJson<Record<string, unknown>>(snapshotPath);
   const works = readJson<{ items: WorkEntry[] }>(
     "data/works/review-queue.json",
   ).items;
@@ -193,27 +191,89 @@ async function main(): Promise<void> {
 
   const dataVersion = String(sample.dataVersion);
   const lexicon = createLexicon([deserializeSnapshot(sample)]);
+  const evidenceRecords = (sample.evidence ?? []) as Array<{
+    id: string;
+    reviewStatus: string;
+  }>;
+  const approved = new Set(
+    evidenceRecords
+      .filter((item) => item.reviewStatus === "approved")
+      .map((item) => item.id),
+  );
+  const approvedCount = approved.size;
 
   const reports: WorkReport[] = [];
   for (const work of works) {
-    reports.push(await analyseWork(lexicon, work, dataVersion));
+    reports.push(await analyseWork(lexicon, work, dataVersion, approved));
   }
+
+  const totalTokens = reports.reduce((sum, item) => sum + item.tokens, 0);
+  const totalCovered = reports.reduce(
+    (sum, item) => sum + item.coveredTokens,
+    0,
+  );
+  const totalMissing = reports.reduce(
+    (sum, item) => sum + item.missingTokens,
+    0,
+  );
+  const totalNoEvidence = reports.reduce(
+    (sum, item) => sum + item.tokensWithoutApprovedEvidence,
+    0,
+  );
+  const totalToneCritical = reports.reduce(
+    (sum, item) => sum + item.toneCritical.length,
+    0,
+  );
 
   const report = {
     generatedBy: "packages/readings/scripts/d2-coverage.ts",
     book: "pingshui" as const,
+    snapshot: snapshotPath,
+    snapshotDeclaration: {
+      source: "apps/api/src/snapshot-manifest.json",
+      apiManifestSnapshot: API_MANIFEST_SNAPSHOT,
+      legacySnapshot: LEGACY_SNAPSHOT,
+      matchesApiManifest:
+        snapshotPath === `data/normalized/${API_MANIFEST_SNAPSHOT}`,
+      note: "本报告与 API 装的是同一份快照（106 部）。105 部版缺上声三讲，不在 API 清单内；两份快照的 reviewStatus 都是 unverified，都不能称为已审核数据。",
+    },
     dataVersion,
     snapshotReviewStatus: sample.reviewStatus,
     snapshotNotice: sample.notice,
-    contextRules: {
-      approved: 0,
-      loaded: 0,
-      inReviewQueue: reviewQueue.length,
-      note: "本批次没有任何一条语境规则通过人工审核，因此实际参与选音的规则为 0 条。",
+    fourColumnSummary: {
+      structure: {
+        lexiconAccepted: true,
+        snapshotReviewStatus: sample.reviewStatus,
+        note: "快照通过 deserializeSnapshot 的引用完整性校验与 LookupResultSchema；这只说明结构与引用成立，不代表内容审核。",
+      },
+      machineComparison: {
+        tokens: totalTokens,
+        coveredTokens: totalCovered,
+        missingTokens: totalMissing,
+        note: "逐字位比对字表覆盖情况。",
+      },
+      humanReview: {
+        worksApproved: 0,
+        contextRulesApproved: 0,
+        contextRulesInQueue: reviewQueue.length,
+        note: "E 的三首正文仍是 pending；语境规则仍在待审队列。",
+      },
+      evidenceApproved: {
+        approved: approvedCount,
+        total: evidenceRecords.length,
+        note: "evidence 未审核时，有候选的字位也不能进入确定结论。",
+      },
     },
     denominators: {
       unit: "token（格律字位）",
-      note: "所有比例的分母都是字位；缺字、证据未就绪都按字位计入，不做字符级折算。",
+      note: "所有比例的分母都是字位；缺字、证据未就绪都按字位计入。",
+    },
+    totals: {
+      tokens: totalTokens,
+      coveredTokens: totalCovered,
+      missingTokens: totalMissing,
+      tokensWithoutApprovedEvidence: totalNoEvidence,
+      toneCriticalPositions: totalToneCritical,
     },
     works: reports,
   };
@@ -225,23 +285,50 @@ async function main(): Promise<void> {
     "utf8",
   );
 
+  writeFileSync(
+    path.join(OUT_DIR, "tone-critical-positions.json"),
+    `${JSON.stringify(
+      {
+        generatedBy: "packages/readings/scripts/d2-coverage.ts",
+        note: "平仄取决于消歧的位置：候选里同时存在平与仄，选错会直接改变格律结论。按字位列出，供人工优先审核对应韵部证据。",
+        dataVersion,
+        positions: reports.flatMap((item) =>
+          item.toneCritical.map((position) => ({
+            work: item.title,
+            ...position,
+          })),
+        ),
+      },
+      null,
+      2,
+    )}\n`,
+    "utf8",
+  );
+
   const lines: string[] = [];
-  lines.push("# D2 真实数据覆盖报告（带分母）");
+  lines.push("# 覆盖报告（带分母，四栏口径）");
+  lines.push("");
+  lines.push(`快照：\`${snapshotPath}\``);
+  lines.push(`dataVersion：\`${dataVersion}\``);
   lines.push("");
   lines.push(
-    `数据：\`${dataVersion}\`（平水，快照 reviewStatus=\`${String(sample.reviewStatus)}\`）`,
+    "> **快照口径**：本报告使用 `apps/api/src/snapshot-manifest.json` 为 pingshui 声明的当前快照" +
+      "（106 部，含上声三讲补缺）。105 部版 `pingshui.full-d2.json` 缺上声三讲、不在 API 清单内，" +
+      "不与本报告混用；两份快照的 `reviewStatus` 都是 `unverified`，都不代表已审核数据。",
+  );
+  lines.push("");
+  lines.push("| 项目 | 结构完整性 | 机器对照 | 人工核验 | evidence approved |");
+  lines.push("| --- | --- | --- | --- | --- |");
+  lines.push(
+    `| 现状 | 引用/结构通过（快照 reviewStatus=${String(sample.reviewStatus)}） | ${totalCovered}/${totalTokens} 字位有候选，缺字 ${totalMissing} | 作品审核 0/3，语境规则 0 条 | **${approvedCount}/${evidenceRecords.length}** |`,
   );
   lines.push("");
   lines.push(
-    "正文：`data/works/review-queue.json` 中 E 登记的三首固定正文（均为 pending 状态）。",
+    "> 结构通过 ≠ 内容审核通过。上表最后一栏才是决定能否出结论的那一栏。",
   );
   lines.push("");
   lines.push(
-    `语境规则：实际参与选音 **0 条**；待审队列 ${reviewQueue.length} 条，不计入覆盖。`,
-  );
-  lines.push("");
-  lines.push(
-    "| 作品 | 字位 | 去重字数 | 有候选字位 | 缺字位 | 多候选字位 | 无已审核证据字位 | resolve 结果 |",
+    "| 作品 | 字位 | 有候选 | 缺字 | 多候选 | 其中平仄取决于消歧 | 无已审核证据 | resolve 结果 |",
   );
   lines.push("| --- | --- | --- | --- | --- | --- | --- | --- |");
   for (const item of reports) {
@@ -252,41 +339,44 @@ async function main(): Promise<void> {
           ? `未就绪（${item.resolveOutcome.code}）`
           : "错误";
     lines.push(
-      `| ${item.title} | ${item.tokens} | ${item.uniqueCharacters} | ${item.coveredTokens} | ${item.missingTokens} | ${item.multiCandidateTokens} | ${item.tokensWithoutApprovedEvidence} | ${outcome} |`,
+      `| ${item.title} | ${item.tokens} | ${item.coveredTokens} | ${item.missingTokens} | ${item.multiCandidateTokens} | ${item.toneCritical.length} | ${item.tokensWithoutApprovedEvidence} | ${outcome} |`,
     );
   }
   lines.push("");
+  lines.push(`## 平仄取决于消歧的位置（共 ${totalToneCritical} 个）`);
+  lines.push("");
+  lines.push(
+    "这些字位的候选同时含平与仄，选错会直接改变格律结论；其余多音字位属于「读音歧义但平仄已定」，不影响格律。",
+  );
+  lines.push("");
+  for (const item of reports) {
+    if (item.toneCritical.length === 0) continue;
+    lines.push(`**${item.title}**`);
+    lines.push("");
+    for (const position of item.toneCritical) {
+      lines.push(
+        `- ${position.tokenId}「${position.character}」：${position.candidateIds.length} 个候选（平仄 ${position.tones.join("/")}）`,
+      );
+      for (const candidateId of position.candidateIds) {
+        lines.push(`  - \`${candidateId}\``);
+      }
+    }
+    lines.push("");
+  }
   lines.push("## 读法");
   lines.push("");
   lines.push(
-    "- **有候选字位 / 缺字位**：`lookup` 层事实。缺字是 A 的样本只有七字导致，不是解析问题。",
+    "- **有候选 / 缺字**：lookup 层事实。当前全量表下三首诗 100% 有候选。",
   );
   lines.push(
-    "- **无已审核证据字位**：这些字位即使有候选，也不能支撑读音/平仄结论；`resolveReadings` 按门槛抛 `LOOKUP_EVIDENCE_UNVERIFIED`。",
+    "- **无已审核证据**：有候选但证据未审核，`resolveReadings` 按门槛抛 `LOOKUP_EVIDENCE_UNVERIFIED`。",
   );
   lines.push(
-    "- **仍歧义 / 未知 / 有效语境命中**：本批次全部为 0——不是因为判成 0，而是因为没有一条规则通过审核、也没有一个字位拿到已审核证据，标注阶段整体未就绪。",
+    "- **仍歧义 / 未知 / 有效语境命中**：本批次全部为 0——没有一条规则通过审核、也没有一个字位拿到已审核证据。",
   );
   lines.push(
-    "- 因此本报告**不产生**读音准确率或自动覆盖率：没有已审核证据与已审核规则，任何比例都会是拿未核实数据算出来的。",
+    "- 因此本报告**不产生**读音准确率或自动覆盖率：任何比例都会是拿未核实数据算出来的。",
   );
-  lines.push("");
-  lines.push("## 缺口清单");
-  lines.push("");
-  for (const item of reports) {
-    const missing =
-      item.missingCharacters.length === 0
-        ? "（无缺字）"
-        : item.missingCharacters.join("、");
-    lines.push(
-      `- **${item.title}**（${item.tokens} 字位）：缺 ${item.missingTokens} 字位；缺字：${missing}`,
-    );
-    for (const multi of item.multiCandidateCharacters) {
-      lines.push(
-        `  - 多候选「${multi.character}」：${multi.candidateIds.join(" / ")}（平仄 ${multi.tones.join(" / ")}）`,
-      );
-    }
-  }
   lines.push("");
 
   writeFileSync(

@@ -1,18 +1,51 @@
 {
   "generatedBy": "packages/readings/scripts/d2-coverage.ts",
   "book": "pingshui",
-  "dataVersion": "sample-pingshui-cwr-ff0e9c1-d1",
+  "snapshot": "data/normalized/pingshui.full-d2-patched.json",
+  "snapshotDeclaration": {
+    "source": "apps/api/src/snapshot-manifest.json",
+    "apiManifestSnapshot": "pingshui.full-d2-patched.json",
+    "legacySnapshot": "pingshui.full-d2.json",
+    "matchesApiManifest": true,
+    "note": "本报告与 API 装的是同一份快照（106 部）。105 部版缺上声三讲，不在 API 清单内；两份快照的 reviewStatus 都是 unverified，都不能称为已审核数据。"
+  },
+  "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-draft",
   "snapshotReviewStatus": "unverified",
-  "snapshotNotice": "真实七字小样本（白、一、更、流、楼、雪、物）：数据取自 chinese_word_rhyme 固定提交的平水韵原表，仅登记韵部归属与声类；反切、义项、今读一律为 null。开发/待审核身份，不是全量发布数据，也不代表 106 部门槛已通过（该提交缺上声三讲）。",
-  "contextRules": {
-    "approved": 0,
-    "loaded": 0,
-    "inReviewQueue": 4,
-    "note": "本批次没有任何一条语境规则通过人工审核，因此实际参与选音的规则为 0 条。"
+  "snapshotNotice": "平水韵全量候选（106 部，含上声三讲补丁草案）：在 105 部快照上追加「三讲」9 条归属，结构可达 106 部且无空部；但补丁仍为 draft、全库 reviewStatus=unverified，未经人审签，releaseGatePassed 仍为 false，不得进 data/releases。上声三讲底本为维基文库《平水韻》oldid 8264804 的繁体正文「講港棒蚌項缿玤傋耩」（该韵目无【詞】段）；底本为繁体，此处仅做繁→简转换（講→讲、項→项），不得声称底本原文即简体。「玤」原已收于上声一董，本补丁只新增其「三讲」归属，未删除原归属。",
+  "fourColumnSummary": {
+    "structure": {
+      "lexiconAccepted": true,
+      "snapshotReviewStatus": "unverified",
+      "note": "快照通过 deserializeSnapshot 的引用完整性校验与 LookupResultSchema；这只说明结构与引用成立，不代表内容审核。"
+    },
+    "machineComparison": {
+      "tokens": 96,
+      "coveredTokens": 96,
+      "missingTokens": 0,
+      "note": "逐字位比对字表覆盖情况。"
+    },
+    "humanReview": {
+      "worksApproved": 0,
+      "contextRulesApproved": 0,
+      "contextRulesInQueue": 4,
+      "note": "E 的三首正文仍是 pending；语境规则仍在待审队列。"
+    },
+    "evidenceApproved": {
+      "approved": 0,
+      "total": 106,
+      "note": "evidence 未审核时，有候选的字位也不能进入确定结论。"
+    }
   },
   "denominators": {
     "unit": "token（格律字位）",
-    "note": "所有比例的分母都是字位；缺字、证据未就绪都按字位计入，不做字符级折算。"
+    "note": "所有比例的分母都是字位；缺字、证据未就绪都按字位计入。"
+  },
+  "totals": {
+    "tokens": 96,
+    "coveredTokens": 96,
+    "missingTokens": 0,
+    "tokensWithoutApprovedEvidence": 96,
+    "toneCriticalPositions": 10
   },
   "works": [
     {
@@ -20,30 +53,15 @@
       "title": "登鹳雀楼",
       "tokens": 20,
       "uniqueCharacters": 20,
-      "coveredTokens": 5,
-      "missingTokens": 15,
-      "multiCandidateTokens": 1,
-      "tokensWithoutApprovedEvidence": 5,
-      "missingCharacters": [
-        "上",
-        "依",
-        "入",
-        "千",
-        "尽",
-        "层",
-        "山",
-        "日",
-        "欲",
-        "河",
-        "海",
-        "目",
-        "穷",
-        "里",
-        "黄"
-      ],
-      "multiCandidateCharacters": [
+      "coveredTokens": 20,
+      "missingTokens": 0,
+      "multiCandidateTokens": 3,
+      "toneCritical": [
         {
+          "tokenId": "l4c1",
           "character": "更",
+          "line": 4,
+          "column": 1,
           "candidateIds": [
             "pingshui:更:ping:八庚",
             "pingshui:更:qu:二十四敬"
@@ -51,9 +69,66 @@
           "tones": [
             "P",
             "Z"
-          ]
+          ],
+          "groupIds": [
+            "group:pingshui:下平:八庚",
+            "group:pingshui:去:二十四敬"
+          ],
+          "evidenceIds": [
+            "ev:pingshui:下平:八庚",
+            "ev:pingshui:去:二十四敬"
+          ],
+          "evidenceApproved": false
         }
       ],
+      "toneFixedMulti": [
+        {
+          "tokenId": "l3c4",
+          "character": "里",
+          "line": 3,
+          "column": 4,
+          "candidateIds": [
+            "pingshui:里:qu:四寘",
+            "pingshui:里:shang:四纸"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "groupIds": [
+            "group:pingshui:去:四寘",
+            "group:pingshui:上:四纸"
+          ],
+          "evidenceIds": [
+            "ev:pingshui:去:四寘",
+            "ev:pingshui:上:四纸"
+          ],
+          "evidenceApproved": false
+        },
+        {
+          "tokenId": "l4c2",
+          "character": "上",
+          "line": 4,
+          "column": 2,
+          "candidateIds": [
+            "pingshui:上:qu:二十三漾",
+            "pingshui:上:shang:二十二养"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "groupIds": [
+            "group:pingshui:去:二十三漾",
+            "group:pingshui:上:二十二养"
+          ],
+          "evidenceIds": [
+            "ev:pingshui:去:二十三漾",
+            "ev:pingshui:上:二十二养"
+          ],
+          "evidenceApproved": false
+        }
+      ],
+      "tokensWithoutApprovedEvidence": 20,
+      "missingCharacters": [],
       "resolveOutcome": {
         "kind": "data_not_ready",
         "code": "LOOKUP_EVIDENCE_UNVERIFIED",
@@ -64,51 +139,127 @@
           "candidateIds": "pingshui:白:ru:入声十一陌",
           "selectionMethod": "unique",
           "book": "pingshui",
-          "dataVersion": "sample-pingshui-cwr-ff0e9c1-d1"
+          "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-draft"
         }
-      },
-      "contextRuleHits": 0,
-      "readingStatusCounts": null,
-      "toneStatusCounts": null
+      }
     },
     {
       "caseId": "golden-jingyesi-ps-v1",
       "title": "静夜思",
       "tokens": 20,
       "uniqueCharacters": 17,
-      "coveredTokens": 0,
-      "missingTokens": 20,
-      "multiCandidateTokens": 0,
-      "tokensWithoutApprovedEvidence": 0,
-      "missingCharacters": [
-        "上",
-        "举",
-        "乡",
-        "低",
-        "光",
-        "前",
-        "地",
-        "头",
-        "床",
-        "思",
-        "故",
-        "明",
-        "是",
-        "月",
-        "望",
-        "疑",
-        "霜"
+      "coveredTokens": 20,
+      "missingTokens": 0,
+      "multiCandidateTokens": 4,
+      "toneCritical": [
+        {
+          "tokenId": "l3c3",
+          "character": "望",
+          "line": 3,
+          "column": 3,
+          "candidateIds": [
+            "pingshui:望:ping:七阳",
+            "pingshui:望:qu:二十三漾"
+          ],
+          "tones": [
+            "P",
+            "Z"
+          ],
+          "groupIds": [
+            "group:pingshui:下平:七阳",
+            "group:pingshui:去:二十三漾"
+          ],
+          "evidenceIds": [
+            "ev:pingshui:下平:七阳",
+            "ev:pingshui:去:二十三漾"
+          ],
+          "evidenceApproved": false
+        },
+        {
+          "tokenId": "l4c3",
+          "character": "思",
+          "line": 4,
+          "column": 3,
+          "candidateIds": [
+            "pingshui:思:ping:四支",
+            "pingshui:思:qu:四寘"
+          ],
+          "tones": [
+            "P",
+            "Z"
+          ],
+          "groupIds": [
+            "group:pingshui:上平:四支",
+            "group:pingshui:去:四寘"
+          ],
+          "evidenceIds": [
+            "ev:pingshui:上平:四支",
+            "ev:pingshui:去:四寘"
+          ],
+          "evidenceApproved": false
+        },
+        {
+          "tokenId": "l4c5",
+          "character": "乡",
+          "line": 4,
+          "column": 5,
+          "candidateIds": [
+            "pingshui:乡:ping:七阳",
+            "pingshui:乡:qu:二十三漾"
+          ],
+          "tones": [
+            "P",
+            "Z"
+          ],
+          "groupIds": [
+            "group:pingshui:下平:七阳",
+            "group:pingshui:去:二十三漾"
+          ],
+          "evidenceIds": [
+            "ev:pingshui:下平:七阳",
+            "ev:pingshui:去:二十三漾"
+          ],
+          "evidenceApproved": false
+        }
       ],
-      "multiCandidateCharacters": [],
+      "toneFixedMulti": [
+        {
+          "tokenId": "l2c4",
+          "character": "上",
+          "line": 2,
+          "column": 4,
+          "candidateIds": [
+            "pingshui:上:qu:二十三漾",
+            "pingshui:上:shang:二十二养"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "groupIds": [
+            "group:pingshui:去:二十三漾",
+            "group:pingshui:上:二十二养"
+          ],
+          "evidenceIds": [
+            "ev:pingshui:去:二十三漾",
+            "ev:pingshui:上:二十二养"
+          ],
+          "evidenceApproved": false
+        }
+      ],
+      "tokensWithoutApprovedEvidence": 20,
+      "missingCharacters": [],
       "resolveOutcome": {
-        "kind": "annotated"
-      },
-      "contextRuleHits": 0,
-      "readingStatusCounts": {
-        "unknown": 20
-      },
-      "toneStatusCounts": {
-        "unknown": 20
+        "kind": "data_not_ready",
+        "code": "LOOKUP_EVIDENCE_UNVERIFIED",
+        "message": "字位 l1c1（床）参与读音/平仄推导的候选 pingshui:床:ping:七阳 没有已审核证据（选择方式 unique）：未审核或缺失的证据不能支撑读音、平仄或归部结论，按数据未就绪处理",
+        "details": {
+          "tokenId": "l1c1",
+          "character": "床",
+          "candidateIds": "pingshui:床:ping:七阳",
+          "selectionMethod": "unique",
+          "book": "pingshui",
+          "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-draft"
+        }
       }
     },
     {
@@ -116,72 +267,370 @@
       "title": "黄鹤楼",
       "tokens": 56,
       "uniqueCharacters": 46,
-      "coveredTokens": 3,
-      "missingTokens": 53,
-      "multiCandidateTokens": 0,
-      "tokensWithoutApprovedEvidence": 3,
-      "missingCharacters": [
-        "上",
-        "不",
-        "乘",
-        "乡",
-        "云",
-        "人",
-        "何",
-        "余",
-        "使",
-        "关",
-        "千",
-        "历",
-        "去",
-        "地",
-        "处",
-        "复",
-        "川",
-        "已",
-        "悠",
-        "愁",
-        "日",
-        "昔",
-        "是",
-        "晴",
-        "暮",
-        "树",
-        "此",
-        "汉",
-        "江",
-        "波",
-        "洲",
-        "烟",
-        "空",
-        "芳",
-        "草",
-        "萋",
-        "载",
-        "返",
-        "阳",
-        "鹉",
-        "鹤",
-        "鹦",
-        "黄"
+      "coveredTokens": 56,
+      "missingTokens": 0,
+      "multiCandidateTokens": 15,
+      "toneCritical": [
+        {
+          "tokenId": "l1c4",
+          "character": "乘",
+          "line": 1,
+          "column": 4,
+          "candidateIds": [
+            "pingshui:乘:ping:十蒸",
+            "pingshui:乘:qu:二十五径"
+          ],
+          "tones": [
+            "P",
+            "Z"
+          ],
+          "groupIds": [
+            "group:pingshui:下平:十蒸",
+            "group:pingshui:去:二十五径"
+          ],
+          "evidenceIds": [
+            "ev:pingshui:下平:十蒸",
+            "ev:pingshui:去:二十五径"
+          ],
+          "evidenceApproved": false
+        },
+        {
+          "tokenId": "l2c3",
+          "character": "空",
+          "line": 2,
+          "column": 3,
+          "candidateIds": [
+            "pingshui:空:ping:一东",
+            "pingshui:空:qu:一送",
+            "pingshui:空:shang:一董"
+          ],
+          "tones": [
+            "P",
+            "Z"
+          ],
+          "groupIds": [
+            "group:pingshui:上平:一东",
+            "group:pingshui:去:一送",
+            "group:pingshui:上:一董"
+          ],
+          "evidenceIds": [
+            "ev:pingshui:上平:一东",
+            "ev:pingshui:去:一送",
+            "ev:pingshui:上:一董"
+          ],
+          "evidenceApproved": false
+        },
+        {
+          "tokenId": "l3c5",
+          "character": "不",
+          "line": 3,
+          "column": 5,
+          "candidateIds": [
+            "pingshui:不:ping:十一尤",
+            "pingshui:不:ru:入声五物"
+          ],
+          "tones": [
+            "P",
+            "Z"
+          ],
+          "groupIds": [
+            "group:pingshui:下平:十一尤",
+            "group:pingshui:入:入声五物"
+          ],
+          "evidenceIds": [
+            "ev:pingshui:下平:十一尤",
+            "ev:pingshui:入:入声五物"
+          ],
+          "evidenceApproved": false
+        },
+        {
+          "tokenId": "l4c5",
+          "character": "空",
+          "line": 4,
+          "column": 5,
+          "candidateIds": [
+            "pingshui:空:ping:一东",
+            "pingshui:空:qu:一送",
+            "pingshui:空:shang:一董"
+          ],
+          "tones": [
+            "P",
+            "Z"
+          ],
+          "groupIds": [
+            "group:pingshui:上平:一东",
+            "group:pingshui:去:一送",
+            "group:pingshui:上:一董"
+          ],
+          "evidenceIds": [
+            "ev:pingshui:上平:一东",
+            "ev:pingshui:去:一送",
+            "ev:pingshui:上:一董"
+          ],
+          "evidenceApproved": false
+        },
+        {
+          "tokenId": "l5c5",
+          "character": "汉",
+          "line": 5,
+          "column": 5,
+          "candidateIds": [
+            "pingshui:汉:ping:十四寒",
+            "pingshui:汉:qu:十五翰"
+          ],
+          "tones": [
+            "P",
+            "Z"
+          ],
+          "groupIds": [
+            "group:pingshui:上平:十四寒",
+            "group:pingshui:去:十五翰"
+          ],
+          "evidenceIds": [
+            "ev:pingshui:上平:十四寒",
+            "ev:pingshui:去:十五翰"
+          ],
+          "evidenceApproved": false
+        },
+        {
+          "tokenId": "l7c3",
+          "character": "乡",
+          "line": 7,
+          "column": 3,
+          "candidateIds": [
+            "pingshui:乡:ping:七阳",
+            "pingshui:乡:qu:二十三漾"
+          ],
+          "tones": [
+            "P",
+            "Z"
+          ],
+          "groupIds": [
+            "group:pingshui:下平:七阳",
+            "group:pingshui:去:二十三漾"
+          ],
+          "evidenceIds": [
+            "ev:pingshui:下平:七阳",
+            "ev:pingshui:去:二十三漾"
+          ],
+          "evidenceApproved": false
+        }
       ],
-      "multiCandidateCharacters": [],
+      "toneFixedMulti": [
+        {
+          "tokenId": "l1c1",
+          "character": "昔",
+          "line": 1,
+          "column": 1,
+          "candidateIds": [
+            "pingshui:昔:ru:入声十一陌",
+            "pingshui:昔:ru:入声十药"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "groupIds": [
+            "group:pingshui:入:入声十一陌",
+            "group:pingshui:入:入声十药"
+          ],
+          "evidenceIds": [
+            "ev:pingshui:入:入声十一陌",
+            "ev:pingshui:入:入声十药"
+          ],
+          "evidenceApproved": false
+        },
+        {
+          "tokenId": "l1c7",
+          "character": "去",
+          "line": 1,
+          "column": 7,
+          "candidateIds": [
+            "pingshui:去:qu:六御",
+            "pingshui:去:shang:六语"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "groupIds": [
+            "group:pingshui:去:六御",
+            "group:pingshui:上:六语"
+          ],
+          "evidenceIds": [
+            "ev:pingshui:去:六御",
+            "ev:pingshui:上:六语"
+          ],
+          "evidenceApproved": false
+        },
+        {
+          "tokenId": "l3c4",
+          "character": "去",
+          "line": 3,
+          "column": 4,
+          "candidateIds": [
+            "pingshui:去:qu:六御",
+            "pingshui:去:shang:六语"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "groupIds": [
+            "group:pingshui:去:六御",
+            "group:pingshui:上:六语"
+          ],
+          "evidenceIds": [
+            "ev:pingshui:去:六御",
+            "ev:pingshui:上:六语"
+          ],
+          "evidenceApproved": false
+        },
+        {
+          "tokenId": "l3c6",
+          "character": "复",
+          "line": 3,
+          "column": 6,
+          "candidateIds": [
+            "pingshui:复:qu:二十六宥",
+            "pingshui:复:ru:入声一屋"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "groupIds": [
+            "group:pingshui:去:二十六宥",
+            "group:pingshui:入:入声一屋"
+          ],
+          "evidenceIds": [
+            "ev:pingshui:去:二十六宥",
+            "ev:pingshui:入:入声一屋"
+          ],
+          "evidenceApproved": false
+        },
+        {
+          "tokenId": "l4c4",
+          "character": "载",
+          "line": 4,
+          "column": 4,
+          "candidateIds": [
+            "pingshui:载:qu:十一队",
+            "pingshui:载:shang:十贿"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "groupIds": [
+            "group:pingshui:去:十一队",
+            "group:pingshui:上:十贿"
+          ],
+          "evidenceIds": [
+            "ev:pingshui:去:十一队",
+            "ev:pingshui:上:十贿"
+          ],
+          "evidenceApproved": false
+        },
+        {
+          "tokenId": "l5c7",
+          "character": "树",
+          "line": 5,
+          "column": 7,
+          "candidateIds": [
+            "pingshui:树:qu:七遇",
+            "pingshui:树:shang:七麌"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "groupIds": [
+            "group:pingshui:去:七遇",
+            "group:pingshui:上:七麌"
+          ],
+          "evidenceIds": [
+            "ev:pingshui:去:七遇",
+            "ev:pingshui:上:七麌"
+          ],
+          "evidenceApproved": false
+        },
+        {
+          "tokenId": "l7c6",
+          "character": "处",
+          "line": 7,
+          "column": 6,
+          "candidateIds": [
+            "pingshui:处:qu:六御",
+            "pingshui:处:shang:六语"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "groupIds": [
+            "group:pingshui:去:六御",
+            "group:pingshui:上:六语"
+          ],
+          "evidenceIds": [
+            "ev:pingshui:去:六御",
+            "ev:pingshui:上:六语"
+          ],
+          "evidenceApproved": false
+        },
+        {
+          "tokenId": "l8c4",
+          "character": "上",
+          "line": 8,
+          "column": 4,
+          "candidateIds": [
+            "pingshui:上:qu:二十三漾",
+            "pingshui:上:shang:二十二养"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "groupIds": [
+            "group:pingshui:去:二十三漾",
+            "group:pingshui:上:二十二养"
+          ],
+          "evidenceIds": [
+            "ev:pingshui:去:二十三漾",
+            "ev:pingshui:上:二十二养"
+          ],
+          "evidenceApproved": false
+        },
+        {
+          "tokenId": "l8c5",
+          "character": "使",
+          "line": 8,
+          "column": 5,
+          "candidateIds": [
+            "pingshui:使:qu:四寘",
+            "pingshui:使:shang:四纸"
+          ],
+          "tones": [
+            "Z"
+          ],
+          "groupIds": [
+            "group:pingshui:去:四寘",
+            "group:pingshui:上:四纸"
+          ],
+          "evidenceIds": [
+            "ev:pingshui:去:四寘",
+            "ev:pingshui:上:四纸"
+          ],
+          "evidenceApproved": false
+        }
+      ],
+      "tokensWithoutApprovedEvidence": 56,
+      "missingCharacters": [],
       "resolveOutcome": {
         "kind": "data_not_ready",
         "code": "LOOKUP_EVIDENCE_UNVERIFIED",
-        "message": "字位 l2c7（楼）参与读音/平仄推导的候选 pingshui:楼:ping:十一尤 没有已审核证据（选择方式 unique）：未审核或缺失的证据不能支撑读音、平仄或归部结论，按数据未就绪处理",
+        "message": "字位 l1c1（昔）参与读音/平仄推导的候选 pingshui:昔:ru:入声十一陌、pingshui:昔:ru:入声十药 没有已审核证据（选择方式 unresolved）：未审核或缺失的证据不能支撑读音、平仄或归部结论，按数据未就绪处理",
         "details": {
-          "tokenId": "l2c7",
-          "character": "楼",
-          "candidateIds": "pingshui:楼:ping:十一尤",
-          "selectionMethod": "unique",
+          "tokenId": "l1c1",
+          "character": "昔",
+          "candidateIds": "pingshui:昔:ru:入声十一陌,pingshui:昔:ru:入声十药",
+          "selectionMethod": "unresolved",
           "book": "pingshui",
-          "dataVersion": "sample-pingshui-cwr-ff0e9c1-d1"
+          "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-draft"
         }
-      },
-      "contextRuleHits": 0,
-      "readingStatusCounts": null,
-      "toneStatusCounts": null
+      }
     }
   ]
 }
