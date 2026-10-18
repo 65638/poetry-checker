@@ -308,6 +308,7 @@ function main(): void {
   const aInputBase: SnapshotInput = {
     ...pingshuiSnapshotFromCwr(table, {
       dataVersion: A_VERSION,
+      sourceId: "src:chinese_word_rhyme:pingshui",
       revision: CWR_REVISION,
       dataPath: CWR_DATA_PATH,
       snapshotSha256: sha256Bytes(cwrBytes),

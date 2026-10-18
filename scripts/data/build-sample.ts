@@ -50,6 +50,7 @@ function main(): void {
 
   const full = pingshuiSnapshotFromCwr(table, {
     dataVersion: DATA_VERSION,
+    sourceId: "src:chinese_word_rhyme:pingshui",
     revision: REVISION,
     dataPath: "data/Pingshui_Rhyme.json",
     snapshotSha256: sha256(bytes),
