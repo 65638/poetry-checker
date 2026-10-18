@@ -24,8 +24,8 @@ export type {
   ClosureProblem,
   ClosureResult,
 } from "./report/closure.js";
-// D3 批次一公共导出（代码为 Codex 在 docs/handoffs/d3-codex-exceptions.md
-// 指定原文；GLM 代加以解除 API 接线阻塞，C 复核后可自行调整措辞与位置）。
+// Codex 实现的已审作品特例适用层（C 只做公共导出，不编辑实现）。
+// 纯函数：通用核心之后、summary 之前调用；未命中时原样返回报告。
 export {
   applyReviewedWorkExceptions,
   parseReviewedWorkExceptions,

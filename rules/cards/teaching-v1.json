@@ -79,11 +79,12 @@
     "version": "1",
     "name": "三平尾",
     "scope": "按模板检查的近体句末三字",
-    "statement": "末三字全平为三平尾，明确违反时判定为 error。",
+    "statement": "末三字全平为三平尾，一般近体句明确违反时判定为 error；已审核的具体作品字位可按登记范围作为该诗特征解释，显示为 not_applicable/info（不是拗救，也不豁免同诗其他规则）。当前登记的批准范围仅限平水版《黄鹤楼》l4c5–7（见 rules/exceptions/reviewed-works-v1.json）。",
     "limitations": [
       "仅对按所选模板检查的近体句生效",
-      "语文学出处待人工核实",
-      "王力页371–372只提供古体尾式的部分依据；近体检查及 error/warning 等级是工程教学口径，不声称文献规定该等级。"
+      "例外只对已登记作品生效：作品元数据、正文指纹、审批证据三者均 approved 且精确匹配；词林/新韵不继承平水特例",
+      "例外不改变读音、不改判古体、不清空其他字位诊断；METER.POSITION 等常格差异仍独立列示",
+      "王力页371–372只提供古体尾式的部分依据；近体检查及 error/warning 等级是工程教学口径，不声称文献规定该等级"
     ],
     "evidenceIds": [
       "ev:rule:TAIL.SANPING:engineering-scope"
