@@ -163,7 +163,7 @@
       "draftId": "draft-rescue-self-v1",
       "reviewStatus": "approved",
       "status": "approved_pending_evidence",
-      "reviewNote": "组长 J03 第一批人审属实（2026-10-18，记录 12_J03人审记录；全文待归档）。证据记录待 GLM 装配 provenance 后补 evidenceIds。",
+      "reviewNote": "组长 2026-10-18 人审属实（转述编号「J03 第一批」）。注意：仓库内 `data/reviews/j03-batch1-human-review.json` 实为 A 的候选级审批（不含规则卡），本卡的审批编号与记录归档待组长确认。证据记录待 GLM 装配 provenance 后补 evidenceIds。",
       "citation": [
         "王力文集·第15卷《诗词格律》第二章第三节（六）拗救·（a）本句自救，印刷页 339（PDF 346）"
       ],
@@ -189,7 +189,7 @@
       "draftId": "draft-rescue-teao-v1",
       "reviewStatus": "approved",
       "status": "approved_pending_evidence",
-      "reviewNote": "组长 J03 第一批人审属实（2026-10-18，记录 12_J03人审记录；全文待归档）。证据记录待 GLM 装配 provenance 后补 evidenceIds。",
+      "reviewNote": "组长 2026-10-18 人审属实（转述编号「J03 第一批」）。注意：仓库内 `data/reviews/j03-batch1-human-review.json` 实为 A 的候选级审批（不含规则卡），本卡的审批编号与记录归档待组长确认。证据记录待 GLM 装配 provenance 后补 evidenceIds。",
       "citation": [
         "王力文集·第15卷《诗词格律》第二章第三节（五）特定的一种平仄格式，印刷页 336–338（PDF 343–345）"
       ],
@@ -214,7 +214,7 @@
       "draftId": "draft-rescue-duiju-v1",
       "reviewStatus": "approved",
       "status": "approved_pending_evidence",
-      "reviewNote": "组长 J03 第一批人审属实（2026-10-18，记录 12_J03人审记录；全文待归档）。证据记录待 GLM 装配 provenance 后补 evidenceIds。",
+      "reviewNote": "组长 2026-10-18 人审属实（转述编号「J03 第一批」）。注意：仓库内 `data/reviews/j03-batch1-human-review.json` 实为 A 的候选级审批（不含规则卡），本卡的审批编号与记录归档待组长确认。证据记录待 GLM 装配 provenance 后补 evidenceIds。",
       "citation": [
         "王力文集·第15卷《诗词格律》第二章第三节（六）拗救·（b）对句相救，印刷页 339（PDF 346）",
         "五言实例：页 340《赋得古原草送别》；七言实例：页 341 陆游《夜泊水村》"
