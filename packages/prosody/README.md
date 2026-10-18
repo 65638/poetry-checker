@@ -12,6 +12,8 @@
 | `getTemplates` | 16 套整诗模板（core 辅助，经公共出口暴露） |
 | `checkTonePossibilities` | 三值平仄判定（core 辅助） |
 | `checkCommonRhyme` | 全体韵脚公共归部判定（core 辅助） |
+| `collectRuleReferences` | 汇总报告引用的规则 ID（普通 + 救法），供 `provenance.rules` 装配 |
+| `checkReportClosure` | 只读校验引用闭合（ruleId/version/resolvedBy/relatedFindingIds/relations/韵脚/字位），返回问题清单 |
 | `ProsodyNotImplementedError` | 兼容保留的异常类型；teaching-v1 判定已不再抛出 |
 
 ## 已验收能力（tests/acceptance）
@@ -29,6 +31,7 @@
 - 三平尾 error、三仄尾 warning；A 型小拗 pass/info（`expected=[P,Z]`、`observed=[Z]`、`resolvedBy=null`）及额外固定位不被豁免。
 - 改第 2 字的平仄/失对/失粘定位；三值/未知/候选关联与韵脚跨候选不拼接；公共归部整体无交与首句入韵。
 - 模板与适用性状态（not_applicable/unsupported/未选模板/uncertain）；评分权重 .65/.20/.10/.05 缺项归一与 keyRate；确定性、位置与引用闭合。
+- 引用闭合工具（`closure.test.ts`，3 项）：正格报告通过；已救报告 `resolvedBy` 只引用救法规则；人为破坏引用时逐项返回稳定错误码（`resolved_by_unknown` / `related_finding_missing` / `check_id_duplicate` / `location_mismatch` / `rhyme_token_missing`）。
 
 ## 未实现边界（不得计为通过）
 

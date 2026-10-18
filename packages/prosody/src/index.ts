@@ -12,3 +12,15 @@ export type {
   RhymeDomain,
   CommonRhymeResult,
 } from "./core/index.js";
+// C 维护的引用闭合工具（只读校验，供 GLM 组装 AnalysisResponse/provenance 前自检）。
+export {
+  FROZEN_RULE_IDS,
+  RESCUE_RULE_IDS,
+  collectRuleReferences,
+  checkReportClosure,
+} from "./report/closure.js";
+export type {
+  RuleReferences,
+  ClosureProblem,
+  ClosureResult,
+} from "./report/closure.js";

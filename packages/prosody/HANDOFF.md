@@ -18,6 +18,8 @@
 | 文件 | 说明 |
 |---|---|
 | `packages/prosody/tests/acceptance/d2-core.test.ts` | **新增 32 项**独立验收：C2-01..C2-13（孤平/自救/特拗/对句相救五七言/尾式/A 型小拗/改第 2 字/三值与候选/公共归部与首句入韵/模板与适用性状态/评分与 keyRate/确定性与引用闭合）。预期全部手写，不调用被测实现生成答案 |
+| `packages/prosody/tests/acceptance/closure.test.ts` | **新增 3 项**：引用闭合工具验收（正格报告通过、已救报告 resolvedBy 只引用救法、人为破坏逐项报错误码） |
+| `packages/prosody/src/report/closure.ts` | **新增**：只读引用闭合工具 `collectRuleReferences` / `checkReportClosure`（ruleId/version/resolvedBy/relatedFindingIds/relations/韵脚/字位），经 `src/index.ts` 导出给 GLM；不改变状态、等级、候选顺序 |
 | `packages/prosody/tests/acceptance/fixtures.ts` | 增加 `codeLine`/`makeCodePoem` 字位编码构造器（P/Z/A/U、可按字位指定韵部），供 D2 反例构造 |
 | `packages/prosody/tests/acceptance/D2-matrix.md` | 重写为 C2-01..C2-13 实跑矩阵：逐项填“通过/未执行”、附 SHA 与交接给 GLM 的引用闭合约定 |
 | `rules/cards/draft-teaching-v1.json` | 10 张规则卡来源待审项具体化（三首案例、核心救法优先；无编造版次/页码）；仍全部 pending |
@@ -33,12 +35,12 @@ Codex 在 `b5457e4` 中对 `templates.test.ts` 只改 3 行：C-D1-02 的 `relat
 
 ```text
 pnpm exec vitest run packages/prosody/tests/acceptance
-  → exit 0；4 个测试文件、79 项通过（D2 新增 32：d2-core.test.ts）
-    templates 28、uncertainty 14、cards 5、d2-core 32
+  → exit 0；5 个测试文件、82 项通过（D2 新增 32 + 闭合工具 3）
+    templates 28、uncertainty 14、cards 5、d2-core 32、closure 3
 pnpm --filter @poetry/prosody test
-  → exit 0；core 13 + acceptance 79 = 92 项
+  → exit 0；core 13 + acceptance 82 = 95 项
 pnpm verify
-  → exit 0；30 个测试文件、484 项通过（合并后基线 452 + C 新增 32），
+  → exit 0；31 个测试文件、487 项通过（合并后基线 452 + C 新增 35），
     lint、typecheck、构建、8 个生成物一致性全部通过
 git diff --check → exit 0
 ```
@@ -56,6 +58,50 @@ git diff --check → exit 0
 - `relatedFindingIds` 只引用同一报告内的诊断 ID；`relations[].findingIds`、`rhyme.tokenIds`、`locations[].tokenId` 必须能在 `poem.tokens` 解析（C2-13 已在核心层验证）。
 - C 未改动 `src/index.ts`：公共导出（matchTemplates/evaluateProsody/getTemplates/checkTonePossibilities/checkCommonRhyme）已指向新实现，无需额外包装；辅助函数不是第二份 HTTP 协议。
 - 汇总状态（summary/HTTP 错误）由 GLM 按契约 §6 实现；C 提供 Finding 的 status/severity 语义。
+
+### 给 GLM 的接入示例（2026-10-18 补充：引用闭合工具）
+
+C 新增 `src/report/closure.ts`，并从 `@poetry/prosody` 导出（只读校验，不改报告、不发 HTTP）：
+
+```ts
+import {
+  matchTemplates,
+  evaluateProsody,
+  checkReportClosure,
+  collectRuleReferences,
+} from "@poetry/prosody";
+
+// 1) 候选 → 2) 体裁（E 侧）→ 3) 完整判定
+const candidates = matchTemplates({ poem, formHint, ruleSet: "teaching-v1" });
+const report = evaluateProsody({
+  poem,
+  candidates,
+  selectedTemplateId,
+  applicability,
+  ruleSet: "teaching-v1",
+});
+
+// 4) 组装 AnalysisResponse / provenance 前自检引用闭合
+const closure = checkReportClosure(report, poem);
+if (!closure.ok) {
+  // closure.problems: { code, detail }[]，例：resolved_by_unknown / related_finding_missing /
+  // check_id_duplicate / rhyme_token_missing / location_mismatch
+  // 交 C/Codex 定位，不要静默丢弃或改写状态
+}
+
+// 5) provenance.rules 必须同时返回普通规则与救法规则，version 为 "1"
+const { ruleIds, rescueRuleIds } = collectRuleReferences(report);
+const referenced = [...ruleIds, ...rescueRuleIds];
+// 用 referenced 去 rule cards 里取卡（id/version/name/scope/statement/limitations/evidenceIds），
+// sources/evidence 按卡内 evidenceIds 装配；不得返回空数组冒充“无引用”。
+```
+
+要点：
+
+- `checkReportClosure` 只读：不改变 status/severity/候选顺序，不允许用它“修”报告来通过测试。
+- `Finding.resolvedBy` 是 RuleCard ID（仅 `RESCUE.SELF/TEAO/DUIJU`）；`relatedFindingIds` 才是 Finding 实例 ID。
+- 示例中的字段以 `@poetry/contracts` 为准（本段是调用形状示意，不是逐字快照）；`ruleVersion` 恒为 `"1"`。
+- 若报告来自“未选模板/不适用/未支持”分支，checks 可能为空或仅含待确认项，闭合校验仍应通过。
 
 ### 未解决问题 / 下一步
 
