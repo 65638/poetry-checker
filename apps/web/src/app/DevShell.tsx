@@ -84,24 +84,41 @@ export function DevShell() {
   return (
     <>
       <CheckerView {...props} />
-      <div
+      {/*
+        开发场景面板：默认收起，避免在 375px 下遮挡正式输入区。
+        只在 DEV 构建渲染（DevShell 本身由 main.tsx 的 DEV 分支引入）。
+      */}
+      <details
         data-testid="dev-shell-panel"
         style={{
           position: "fixed",
-          right: 12,
-          bottom: 12,
+          right: 8,
+          bottom: 8,
           zIndex: 10,
-          maxWidth: 360,
+          maxWidth: 340,
+          maxHeight: "50vh",
+          overflow: "auto",
           background: "#fff",
           border: "1px solid #DDD8CC",
           borderRadius: 8,
-          padding: 8,
+          padding: "4px 8px",
           fontSize: 12,
           boxShadow: "0 2px 8px rgba(0,0,0,.12)",
         }}
       >
+        <summary
+          style={{
+            cursor: "pointer",
+            fontWeight: 600,
+            padding: "6px 2px",
+            minHeight: 32,
+            display: "list-item",
+          }}
+        >
+          开发场景（DEV）
+        </summary>
         <DevScenarioSelector onLoad={handleLoadScenario} />
-      </div>
+      </details>
     </>
   );
 }

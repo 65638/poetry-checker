@@ -1,53 +1,43 @@
-# D2/D3 核心验收矩阵（C 交付给 Codex 的精确输入/预期）
+# D2 独立验收矩阵（C2-01..C2-13）与实跑结果
 
-> 状态：**未执行：核心待实现**。当前 `evaluateProsodyCore` 明确抛出
-> `PROSODY_EVALUATION_PENDING`（`packages/prosody/src/core/index.ts`），
-> `matchTemplates` 仅有 toneFit。**规则卡存在不等于算法已实现**，本矩阵条目一律不计为通过。
-> Codex 完成后由 C 将本表逐条换成真实断言，不得留下长期跳过。
->
-> 口径基线：**Codex 2026-10-17 确认**（核对基线 `9b27322` / `contract-v1`）——10 个固定规则 ID
-> （公共韵部为 `RHYME.COMMON`，首版 `version="1"`）；可变位按四句式允许集合；A 型小拗**②允许并标 info**；
-> 七言对句相救位置为出句第 6 字 ↔ 对句第 5 字。引用规则见 `docs/rulebook.md` §0–1。
+> 本轮基线：D1 main `6375b35`；核心实现 `b5457e4`（交接 HEAD `14df990`，经 `support/core-d2.bundle` 导入审查分支 `review/codex-core-d2`）；验收分支 `feat/c-d2-acceptance`。
+> 测试文件：`packages/prosody/tests/acceptance/d2-core.test.ts`（32 项）；预期全部按任务书矩阵、已确认口径与冻结规则表手工书写，不调用被测实现生成答案。
+> 合成样本只验证算法；三首名篇真实链路仍待 A/B/E 真实数据，不把合成测试算作名篇验收。
 
-## 优先顺序
+## 1. 实跑结果
 
-1. D2-01..D2-06：窄义孤平、三类常见变格、三平尾/三仄尾（P0 三类变格必须验收）
-2. D2-11..D2-13：A 型小拗政策②的实际输出（复用 METER.POSITION）
-3. D2-07：固定模板改第二字 + 对/粘 Finding 定位
-4. D2-08：未选模板 / 不适用 / 未支持状态
-5. D2-09：解释关联与引用完整性
-6. D2-10：evaluateProsody 的确定性与不可变性
+命令：`pnpm exec vitest run packages/prosody/tests/acceptance` → **4 个文件、79 项通过（D2 新增 32）**；`pnpm verify` 见 HANDOFF。
 
-## 验收矩阵
+| 编号 | 场景 | 输入摘要（合成） | 手写预期 | 结果 |
+|---|---|---|---|---|
+| C2-01 | 窄义孤平 | B 型 `ZPZZP`；对照 `ZZZZP`（单一平声但非该式） | 仅 `ZPZZP` 报 GUPING.NARROW fail/error，定位后五字；对照句不判孤平、其他错误照报 | ✅ 通过 |
+| C2-02 | 孤平自救 | B 型 `ZPPZP`；差一位 `ZZPZP` | 自救认可：GUPING 通过并 `resolvedBy=RESCUE.SELF`，双向关联闭合；差一位不认定已救、第 2 字仍 fail | ✅ 通过 |
+| C2-03 | 特拗 | C 型 `PPZPZ`；差一位 `PZZPZ` | 第 4 字 pass 且 `resolvedBy=RESCUE.TEAO`；第 3/4 句第 4 字相对不被重复硬报；差一位不认可、第 4 字仍 fail | ✅ 通过 |
+| C2-04 | 五言对句相救 | 同联 `ZZPZZ / PPPZP`；跨联同形；救位未知 | 命中：拗位 pass + `resolvedBy=RESCUE.DUIJU`；跨联不宣称已救、拗位 fail；救位未知 → 救法 uncertain、拗位 uncertain | ✅ 通过 |
+| C2-05 | 七言对句相救 | 同联 `PPZZPZZ / ZZPPPZP`；错误前缀 `ZPZZPZZ` | 窄模式第 6↔5 字可认可；错误前缀不放行、第 6 字 fail | ✅ 通过 |
+| C2-06 | 尾式 | 末三字 `PPP` / `ZZZ` | 前者 TAIL.SANPING fail/error；后者 TAIL.SANZE fail/warning（不升级 error） | ✅ 通过 |
+| C2-07 | A 型小拗 | 五言 `ZZZPZ`、七言 `PPZZZPZ`；七言第 6 字再破坏 | 五言第 3/七言第 5 字 pass/info，`expected=[P,Z]`、`observed=[Z]`、`resolvedBy=null`；额外固定位错误不被豁免 | ✅ 通过 |
+| C2-08 | 改第 2 字与关系 | 固定 `wujue-ze-unrhymed`，首句第 2 字改平 | 平仄 fail/error 定位 l1c2；同联失对 fail；联间相粘仍 pass；模板不切换 | ✅ 通过 |
+| C2-09 | 三值与候选关联 | P/P 多候选、P/Z 歧义、无候选、中位未知；韵脚声调与归部交叉候选 | 平仄 resolved / ambiguous / unknown 正确；中位未知不当作可平可仄；韵脚不跨候选拼接 → 判 fail | ✅ 通过 |
+| C2-10 | 公共归部与首句入韵 | 四个韵脚两两相交整体无交；首句入韵用异部 | 前者 fail；后者 fail 且首句韵脚在检查范围内，提示借邻韵不自动放行 | ✅ 通过 |
+| C2-11 | 模板与适用性状态 | not_applicable / unsupported / 未选模板 / uncertain | 不适用无 checks 无硬错误；不支持明确标记；未选模板只输出共同诊断并待确认；uncertain 时错误降级 warning | ✅ 通过 |
+| C2-12 | 评分与 keyRate | 正格诗；押韵失败诗；全未知；13 固定位仅 1 位可判 | 前三特征 1/1/1、对仗 null、score=1；押韵失败 score=(0.65+0.20)/0.95；全未知 score/toneFit 等为 null；keyRate=1/13 | ✅ 通过 |
+| C2-13 | 确定性与引用闭合 | 冻结输入重复执行；补充平面汉字；救法诗全量检查 | 结果稳定、输入不变；`𠀀` 位置与诊断定位准确；ID 唯一、ruleId/版本在冻结集合、relatedFindingIds/relations/韵脚引用闭合 | ✅ 通过 |
 
-| 编号 | 模式/场景 | 输入（合成 P/Z，正格样本由 tests/acceptance/fixtures.ts 构造） | 前提/依据 | 预期 | 负责人 | 状态 |
-|---|---|---|---|---|---|---|
-| D2-01 | 窄义孤平 | 五言 B 型 `ZPZZP`（已选模板，全字位确定） | 规则卡 GUPING.NARROW；确认口径“不能仅因两个位置为中而放行” | Finding：status=fail，severity=error，ruleId=GUPING.NARROW，字位定位正确；不是“整句只一个平声”宽口径 | Codex 实现，C 验收 | 未执行：核心待实现 |
-| D2-02 | 孤平自救 | 五言 B 型 `ZPPZP`（七言对应尾部） | 规则卡 RESCUE.SELF | 认可自救：`resolvedBy` 指向 RuleCard ID `RESCUE.SELF`，保留原偏离证据并关联 finding；不留未解决的孤平硬错误；不得把所有 B 型偏离都算已救 | Codex 实现，C 验收 | 未执行：核心待实现 |
-| D2-03 | 特拗 | C 型五言 `PPZPZ`；七言对应“中仄平平仄平仄” | 规则卡 RESCUE.TEAO | 匹配完整审核模式后认可；不重复报被认可位置失对；不得把 C 型特拗换成另一句型免检 | Codex 实现，C 验收 | 未执行：核心待实现 |
-| D2-04 | 对句相救（五言） | 同联 A/B 型 `ZZPZZ / PPPZP`（如“野火烧不尽/春风吹又生”） | 规则卡 RESCUE.DUIJU：出句第 4 字 ↔ 对句第 3 字 | 命中救法：`resolvedBy`=`RESCUE.DUIJU`，`relatedFindingIds` 关联出句与对句字位；必须同联 | Codex 实现，C 验收 | 未执行：核心待实现 |
-| D2-04b | 对句相救（七言） | 同联、A/B 型，出句第 6 字 ↔ 对句第 5 字；合成前缀候选 `PPZZPZZ / ZZPPPZP`（待核定测试材料） | 确认口径：位置按五言核心后移两字；位置正确只是必要条件 | 同联且模式完整时才认可；前缀、完整后五字、其他固定位置、候选不确定性都要核对；跨联或救位未知 → 不宣称已救 | Codex 实现，C 验收 | 未执行：核心待实现 |
-| D2-05 | 三平尾 | 末三字 PPP（确定读音） | 规则卡 TAIL.SANPING | Finding：status=fail，severity=error | Codex 实现，C 验收 | 未执行：核心待实现 |
-| D2-06 | 三仄尾 | 末三字 ZZZ（确定读音，如 C 型 `PPZZZ`） | 规则卡 TAIL.SANZE | Finding：severity=warning；不单独造成整诗 fail | Codex 实现，C 验收 | 未执行：核心待实现 |
-| D2-07 | 固定模板改第 2 字 + 关系 | 已选 wujue-ze-unrhymed，改首句第 2 字平仄；同联/联间关系 | METER.POSITION / RELATION.DUI / RELATION.NIAN | 必检位平仄 fail 定位到字；允许关联粘对诊断；不得靠换模板或古体免责 | Codex 实现，C 验收 | 未执行：核心待实现 |
-| D2-08 | 未选模板 / 不适用 / 未支持 | selectedTemplateId=null；applicability=not_applicable / unsupported | 契约 §6 | not_applicable 无近体硬错误、保留字音归部；未选模板只输出跨候选共同诊断；不得以空 checks 冒充 pass | Codex 实现，C 验收 | 未执行：核心待实现 |
-| D2-09 | 解释关联与引用 | 任意 finding，含救法 | 确认口径 §1 引用规则 1–4；契约补充约定 7 | 每条 Finding 有 ruleId/ruleVersion(=「1」)/status/severity/字位/expected/observed/message/templateId/evidenceIds；`resolvedBy` 指向 RuleCard ID（非 Finding ID）；`relatedFindingIds` 引用诊断实例；provenance.rules 含被引用的普通与救法规则 | Codex 实现，C 验收 | 未执行：核心待实现 |
-| D2-10 | 确定性与不可变 | 相同输入重复执行 evaluateProsody；冻结输入 | C-D1-09 延续 | 结果稳定、输入不变、无随机 ID 与时间戳 | Codex 实现，C 验收 | 未执行：核心待实现 |
-| D2-11 | A 型小拗（五言） | A 型 `ZZZPZ`（第三字由平变仄，其余符合 A 型） | 确认口径：政策②允许并标 info | 目标字位：ruleId=METER.POSITION，ruleVersion="1"，status=pass，severity=info，expected=["P","Z"]，observed=["Z"]，resolvedBy=null；不要求对句相救，不单独使全篇 needs_review/fail；复用已有 METER.POSITION 记录，不产生矛盾 fail | Codex 实现，C 验收 | 未执行：核心待实现 |
-| D2-12 | A 型小拗（七言） | A 型 `PPZZZPZ`（第五字由平变仄） | 同上 | 对应七言第五字 pass/info，其余同 D2-11 | Codex 实现，C 验收 | 未执行：核心待实现 |
-| D2-13 | A 型小拗的边界 | A 型第四字（七言第六字）也变仄；或 `ZZZZZ` 等 | 确认口径：政策②只覆盖五言第三字/七言第五字 | 不适用“小拗允许”免责，另按偏离/救法处理；不得套用 D2-11 免检 | Codex 实现，C 验收 | 未执行：核心待实现 |
-| D2-14 | 已认可救法的关联 | 真正已救的五言同联 A/B 模式 | 确认口径 §1 引用规则 4 | 普通偏离与救法诊断关联，`resolvedBy` 指向规则卡 ID；救法只豁免它覆盖的偏离，其他错误照常保留 | Codex 实现，C 验收 | 未执行：核心待实现 |
-| D2-15 | 不宣称未确认的救法 | 相同声调形状但**跨联**，或救位读音未知 | 确认口径：必须同联；位置正确不是完整判据 | 不输出确定的“对句相救已认可”；按三值语义给出 uncertain 或普通偏离 | Codex 实现，C 验收 | 未执行：核心待实现 |
-| D2-16 | 未知音不当作可平可仄 | 可变位（“中”）位置上的字读音 unknown | 确认口径：未知音不能当作已知可平可仄 | 不因该位置允许 `[P,Z]` 就把 unknown 记为 pass；相关约束按三值给 uncertain | Codex 实现，C 验收 | 未执行：核心待实现 |
+## 2. 未执行 / 边界（不按通过计数）
 
-## 未纳入本批次的 P0 目标（仅登记）
+| 事项 | 状态 | 说明 |
+|---|---|---|
+| 首句借邻韵自动放行 | 未实现 | 无已审核邻韵关系表，P0 不自动放行（矩阵要求即如此） |
+| 更宽跨句救法、罕见救法 | 未实现 | 不在 P0；保留复核提示 |
+| 七言对句相救真实诗例 | 未核实 | 合成材料 `PPZZPZZ / ZZPPPZP` 仅用于位置对应说明；语文学依据与真实诗例待 C/组长核定 |
+| parallelismFit（对仗） | 恒为 null | 核心未实现语义对仗；评分按缺项归一化 |
+| 三首名篇真实链路 | 未执行 | 需 A 真实韵书 + B 真实读音 + E 体裁；合成测试不能替代 |
+| provenance.rules 装配 | GLM 负责 | C 交付规则卡与引用闭合说明，API 侧汇总时纳入普通规则与 resolvedBy 救法规则 |
 
-- 36 组规则级测试为**项目总目标**，D1 不要求全部完成（组长 D1 指令 §六）。
-- 首句借邻韵：P0 无审核邻韵表不自动放行，邻韵表待人工审核，不登记实现。
-- 更宽跨句救法、罕见救法：P0 不实现，保留“需复核”提示。
+## 3. 交接给 GLM 的引用闭合约定
 
-## 与 E 的边界（记录于各自 HANDOFF）
-
-- C 负责候选特征是否正确；E 负责如何使用特征决定体裁适用性；C 不导入 genre，E 不重算格律。
-- 当前 relationFit/rhymeFit 为空：toneFit 高也不能让 E 直接认定强近体；E 使用独立完整特征 fixture 开发。
-- C 的规则级样本在 packages/prosody/tests/acceptance；E 的作品与体裁样本由 E 管理；真实名篇、页码及体裁预期需要人审。
+- 报告内出现的 `Finding.ruleId` 必须是 10 个固定 ID 之一，且能在 `provenance.rules` 找到同 `id`、`version="1"` 的规则卡。
+- `resolvedBy` 指向救法规则卡 ID（`RESCUE.SELF/TEAO/DUIJU`），同样要随 `provenance.rules` 返回；`relatedFindingIds` 只引用同一报告内的诊断 ID。
+- `relations[].findingIds`、`rhyme.tokenIds`、`locations[].tokenId` 均须能在 `poem.tokens` 中解析（C2-13 已在核心层验证闭合）。
+- 规则卡为草案（pending），不得进入发布来源集合；文献未核实前不能标记人工审核通过。

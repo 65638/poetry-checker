@@ -1,0 +1,44 @@
+{
+  "comment": "规则卡证据记录（GLM 按 C 的 docs/rule-sources.md §10 映射生成；ev: ID 供 rules/cards 的 rule.evidenceIds 回填）。approved 依据：docs/reviews/12_J03人审记录_第一批.md 第三部分第 10–12 项（2026-10-18 组长人审）。kind 暂用 dictionary（契约枚举缺口： scholarly 专著引用，待契约 v1.1 评估增设 rule_citation）。版权口径：王力文集为受版权保护出版物，本仓库只做页码定位与规则转述，不存储不复制原文，excerpt 恒为 null。",
+  "sources": [
+    {
+      "id": "src:wangli:wenji15",
+      "title": "王力文集·第15卷《诗词格律》（C 本地扫描件 _sources/wangli15.pdf，未入库）",
+      "edition": null,
+      "url": null,
+      "license": "受版权保护的现代出版物；本仓库仅以章节页码定位与规则转述作为内部人工审核依据，不存储、不复制原文（excerpt 恒为 null）",
+      "snapshotSha256": null,
+      "revision": null,
+      "retrievedAt": null
+    }
+  ],
+  "evidence": [
+    {
+      "id": "ev:rule:RESCUE.SELF:wangli15-p339",
+      "sourceId": "src:wangli:wenji15",
+      "kind": "dictionary",
+      "locator": "第二章第三节（六）拗救·（a）本句自救，印刷页 339（PDF 346）；人审 docs/reviews/12_J03人审记录_第一批.md 第三部分第 10 项（2026-10-18）",
+      "assertion": "五言「平平仄仄平」第一字用仄拗时，第三字补平自救，成「仄平平仄平」；七言对应「仄仄仄平平仄平」",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:rule:RESCUE.TEAO:wangli15-p336-338",
+      "sourceId": "src:wangli:wenji15",
+      "kind": "dictionary",
+      "locator": "第二章第三节（五）特定的一种平仄格式，印刷页 336–338（PDF 343–345）；人审 docs/reviews/12_J03人审记录_第一批.md 第三部分第 11 项（2026-10-18）",
+      "assertion": "五言「平平仄平仄」、七言「仄仄平平仄平仄」为特定平仄格式：五言第三四字、七言第五六字平仄互换，且五言第一字、七言第三字必须用平声",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:rule:RESCUE.DUIJU:wangli15-p339-341",
+      "sourceId": "src:wangli:wenji15",
+      "kind": "dictionary",
+      "locator": "第二章第三节（六）拗救·（b）对句相救，印刷页 339；实例页 340（《赋得古原草送别》）、页 341（陆游《夜泊水村》）；人审 docs/reviews/12_J03人审记录_第一批.md 第三部分第 12 项（2026-10-18）",
+      "assertion": "出句第四字（七言第六字）拗时，在对句第三字（七言第五字）用平声补偿；须同联",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    }
+  ]
+}

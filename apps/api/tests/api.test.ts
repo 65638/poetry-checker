@@ -1,4 +1,6 @@
 import { readFileSync } from "node:fs";
+// D1 mock 行为仅在显式开发模式启用（D2 起默认真实编排）
+process.env.POETRY_DEV_MOCK = "1";
 import { describe, expect, it } from "vitest";
 import {
   AnalysisResponseSchema,

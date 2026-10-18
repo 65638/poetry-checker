@@ -8,6 +8,9 @@ import {
   type AnalysisResponse,
   RhymeBooksResponseSchema,
 } from "@poetry/contracts";
+import { loadResources, lookupCharactersByBook, type Resources } from "./resources.js";
+import { toLexiconErrorResponse } from "./lexicon-errors.js";
+import { analyze } from "./orchestrator.js";
 
 const fixtureNames = [
   "pass",
@@ -52,18 +55,58 @@ function errorBody(code: string, message: string) {
   };
 }
 
-export function buildApp(): FastifyInstance {
+function mapModuleErrorForServer(error: unknown): { status: number; body: unknown } | null {
+  const mapped = toLexiconErrorResponse(error);
+  return mapped === null ? null : { status: mapped.status, body: mapped.body };
+}
+
+export function buildApp(options?: { resources?: Resources }): FastifyInstance {
   const app = Fastify({ logger: false });
+  // 真实编排默认启用；POETRY_DEV_MOCK=1 时显式回退 fixture mock（开发联调专用）
+  const devMock = process.env.POETRY_DEV_MOCK === "1";
+  const resources: Resources = options?.resources ?? loadResources();
+  const realReady = resources.ready;
 
   app.get("/healthz", async () => ({ status: "ok" }));
 
-  app.get("/readyz", async () => ({
-    status: "ready",
-    versions: fixtureVersions,
-  }));
+  app.get("/readyz", async (_req, reply) => {
+    if (devMock) {
+      return { status: "ready", versions: fixtureVersions };
+    }
+    if (!realReady) {
+      return reply.status(503).send(dataNotReady(resources.notReadyReasons.join("；")));
+    }
+    return {
+      status: "ready",
+      versions: {
+        data: Object.values(resources.snapshots).map((x) => `${x.book}=${x.dataVersion}`).join(","),
+        rules: "teaching-v1",
+        context: "none-loaded",
+        works: "none-loaded",
+      },
+    };
+  });
 
-  app.get("/api/v1/rhyme-books", async () =>
-    RhymeBooksResponseSchema.parse({
+  app.get("/api/v1/rhyme-books", async () => {
+    if (!devMock) {
+      return RhymeBooksResponseSchema.parse({
+        books: (["pingshui", "cilin", "xinyun"] as const).map((id) => {
+          const snap = resources.snapshots[id];
+          return {
+            id,
+            name: id === "pingshui" ? "平水韵" : id === "cilin" ? "词林正韵" : "中华新韵",
+            dataVersion: snap?.dataVersion ?? "not-loaded",
+            groupCount: snap?.mainGroups ?? 0,
+            coverageNotice:
+              snap === undefined
+                ? "未装载：manifest 缺失或文件不可读"
+                : `${snap.reviewStatus === "approved" ? "已审核" : "未审核（开发联调口径）"}：主部 ${snap.mainGroups}` +
+                  (snap.subGroups !== snap.mainGroups ? `／声类子卷 ${snap.subGroups}` : ""),
+          };
+        }),
+      });
+    }
+    return RhymeBooksResponseSchema.parse({
       books: [
         {
           id: "pingshui",
@@ -87,22 +130,75 @@ export function buildApp(): FastifyInstance {
           coverageNotice: "开发 mock：真实字表由队员 A 接入后提供韵部数量",
         },
       ],
-    }),
-  );
-
-  app.get("/api/v1/characters/:char", async (_request, reply) => {
-    return reply.status(503).send(dataNotReady("单字查询"));
+    });
   });
 
-  app.get("/api/v1/rules/:ruleId", async (_request, reply) => {
-    return reply.status(503).send(dataNotReady("规则卡查询"));
+  app.get("/api/v1/characters/:char", async (request, reply) => {
+    if (devMock) return reply.status(503).send(dataNotReady("单字查询"));
+    const { char } = request.params as { char: string };
+    if ([...char].length !== 1) {
+      return reply.status(422).send(errorBody("VALIDATION_ERROR", "路径参数必须是单个 Unicode 码点"));
+    }
+    const book = (request.query as { book?: string }).book;
+    if (book !== "pingshui" && book !== "cilin" && book !== "xinyun") {
+      return reply.status(422).send(errorBody("VALIDATION_ERROR", "book 参数必须是三韵书之一"));
+    }
+    const dataVersion = resources.snapshots[book]?.dataVersion;
+    if (dataVersion === undefined) {
+      return reply.status(503).send(dataNotReady(`韵书 ${book} 无已装载版本`));
+    }
+    try {
+      const lookup = await lookupCharactersByBook(char, book, dataVersion);
+      return reply.send(lookup);
+    } catch (error) {
+      const mapped = mapModuleErrorForServer(error);
+      if (mapped !== null) return reply.status(mapped.status).send(mapped.body);
+      return reply.status(500).send(errorBody("INTERNAL_ERROR", "查询失败"));
+    }
   });
 
-  app.get("/api/v1/sources/:sourceId", async (_request, reply) => {
-    return reply.status(503).send(dataNotReady("来源查询"));
+  app.get("/api/v1/rules/:ruleId", async (request, reply) => {
+    if (devMock) return reply.status(503).send(dataNotReady("规则卡查询"));
+    if (resources.ruleCards.length === 0) {
+      return reply.status(503).send(dataNotReady("规则卡库未装载（C 的 rules/cards/teaching-v1.json 未发布）"));
+    }
+    const { ruleId } = request.params as { ruleId: string };
+    const rule = resources.ruleCards.find((r) => r.id === ruleId);
+    if (rule === undefined) return reply.status(404).send(errorBody("NOT_FOUND", `已装载规则目录中不存在 ${ruleId}`));
+    const evIds = new Set(rule.evidenceIds);
+    return reply.send({
+      rule,
+      evidence: resources.evidenceRegistry.filter((e) => evIds.has(e.id)),
+      sources: resources.sourceRegistry,
+    });
+  });
+
+  app.get("/api/v1/sources/:sourceId", async (request, reply) => {
+    if (devMock) return reply.status(503).send(dataNotReady("来源查询"));
+    const { sourceId } = request.params as { sourceId: string };
+    const known = resources.sourceRegistry.some((x) => x.id === sourceId);
+    if (!known) {
+      return reply.status(404).send(errorBody("NOT_FOUND", `已加载资源中不存在来源 ${sourceId}`));
+    }
+    return reply.status(503).send(dataNotReady(`来源 ${sourceId} 的装载明细待 A 发布含证据快照后提供`));
   });
 
   app.post("/api/v1/analyze", async (request, reply) => {
+    if (!devMock) {
+      const parsedReq = AnalyzeRequestSchema.safeParse(request.body);
+      if (!parsedReq.success) {
+        return reply.status(422).send({
+          error: {
+            code: "VALIDATION_ERROR",
+            message: "请求不符合公共契约 AnalyzeRequest",
+            fieldErrors: parsedReq.error.issues.map((i) => ({ path: i.path.join("."), message: i.message })),
+          },
+        });
+      }
+      const result = await analyze(parsedReq.data, resources);
+      if (result.kind === "error") return reply.status(result.status).send(result.body);
+      return reply.send(result.response);
+    }
     const raw = request.body;
     if (typeof raw === "object" && raw !== null && "text" in raw) {
       const text = (raw as { text?: unknown }).text;

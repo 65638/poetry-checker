@@ -1,0 +1,42 @@
+{
+  "note": "最小注入样例。**这是形状示例，不是真实审核数据**：ID 全部带 example 前缀，来源字段为空。真实规则的 approved 必须来自真人审核记录。",
+  "dataVersion": "sample-pingshui-cwr-ff0e9c1-d1",
+  "book": "pingshui",
+  "contextRules": [
+    {
+      "id": "ctx-example-geng-adverb",
+      "target": "更",
+      "exactPhrases": ["更上一层楼"],
+      "targetOffset": 0,
+      "sense": "示例：副词「更加／再」义（义项本身待审）",
+      "book": "pingshui",
+      "selectCandidateIds": ["pingshui:更:qu:二十四敬"],
+      "negativeExamples": ["三更"],
+      "evidenceIds": ["ev-example-context-geng-adverb"],
+      "reviewStatus": "approved"
+    }
+  ],
+  "contextEvidence": [
+    {
+      "id": "ev-example-context-geng-adverb",
+      "sourceId": "src-example-context",
+      "kind": "context",
+      "locator": "示例：语境义项条目（占位，非真实页码）",
+      "assertion": "示例：该语境取某义项，对应候选 pingshui:更:qu:二十四敬",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    }
+  ],
+  "contextSources": [
+    {
+      "id": "src-example-context",
+      "title": "示例语境来源（非真实）",
+      "edition": null,
+      "url": null,
+      "license": "example-only",
+      "snapshotSha256": null,
+      "revision": null,
+      "retrievedAt": null
+    }
+  ]
+}
