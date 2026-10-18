@@ -80,14 +80,38 @@ describe("D3 批次一·已审特例 HTTP 真链路", () => {
     expect(body.versions.rules).toBe("teaching-v1+reviewed-works-v1");
   });
 
-  it("一般三平尾仍是 error：临时目录断言由 Codex 57 项单测覆盖；此处钉特例只登记黄鹤楼一条", async () => {
+  it("特例登记恰好 1 条 approved 且装载零错误", async () => {
     const r = (await import("../src/resources.js")).loadResources();
     expect(r.reviewedWorkExceptions).toHaveLength(1);
     expect(r.reviewedWorkExceptions[0]?.id).toBe(
       "exception:j03b2:huanghelou:l4:sanping:pingshui",
     );
     expect(r.reviewedWorkExceptions[0]?.reviewStatus).toBe("approved");
-    // 装载校验零错误（引用闭合）
     expect(r.loadErrors).toEqual([]);
+  });
+
+  it("规则详情可追溯：GET /rules/TAIL.SANPING 返回 ctx:j03b2:08 审批证据与其来源", async () => {
+    const res = await app.inject({ method: "GET", url: "/api/v1/rules/TAIL.SANPING" });
+    expect(res.statusCode).toBe(200);
+    const body = res.json() as {
+      evidence: Array<{ id: string; sourceId: string; kind: string; reviewStatus: string }>;
+      sources: Array<{ id: string }>;
+    };
+    const approval = body.evidence.find((e) => e.id === "ctx:j03b2:08");
+    expect(approval).toBeDefined();
+    expect(approval?.kind).toBe("context");
+    expect(approval?.reviewStatus).toBe("approved");
+    expect(approval?.sourceId).toBe("src:j03-review-batch2");
+    expect(body.sources.some((s) => s.id === "src:j03-review-batch2")).toBe(true);
+  });
+
+  it("analyze 的 provenance.evidence 含 ctx:j03b2:08（合并注册表原样出站）", async () => {
+    const body = await analyzeHuanghelou();
+    expect(
+      body.provenance.evidence.some((e) => e.id === "ctx:j03b2:08"),
+    ).toBe(true);
+    expect(
+      body.provenance.sources.some((s) => s.id === "src:j03-review-batch2"),
+    ).toBe(true);
   });
 });

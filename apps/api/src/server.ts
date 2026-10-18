@@ -195,7 +195,14 @@ export function buildApp(options?: { resources?: Resources }): FastifyInstance {
       return reply
         .status(404)
         .send(errorBody("NOT_FOUND", `已装载规则目录中不存在 ${ruleId}`));
+    // 证据=规则卡 evidenceIds ∪ 该规则的已审特例审批证据（如 TAIL.SANPING
+    // 的 ctx:j03b2:08，13_ 第二批第 8 条），详情页可一并追溯。
     const evIds = new Set(rule.evidenceIds);
+    for (const ex of resources.reviewedWorkExceptions) {
+      if (ex.ruleId === ruleId && ex.reviewStatus === "approved") {
+        evIds.add(ex.approval.evidenceId);
+      }
+    }
     return reply.send({
       rule,
       evidence: resources.evidenceRegistry.filter((e) => evIds.has(e.id)),
