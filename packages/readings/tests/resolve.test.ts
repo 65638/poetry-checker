@@ -821,6 +821,102 @@ describe("resolveReadings：上下文规则", () => {
     expect(token.evidenceIds).toContain(RULE_EVIDENCE.id);
     expect(token.reason).toContain("r-fully-reviewed");
   });
+
+  it("B2-04 词组长于正文时不匹配：不因部分命中就选音", () => {
+    const rule = contextRule({
+      id: "r-longer-than-text",
+      target: "更",
+      exactPhrases: ["更上一层楼"],
+      targetOffset: 0,
+      selectCandidateIds: ["c-更-P"],
+    });
+    // 正文只有「更上」，短语整体不出现。
+    const shortPoem = poemOf("更上");
+    const shortLookup = syntheticLookup({
+      entries: [
+        {
+          character: "更",
+          candidates: [
+            syntheticCandidate({
+              id: "c-更-P",
+              character: "更",
+              tone: "P",
+              evidenceIds: [APPROVED_EVIDENCE.id],
+            }),
+            syntheticCandidate({
+              id: "c-更-Z",
+              character: "更",
+              tone: "Z",
+              evidenceIds: [APPROVED_EVIDENCE.id],
+            }),
+          ],
+        },
+        {
+          character: "上",
+          candidates: [
+            syntheticCandidate({
+              id: "c-上-Z",
+              character: "上",
+              tone: "Z",
+              evidenceIds: [APPROVED_EVIDENCE.id],
+            }),
+          ],
+        },
+      ],
+    });
+    const token = tokenOf(
+      annotate({ poem: shortPoem, lookup: shortLookup, contextRules: [rule] }),
+      "l1c1",
+    );
+    expect(token.selectionMethod).toBe("unresolved");
+    expect(token.readingStatus).toBe("ambiguous");
+    expect(token.effectiveCandidateIds).toEqual(["c-更-P", "c-更-Z"]);
+  });
+
+  it("B2-04 同一短语内目标字重现：只按 targetOffset 命中那一个字位", () => {
+    const repeatLookup = syntheticLookup({
+      entries: [
+        {
+          character: "重",
+          candidates: [
+            syntheticCandidate({
+              id: "c-重-A",
+              character: "重",
+              tone: "P",
+              evidenceIds: [APPROVED_EVIDENCE.id],
+            }),
+            syntheticCandidate({
+              id: "c-重-B",
+              character: "重",
+              tone: "Z",
+              evidenceIds: [APPROVED_EVIDENCE.id],
+            }),
+          ],
+        },
+      ],
+    });
+    const rule = contextRule({
+      id: "r-repeat-first",
+      target: "重",
+      exactPhrases: ["重重"],
+      targetOffset: 0,
+      selectCandidateIds: ["c-重-A"],
+    });
+    const result = annotate({
+      poem: poemOf("重重"),
+      lookup: repeatLookup,
+      contextRules: [rule],
+    });
+
+    const first = tokenOf(result, "l1c1");
+    const second = tokenOf(result, "l1c2");
+    expect(first.selectionMethod).toBe("context_rule");
+    expect(first.selectedReadingId).toBe("c-重-A");
+    // 第二个「重」不在 targetOffset 上，不能被同一条规则顺带确定。
+    expect(second.selectionMethod).toBe("unresolved");
+    expect(second.readingStatus).toBe("ambiguous");
+    expect(second.effectiveCandidateIds).toEqual(["c-重-A", "c-重-B"]);
+  });
 });
 
 describe("resolveReadings：不变性、确定性与边界", () => {

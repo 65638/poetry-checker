@@ -255,3 +255,74 @@ const annotated = resolveReadings({
 
 两项缺陷的解决方式见第 2.1 节；错误码与 503 映射见第 6 节；
 真实上下文规则已审核 0 条（见第 4 节），本批次不构成任何覆盖率结论。
+
+---
+
+# D2：真实数据联调与语境规则准备（2026-10-17，分支 `feat/b-d2-context`）
+
+基线 `main = 6375b35`（D1 已合入）。**保留 D1 全部实现与门槛，没有重写模块。**
+
+## 11. 这一批做了什么
+
+| 交付                                                   | 位置                                            |
+| ------------------------------------------------------ | ----------------------------------------------- |
+| 真实数据复现脚本（parse → lookup → resolve）与覆盖统计 | `packages/readings/scripts/d2-coverage.ts`      |
+| 覆盖报告（带分母）                                     | `data/context/d2-coverage-report.json` / `.md`  |
+| 待审队列升级到真实候选 ID                              | `data/context/review-queue.json`                |
+| 给 GLM 的最小注入样例                                  | `data/context/injection-example.md` / `.json`   |
+| 真实数据测试（B2-08）                                  | `packages/readings/tests/real-pingshui.test.ts` |
+| 规则匹配补充用例（B2-04）                              | `packages/readings/tests/resolve.test.ts`       |
+| 政策与现状文档                                         | `docs/readings.md` §6/§7/§8/§9/§10              |
+
+## 12. 真实数据实测（分母 = 字位）
+
+数据：`data/normalized/pingshui.sample-d1.json`，`dataVersion = sample-pingshui-cwr-ff0e9c1-d1`，
+**7 个字**（白、一、更、流、楼、雪、物），快照与证据全部 `unverified`。正文取 E 的三首固定正文。
+
+| 作品     | 字位 | 有候选字位 | 缺字位 | 多候选字位 | 无已审核证据字位 | resolve 结果                                 |
+| -------- | ---- | ---------- | ------ | ---------- | ---------------- | -------------------------------------------- |
+| 登鹳雀楼 | 20   | 5          | 15     | 1（更）    | 5                | 抛 `LOOKUP_EVIDENCE_UNVERIFIED`（`l1c1` 白） |
+| 静夜思   | 20   | 0          | 20     | 0          | 0                | 正常返回，20 字位全 `unknown`                |
+| 黄鹤楼   | 56   | 3          | 53     | 0          | 3                | 抛 `LOOKUP_EVIDENCE_UNVERIFIED`              |
+
+合计 96 字位，其中 8 字位有候选、88 字位缺字。
+
+- **静夜思正常返回**不是更好：它整首都没收录，`unknown` 是“未收录”的合法表达。
+- **另两首抛错**是门槛正确工作的结果，不是 bug。
+- 因此本批次**不产出**自动覆盖率与读音准确率：没有已审核证据、没有已审核规则，算出来也是假的。
+
+## 13. 语境规则与候选 ID
+
+- 「更」在真实快照里**有两个候选**：`pingshui:更:ping:八庚`（P，下平八庚）、
+  `pingshui:更:qu:二十四敬`（Z，去二十四敬），写进 `review-queue.json` 的 `proposedSelectCandidateIds`。
+- 义项→候选对应（副词义→去声、夜间计时义→平声）仍是**待审假设**：`selectCandidateIds` 留空、
+  `evidenceIds` 空、`reviewStatus=unverified`、`decision=null`、`proposalStatus=awaiting-linguistic-evidence`。
+- 「重/长/行」三条：真实快照根本没有这些字，`proposalStatus=awaiting-candidate-ids`。
+- `rules.approved.json` **仍未创建**——本批次真实语境规则 approved 数 = 0。
+
+## 14. 需要上游答复的清单（审核请求）
+
+1. **A**：真实字表何时覆盖其余 88 字位？候选 `evidenceIds` 何时从 `unverified` 转 `approved`、由谁审核？
+2. **组长/人工**：义项↔候选的对应关系由谁提供文献依据（韵书条目/字书义项/反切）？
+   现在四条草案**全部缺**，包括唯一有真实候选的「更」。
+3. **GLM**：按 `data/context/injection-example.md` 把 `kind=context` 的证据与来源并入 `lookup`，
+   否则任何 approved 规则都会因“证据解析不到”被判 `CONTEXT_RULE_EVIDENCE_INSUFFICIENT`。
+4. **E**：《静夜思》异文（“床前看月光”）需另立版本，`parseText` 不自动改正文。
+
+## 15. 验证命令与结果
+
+```text
+$ pnpm --filter @poetry/readings test
+  ✓ parse.test.ts (10)  ✓ resolve.test.ts (35)  ✓ real-pingshui.test.ts (6)
+  Test Files 3 passed / Tests 51 passed
+
+$ pnpm verify
+  （见提交记录，退出码 0：lint + 双 tsc + 全仓测试 + build + 生成物一致性）
+```
+
+## 16. D2 已知边界
+
+- 仍是 fail-closed：任一字位有效候选缺已审核证据，整次分析报 `LOOKUP_EVIDENCE_UNVERIFIED`。
+  真实数据接入后前端的可用性取决于 A 的审核进度，不是本模块能绕过的。
+- 规则只做同句内精确短语；不做分词、同义词、跨句指代。
+- 未做留出评测，因此不报准确率；也不把规则编写样本的命中率当泛化准确率。

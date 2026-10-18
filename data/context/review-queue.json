@@ -1,39 +1,45 @@
 {
-  "queueVersion": "2026-10-17.d1",
+  "queueVersion": "2026-10-17.d2",
   "owner": "B",
   "reviewStatus": "unverified",
-  "note": "待审核语境清单，不是 ContextRule[]，运行时不得加载。selectCandidateIds 为空是因为 A 尚未交付真实稳定候选 ID；不编造 ID。sourceStatus 为「尚未查到」的条目只记录待查问题，不构成语言学结论。现代读音只作为检索线索，不能直接当作古韵义项。",
-  "candidateIdStatus": "awaiting-a-stable-candidate-ids",
+  "dataVersion": "sample-pingshui-cwr-ff0e9c1-d1",
+  "note": "待审核语境清单，不是 ContextRule[]，运行时不得加载。d2 起：只有「更」在真实快照里有两个候选，其余字的候选 ID 仍不存在于任何真实数据，因此 selectCandidateIds 一律留空，只在 proposedSelectCandidateIds 里写真实 ID 供评审。proposed 的义项↔候选对应关系全部待语言学证据，不得据此标 approved。",
+  "candidateIdStatus": "partial",
+  "candidateIdSources": {
+    "sample-pingshui-cwr-ff0e9c1-d1": "data/normalized/pingshui.sample-d1.json（七字真实小样本，reviewStatus=unverified）"
+  },
+  "coverageContext": {
+    "report": "data/context/d2-coverage-report.json",
+    "coveredCharacters": ["白", "一", "更", "流", "楼", "雪", "物"],
+    "note": "真实快照只覆盖 7 个字；三首诗共 96 字位，其中 88 字位在该快照中没有候选。"
+  },
   "items": [
     {
       "id": "rq-geng-adverb-vs-night-watch",
       "target": "更",
       "book": "pingshui",
+      "realCandidateIds": ["pingshui:更:ping:八庚", "pingshui:更:qu:二十四敬"],
       "phrases": [
         {
           "phrase": "更上一层楼",
           "targetOffset": 0,
-          "senseQuestion": "「更加/再」副词义的语境；是否对应仄声读音，需要古韵证据而不是现代拼音"
+          "proposedSelectCandidateIds": ["pingshui:更:qu:二十四敬"],
+          "proposedTone": "Z",
+          "senseHypothesis": "「更加／再」副词义，拟对应去声二十四敬",
+          "evidenceNeeded": "去声义项的可定位来源（韵书条目/字书义项/反切），不能用“这句该仄”倒推"
         },
         {
           "phrase": "三更",
           "targetOffset": 0,
-          "senseQuestion": "夜间计时单位义；传统读平声的说法需可定位来源核实"
-        },
-        {
-          "phrase": "更衣",
-          "targetOffset": 0,
-          "senseQuestion": "「更换」义的语境；与「三更」是否同一声类待查"
-        },
-        {
-          "phrase": "更改",
-          "targetOffset": 0,
-          "senseQuestion": "「改变」义的语境；与副词义「更」是否同音待查"
+          "proposedSelectCandidateIds": ["pingshui:更:ping:八庚"],
+          "proposedTone": "P",
+          "senseHypothesis": "夜间计时单位义，拟对应下平八庚",
+          "evidenceNeeded": "平声义项的可定位来源；与「更加」义是否同字异读需文献佐证"
         }
       ],
       "positiveExamples": [
-        "「更上一层楼」：目标字位于句首，短语内偏移 0",
-        "「三更」：目标字位于词首，短语内偏移 0"
+        "「更上一层楼」：目标字位于短语偏移 0",
+        "「三更」：目标字位于短语偏移 0"
       ],
       "negativeExamples": [
         "「更上一层楼」的规则不得命中「三更」：两词义项不同，不能靠共享「更」字自动套用",
@@ -42,122 +48,239 @@
       "selectCandidateIds": [],
       "evidenceIds": [],
       "sourceStatus": "尚未查到可定位来源（词书版次/页码/反切均未核）",
+      "reviewStatus": "unverified",
+      "proposalStatus": "awaiting-linguistic-evidence",
       "decision": null,
-      "blockedBy": [
-        "缺少 A 的真实候选 ID",
-        "缺少可定位的义项证据",
-        "缺少人工审核"
-      ]
+      "blockedBy": ["缺少义项证据", "缺少人工审核"]
     },
     {
       "id": "rq-zhong-repeat-vs-weight",
       "target": "重",
       "book": "pingshui",
+      "realCandidateIds": [],
       "phrases": [
         {
           "phrase": "重山",
           "targetOffset": 0,
-          "senseQuestion": "「层叠/重复」义；此义若与平声对应，需要反切或韵书条目证据"
+          "proposedSelectCandidateIds": [],
+          "senseHypothesis": "「层叠／重复」义",
+          "evidenceNeeded": "候选 ID（当前快照无「重」）与反切／义项来源"
         },
         {
           "phrase": "重重",
           "targetOffset": 0,
-          "senseQuestion": "叠用「重重」；同一短语内出现两个目标字，规则需拆成两条或固定偏移"
+          "proposedSelectCandidateIds": [],
+          "senseHypothesis": "叠用；同一短语内出现两个目标字，规则需拆或固定偏移",
+          "evidenceNeeded": "同上；并确认两个目标字是否同音同义"
         },
         {
           "phrase": "轻重",
           "targetOffset": 1,
-          "senseQuestion": "「重量」义，目标字在短语偏移 1；与「重山」偏移不同，必须拆成独立规则"
+          "proposedSelectCandidateIds": [],
+          "senseHypothesis": "「重量」义，目标偏移 1，与「重山」偏移不同，必须独立成条",
+          "evidenceNeeded": "同上"
         }
       ],
-      "positiveExamples": [
-        "「重山」「重重」目标偏移为 0；「轻重」目标偏移为 1"
-      ],
+      "positiveExamples": ["「重山」「重重」偏移 0；「轻重」偏移 1"],
       "negativeExamples": [
-        "同一条规则的短语偏移不一致时不得合并：「重山」（偏移 0）与「轻重」（偏移 1）必须拆规则",
+        "同一条规则的短语偏移不一致时不得合并：「重山」（0）与「轻重」（1）必须拆规则",
         "「重重」中两个目标字不能用一条规则同时覆盖"
       ],
       "selectCandidateIds": [],
       "evidenceIds": [],
-      "sourceStatus": "尚未查到可定位来源",
+      "sourceStatus": "尚未查到可定位来源；且当前真实快照未覆盖「重」",
+      "reviewStatus": "unverified",
+      "proposalStatus": "awaiting-candidate-ids",
       "decision": null,
-      "blockedBy": [
-        "缺少 A 的真实候选 ID",
-        "缺少可定位的义项证据",
-        "缺少人工审核"
-      ]
+      "blockedBy": ["缺少 A 的真实候选 ID", "缺少义项证据", "缺少人工审核"]
     },
     {
       "id": "rq-chang-length-vs-grow",
       "target": "长",
       "book": "pingshui",
+      "realCandidateIds": [],
       "phrases": [
         {
           "phrase": "长安",
           "targetOffset": 0,
-          "senseQuestion": "地名/长久义的读音归属待查；现代「cháng」不能直接等同古韵平声"
+          "proposedSelectCandidateIds": [],
+          "senseHypothesis": "地名／长久义，读音归属待查",
+          "evidenceNeeded": "候选 ID 与义项来源；现代「cháng」不能直接等同古韵平声"
         },
         {
           "phrase": "生长",
           "targetOffset": 1,
-          "senseQuestion": "「生长」义，目标字在偏移 1；与现代第三声的对应关系需证据"
+          "proposedSelectCandidateIds": [],
+          "senseHypothesis": "「生长」义，目标偏移 1",
+          "evidenceNeeded": "候选 ID 与反切来源"
         },
         {
           "phrase": "长者",
           "targetOffset": 0,
-          "senseQuestion": "「长辈/年长」义，目标偏移 0；与「长」的其他义项是否同音待查"
+          "proposedSelectCandidateIds": [],
+          "senseHypothesis": "「长辈／年长」义，偏移 0",
+          "evidenceNeeded": "与「长」其他义项是否同音的佐证"
         }
       ],
-      "positiveExamples": ["「生长」目标偏移 1；「长者」目标偏移 0"],
+      "positiveExamples": ["「生长」偏移 1；「长者」偏移 0"],
       "negativeExamples": [
-        "不能用现代拼音声调反推古韵平仄：本条目在拿到反切/韵书证据前不得生成规则",
+        "不能用现代拼音声调反推古韵平仄：拿到反切／韵书证据前不得生成规则",
         "「长安」与「长者」虽同以「长」开头，义项不同，不能共用一条规则"
       ],
       "selectCandidateIds": [],
       "evidenceIds": [],
-      "sourceStatus": "尚未查到可定位来源",
+      "sourceStatus": "尚未查到可定位来源；当前真实快照未覆盖「长」",
+      "reviewStatus": "unverified",
+      "proposalStatus": "awaiting-candidate-ids",
       "decision": null,
-      "blockedBy": [
-        "缺少 A 的真实候选 ID",
-        "缺少可定位的义项证据",
-        "缺少人工审核"
-      ]
+      "blockedBy": ["缺少 A 的真实候选 ID", "缺少义项证据", "缺少人工审核"]
     },
     {
       "id": "rq-xing-walk-vs-row",
       "target": "行",
       "book": "pingshui",
+      "realCandidateIds": [],
       "phrases": [
         {
           "phrase": "行人",
           "targetOffset": 0,
-          "senseQuestion": "「行走/行人」义，现代读 xíng；古韵声类待查"
+          "proposedSelectCandidateIds": [],
+          "senseHypothesis": "「行走／行人」义，现代读 xíng",
+          "evidenceNeeded": "候选 ID 与古韵声类来源"
         },
         {
           "phrase": "行列",
           "targetOffset": 0,
-          "senseQuestion": "「行列/行业」义，现代读 háng；与 xíng 是否分属不同声类待查"
+          "proposedSelectCandidateIds": [],
+          "senseHypothesis": "「行列／行业」义，现代读 háng；与 xíng 是否分属不同声类待查",
+          "evidenceNeeded": "同上"
         },
         {
           "phrase": "德行",
           "targetOffset": 1,
-          "senseQuestion": "「德行」旧读 xìng 的说法需要可定位来源；目标字在偏移 1"
+          "proposedSelectCandidateIds": [],
+          "senseHypothesis": "旧读 xìng 的说法需可定位来源，目标偏移 1",
+          "evidenceNeeded": "若拿不到来源，不得写成规则"
         }
       ],
-      "positiveExamples": ["「行人」「行列」目标偏移 0；「德行」目标偏移 1"],
+      "positiveExamples": ["「行人」「行列」偏移 0；「德行」偏移 1"],
       "negativeExamples": [
         "「行」单独出现时语境不足，必须保留来源给出的全部候选，不得默认一个读音",
         "「德行」的旧读说法若拿不到来源，不得写成确定规则"
       ],
       "selectCandidateIds": [],
       "evidenceIds": [],
-      "sourceStatus": "尚未查到可定位来源",
+      "sourceStatus": "尚未查到可定位来源；当前真实快照未覆盖「行」",
+      "reviewStatus": "unverified",
+      "proposalStatus": "awaiting-candidate-ids",
       "decision": null,
-      "blockedBy": [
-        "缺少 A 的真实候选 ID",
-        "缺少可定位的义项证据",
-        "缺少人工审核"
-      ]
+      "blockedBy": ["缺少 A 的真实候选 ID", "缺少义项证据", "缺少人工审核"]
     }
-  ]
+  ],
+  "multiReadingTrials": {
+    "note": "按评审要求对 E 的三首固定正文做多音字排查。当前真实快照只覆盖 7 字，所以下表「是否影响平仄/韵脚」一律标记为待核实，不是结论；只有「更」有真实候选可对照。",
+    "works": [
+      {
+        "caseId": "golden-dengguanquelou-ps-v1",
+        "title": "登鹳雀楼",
+        "characters": [
+          {
+            "character": "更",
+            "context": "更上一层楼（第 4 句第 1 字）",
+            "affects": "平仄可能（P 对 Z）",
+            "dataStatus": "真实快照有两个候选：pingshui:更:ping:八庚 / pingshui:更:qu:二十四敬",
+            "verdict": "待义项证据"
+          },
+          {
+            "character": "尽",
+            "context": "白日依山尽（第 1 句末字）",
+            "affects": "待核实（若两个声类同属仄，只影响读音不影响平仄）",
+            "dataStatus": "当前快照未覆盖",
+            "verdict": "待 A 数据"
+          },
+          {
+            "character": "上",
+            "context": "更上一层楼（第 4 句第 2 字）",
+            "affects": "待核实",
+            "dataStatus": "当前快照未覆盖",
+            "verdict": "待 A 数据"
+          }
+        ]
+      },
+      {
+        "caseId": "golden-jingyesi-ps-v1",
+        "title": "静夜思",
+        "characters": [
+          {
+            "character": "思",
+            "context": "低头思故乡（第 4 句第 3 字）",
+            "affects": "待核实（平／去可能影响平仄）",
+            "dataStatus": "当前快照未覆盖",
+            "verdict": "待 A 数据"
+          },
+          {
+            "character": "望",
+            "context": "举头望明月（第 3 句第 3 字）",
+            "affects": "待核实",
+            "dataStatus": "当前快照未覆盖",
+            "verdict": "待 A 数据"
+          },
+          {
+            "character": "看",
+            "context": "异文「床前看月光」中出现",
+            "affects": "待核实",
+            "dataStatus": "通行本无此字；异文另立版本",
+            "verdict": "待 A/E 处理异文"
+          }
+        ]
+      },
+      {
+        "caseId": "golden-huanghelou-ps-v1",
+        "title": "黄鹤楼",
+        "characters": [
+          {
+            "character": "乘",
+            "context": "昔人已乘黄鹤去（第 1 句第 4 字）",
+            "affects": "待核实",
+            "dataStatus": "当前快照未覆盖",
+            "verdict": "待 A 数据"
+          },
+          {
+            "character": "空",
+            "context": "此地空余黄鹤楼 / 白云千载空悠悠",
+            "affects": "待核实（平／去可能影响平仄与韵脚）",
+            "dataStatus": "当前快照未覆盖",
+            "verdict": "待 A 数据"
+          },
+          {
+            "character": "处",
+            "context": "日暮乡关何处是（第 7 句第 5 字）",
+            "affects": "待核实",
+            "dataStatus": "当前快照未覆盖",
+            "verdict": "待 A 数据"
+          },
+          {
+            "character": "不",
+            "context": "黄鹤一去不复返（第 3 句第 5 字）",
+            "affects": "待核实（入声与否影响平仄）",
+            "dataStatus": "当前快照未覆盖",
+            "verdict": "待 A 数据"
+          },
+          {
+            "character": "载",
+            "context": "白云千载空悠悠（第 4 句第 4 字）",
+            "affects": "待核实",
+            "dataStatus": "当前快照未覆盖",
+            "verdict": "待 A 数据"
+          }
+        ]
+      }
+    ],
+    "reviewRequest": [
+      "请 A 明确：真实字表何时能覆盖三首诗的剩余 88 字位（96 字位中仅 8 字位有候选）",
+      "请 A 明确：候选的 evidenceIds 何时能从 unverified 转为 approved，以及由谁审核",
+      "请组长确认：义项↔候选的对应关系由谁提供文献依据（当前 4 条草案全部缺）",
+      "本批次不改用任何合成候选冒充真实数据"
+    ]
+  }
 }

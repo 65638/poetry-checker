@@ -1,0 +1,187 @@
+{
+  "generatedBy": "packages/readings/scripts/d2-coverage.ts",
+  "book": "pingshui",
+  "dataVersion": "sample-pingshui-cwr-ff0e9c1-d1",
+  "snapshotReviewStatus": "unverified",
+  "snapshotNotice": "真实七字小样本（白、一、更、流、楼、雪、物）：数据取自 chinese_word_rhyme 固定提交的平水韵原表，仅登记韵部归属与声类；反切、义项、今读一律为 null。开发/待审核身份，不是全量发布数据，也不代表 106 部门槛已通过（该提交缺上声三讲）。",
+  "contextRules": {
+    "approved": 0,
+    "loaded": 0,
+    "inReviewQueue": 4,
+    "note": "本批次没有任何一条语境规则通过人工审核，因此实际参与选音的规则为 0 条。"
+  },
+  "denominators": {
+    "unit": "token（格律字位）",
+    "note": "所有比例的分母都是字位；缺字、证据未就绪都按字位计入，不做字符级折算。"
+  },
+  "works": [
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "title": "登鹳雀楼",
+      "tokens": 20,
+      "uniqueCharacters": 20,
+      "coveredTokens": 5,
+      "missingTokens": 15,
+      "multiCandidateTokens": 1,
+      "tokensWithoutApprovedEvidence": 5,
+      "missingCharacters": [
+        "上",
+        "依",
+        "入",
+        "千",
+        "尽",
+        "层",
+        "山",
+        "日",
+        "欲",
+        "河",
+        "海",
+        "目",
+        "穷",
+        "里",
+        "黄"
+      ],
+      "multiCandidateCharacters": [
+        {
+          "character": "更",
+          "candidateIds": [
+            "pingshui:更:ping:八庚",
+            "pingshui:更:qu:二十四敬"
+          ],
+          "tones": [
+            "P",
+            "Z"
+          ]
+        }
+      ],
+      "resolveOutcome": {
+        "kind": "data_not_ready",
+        "code": "LOOKUP_EVIDENCE_UNVERIFIED",
+        "message": "字位 l1c1（白）参与读音/平仄推导的候选 pingshui:白:ru:入声十一陌 没有已审核证据（选择方式 unique）：未审核或缺失的证据不能支撑读音、平仄或归部结论，按数据未就绪处理",
+        "details": {
+          "tokenId": "l1c1",
+          "character": "白",
+          "candidateIds": "pingshui:白:ru:入声十一陌",
+          "selectionMethod": "unique",
+          "book": "pingshui",
+          "dataVersion": "sample-pingshui-cwr-ff0e9c1-d1"
+        }
+      },
+      "contextRuleHits": 0,
+      "readingStatusCounts": null,
+      "toneStatusCounts": null
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "title": "静夜思",
+      "tokens": 20,
+      "uniqueCharacters": 17,
+      "coveredTokens": 0,
+      "missingTokens": 20,
+      "multiCandidateTokens": 0,
+      "tokensWithoutApprovedEvidence": 0,
+      "missingCharacters": [
+        "上",
+        "举",
+        "乡",
+        "低",
+        "光",
+        "前",
+        "地",
+        "头",
+        "床",
+        "思",
+        "故",
+        "明",
+        "是",
+        "月",
+        "望",
+        "疑",
+        "霜"
+      ],
+      "multiCandidateCharacters": [],
+      "resolveOutcome": {
+        "kind": "annotated"
+      },
+      "contextRuleHits": 0,
+      "readingStatusCounts": {
+        "unknown": 20
+      },
+      "toneStatusCounts": {
+        "unknown": 20
+      }
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "title": "黄鹤楼",
+      "tokens": 56,
+      "uniqueCharacters": 46,
+      "coveredTokens": 3,
+      "missingTokens": 53,
+      "multiCandidateTokens": 0,
+      "tokensWithoutApprovedEvidence": 3,
+      "missingCharacters": [
+        "上",
+        "不",
+        "乘",
+        "乡",
+        "云",
+        "人",
+        "何",
+        "余",
+        "使",
+        "关",
+        "千",
+        "历",
+        "去",
+        "地",
+        "处",
+        "复",
+        "川",
+        "已",
+        "悠",
+        "愁",
+        "日",
+        "昔",
+        "是",
+        "晴",
+        "暮",
+        "树",
+        "此",
+        "汉",
+        "江",
+        "波",
+        "洲",
+        "烟",
+        "空",
+        "芳",
+        "草",
+        "萋",
+        "载",
+        "返",
+        "阳",
+        "鹉",
+        "鹤",
+        "鹦",
+        "黄"
+      ],
+      "multiCandidateCharacters": [],
+      "resolveOutcome": {
+        "kind": "data_not_ready",
+        "code": "LOOKUP_EVIDENCE_UNVERIFIED",
+        "message": "字位 l2c7（楼）参与读音/平仄推导的候选 pingshui:楼:ping:十一尤 没有已审核证据（选择方式 unique）：未审核或缺失的证据不能支撑读音、平仄或归部结论，按数据未就绪处理",
+        "details": {
+          "tokenId": "l2c7",
+          "character": "楼",
+          "candidateIds": "pingshui:楼:ping:十一尤",
+          "selectionMethod": "unique",
+          "book": "pingshui",
+          "dataVersion": "sample-pingshui-cwr-ff0e9c1-d1"
+        }
+      },
+      "contextRuleHits": 0,
+      "readingStatusCounts": null,
+      "toneStatusCounts": null
+    }
+  ]
+}
