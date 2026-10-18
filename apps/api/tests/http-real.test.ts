@@ -22,10 +22,10 @@ describe("HTTP 层·真实模式（A 全量数据，manifest 装载）", () => {
     expect(byId.get("xinyun")?.coverageNotice).toContain("56");
   });
 
-  it("manifest 不注册报告文件；如实记录已知来源冲突缺陷", () => {
+  it("manifest 不注册报告文件；来源冲突已消除（A 按库拆分 ID，474afd9）", () => {
     const r = loadResources();
     expect(JSON.stringify(r.snapshots)).not.toContain("works-coverage");
-    expect(JSON.stringify(r.loadErrors)).toContain("src:chinese_word_rhyme");
+    expect(r.loadErrors).toEqual([]);
   });
 
   it("characters：三库单码点真查 200 过 Schema", async () => {

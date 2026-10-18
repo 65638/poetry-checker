@@ -1,7 +1,7 @@
 {
   "pingshui": {
     "file": "pingshui.full-d2-patched.json",
-    "reason": "106部含三讲补缺（三讲九字已经组长人审属实）；reviewStatus 仍 unverified，A 落 approved 前如实呈现；105 全量与旧七字样本不选"
+    "reason": "106部含三讲补缺；J03 第一批 8 部证据已 approved（approved-evidence.json 清单驱动），快照级仍 unverified；105 全量与旧七字样本不选"
   },
   "cilin": {
     "file": "cilin.full-d2.json",
@@ -9,6 +9,6 @@
   },
   "xinyun": {
     "file": "xinyun.full-d2.json",
-    "reason": "新韵 14 韵重建表（56 子卷；modernReading 缺失为 A 已知缺陷待修）"
+    "reason": "新韵 14 韵重建表（56 子卷；modernReading 已按具体读音重建 @474afd9，1,508 组多读音另存 xinyun-reading-collisions.dev.json）"
   }
 }
