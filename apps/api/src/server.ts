@@ -8,7 +8,8 @@ import {
   type AnalysisResponse,
   RhymeBooksResponseSchema,
 } from "@poetry/contracts";
-import { loadResources, type Resources } from "./resources.js";
+import { loadResources, lookupCharactersByBook, type Resources } from "./resources.js";
+import { toLexiconErrorResponse } from "./lexicon-errors.js";
 import { analyze } from "./orchestrator.js";
 
 const fixtureNames = [
@@ -52,6 +53,11 @@ function errorBody(code: string, message: string) {
       fieldErrors: [] as Array<{ path: string; message: string }>,
     },
   };
+}
+
+function mapModuleErrorForServer(error: unknown): { status: number; body: unknown } | null {
+  const mapped = toLexiconErrorResponse(error);
+  return mapped === null ? null : { status: mapped.status, body: mapped.body };
 }
 
 export function buildApp(options?: { resources?: Resources }): FastifyInstance {
@@ -109,16 +115,46 @@ export function buildApp(options?: { resources?: Resources }): FastifyInstance {
     }),
   );
 
-  app.get("/api/v1/characters/:char", async (_request, reply) => {
-    return reply.status(503).send(dataNotReady("单字查询"));
+  app.get("/api/v1/characters/:char", async (request, reply) => {
+    if (devMock) return reply.status(503).send(dataNotReady("单字查询"));
+    const { char } = request.params as { char: string };
+    if ([...char].length !== 1) {
+      return reply.status(422).send(errorBody("VALIDATION_ERROR", "路径参数必须是单个 Unicode 码点"));
+    }
+    const book = (request.query as { book?: string }).book;
+    if (book !== "pingshui" && book !== "cilin" && book !== "xinyun") {
+      return reply.status(422).send(errorBody("VALIDATION_ERROR", "book 参数必须是三韵书之一"));
+    }
+    const dataVersion = resources.lexiconVersions[book];
+    if (dataVersion === undefined) {
+      return reply.status(503).send(dataNotReady(`韵书 ${book} 无已装载版本`));
+    }
+    try {
+      const lookup = await lookupCharactersByBook(char, book, dataVersion);
+      return reply.send(lookup);
+    } catch (error) {
+      const mapped = mapModuleErrorForServer(error);
+      if (mapped !== null) return reply.status(mapped.status).send(mapped.body);
+      return reply.status(500).send(errorBody("INTERNAL_ERROR", "查询失败"));
+    }
   });
 
-  app.get("/api/v1/rules/:ruleId", async (_request, reply) => {
-    return reply.status(503).send(dataNotReady("规则卡查询"));
+  app.get("/api/v1/rules/:ruleId", async (request, reply) => {
+    if (devMock) return reply.status(503).send(dataNotReady("规则卡查询"));
+    const { ruleId } = request.params as { ruleId: string };
+    const rule = resources.ruleCards.find((r) => r.id === ruleId);
+    if (rule === undefined) return reply.status(404).send(errorBody("NOT_FOUND", `已装载规则目录中不存在 ${ruleId}`));
+    return reply.send({ rule, evidence: [], sources: [] });
   });
 
-  app.get("/api/v1/sources/:sourceId", async (_request, reply) => {
-    return reply.status(503).send(dataNotReady("来源查询"));
+  app.get("/api/v1/sources/:sourceId", async (request, reply) => {
+    if (devMock) return reply.status(503).send(dataNotReady("来源查询"));
+    const { sourceId } = request.params as { sourceId: string };
+    const known = new Set(resources.knownSourceIds);
+    if (!known.has(sourceId)) {
+      return reply.status(404).send(errorBody("NOT_FOUND", `已加载资源中不存在来源 ${sourceId}`));
+    }
+    return reply.status(503).send(dataNotReady(`来源 ${sourceId} 的装载明细待 A 发布含证据快照后提供`));
   });
 
   app.post("/api/v1/analyze", async (request, reply) => {

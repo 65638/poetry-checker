@@ -1,7 +1,7 @@
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { registerSnapshots } from "@poetry/lexicon";
+import { lookupCharacters, registerSnapshots } from "@poetry/lexicon";
 import type { ContextRule, RuleCard, WorkMetadata } from "@poetry/contracts";
 
 /** 启动时只读装载的资源快照；请求内同一版本，不做热更新。 */
@@ -14,6 +14,8 @@ export interface Resources {
   works: WorkMetadata[];
   ready: boolean;
   notReadyReasons: string[];
+  /** 已加载快照中出现的来源 ID（明细待证据快照发布）。 */
+  knownSourceIds: string[];
 }
 
 function findRepoRoot(): string {
@@ -43,6 +45,10 @@ let cached: Resources | undefined;
 
 /** 进程内只装载一次：registerSnapshots 禁止重复注册同版本（A 的设计），
  * 且请求内使用同一版本快照符合冻结约定。 */
+export async function lookupCharactersByBook(char: string, book: "pingshui" | "cilin" | "xinyun", dataVersion: string) {
+  return lookupCharacters({ characters: [char], rhymeBook: book, dataVersion });
+}
+
 export function loadResources(): Resources {
   if (cached !== undefined) return cached;
   cached = loadResourcesOnce();
@@ -51,6 +57,7 @@ export function loadResources(): Resources {
 
 function loadResourcesOnce(): Resources {
   const notReadyReasons: string[] = [];
+  const knownSourceIds: string[] = [];
   const unverifiedVersions: string[] = [];
   const lexiconVersions: Record<string, string> = {};
 
@@ -69,6 +76,10 @@ function loadResourcesOnce(): Resources {
   if (inputs.length > 0) {
     // registerSnapshots 自带结构守卫；审核状态由 reviewStatus 携带
     const registered = registerSnapshots(inputs as never[]);
+    for (const raw of inputs) {
+      const sources = (raw as { sources?: Array<{ id: string }> }).sources;
+      if (Array.isArray(sources)) knownSourceIds.push(...sources.map((s) => s.id));
+    }
     for (const s of registered) {
       lexiconVersions[s.book] = s.dataVersion;
       if (s.reviewStatus !== "approved") unverifiedVersions.push(s.dataVersion);
@@ -90,6 +101,7 @@ function loadResourcesOnce(): Resources {
     contextRules,
     ruleCards,
     works,
+    knownSourceIds: [...new Set(knownSourceIds)].sort(),
     ready: Object.keys(lexiconVersions).length > 0 && contextRules.length > 0 && works.length > 0 && ruleCards.length > 0,
     notReadyReasons,
   };

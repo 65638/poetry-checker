@@ -18,7 +18,7 @@
     "check:generated": "pnpm build && tsx scripts/generate-contracts.ts --check",
     "verify": "pnpm lint && pnpm typecheck && pnpm test && pnpm check:generated",
     "dev:api": "pnpm --filter @poetry/api dev",
-    "dev": "pnpm --filter @poetry/api dev",
+    "dev": "node scripts/dev.mjs",
     "dev:web": "pnpm --filter @poetry/web dev"
   },
   "devDependencies": {
