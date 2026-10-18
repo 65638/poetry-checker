@@ -1,5 +1,58 @@
 # @poetry/prosody HANDOFF（队员 C）
 
+## D2 审核批次（2026-10-18，基线 `main @ 513d3f8`）
+
+> PR：**#11** https://github.com/65638/poetry-checker/pull/11 （`feat/c-d2-review` → `main`；创建时 head `5f02759`，已用 `git ls-remote refs/pull/11/head` 核对）
+
+### 完成
+
+1. **三张救法卡升 approved + 证据闭合**：`rules/cards/draft-teaching-v1.json` 中 RESCUE.SELF/TEAO/DUIJU 的 `reviewStatus=approved`、`status=approved`，`citation` 精确到 J03 第一批·第三部分**第 10/11/12 项**，`rule.evidenceIds` 回填 GLM 已落库的 `ev:rule:RESCUE.*`（`rules/evidence/teaching-v1.json`，均 `approved`）；其余 7 卡保持 pending、`evidenceIds=[]`。
+2. **规则卡检查报告**：`docs/rule-sources.md` §11（10 行：ruleId/version/evidenceIds/状态/文献状态/人审项 + 闭合结论）。
+3. **三首金标准异常清单**：新增 `packages/prosody/scripts/d2-anomaly-report.mts`（真实 lexicon→readings→prosody 链路；字位平仄按韵部声类推导，未经 B 语境消歧）与生成物 `tests/acceptance/d2-anomaly-report.json`；报告见 `docs/rule-sources.md` §12（含 A1–A4 异常）。
+4. **文献引用状态表** §13、**代码测试 vs 文献人审/发布口径** §14；§10 更新为 evidenceIds 回填结果。
+5. `cards.test.ts` 扩为 6 项（含「evidenceIds 必须能在 evidence 文件解析且 approved」）；`D2-matrix.md` 更新为新基线。
+
+### 真实结果（本机受限，逐项执行并记录）
+
+```text
+基线与安装
+  git switch -c feat/c-d2-review origin/main   → 513d3f8
+  pnpm install --frozen-lockfile               → 失败：ERR_MEMORY_ALLOCATION_FAILED（环境提交内存不足，非仓库问题）
+  （node_modules 已存在且 lockfile 未变，后续直接跑检查）
+
+单项检查（NODE_OPTIONS=--max-semi-space-size=2 --max-old-space-size=768）
+  eslint .                                     → exit 0
+  tsc --noEmit                                 → exit 0
+  tsc --noEmit -p apps/web/tsconfig.json       → exit 0
+  vitest run --maxWorkers=1                    → exit 0；37 文件、530 项通过
+  tsx scripts/generate-contracts.ts --check    → exit 0（已核对 8 个文件）
+  pnpm -r build（check:generated 的前置）        → exit 134（OOM，环境提交内存 ~200–800MB；未重跑构建）
+  pnpm verify（单命令）                         → 无法完成（同上）——以上分项结果等价记录
+
+acceptance 专项
+  vitest run packages/prosody/tests/acceptance → exit 0；5 文件、83 项（templates 28 / uncertainty 14 / cards 6 / d2-core 32 / closure 3）
+```
+
+> 说明：`pnpm verify` 与 `pnpm install` 的失败原因是本机可用提交内存不足（`FreeVirtualMemory` 一度仅 ~200MB），不是代码/依赖错误；在内存充足的机器上应重跑 `pnpm install --frozen-lockfile && pnpm verify` 复核。构建未重跑，但 `generate-contracts --check` 通过且本次改动未触及契约/生成源。
+
+### 三首异常（摘要，详见 `docs/rule-sources.md` §12）
+
+- 登鹳雀楼：0 项非通过；唯一未定字位 `l4c1 更`（P/Z）；押韵 pass（流/楼→下平十一尤）。
+- 静夜思：9 项非通过（按近体判定），与「古绝」口径一致；**A1：golden 缺 applicability/formId 断言**（E 补）。
+- 黄鹤楼：11 项非通过（半古半律）；**A2：RESCUE.SELF 依赖「空」的平/仄**；未定字位 乘/空/不/汉/乡。
+
+### 未完成 / 需别人处理
+
+1. `rules/cards/teaching-v1.json`（发布注册表）未建 → `provenance.rules` 为空、`/readyz` 仍报「无已发布规则卡」；**发布门槛未达**，不得宣称完成。
+2. 三首案例断言（第 9 项）尚无独立 evidence 记录（卡级已覆盖；如需按案例建，由 GLM 增补）。
+3. E 补 `jingyesi.json` 的 applicability/formId 断言；三库快照仍 `unverified`。
+4. 本机内存不足导致的 `pnpm verify` 未整体重跑，需在正常环境复核。
+
+### 已知限制
+
+- 异常清单是**机器初审**（按声类推导平仄、未经语境消歧、快照 unverified），不是最终读音或人审结论。
+- 七言纯 (b) 对句相救、七言完整特拗的真实诗例仍缺；三平尾/三仄尾维持「部分依据 + 工程等级」。
+
 ## D2 批次（2026-10-18）：核心独立验收、规则证据与报告封装
 
 ### 基线与 SHA

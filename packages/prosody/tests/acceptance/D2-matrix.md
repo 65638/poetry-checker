@@ -1,12 +1,12 @@
 # D2 独立验收矩阵（C2-01..C2-13）与实跑结果
 
-> 本轮基线：D1 main `6375b35`；核心实现 `b5457e4`（交接 HEAD `14df990`，经 `support/core-d2.bundle` 导入审查分支 `review/codex-core-d2`）；验收分支 `feat/c-d2-acceptance`。
-> 测试文件：`packages/prosody/tests/acceptance/d2-core.test.ts`（32 项）；预期全部按任务书矩阵、已确认口径与冻结规则表手工书写，不调用被测实现生成答案。
-> 合成样本只验证算法；三首名篇真实链路仍待 A/B/E 真实数据，不把合成测试算作名篇验收。
+> **D2 审核批次（2026-10-18）基线：`main @ 513d3f8`**（含核心 `b5457e4`、引用闭合工具、`rules/evidence/teaching-v1.json`、`docs/reviews/12_J03人审记录_第一批.md`）；本批次分支 `feat/c-d2-review`。
+> 测试文件：`packages/prosody/tests/acceptance/d2-core.test.ts`（32 项）+ `closure.test.ts`（3 项）+ `cards.test.ts`（6 项）；预期全部按任务书矩阵、已确认口径与冻结规则表手工书写，不调用被测实现生成答案。
+> 合成样本只验证算法；三首名篇的真实链路异常清单见 `docs/rule-sources.md` §12（机器初审；`d2-anomaly-report.json` 为生成物），不把合成测试算作名篇验收。
 
 ## 1. 实跑结果
 
-命令：`pnpm exec vitest run packages/prosody/tests/acceptance` → **4 个文件、79 项通过（D2 新增 32）**；`pnpm verify` 见 HANDOFF。
+命令：`pnpm exec vitest run packages/prosody/tests/acceptance` → **5 个文件、83 项通过**（templates 28、uncertainty 14、cards 6、d2-core 32、closure 3）；`pnpm verify` → **37 个文件、530 项通过**（含本次 +1 张卡断言）。
 
 | 编号 | 场景 | 输入摘要（合成） | 手写预期 | 结果 |
 |---|---|---|---|---|
