@@ -222,3 +222,46 @@ export function makeSyntheticPoem(
     book,
   );
 }
+
+// 字位编码：
+// "P" = 单一平声候选；"Z" = 单一仄声候选；
+// "A" = 平/仄两候选（读音歧义，平仄未定）；"U" = 无候选（unknown）。
+export type CodeChar = "P" | "Z" | "A" | "U";
+
+export interface CodeLineOptions {
+  /** 按 0 基下标给该字指定韵部集合；缺省 P→synthetic:group:P，Z→synthetic:group:Z。 */
+  groups?: Record<number, string[]>;
+}
+
+export function codeLine(code: string, options: CodeLineOptions = {}): SyntheticTokenSpec[] {
+  return [...code].map((char, index) => {
+    const groups = options.groups?.[index];
+    const text = char === "Z" ? "仄" : "平";
+    if (char === "P")
+      return { text, readings: [{ tone: "P", groupIds: groups ?? ["synthetic:group:P"] }] };
+    if (char === "Z")
+      return { text, readings: [{ tone: "Z", groupIds: groups ?? ["synthetic:group:Z"] }] };
+    if (char === "A")
+      return {
+        text,
+        readings: [
+          { tone: "P", groupIds: groups ?? ["synthetic:group:P"] },
+          { tone: "Z", groupIds: ["synthetic:group:Z"] },
+        ],
+      };
+    if (char === "U") return { text, readings: [] };
+    throw new Error(`非法字位编码：${char}`);
+  });
+}
+
+export function makeCodePoem(
+  lines: Array<string | { code: string; options?: CodeLineOptions }>,
+  book: BookId = "pingshui",
+): AnnotatedPoem {
+  return makeAnnotatedPoem(
+    lines.map((line) =>
+      typeof line === "string" ? codeLine(line) : codeLine(line.code, line.options ?? {}),
+    ),
+    book,
+  );
+}

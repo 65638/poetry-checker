@@ -1,12 +1,9 @@
 /* apps/web/src/presentation/styles/input.css */
 .pc-input {
+  --pc-draft-line: calc(var(--pc-text-draft) * var(--pc-leading-draft));
   display: flex;
   flex-direction: column;
   gap: var(--pc-space-2);
-  padding: var(--pc-space-5);
-  background: var(--pc-surface);
-  border: 1px solid var(--pc-divider);
-  border-radius: var(--pc-radius-panel);
 }
 
 .pc-input__label {
@@ -14,29 +11,57 @@
   padding: 0;
   font-size: var(--pc-text-sm);
   font-weight: 600;
+  letter-spacing: 0.08em;
   color: var(--pc-text);
 }
 
 .pc-input__hint {
   margin: 0;
   font-size: var(--pc-text-sm);
+  line-height: var(--pc-leading-body);
   color: var(--pc-text-muted);
   overflow-wrap: anywhere;
 }
 
+/* Ruled writing sheet: rules sit on each line's baseline area and scroll with the text. */
 .pc-input__text {
   box-sizing: border-box;
   width: 100%;
-  min-height: 200px;
-  padding: var(--pc-space-3);
+  min-height: calc(var(--pc-draft-line) * 5 + 2 * var(--pc-space-3));
+  padding: var(--pc-space-3) var(--pc-space-4);
   resize: vertical;
   font-family: var(--pc-font-serif);
-  font-size: var(--pc-text-lg);
-  line-height: 1.8;
+  font-size: var(--pc-text-draft);
+  line-height: var(--pc-draft-line);
+  letter-spacing: 0.06em;
   color: var(--pc-text);
-  background: var(--pc-surface);
+  background-color: var(--pc-surface-sheet);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent calc(var(--pc-draft-line) - 1px),
+    var(--pc-ruling) calc(var(--pc-draft-line) - 1px),
+    var(--pc-ruling) var(--pc-draft-line)
+  );
+  background-origin: content-box;
+  background-clip: padding-box;
+  background-attachment: local;
   border: 1px solid var(--pc-border-control);
-  border-radius: var(--pc-radius);
+  border-radius: var(--pc-radius-sheet);
+  transition: border-color var(--pc-dur-control) var(--pc-ease-out);
+}
+
+.pc-desk--reading .pc-input__text {
+  min-height: calc(var(--pc-draft-line) * 4 + 2 * var(--pc-space-3));
+}
+
+.pc-input__text:hover {
+  border-color: var(--pc-text-muted);
+}
+
+.pc-input__text:focus-visible {
+  outline: var(--pc-focus-width) solid var(--pc-focus);
+  outline-offset: var(--pc-focus-offset);
 }
 
 .pc-input__text::placeholder {
@@ -85,7 +110,19 @@
   background: var(--pc-surface);
   color: var(--pc-text);
   text-align: center;
-  transition: background-color var(--pc-dur-control), color var(--pc-dur-control);
+  transition:
+    background-color var(--pc-dur-control) var(--pc-ease-out),
+    border-color var(--pc-dur-control) var(--pc-ease-out),
+    color var(--pc-dur-control) var(--pc-ease-out),
+    transform var(--pc-dur-control) var(--pc-ease-out);
+}
+
+.pc-segmented__radio:hover + .pc-segmented__face {
+  background: var(--pc-surface-hover);
+}
+
+.pc-segmented__radio:active + .pc-segmented__face {
+  transform: scale(var(--pc-press-scale));
 }
 
 .pc-segmented__radio:checked + .pc-segmented__face {
@@ -93,6 +130,10 @@
   border-color: var(--pc-accent);
   color: var(--pc-text-on-accent);
   font-weight: 600;
+}
+
+.pc-segmented__radio:checked:hover + .pc-segmented__face {
+  background: var(--pc-accent-hover);
 }
 
 .pc-segmented__radio:checked + .pc-segmented__face::before {
@@ -117,7 +158,24 @@
   color: var(--pc-text);
   font: inherit;
   cursor: pointer;
-  transition: background-color var(--pc-dur-control);
+  transition:
+    background-color var(--pc-dur-control) var(--pc-ease-out),
+    border-color var(--pc-dur-control) var(--pc-ease-out),
+    color var(--pc-dur-control) var(--pc-ease-out),
+    transform var(--pc-dur-control) var(--pc-ease-out);
+}
+
+.pc-button:hover:not(:disabled) {
+  background: var(--pc-surface-hover);
+}
+
+.pc-button:active:not(:disabled) {
+  transform: scale(var(--pc-press-scale));
+}
+
+.pc-button:focus-visible {
+  outline: var(--pc-focus-width) solid var(--pc-focus);
+  outline-offset: var(--pc-focus-offset);
 }
 
 .pc-button--primary {
@@ -125,14 +183,22 @@
   border-color: var(--pc-accent);
   color: var(--pc-text-on-accent);
   font-weight: 600;
+  letter-spacing: 0.2em;
 }
 
 .pc-button--primary:hover:not(:disabled) {
   background: var(--pc-accent-hover);
+  border-color: var(--pc-accent-hover);
+}
+
+.pc-button--primary:active:not(:disabled) {
+  background: var(--pc-accent-press);
+  border-color: var(--pc-accent-press);
 }
 
 .pc-button--quiet {
   border-color: transparent;
+  background: transparent;
   color: var(--pc-accent);
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -143,6 +209,12 @@
   border-color: var(--pc-divider);
   color: var(--pc-text-muted);
   cursor: not-allowed;
+}
+
+.pc-button--quiet:disabled {
+  background: transparent;
+  border-color: transparent;
+  text-decoration: none;
 }
 
 .pc-input__submit {
@@ -163,4 +235,13 @@
   margin: var(--pc-space-1) 0 0;
   padding: 0;
   list-style: none;
+}
+
+.pc-examples__pending {
+  padding: 0 var(--pc-space-1);
+  border: 1px solid var(--pc-divider);
+  border-radius: var(--pc-radius-sheet);
+  font-size: var(--pc-text-xs);
+  line-height: 1.6;
+  color: var(--pc-text-muted);
 }

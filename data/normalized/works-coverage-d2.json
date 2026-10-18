@@ -1,0 +1,6144 @@
+{
+  "schemaVersion": "d2-draft",
+  "note": "三首名篇逐字覆盖（A2-08）。正文取自 data/works/review-queue.json，其 reviewStatus 为 pending，**不是 approved 元数据**；正文版本与出处仍待人工核实。本报告只登记全部候选与证据状态，不在数据层选读音（多音多部取舍属 B 的消歧职责）。所有 evidence 仍为 unverified，不得据此下发布级结论。",
+  "generatedFrom": {
+    "worksQueue": "data/works/review-queue.json",
+    "books": [
+      {
+        "book": "pingshui",
+        "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-draft",
+        "reviewStatus": "unverified"
+      },
+      {
+        "book": "cilin",
+        "dataVersion": "cilin-cwr-ff0e9c1-d2-full",
+        "reviewStatus": "unverified"
+      },
+      {
+        "book": "xinyun",
+        "dataVersion": "xinyun-rebuild-d2-full",
+        "reviewStatus": "unverified"
+      }
+    ],
+    "pingshuiNote": "平水使用 106 部**补丁草案**快照（含上声三讲）；draftOnlyCharacters 标记仅由该草案支撑的字。"
+  },
+  "poems": [
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "title": "登鹳雀楼",
+      "author": "王之涣",
+      "textReviewStatus": "pending",
+      "textSource": "data/works/review-queue.json",
+      "totalCharacters": 20,
+      "distinctCharacters": 20,
+      "crossBookMissing": [],
+      "perBook": [
+        {
+          "book": "pingshui",
+          "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-draft",
+          "reviewStatus": "unverified",
+          "totalCharacters": 20,
+          "distinctCharacters": 20,
+          "found": 20,
+          "missing": [],
+          "missingCount": 0,
+          "multiCandidateCharacters": [
+            {
+              "character": "上",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:上:qu:二十三漾",
+                "pingshui:上:shang:二十二养"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang"
+              ]
+            },
+            {
+              "character": "更",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:更:ping:八庚",
+                "pingshui:更:qu:二十四敬"
+              ],
+              "toneClasses": [
+                "ping",
+                "qu"
+              ]
+            },
+            {
+              "character": "里",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:里:qu:四寘",
+                "pingshui:里:shang:四纸"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang"
+              ]
+            }
+          ],
+          "draftOnlyCharacters": [],
+          "evidenceReviewStatusCounts": {
+            "unverified": 21,
+            "approved": 0
+          },
+          "characterDetails": [
+            {
+              "character": "一",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:一:ru:入声四质"
+              ],
+              "toneClasses": [
+                "ru"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:入:入声四质"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "上",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:上:qu:二十三漾",
+                "pingshui:上:shang:二十二养"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:上:二十二养",
+                "group:pingshui:去:二十三漾"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "依",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:依:ping:五微"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:pingshui:上平:五微"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "入",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:入:ru:入声十四缉"
+              ],
+              "toneClasses": [
+                "ru"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:入:入声十四缉"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "千",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:千:ping:一先"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:pingshui:下平:一先"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "尽",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:尽:shang:十一轸"
+              ],
+              "toneClasses": [
+                "shang"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:上:十一轸"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "层",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:层:ping:十蒸"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:pingshui:下平:十蒸"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "山",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:山:ping:十五删"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:pingshui:上平:十五删"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "日",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:日:ru:入声四质"
+              ],
+              "toneClasses": [
+                "ru"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:入:入声四质"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "更",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:更:ping:八庚",
+                "pingshui:更:qu:二十四敬"
+              ],
+              "toneClasses": [
+                "ping",
+                "qu"
+              ],
+              "possibleTones": [
+                "P",
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:下平:八庚",
+                "group:pingshui:去:二十四敬"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "楼",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:楼:ping:十一尤"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:pingshui:下平:十一尤"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "欲",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:欲:ru:入声二沃"
+              ],
+              "toneClasses": [
+                "ru"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:入:入声二沃"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "河",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:河:ping:五歌"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:pingshui:下平:五歌"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "流",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:流:ping:十一尤"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:pingshui:下平:十一尤"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "海",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:海:shang:十贿"
+              ],
+              "toneClasses": [
+                "shang"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:上:十贿"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "白",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:白:ru:入声十一陌"
+              ],
+              "toneClasses": [
+                "ru"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:入:入声十一陌"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "目",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:目:ru:入声一屋"
+              ],
+              "toneClasses": [
+                "ru"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:入:入声一屋"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "穷",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:穷:ping:一东"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:pingshui:上平:一东"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "里",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:里:qu:四寘",
+                "pingshui:里:shang:四纸"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:上:四纸",
+                "group:pingshui:去:四寘"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "黄",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:黄:ping:七阳"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:pingshui:下平:七阳"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            }
+          ]
+        },
+        {
+          "book": "cilin",
+          "dataVersion": "cilin-cwr-ff0e9c1-d2-full",
+          "reviewStatus": "unverified",
+          "totalCharacters": 20,
+          "distinctCharacters": 20,
+          "found": 20,
+          "missing": [],
+          "missingCount": 0,
+          "multiCandidateCharacters": [
+            {
+              "character": "更",
+              "candidateCount": 2,
+              "candidateIds": [
+                "cilin:更:ping:第十一部·平声",
+                "cilin:更:ze_unspecified:第十一部·仄声"
+              ],
+              "toneClasses": [
+                "ping",
+                "ze_unspecified"
+              ]
+            }
+          ],
+          "draftOnlyCharacters": [],
+          "evidenceReviewStatusCounts": {
+            "unverified": 14,
+            "approved": 0
+          },
+          "characterDetails": [
+            {
+              "character": "一",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:一:ru:第十七部·入声"
+              ],
+              "toneClasses": [
+                "ru"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第十七部:第十七部·入声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "上",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:上:ze_unspecified:第二部·仄声"
+              ],
+              "toneClasses": [
+                "ze_unspecified"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第二部:第二部·仄声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "依",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:依:ping:第三部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第三部:第三部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "入",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:入:ru:第十七部·入声"
+              ],
+              "toneClasses": [
+                "ru"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第十七部:第十七部·入声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "千",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:千:ping:第七部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第七部:第七部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "尽",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:尽:ze_unspecified:第六部·仄声"
+              ],
+              "toneClasses": [
+                "ze_unspecified"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第六部:第六部·仄声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "层",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:层:ping:第十一部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第十一部:第十一部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "山",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:山:ping:第七部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第七部:第七部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "日",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:日:ru:第十七部·入声"
+              ],
+              "toneClasses": [
+                "ru"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第十七部:第十七部·入声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "更",
+              "candidateCount": 2,
+              "candidateIds": [
+                "cilin:更:ping:第十一部·平声",
+                "cilin:更:ze_unspecified:第十一部·仄声"
+              ],
+              "toneClasses": [
+                "ping",
+                "ze_unspecified"
+              ],
+              "possibleTones": [
+                "P",
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第十一部:第十一部·仄声",
+                "group:cilin:第十一部:第十一部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "楼",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:楼:ping:第十二部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第十二部:第十二部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "欲",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:欲:ru:第十五部·入声"
+              ],
+              "toneClasses": [
+                "ru"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第十五部:第十五部·入声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "河",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:河:ping:第九部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第九部:第九部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "流",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:流:ping:第十二部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第十二部:第十二部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "海",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:海:ze_unspecified:第五部·仄声"
+              ],
+              "toneClasses": [
+                "ze_unspecified"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第五部:第五部·仄声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "白",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:白:ru:第十七部·入声"
+              ],
+              "toneClasses": [
+                "ru"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第十七部:第十七部·入声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "目",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:目:ru:第十五部·入声"
+              ],
+              "toneClasses": [
+                "ru"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第十五部:第十五部·入声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "穷",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:穷:ping:第一部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第一部:第一部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "里",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:里:ze_unspecified:第三部·仄声"
+              ],
+              "toneClasses": [
+                "ze_unspecified"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第三部:第三部·仄声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "黄",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:黄:ping:第二部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第二部:第二部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            }
+          ]
+        },
+        {
+          "book": "xinyun",
+          "dataVersion": "xinyun-rebuild-d2-full",
+          "reviewStatus": "unverified",
+          "totalCharacters": 20,
+          "distinctCharacters": 20,
+          "found": 20,
+          "missing": [],
+          "missingCount": 0,
+          "multiCandidateCharacters": [
+            {
+              "character": "一",
+              "candidateCount": 3,
+              "candidateIds": [
+                "xinyun:一:qu:十二齐·去声",
+                "xinyun:一:yangping:十二齐·阳平",
+                "xinyun:一:yinping:十二齐·阴平"
+              ],
+              "toneClasses": [
+                "qu",
+                "yangping",
+                "yinping"
+              ]
+            },
+            {
+              "character": "上",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:上:qu:十唐·去声",
+                "xinyun:上:shang:十唐·上声"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang"
+              ]
+            },
+            {
+              "character": "依",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:依:shang:十二齐·上声",
+                "xinyun:依:yinping:十二齐·阴平"
+              ],
+              "toneClasses": [
+                "shang",
+                "yinping"
+              ]
+            },
+            {
+              "character": "尽",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:尽:qu:九文·去声",
+                "xinyun:尽:shang:九文·上声"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang"
+              ]
+            },
+            {
+              "character": "更",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:更:qu:十一庚·去声",
+                "xinyun:更:yinping:十一庚·阴平"
+              ],
+              "toneClasses": [
+                "qu",
+                "yinping"
+              ]
+            },
+            {
+              "character": "白",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:白:yangping:二波·阳平",
+                "xinyun:白:yangping:四开·阳平"
+              ],
+              "toneClasses": [
+                "yangping"
+              ]
+            }
+          ],
+          "draftOnlyCharacters": [],
+          "evidenceReviewStatusCounts": {
+            "unverified": 19,
+            "approved": 0
+          },
+          "characterDetails": [
+            {
+              "character": "一",
+              "candidateCount": 3,
+              "candidateIds": [
+                "xinyun:一:qu:十二齐·去声",
+                "xinyun:一:yangping:十二齐·阳平",
+                "xinyun:一:yinping:十二齐·阴平"
+              ],
+              "toneClasses": [
+                "qu",
+                "yangping",
+                "yinping"
+              ],
+              "possibleTones": [
+                "P",
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:十二齐:十二齐·去声",
+                "group:xinyun:十二齐:十二齐·阳平",
+                "group:xinyun:十二齐:十二齐·阴平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "上",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:上:qu:十唐·去声",
+                "xinyun:上:shang:十唐·上声"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:十唐:十唐·上声",
+                "group:xinyun:十唐:十唐·去声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "依",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:依:shang:十二齐·上声",
+                "xinyun:依:yinping:十二齐·阴平"
+              ],
+              "toneClasses": [
+                "shang",
+                "yinping"
+              ],
+              "possibleTones": [
+                "P",
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:十二齐:十二齐·上声",
+                "group:xinyun:十二齐:十二齐·阴平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "入",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:入:qu:十四姑·去声"
+              ],
+              "toneClasses": [
+                "qu"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:十四姑:十四姑·去声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "千",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:千:yinping:八寒·阴平"
+              ],
+              "toneClasses": [
+                "yinping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:xinyun:八寒:八寒·阴平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "尽",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:尽:qu:九文·去声",
+                "xinyun:尽:shang:九文·上声"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:九文:九文·上声",
+                "group:xinyun:九文:九文·去声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "层",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:层:yangping:十一庚·阳平"
+              ],
+              "toneClasses": [
+                "yangping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:xinyun:十一庚:十一庚·阳平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "山",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:山:yinping:八寒·阴平"
+              ],
+              "toneClasses": [
+                "yinping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:xinyun:八寒:八寒·阴平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "日",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:日:qu:十三支·去声"
+              ],
+              "toneClasses": [
+                "qu"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:十三支:十三支·去声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "更",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:更:qu:十一庚·去声",
+                "xinyun:更:yinping:十一庚·阴平"
+              ],
+              "toneClasses": [
+                "qu",
+                "yinping"
+              ],
+              "possibleTones": [
+                "P",
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:十一庚:十一庚·去声",
+                "group:xinyun:十一庚:十一庚·阴平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "楼",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:楼:yangping:七尤·阳平"
+              ],
+              "toneClasses": [
+                "yangping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:xinyun:七尤:七尤·阳平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "欲",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:欲:qu:十二齐·去声"
+              ],
+              "toneClasses": [
+                "qu"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:十二齐:十二齐·去声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "河",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:河:yangping:二波·阳平"
+              ],
+              "toneClasses": [
+                "yangping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:xinyun:二波:二波·阳平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "流",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:流:yangping:七尤·阳平"
+              ],
+              "toneClasses": [
+                "yangping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:xinyun:七尤:七尤·阳平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "海",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:海:shang:四开·上声"
+              ],
+              "toneClasses": [
+                "shang"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:四开:四开·上声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "白",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:白:yangping:二波·阳平",
+                "xinyun:白:yangping:四开·阳平"
+              ],
+              "toneClasses": [
+                "yangping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:xinyun:二波:二波·阳平",
+                "group:xinyun:四开:四开·阳平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "目",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:目:qu:十四姑·去声"
+              ],
+              "toneClasses": [
+                "qu"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:十四姑:十四姑·去声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "穷",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:穷:yangping:十一庚·阳平"
+              ],
+              "toneClasses": [
+                "yangping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:xinyun:十一庚:十一庚·阳平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "里",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:里:shang:十二齐·上声"
+              ],
+              "toneClasses": [
+                "shang"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:十二齐:十二齐·上声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "黄",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:黄:yangping:十唐·阳平"
+              ],
+              "toneClasses": [
+                "yangping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:xinyun:十唐:十唐·阳平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "title": "静夜思",
+      "author": "李白",
+      "textReviewStatus": "pending",
+      "textSource": "data/works/review-queue.json",
+      "totalCharacters": 20,
+      "distinctCharacters": 17,
+      "crossBookMissing": [],
+      "perBook": [
+        {
+          "book": "pingshui",
+          "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-draft",
+          "reviewStatus": "unverified",
+          "totalCharacters": 20,
+          "distinctCharacters": 17,
+          "found": 17,
+          "missing": [],
+          "missingCount": 0,
+          "multiCandidateCharacters": [
+            {
+              "character": "上",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:上:qu:二十三漾",
+                "pingshui:上:shang:二十二养"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang"
+              ]
+            },
+            {
+              "character": "乡",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:乡:ping:七阳",
+                "pingshui:乡:qu:二十三漾"
+              ],
+              "toneClasses": [
+                "ping",
+                "qu"
+              ]
+            },
+            {
+              "character": "思",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:思:ping:四支",
+                "pingshui:思:qu:四寘"
+              ],
+              "toneClasses": [
+                "ping",
+                "qu"
+              ]
+            },
+            {
+              "character": "望",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:望:ping:七阳",
+                "pingshui:望:qu:二十三漾"
+              ],
+              "toneClasses": [
+                "ping",
+                "qu"
+              ]
+            }
+          ],
+          "draftOnlyCharacters": [],
+          "evidenceReviewStatusCounts": {
+            "unverified": 13,
+            "approved": 0
+          },
+          "characterDetails": [
+            {
+              "character": "上",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:上:qu:二十三漾",
+                "pingshui:上:shang:二十二养"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:上:二十二养",
+                "group:pingshui:去:二十三漾"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "举",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:举:shang:六语"
+              ],
+              "toneClasses": [
+                "shang"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:上:六语"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "乡",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:乡:ping:七阳",
+                "pingshui:乡:qu:二十三漾"
+              ],
+              "toneClasses": [
+                "ping",
+                "qu"
+              ],
+              "possibleTones": [
+                "P",
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:下平:七阳",
+                "group:pingshui:去:二十三漾"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "低",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:低:ping:八齐"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:pingshui:上平:八齐"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "光",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:光:ping:七阳"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:pingshui:下平:七阳"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "前",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:前:ping:一先"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:pingshui:下平:一先"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "地",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:地:qu:四寘"
+              ],
+              "toneClasses": [
+                "qu"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:去:四寘"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "头",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:头:ping:十一尤"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:pingshui:下平:十一尤"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "床",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:床:ping:七阳"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:pingshui:下平:七阳"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "思",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:思:ping:四支",
+                "pingshui:思:qu:四寘"
+              ],
+              "toneClasses": [
+                "ping",
+                "qu"
+              ],
+              "possibleTones": [
+                "P",
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:上平:四支",
+                "group:pingshui:去:四寘"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "故",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:故:qu:七遇"
+              ],
+              "toneClasses": [
+                "qu"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:去:七遇"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "明",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:明:ping:八庚"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:pingshui:下平:八庚"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "是",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:是:shang:四纸"
+              ],
+              "toneClasses": [
+                "shang"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:上:四纸"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "月",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:月:ru:入声六月"
+              ],
+              "toneClasses": [
+                "ru"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:入:入声六月"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "望",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:望:ping:七阳",
+                "pingshui:望:qu:二十三漾"
+              ],
+              "toneClasses": [
+                "ping",
+                "qu"
+              ],
+              "possibleTones": [
+                "P",
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:下平:七阳",
+                "group:pingshui:去:二十三漾"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "疑",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:疑:ping:四支"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:pingshui:上平:四支"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "霜",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:霜:ping:七阳"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:pingshui:下平:七阳"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            }
+          ]
+        },
+        {
+          "book": "cilin",
+          "dataVersion": "cilin-cwr-ff0e9c1-d2-full",
+          "reviewStatus": "unverified",
+          "totalCharacters": 20,
+          "distinctCharacters": 17,
+          "found": 17,
+          "missing": [],
+          "missingCount": 0,
+          "multiCandidateCharacters": [
+            {
+              "character": "思",
+              "candidateCount": 2,
+              "candidateIds": [
+                "cilin:思:ping:第三部·平声",
+                "cilin:思:ze_unspecified:第三部·仄声"
+              ],
+              "toneClasses": [
+                "ping",
+                "ze_unspecified"
+              ]
+            },
+            {
+              "character": "望",
+              "candidateCount": 2,
+              "candidateIds": [
+                "cilin:望:ping:第二部·平声",
+                "cilin:望:ze_unspecified:第二部·仄声"
+              ],
+              "toneClasses": [
+                "ping",
+                "ze_unspecified"
+              ]
+            }
+          ],
+          "draftOnlyCharacters": [],
+          "evidenceReviewStatusCounts": {
+            "unverified": 9,
+            "approved": 0
+          },
+          "characterDetails": [
+            {
+              "character": "上",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:上:ze_unspecified:第二部·仄声"
+              ],
+              "toneClasses": [
+                "ze_unspecified"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第二部:第二部·仄声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "举",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:举:ze_unspecified:第四部·仄声"
+              ],
+              "toneClasses": [
+                "ze_unspecified"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第四部:第四部·仄声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "乡",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:乡:ping:第二部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第二部:第二部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "低",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:低:ping:第三部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第三部:第三部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "光",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:光:ping:第二部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第二部:第二部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "前",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:前:ping:第七部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第七部:第七部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "地",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:地:ze_unspecified:第三部·仄声"
+              ],
+              "toneClasses": [
+                "ze_unspecified"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第三部:第三部·仄声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "头",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:头:ping:第十二部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第十二部:第十二部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "床",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:床:ping:第二部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第二部:第二部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "思",
+              "candidateCount": 2,
+              "candidateIds": [
+                "cilin:思:ping:第三部·平声",
+                "cilin:思:ze_unspecified:第三部·仄声"
+              ],
+              "toneClasses": [
+                "ping",
+                "ze_unspecified"
+              ],
+              "possibleTones": [
+                "P",
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第三部:第三部·仄声",
+                "group:cilin:第三部:第三部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "故",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:故:ze_unspecified:第四部·仄声"
+              ],
+              "toneClasses": [
+                "ze_unspecified"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第四部:第四部·仄声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "明",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:明:ping:第十一部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第十一部:第十一部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "是",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:是:ze_unspecified:第三部·仄声"
+              ],
+              "toneClasses": [
+                "ze_unspecified"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第三部:第三部·仄声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "月",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:月:ru:第十八部·入声"
+              ],
+              "toneClasses": [
+                "ru"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第十八部:第十八部·入声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "望",
+              "candidateCount": 2,
+              "candidateIds": [
+                "cilin:望:ping:第二部·平声",
+                "cilin:望:ze_unspecified:第二部·仄声"
+              ],
+              "toneClasses": [
+                "ping",
+                "ze_unspecified"
+              ],
+              "possibleTones": [
+                "P",
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第二部:第二部·仄声",
+                "group:cilin:第二部:第二部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "疑",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:疑:ping:第三部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第三部:第三部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "霜",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:霜:ping:第二部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第二部:第二部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            }
+          ]
+        },
+        {
+          "book": "xinyun",
+          "dataVersion": "xinyun-rebuild-d2-full",
+          "reviewStatus": "unverified",
+          "totalCharacters": 20,
+          "distinctCharacters": 17,
+          "found": 17,
+          "missing": [],
+          "missingCount": 0,
+          "multiCandidateCharacters": [
+            {
+              "character": "上",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:上:qu:十唐·去声",
+                "xinyun:上:shang:十唐·上声"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang"
+              ]
+            },
+            {
+              "character": "光",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:光:qu:十唐·去声",
+                "xinyun:光:yinping:十唐·阴平"
+              ],
+              "toneClasses": [
+                "qu",
+                "yinping"
+              ]
+            },
+            {
+              "character": "前",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:前:shang:八寒·上声",
+                "xinyun:前:yangping:八寒·阳平"
+              ],
+              "toneClasses": [
+                "shang",
+                "yangping"
+              ]
+            },
+            {
+              "character": "思",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:思:yinping:十三支·阴平",
+                "xinyun:思:yinping:四开·阴平"
+              ],
+              "toneClasses": [
+                "yinping"
+              ]
+            },
+            {
+              "character": "明",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:明:qu:十一庚·去声",
+                "xinyun:明:yangping:十一庚·阳平"
+              ],
+              "toneClasses": [
+                "qu",
+                "yangping"
+              ]
+            },
+            {
+              "character": "是",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:是:qu:十三支·去声",
+                "xinyun:是:yangping:十二齐·阳平"
+              ],
+              "toneClasses": [
+                "qu",
+                "yangping"
+              ]
+            },
+            {
+              "character": "月",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:月:qu:三皆·去声",
+                "xinyun:月:qu:十四姑·去声"
+              ],
+              "toneClasses": [
+                "qu"
+              ]
+            },
+            {
+              "character": "疑",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:疑:yangping:十一庚·阳平",
+                "xinyun:疑:yangping:十二齐·阳平"
+              ],
+              "toneClasses": [
+                "yangping"
+              ]
+            }
+          ],
+          "draftOnlyCharacters": [],
+          "evidenceReviewStatusCounts": {
+            "unverified": 18,
+            "approved": 0
+          },
+          "characterDetails": [
+            {
+              "character": "上",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:上:qu:十唐·去声",
+                "xinyun:上:shang:十唐·上声"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:十唐:十唐·上声",
+                "group:xinyun:十唐:十唐·去声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "举",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:举:shang:十二齐·上声"
+              ],
+              "toneClasses": [
+                "shang"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:十二齐:十二齐·上声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "乡",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:乡:yinping:十唐·阴平"
+              ],
+              "toneClasses": [
+                "yinping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:xinyun:十唐:十唐·阴平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "低",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:低:yinping:十二齐·阴平"
+              ],
+              "toneClasses": [
+                "yinping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:xinyun:十二齐:十二齐·阴平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "光",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:光:qu:十唐·去声",
+                "xinyun:光:yinping:十唐·阴平"
+              ],
+              "toneClasses": [
+                "qu",
+                "yinping"
+              ],
+              "possibleTones": [
+                "P",
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:十唐:十唐·去声",
+                "group:xinyun:十唐:十唐·阴平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "前",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:前:shang:八寒·上声",
+                "xinyun:前:yangping:八寒·阳平"
+              ],
+              "toneClasses": [
+                "shang",
+                "yangping"
+              ],
+              "possibleTones": [
+                "P",
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:八寒:八寒·上声",
+                "group:xinyun:八寒:八寒·阳平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "地",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:地:qu:十二齐·去声"
+              ],
+              "toneClasses": [
+                "qu"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:十二齐:十二齐·去声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "头",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:头:yangping:七尤·阳平"
+              ],
+              "toneClasses": [
+                "yangping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:xinyun:七尤:七尤·阳平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "床",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:床:yangping:十唐·阳平"
+              ],
+              "toneClasses": [
+                "yangping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:xinyun:十唐:十唐·阳平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "思",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:思:yinping:十三支·阴平",
+                "xinyun:思:yinping:四开·阴平"
+              ],
+              "toneClasses": [
+                "yinping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:xinyun:十三支:十三支·阴平",
+                "group:xinyun:四开:四开·阴平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "故",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:故:qu:十四姑·去声"
+              ],
+              "toneClasses": [
+                "qu"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:十四姑:十四姑·去声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "明",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:明:qu:十一庚·去声",
+                "xinyun:明:yangping:十一庚·阳平"
+              ],
+              "toneClasses": [
+                "qu",
+                "yangping"
+              ],
+              "possibleTones": [
+                "P",
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:十一庚:十一庚·去声",
+                "group:xinyun:十一庚:十一庚·阳平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "是",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:是:qu:十三支·去声",
+                "xinyun:是:yangping:十二齐·阳平"
+              ],
+              "toneClasses": [
+                "qu",
+                "yangping"
+              ],
+              "possibleTones": [
+                "P",
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:十三支:十三支·去声",
+                "group:xinyun:十二齐:十二齐·阳平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "月",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:月:qu:三皆·去声",
+                "xinyun:月:qu:十四姑·去声"
+              ],
+              "toneClasses": [
+                "qu"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:三皆:三皆·去声",
+                "group:xinyun:十四姑:十四姑·去声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "望",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:望:qu:十唐·去声"
+              ],
+              "toneClasses": [
+                "qu"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:十唐:十唐·去声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "疑",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:疑:yangping:十一庚·阳平",
+                "xinyun:疑:yangping:十二齐·阳平"
+              ],
+              "toneClasses": [
+                "yangping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:xinyun:十一庚:十一庚·阳平",
+                "group:xinyun:十二齐:十二齐·阳平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "霜",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:霜:yinping:十唐·阴平"
+              ],
+              "toneClasses": [
+                "yinping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:xinyun:十唐:十唐·阴平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "title": "黄鹤楼",
+      "author": "崔颢",
+      "textReviewStatus": "pending",
+      "textSource": "data/works/review-queue.json",
+      "totalCharacters": 56,
+      "distinctCharacters": 46,
+      "crossBookMissing": [],
+      "perBook": [
+        {
+          "book": "pingshui",
+          "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-draft",
+          "reviewStatus": "unverified",
+          "totalCharacters": 56,
+          "distinctCharacters": 46,
+          "found": 46,
+          "missing": [],
+          "missingCount": 0,
+          "multiCandidateCharacters": [
+            {
+              "character": "上",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:上:qu:二十三漾",
+                "pingshui:上:shang:二十二养"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang"
+              ]
+            },
+            {
+              "character": "不",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:不:ping:十一尤",
+                "pingshui:不:ru:入声五物"
+              ],
+              "toneClasses": [
+                "ping",
+                "ru"
+              ]
+            },
+            {
+              "character": "乘",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:乘:ping:十蒸",
+                "pingshui:乘:qu:二十五径"
+              ],
+              "toneClasses": [
+                "ping",
+                "qu"
+              ]
+            },
+            {
+              "character": "乡",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:乡:ping:七阳",
+                "pingshui:乡:qu:二十三漾"
+              ],
+              "toneClasses": [
+                "ping",
+                "qu"
+              ]
+            },
+            {
+              "character": "使",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:使:qu:四寘",
+                "pingshui:使:shang:四纸"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang"
+              ]
+            },
+            {
+              "character": "去",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:去:qu:六御",
+                "pingshui:去:shang:六语"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang"
+              ]
+            },
+            {
+              "character": "处",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:处:qu:六御",
+                "pingshui:处:shang:六语"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang"
+              ]
+            },
+            {
+              "character": "复",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:复:qu:二十六宥",
+                "pingshui:复:ru:入声一屋"
+              ],
+              "toneClasses": [
+                "qu",
+                "ru"
+              ]
+            },
+            {
+              "character": "昔",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:昔:ru:入声十一陌",
+                "pingshui:昔:ru:入声十药"
+              ],
+              "toneClasses": [
+                "ru"
+              ]
+            },
+            {
+              "character": "树",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:树:qu:七遇",
+                "pingshui:树:shang:七麌"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang"
+              ]
+            },
+            {
+              "character": "汉",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:汉:ping:十四寒",
+                "pingshui:汉:qu:十五翰"
+              ],
+              "toneClasses": [
+                "ping",
+                "qu"
+              ]
+            },
+            {
+              "character": "空",
+              "candidateCount": 3,
+              "candidateIds": [
+                "pingshui:空:ping:一东",
+                "pingshui:空:qu:一送",
+                "pingshui:空:shang:一董"
+              ],
+              "toneClasses": [
+                "ping",
+                "qu",
+                "shang"
+              ]
+            },
+            {
+              "character": "载",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:载:qu:十一队",
+                "pingshui:载:shang:十贿"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang"
+              ]
+            }
+          ],
+          "draftOnlyCharacters": [],
+          "evidenceReviewStatusCounts": {
+            "unverified": 37,
+            "approved": 0
+          },
+          "characterDetails": [
+            {
+              "character": "一",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:一:ru:入声四质"
+              ],
+              "toneClasses": [
+                "ru"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:入:入声四质"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "上",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:上:qu:二十三漾",
+                "pingshui:上:shang:二十二养"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:上:二十二养",
+                "group:pingshui:去:二十三漾"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "不",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:不:ping:十一尤",
+                "pingshui:不:ru:入声五物"
+              ],
+              "toneClasses": [
+                "ping",
+                "ru"
+              ],
+              "possibleTones": [
+                "P",
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:下平:十一尤",
+                "group:pingshui:入:入声五物"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "乘",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:乘:ping:十蒸",
+                "pingshui:乘:qu:二十五径"
+              ],
+              "toneClasses": [
+                "ping",
+                "qu"
+              ],
+              "possibleTones": [
+                "P",
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:下平:十蒸",
+                "group:pingshui:去:二十五径"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "乡",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:乡:ping:七阳",
+                "pingshui:乡:qu:二十三漾"
+              ],
+              "toneClasses": [
+                "ping",
+                "qu"
+              ],
+              "possibleTones": [
+                "P",
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:下平:七阳",
+                "group:pingshui:去:二十三漾"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "云",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:云:ping:十二文"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:pingshui:上平:十二文"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "人",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:人:ping:十一真"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:pingshui:上平:十一真"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "何",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:何:ping:五歌"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:pingshui:下平:五歌"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "余",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:余:ping:六鱼"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:pingshui:上平:六鱼"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "使",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:使:qu:四寘",
+                "pingshui:使:shang:四纸"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:上:四纸",
+                "group:pingshui:去:四寘"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "关",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:关:ping:十五删"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:pingshui:上平:十五删"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "千",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:千:ping:一先"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:pingshui:下平:一先"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "历",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:历:ru:入声十二锡"
+              ],
+              "toneClasses": [
+                "ru"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:入:入声十二锡"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "去",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:去:qu:六御",
+                "pingshui:去:shang:六语"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:上:六语",
+                "group:pingshui:去:六御"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "地",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:地:qu:四寘"
+              ],
+              "toneClasses": [
+                "qu"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:去:四寘"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "处",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:处:qu:六御",
+                "pingshui:处:shang:六语"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:上:六语",
+                "group:pingshui:去:六御"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "复",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:复:qu:二十六宥",
+                "pingshui:复:ru:入声一屋"
+              ],
+              "toneClasses": [
+                "qu",
+                "ru"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:入:入声一屋",
+                "group:pingshui:去:二十六宥"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "川",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:川:ping:一先"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:pingshui:下平:一先"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "已",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:已:shang:四纸"
+              ],
+              "toneClasses": [
+                "shang"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:上:四纸"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "悠",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:悠:ping:十一尤"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:pingshui:下平:十一尤"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "愁",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:愁:ping:十一尤"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:pingshui:下平:十一尤"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "日",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:日:ru:入声四质"
+              ],
+              "toneClasses": [
+                "ru"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:入:入声四质"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "昔",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:昔:ru:入声十一陌",
+                "pingshui:昔:ru:入声十药"
+              ],
+              "toneClasses": [
+                "ru"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:入:入声十一陌",
+                "group:pingshui:入:入声十药"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "是",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:是:shang:四纸"
+              ],
+              "toneClasses": [
+                "shang"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:上:四纸"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "晴",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:晴:ping:八庚"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:pingshui:下平:八庚"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "暮",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:暮:qu:七遇"
+              ],
+              "toneClasses": [
+                "qu"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:去:七遇"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "树",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:树:qu:七遇",
+                "pingshui:树:shang:七麌"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:上:七麌",
+                "group:pingshui:去:七遇"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "楼",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:楼:ping:十一尤"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:pingshui:下平:十一尤"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "此",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:此:shang:四纸"
+              ],
+              "toneClasses": [
+                "shang"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:上:四纸"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "汉",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:汉:ping:十四寒",
+                "pingshui:汉:qu:十五翰"
+              ],
+              "toneClasses": [
+                "ping",
+                "qu"
+              ],
+              "possibleTones": [
+                "P",
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:上平:十四寒",
+                "group:pingshui:去:十五翰"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "江",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:江:ping:三江"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:pingshui:上平:三江"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "波",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:波:ping:五歌"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:pingshui:下平:五歌"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "洲",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:洲:ping:十一尤"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:pingshui:下平:十一尤"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "烟",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:烟:ping:一先"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:pingshui:下平:一先"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "白",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:白:ru:入声十一陌"
+              ],
+              "toneClasses": [
+                "ru"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:入:入声十一陌"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "空",
+              "candidateCount": 3,
+              "candidateIds": [
+                "pingshui:空:ping:一东",
+                "pingshui:空:qu:一送",
+                "pingshui:空:shang:一董"
+              ],
+              "toneClasses": [
+                "ping",
+                "qu",
+                "shang"
+              ],
+              "possibleTones": [
+                "P",
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:上:一董",
+                "group:pingshui:上平:一东",
+                "group:pingshui:去:一送"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "芳",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:芳:ping:七阳"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:pingshui:下平:七阳"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "草",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:草:shang:十九皓"
+              ],
+              "toneClasses": [
+                "shang"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:上:十九皓"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "萋",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:萋:ping:八齐"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:pingshui:上平:八齐"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "载",
+              "candidateCount": 2,
+              "candidateIds": [
+                "pingshui:载:qu:十一队",
+                "pingshui:载:shang:十贿"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:上:十贿",
+                "group:pingshui:去:十一队"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "返",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:返:shang:十三阮"
+              ],
+              "toneClasses": [
+                "shang"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:上:十三阮"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "阳",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:阳:ping:七阳"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:pingshui:下平:七阳"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "鹉",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:鹉:shang:七麌"
+              ],
+              "toneClasses": [
+                "shang"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:上:七麌"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "鹤",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:鹤:ru:入声十药"
+              ],
+              "toneClasses": [
+                "ru"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:pingshui:入:入声十药"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "鹦",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:鹦:ping:八庚"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:pingshui:下平:八庚"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "黄",
+              "candidateCount": 1,
+              "candidateIds": [
+                "pingshui:黄:ping:七阳"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:pingshui:下平:七阳"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            }
+          ]
+        },
+        {
+          "book": "cilin",
+          "dataVersion": "cilin-cwr-ff0e9c1-d2-full",
+          "reviewStatus": "unverified",
+          "totalCharacters": 56,
+          "distinctCharacters": 46,
+          "found": 45,
+          "missing": [
+            "余"
+          ],
+          "missingCount": 1,
+          "multiCandidateCharacters": [
+            {
+              "character": "不",
+              "candidateCount": 2,
+              "candidateIds": [
+                "cilin:不:ping:第十二部·平声",
+                "cilin:不:ru:第十八部·入声"
+              ],
+              "toneClasses": [
+                "ping",
+                "ru"
+              ]
+            },
+            {
+              "character": "乘",
+              "candidateCount": 2,
+              "candidateIds": [
+                "cilin:乘:ping:第十一部·平声",
+                "cilin:乘:ze_unspecified:第十一部·仄声"
+              ],
+              "toneClasses": [
+                "ping",
+                "ze_unspecified"
+              ]
+            },
+            {
+              "character": "复",
+              "candidateCount": 2,
+              "candidateIds": [
+                "cilin:复:ru:第十五部·入声",
+                "cilin:复:ze_unspecified:第十二部·仄声"
+              ],
+              "toneClasses": [
+                "ru",
+                "ze_unspecified"
+              ]
+            },
+            {
+              "character": "空",
+              "candidateCount": 2,
+              "candidateIds": [
+                "cilin:空:ping:第一部·平声",
+                "cilin:空:ze_unspecified:第一部·仄声"
+              ],
+              "toneClasses": [
+                "ping",
+                "ze_unspecified"
+              ]
+            }
+          ],
+          "draftOnlyCharacters": [],
+          "evidenceReviewStatusCounts": {
+            "unverified": 21,
+            "approved": 0
+          },
+          "characterDetails": [
+            {
+              "character": "一",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:一:ru:第十七部·入声"
+              ],
+              "toneClasses": [
+                "ru"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第十七部:第十七部·入声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "上",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:上:ze_unspecified:第二部·仄声"
+              ],
+              "toneClasses": [
+                "ze_unspecified"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第二部:第二部·仄声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "不",
+              "candidateCount": 2,
+              "candidateIds": [
+                "cilin:不:ping:第十二部·平声",
+                "cilin:不:ru:第十八部·入声"
+              ],
+              "toneClasses": [
+                "ping",
+                "ru"
+              ],
+              "possibleTones": [
+                "P",
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第十二部:第十二部·平声",
+                "group:cilin:第十八部:第十八部·入声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "乘",
+              "candidateCount": 2,
+              "candidateIds": [
+                "cilin:乘:ping:第十一部·平声",
+                "cilin:乘:ze_unspecified:第十一部·仄声"
+              ],
+              "toneClasses": [
+                "ping",
+                "ze_unspecified"
+              ],
+              "possibleTones": [
+                "P",
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第十一部:第十一部·仄声",
+                "group:cilin:第十一部:第十一部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "乡",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:乡:ping:第二部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第二部:第二部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "云",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:云:ping:第六部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第六部:第六部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "人",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:人:ping:第六部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第六部:第六部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "何",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:何:ping:第九部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第九部:第九部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "使",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:使:ze_unspecified:第三部·仄声"
+              ],
+              "toneClasses": [
+                "ze_unspecified"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第三部:第三部·仄声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "关",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:关:ping:第七部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第七部:第七部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "千",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:千:ping:第七部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第七部:第七部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "历",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:历:ru:第十七部·入声"
+              ],
+              "toneClasses": [
+                "ru"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第十七部:第十七部·入声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "去",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:去:ze_unspecified:第四部·仄声"
+              ],
+              "toneClasses": [
+                "ze_unspecified"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第四部:第四部·仄声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "地",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:地:ze_unspecified:第三部·仄声"
+              ],
+              "toneClasses": [
+                "ze_unspecified"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第三部:第三部·仄声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "处",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:处:ze_unspecified:第四部·仄声"
+              ],
+              "toneClasses": [
+                "ze_unspecified"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第四部:第四部·仄声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "复",
+              "candidateCount": 2,
+              "candidateIds": [
+                "cilin:复:ru:第十五部·入声",
+                "cilin:复:ze_unspecified:第十二部·仄声"
+              ],
+              "toneClasses": [
+                "ru",
+                "ze_unspecified"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第十二部:第十二部·仄声",
+                "group:cilin:第十五部:第十五部·入声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "川",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:川:ping:第七部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第七部:第七部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "已",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:已:ze_unspecified:第三部·仄声"
+              ],
+              "toneClasses": [
+                "ze_unspecified"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第三部:第三部·仄声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "悠",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:悠:ping:第十二部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第十二部:第十二部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "愁",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:愁:ping:第十二部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第十二部:第十二部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "日",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:日:ru:第十七部·入声"
+              ],
+              "toneClasses": [
+                "ru"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第十七部:第十七部·入声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "昔",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:昔:ru:第十七部·入声"
+              ],
+              "toneClasses": [
+                "ru"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第十七部:第十七部·入声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "是",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:是:ze_unspecified:第三部·仄声"
+              ],
+              "toneClasses": [
+                "ze_unspecified"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第三部:第三部·仄声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "晴",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:晴:ping:第十一部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第十一部:第十一部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "暮",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:暮:ze_unspecified:第四部·仄声"
+              ],
+              "toneClasses": [
+                "ze_unspecified"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第四部:第四部·仄声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "树",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:树:ze_unspecified:第四部·仄声"
+              ],
+              "toneClasses": [
+                "ze_unspecified"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第四部:第四部·仄声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "楼",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:楼:ping:第十二部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第十二部:第十二部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "此",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:此:ze_unspecified:第三部·仄声"
+              ],
+              "toneClasses": [
+                "ze_unspecified"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第三部:第三部·仄声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "汉",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:汉:ze_unspecified:第七部·仄声"
+              ],
+              "toneClasses": [
+                "ze_unspecified"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第七部:第七部·仄声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "江",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:江:ping:第二部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第二部:第二部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "波",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:波:ping:第九部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第九部:第九部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "洲",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:洲:ping:第十二部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第十二部:第十二部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "烟",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:烟:ping:第七部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第七部:第七部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "白",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:白:ru:第十七部·入声"
+              ],
+              "toneClasses": [
+                "ru"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第十七部:第十七部·入声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "空",
+              "candidateCount": 2,
+              "candidateIds": [
+                "cilin:空:ping:第一部·平声",
+                "cilin:空:ze_unspecified:第一部·仄声"
+              ],
+              "toneClasses": [
+                "ping",
+                "ze_unspecified"
+              ],
+              "possibleTones": [
+                "P",
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第一部:第一部·仄声",
+                "group:cilin:第一部:第一部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "芳",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:芳:ping:第二部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第二部:第二部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "草",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:草:ze_unspecified:第八部·仄声"
+              ],
+              "toneClasses": [
+                "ze_unspecified"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第八部:第八部·仄声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "萋",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:萋:ping:第三部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第三部:第三部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "载",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:载:ze_unspecified:第五部·仄声"
+              ],
+              "toneClasses": [
+                "ze_unspecified"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第五部:第五部·仄声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "返",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:返:ze_unspecified:第七部·仄声"
+              ],
+              "toneClasses": [
+                "ze_unspecified"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第七部:第七部·仄声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "阳",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:阳:ping:第二部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第二部:第二部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "鹉",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:鹉:ze_unspecified:第四部·仄声"
+              ],
+              "toneClasses": [
+                "ze_unspecified"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第四部:第四部·仄声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "鹤",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:鹤:ru:第十六部·入声"
+              ],
+              "toneClasses": [
+                "ru"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:cilin:第十六部:第十六部·入声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "鹦",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:鹦:ping:第十一部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第十一部:第十一部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "黄",
+              "candidateCount": 1,
+              "candidateIds": [
+                "cilin:黄:ping:第二部·平声"
+              ],
+              "toneClasses": [
+                "ping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:cilin:第二部:第二部·平声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            }
+          ]
+        },
+        {
+          "book": "xinyun",
+          "dataVersion": "xinyun-rebuild-d2-full",
+          "reviewStatus": "unverified",
+          "totalCharacters": 56,
+          "distinctCharacters": 46,
+          "found": 46,
+          "missing": [],
+          "missingCount": 0,
+          "multiCandidateCharacters": [
+            {
+              "character": "一",
+              "candidateCount": 3,
+              "candidateIds": [
+                "xinyun:一:qu:十二齐·去声",
+                "xinyun:一:yangping:十二齐·阳平",
+                "xinyun:一:yinping:十二齐·阴平"
+              ],
+              "toneClasses": [
+                "qu",
+                "yangping",
+                "yinping"
+              ]
+            },
+            {
+              "character": "上",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:上:qu:十唐·去声",
+                "xinyun:上:shang:十唐·上声"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang"
+              ]
+            },
+            {
+              "character": "不",
+              "candidateCount": 5,
+              "candidateIds": [
+                "xinyun:不:qu:十四姑·去声",
+                "xinyun:不:shang:七尤·上声",
+                "xinyun:不:yangping:十四姑·阳平",
+                "xinyun:不:yinping:七尤·阴平",
+                "xinyun:不:yinping:十四姑·阴平"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang",
+                "yangping",
+                "yinping"
+              ]
+            },
+            {
+              "character": "乘",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:乘:qu:十一庚·去声",
+                "xinyun:乘:yangping:十一庚·阳平"
+              ],
+              "toneClasses": [
+                "qu",
+                "yangping"
+              ]
+            },
+            {
+              "character": "何",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:何:qu:二波·去声",
+                "xinyun:何:yangping:二波·阳平"
+              ],
+              "toneClasses": [
+                "qu",
+                "yangping"
+              ]
+            },
+            {
+              "character": "余",
+              "candidateCount": 3,
+              "candidateIds": [
+                "xinyun:余:qu:十二齐·去声",
+                "xinyun:余:yangping:十二齐·阳平",
+                "xinyun:余:yangping:十四姑·阳平"
+              ],
+              "toneClasses": [
+                "qu",
+                "yangping"
+              ]
+            },
+            {
+              "character": "去",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:去:qu:十二齐·去声",
+                "xinyun:去:yinping:十二齐·阴平"
+              ],
+              "toneClasses": [
+                "qu",
+                "yinping"
+              ]
+            },
+            {
+              "character": "处",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:处:qu:十四姑·去声",
+                "xinyun:处:shang:十四姑·上声"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang"
+              ]
+            },
+            {
+              "character": "已",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:已:qu:十三支·去声",
+                "xinyun:已:shang:十二齐·上声"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang"
+              ]
+            },
+            {
+              "character": "愁",
+              "candidateCount": 3,
+              "candidateIds": [
+                "xinyun:愁:shang:六豪·上声",
+                "xinyun:愁:yangping:七尤·阳平",
+                "xinyun:愁:yinping:七尤·阴平"
+              ],
+              "toneClasses": [
+                "shang",
+                "yangping",
+                "yinping"
+              ]
+            },
+            {
+              "character": "昔",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:昔:qu:二波·去声",
+                "xinyun:昔:yinping:十二齐·阴平"
+              ],
+              "toneClasses": [
+                "qu",
+                "yinping"
+              ]
+            },
+            {
+              "character": "是",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:是:qu:十三支·去声",
+                "xinyun:是:yangping:十二齐·阳平"
+              ],
+              "toneClasses": [
+                "qu",
+                "yangping"
+              ]
+            },
+            {
+              "character": "波",
+              "candidateCount": 3,
+              "candidateIds": [
+                "xinyun:波:qu:十二齐·去声",
+                "xinyun:波:yinping:二波·阴平",
+                "xinyun:波:yinping:五微·阴平"
+              ],
+              "toneClasses": [
+                "qu",
+                "yinping"
+              ]
+            },
+            {
+              "character": "烟",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:烟:yinping:九文·阴平",
+                "xinyun:烟:yinping:八寒·阴平"
+              ],
+              "toneClasses": [
+                "yinping"
+              ]
+            },
+            {
+              "character": "白",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:白:yangping:二波·阳平",
+                "xinyun:白:yangping:四开·阳平"
+              ],
+              "toneClasses": [
+                "yangping"
+              ]
+            },
+            {
+              "character": "空",
+              "candidateCount": 3,
+              "candidateIds": [
+                "xinyun:空:qu:十一庚·去声",
+                "xinyun:空:shang:十一庚·上声",
+                "xinyun:空:yinping:十一庚·阴平"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang",
+                "yinping"
+              ]
+            },
+            {
+              "character": "草",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:草:qu:六豪·去声",
+                "xinyun:草:shang:六豪·上声"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang"
+              ]
+            },
+            {
+              "character": "载",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:载:qu:四开·去声",
+                "xinyun:载:shang:四开·上声"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang"
+              ]
+            }
+          ],
+          "draftOnlyCharacters": [],
+          "evidenceReviewStatusCounts": {
+            "unverified": 35,
+            "approved": 0
+          },
+          "characterDetails": [
+            {
+              "character": "一",
+              "candidateCount": 3,
+              "candidateIds": [
+                "xinyun:一:qu:十二齐·去声",
+                "xinyun:一:yangping:十二齐·阳平",
+                "xinyun:一:yinping:十二齐·阴平"
+              ],
+              "toneClasses": [
+                "qu",
+                "yangping",
+                "yinping"
+              ],
+              "possibleTones": [
+                "P",
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:十二齐:十二齐·去声",
+                "group:xinyun:十二齐:十二齐·阳平",
+                "group:xinyun:十二齐:十二齐·阴平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "上",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:上:qu:十唐·去声",
+                "xinyun:上:shang:十唐·上声"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:十唐:十唐·上声",
+                "group:xinyun:十唐:十唐·去声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "不",
+              "candidateCount": 5,
+              "candidateIds": [
+                "xinyun:不:qu:十四姑·去声",
+                "xinyun:不:shang:七尤·上声",
+                "xinyun:不:yangping:十四姑·阳平",
+                "xinyun:不:yinping:七尤·阴平",
+                "xinyun:不:yinping:十四姑·阴平"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang",
+                "yangping",
+                "yinping"
+              ],
+              "possibleTones": [
+                "P",
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:七尤:七尤·上声",
+                "group:xinyun:七尤:七尤·阴平",
+                "group:xinyun:十四姑:十四姑·去声",
+                "group:xinyun:十四姑:十四姑·阳平",
+                "group:xinyun:十四姑:十四姑·阴平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "乘",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:乘:qu:十一庚·去声",
+                "xinyun:乘:yangping:十一庚·阳平"
+              ],
+              "toneClasses": [
+                "qu",
+                "yangping"
+              ],
+              "possibleTones": [
+                "P",
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:十一庚:十一庚·去声",
+                "group:xinyun:十一庚:十一庚·阳平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "乡",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:乡:yinping:十唐·阴平"
+              ],
+              "toneClasses": [
+                "yinping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:xinyun:十唐:十唐·阴平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "云",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:云:yangping:九文·阳平"
+              ],
+              "toneClasses": [
+                "yangping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:xinyun:九文:九文·阳平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "人",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:人:yangping:九文·阳平"
+              ],
+              "toneClasses": [
+                "yangping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:xinyun:九文:九文·阳平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "何",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:何:qu:二波·去声",
+                "xinyun:何:yangping:二波·阳平"
+              ],
+              "toneClasses": [
+                "qu",
+                "yangping"
+              ],
+              "possibleTones": [
+                "P",
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:二波:二波·去声",
+                "group:xinyun:二波:二波·阳平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "余",
+              "candidateCount": 3,
+              "candidateIds": [
+                "xinyun:余:qu:十二齐·去声",
+                "xinyun:余:yangping:十二齐·阳平",
+                "xinyun:余:yangping:十四姑·阳平"
+              ],
+              "toneClasses": [
+                "qu",
+                "yangping"
+              ],
+              "possibleTones": [
+                "P",
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:十二齐:十二齐·去声",
+                "group:xinyun:十二齐:十二齐·阳平",
+                "group:xinyun:十四姑:十四姑·阳平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "使",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:使:shang:十三支·上声"
+              ],
+              "toneClasses": [
+                "shang"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:十三支:十三支·上声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "关",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:关:yinping:八寒·阴平"
+              ],
+              "toneClasses": [
+                "yinping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:xinyun:八寒:八寒·阴平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "千",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:千:yinping:八寒·阴平"
+              ],
+              "toneClasses": [
+                "yinping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:xinyun:八寒:八寒·阴平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "历",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:历:qu:十二齐·去声"
+              ],
+              "toneClasses": [
+                "qu"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:十二齐:十二齐·去声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "去",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:去:qu:十二齐·去声",
+                "xinyun:去:yinping:十二齐·阴平"
+              ],
+              "toneClasses": [
+                "qu",
+                "yinping"
+              ],
+              "possibleTones": [
+                "P",
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:十二齐:十二齐·去声",
+                "group:xinyun:十二齐:十二齐·阴平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "地",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:地:qu:十二齐·去声"
+              ],
+              "toneClasses": [
+                "qu"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:十二齐:十二齐·去声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "处",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:处:qu:十四姑·去声",
+                "xinyun:处:shang:十四姑·上声"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:十四姑:十四姑·上声",
+                "group:xinyun:十四姑:十四姑·去声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "复",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:复:qu:十四姑·去声"
+              ],
+              "toneClasses": [
+                "qu"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:十四姑:十四姑·去声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "川",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:川:yinping:八寒·阴平"
+              ],
+              "toneClasses": [
+                "yinping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:xinyun:八寒:八寒·阴平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "已",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:已:qu:十三支·去声",
+                "xinyun:已:shang:十二齐·上声"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:十三支:十三支·去声",
+                "group:xinyun:十二齐:十二齐·上声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "悠",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:悠:yinping:七尤·阴平"
+              ],
+              "toneClasses": [
+                "yinping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:xinyun:七尤:七尤·阴平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "愁",
+              "candidateCount": 3,
+              "candidateIds": [
+                "xinyun:愁:shang:六豪·上声",
+                "xinyun:愁:yangping:七尤·阳平",
+                "xinyun:愁:yinping:七尤·阴平"
+              ],
+              "toneClasses": [
+                "shang",
+                "yangping",
+                "yinping"
+              ],
+              "possibleTones": [
+                "P",
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:七尤:七尤·阳平",
+                "group:xinyun:七尤:七尤·阴平",
+                "group:xinyun:六豪:六豪·上声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "日",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:日:qu:十三支·去声"
+              ],
+              "toneClasses": [
+                "qu"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:十三支:十三支·去声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "昔",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:昔:qu:二波·去声",
+                "xinyun:昔:yinping:十二齐·阴平"
+              ],
+              "toneClasses": [
+                "qu",
+                "yinping"
+              ],
+              "possibleTones": [
+                "P",
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:二波:二波·去声",
+                "group:xinyun:十二齐:十二齐·阴平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "是",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:是:qu:十三支·去声",
+                "xinyun:是:yangping:十二齐·阳平"
+              ],
+              "toneClasses": [
+                "qu",
+                "yangping"
+              ],
+              "possibleTones": [
+                "P",
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:十三支:十三支·去声",
+                "group:xinyun:十二齐:十二齐·阳平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "晴",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:晴:yangping:十一庚·阳平"
+              ],
+              "toneClasses": [
+                "yangping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:xinyun:十一庚:十一庚·阳平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "暮",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:暮:qu:十四姑·去声"
+              ],
+              "toneClasses": [
+                "qu"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:十四姑:十四姑·去声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "树",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:树:qu:十四姑·去声"
+              ],
+              "toneClasses": [
+                "qu"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:十四姑:十四姑·去声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "楼",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:楼:yangping:七尤·阳平"
+              ],
+              "toneClasses": [
+                "yangping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:xinyun:七尤:七尤·阳平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "此",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:此:shang:十三支·上声"
+              ],
+              "toneClasses": [
+                "shang"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:十三支:十三支·上声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "汉",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:汉:qu:八寒·去声"
+              ],
+              "toneClasses": [
+                "qu"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:八寒:八寒·去声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "江",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:江:yinping:十唐·阴平"
+              ],
+              "toneClasses": [
+                "yinping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:xinyun:十唐:十唐·阴平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "波",
+              "candidateCount": 3,
+              "candidateIds": [
+                "xinyun:波:qu:十二齐·去声",
+                "xinyun:波:yinping:二波·阴平",
+                "xinyun:波:yinping:五微·阴平"
+              ],
+              "toneClasses": [
+                "qu",
+                "yinping"
+              ],
+              "possibleTones": [
+                "P",
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:二波:二波·阴平",
+                "group:xinyun:五微:五微·阴平",
+                "group:xinyun:十二齐:十二齐·去声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "洲",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:洲:yinping:七尤·阴平"
+              ],
+              "toneClasses": [
+                "yinping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:xinyun:七尤:七尤·阴平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "烟",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:烟:yinping:九文·阴平",
+                "xinyun:烟:yinping:八寒·阴平"
+              ],
+              "toneClasses": [
+                "yinping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:xinyun:九文:九文·阴平",
+                "group:xinyun:八寒:八寒·阴平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "白",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:白:yangping:二波·阳平",
+                "xinyun:白:yangping:四开·阳平"
+              ],
+              "toneClasses": [
+                "yangping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:xinyun:二波:二波·阳平",
+                "group:xinyun:四开:四开·阳平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "空",
+              "candidateCount": 3,
+              "candidateIds": [
+                "xinyun:空:qu:十一庚·去声",
+                "xinyun:空:shang:十一庚·上声",
+                "xinyun:空:yinping:十一庚·阴平"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang",
+                "yinping"
+              ],
+              "possibleTones": [
+                "P",
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:十一庚:十一庚·上声",
+                "group:xinyun:十一庚:十一庚·去声",
+                "group:xinyun:十一庚:十一庚·阴平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "芳",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:芳:yinping:十唐·阴平"
+              ],
+              "toneClasses": [
+                "yinping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:xinyun:十唐:十唐·阴平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "草",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:草:qu:六豪·去声",
+                "xinyun:草:shang:六豪·上声"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:六豪:六豪·上声",
+                "group:xinyun:六豪:六豪·去声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "萋",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:萋:yinping:十二齐·阴平"
+              ],
+              "toneClasses": [
+                "yinping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:xinyun:十二齐:十二齐·阴平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "载",
+              "candidateCount": 2,
+              "candidateIds": [
+                "xinyun:载:qu:四开·去声",
+                "xinyun:载:shang:四开·上声"
+              ],
+              "toneClasses": [
+                "qu",
+                "shang"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:四开:四开·上声",
+                "group:xinyun:四开:四开·去声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "返",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:返:shang:八寒·上声"
+              ],
+              "toneClasses": [
+                "shang"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:八寒:八寒·上声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "阳",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:阳:yangping:十唐·阳平"
+              ],
+              "toneClasses": [
+                "yangping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:xinyun:十唐:十唐·阳平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "鹉",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:鹉:shang:十四姑·上声"
+              ],
+              "toneClasses": [
+                "shang"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:十四姑:十四姑·上声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "鹤",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:鹤:qu:二波·去声"
+              ],
+              "toneClasses": [
+                "qu"
+              ],
+              "possibleTones": [
+                "Z"
+              ],
+              "groupIds": [
+                "group:xinyun:二波:二波·去声"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "鹦",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:鹦:yinping:十一庚·阴平"
+              ],
+              "toneClasses": [
+                "yinping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:xinyun:十一庚:十一庚·阴平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            },
+            {
+              "character": "黄",
+              "candidateCount": 1,
+              "candidateIds": [
+                "xinyun:黄:yangping:十唐·阳平"
+              ],
+              "toneClasses": [
+                "yangping"
+              ],
+              "possibleTones": [
+                "P"
+              ],
+              "groupIds": [
+                "group:xinyun:十唐:十唐·阳平"
+              ],
+              "evidenceReviewStatuses": [
+                "unverified"
+              ],
+              "draftOnly": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

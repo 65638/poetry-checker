@@ -7,6 +7,12 @@ import { EvidencePanel } from './components/EvidencePanel';
 import './styles/tokens.css';
 import './styles/layout.css';
 
+const STEPS = [
+  { title: '录入诗文', text: '每行一句，标点可留可去，原文与位置都会保留。' },
+  { title: '选择韵书', text: '平水韵、词林正韵或中华新韵，口径不同，结论也可能不同。' },
+  { title: '逐字查看', text: '平仄与韵脚标在字旁；点任意一字，可看读音候选与依据。' },
+];
+
 export function CheckerView(props: CheckerViewProps) {
   const { draft, report, busy, stale, error, feedback, selectedTokenId, selectedFindingId } = props;
   const rootRef = useRef<HTMLDivElement>(null);
@@ -18,6 +24,7 @@ export function CheckerView(props: CheckerViewProps) {
       ? (report.poem.tokens.find((t) => t.tokenId === selectedTokenId) ?? null)
       : null;
   const panelOpen = selectedToken !== null;
+  const hasReport = report !== null;
 
   const lockedReason = stale
     ? '报告与当前输入不一致，请重新分析后再选音。'
@@ -49,13 +56,16 @@ export function CheckerView(props: CheckerViewProps) {
   return (
     <div ref={rootRef} className="pc-root">
       <div className="pc-page" inert={panelOpen}>
-        <header className="pc-header">
+        <header className="pc-masthead">
           <span className="pc-seal" aria-hidden="true">律</span>
-          <h1 className="pc-title">诗格律检查器</h1>
+          <div className="pc-masthead__text">
+            <h1 className="pc-title">诗格律检查器</h1>
+            <p className="pc-masthead__sub">近体诗平仄 · 用韵 · 读音依据</p>
+          </div>
         </header>
 
-        <main className="pc-layout">
-          <section className="pc-input-col" aria-labelledby="pc-input-heading">
+        <main className={`pc-desk${hasReport ? ' pc-desk--reading' : ' pc-desk--writing'}`}>
+          <section className="pc-desk__sheet" aria-labelledby="pc-input-heading">
             <h2 id="pc-input-heading" className="pc-visually-hidden">输入</h2>
             <InputPanel
               draft={draft}
@@ -68,7 +78,7 @@ export function CheckerView(props: CheckerViewProps) {
           </section>
 
           <section
-            className="pc-report-col"
+            className="pc-desk__page"
             aria-labelledby="pc-report-heading"
             aria-busy={busy}
           >
@@ -102,9 +112,27 @@ export function CheckerView(props: CheckerViewProps) {
                 onDownloadReport={props.onDownloadReport}
               />
             ) : (
-              <div className="pc-empty">
-                {busy ? '正在分析…' : '在输入区填写诗文，选择韵书后点击「分析」。'}
-              </div>
+              <aside className="pc-intro" aria-label="使用说明">
+                <div className="pc-intro__motif" aria-hidden="true" />
+                {busy ? (
+                  <p className="pc-intro__busy">
+                    <span className="pc-busy-dot" aria-hidden="true" />
+                    正在分析，结果出来后会显示在这里。
+                  </p>
+                ) : (
+                  <ol className="pc-steps">
+                    {STEPS.map((s, i) => (
+                      <li key={s.title} className="pc-step">
+                        <span className="pc-step__no" aria-hidden="true">{['一', '二', '三'][i]}</span>
+                        <div>
+                          <h3 className="pc-step__title">{s.title}</h3>
+                          <p className="pc-step__text">{s.text}</p>
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+                )}
+              </aside>
             )}
           </section>
         </main>

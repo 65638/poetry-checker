@@ -5,12 +5,16 @@ import type { CheckerViewProps, InputDraft } from '../../view-contract';
 import '../styles/input.css';
 
 const BOOKS: Array<{ id: BookId; label: string; hint: string }> = [
-  { id: 'pingshui', label: '平水韵', hint: '106 部，入声归仄。' },
-  { id: 'cilin', label: '词林正韵', hint: '19 部，入声归仄；不检查词牌格律。' },
+  { id: 'pingshui', label: '平水韵', hint: '传统诗韵，通行定义分 106 部；入声字归仄。' },
+  {
+    id: 'cilin',
+    label: '词林正韵',
+    hint: '传统词韵，通行定义分 19 部；入声字归仄。本工具不检查词牌格律。',
+  },
   {
     id: 'xinyun',
     label: '中华新韵',
-    hint: '14 部，按普通话声调：一、二声为平，三、四声为仄；结果可能与传统韵书不同。',
+    hint: '现代诗韵，通行定义分 14 部；按普通话声调，一、二声为平，三、四声为仄，结论可能与传统韵书不同。',
   },
 ];
 
@@ -48,7 +52,7 @@ export function InputPanel(props: InputPanelProps) {
       <textarea
         id={`${uid}-text`}
         className="pc-input__text"
-        rows={8}
+        rows={6}
         spellCheck={false}
         placeholder="每行一句，可直接粘贴整首诗"
         aria-describedby={`${uid}-text-hint`}
@@ -119,17 +123,22 @@ export function InputPanel(props: InputPanelProps) {
             示例
           </p>
           <ul className="pc-examples__list" aria-labelledby={`${uid}-examples`}>
-            {examples.map((ex) => (
-              <li key={ex.id}>
-                <button
-                  type="button"
-                  className="pc-button pc-button--quiet"
-                  onClick={() => onLoadExample(ex.id)}
-                >
-                  {ex.title}
-                </button>
-              </li>
-            ))}
+            {examples.map((ex) => {
+              const pending = ex.text.trim() === '';
+              return (
+                <li key={ex.id}>
+                  <button
+                    type="button"
+                    className="pc-button pc-button--quiet pc-examples__item"
+                    disabled={pending}
+                    onClick={() => onLoadExample(ex.id)}
+                  >
+                    {ex.title}
+                    {pending && <span className="pc-examples__pending">待核对</span>}
+                  </button>
+                </li>
+              );
+            })}
           </ul>
         </div>
       )}

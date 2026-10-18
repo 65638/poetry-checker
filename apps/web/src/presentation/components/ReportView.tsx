@@ -14,7 +14,7 @@ type ReportViewProps = Pick<
 
 const SUMMARY: Record<SummaryStatus, { label: string; icon: string; desc: string; next?: string }> = {
   pass: { label: '通过', icon: '✓', desc: '按所选韵书与规则集，已实现的必检项均通过；不代表文学水平评价。' },
-  fail: { label: '不合律', icon: '✕', desc: '存在明确违规，具体位置、应为与实际见下方诊断。' },
+  fail: { label: '不合律', icon: '✕', desc: '存在明确违规，具体位置、应为与实际见下方批注。' },
   needs_review: {
     label: '待复核', icon: '?', desc: '部分读音、体裁或依据尚未确定，暂不能给出结论。',
     next: '下一步：点击带「?」标记的字，查看候选读音与依据。',
@@ -44,8 +44,14 @@ function trailing(original: string, token: AnnotatedToken, next: AnnotatedToken 
   return original.slice(token.endUtf16, end).trim();
 }
 
+function prefersReducedMotion() {
+  return typeof window.matchMedia === 'function'
+    && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
 export function ReportView(props: ReportViewProps) {
   const { report, stale, selectedTokenId, selectedFindingId } = props;
+  const rootRef = useRef<HTMLElement>(null);
   const gridRef = useRef<HTMLOListElement>(null);
   const tokens = new Map(report.poem.tokens.map((t) => [t.tokenId, t]));
   const rhymeIds = new Set(report.prosody.rhyme.tokenIds);
@@ -57,17 +63,35 @@ export function ReportView(props: ReportViewProps) {
   );
   const summary = SUMMARY[report.summary.status];
   const firstRelated = selectedFinding?.locations[0]?.tokenId ?? null;
+  const reportId = report.inputHash;
+
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el || typeof el.animate !== 'function' || prefersReducedMotion()) return;
+    const ms = parseFloat(getComputedStyle(el).getPropertyValue('--pc-dur-report'));
+    if (!(ms > 0)) return;
+    const shift = getComputedStyle(el).getPropertyValue('--pc-shift-report').trim() || '0px';
+    el.animate(
+      [
+        { opacity: 0, transform: `translateY(${shift})` },
+        { opacity: 1, transform: 'none' },
+      ],
+      { duration: ms, easing: 'cubic-bezier(0.2, 0.7, 0.2, 1)' },
+    );
+  }, [reportId]);
 
   useEffect(() => {
     if (firstRelated === null) return;
     const el = Array.from(gridRef.current?.querySelectorAll<HTMLElement>('[data-token-id]') ?? [])
       .find((n) => n.dataset.tokenId === firstRelated);
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    el?.scrollIntoView({ block: 'nearest', behavior: reduce ? 'auto' : 'smooth' });
+    el?.scrollIntoView({ block: 'nearest', behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
   }, [selectedFindingId, firstRelated]);
 
   return (
-    <article className={`pc-report${stale ? ' pc-report--stale' : ''}`}>
+    <article
+      ref={rootRef}
+      className={`pc-report${stale ? ' pc-report--stale' : ''}${selectedFinding ? ' pc-report--focusing' : ''}`}
+    >
       {stale && (
         <p className="pc-stale" role="status">
           <span aria-hidden="true">⟳</span> 此报告对应修改前的输入，结论可能已失效；请重新分析。
@@ -83,8 +107,8 @@ export function ReportView(props: ReportViewProps) {
           {summary.next && <p className="pc-status__next">{summary.next}</p>}
         </div>
         <div className="pc-status__actions">
-          <button type="button" className="pc-button" onClick={props.onCopySummary}>复制摘要</button>
-          <button type="button" className="pc-button" onClick={props.onDownloadReport}>下载报告</button>
+          <button type="button" className="pc-button pc-button--small" onClick={props.onCopySummary}>复制摘要</button>
+          <button type="button" className="pc-button pc-button--small" onClick={props.onDownloadReport}>下载报告</button>
         </div>
       </header>
 
@@ -96,9 +120,11 @@ export function ReportView(props: ReportViewProps) {
         <span>{report.policy.notice}</span>
       </p>
 
-      <section aria-labelledby="pc-grid-heading">
-        <h3 id="pc-grid-heading" className="pc-section-title">逐字平仄</h3>
-        <p className="pc-legend">「韵」= 韵脚 · 「?」= 读音待定 · 虚线框 = 声调未定 · ◆ = 诊断关联位置</p>
+      <section className="pc-reading" aria-labelledby="pc-grid-heading">
+        <div className="pc-reading__head">
+          <h3 id="pc-grid-heading" className="pc-section-title">批注诗文</h3>
+          <p className="pc-legend">「韵」= 韵脚 · 「?」= 读音待定 · 虚线框 = 声调未定 · ◆ = 批注关联位置</p>
+        </div>
         <ol ref={gridRef} className="pc-grid">
           {report.poem.lines.map((line) => (
             <li key={line.line} className="pc-line">
@@ -112,13 +138,13 @@ export function ReportView(props: ReportViewProps) {
                   const pending = t.readingStatus !== 'resolved';
                   const isRelated = related.has(id);
                   const punct = trailing(report.poem.originalText, t, tokens.get(line.tokenIds[i + 1] ?? ''));
-                  const label = `第${t.line}句第${t.column}字「${t.text}」，${tone.label}${isRhyme ? '，韵脚' : ''}${pending ? '，读音待定' : ''}${isRelated ? '，诊断关联位置' : ''}`;
+                  const label = `第${t.line}句第${t.column}字「${t.text}」，${tone.label}${isRhyme ? '，韵脚' : ''}${pending ? '，读音待定' : ''}${isRelated ? '，批注关联位置' : ''}`;
                   return (
                     <span key={id} className="pc-cell-wrap">
                       <button
                         type="button"
                         data-token-id={id}
-                        className={`pc-cell pc-cell--${tone.mod}${isRelated ? ' pc-cell--related' : ''}${selectedTokenId === id ? ' pc-cell--selected' : ''}`}
+                        className={`pc-cell pc-cell--${tone.mod}${isRhyme ? ' pc-cell--rhyme' : ''}${isRelated ? ' pc-cell--related' : ''}${selectedTokenId === id ? ' pc-cell--selected' : ''}`}
                         aria-label={label}
                         aria-haspopup="dialog"
                         aria-expanded={selectedTokenId === id}
@@ -140,36 +166,39 @@ export function ReportView(props: ReportViewProps) {
         </ol>
       </section>
 
-      <section aria-labelledby="pc-findings-heading">
-        <h3 id="pc-findings-heading" className="pc-section-title">诊断</h3>
+      <section className="pc-notes" aria-labelledby="pc-findings-heading">
+        <h3 id="pc-findings-heading" className="pc-section-title">批注</h3>
         {checks.length === 0 ? (
-          <p className="pc-legend">本报告未列出诊断条目；结论以上方状态为准。</p>
+          <p className="pc-legend">本报告未列出批注条目；结论以上方状态为准。</p>
         ) : (
           <ol className="pc-findings">
-            {checks.map((f) => {
+            {checks.map((f, i) => {
               const st = CHECK[f.status];
               const rule = report.provenance.rules.find((r) => r.id === f.ruleId);
               const where = f.locations.map((l) => `第${l.line}句第${l.column}字`).join('、') || '整首';
               return (
                 <li key={f.id} className={`pc-finding pc-finding--${f.status}${f.id === selectedFindingId ? ' pc-finding--selected' : ''}`}>
-                  <div className="pc-finding__head">
-                    <span className="pc-tag"><span aria-hidden="true">{st.icon}</span> {st.label}</span>
-                    <span className="pc-tag pc-tag--quiet">{SEVERITY[f.severity]}</span>
-                    <span className="pc-finding__rule">{rule ? rule.name : f.ruleId}</span>
+                  <span className="pc-finding__no" aria-hidden="true">{i + 1}</span>
+                  <div className="pc-finding__body">
+                    <div className="pc-finding__head">
+                      <span className="pc-tag"><span aria-hidden="true">{st.icon}</span> {st.label}</span>
+                      <span className="pc-tag pc-tag--quiet">{SEVERITY[f.severity]}</span>
+                      <span className="pc-finding__rule">{rule ? rule.name : f.ruleId}</span>
+                    </div>
+                    <p className="pc-finding__msg">{f.message}</p>
+                    <dl className="pc-finding__compare">
+                      <div><dt>应为</dt><dd>{f.expected.map(toneText).join(' / ') || '无记录'}</dd></div>
+                      <div><dt>实际</dt><dd>{f.observed.map(toneText).join(' / ') || '无记录'}</dd></div>
+                    </dl>
+                    <button
+                      type="button"
+                      className="pc-button pc-button--quiet pc-finding__locate"
+                      aria-pressed={f.id === selectedFindingId}
+                      onClick={() => props.onSelectFinding(f.id)}
+                    >
+                      ◆ 在诗中定位：{where}
+                    </button>
                   </div>
-                  <p className="pc-finding__msg">{f.message}</p>
-                  <dl className="pc-finding__compare">
-                    <div><dt>应为</dt><dd>{f.expected.map(toneText).join(' / ') || '无记录'}</dd></div>
-                    <div><dt>实际</dt><dd>{f.observed.map(toneText).join(' / ') || '无记录'}</dd></div>
-                  </dl>
-                  <button
-                    type="button"
-                    className="pc-button pc-button--quiet"
-                    aria-pressed={f.id === selectedFindingId}
-                    onClick={() => props.onSelectFinding(f.id)}
-                  >
-                    ◆ 在诗中定位：{where}
-                  </button>
                 </li>
               );
             })}

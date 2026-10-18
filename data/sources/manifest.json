@@ -1,13 +1,14 @@
 {
-  "manifestVersion": "d1-1",
+  "manifestVersion": "d2-1",
   "updatedAt": "2026-10-17T12:26:28.017Z",
+  "updatedAtNote": "该时间戳仍是 d1-1 的登记时间。d2-1 本次只改 src:wikisource:pingshuiyun 一条（由“未取得”改为“已落盘、摘要待补”）；正文由用户在其本机浏览器取回，执行环境无法取得当前日期，故未改写时间戳，补录时请结合作业日期更新。",
   "maintainer": "队员 A / DeepSeek（D1 数据批次）",
   "howToVerify": "node scripts/data/fetch-sources.ts --check 会按本文件登记的 snapshotSha256 重新校验 data/raw 下的字节；不一致即报错退出，不静默替换。",
   "digestScope": "snapshotSha256 只覆盖原始快照字节；retrievedAt 等时间信息不参与业务内容摘要（见 packages/lexicon/src/digest.ts）。",
   "environmentNotes": [
     "本机到 github.com / raw.githubusercontent.com 的 TLS 证书链被中间人替换（UNABLE_TO_VERIFY_LEAF_SIGNATURE），直连校验失败；schannel 侧报 SEC_E_NO_CREDENTIALS。",
     "因此静态文件改由 jsdelivr CDN 取同一固定提交/标签的文件；CDN 证书链正常，且同一文件在两个不同 ref（提交与标签）取回的 SHA-256 一致。",
-    "维基文库（zh.wikisource.org / zh.wikipedia.org）本机不可达（连接超时），其正文与修订号未取得，状态记为 unreachable。",
+    "维基文库（zh.wikisource.org / zh.wikipedia.org）在 D1 的执行环境不可达（连接超时）。D2 批次一改由用户在其本机浏览器按 oldid=8264804 取回 wikitext 并落盘；执行环境本身仍未联网，取回动作与时间均未经机器验证。",
     "未执行任何上游仓库脚本（crawler/*.py、Makefile 等），只取静态数据与许可文本。"
   ],
   "sources": [
@@ -111,23 +112,38 @@
     },
     {
       "id": "src:wikisource:pingshuiyun",
-      "title": "维基文库《平水韻》（拟用于上声三讲补缺依据）",
+      "title": "维基文库《平水韻》（上声三讲补缺依据；底本为繁体）",
       "repoUrl": "https://zh.wikisource.org/wiki/平水韻",
-      "revision": null,
-      "revisionType": "页面修订号未取得",
-      "status": "unreachable",
-      "error": "UND_ERR_CONNECT_TIMEOUT（zh.wikisource.org / zh.wikipedia.org 均连接超时）",
+      "fixedUrl": "https://zh.wikisource.org/w/index.php?oldid=8264804",
+      "revision": "8264804",
+      "revisionType": "页面修订号（oldid），已固定为不可变引用",
+      "status": "snapshot_saved_locally",
+      "retrievedVia": "用户在其本机浏览器按 oldid=8264804 取回页面 wikitext 源文本并另存为本地文件；本批次执行环境网络不可达，未参与取回，也未验证取回过程。",
       "retrievedAt": null,
+      "retrievedAtNote": "落盘时刻未记录。补录前不得写成具体日期，也不得据此声称“已核对页面版权框”。",
       "license": {
-        "declared": "页面声明 CC BY-SA 4.0（依任务书记录，本次未能亲自复核）",
-        "verified": "未核实"
+        "declaredInBytes": "{{PD-old}}、{{wikipedia}}",
+        "declaredWhere": "data/raw/wikisouce/pingshuiyun-8264804.wikitext 第 655-656 行页脚模板；另见第 658 行 [[Category:韻書]]",
+        "verified": "已按落盘字节核对页脚模板原文",
+        "conflictsWith": "任务书与 D1 占位声明都记的是 CC BY-SA 4.0，与落盘字节的 {{PD-old}} 不一致；不得再沿用 CC BY-SA 4.0 的表述",
+        "pendingReview": "{{PD-old}} 的适用条件（作者逝世逾百年）与渲染后的版权框需人工复核；复核前只记录字节事实，不下许可结论"
       },
       "upstreamRightsTodo": [
-        "需在有网环境复核页面声明、修订号与署名要求后再使用。",
-        "使用其正文时必须保留来源、署名与许可，并保留可定位修订号。",
-        "注文中的汉字不得当作韵字收录。"
+        "人工复核页面版权框与 {{PD-old}} 适用条件后再定稿许可结论。",
+        "使用其正文时必须保留来源、署名与可定位修订号 oldid=8264804。",
+        "注文中的汉字不得当作韵字收录；本页 {{++|…}} 标题行之后的字串为韵字正文，【詞】段为补字。"
       ],
-      "files": []
+      "files": [
+        {
+          "path": "data/raw/wikisouce/pingshuiyun-8264804.wikitext",
+          "bytes": null,
+          "snapshotSha256": null,
+          "digestStatus": "pending",
+          "digestNote": "本批次执行环境被要求不运行终端命令，未能取得字节数与 SHA-256。未补齐前 fetch-sources.ts --check 不覆盖此条（该脚本只遍历内建 FETCH_PLAN 的 8 个 CDN 文件，且 expectedHashes 会跳过 null 摘要），因此不得以“--check 通过”推断本条已校验，也不得把本条计入已核对来源数。",
+          "purpose": "《平水韻》全本 wikitext（繁体，106 韵）；上声三讲正文为「講港棒蚌項缿玤傋耩」",
+          "namingDeviation": "目录名落盘为 wikisouce（少一个 r）、文件名为小写，与 D2 执行手册约定的 data/raw/wikisource/PingshuiYun-8264804.wikitext 不一致。改路径必须保持字节不变（改名而非重新转录）。"
+        }
+      ]
     },
     {
       "id": "src:wikisource:cilinzhengyun",
