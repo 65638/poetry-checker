@@ -37,10 +37,10 @@ import {
   XINYUN_RULES_VERSION,
   checkCompleteness,
   defineSnapshot,
-  gateFor,
   type BookGate,
   type CompletenessReport,
 } from "../../packages/lexicon/src/index.js";
+import type { SnapshotReviewStatus } from "../../packages/lexicon/src/snapshot.js";
 
 import {
   ROOT,
@@ -126,7 +126,7 @@ type AnomalyClass = (typeof ALL_CLASSES)[number];
 interface RawSnapshot {
   dataVersion: string;
   book: BookId;
-  reviewStatus: string;
+  reviewStatus: SnapshotReviewStatus;
   notice: string;
   candidates: ReadingCandidate[];
   groups: RhymeGroup[];
@@ -1021,10 +1021,14 @@ function computeReconciliation(audits: SnapshotAudit[]): Reconciliation {
       candidate.modernReading?.toneNumber !== expected
     );
   }).length;
-  // 调号字符（阴平/阳平/上声/去声）不应出现在 pinyin 字段里（应为无调号拼音）。
+  // 调号字符：只认四个声调附加符（macron/acute/caron/grave）。
+  // 注意不能直接用「NFD 变长」判定——`ü`(U+00FC) 也会分解出 U+0308 分音符，
+  // 而 0009 明确要求「去调号但保留 ü（lǜ → lü）」，把 ü 算成调号会产生假阳性。
+  const TONE_MARKS = ["\u0304", "\u0301", "\u030C", "\u0300"] as const;
   const pinyinWithToneMark = withModernReading.filter((candidate) => {
     const pinyin = candidate.modernReading?.pinyin ?? "";
-    return /[\u0100-\u01FF\u0300-\u036F]/u.test(pinyin);
+    const decomposed = pinyin.normalize("NFD");
+    return TONE_MARKS.some((mark) => decomposed.includes(mark));
   }).length;
 
   const collisions = readJson<{ count?: number; items?: unknown[] }>(

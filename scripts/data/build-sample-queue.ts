@@ -186,7 +186,6 @@ function main(): void {
     return units;
   };
 
-  const items: QueueItem[] = [];
   const seq: Record<BookId, number> = { pingshui: 0, cilin: 0, xinyun: 0 };
   const nextId = (book: BookId): string => {
     seq[book] += 1;
@@ -309,8 +308,6 @@ function main(): void {
       pingshuiAllChars.set(character, list);
     }
   }
-  const pingshuiCharSet = new Set(pingshuiAllChars.keys());
-
   // (a) 入声 20：平水入声 17 部各 ≥1，余量 3 按码位补
   const ruUnits = [...pingshuiUnits.keys()].filter((unit) => unit.startsWith("入:")).sort();
   check(ruUnits.length === 17, `平水入声部 17 个（实际 ${ruUnits.length}）`);
