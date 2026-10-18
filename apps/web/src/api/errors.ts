@@ -41,8 +41,20 @@ export class ApiError extends Error {
     this.fieldErrors = options.fieldErrors ?? [];
   }
 
-  /** 供 UI 显示的稳定文案；不把 unknown 说成网络故障。 */
+  /**
+   * 供 UI 显示的稳定文案；不把 unknown 说成网络故障。
+   *
+   * 原则：**保留服务端给出的诊断细节**。服务端的 message 是给用户看的原因
+   * （例如「LOOKUP_EVIDENCE_UNVERIFIED：字位 l1c1（白）… 没有已审核证据」），
+   * 前端固定文案只负责「接下来该做什么」。两者都显示，用户才知道是等数据
+   * 还是改输入 —— 只给「稍后重试」会让人无从下手。
+   */
   get userMessage(): string {
+    const detail = this.message.trim();
+    const withDetail = (advice: string): string =>
+      detail.length === 0 || detail.length > 600
+        ? advice
+        : `${advice}\n原因：${detail}`;
     switch (this.code) {
       case "NETWORK_ERROR":
         return "无法连接分析服务，请检查网络后重试。输入内容已保留。";
@@ -51,13 +63,13 @@ export class ApiError extends Error {
       case "HTTP_422":
         return `请求未被接受：${this.message}`;
       case "HTTP_413":
-        return "正文超出长度限制（最多 2,000 个 Unicode 码点）。";
+        return withDetail("正文超出长度限制（最多 2,000 个 Unicode 码点）。");
       case "HTTP_503":
-        return "分析数据尚未就绪，请稍后重试。输入内容已保留。";
+        return withDetail("分析数据尚未就绪，请稍后重试。输入内容已保留。");
       case "HTTP_404":
-        return "请求的资源不存在。";
+        return withDetail("请求的资源不存在。");
       case "HTTP_500":
-        return "分析服务内部错误，请稍后重试。";
+        return withDetail("分析服务内部错误，请稍后重试。");
       case "BAD_JSON":
         return "服务返回的内容无法解析，已按失败处理，未展示为正常报告。";
       case "BAD_SCHEMA":
