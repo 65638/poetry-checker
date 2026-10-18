@@ -89,13 +89,13 @@ describe("HTTP 层·真实模式（A 全量数据，manifest 装载）", () => {
     ).toBe(404);
   });
 
-  it("readyz：快照未审核+规则/语境/作品未发布 → 503 列明缺口", async () => {
+  it("readyz：全库未审核与规则部分依据 → 503 列明缺口", async () => {
     const res = await app.inject({ method: "GET", url: "/readyz" });
     expect(res.statusCode).toBe(503);
     expect(res.json().error.code).toBe("DATA_NOT_READY");
   });
 
-  it("analyze：三库进入真实编排；证据门槛与资源冲突均映射 503 DATA_NOT_READY", async () => {
+  it("analyze：平水已审范围返回 200，词林与新韵仍受证据门槛约束", async () => {
     for (const book of ["pingshui", "cilin", "xinyun"] as const) {
       const res = await app.inject({
         method: "POST",
@@ -109,8 +109,15 @@ describe("HTTP 层·真实模式（A 全量数据，manifest 装载）", () => {
           readingOverrides: [],
         },
       });
-      expect(res.statusCode, book).toBe(503);
-      expect(res.json().error.code).toBe("DATA_NOT_READY");
+      if (book === "pingshui") {
+        expect(res.statusCode, book).toBe(200);
+        expect(AnalysisResponseSchema.parse(res.json()).summary.status).toBe(
+          "pass",
+        );
+      } else {
+        expect(res.statusCode, book).toBe(503);
+        expect(res.json().error.code).toBe("DATA_NOT_READY");
+      }
     }
   });
 

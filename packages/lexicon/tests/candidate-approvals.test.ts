@@ -1,4 +1,6 @@
 import { readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import {
@@ -21,12 +23,15 @@ const load = () =>
     ),
   );
 
-describe("J03 审批只作用于明确候选", () => {
+describe("J03 与 D2 批次审批只作用于明确候选", () => {
   it("白已审不连带批准同部的昔；一已审不连带批准日", () => {
     const snapshot = load();
     const approved = new Set(
       snapshot.evidence
-        .filter((item) => item.reviewStatus === "approved")
+        .filter(
+          (item) =>
+            item.reviewStatus === "approved" && item.id.endsWith(":j03"),
+        )
         .map((item) => item.id),
     );
     for (const id of ["pingshui:白:ru:入声十一陌", "pingshui:一:ru:入声四质"]) {
@@ -49,7 +54,66 @@ describe("J03 审批只作用于明确候选", () => {
     }
     expect(snapshot.reviewStatus).toBe("unverified");
   });
-  it("十处裁定指向的八个唯一候选已审，未选竞争候选没有删除", () => {
+  it("68条新增审批准确对应冻结来源批次，原件与来源字节摘要可复核", () => {
+    const approval = JSON.parse(
+      readFileSync(
+        join(root, "data/reviews/d2-closeout-batch-approval.json"),
+        "utf8",
+      ),
+    ) as {
+      actualReply: string;
+      approvedScope: {
+        batchFile: string;
+        batchSha256: string;
+        candidateCount: number;
+        candidateIds: string[];
+      };
+      recordFiles: Array<{ path: string; sha256: string }>;
+    };
+    const batchBytes = readFileSync(
+      join(root, approval.approvedScope.batchFile),
+    );
+    expect(createHash("sha256").update(batchBytes).digest("hex")).toBe(
+      approval.approvedScope.batchSha256,
+    );
+    const batch = JSON.parse(batchBytes.toString("utf8")) as {
+      source: { path: string; sha256: string };
+      items: Array<{ candidate: { id: string }; machineStatus: string }>;
+    };
+    for (const file of [...approval.recordFiles, batch.source]) {
+      expect(
+        createHash("sha256")
+          .update(readFileSync(join(root, file.path)))
+          .digest("hex"),
+        file.path,
+      ).toBe(file.sha256);
+    }
+    const expectedIds = batch.items
+      .filter((item) => item.machineStatus === "source_character_found")
+      .map((item) => item.candidate.id)
+      .sort();
+    expect(expectedIds).toHaveLength(68);
+    expect(approval.approvedScope.candidateCount).toBe(68);
+    expect([...approval.approvedScope.candidateIds].sort()).toEqual(
+      expectedIds,
+    );
+    expect(approval.actualReply).toBe("同意该批次与“千里”裁定");
+    const registeredIds = readCandidateApprovals(root)
+      .filter((item) => item.evidenceId.endsWith(":d2-batch"))
+      .map((item) => item.candidateId)
+      .sort();
+    expect(registeredIds).toEqual(expectedIds);
+    const snapshot = load();
+    const batchEvidence = snapshot.evidence.filter((item) =>
+      item.id.endsWith(":d2-batch"),
+    );
+    expect(batchEvidence).toHaveLength(68);
+    expect(
+      batchEvidence.every((item) => item.reviewStatus === "approved"),
+    ).toBe(true);
+    expect(registeredIds).not.toContain("pingshui:里:qu:四寘");
+  });
+  it("明确批准的候选均有独立证据，未选竞争候选没有删除", () => {
     const snapshot = load();
     const approvals = readCandidateApprovals(root);
     const approved = new Set(

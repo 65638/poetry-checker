@@ -47,7 +47,7 @@ describe("真实资源加载与失败闭合", () => {
   it("B 的十条语境规则、证据、来源和作品/运行卡都加载并闭合", () => {
     const resources = loadResources();
     expect(resources.loadErrors).toEqual([]);
-    expect(resources.contextRules).toHaveLength(10);
+    expect(resources.contextRules).toHaveLength(11);
     expect(resources.ruleCards).toHaveLength(10);
     expect(
       resources.works.filter((work) => work.reviewStatus === "approved"),

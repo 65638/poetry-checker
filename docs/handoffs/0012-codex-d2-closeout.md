@@ -1,5 +1,38 @@
 # Codex 接管 D2 收口
 
+## 当前结论（2026-10-18，组长确认后；以本节为准）
+
+组长回复原文：**同意该批次与“千里”裁定**。已将 68 条固定原文可匹配候选按精确 ID 落库，并新增第 11 条语境规则：仅在“欲穷千里目”中选择“里”的上声四纸。去声四寘竞争候选仍存在、仍为 unverified。审核方式为“组长接受机器初审批次并裁定异常”，不称逐字人工核验，不批准整部或全库。
+
+机器记录：`data/reviews/d2-closeout-batch-approval.json`；批准前来源对照及 SHA 冻结在 `data/reviews/d2-closeout-approved-source-batch.json`。测试会校验批次 68 个 ID、原件/来源摘要及候选范围隔离。
+
+实际验收：`pnpm verify` exit 0，**44 文件 / 584 测试**；lint、typecheck、构建、8 个契约/模板生成物检查通过。三首真实 HTTP 探针 `pnpm exec tsx scripts/probe-d2-api.ts --require-golden` exit 0，**3/3**，报告见 `data/reviews/d2-real-api-report.json`。
+
+| 作品（平水韵） | HTTP | 正确行为 |
+|---|---|---|
+| 登鹳雀楼 | 200 | 五绝，仄起首句不入韵，流/楼同十一尤，summary=pass |
+| 静夜思 | 200 | 古体，summary=not_applicable，不强套近体规则，仍展示逐字音韵 |
+| 黄鹤楼 | 200 | 七律及特殊拗律标签，押韵通过，常格偏离可定位，summary=fail 符合预期 |
+
+三首 96 字位经已审语境规则筛选后有效候选证据 **96/96**，剩余阻断 0。筛选前仍有 10 字位含未审竞争候选，不能删除这些候选来凑通过；同调多读仍显示读音歧义。
+
+数据版本升至 `pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3`（API 使用的 106 部快照）；105 部对应 `pingshui-cwr-ff0e9c1-d2-full-review3`。候选/韵部/来源及既有证据 ID 均不迁移。新增 68 个 `ev:candidate:*:d2-batch`；全量共 83 条候选审批，106 部另有三讲部级 1 条，共 84/189 条证据已审。版本差异、字节摘要见 `data/reviews/d2-review3-version-change.json`。
+
+业务摘要：105 部 `60c416c8d0fe39fee07a82a2975ad0bbe1374b53985abb5a79f9723c04498f7e`；106 部 `6c9057412b85a3c7b4066f260e8d52b60b8be936c814380200f7ed9d7a71d6ef`。
+
+四份全量快照机器初审运行通过、引用闭合，仍登记 16 项异常（P0=0、P1=4、P2=7、P3=5）。运行通过不表示异常关闭。词林/新韵未新增证据批准，三张规则卡的部分依据边界仍保留，`/readyz` **仍返回 503**。本批完成三首真实 API 门槛，不宣告三库全量发布。
+
+### GLM 集成指令
+
+1. 从 PR #12（`codex/d2-closeout`）集成；先保留当前工作区改动，不重置主工作区。该分支基于 main `e1c076c`，包含 B `adfc454` 及 Codex 首批修复。
+2. 运行下文复现命令；`--require-golden` 必须 exit 0 / 3/3。集成后重启 API，确保未设置 `POETRY_DEV_MOCK=1`，让进程加载 review3。
+3. 用正式入口 `/` 验证三首提交、字位依据、规则详情、选音和导出；旧 `presentation-preview.html` 是合成展示页，不能用于真实链路验收。
+4. 归还 A/B/C/E/GLM 对应路径。本轮未改 Web 展示层，未重跑浏览器端到端/视觉验收；D2 全组宣告仍需集成后的正式入口复验。前端改版沿原计划推进。
+
+以下保留首次接管记录，**其中 0/3 与待裁状态已由上文取代**。
+
+## 首次接管记录（历史：8f74397）
+
 用户授权：本会话“目前情况很严峻，可能得你干这些活了”。
 
 起点：main `e1c076c`；独立分支 `codex/d2-closeout`，不切换主工作区。

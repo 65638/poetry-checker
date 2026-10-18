@@ -1,11 +1,9 @@
 /**
  * B2-08：用 A 的真实快照跑三首固定正文，断言“当前实际状态”。
  *
- * 2026-10-18 起样本快照的 7 条部级证据已随 J03 第一批落库为 approved
- * （快照级 reviewStatus 仍为 unverified——部分批准不等于整库批准）；
- * 证据门槛语义不变：触发门槛的用例改用全量快照中仍未审核的部
- * （依=五微、山=十五删、尽=十一轸、人=十一真 等）。
- * 本改法由 A 在 @GLM @B 反馈中给出，GLM 代改，B 复核。
+ * 候选审批按 J03 和 D2 收口批次精确落库，全库仍为 unverified。
+ * 本组不加载语境规则，用当前数据推导未审有效候选的首个阻断位置；
+ * 完整语境接线后的三首成功回归在 apps/api/tests/golden-real.test.ts。
  */
 import { readFileSync } from "node:fs";
 import path from "node:path";
@@ -174,7 +172,7 @@ describe("B2-08 真实快照下的逐字状态", () => {
     ]);
   });
 
-  it("登鹳雀楼（全量快照）：门槛恰在第一个未审字位拦截，位置由数据推导（当前为 l1c3 依=五微）", async () => {
+  it("登鹳雀楼（不加载语境）：在第一个未审竞争候选处拦截，位置由数据推导", async () => {
     const text = work("golden-dengguanquelou-ps-v1").text;
     const poem = parseText({ text });
     const lookup = await lookupFullFor(text);
@@ -203,7 +201,7 @@ describe("B2-08 真实快照下的逐字状态", () => {
     expect(error.details.dataVersion).toBe(fullDataVersion);
   });
 
-  it("黄鹤楼（全量快照）：46 字全收录、缺字 0；门槛在第一个未审字位拦截（当前为 l1c1 昔=十药未审+十一陌已审）", async () => {
+  it("黄鹤楼（不加载语境）：46 字全收录、缺字 0；未审竞争候选仍会拦截", async () => {
     const text = work("golden-huanghelou-ps-v1").text;
     const poem = parseText({ text });
     expect(poem.tokens).toHaveLength(56);
@@ -231,7 +229,7 @@ describe("B2-08 真实快照下的逐字状态", () => {
     expect(error.code).toBe("LOOKUP_EVIDENCE_UNVERIFIED");
     expect(error.details.tokenId).toBe(expected.tokenId);
 
-    // 「已审候选不得掩盖未审竞争候选」：首个拦截位是多候选且部分已审时（当前正是「昔」），
+    // 「已审候选不得掩盖未审竞争候选」：首个拦截位是多候选且部分已审时，
     // 真实数据直接钉住该语义；全部审完后由 resolve.test.ts 的
     // 「GATE 混合有效候选」合成用例长期守护，不依赖真实数据的审核进度。
     if (expected.mixed) {

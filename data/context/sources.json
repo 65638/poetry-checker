@@ -8,5 +8,15 @@
     "snapshotSha256": null,
     "revision": null,
     "retrievedAt": null
+  },
+  {
+    "id": "src:d2-closeout-review",
+    "title": "D2收口候选批次与“千里”异常裁定",
+    "edition": "2026-10-18 用户会话明确确认；组长接受AI初审结果并裁定异常",
+    "url": null,
+    "license": "项目内部审批记录",
+    "snapshotSha256": "38a5359e7f98b3a4377ce844d4765623656670f2ff1478a94155270b050b96e6",
+    "revision": null,
+    "retrievedAt": null
   }
 ]

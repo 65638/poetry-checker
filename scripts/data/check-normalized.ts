@@ -36,11 +36,11 @@ const NORMALIZED = path.join(ROOT, "data", "normalized");
 const EXPECTED: Readonly<
   Record<string, { groupCount: number; missingGroups: readonly string[] }>
 > = {
-  "pingshui-cwr-ff0e9c1-d2-full-review2": {
+  "pingshui-cwr-ff0e9c1-d2-full-review3": {
     groupCount: 105,
     missingGroups: ["三讲"],
   },
-  "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review2": {
+  "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3": {
     groupCount: 106,
     missingGroups: [],
   },
@@ -185,7 +185,7 @@ function main(): void {
 
     // 三讲补丁快照的专项复核：一字多部必须双向成立
     if (
-      snapshot.dataVersion === "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review2"
+      snapshot.dataVersion === "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3"
     ) {
       const fenGroups = snapshot.candidates
         .filter((candidate) => candidate.character === PRE_EXISTING_CHARACTER)

@@ -1,23 +1,29 @@
 # apps/api
 
-负责人：组长 / 本地 GLM。当前状态：D1 开发 mock 已实现（见根 HANDOFF），真实编排待各模块接入。
+负责人：组长 / 本地 GLM。本次 Codex 接管与归还记录见 `docs/handoffs/0012-codex-d2-closeout.md`。
 
-## 当前行为（D1 mock）
+默认走真实编排：parseText → lookup → resolveReadings → matchTemplates → classifyGenre → evaluateProsody。仅显式设置 `POETRY_DEV_MOCK=1` 才加载合成 fixture。
 
-- `GET /healthz` → `{status:"ok"}`。
-- `GET /readyz` → `{status:"ready", versions}`（版本为 fixture-only）。
-- `GET /api/v1/rhyme-books` → 三本韵书清单；`dataVersion=fixture-only`，`groupCount=0`，待 A 接入真实字表后替换。
-- `POST /api/v1/analyze` → 请求经 `AnalyzeRequestSchema` 校验（422 统一错误对象、超限 413），响应从 `fixtures/contracts/` 五类合成报告中确定性选取：正文精确匹配某 fixture 原文时返回该状态，否则返回 `needs_review`；请求韵书写入 `policy` 与 `poem.book`，`inputHash` 按请求正文重算。**不执行任何真实格律判断。**
-- `GET /api/v1/characters|rules|sources/...` → 503 `DATA_NOT_READY`（真实数据分别来自 A、C/Codex、A/B/E）。
+## 当前行为（2026-10-18，D2 收口）
+
+- `GET /healthz`：进程存活。
+- `GET /readyz`：全库发布就绪状态。目前为 503 `DATA_NOT_READY`，原因是三库全量证据未批准，以及三张规则卡的部分依据范围；不阻止具备有效依据的局部分析。
+- `GET /api/v1/rhyme-books`：真实三库快照，主部数 106/19/14；词林和新韵的声类子卷另计。
+- `POST /api/v1/analyze`：三首核心诗平水韵模式均为 200。《登鹳雀楼》合律、《静夜思》不适用近体规则、《黄鹤楼》保留七律身份并显示常格偏离；同调多读保留歧义。其他输入若有效候选缺少已批准依据，返回 503；不得保证任意输入均可分析。
+- `GET /api/v1/characters/:character`：返回候选与审核状态，查字成功不等于候选已审。
+- `GET /api/v1/rules/:ruleId`、`GET /api/v1/sources/:sourceId`：可查运行规则和来源，未知 ID 返回 404；卡片 limitations 如实列出适用边界。
+
+API 同时装载语境规则/证据/来源、作品元数据/证据/来源、运行规则卡。文件损坏、Schema 错误、引用缺失或同 ID 内容冲突记入 loadErrors，分析返回 503，不静默跳过。输入使用冻结 Schema 校验，模块错误码映射分别见 `src/readings-errors.ts`、`src/genre-errors.ts`、`src/lexicon-errors.ts`。
 
 ## 运行
 
 ```sh
 pnpm install --frozen-lockfile
 pnpm dev:api          # 等价于 pnpm --filter @poetry/api dev，默认 127.0.0.1:3000，PORT 可改
-pnpm --filter @poetry/api test
+pnpm verify
+pnpm exec tsx scripts/probe-d2-api.ts --require-golden
 ```
 
-## 接入真实模块（后续）
+默认监听 127.0.0.1:3000，`PORT` 可改。前后端同时启动使用根目录 `pnpm dev`，正式页面入口为 `/`；`presentation-preview.html` 是合成展示页。
 
-按公共契约第 4 节顺序编排 parseText → lookup → resolveReadings → matchTemplates → classifyGenre → evaluateProsody；替换 mock 选 fixture 逻辑；`readyz` 反映真实数据装载状态。错误码、确定性、证据可解析要求见契约第 5 节与组长任务书 L01–L12。
+本批 API 快照为 `pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3`。**集成后重启 API** 以刷新资源缓存。真实 HTTP 注入探针在 `data/reviews/d2-real-api-report.json` 留存实际报告；本地 3/3 通过不替代集成后的浏览器验收，也不批准三库全量发布。

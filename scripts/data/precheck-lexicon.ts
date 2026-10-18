@@ -1095,10 +1095,13 @@ function computeReconciliation(audits: SnapshotAudit[]): Reconciliation {
     approvedTable.find((entry) => entry.dataVersion === dataVersion);
 
   const patched = findApproved(
-    "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review2",
+    "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3",
   );
-  const plain = findApproved("pingshui-cwr-ff0e9c1-d2-full-review2");
+  const plain = findApproved("pingshui-cwr-ff0e9c1-d2-full-review3");
   const sampleRow = findApproved("sample-pingshui-cwr-ff0e9c1-d1-review2");
+  const candidateCount =
+    readJson<{ candidateApprovals: unknown[] }>(APPROVED_FILE)
+      ?.candidateApprovals.length ?? 0;
 
   const matches: Reconciliation["matches"] = [
     {
@@ -1122,20 +1125,24 @@ function computeReconciliation(audits: SnapshotAudit[]): Reconciliation {
       ok: sourceIdsAcrossBooksDistinct,
     },
     {
-      claim: "④ 平水106部：三讲1条部级与15条候选证据",
-      expected: "16 / 121",
+      claim: `④ 平水106部：三讲1条部级与${candidateCount}条候选证据`,
+      expected: `${candidateCount + 1} / ${candidateCount + 106}`,
       actual:
         patched === undefined
           ? "未取得"
           : `${patched.approved} / ${patched.total}`,
-      ok: patched?.approved === 16 && patched?.total === 121,
+      ok:
+        patched?.approved === candidateCount + 1 &&
+        patched?.total === candidateCount + 106,
     },
     {
-      claim: "④ 平水105部：15条候选证据，不批准所属整部",
-      expected: "15 / 120",
+      claim: `④ 平水105部：${candidateCount}条候选证据，不批准所属整部`,
+      expected: `${candidateCount} / ${candidateCount + 105}`,
       actual:
         plain === undefined ? "未取得" : `${plain.approved} / ${plain.total}`,
-      ok: plain?.approved === 15 && plain?.total === 120,
+      ok:
+        plain?.approved === candidateCount &&
+        plain?.total === candidateCount + 105,
     },
     {
       claim: "④ 七字样本：8条候选已审、7条原部级未审",
@@ -1180,16 +1187,16 @@ const MAPPING_DRAFT_FILE = `data/reviews/cilin-pingshui-mapping-draft-${REPORT_D
 const PINGSHUI_MAIN = "pingshui.full-d2-patched.json";
 const CILIN_FILE = "cilin.full-d2.json";
 
-/** 已登记的业务内容摘要（来源：docs/handoffs/0009-a-fix-source-id-and-modern-reading.md）。 */
+/** 已登记的业务内容摘要（每项注明登记来源）。 */
 const REGISTERED_DIGESTS: Readonly<
   Record<string, { digest: string; source: string }>
 > = {
   "pingshui.full-d2.json": {
-    digest: "4fe504dc8bda00b3a5698a8648631b7d2fd69bad953fe0f567abdf04488c07c8",
+    digest: "60c416c8d0fe39fee07a82a2975ad0bbe1374b53985abb5a79f9723c04498f7e",
     source: "docs/handoffs/0012-codex-d2-closeout.md",
   },
   "pingshui.full-d2-patched.json": {
-    digest: "d5ec1a588f165d38feb93752021848ed7943f54c7118cc7933e560477323d501",
+    digest: "6c9057412b85a3c7b4066f260e8d52b60b8be936c814380200f7ed9d7a71d6ef",
     source: "docs/handoffs/0012-codex-d2-closeout.md",
   },
   "xinyun.full-d2.json": {
@@ -2113,7 +2120,7 @@ function main(): void {
     actionKind: "接线/脚本可修",
     affectedBooks: [
       "pingshui-cwr-ff0e9c1-d2-full",
-      "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review2",
+      "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3",
       "cilin-cwr-ff0e9c1-d2-full",
       "xinyun-rebuild-d2-full",
     ],
@@ -2329,9 +2336,8 @@ function main(): void {
       measured: {
         pingshuiPatchedRaw: supplement.a1.universe.pingshuiDistinctRaw,
         pingshui105Raw:
-          audits.find(
-            (audit) => audit.dataVersion === "pingshui-cwr-ff0e9c1-d2-full",
-          )?.candidates.distinctCharacters ?? 0,
+          audits.find((audit) => audit.file === "pingshui.full-d2.json")
+            ?.candidates.distinctCharacters ?? 0,
         cilinRaw: supplement.a1.universe.cilinDistinctRaw,
         cilinHan: supplement.a1.universe.cilinHan,
         allNormalizationsEqual: true,
@@ -2659,7 +2665,7 @@ function renderMarkdown(input: PrecheckOutput): string {
   );
   push("");
   push(
-    `**第二批人审（13_）**：\`${input.secondBatchWorksheet.file}\` 确认为**空白工作表**（${input.secondBatchWorksheet.evidence}）。` +
+    `**第二批人审（13_）**：\`${input.secondBatchWorksheet.file}\` ${input.secondBatchWorksheet.isBlankWorksheet ? "为待填写工作表" : "已归档裁定"}（${input.secondBatchWorksheet.evidence}）。` +
       `**新增 approved = ${input.secondBatchWorksheet.newApproved} 条**。${input.secondBatchWorksheet.note}`,
   );
   push("");

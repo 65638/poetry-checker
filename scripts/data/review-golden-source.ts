@@ -195,7 +195,7 @@ const md = [
   "",
   `版本：${snapshot.dataVersion}。原文：${rawPath}，oldid=8264804，SHA-256=${sha}。`,
   "",
-  `96 字位中，经现有语境裁定后 ${reviewedPositions} 位证据已齐，${blockedPositions} 位仍缺；去重为 ${items.length} 条候选。源文找到 ${stats.sourceMatchedCandidates} 条，未匹配 ${stats.sourceDiscrepancies} 条。所有条目当前仍为 unverified。`,
+  `${stats.tokens} 字位中，经现有语境裁定后 ${reviewedPositions} 位证据已齐，${blockedPositions} 位仍缺；去重为 ${items.length} 条候选。源文找到 ${stats.sourceMatchedCandidates} 条，未匹配 ${stats.sourceDiscrepancies} 条。${items.length === 0 ? "当前固定正文的有效候选没有待裁项；不代表所有竞争候选或全库已批准。" : "以下待裁条目当前仍为 unverified。"}`,
   "",
   "同一候选出现在多个位置只列一次。源文字形命中只能证明机器检索结果；简繁差异取自已登记作品对照，不把它扩大成全库字形转换。保留竞争候选，不因押韵或平仄需要选择它。",
   "",

@@ -61,8 +61,8 @@ const OUT_DIR = path.join(ROOT, "data", "normalized");
 const CWR_REVISION = "ff0e9c13fb037c43e0eaa5dc929c0fe4fa2ffb18";
 const CWR_DATA_PATH = "data/Pingshui_Rhyme.json";
 
-const A_VERSION = "pingshui-cwr-ff0e9c1-d2-full-review2";
-const B_VERSION = "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review2";
+const A_VERSION = "pingshui-cwr-ff0e9c1-d2-full-review3";
+const B_VERSION = "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3";
 
 /** 已核事实：落盘字节身份（由人在真实文件上核对后提供，此处只做回归断言）。 */
 const WIKITEXT_OLDID = "8264804";

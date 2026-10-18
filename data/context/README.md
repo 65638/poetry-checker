@@ -1,12 +1,12 @@
 ﻿# data/context：语境规则格式与待审队列（D1 建立，D2 接入真实数据）
 
-本目录属于队员 B（见 `docs/ownership.md`）。第二批裁定已生成 10 条语境规则及其证据、来源；实际生效仍需 API 加载这些资源，并满足所选候选自身的证据门槛。
+本目录属于队员 B（见 `docs/ownership.md`）。J03 第二批 10 条及 D2 收口 1 条语境规则已由 API 加载；均配套已批准的语境依据与所选候选归部证据。Codex 本次接管记录见 `docs/handoffs/0012-codex-d2-closeout.md`。
 
 ## 目录约定
 
 | 文件                           | 作用                                                         | 是否可被运行时加载                                                 |
 | ------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------------ |
-| `rules.json`                   | **已审核、可生效**的 `ContextRule[]`（当前 10 条）           | 是。API 硬编码读这个路径                                           |
+| `rules.json`                   | **已审核、可生效**的 `ContextRule[]`（当前 11 条）           | 是。API 硬编码读这个路径                                           |
 | `evidence.json`                | 规则引用的 `kind="context"` 已审核证据                       | 由 API 并入 `lookup.evidence` 后生效                               |
 | `sources.json`                 | 上述证据的 `SourceRecord`                                    | 由 API 并入 `lookup.sources` 后生效                                |
 | `review-queue.json`            | 待审核语境清单：候选词组、偏移、要查的词义、正反例、来源状态 | **否**。这是人工整理材料，不是 `ContextRule[]`，加载器不得直接读它 |
@@ -18,22 +18,22 @@
 `CONTEXT_RULE_UNVERIFIED_IGNORED` notice，不改变任何字位的读音。规则已审核但证据缺失/未审核/用途不是 `context` 时，
 记为 `CONTEXT_RULE_EVIDENCE_INSUFFICIENT` notice，同样不选音。
 
-## 当前状态（2026-10-18，第二批人审后）
+## 当前状态（2026-10-18，D2 收口批次确认后）
 
 `rules.json` 的 10 条来自 `docs/reviews/13_J03三首核心诗逐字人审_第二批.md` 组长裁定，
 逐条绑定：短语、`targetOffset`、被选候选、`kind=context` 的裁定证据与来源。
-本文件只做**选音**，不改任何格律规则。
+新增第 11 条来自组长“同意该批次与‘千里’裁定”：只在固定句“欲穷千里目”选择上声四纸，去声四寘竞争候选保留待核。记录见 `data/reviews/d2-closeout-batch-approval.json`，审核方式为接受机器初审批次并裁定异常。本文件只做**选音**，不改任何格律规则。
 
 | 项                   | 值                                                            |
 | -------------------- | ------------------------------------------------------------- |
-| 规则                 | 10 条，全部 `reviewStatus=approved`                           |
-| 规则证据             | 10 条 `kind=context`、approved，来源 `src:j03-review-batch2`  |
-| 被选候选已有韵书证据 | **2 / 10**（更、不）；其余 8 条的归部证据仍未审核             |
-| 三首解析结果         | 仍全部 `LOOKUP_EVIDENCE_UNVERIFIED`；逐字先选有效候选，再检查每个有效候选的证据 |
+| 规则                 | 11 条，全部 `reviewStatus=approved`                           |
+| 规则证据             | 11 条 `kind=context`、approved；来源 `src:j03-review-batch2`、`src:d2-closeout-review` |
+| 被选候选已有韵书证据 | **11 / 11**；候选范围审批，不扩成整部批准                     |
+| 三首真实 API         | **3/3 返回 200**；合律/不适用/常格偏离分别如实保留            |
 
-**剩余接入事项**：A 按 13_ 原记录已批准的候选范围落实归部证据，不把字位裁定扩大为整部批准；GLM 同时加载规则、证据、来源三个文件。三首还需要其余有效候选的证据，不能以落实六部相关候选代替整诗验收，也不必等待整库批准才开始局部联调。
+**集成事项**：GLM 集成后重启 API 加载 review3，复跑 `scripts/probe-d2-api.ts --require-golden` 并在正式页面验证。全库发布仍未批准；不得将三首通过扩成任意输入均可分析。
 
-字位证据统计以 `data/reviews/golden-token-review-2026-10-18.json/.md` 为准：当前快照任一候选获标记 22/96，全部候选获标记 21/96，混合 1/96（昔），语境筛选前候选预检阻断 75/96。计数仅描述快照标记，不扩大人工批准范围。
+字位证据统计以 `data/reviews/golden-token-review-2026-10-18.json/.md` 为准：任一候选获标记 96/96，全部候选获标记 86/96，混合 10/96。语境筛选前 10 字位仍有未审竞争候选；应用已审规则后，有效候选证据 96/96 齐备，见 `data/reviews/d2-remaining-candidate-review.json`。计数不扩大批准范围。
 
 ## 为什么之前没有 rules.json
 

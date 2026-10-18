@@ -41,8 +41,8 @@ const candidatesById = new Map(
 );
 
 describe("data/context/rules.json", () => {
-  it("十条规则都通过冻结 Schema，且都是 approved 的单候选选择", () => {
-    expect(rules).toHaveLength(10);
+  it("十一条规则都通过冻结 Schema，且都是 approved 的单候选选择", () => {
+    expect(rules).toHaveLength(11);
     for (const rule of rules) {
       const parsed = ContextRuleSchema.safeParse(rule);
       expect(

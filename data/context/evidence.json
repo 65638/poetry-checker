@@ -88,5 +88,14 @@
     "assertion": "「日暮乡关何处是」之「乡关」为名词故乡义，取平声七阳（pingshui:乡:ping:七阳）",
     "excerpt": null,
     "reviewStatus": "approved"
+  },
+  {
+    "id": "ctx:d2-closeout:qianli",
+    "sourceId": "src:d2-closeout-review",
+    "kind": "context",
+    "locator": "docs/reviews/14_D2收口_候选批次与里字异常.md 实际裁定记录；data/reviews/d2-closeout-batch-approval.json；平水韵oldid8264804第204行上声四纸“里”，第382行去声四寘“裏”",
+    "assertion": "组长接受机器初审批次并裁定：仅在《登鹳雀楼》“欲穷千里目”的距离义中，里取pingshui:里:shang:四纸。去声四寘候选保留未审核，非为满足模板而删去竞争读音。",
+    "excerpt": null,
+    "reviewStatus": "approved"
   }
 ]

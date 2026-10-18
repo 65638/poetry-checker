@@ -78,7 +78,7 @@
   "statusSemantics": {
     "aiInitialReviewStatus": "machine_checked",
     "contractFieldUnchanged": true,
-    "approvedEvidenceCount": 16,
+    "approvedEvidenceCount": 84,
     "note": "按方案 §5：AI 初审通过结构/引用检查但未完成人工复核 → 本报告结论状态为 machine_checked。human_reviewed / rejected 等中间状态只写在报告与审核记录里，**不改契约字段 reviewStatus**（契约快照只有 approved / unverified）。四份快照 reviewStatus 一律保持 unverified；approved 仅来自 approved-evidence.json 的部级及候选级精确范围。"
   },
   "secondBatchWorksheet": {
@@ -26396,19 +26396,19 @@
       "results": [
         {
           "file": "data/normalized/pingshui.full-d2.json",
-          "digestFirst": "4fe504dc8bda00b3a5698a8648631b7d2fd69bad953fe0f567abdf04488c07c8",
-          "digestSecond": "4fe504dc8bda00b3a5698a8648631b7d2fd69bad953fe0f567abdf04488c07c8",
+          "digestFirst": "60c416c8d0fe39fee07a82a2975ad0bbe1374b53985abb5a79f9723c04498f7e",
+          "digestSecond": "60c416c8d0fe39fee07a82a2975ad0bbe1374b53985abb5a79f9723c04498f7e",
           "repeatConsistent": true,
-          "registeredDigest": "4fe504dc8bda00b3a5698a8648631b7d2fd69bad953fe0f567abdf04488c07c8",
+          "registeredDigest": "60c416c8d0fe39fee07a82a2975ad0bbe1374b53985abb5a79f9723c04498f7e",
           "registeredSource": "docs/handoffs/0012-codex-d2-closeout.md",
           "matchesRegistered": true
         },
         {
           "file": "data/normalized/pingshui.full-d2-patched.json",
-          "digestFirst": "d5ec1a588f165d38feb93752021848ed7943f54c7118cc7933e560477323d501",
-          "digestSecond": "d5ec1a588f165d38feb93752021848ed7943f54c7118cc7933e560477323d501",
+          "digestFirst": "6c9057412b85a3c7b4066f260e8d52b60b8be936c814380200f7ed9d7a71d6ef",
+          "digestSecond": "6c9057412b85a3c7b4066f260e8d52b60b8be936c814380200f7ed9d7a71d6ef",
           "repeatConsistent": true,
-          "registeredDigest": "d5ec1a588f165d38feb93752021848ed7943f54c7118cc7933e560477323d501",
+          "registeredDigest": "6c9057412b85a3c7b4066f260e8d52b60b8be936c814380200f7ed9d7a71d6ef",
           "registeredSource": "docs/handoffs/0012-codex-d2-closeout.md",
           "matchesRegistered": true
         },
@@ -26522,7 +26522,7 @@
   "snapshots": [
     {
       "file": "data/normalized/pingshui.full-d2.json",
-      "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-review2",
+      "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-review3",
       "book": "pingshui",
       "reviewStatus": "unverified",
       "structure": {
@@ -26773,8 +26773,8 @@
         "duplicateIds": []
       },
       "evidenceStats": {
-        "total": 120,
-        "approved": 15,
+        "total": 188,
+        "approved": 83,
         "unverified": 105,
         "approvedNotInList": [],
         "listMissing": [
@@ -26783,8 +26783,8 @@
         "listMissingNote": "审批清单未命中 1 条，均属预期（跨库全局清单 + 105/106 部差异），不计为异常。"
       },
       "metadata": {
-        "businessDigest": "4fe504dc8bda00b3a5698a8648631b7d2fd69bad953fe0f567abdf04488c07c8",
-        "canonicalDigest": "b8447207729ad06a4a7f29f81844fff9ffc979d514bea9a16a84667304dd815b",
+        "businessDigest": "60c416c8d0fe39fee07a82a2975ad0bbe1374b53985abb5a79f9723c04498f7e",
+        "canonicalDigest": "344e7eac12e1a618d605ddbc783336eb7056d28935b54f4412df441251a93f7c",
         "sources": [
           {
             "id": "src:chinese_word_rhyme:pingshui",
@@ -26836,7 +26836,7 @@
           "id": "A-pingshui-001",
           "class": "A",
           "book": "pingshui",
-          "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-review2",
+          "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-review3",
           "severity": "P1",
           "location": "data/normalized/pingshui.full-d2.json · groups",
           "fact": "缺失韵目 1 个：三讲；连带结果：韵部 105/106，分部 {\"上平\":15,\"下平\":15,\"上\":28,\"去\":30,\"入\":17}（应有 {\"上平\":15,\"下平\":15,\"上\":29,\"去\":30,\"入\":17}）",
@@ -26849,7 +26849,7 @@
           "id": "F-pingshui-002",
           "class": "F",
           "book": "pingshui",
-          "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-review2",
+          "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-review3",
           "severity": "P2",
           "location": "data/normalized/pingshui.full-d2.json · 快照头",
           "fact": "快照未登记生成器/规则版本字段",
@@ -26862,7 +26862,7 @@
     },
     {
       "file": "data/normalized/pingshui.full-d2-patched.json",
-      "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review2",
+      "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3",
       "book": "pingshui",
       "reviewStatus": "unverified",
       "structure": {
@@ -27111,16 +27111,16 @@
         "duplicateIds": []
       },
       "evidenceStats": {
-        "total": 121,
-        "approved": 16,
+        "total": 189,
+        "approved": 84,
         "unverified": 105,
         "approvedNotInList": [],
         "listMissing": [],
         "listMissingNote": "审批清单 ID 在本快照内全部命中。"
       },
       "metadata": {
-        "businessDigest": "d5ec1a588f165d38feb93752021848ed7943f54c7118cc7933e560477323d501",
-        "canonicalDigest": "d74ff264bae20471884ab9bba5aa598637ce6b644a1d73652abf75af67c2bd6e",
+        "businessDigest": "6c9057412b85a3c7b4066f260e8d52b60b8be936c814380200f7ed9d7a71d6ef",
+        "canonicalDigest": "7aa8f1d167f5eb2c09a961af0523b4f618d3e00ff131b12d10af6dbb16759c75",
         "sources": [
           {
             "id": "src:chinese_word_rhyme:pingshui",
@@ -27183,7 +27183,7 @@
           "id": "F-pingshui-001",
           "class": "F",
           "book": "pingshui",
-          "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review2",
+          "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3",
           "severity": "P2",
           "location": "data/normalized/pingshui.full-d2-patched.json · 快照头",
           "fact": "快照未登记生成器/规则版本字段",
@@ -27492,23 +27492,91 @@
         "approvedNotInList": [],
         "listMissing": [
           "ev:candidate:pingshui:一:ru:入声四质:j03",
+          "ev:candidate:pingshui:上:qu:二十三漾:d2-batch",
+          "ev:candidate:pingshui:上:shang:二十二养:d2-batch",
           "ev:candidate:pingshui:不:ru:入声五物:j03",
+          "ev:candidate:pingshui:举:shang:六语:d2-batch",
           "ev:candidate:pingshui:乘:ping:十蒸:j03",
           "ev:candidate:pingshui:乡:ping:七阳:j03",
+          "ev:candidate:pingshui:云:ping:十二文:d2-batch",
+          "ev:candidate:pingshui:人:ping:十一真:d2-batch",
+          "ev:candidate:pingshui:低:ping:八齐:d2-batch",
+          "ev:candidate:pingshui:何:ping:五歌:d2-batch",
+          "ev:candidate:pingshui:余:ping:六鱼:d2-batch",
+          "ev:candidate:pingshui:使:qu:四寘:d2-batch",
+          "ev:candidate:pingshui:使:shang:四纸:d2-batch",
+          "ev:candidate:pingshui:依:ping:五微:d2-batch",
+          "ev:candidate:pingshui:光:ping:七阳:d2-batch",
+          "ev:candidate:pingshui:入:ru:入声十四缉:d2-batch",
+          "ev:candidate:pingshui:关:ping:十五删:d2-batch",
+          "ev:candidate:pingshui:前:ping:一先:d2-batch",
+          "ev:candidate:pingshui:千:ping:一先:d2-batch",
+          "ev:candidate:pingshui:历:ru:入声十二锡:d2-batch",
+          "ev:candidate:pingshui:去:qu:六御:d2-batch",
+          "ev:candidate:pingshui:去:shang:六语:d2-batch",
+          "ev:candidate:pingshui:地:qu:四寘:d2-batch",
+          "ev:candidate:pingshui:处:qu:六御:d2-batch",
+          "ev:candidate:pingshui:处:shang:六语:d2-batch",
+          "ev:candidate:pingshui:复:qu:二十六宥:d2-batch",
+          "ev:candidate:pingshui:复:ru:入声一屋:d2-batch",
+          "ev:candidate:pingshui:头:ping:十一尤:d2-batch",
+          "ev:candidate:pingshui:尽:shang:十一轸:d2-batch",
+          "ev:candidate:pingshui:层:ping:十蒸:d2-batch",
+          "ev:candidate:pingshui:山:ping:十五删:d2-batch",
+          "ev:candidate:pingshui:川:ping:一先:d2-batch",
+          "ev:candidate:pingshui:已:shang:四纸:d2-batch",
+          "ev:candidate:pingshui:床:ping:七阳:d2-batch",
           "ev:candidate:pingshui:思:ping:四支:j03",
+          "ev:candidate:pingshui:悠:ping:十一尤:d2-batch",
+          "ev:candidate:pingshui:愁:ping:十一尤:d2-batch",
+          "ev:candidate:pingshui:故:qu:七遇:d2-batch",
+          "ev:candidate:pingshui:日:ru:入声四质:d2-batch",
+          "ev:candidate:pingshui:明:ping:八庚:d2-batch",
+          "ev:candidate:pingshui:昔:ru:入声十一陌:d2-batch",
+          "ev:candidate:pingshui:昔:ru:入声十药:d2-batch",
+          "ev:candidate:pingshui:是:shang:四纸:d2-batch",
+          "ev:candidate:pingshui:晴:ping:八庚:d2-batch",
+          "ev:candidate:pingshui:暮:qu:七遇:d2-batch",
           "ev:candidate:pingshui:更:ping:八庚:j03",
           "ev:candidate:pingshui:更:qu:二十四敬:j03",
+          "ev:candidate:pingshui:月:ru:入声六月:d2-batch",
           "ev:candidate:pingshui:望:qu:二十三漾:j03",
+          "ev:candidate:pingshui:树:qu:七遇:d2-batch",
+          "ev:candidate:pingshui:树:shang:七麌:d2-batch",
           "ev:candidate:pingshui:楼:ping:十一尤:j03",
+          "ev:candidate:pingshui:欲:ru:入声二沃:d2-batch",
+          "ev:candidate:pingshui:此:shang:四纸:d2-batch",
           "ev:candidate:pingshui:汉:qu:十五翰:j03",
+          "ev:candidate:pingshui:江:ping:三江:d2-batch",
+          "ev:candidate:pingshui:河:ping:五歌:d2-batch",
+          "ev:candidate:pingshui:波:ping:五歌:d2-batch",
+          "ev:candidate:pingshui:洲:ping:十一尤:d2-batch",
           "ev:candidate:pingshui:流:ping:十一尤:j03",
+          "ev:candidate:pingshui:海:shang:十贿:d2-batch",
+          "ev:candidate:pingshui:烟:ping:一先:d2-batch",
           "ev:candidate:pingshui:物:ru:入声五物:j03",
+          "ev:candidate:pingshui:疑:ping:四支:d2-batch",
           "ev:candidate:pingshui:白:ru:入声十一陌:j03",
+          "ev:candidate:pingshui:目:ru:入声一屋:d2-batch",
+          "ev:candidate:pingshui:穷:ping:一东:d2-batch",
           "ev:candidate:pingshui:空:ping:一东:j03",
+          "ev:candidate:pingshui:芳:ping:七阳:d2-batch",
+          "ev:candidate:pingshui:草:shang:十九皓:d2-batch",
+          "ev:candidate:pingshui:萋:ping:八齐:d2-batch",
+          "ev:candidate:pingshui:载:qu:十一队:d2-batch",
+          "ev:candidate:pingshui:载:shang:十贿:d2-batch",
+          "ev:candidate:pingshui:返:shang:十三阮:d2-batch",
+          "ev:candidate:pingshui:里:shang:四纸:d2-batch",
+          "ev:candidate:pingshui:阳:ping:七阳:d2-batch",
           "ev:candidate:pingshui:雪:ru:入声九屑:j03",
+          "ev:candidate:pingshui:霜:ping:七阳:d2-batch",
+          "ev:candidate:pingshui:鹉:shang:七麌:d2-batch",
+          "ev:candidate:pingshui:鹤:ru:入声十药:d2-batch",
+          "ev:candidate:pingshui:鹦:ping:八庚:d2-batch",
+          "ev:candidate:pingshui:黄:ping:七阳:d2-batch",
           "ev:pingshui:上:三讲"
         ],
-        "listMissingNote": "审批清单未命中 16 条，均属预期（跨库全局清单 + 105/106 部差异），不计为异常。"
+        "listMissingNote": "审批清单未命中 84 条，均属预期（跨库全局清单 + 105/106 部差异），不计为异常。"
       },
       "metadata": {
         "businessDigest": "bcbeb62ada9a5b6a72e69dbdee844f10e0466b40fd46939b0b3e4f56f09d38e8",
@@ -27867,23 +27935,91 @@
         "approvedNotInList": [],
         "listMissing": [
           "ev:candidate:pingshui:一:ru:入声四质:j03",
+          "ev:candidate:pingshui:上:qu:二十三漾:d2-batch",
+          "ev:candidate:pingshui:上:shang:二十二养:d2-batch",
           "ev:candidate:pingshui:不:ru:入声五物:j03",
+          "ev:candidate:pingshui:举:shang:六语:d2-batch",
           "ev:candidate:pingshui:乘:ping:十蒸:j03",
           "ev:candidate:pingshui:乡:ping:七阳:j03",
+          "ev:candidate:pingshui:云:ping:十二文:d2-batch",
+          "ev:candidate:pingshui:人:ping:十一真:d2-batch",
+          "ev:candidate:pingshui:低:ping:八齐:d2-batch",
+          "ev:candidate:pingshui:何:ping:五歌:d2-batch",
+          "ev:candidate:pingshui:余:ping:六鱼:d2-batch",
+          "ev:candidate:pingshui:使:qu:四寘:d2-batch",
+          "ev:candidate:pingshui:使:shang:四纸:d2-batch",
+          "ev:candidate:pingshui:依:ping:五微:d2-batch",
+          "ev:candidate:pingshui:光:ping:七阳:d2-batch",
+          "ev:candidate:pingshui:入:ru:入声十四缉:d2-batch",
+          "ev:candidate:pingshui:关:ping:十五删:d2-batch",
+          "ev:candidate:pingshui:前:ping:一先:d2-batch",
+          "ev:candidate:pingshui:千:ping:一先:d2-batch",
+          "ev:candidate:pingshui:历:ru:入声十二锡:d2-batch",
+          "ev:candidate:pingshui:去:qu:六御:d2-batch",
+          "ev:candidate:pingshui:去:shang:六语:d2-batch",
+          "ev:candidate:pingshui:地:qu:四寘:d2-batch",
+          "ev:candidate:pingshui:处:qu:六御:d2-batch",
+          "ev:candidate:pingshui:处:shang:六语:d2-batch",
+          "ev:candidate:pingshui:复:qu:二十六宥:d2-batch",
+          "ev:candidate:pingshui:复:ru:入声一屋:d2-batch",
+          "ev:candidate:pingshui:头:ping:十一尤:d2-batch",
+          "ev:candidate:pingshui:尽:shang:十一轸:d2-batch",
+          "ev:candidate:pingshui:层:ping:十蒸:d2-batch",
+          "ev:candidate:pingshui:山:ping:十五删:d2-batch",
+          "ev:candidate:pingshui:川:ping:一先:d2-batch",
+          "ev:candidate:pingshui:已:shang:四纸:d2-batch",
+          "ev:candidate:pingshui:床:ping:七阳:d2-batch",
           "ev:candidate:pingshui:思:ping:四支:j03",
+          "ev:candidate:pingshui:悠:ping:十一尤:d2-batch",
+          "ev:candidate:pingshui:愁:ping:十一尤:d2-batch",
+          "ev:candidate:pingshui:故:qu:七遇:d2-batch",
+          "ev:candidate:pingshui:日:ru:入声四质:d2-batch",
+          "ev:candidate:pingshui:明:ping:八庚:d2-batch",
+          "ev:candidate:pingshui:昔:ru:入声十一陌:d2-batch",
+          "ev:candidate:pingshui:昔:ru:入声十药:d2-batch",
+          "ev:candidate:pingshui:是:shang:四纸:d2-batch",
+          "ev:candidate:pingshui:晴:ping:八庚:d2-batch",
+          "ev:candidate:pingshui:暮:qu:七遇:d2-batch",
           "ev:candidate:pingshui:更:ping:八庚:j03",
           "ev:candidate:pingshui:更:qu:二十四敬:j03",
+          "ev:candidate:pingshui:月:ru:入声六月:d2-batch",
           "ev:candidate:pingshui:望:qu:二十三漾:j03",
+          "ev:candidate:pingshui:树:qu:七遇:d2-batch",
+          "ev:candidate:pingshui:树:shang:七麌:d2-batch",
           "ev:candidate:pingshui:楼:ping:十一尤:j03",
+          "ev:candidate:pingshui:欲:ru:入声二沃:d2-batch",
+          "ev:candidate:pingshui:此:shang:四纸:d2-batch",
           "ev:candidate:pingshui:汉:qu:十五翰:j03",
+          "ev:candidate:pingshui:江:ping:三江:d2-batch",
+          "ev:candidate:pingshui:河:ping:五歌:d2-batch",
+          "ev:candidate:pingshui:波:ping:五歌:d2-batch",
+          "ev:candidate:pingshui:洲:ping:十一尤:d2-batch",
           "ev:candidate:pingshui:流:ping:十一尤:j03",
+          "ev:candidate:pingshui:海:shang:十贿:d2-batch",
+          "ev:candidate:pingshui:烟:ping:一先:d2-batch",
           "ev:candidate:pingshui:物:ru:入声五物:j03",
+          "ev:candidate:pingshui:疑:ping:四支:d2-batch",
           "ev:candidate:pingshui:白:ru:入声十一陌:j03",
+          "ev:candidate:pingshui:目:ru:入声一屋:d2-batch",
+          "ev:candidate:pingshui:穷:ping:一东:d2-batch",
           "ev:candidate:pingshui:空:ping:一东:j03",
+          "ev:candidate:pingshui:芳:ping:七阳:d2-batch",
+          "ev:candidate:pingshui:草:shang:十九皓:d2-batch",
+          "ev:candidate:pingshui:萋:ping:八齐:d2-batch",
+          "ev:candidate:pingshui:载:qu:十一队:d2-batch",
+          "ev:candidate:pingshui:载:shang:十贿:d2-batch",
+          "ev:candidate:pingshui:返:shang:十三阮:d2-batch",
+          "ev:candidate:pingshui:里:shang:四纸:d2-batch",
+          "ev:candidate:pingshui:阳:ping:七阳:d2-batch",
           "ev:candidate:pingshui:雪:ru:入声九屑:j03",
+          "ev:candidate:pingshui:霜:ping:七阳:d2-batch",
+          "ev:candidate:pingshui:鹉:shang:七麌:d2-batch",
+          "ev:candidate:pingshui:鹤:ru:入声十药:d2-batch",
+          "ev:candidate:pingshui:鹦:ping:八庚:d2-batch",
+          "ev:candidate:pingshui:黄:ping:七阳:d2-batch",
           "ev:pingshui:上:三讲"
         ],
-        "listMissingNote": "审批清单未命中 16 条，均属预期（跨库全局清单 + 105/106 部差异），不计为异常。"
+        "listMissingNote": "审批清单未命中 84 条，均属预期（跨库全局清单 + 105/106 部差异），不计为异常。"
       },
       "metadata": {
         "businessDigest": "4a68bd5782ec6e2de7e0682edca0a38534307f4dd28702db487875815c690ae5",
@@ -27989,14 +28125,14 @@
     "sourceIds": [
       {
         "book": "pingshui",
-        "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-review2",
+        "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-review3",
         "sourceIds": [
           "src:chinese_word_rhyme:pingshui"
         ]
       },
       {
         "book": "pingshui",
-        "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review2",
+        "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3",
         "sourceIds": [
           "src:chinese_word_rhyme:pingshui",
           "src:wikisource:pingshuiyun"
@@ -28022,16 +28158,16 @@
       {
         "file": "data/normalized/pingshui.full-d2.json",
         "book": "pingshui",
-        "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-review2",
-        "approved": 15,
-        "total": 120
+        "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-review3",
+        "approved": 83,
+        "total": 188
       },
       {
         "file": "data/normalized/pingshui.full-d2-patched.json",
         "book": "pingshui",
-        "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review2",
-        "approved": 16,
-        "total": 121
+        "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3",
+        "approved": 84,
+        "total": 189
       },
       {
         "file": "data/normalized/cilin.full-d2.json",
@@ -28075,15 +28211,15 @@
         "ok": true
       },
       {
-        "claim": "④ 平水106部：三讲1条部级与15条候选证据",
-        "expected": "16 / 121",
-        "actual": "16 / 121",
+        "claim": "④ 平水106部：三讲1条部级与83条候选证据",
+        "expected": "84 / 189",
+        "actual": "84 / 189",
         "ok": true
       },
       {
-        "claim": "④ 平水105部：15条候选证据，不批准所属整部",
-        "expected": "15 / 120",
-        "actual": "15 / 120",
+        "claim": "④ 平水105部：83条候选证据，不批准所属整部",
+        "expected": "83 / 188",
+        "actual": "83 / 188",
         "ok": true
       },
       {
@@ -28164,7 +28300,7 @@
       "actionKind": "接线/脚本可修",
       "affectedBooks": [
         "pingshui-cwr-ff0e9c1-d2-full",
-        "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review2",
+        "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3",
         "cilin-cwr-ff0e9c1-d2-full",
         "xinyun-rebuild-d2-full"
       ]

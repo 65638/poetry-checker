@@ -35,5 +35,5 @@
   "evidenceIds": [
     "ev:work:dengguanquelou:j03"
   ],
-  "notes": "正文、作者、选版、体裁断言已有 J03/C 记录，现按原范围落库。reviewStatus=approved 表示这些预期经审核，不表示真实 API 已通过；全诗逐字归部证据仍待范围裁定，见 data/reviews/d2-remaining-candidate-review.md。异文保持独立、不合并；黄鹤楼保留特殊拗律标签，常格偏离仍须显示。"
+  "notes": "正文、作者、选版、体裁断言按已有J03/C记录落库；有效候选依据由组长接受14号机器初审批次及千里异常裁定补齐，未扩张为逐字人工核验。review3真实API三首均200，见data/reviews/d2-real-api-report.json；黄鹤楼保留特殊拗律标签并如实显示常格偏离。全库发布仍未批准。"
 }
