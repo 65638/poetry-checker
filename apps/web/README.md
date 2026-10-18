@@ -45,7 +45,7 @@ pnpm verify                           # 根：lint + 双 tsconfig 类型检查 +
 > 检查必须用 `pnpm verify` 或上面的 `--filter @poetry/web typecheck`。
 
 D1 实测结果（合并 `origin/main` 后，Node 24.19.0 / pnpm 11.25.0）：
-**`pnpm verify` exit 0** —— lint、双 tsconfig 类型检查、**410 项测试**
+**`pnpm verify` exit 0** —— lint、双 tsconfig 类型检查、**423 项测试**
 （integrate 基线，28 个文件）、构建、生成物一致性全部通过；
 `dev:api` + `dev:web` 真实冒烟通过。
 
