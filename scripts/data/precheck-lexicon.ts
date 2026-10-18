@@ -2358,7 +2358,43 @@ function main(): void {
         executor: "A 侧在本机外部终端执行",
         exitCode: 0,
         result: "28 files / 410 tests，7 of 8 projects 构建成功，8 契约/模板无漂移",
-        note: "同上",
+        note: "同上；此为 D2 审核轮之前的实跑结果",
+      },
+      {
+        command: "node_modules/.bin/eslint .",
+        executor: "A 侧在本执行环境（绕过 pnpm 直接调二进制）",
+        exitCode: 0,
+        result: "0 error / 0 warning",
+        note: "等价于 pnpm verify 的 lint 关。此前本批新增脚本曾报 4 个 error（2×no-unused-vars、1×未用导入、1×no-misleading-character-class），已由 64b2652 修复",
+      },
+      {
+        command: "node_modules/.bin/tsc --noEmit && node_modules/.bin/tsc --noEmit -p apps/web/tsconfig.json",
+        executor: "A 侧在本执行环境",
+        exitCode: 0,
+        result: "两个 tsconfig 均 0 error",
+        note: "等价于 pnpm verify 的 typecheck 关。此前 precheck-lexicon.ts 有 1 处 TS2345（RawSnapshot.reviewStatus 过宽），已由 64b2652 修复",
+      },
+      {
+        command: "node_modules/.bin/vitest run（全仓）",
+        executor: "A 侧在本执行环境",
+        exitCode: 1,
+        result:
+          "37 files / 529 tests：525 passed + 4 failed。4 条失败全在他人模块且均为「测试写死旧状态」：" +
+          "apps/api/tests/http-real.test.ts 1 条（断言 loadErrors 仍含 src:chinese_word_rhyme，该缺陷已由 474afd9 修复）、" +
+          "packages/readings/tests/real-pingshui.test.ts 3 条（断言快照无 approved 证据，已由 2cce583 的 J03 审批改变）",
+        note:
+          "这两处测试的期望值需由 GLM / B 各自更新；A 不越界修改 apps/ 与 packages/readings/。" +
+          "在它们更新前，全仓 vitest 与 pnpm verify 必然保持红——**这不是 A 侧数据错误**",
+      },
+      {
+        command: "pnpm build && tsx scripts/generate-contracts.ts --check（即 pnpm check:generated）",
+        executor: "**未运行**",
+        exitCode: null,
+        result: "未运行",
+        note:
+          "本执行环境跑不了：`pnpm` 的 store 锁位于工作区之外（C:\\Users\\…\\pnpm-store-operation-locks，" +
+          "写入被沙箱以 os error 5 拒绝），因此 pnpm 的任何命令（含 pnpm -r build）都无法执行，check:generated 无法完成。" +
+          "**不得因未运行而声称通过**——该项只能由人在外部终端跑，或在 CI 上验证",
       },
     ],
     reproduce: [
@@ -2456,7 +2492,7 @@ interface PrecheckOutput {
   verificationCommands: {
     command: string;
     executor: string;
-    exitCode: number;
+    exitCode: number | null;
     result: string;
     note: string;
   }[];
@@ -3153,13 +3189,27 @@ function renderMarkdown(input: PrecheckOutput): string {
   push("| 命令 | 执行方 | EXIT | 真实输出摘要 | 备注 |");
   push("|---|---|---|---|---|");
   for (const item of input.verificationCommands) {
+    const exitCell =
+      item.exitCode === null ? "**未运行**" : String(item.exitCode);
     push(
-      `| \`${item.command}\` | ${item.executor} | ${item.exitCode} | ${item.result} | ${item.note} |`,
+      `| \`${item.command}\` | ${item.executor} | ${exitCell} | ${item.result} | ${item.note} |`,
     );
   }
   push("");
+  push("**两个执行环境必须分清**：");
+  push("");
   push(
-    "上述命令全部**由 A 侧在本机外部终端执行**；本报告的初审脚本在另一环境运行，测试数字照抄人侧输出，未改写。",
+    "1. `pnpm exec vitest run packages/lexicon/tests` 与 `pnpm verify` 两条的原始数字由 **A 侧在本机外部终端**执行后回传（本环境跑不了 pnpm，见下），报告照抄未改写；",
+  );
+  push(
+    "2. `eslint`、`tsc`、全仓 `vitest` 三条由 **A 侧在本执行环境**直接调用 `node_modules/.bin/*` 二进制完成（绕过 pnpm）；",
+  );
+  push(
+    "3. **`check:generated` 在本环境未运行**：`pnpm` 的 store 锁在工作区外被沙箱拒绝（os error 5），`pnpm -r build` 无法执行。该项**未验证**，不得据此声称契约产物无漂移——须由人外部终端或 CI 验证。",
+  );
+  push("");
+  push(
+    "**当前全仓测试状态（A 侧实测）**：525 passed / 4 failed，4 条失败均属跨模块测试写死旧状态（GLM 1 条、B 3 条），已列明在上表备注中，**不是 A 侧数据错误**。",
   );
   push("");
 
