@@ -2,6 +2,8 @@
 
 ## D2 审核批次（2026-10-18，基线 `main @ 513d3f8`）
 
+> PR：**#11** https://github.com/65638/poetry-checker/pull/11 （`feat/c-d2-review` → `main`；创建时 head `5f02759`，已用 `git ls-remote refs/pull/11/head` 核对）
+
 ### 完成
 
 1. **三张救法卡升 approved + 证据闭合**：`rules/cards/draft-teaching-v1.json` 中 RESCUE.SELF/TEAO/DUIJU 的 `reviewStatus=approved`、`status=approved`，`citation` 精确到 J03 第一批·第三部分**第 10/11/12 项**，`rule.evidenceIds` 回填 GLM 已落库的 `ev:rule:RESCUE.*`（`rules/evidence/teaching-v1.json`，均 `approved`）；其余 7 卡保持 pending、`evidenceIds=[]`。
