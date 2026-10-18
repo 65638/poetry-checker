@@ -1,6 +1,6 @@
 {
   "status": "draft_only_not_for_release",
-  "note": "规则卡草案（teaching-v1）。工程口径已由 Codex 于 2026-10-17 确认（ID、可变位、A 型小拗②、七言对句相救位置）；rule.version 按确认取字符串 \"1\"。文献版次、章节、页码仍由 C 人工核实之前，全部条目 reviewStatus=pending，不进入发布来源集合。",
+  "note": "规则卡草案（teaching-v1）。工程口径已由 Codex 于 2026-10-17 确认（ID、可变位、A 型小拗②、七言对句相救位置）；rule.version 按确认取字符串 \"1\"。D2 核心首版（b5457e4）已实现并由 C 独立验收（C2-01..C2-13 通过），但文献版次、章节、页码与真实诗例仍待 C 人工核实；全部条目 reviewStatus=pending，不进入发布来源集合。逐条待审项另见 docs/rule-sources.md。",
   "cards": [
     {
       "draftId": "draft-meter-position-v1",
@@ -20,7 +20,11 @@
         ],
         "evidenceIds": []
       },
-      "sourceNeeded": ["待补真实底本、章节或页面定位", "A 型小拗允许口径的文献依据待人工核实"]
+      "sourceNeeded": [
+        "逐位平仄与“一三五不论”受限范围的文献章节待核实（任务书参考王力《诗词格律》方向，版次/章节/页码待查）",
+        "A 型小拗“允许并标 info”的文献依据待核实",
+        "三首案例逐字平仄核对记录待补（登鹳雀楼 / 静夜思 / 黄鹤楼）"
+      ]
     },
     {
       "draftId": "draft-rhyme-common-v1",
@@ -38,7 +42,11 @@
         ],
         "evidenceIds": []
       },
-      "sourceNeeded": ["待补真实底本、章节或页面定位", "首句借邻韵关系表待审核"]
+      "sourceNeeded": [
+        "三库韵目与同部证据待核对：任务书示例称“流/楼”同属下平十一尤，需对照所采用韵书版本逐条核实",
+        "首句借邻韵关系表待审核（P0 无表不自动放行）",
+        "三首案例韵脚核对记录待补"
+      ]
     },
     {
       "draftId": "draft-relation-dui-v1",
@@ -57,7 +65,11 @@
         ],
         "evidenceIds": []
       },
-      "sourceNeeded": ["待补真实底本、章节或页面定位"]
+      "sourceNeeded": [
+        "“对”（同联相对）的文献章节待核实",
+        "七言二四六判别点的文献表述待核实",
+        "三首案例对检查记录待补（含《黄鹤楼》特殊拗律）"
+      ]
     },
     {
       "draftId": "draft-relation-nian-v1",
@@ -75,7 +87,11 @@
         ],
         "evidenceIds": []
       },
-      "sourceNeeded": ["待补真实底本、章节或页面定位"]
+      "sourceNeeded": [
+        "“粘”（联间相粘）的文献章节待核实",
+        "粘对与变格交互的文献表述待核实",
+        "三首案例粘检查记录待补"
+      ]
     },
     {
       "draftId": "draft-guping-narrow-v1",
@@ -94,7 +110,11 @@
         ],
         "evidenceIds": []
       },
-      "sourceNeeded": ["待补真实底本、章节或页面定位"]
+      "sourceNeeded": [
+        "窄义孤平 ZPZZP 的文献依据待核实（与“整句单平”宽口径的区分需可定位出处）",
+        "七言“后五字”对应论述待核实",
+        "《黄鹤楼》特殊拗律说明待核对"
+      ]
     },
     {
       "draftId": "draft-tail-sanping-v1",
@@ -112,7 +132,11 @@
         ],
         "evidenceIds": []
       },
-      "sourceNeeded": ["待补真实底本、章节或页面定位"]
+      "sourceNeeded": [
+        "三平尾为病的文献依据待核实",
+        "三平尾与特拗/救法交互的边界待人工核定",
+        "案例记录待补"
+      ]
     },
     {
       "draftId": "draft-tail-sanze-v1",
@@ -130,7 +154,10 @@
         ],
         "evidenceIds": []
       },
-      "sourceNeeded": ["待补真实底本、章节或页面定位"]
+      "sourceNeeded": [
+        "三仄尾的等级（warning 而非 error）与文献依据待人工核定",
+        "案例记录待补"
+      ]
     },
     {
       "draftId": "draft-rescue-self-v1",
@@ -149,7 +176,11 @@
         ],
         "evidenceIds": []
       },
-      "sourceNeeded": ["待补真实底本、章节或页面定位"]
+      "sourceNeeded": [
+        "孤平自救 ZPPZP 的文献依据待核实",
+        "七言 *ZZPPZP 对应论述与真实诗例待核实",
+        "已救/未救边界（差一位不认定）的诗例与依据待人工核对"
+      ]
     },
     {
       "draftId": "draft-rescue-teao-v1",
@@ -167,7 +198,11 @@
         ],
         "evidenceIds": []
       },
-      "sourceNeeded": ["待补真实底本、章节或页面定位", "七言特拗完整模式需人工核对诗例"]
+      "sourceNeeded": [
+        "特拗 PPZPZ 的文献依据待核实",
+        "七言 *ZPPZPZ 完整模式与真实诗例待核实",
+        "《黄鹤楼》相关诗例待人工核对"
+      ]
     },
     {
       "draftId": "draft-rescue-duiju-v1",
@@ -186,7 +221,11 @@
         ],
         "evidenceIds": []
       },
-      "sourceNeeded": ["待补真实底本、章节或页面定位", "七言完整判据与真实诗例待人工核实"]
+      "sourceNeeded": [
+        "五言对句相救 ZZPZZ/PPPZP 的文献依据与“野火烧不尽 / 春风吹又生”诗例出处待核实",
+        "七言 PPZZPZZ/ZZPPPZP 为合成测试材料，真实诗例与语文学依据待核实",
+        "跨联不配对、错误前缀不放行的边界待人工核定"
+      ]
     }
   ]
 }

@@ -156,6 +156,8 @@
 
 ## 5. 当前实现边界（不视为通过）
 
-- `evaluateProsodyCore` 未实现，抛出 `PROSODY_EVALUATION_PENDING`；完整判定、粘对、孤平/尾式、拗救均未实现。
-- `matchTemplates` 仅有 toneFit；score 不能用于发布时的体裁结论。
-- 未实现项一律不得计为 pass；对应验收见 `tests/acceptance/D2-matrix.md`。
+- 核心 D2 首版（`b5457e4`，交接 `14df990`）已实现完整判定：逐位平仄、粘对、押韵、孤平/尾式、三类救法、A 型小拗、模板/适用性状态；C 的 C2-01..C2-13 独立验收已通过（见 `tests/acceptance/D2-matrix.md`）。
+- `parallelismFit` 恒为 null（未实现语义对仗）；`score` 不能单独作为“强近体”依据，需结合 `evaluatedKeyRate` 与分差。
+- 首句借邻韵无已审核关系表时不自动放行；更宽/罕见救法不在 P0。
+- 规则卡全部 pending（文献未核实），不得进入发布来源集合；**代码通过验收 ≠ 文献审核通过**（逐条待审见 `docs/rule-sources.md`）。
+- 合成测试不代替三首名篇真实链路；名篇验收需 A 真实韵书 + B 真实读音 + E 体裁。
