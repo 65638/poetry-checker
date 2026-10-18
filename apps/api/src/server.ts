@@ -8,6 +8,8 @@ import {
   type AnalysisResponse,
   RhymeBooksResponseSchema,
 } from "@poetry/contracts";
+import { loadResources, type Resources } from "./resources.js";
+import { analyze } from "./orchestrator.js";
 
 const fixtureNames = [
   "pass",
@@ -52,15 +54,32 @@ function errorBody(code: string, message: string) {
   };
 }
 
-export function buildApp(): FastifyInstance {
+export function buildApp(options?: { resources?: Resources }): FastifyInstance {
   const app = Fastify({ logger: false });
+  // 真实编排默认启用；POETRY_DEV_MOCK=1 时显式回退 fixture mock（开发联调专用）
+  const devMock = process.env.POETRY_DEV_MOCK === "1";
+  const resources: Resources = options?.resources ?? loadResources();
+  const realReady = resources.ready;
 
   app.get("/healthz", async () => ({ status: "ok" }));
 
-  app.get("/readyz", async () => ({
-    status: "ready",
-    versions: fixtureVersions,
-  }));
+  app.get("/readyz", async (_req, reply) => {
+    if (devMock) {
+      return { status: "ready", versions: fixtureVersions };
+    }
+    if (!realReady) {
+      return reply.status(503).send(dataNotReady(resources.notReadyReasons.join("；")));
+    }
+    return {
+      status: "ready",
+      versions: {
+        data: Object.values(resources.lexiconVersions).join(","),
+        rules: "teaching-v1",
+        context: "none-loaded",
+        works: "none-loaded",
+      },
+    };
+  });
 
   app.get("/api/v1/rhyme-books", async () =>
     RhymeBooksResponseSchema.parse({
@@ -103,6 +122,21 @@ export function buildApp(): FastifyInstance {
   });
 
   app.post("/api/v1/analyze", async (request, reply) => {
+    if (!devMock) {
+      const parsedReq = AnalyzeRequestSchema.safeParse(request.body);
+      if (!parsedReq.success) {
+        return reply.status(422).send({
+          error: {
+            code: "VALIDATION_ERROR",
+            message: "请求不符合公共契约 AnalyzeRequest",
+            fieldErrors: parsedReq.error.issues.map((i) => ({ path: i.path.join("."), message: i.message })),
+          },
+        });
+      }
+      const result = await analyze(parsedReq.data, resources);
+      if (result.kind === "error") return reply.status(result.status).send(result.body);
+      return reply.send(result.response);
+    }
     const raw = request.body;
     if (typeof raw === "object" && raw !== null && "text" in raw) {
       const text = (raw as { text?: unknown }).text;
