@@ -1,0 +1,97 @@
+{
+  "revision": {
+    "commit": "4b2b11459b1ad59823b4e7533a24cd406e8d3b72",
+    "dirty": false
+  },
+  "at": "2026-10-19T20:00:25.484Z",
+  "scenarios": [
+    {
+      "name": "findings-preserved-tally-default-collapse",
+      "status": "pass",
+      "detail": {
+        "expected": 36,
+        "actual": 36,
+        "tally": 36,
+        "collapsed": true,
+        "messages": true,
+        "settled": 36,
+        "expectedSettled": 36
+      }
+    },
+    {
+      "name": "keyboard-open-close-native-details",
+      "status": "pass",
+      "detail": {
+        "spaceOpens": true,
+        "enterCloses": true,
+        "hiddenItemsSkipped": true
+      }
+    },
+    {
+      "name": "settled-selection-is-retained-and-reopens",
+      "status": "pass",
+      "detail": {
+        "selectedAndOpen": true
+      }
+    },
+    {
+      "name": "huanghelou-attention-not-collapsed",
+      "status": "pass",
+      "detail": {
+        "expected": 96,
+        "total": 96,
+        "attention": 9,
+        "expectedAttention": 9,
+        "hiddenErrors": 0,
+        "summary": "fail"
+      }
+    },
+    {
+      "name": "mobile-scroll-mouse-reduced",
+      "status": "fail",
+      "error": "{\"calls\":[],\"active\":\"\",\"reportTop\":550.546875,\"scrollY\":268}\n\n0 !== 1\n"
+    },
+    {
+      "name": "mobile-scroll-keyboard-reduced",
+      "status": "pass",
+      "detail": {
+        "calls": [
+          {
+            "options": {
+              "block": "start",
+              "behavior": "auto"
+            },
+            "active": "pc-input__text"
+          }
+        ],
+        "active": "pc-input__text",
+        "reportTop": 15.546875,
+        "scrollY": 803
+      }
+    },
+    {
+      "name": "mobile-scroll-mouse-normal",
+      "status": "fail",
+      "error": "{\"calls\":[],\"active\":\"\",\"reportTop\":550.546875,\"scrollY\":268}\n\n0 !== 1\n"
+    },
+    {
+      "name": "mobile-scroll-keyboard-normal",
+      "status": "pass",
+      "detail": {
+        "calls": [
+          {
+            "options": {
+              "block": "start",
+              "behavior": "smooth"
+            },
+            "active": "pc-input__text"
+          }
+        ],
+        "active": "pc-input__text",
+        "reportTop": 15.546875,
+        "scrollY": 803
+      }
+    }
+  ],
+  "url": "http://127.0.0.1:57575/"
+}
