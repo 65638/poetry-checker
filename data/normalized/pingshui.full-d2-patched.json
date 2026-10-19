@@ -167244,7 +167244,7 @@
       "locator": "data/Pingshui_Rhyme.json 上平声部/一东",
       "assertion": "data/Pingshui_Rhyme.json 上平声部/一东 共收录 152 个字形（原表条目 156 条）",
       "excerpt": null,
-      "reviewStatus": "unverified"
+      "reviewStatus": "approved"
     },
     {
       "id": "ev:pingshui:上平:二冬",
@@ -167271,7 +167271,7 @@
       "locator": "data/Pingshui_Rhyme.json 上平声部/四支",
       "assertion": "data/Pingshui_Rhyme.json 上平声部/四支 共收录 440 个字形（原表条目 452 条）",
       "excerpt": null,
-      "reviewStatus": "unverified"
+      "reviewStatus": "approved"
     },
     {
       "id": "ev:pingshui:上平:五微",
@@ -167433,7 +167433,7 @@
       "locator": "data/Pingshui_Rhyme.json 下平声部/七阳",
       "assertion": "data/Pingshui_Rhyme.json 下平声部/七阳 共收录 266 个字形（原表条目 268 条）",
       "excerpt": null,
-      "reviewStatus": "unverified"
+      "reviewStatus": "approved"
     },
     {
       "id": "ev:pingshui:下平:八庚",
@@ -167460,7 +167460,7 @@
       "locator": "data/Pingshui_Rhyme.json 下平声部/十蒸",
       "assertion": "data/Pingshui_Rhyme.json 下平声部/十蒸 共收录 98 个字形（原表条目 101 条）",
       "excerpt": null,
-      "reviewStatus": "unverified"
+      "reviewStatus": "approved"
     },
     {
       "id": "ev:pingshui:下平:十一尤",
@@ -167892,7 +167892,7 @@
       "locator": "data/Pingshui_Rhyme.json 去声部/十五翰",
       "assertion": "data/Pingshui_Rhyme.json 去声部/十五翰 共收录 105 个字形（原表条目 109 条）",
       "excerpt": null,
-      "reviewStatus": "unverified"
+      "reviewStatus": "approved"
     },
     {
       "id": "ev:pingshui:去:十六谏",
@@ -167964,7 +167964,7 @@
       "locator": "data/Pingshui_Rhyme.json 去声部/二十三漾",
       "assertion": "data/Pingshui_Rhyme.json 去声部/二十三漾 共收录 102 个字形（原表条目 104 条）",
       "excerpt": null,
-      "reviewStatus": "unverified"
+      "reviewStatus": "approved"
     },
     {
       "id": "ev:pingshui:去:二十四敬",

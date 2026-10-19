@@ -2,7 +2,7 @@
   "approvalsId": "approved-evidence-d2",
   "title": "已获责任人确认的精确范围证据清单（含接受机器初审的批次，不统称逐字人审）",
   "updatedAt": "2026-10-18",
-  "authority": "组长 J03 第一批人审（引用 12_J03人审记录）+ 三讲人审签（A同学，2026-10-18） + 14号候选批次确认（组长接受AI初审并裁定异常）",
+  "authority": "组长 J03 第一批人审（引用 12_J03人审记录）+ 三讲人审签（A同学，2026-10-18） + 14号候选批次确认（组长接受AI初审并裁定异常） + J03 第二批裁定追加 6 部归部事实（引用 13_J03三首核心诗逐字人审_第二批.md 第六节第 1 条）",
   "authorityNote": "审批原件已归档到 docs/reviews/12_J03人审记录_第一批.md 和 docs/reviews/13_J03三首核心诗逐字人审_第二批.md。候选审批仅证明所列字音归部，不覆盖所属整韵部。 后续有限批次见 data/reviews/d2-closeout-batch-approval.json，不得改称逐字人工审核。",
   "note": "部级审批与候选级审批分开；构建脚本为每个已批准候选追加独立证据，原部级证据保持原审核范围。",
   "approved": [
@@ -16,11 +16,78 @@
         "data/patches/pingshui-shang-sanj-jiang.draft.json",
         "docs/handoffs/0007-a-d2-human-review-signoff.md"
       ]
+    },
+    {
+      "evidenceId": "ev:pingshui:去:二十三漾",
+      "scope": "部级",
+      "approvedBy": "组长 J03 第二批人审裁定（13_ 第六节第 1 条）",
+      "approvedAt": "2026-10-18",
+      "basis": "J03 第二批裁定所据归部事实（去:二十三漾）；仅覆盖该部归部事实，不覆盖整库、不改快照级 reviewStatus",
+      "recordFiles": [
+        "docs/reviews/13_J03三首核心诗逐字人审_第二批.md"
+      ]
+    },
+    {
+      "evidenceId": "ev:pingshui:上平:四支",
+      "scope": "部级",
+      "approvedBy": "组长 J03 第二批人审裁定（13_ 第六节第 1 条）",
+      "approvedAt": "2026-10-18",
+      "basis": "J03 第二批裁定所据归部事实（上平:四支）；仅覆盖该部归部事实，不覆盖整库、不改快照级 reviewStatus",
+      "recordFiles": [
+        "docs/reviews/13_J03三首核心诗逐字人审_第二批.md"
+      ]
+    },
+    {
+      "evidenceId": "ev:pingshui:下平:七阳",
+      "scope": "部级",
+      "approvedBy": "组长 J03 第二批人审裁定（13_ 第六节第 1 条）",
+      "approvedAt": "2026-10-18",
+      "basis": "J03 第二批裁定所据归部事实（下平:七阳）；仅覆盖该部归部事实，不覆盖整库、不改快照级 reviewStatus",
+      "recordFiles": [
+        "docs/reviews/13_J03三首核心诗逐字人审_第二批.md"
+      ]
+    },
+    {
+      "evidenceId": "ev:pingshui:下平:十蒸",
+      "scope": "部级",
+      "approvedBy": "组长 J03 第二批人审裁定（13_ 第六节第 1 条）",
+      "approvedAt": "2026-10-18",
+      "basis": "J03 第二批裁定所据归部事实（下平:十蒸）；仅覆盖该部归部事实，不覆盖整库、不改快照级 reviewStatus",
+      "recordFiles": [
+        "docs/reviews/13_J03三首核心诗逐字人审_第二批.md"
+      ]
+    },
+    {
+      "evidenceId": "ev:pingshui:上平:一东",
+      "scope": "部级",
+      "approvedBy": "组长 J03 第二批人审裁定（13_ 第六节第 1 条）",
+      "approvedAt": "2026-10-18",
+      "basis": "J03 第二批裁定所据归部事实（上平:一东）；仅覆盖该部归部事实，不覆盖整库、不改快照级 reviewStatus",
+      "recordFiles": [
+        "docs/reviews/13_J03三首核心诗逐字人审_第二批.md"
+      ]
+    },
+    {
+      "evidenceId": "ev:pingshui:去:十五翰",
+      "scope": "部级",
+      "approvedBy": "组长 J03 第二批人审裁定（13_ 第六节第 1 条）",
+      "approvedAt": "2026-10-18",
+      "basis": "J03 第二批裁定所据归部事实（去:十五翰）；仅覆盖该部归部事实，不覆盖整库、不改快照级 reviewStatus",
+      "recordFiles": [
+        "docs/reviews/13_J03三首核心诗逐字人审_第二批.md"
+      ]
     }
   ],
   "approvedEvidenceIds": [
-    "ev:pingshui:上:三讲"
+    "ev:pingshui:上:三讲",
+    "ev:pingshui:去:二十三漾",
+    "ev:pingshui:上平:四支",
+    "ev:pingshui:下平:七阳",
+    "ev:pingshui:下平:十蒸",
+    "ev:pingshui:上平:一东",
+    "ev:pingshui:去:十五翰"
   ],
+
   "notApproved": {
     "count": "其余全部证据",
     "reason": "除三讲整部与 candidateApprovals 精确列举的候选外，其余归部证据均保持 unverified；三首平仄审批不自动批准所有竞争候选归部。",
