@@ -26383,12 +26383,12 @@
         {
           "file": "data/normalized/cilin.full-d2.json",
           "dataVersion": "cilin-cwr-ff0e9c1-d2-full",
-          "digestFirst": "52f98e9c7f18463ad967a6f95986ac3e90fdf7131b5ad41b535b0b29134aadb5",
-          "digestSecond": "52f98e9c7f18463ad967a6f95986ac3e90fdf7131b5ad41b535b0b29134aadb5",
+          "digestFirst": "091139958106885281aa69f6409644d4138564de83dba3f5afc54b0cf27b1f55",
+          "digestSecond": "091139958106885281aa69f6409644d4138564de83dba3f5afc54b0cf27b1f55",
           "repeatConsistent": true,
           "registeredFileName": "cilin.full-d2.json",
-          "registeredDigest": "52f98e9c7f18463ad967a6f95986ac3e90fdf7131b5ad41b535b0b29134aadb5",
-          "registeredSource": "重登记：2026-10-18 导入层过滤后实测（原登记值见 changelog）",
+          "registeredDigest": "091139958106885281aa69f6409644d4138564de83dba3f5afc54b0cf27b1f55",
+          "registeredSource": "重登记：2026-10-18 增补生成器戳记后实测（原登记值见 changelog）",
           "registeredChangelog": [
             {
               "from": null,
@@ -26401,6 +26401,12 @@
               "to": "52f98e9c7f18463ad967a6f95986ac3e90fdf7131b5ad41b535b0b29134aadb5",
               "reason": "导入层剔除原表 8 条非汉字杂项（4 个字形）后重建：候选 5403→5395、字形 5037→5033；data/raw 字节未改",
               "registeredAt": "2026-10-18"
+            },
+            {
+              "from": "52f98e9c7f18463ad967a6f95986ac3e90fdf7131b5ad41b535b0b29134aadb5",
+              "to": "091139958106885281aa69f6409644d4138564de83dba3f5afc54b0cf27b1f55",
+              "reason": "notice 增补生成器戳记「生成器：scripts/data/build-cilin.ts@d3-1」（关闭 F-cilin-002）；只改 notice 文本",
+              "registeredAt": "2026-10-18"
             }
           ],
           "fileNameMatches": true,
@@ -26409,17 +26415,23 @@
         {
           "file": "data/normalized/pingshui.full-d2-patched.json",
           "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3",
-          "digestFirst": "cae183af3d83bb33f3ecc57dd85d9dbada0cdc4f8bf55437b2f46ba6af4ced7c",
-          "digestSecond": "cae183af3d83bb33f3ecc57dd85d9dbada0cdc4f8bf55437b2f46ba6af4ced7c",
+          "digestFirst": "3f3020a5e696abf4489ab7054069cbf85bf0dcbc818440b7fffb2a0959d083c5",
+          "digestSecond": "3f3020a5e696abf4489ab7054069cbf85bf0dcbc818440b7fffb2a0959d083c5",
           "repeatConsistent": true,
           "registeredFileName": "pingshui.full-d2-patched.json",
-          "registeredDigest": "cae183af3d83bb33f3ecc57dd85d9dbada0cdc4f8bf55437b2f46ba6af4ced7c",
-          "registeredSource": "重登记：2026-10-18 本报告实测（原登记值见 changelog）",
+          "registeredDigest": "3f3020a5e696abf4489ab7054069cbf85bf0dcbc818440b7fffb2a0959d083c5",
+          "registeredSource": "重登记：2026-10-18 增补生成器戳记后实测（原登记值见 changelog）",
           "registeredChangelog": [
             {
               "from": "6c9057412b85a3c7b4066f260e8d52b60b8be936c814380200f7ed9d7a71d6ef",
               "to": "cae183af3d83bb33f3ecc57dd85d9dbada0cdc4f8bf55437b2f46ba6af4ced7c",
               "reason": "review2→review3 版本改名 + J03 第二批 6 部归部落库后重建",
+              "registeredAt": "2026-10-18"
+            },
+            {
+              "from": "cae183af3d83bb33f3ecc57dd85d9dbada0cdc4f8bf55437b2f46ba6af4ced7c",
+              "to": "3f3020a5e696abf4489ab7054069cbf85bf0dcbc818440b7fffb2a0959d083c5",
+              "reason": "notice 增补生成器戳记「生成器：scripts/data/build-pingshui.ts@d3-1」（关闭 F-pingshui-001）；只改 notice 文本",
               "registeredAt": "2026-10-18"
             }
           ],
@@ -26429,17 +26441,23 @@
         {
           "file": "data/normalized/pingshui.full-d2.json",
           "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-review3",
-          "digestFirst": "17121e27b1229c67b336e9e8b80fae4d4c511225f301c00d01444fa17a00174c",
-          "digestSecond": "17121e27b1229c67b336e9e8b80fae4d4c511225f301c00d01444fa17a00174c",
+          "digestFirst": "0f8bda54f9a62e903fb9af419bb78dab54c558b33af1939e2fbe82480f6362fe",
+          "digestSecond": "0f8bda54f9a62e903fb9af419bb78dab54c558b33af1939e2fbe82480f6362fe",
           "repeatConsistent": true,
           "registeredFileName": "pingshui.full-d2.json",
-          "registeredDigest": "17121e27b1229c67b336e9e8b80fae4d4c511225f301c00d01444fa17a00174c",
-          "registeredSource": "重登记：2026-10-18 本报告实测（原登记值见 changelog）",
+          "registeredDigest": "0f8bda54f9a62e903fb9af419bb78dab54c558b33af1939e2fbe82480f6362fe",
+          "registeredSource": "重登记：2026-10-18 增补生成器戳记后实测（原登记值见 changelog）",
           "registeredChangelog": [
             {
               "from": "60c416c8d0fe39fee07a82a2975ad0bbe1374b53985abb5a79f9723c04498f7e",
               "to": "17121e27b1229c67b336e9e8b80fae4d4c511225f301c00d01444fa17a00174c",
               "reason": "review2→review3 版本改名（dataVersion 参与业务内容摘要，改名必然改摘要）+ J03 第二批 6 部归部落库后重建",
+              "registeredAt": "2026-10-18"
+            },
+            {
+              "from": "17121e27b1229c67b336e9e8b80fae4d4c511225f301c00d01444fa17a00174c",
+              "to": "0f8bda54f9a62e903fb9af419bb78dab54c558b33af1939e2fbe82480f6362fe",
+              "reason": "notice 增补生成器戳记「生成器：scripts/data/build-pingshui.ts@d3-1」（关闭 F-pingshui-002）；只改 notice 文本，候选/归属/证据未动",
               "registeredAt": "2026-10-18"
             }
           ],
@@ -26497,16 +26515,16 @@
           ]
         },
         {
-          "source": "重登记：2026-10-18 导入层过滤后实测（原登记值见 changelog）",
+          "source": "重登记：2026-10-18 增补生成器戳记后实测（原登记值见 changelog）",
           "dataVersions": [
-            "cilin-cwr-ff0e9c1-d2-full"
+            "cilin-cwr-ff0e9c1-d2-full",
+            "pingshui-cwr-ff0e9c1-d2-full-review3",
+            "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3"
           ]
         },
         {
           "source": "重登记：2026-10-18 本报告实测（原登记值见 changelog）",
           "dataVersions": [
-            "pingshui-cwr-ff0e9c1-d2-full-review3",
-            "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3",
             "sample-pingshui-cwr-ff0e9c1-d1-review2"
           ]
         }
@@ -26871,8 +26889,8 @@
         "listMissingNote": "审批清单未命中 1 条，均属预期（跨库全局清单 + 105/106 部差异），不计为异常。"
       },
       "metadata": {
-        "businessDigest": "17121e27b1229c67b336e9e8b80fae4d4c511225f301c00d01444fa17a00174c",
-        "canonicalDigest": "0d6086301b449f5de18e829063e9f2a28019e61b87b51dac66d94cf334e38370",
+        "businessDigest": "0f8bda54f9a62e903fb9af419bb78dab54c558b33af1939e2fbe82480f6362fe",
+        "canonicalDigest": "4793138918aa35108b88e5e70e51f44436f5ed7d7f4e342d4bab59d3b136b311",
         "sources": [
           {
             "id": "src:chinese_word_rhyme:pingshui",
@@ -26932,19 +26950,6 @@
           "impact": "该韵部下的字无法归部，按韵部查询会漏；结构门槛不通过",
           "suggestedAction": "数据缺口，需补来源后重构建；不得新增空韵目凑数",
           "actionKind": "数据事实需人审"
-        },
-        {
-          "id": "F-pingshui-002",
-          "class": "F",
-          "book": "pingshui",
-          "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-review3",
-          "severity": "P2",
-          "location": "data/normalized/pingshui.full-d2.json · 快照头",
-          "fact": "快照未登记生成器/规则版本字段",
-          "basis": "SnapshotInput 结构无 generatorVersion/rulesVersion；平水与词林由 build-*.ts 直接生成，版本只能从脚本名推断",
-          "impact": "无法仅凭数据包回答「这份数据由哪版脚本产出」",
-          "suggestedAction": "在 notice 或独立 descriptor 中登记脚本版本（不改快照 Schema）",
-          "actionKind": "接线/脚本可修"
         }
       ]
     },
@@ -27207,8 +27212,8 @@
         "listMissingNote": "审批清单 ID 在本快照内全部命中。"
       },
       "metadata": {
-        "businessDigest": "cae183af3d83bb33f3ecc57dd85d9dbada0cdc4f8bf55437b2f46ba6af4ced7c",
-        "canonicalDigest": "58a4c940cbf9e7b77fff4fcf3b5d800c9616726f7e6557e7b4fff247601d9876",
+        "businessDigest": "3f3020a5e696abf4489ab7054069cbf85bf0dcbc818440b7fffb2a0959d083c5",
+        "canonicalDigest": "2dd2fa67bce83c8d056f59120ebcc811be8e4b1ad98a204f27d83c9f0be8485a",
         "sources": [
           {
             "id": "src:chinese_word_rhyme:pingshui",
@@ -27266,21 +27271,7 @@
           "bothGroups": "not_applicable"
         }
       ],
-      "anomalies": [
-        {
-          "id": "F-pingshui-001",
-          "class": "F",
-          "book": "pingshui",
-          "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3",
-          "severity": "P2",
-          "location": "data/normalized/pingshui.full-d2-patched.json · 快照头",
-          "fact": "快照未登记生成器/规则版本字段",
-          "basis": "SnapshotInput 结构无 generatorVersion/rulesVersion；平水与词林由 build-*.ts 直接生成，版本只能从脚本名推断",
-          "impact": "无法仅凭数据包回答「这份数据由哪版脚本产出」",
-          "suggestedAction": "在 notice 或独立 descriptor 中登记脚本版本（不改快照 Schema）",
-          "actionKind": "接线/脚本可修"
-        }
-      ]
+      "anomalies": []
     },
     {
       "file": "data/normalized/cilin.full-d2.json",
@@ -27673,8 +27664,8 @@
         "listMissingNote": "审批清单未命中 90 条，均属预期（跨库全局清单 + 105/106 部差异），不计为异常。"
       },
       "metadata": {
-        "businessDigest": "52f98e9c7f18463ad967a6f95986ac3e90fdf7131b5ad41b535b0b29134aadb5",
-        "canonicalDigest": "61bce00a41207a86b2fc0a9a1b1652402b1150cebd7c8cee9df5820ca6420a67",
+        "businessDigest": "091139958106885281aa69f6409644d4138564de83dba3f5afc54b0cf27b1f55",
+        "canonicalDigest": "40d6152fb68f2d4a26320d0b53f9324150df2ff7c30dfe7d5410de48142e1b41",
         "sources": [
           {
             "id": "src:chinese_word_rhyme:cilin",
@@ -27729,19 +27720,6 @@
           "impact": "这些是「来源只标仄声」的如实记录：不得臆补成上声或去声；本次核出越界 0 条",
           "suggestedAction": "保持现状；人审时只需确认来源确实只标仄",
           "actionKind": "数据事实需人审"
-        },
-        {
-          "id": "F-cilin-002",
-          "class": "F",
-          "book": "cilin",
-          "dataVersion": "cilin-cwr-ff0e9c1-d2-full",
-          "severity": "P2",
-          "location": "data/normalized/cilin.full-d2.json · 快照头",
-          "fact": "快照未登记生成器/规则版本字段",
-          "basis": "SnapshotInput 结构无 generatorVersion/rulesVersion；平水与词林由 build-*.ts 直接生成，版本只能从脚本名推断",
-          "impact": "无法仅凭数据包回答「这份数据由哪版脚本产出」",
-          "suggestedAction": "在 notice 或独立 descriptor 中登记脚本版本（不改快照 Schema）",
-          "actionKind": "接线/脚本可修"
         }
       ]
     },
@@ -28377,7 +28355,7 @@
       "dataVersion": "*",
       "severity": "P2",
       "location": "data/normalized/*.json（快照头）· SnapshotInput 结构",
-      "fact": "新韵的规则版本 xinyun-14-rules-d1 与生成器版本 xinyun-rebuild-gen/0.1.0 只写在快照 notice 文本里（notice 命中：规则=true、生成器=true）；pinyin-data revision=fa9761fff402f8560196b1ba085c437c52b56d7c、SHA-256 与落盘字节一致=true；但快照 Schema **没有** generatorVersion/rulesVersion 字段，机器无法结构化读取；平水/词林同样无该字段",
+      "fact": "新韵的规则版本 xinyun-14-rules-d1 与生成器版本 xinyun-rebuild-gen/0.1.0 只写在快照 notice 文本里（notice 命中：规则=true、生成器=true）；pinyin-data revision=fa9761fff402f8560196b1ba085c437c52b56d7c、SHA-256 与落盘字节一致=true；但快照 Schema **没有** generatorVersion/rulesVersion 字段，机器无法结构化读取。平水两版与词林现已在 notice 增补「生成器：scripts/data/build-*.ts@d3-1」戳记（可 grep），三条 F 类「未登记生成器版本」异常因此关闭；**本条的剩余问题只是「非结构化」**——读者仍须 grep 文案，不能用字段直读",
       "basis": "读四份快照的 notice 与 sources；SnapshotInput 类型定义无版本字段；pinyin.txt 字节重算比对",
       "impact": "「同一 dataVersion 对应哪版脚本与规则」只能靠读文案回答，不能机器校验；对方案 §2.1「检查生成器版本、规则版本和 pinyin-data SHA」只能给部分答案",
       "suggestedAction": "由 GLM 决定是否在快照外围加 descriptor（不改契约字段）；在此之前，版本以 notice 文本 + 本报告为准",
@@ -28471,11 +28449,11 @@
   "severityCounts": {
     "P0": 0,
     "P1": 3,
-    "P2": 7,
+    "P2": 4,
     "P3": 5
   },
   "anomalyTotals": {
-    "total": 15,
+    "total": 12,
     "byClass": [
       {
         "class": "A",
@@ -28499,7 +28477,7 @@
       },
       {
         "class": "F",
-        "count": 6
+        "count": 3
       },
       {
         "class": "G",

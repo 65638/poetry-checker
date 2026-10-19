@@ -2,7 +2,7 @@
   "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3",
   "book": "pingshui",
   "reviewStatus": "unverified",
-  "notice": "平水韵全量候选（106 部，含上声三讲补丁草案）：在 105 部快照上追加「三讲」9 条归属，结构可达 106 部且无空部；三讲已签，候选审批按独立证据落库；全库 reviewStatus=unverified，releaseGatePassed 仍为 false，不得进 data/releases。上声三讲底本为维基文库《平水韻》oldid 8264804 的繁体正文「講港棒蚌項缿玤傋耩」（该韵目无【詞】段）；底本为繁体，此处仅做繁→简转换（講→讲、項→项），不得声称底本原文即简体。「玤」原已收于上声一董，本补丁只新增其「三讲」归属，未删除原归属。",
+  "notice": "平水韵全量候选（106 部，含上声三讲补丁草案）：在 105 部快照上追加「三讲」9 条归属，结构可达 106 部且无空部；三讲已签，候选审批按独立证据落库；全库 reviewStatus=unverified，releaseGatePassed 仍为 false，不得进 data/releases。上声三讲底本为维基文库《平水韻》oldid 8264804 的繁体正文「講港棒蚌項缿玤傋耩」（该韵目无【詞】段）；底本为繁体，此处仅做繁→简转换（講→讲、項→项），不得声称底本原文即简体。「玤」原已收于上声一董，本补丁只新增其「三讲」归属，未删除原归属。 生成器：scripts/data/build-pingshui.ts@d3-1（数据源 chinese_word_rhyme@ff0e9c13）；快照 Schema 无版本字段，版本以此戳记为据。",
   "candidates": [
     {
       "id": "pingshui:东:ping:一东",

@@ -2,7 +2,7 @@
 
 由 `scripts/data/build-d3-anomalies.ts` 从 `data/reviews/ai-lexicon-precheck-2026-10-18.json` 生成：**事实 / 影响 / 建议动作三段直读 precheck JSON，不手抄**；本文件只补「复现命令 / 验证命令 / 责任人 / 处置状态 / 归类」。
 
-当前 **15 条未关闭异常**（P0=0 / P1=3 / P2=7 / P3=5） + **1 条已关闭**（保留 ID 供 Gate 1 批次 `exceptionIds` 解析）。
+当前 **12 条未关闭异常**（P0=0 / P1=3 / P2=4 / P3=5） + **4 条已关闭**（保留 ID 供 Gate 1 批次 `exceptionIds` 解析）。
 
 > 口径：**异常** = 需人裁定的事实问题；**护栏** = 机器自动红灯（摘要漂移 / fileName↔dataVersion 不符 / 悬空登记），进 `failures` 由 exit code 表达，**不在此清单**。护栏当前状态见 precheck 报告的 `guards` 段。
 
@@ -15,7 +15,7 @@
 | 结构 | 2 | 0 |
 | 非汉字导入垃圾 | 0 | 1 |
 | 异体归并 | 1 | 0 |
-| 来源 / 许可 / 修订 | 8 | 0 |
+| 来源 / 许可 / 修订 | 5 | 3 |
 | 古今音与读音承载 | 3 | 0 |
 | 跨库映射 | 0 | 0 |
 | 工具链 / 验收命令 | 1 | 0 |
@@ -96,53 +96,44 @@
 
 ## 来源 / 许可 / 修订
 
-### F-pingshui-002 · P2 · 类 F
+### F-pingshui-001 · 106 部快照未登记生成器版本 ✳️ 已关闭
 
 | 项 | 内容 |
 |---|---|
-| 原 ID | `F-pingshui-002`（库：pingshui） |
-| 分级 / 动作类型 | P2 / 接线/脚本可修 |
-| 位置 | `data/normalized/pingshui.full-d2.json · 快照头` |
-| 事实 | 快照未登记生成器/规则版本字段 |
-| 判定依据 | SnapshotInput 结构无 generatorVersion/rulesVersion；平水与词林由 build-*.ts 直接生成，版本只能从脚本名推断 |
-| 影响范围 | 无法仅凭数据包回答「这份数据由哪版脚本产出」 |
-| 修复或待裁 | 105 部快照同 F-pingshui-001 |
-| 责任人 | A（在 notice 中登记） |
+| 原 ID | `F-pingshui-001` |
+| 原分级 | P2 |
+| 事实 | 平水 106 部快照的 notice 未登记生成器/规则版本；快照 Schema 无 generatorVersion 字段，无法回答「这份数据由哪版脚本产出」 |
+| 处置 | **已关闭**：notice 增补戳记「生成器：scripts/data/build-pingshui.ts@d3-1」；precheck 改为以 `生成器：scripts/data/<脚本>@<版本>` 正则识别，命中即视为已登记、不再报 F 类异常。业务内容摘要随之变化并已重登记，changelog 写明「只改 notice 文本」 |
 | 复现命令 | `node node_modules/tsx/dist/cli.mjs scripts/data/precheck-lexicon.ts` |
-| 验证命令 | 同上；105 部快照 |
-| 状态 | **待修** |
+| 验证命令 | node -e "const s=require('./data/normalized/pingshui.full-d2-patched.json');console.log(/生成器[:：]\s*scripts\/data\/[a-z-]+\.ts@[\w.-]+/.exec(s.notice)[1])" |
+| 责任人 | A（已修） |
+| 状态 | **已关闭** |
 
-### F-pingshui-001 · P2 · 类 F
+### F-pingshui-002 · 105 部快照未登记生成器版本 ✳️ 已关闭
 
 | 项 | 内容 |
 |---|---|
-| 原 ID | `F-pingshui-001`（库：pingshui） |
-| 分级 / 动作类型 | P2 / 接线/脚本可修 |
-| 位置 | `data/normalized/pingshui.full-d2-patched.json · 快照头` |
-| 事实 | 快照未登记生成器/规则版本字段 |
-| 判定依据 | SnapshotInput 结构无 generatorVersion/rulesVersion；平水与词林由 build-*.ts 直接生成，版本只能从脚本名推断 |
-| 影响范围 | 无法仅凭数据包回答「这份数据由哪版脚本产出」 |
-| 修复或待裁 | 106 部快照未登记生成器版本。可在 notice 追加脚本名+版本，**不改快照 Schema** |
-| 责任人 | A（在 notice 中登记） |
+| 原 ID | `F-pingshui-002` |
+| 原分级 | P2 |
+| 事实 | 平水 105 部快照的 notice 未登记生成器/规则版本，同 F-pingshui-001 |
+| 处置 | **已关闭**：同 F-pingshui-001，notice 增补同一戳记；摘要已重登记 |
 | 复现命令 | `node node_modules/tsx/dist/cli.mjs scripts/data/precheck-lexicon.ts` |
-| 验证命令 | 快照 notice 或 descriptor 中出现脚本名与版本；否则本条维持 P2 |
-| 状态 | **待修** |
+| 验证命令 | 同上；105 部快照的 notice 同样带戳记 |
+| 责任人 | A（已修） |
+| 状态 | **已关闭** |
 
-### F-cilin-002 · P2 · 类 F
+### F-cilin-002 · 词林快照未登记生成器版本 ✳️ 已关闭
 
 | 项 | 内容 |
 |---|---|
-| 原 ID | `F-cilin-002`（库：cilin） |
-| 分级 / 动作类型 | P2 / 接线/脚本可修 |
-| 位置 | `data/normalized/cilin.full-d2.json · 快照头` |
-| 事实 | 快照未登记生成器/规则版本字段 |
-| 判定依据 | SnapshotInput 结构无 generatorVersion/rulesVersion；平水与词林由 build-*.ts 直接生成，版本只能从脚本名推断 |
-| 影响范围 | 无法仅凭数据包回答「这份数据由哪版脚本产出」 |
-| 修复或待裁 | 词林快照未登记生成器版本；同 F-pingshui-001 |
-| 责任人 | A（在 notice 中登记） |
+| 原 ID | `F-cilin-002` |
+| 原分级 | P2 |
+| 事实 | 词林快照的 notice 未登记生成器/规则版本，同 F-pingshui-001 |
+| 处置 | **已关闭**：notice 增补戳记「生成器：scripts/data/build-cilin.ts@d3-1」；摘要已重登记（52f98e9c… → 09113995…） |
 | 复现命令 | `node node_modules/tsx/dist/cli.mjs scripts/data/precheck-lexicon.ts` |
-| 验证命令 | 同上；词林快照 |
-| 状态 | **待修** |
+| 验证命令 | 同上；词林快照的 notice 带「build-cilin.ts@d3-1」戳记 |
+| 责任人 | A（已修） |
+| 状态 | **已关闭** |
 
 ### F-cross-002 · P3 · 类 F
 
@@ -183,7 +174,7 @@
 | 原 ID | `F-cross-004`（库：cross；affected: pingshui-cwr-ff0e9c1-d2-full、pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3、cilin-cwr-ff0e9c1-d2-full、xinyun-rebuild-d2-full） |
 | 分级 / 动作类型 | P2 / 接线/脚本可修 |
 | 位置 | `data/normalized/*.json（快照头）· SnapshotInput 结构` |
-| 事实 | 新韵的规则版本 xinyun-14-rules-d1 与生成器版本 xinyun-rebuild-gen/0.1.0 只写在快照 notice 文本里（notice 命中：规则=true、生成器=true）；pinyin-data revision=fa9761fff402f8560196b1ba085c437c52b56d7c、SHA-256 与落盘字节一致=true；但快照 Schema **没有** generatorVersion/rulesVersion 字段，机器无法结构化读取；平水/词林同样无该字段 |
+| 事实 | 新韵的规则版本 xinyun-14-rules-d1 与生成器版本 xinyun-rebuild-gen/0.1.0 只写在快照 notice 文本里（notice 命中：规则=true、生成器=true）；pinyin-data revision=fa9761fff402f8560196b1ba085c437c52b56d7c、SHA-256 与落盘字节一致=true；但快照 Schema **没有** generatorVersion/rulesVersion 字段，机器无法结构化读取。平水两版与词林现已在 notice 增补「生成器：scripts/data/build-*.ts@d3-1」戳记（可 grep），三条 F 类「未登记生成器版本」异常因此关闭；**本条的剩余问题只是「非结构化」**——读者仍须 grep 文案，不能用字段直读 |
 | 判定依据 | 读四份快照的 notice 与 sources；SnapshotInput 类型定义无版本字段；pinyin.txt 字节重算比对 |
 | 影响范围 | 「同一 dataVersion 对应哪版脚本与规则」只能靠读文案回答，不能机器校验；对方案 §2.1「检查生成器版本、规则版本和 pinyin-data SHA」只能给部分答案 |
 | 修复或待裁 | 快照 Schema 无 generatorVersion / rulesVersion 字段，机器无法结构化读取；平水/词林同样缺。新韵的规则/生成器版本只存在于 notice 文本。**不改契约字段**，加不加外围 descriptor 由 GLM 定 |

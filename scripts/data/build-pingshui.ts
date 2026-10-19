@@ -131,6 +131,14 @@ const SANJ_JIANG_CHARS = SANJ_JIANG_BASE_CHARS.map(
   (character) => TRAD_TO_SIMP[character] ?? character,
 );
 
+/**
+ * 生成器戳记：快照 Schema 无 generatorVersion 字段，约定把脚本名与版本写进 notice，
+ * precheck 以 `生成器：scripts/data/<脚本>@<版本>` 正则识别，命中即视为已登记。
+ */
+const GENERATOR_STAMP =
+  " 生成器：scripts/data/build-pingshui.ts@d3-1（数据源 chinese_word_rhyme@ff0e9c13）；" +
+  "快照 Schema 无版本字段，版本以此戳记为据。";
+
 const A_NOTICE =
   "平水韵全量候选（105 部）：源自 chinese_word_rhyme 固定提交 ff0e9c13 的原表转载，" +
   "仅登记韵部归属与声类；反切、义项、今读一律为 null。" +
@@ -327,7 +335,7 @@ function main(): void {
         retrievedAt: null,
         license: "MIT（上游转载授权链未核实）",
       }),
-      notice: A_NOTICE,
+      notice: `${A_NOTICE}${GENERATOR_STAMP}`,
     },
     CANDIDATE_APPROVALS,
   );
@@ -340,7 +348,7 @@ function main(): void {
     dataVersion: B_VERSION,
     book: base.book,
     reviewStatus: base.reviewStatus,
-    notice: B_NOTICE,
+    notice: `${B_NOTICE}${GENERATOR_STAMP}`,
     candidates: [...base.candidates, ...buildSanJiangCandidates()],
     groups: [...base.groups, buildSanJiangGroup()],
     evidence: [...base.evidence, buildSanJiangEvidence()],

@@ -55,9 +55,9 @@
 
 | 库 | dataVersion | 结构完整性 | 引用闭合 | 声类一致性 | 异常数 P0/P1/P2/P3 | 证据 approved | 发布门槛 |
 |---|---|---|---|---|---|---|---|
-| pingshui | `pingshui-cwr-ff0e9c1-d2-full-review3` | ⚠ 105/106；缺 三讲；空 无；意外 无 | ✅ 四层闭合 | ✅ 三项全过 | 0/1/1/0 | 89/188 | **未通过** |
-| pingshui | `pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3` | ✅ 106/106，无缺部无空部 | ✅ 四层闭合 | ✅ 三项全过 | 0/0/1/0 | 90/189 | **未通过** |
-| cilin | `cilin-cwr-ff0e9c1-d2-full` | ✅ 33/33，无缺部无空部 | ✅ 四层闭合 | ✅ 三项全过（ze_unspecified 2232） | 0/0/1/1 | 0/33 | **未通过** |
+| pingshui | `pingshui-cwr-ff0e9c1-d2-full-review3` | ⚠ 105/106；缺 三讲；空 无；意外 无 | ✅ 四层闭合 | ✅ 三项全过 | 0/1/0/0 | 89/188 | **未通过** |
+| pingshui | `pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3` | ✅ 106/106，无缺部无空部 | ✅ 四层闭合 | ✅ 三项全过 | 0/0/0/0 | 90/189 | **未通过** |
+| cilin | `cilin-cwr-ff0e9c1-d2-full` | ✅ 33/33，无缺部无空部 | ✅ 四层闭合 | ✅ 三项全过（ze_unspecified 2232） | 0/0/0/1 | 0/33 | **未通过** |
 | xinyun | `xinyun-rebuild-d2-full` | ✅ 56/56，无缺部无空部 | ✅ 四层闭合 | ✅ 三项全过 | 0/0/0/0 | 0/56 | **未通过** |
 
 脚注：**中华新韵 = 十四韵规则 + pinyin-data 重建表，非官方原始表**（规则出处 unverified）。平水两行分别是 105 部原始快照与 106 部三讲草案快照，**并存而非覆盖**。
@@ -299,9 +299,9 @@
 
 | 文件 | dataVersion | 两次摘要一致 | 文件名↔登记一致 | 与登记摘要 | changelog |
 |---|---|---|---|---|---|
-| `cilin.full-d2.json` | `cilin-cwr-ff0e9c1-d2-full` | ✅ | ✅ | ✅ 一致 | 首次登记 @2026-10-18：首次登记（此前护栏从未覆盖词林快照）<br>变更 @2026-10-18：导入层剔除原表 8 条非汉字杂项（4 个字形）后重建：候选 5403→5395、字形 5037→5033；data/raw 字节未改 |
-| `pingshui.full-d2-patched.json` | `pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3` | ✅ | ✅ | ✅ 一致 | 变更 @2026-10-18：review2→review3 版本改名 + J03 第二批 6 部归部落库后重建 |
-| `pingshui.full-d2.json` | `pingshui-cwr-ff0e9c1-d2-full-review3` | ✅ | ✅ | ✅ 一致 | 变更 @2026-10-18：review2→review3 版本改名（dataVersion 参与业务内容摘要，改名必然改摘要）+ J03 第二批 6 部归部落库后重建 |
+| `cilin.full-d2.json` | `cilin-cwr-ff0e9c1-d2-full` | ✅ | ✅ | ✅ 一致 | 首次登记 @2026-10-18：首次登记（此前护栏从未覆盖词林快照）<br>变更 @2026-10-18：导入层剔除原表 8 条非汉字杂项（4 个字形）后重建：候选 5403→5395、字形 5037→5033；data/raw 字节未改<br>变更 @2026-10-18：notice 增补生成器戳记「生成器：scripts/data/build-cilin.ts@d3-1」（关闭 F-cilin-002）；只改 notice 文本 |
+| `pingshui.full-d2-patched.json` | `pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3` | ✅ | ✅ | ✅ 一致 | 变更 @2026-10-18：review2→review3 版本改名 + J03 第二批 6 部归部落库后重建<br>变更 @2026-10-18：notice 增补生成器戳记「生成器：scripts/data/build-pingshui.ts@d3-1」（关闭 F-pingshui-001）；只改 notice 文本 |
+| `pingshui.full-d2.json` | `pingshui-cwr-ff0e9c1-d2-full-review3` | ✅ | ✅ | ✅ 一致 | 变更 @2026-10-18：review2→review3 版本改名（dataVersion 参与业务内容摘要，改名必然改摘要）+ J03 第二批 6 部归部落库后重建<br>变更 @2026-10-18：notice 增补生成器戳记「生成器：scripts/data/build-pingshui.ts@d3-1」（关闭 F-pingshui-002）；只改 notice 文本，候选/归属/证据未动 |
 | `pingshui.sample-d1.json` | `sample-pingshui-cwr-ff0e9c1-d1-review2` | ✅ | ✅ | ✅ 一致 | 变更 @2026-10-18：sample 升 review2（候选级/部级证据分离）后摘要变化；此前 B1 未覆盖 sample，属漏检补登记 |
 | `xinyun.full-d2.json` | `xinyun-rebuild-d2-full` | ✅ | ✅ | ✅ 一致 | （无变化，未写记录） |
 
@@ -310,8 +310,8 @@
 | 登记来源 | 覆盖的 dataVersion |
 |---|---|
 | docs/handoffs/0009-a-fix-source-id-and-modern-reading.md | `xinyun-rebuild-d2-full` |
-| 重登记：2026-10-18 导入层过滤后实测（原登记值见 changelog） | `cilin-cwr-ff0e9c1-d2-full` |
-| 重登记：2026-10-18 本报告实测（原登记值见 changelog） | `pingshui-cwr-ff0e9c1-d2-full-review3`<br>`pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3`<br>`sample-pingshui-cwr-ff0e9c1-d1-review2` |
+| 重登记：2026-10-18 增补生成器戳记后实测（原登记值见 changelog） | `cilin-cwr-ff0e9c1-d2-full`<br>`pingshui-cwr-ff0e9c1-d2-full-review3`<br>`pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3` |
+| 重登记：2026-10-18 本报告实测（原登记值见 changelog） | `sample-pingshui-cwr-ff0e9c1-d1-review2` |
 
 结论：两次摘要全部一致 = **是**；登记摘要漂移 = **0** 条；文件名↔dataVersion 不符 = **0** 条；悬空登记 = **0** 条；未登记快照 = **0** 条（P2，不计入 failures）。
 
@@ -377,8 +377,8 @@
 - 声类三项：toneClass↔部 不符 0；tone↔toneClass 不符 0；ze_unspecified 0 条 / 0 组 / 越界 0
 - 单码点校验：检查 10378 条，违规 0 条
 - 证据 188 条（approved 89 / unverified 99）；越权 approved 0；审批清单未命中 1 条，均属预期（跨库全局清单 + 105/106 部差异），不计为异常。
-- 业务内容摘要：`17121e27b1229c67b336e9e8b80fae4d4c511225f301c00d01444fa17a00174c`
-- 规范化 JSON 摘要：`0d6086301b449f5de18e829063e9f2a28019e61b87b51dac66d94cf334e38370`
+- 业务内容摘要：`0f8bda54f9a62e903fb9af419bb78dab54c558b33af1939e2fbe82480f6362fe`
+- 规范化 JSON 摘要：`4793138918aa35108b88e5e70e51f44436f5ed7d7f4e342d4bab59d3b136b311`
 - 生成器/规则版本：（快照未登记） / （快照未登记）
 
 | 来源 ID | revision | sha256（登记） | 落盘文件 | 与字节一致 |
@@ -396,8 +396,8 @@
 - 声类三项：toneClass↔部 不符 0；tone↔toneClass 不符 0；ze_unspecified 0 条 / 0 组 / 越界 0
 - 单码点校验：检查 10387 条，违规 0 条
 - 证据 189 条（approved 90 / unverified 99）；越权 approved 0；审批清单 ID 在本快照内全部命中。
-- 业务内容摘要：`cae183af3d83bb33f3ecc57dd85d9dbada0cdc4f8bf55437b2f46ba6af4ced7c`
-- 规范化 JSON 摘要：`58a4c940cbf9e7b77fff4fcf3b5d800c9616726f7e6557e7b4fff247601d9876`
+- 业务内容摘要：`3f3020a5e696abf4489ab7054069cbf85bf0dcbc818440b7fffb2a0959d083c5`
+- 规范化 JSON 摘要：`2dd2fa67bce83c8d056f59120ebcc811be8e4b1ad98a204f27d83c9f0be8485a`
 - 生成器/规则版本：（快照未登记） / （快照未登记）
 
 | 来源 ID | revision | sha256（登记） | 落盘文件 | 与字节一致 |
@@ -416,8 +416,8 @@
 - 声类三项：toneClass↔部 不符 0；tone↔toneClass 不符 0；ze_unspecified 2232 条 / 14 组 / 越界 0
 - 单码点校验：检查 5395 条，违规 0 条
 - 证据 33 条（approved 0 / unverified 33）；越权 approved 0；审批清单未命中 90 条，均属预期（跨库全局清单 + 105/106 部差异），不计为异常。
-- 业务内容摘要：`52f98e9c7f18463ad967a6f95986ac3e90fdf7131b5ad41b535b0b29134aadb5`
-- 规范化 JSON 摘要：`61bce00a41207a86b2fc0a9a1b1652402b1150cebd7c8cee9df5820ca6420a67`
+- 业务内容摘要：`091139958106885281aa69f6409644d4138564de83dba3f5afc54b0cf27b1f55`
+- 规范化 JSON 摘要：`40d6152fb68f2d4a26320d0b53f9324150df2ff7c30dfe7d5410de48142e1b41`
 - 生成器/规则版本：（快照未登记） / （快照未登记）
 
 | 来源 ID | revision | sha256（登记） | 落盘文件 | 与字节一致 |
@@ -493,7 +493,7 @@
 
 分类：A 结构 / B 声类 / C 引用 / D 字符 / E 多音 / F 来源 / G 新韵特有 / H 三讲补丁。P0=会让下游出错；P1=数据缺口或接线缺陷；P2=口径/文档不一致；P3=提示。
 
-合计 **15** 条：P0=0 / P1=3 / P2=7 / P3=5
+合计 **12** 条：P0=0 / P1=3 / P2=4 / P3=5
 
 | 分类 | 条数 |
 |---|---|
@@ -502,7 +502,7 @@
 | C | 1 |
 | D | 1 |
 | E | 2 |
-| F | 6 |
+| F | 3 |
 | G | 1 |
 | H | 2 |
 
@@ -518,15 +518,12 @@
 | C-cross-001 | C | cross | `scripts/data/inspect.ts:14（相对 import 使用 .js 扩展名）` | 验收命令 `node --conditions=development scripts/data/inspect.ts` 无法运行：ERR_MODULE_NOT_FOUND packages/lexicon/src/adapters/chinese-word-rhyme.js | Node 24 原生类型剥离不改写相对 import 的 .js→.ts；A 侧本机外部终端实测 EXIT=1；改用 tsx 入口后 EXIT=0 | 任务书第 5 步的验收命令之一本身不可用，易被误判为数据故障 | 把验收命令与文档统一为 `node node_modules/tsx/dist/cli.mjs scripts/data/inspect.ts`（只改脚本与文档） | 接线/脚本可修 |
 | G-cross-008 | G | cross | `data/patches/xinyun-rebuild-report.dev.json · coverage` | 新韵重建：读音源字形 41923、读音 53457；未映射 43（FINAL_NOT_IN_RULES 9 / UNKNOWN_LETTER 30 / VOWEL_LESS 4）；轻声丢弃 241；er 等待核实规则影响 104 条 | 取自 data/patches/xinyun-rebuild-report.dev.json（rebuild-xinyun.ts 的产物，可能滞后于 build-xinyun.ts） | 这些读音不进表：轻声本调不明未默认归平；未映射项是明确不收，不是补齐进度 | 保持现状（不猜补）；er→十二齐 口径待人审核实；需对齐最新构建可重跑 rebuild-xinyun.ts | 数据事实需人审 |
 
-### P2（7 条）
+### P2（4 条）
 
 | 异常 ID | 类 | 库 | 位置 | 事实 | 判定依据 | 影响面 | 建议动作 | 动作类型 |
 |---|---|---|---|---|---|---|---|---|
-| F-pingshui-002 | F | pingshui | `data/normalized/pingshui.full-d2.json · 快照头` | 快照未登记生成器/规则版本字段 | SnapshotInput 结构无 generatorVersion/rulesVersion；平水与词林由 build-*.ts 直接生成，版本只能从脚本名推断 | 无法仅凭数据包回答「这份数据由哪版脚本产出」 | 在 notice 或独立 descriptor 中登记脚本版本（不改快照 Schema） | 接线/脚本可修 |
-| F-pingshui-001 | F | pingshui | `data/normalized/pingshui.full-d2-patched.json · 快照头` | 快照未登记生成器/规则版本字段 | SnapshotInput 结构无 generatorVersion/rulesVersion；平水与词林由 build-*.ts 直接生成，版本只能从脚本名推断 | 无法仅凭数据包回答「这份数据由哪版脚本产出」 | 在 notice 或独立 descriptor 中登记脚本版本（不改快照 Schema） | 接线/脚本可修 |
-| F-cilin-002 | F | cilin | `data/normalized/cilin.full-d2.json · 快照头` | 快照未登记生成器/规则版本字段 | SnapshotInput 结构无 generatorVersion/rulesVersion；平水与词林由 build-*.ts 直接生成，版本只能从脚本名推断 | 无法仅凭数据包回答「这份数据由哪版脚本产出」 | 在 notice 或独立 descriptor 中登记脚本版本（不改快照 Schema） | 接线/脚本可修 |
 | F-cross-003 | F | cross | `data/sources/manifest.json · src:wikisource:pingshuiyun.license` | 该来源的许可为**两层**：作品层 {{PD-old}}（落盘字节第 655-656 行页脚，已核）；站点层 CC BY-SA 4.0（Wikimedia 站点条款，页面模板里没有，条款文本未取得）。manifest 已改为 workLayer / siteLayer / conclusion 三键分别登记，不作单一许可结论 | 字节实测（页脚模板）+ 组长 2026-10-18 定论：两层不是矛盾也不是笔误；站点层条款文本未取得 → pendingReview | 若只引任一层都会出错：只引 PD-old 会漏掉站点署名义务；只引 CC BY-SA 会与字节不符。两层均不构成「可商用」证明 | 保持双层登记；取得站点条款文本或确认署名方式后，仅更新 siteLayer.status，不改作品层 | 数据事实需人审 |
-| F-cross-004 | F | cross<br>affected: `pingshui-cwr-ff0e9c1-d2-full`<br>`pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3`<br>`cilin-cwr-ff0e9c1-d2-full`<br>`xinyun-rebuild-d2-full` | `data/normalized/*.json（快照头）· SnapshotInput 结构` | 新韵的规则版本 xinyun-14-rules-d1 与生成器版本 xinyun-rebuild-gen/0.1.0 只写在快照 notice 文本里（notice 命中：规则=true、生成器=true）；pinyin-data revision=fa9761fff402f8560196b1ba085c437c52b56d7c、SHA-256 与落盘字节一致=true；但快照 Schema **没有** generatorVersion/rulesVersion 字段，机器无法结构化读取；平水/词林同样无该字段 | 读四份快照的 notice 与 sources；SnapshotInput 类型定义无版本字段；pinyin.txt 字节重算比对 | 「同一 dataVersion 对应哪版脚本与规则」只能靠读文案回答，不能机器校验；对方案 §2.1「检查生成器版本、规则版本和 pinyin-data SHA」只能给部分答案 | 由 GLM 决定是否在快照外围加 descriptor（不改契约字段）；在此之前，版本以 notice 文本 + 本报告为准 | 接线/脚本可修 |
+| F-cross-004 | F | cross<br>affected: `pingshui-cwr-ff0e9c1-d2-full`<br>`pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3`<br>`cilin-cwr-ff0e9c1-d2-full`<br>`xinyun-rebuild-d2-full` | `data/normalized/*.json（快照头）· SnapshotInput 结构` | 新韵的规则版本 xinyun-14-rules-d1 与生成器版本 xinyun-rebuild-gen/0.1.0 只写在快照 notice 文本里（notice 命中：规则=true、生成器=true）；pinyin-data revision=fa9761fff402f8560196b1ba085c437c52b56d7c、SHA-256 与落盘字节一致=true；但快照 Schema **没有** generatorVersion/rulesVersion 字段，机器无法结构化读取。平水两版与词林现已在 notice 增补「生成器：scripts/data/build-*.ts@d3-1」戳记（可 grep），三条 F 类「未登记生成器版本」异常因此关闭；**本条的剩余问题只是「非结构化」**——读者仍须 grep 文案，不能用字段直读 | 读四份快照的 notice 与 sources；SnapshotInput 类型定义无版本字段；pinyin.txt 字节重算比对 | 「同一 dataVersion 对应哪版脚本与规则」只能靠读文案回答，不能机器校验；对方案 §2.1「检查生成器版本、规则版本和 pinyin-data SHA」只能给部分答案 | 由 GLM 决定是否在快照外围加 descriptor（不改契约字段）；在此之前，版本以 notice 文本 + 本报告为准 | 接线/脚本可修 |
 | D-cross-007 | D | cross | `data/variants/variant-edges-d2.json` | 简繁/异体候选边共 5 条：pending_review 2 条（餘→余、馀→余）、applied_in_patch 2 条、approved 1 条（樓→楼，均已登记 approvalBasis） | 文件 summary 与 edges[].status 实测 | 未签边不生效：正文若写繁体（如「樓」）仍进 missing；已签边只属查询召回，不等于等价合并 | 按 0008 方案逐条人审签；签前不得让消费方启用 | 数据事实需人审 |
 | E-cross-009 | E | cross | `data/patches/xinyun-reading-collisions.dev.json` | 同(字形,子卷)多读音 1508 组（条目数 1508）：候选只承载一条 modernReading，其余在此列明 | 文件 count 与 items.length 实测 | 「同归部」不等于「同读音」：把子卷内多读音并成一条会丢真实读音 | 保留清单；下游需要多读音时按本清单取，不得合并 | 接线/脚本可修 |
 

@@ -156,27 +156,28 @@ const META: Readonly<Record<string, Meta>> = {
   "F-pingshui-001": {
     category: "source",
     reproduce: UNIFIED_CMD,
-    verify: "快照 notice 或 descriptor 中出现脚本名与版本；否则本条维持 P2",
-    owner: "A（在 notice 中登记）",
-    status: "待修",
+    verify:
+      "node -e \"const s=require('./data/normalized/pingshui.full-d2-patched.json');console.log(/生成器[:：]\\s*scripts\\/data\\/[a-z-]+\\.ts@[\\w.-]+/.exec(s.notice)[1])\"",
+    owner: "A（已修）",
+    status: "已关闭",
     decision:
-      "106 部快照未登记生成器版本。可在 notice 追加脚本名+版本，**不改快照 Schema**",
+      "已关闭：notice 增补「生成器：scripts/data/build-pingshui.ts@d3-1」；precheck 改为正则识别戳记，命中即不报",
   },
   "F-pingshui-002": {
     category: "source",
     reproduce: UNIFIED_CMD,
-    verify: "同上；105 部快照",
-    owner: "A（在 notice 中登记）",
-    status: "待修",
-    decision: "105 部快照同 F-pingshui-001",
+    verify: "同上；105 部快照的 notice 同样带戳记",
+    owner: "A（已修）",
+    status: "已关闭",
+    decision: "已关闭：同 F-pingshui-001",
   },
   "F-cilin-002": {
     category: "source",
     reproduce: UNIFIED_CMD,
-    verify: "同上；词林快照",
-    owner: "A（在 notice 中登记）",
-    status: "待修",
-    decision: "词林快照未登记生成器版本；同 F-pingshui-001",
+    verify: "同上；词林快照的 notice 带「build-cilin.ts@d3-1」戳记",
+    owner: "A（已修）",
+    status: "已关闭",
+    decision: "已关闭：notice 增补「生成器：scripts/data/build-cilin.ts@d3-1」",
   },
   "H-cross-005": {
     category: "source",
@@ -262,6 +263,31 @@ const CLOSED: readonly {
       "词林快照含 4 条**非汉字**候选（`[` U+005B、`]` U+005D、空格 U+0020、`，` U+FF0C），共 8 条条目；单码点校验抓不到（它们都是单码点），但字符本身不是汉字",
     resolution:
       "**已修（c9be32a）**：改在导入层按「单码点 + `\\p{Script=Han}`」双重判定过滤，逐条输出 droppedNonHan（含 codePoint/groupName/sourceLocator），`data/raw` 字节未改。候选 5,403→5,395（−8 = 条目数）、字形 5,037→5,033（−4 = 字形数）、部数/子卷 19/33 不变。已写入 `docs/data-quality.md` §7 与快照 notice",
+  },
+  {
+    id: "F-pingshui-001",
+    title: "106 部快照未登记生成器版本",
+    severity: "P2",
+    fact:
+      "平水 106 部快照的 notice 未登记生成器/规则版本；快照 Schema 无 generatorVersion 字段，无法回答「这份数据由哪版脚本产出」",
+    resolution:
+      "**已关闭**：notice 增补戳记「生成器：scripts/data/build-pingshui.ts@d3-1」；precheck 改为以 `生成器：scripts/data/<脚本>@<版本>` 正则识别，命中即视为已登记、不再报 F 类异常。业务内容摘要随之变化并已重登记，changelog 写明「只改 notice 文本」",
+  },
+  {
+    id: "F-pingshui-002",
+    title: "105 部快照未登记生成器版本",
+    severity: "P2",
+    fact: "平水 105 部快照的 notice 未登记生成器/规则版本，同 F-pingshui-001",
+    resolution:
+      "**已关闭**：同 F-pingshui-001，notice 增补同一戳记；摘要已重登记",
+  },
+  {
+    id: "F-cilin-002",
+    title: "词林快照未登记生成器版本",
+    severity: "P2",
+    fact: "词林快照的 notice 未登记生成器/规则版本，同 F-pingshui-001",
+    resolution:
+      "**已关闭**：notice 增补戳记「生成器：scripts/data/build-cilin.ts@d3-1」；摘要已重登记（52f98e9c… → 09113995…）",
   },
 ];
 
@@ -470,3 +496,4 @@ function main(): void {
 }
 
 main();
+

@@ -2,7 +2,7 @@
   "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-review3",
   "book": "pingshui",
   "reviewStatus": "unverified",
-  "notice": "平水韵全量候选（105 部）：源自 chinese_word_rhyme 固定提交 ff0e9c13 的原表转载，仅登记韵部归属与声类；反切、义项、今读一律为 null。该提交上声仅 28 部、缺「三讲」，按纪律不用占位补齐，故发布门槛必然不通过（releaseGatePassed=false）。用途：复现「缺三讲 → 门槛失败」。reviewStatus=unverified，未经人审签，不得作为发布数据。",
+  "notice": "平水韵全量候选（105 部）：源自 chinese_word_rhyme 固定提交 ff0e9c13 的原表转载，仅登记韵部归属与声类；反切、义项、今读一律为 null。该提交上声仅 28 部、缺「三讲」，按纪律不用占位补齐，故发布门槛必然不通过（releaseGatePassed=false）。用途：复现「缺三讲 → 门槛失败」。reviewStatus=unverified，未经人审签，不得作为发布数据。 生成器：scripts/data/build-pingshui.ts@d3-1（数据源 chinese_word_rhyme@ff0e9c13）；快照 Schema 无版本字段，版本以此戳记为据。",
   "candidates": [
     {
       "id": "pingshui:东:ping:一东",

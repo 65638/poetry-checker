@@ -884,15 +884,21 @@ function auditSnapshot(
   const generatorVersion =
     raw.book === "xinyun" ? XINYUN_GENERATOR_VERSION : null;
   const rulesVersion = raw.book === "xinyun" ? XINYUN_RULES_VERSION : null;
-  if (raw.book !== "xinyun") {
+  // 快照 Schema 无版本字段，因此约定用 notice 里的「生成器：<脚本>@<版本>」戳记登记。
+  // 命中即视为已登记（可 grep、可审计），不再报 F 类异常。
+  const noticeStamp = /生成器[:：]\s*(scripts\/data\/[a-z-]+\.ts@[\w.-]+)/u.exec(
+    raw.notice,
+  );
+  if (raw.book !== "xinyun" && noticeStamp === null) {
     add("F", "P2", {
       location: `${file} · 快照头`,
-      fact: "快照未登记生成器/规则版本字段",
+      fact: "快照未登记生成器/规则版本",
       basis:
-        "SnapshotInput 结构无 generatorVersion/rulesVersion；平水与词林由 build-*.ts 直接生成，版本只能从脚本名推断",
+        "SnapshotInput 结构无 generatorVersion/rulesVersion；平水与词林由 build-*.ts 直接生成，" +
+        "约定以 notice 内「生成器：<脚本>@<版本>」戳记登记，本快照未命中该戳记",
       impact: "无法仅凭数据包回答「这份数据由哪版脚本产出」",
       suggestedAction:
-        "在 notice 或独立 descriptor 中登记脚本版本（不改快照 Schema）",
+        "在 notice 追加「生成器：scripts/data/build-xxx.ts@<版本>」戳记（不改快照 Schema）",
       actionKind: "接线/脚本可修",
     });
   }
@@ -1237,8 +1243,8 @@ const REGISTERED_DIGESTS: Readonly<Record<string, RegisteredDigest>> = {
     fileName: "pingshui.full-d2.json",
     dataVersion: "pingshui-cwr-ff0e9c1-d2-full-review3",
     digest:
-      "17121e27b1229c67b336e9e8b80fae4d4c511225f301c00d01444fa17a00174c",
-    source: "重登记：2026-10-18 本报告实测（原登记值见 changelog）",
+      "0f8bda54f9a62e903fb9af419bb78dab54c558b33af1939e2fbe82480f6362fe",
+    source: "重登记：2026-10-18 增补生成器戳记后实测（原登记值见 changelog）",
     changelog: [
       {
         from: "60c416c8d0fe39fee07a82a2975ad0bbe1374b53985abb5a79f9723c04498f7e",
@@ -1247,14 +1253,21 @@ const REGISTERED_DIGESTS: Readonly<Record<string, RegisteredDigest>> = {
           "review2→review3 版本改名（dataVersion 参与业务内容摘要，改名必然改摘要）+ J03 第二批 6 部归部落库后重建",
         registeredAt: "2026-10-18",
       },
+      {
+        from: "17121e27b1229c67b336e9e8b80fae4d4c511225f301c00d01444fa17a00174c",
+        to: "0f8bda54f9a62e903fb9af419bb78dab54c558b33af1939e2fbe82480f6362fe",
+        reason:
+          "notice 增补生成器戳记「生成器：scripts/data/build-pingshui.ts@d3-1」（关闭 F-pingshui-002）；只改 notice 文本，候选/归属/证据未动",
+        registeredAt: "2026-10-18",
+      },
     ],
   },
   "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3": {
     fileName: "pingshui.full-d2-patched.json",
     dataVersion: "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3",
     digest:
-      "cae183af3d83bb33f3ecc57dd85d9dbada0cdc4f8bf55437b2f46ba6af4ced7c",
-    source: "重登记：2026-10-18 本报告实测（原登记值见 changelog）",
+      "3f3020a5e696abf4489ab7054069cbf85bf0dcbc818440b7fffb2a0959d083c5",
+    source: "重登记：2026-10-18 增补生成器戳记后实测（原登记值见 changelog）",
     changelog: [
       {
         from: "6c9057412b85a3c7b4066f260e8d52b60b8be936c814380200f7ed9d7a71d6ef",
@@ -1263,14 +1276,21 @@ const REGISTERED_DIGESTS: Readonly<Record<string, RegisteredDigest>> = {
           "review2→review3 版本改名 + J03 第二批 6 部归部落库后重建",
         registeredAt: "2026-10-18",
       },
+      {
+        from: "cae183af3d83bb33f3ecc57dd85d9dbada0cdc4f8bf55437b2f46ba6af4ced7c",
+        to: "3f3020a5e696abf4489ab7054069cbf85bf0dcbc818440b7fffb2a0959d083c5",
+        reason:
+          "notice 增补生成器戳记「生成器：scripts/data/build-pingshui.ts@d3-1」（关闭 F-pingshui-001）；只改 notice 文本",
+        registeredAt: "2026-10-18",
+      },
     ],
   },
   "cilin-cwr-ff0e9c1-d2-full": {
     fileName: "cilin.full-d2.json",
     dataVersion: "cilin-cwr-ff0e9c1-d2-full",
     digest:
-      "52f98e9c7f18463ad967a6f95986ac3e90fdf7131b5ad41b535b0b29134aadb5",
-    source: "重登记：2026-10-18 导入层过滤后实测（原登记值见 changelog）",
+      "091139958106885281aa69f6409644d4138564de83dba3f5afc54b0cf27b1f55",
+    source: "重登记：2026-10-18 增补生成器戳记后实测（原登记值见 changelog）",
     changelog: [
       {
         from: null,
@@ -1283,6 +1303,13 @@ const REGISTERED_DIGESTS: Readonly<Record<string, RegisteredDigest>> = {
         to: "52f98e9c7f18463ad967a6f95986ac3e90fdf7131b5ad41b535b0b29134aadb5",
         reason:
           "导入层剔除原表 8 条非汉字杂项（4 个字形）后重建：候选 5403→5395、字形 5037→5033；data/raw 字节未改",
+        registeredAt: "2026-10-18",
+      },
+      {
+        from: "52f98e9c7f18463ad967a6f95986ac3e90fdf7131b5ad41b535b0b29134aadb5",
+        to: "091139958106885281aa69f6409644d4138564de83dba3f5afc54b0cf27b1f55",
+        reason:
+          "notice 增补生成器戳记「生成器：scripts/data/build-cilin.ts@d3-1」（关闭 F-cilin-002）；只改 notice 文本",
         registeredAt: "2026-10-18",
       },
     ],
@@ -2321,7 +2348,9 @@ function main(): void {
       `${supplement.b3.rulesVersion ?? "（未知）"} 与生成器版本 ${supplement.b3.generatorVersion ?? "（未知）"} ` +
       `只写在快照 notice 文本里（notice 命中：规则=${supplement.b3.noticeMentionsRules}、生成器=${supplement.b3.noticeMentionsGenerator}）；` +
       `pinyin-data revision=${supplement.b3.sourceRevision ?? "null"}、SHA-256 与落盘字节一致=${String(supplement.b3.pinyinDigestMatches)}；` +
-      "但快照 Schema **没有** generatorVersion/rulesVersion 字段，机器无法结构化读取；平水/词林同样无该字段",
+      "但快照 Schema **没有** generatorVersion/rulesVersion 字段，机器无法结构化读取。" +
+      "平水两版与词林现已在 notice 增补「生成器：scripts/data/build-*.ts@d3-1」戳记（可 grep），" +
+      "三条 F 类「未登记生成器版本」异常因此关闭；**本条的剩余问题只是「非结构化」**——读者仍须 grep 文案，不能用字段直读",
     basis:
       "读四份快照的 notice 与 sources；SnapshotInput 类型定义无版本字段；pinyin.txt 字节重算比对",
     impact:

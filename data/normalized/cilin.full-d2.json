@@ -2,7 +2,7 @@
   "dataVersion": "cilin-cwr-ff0e9c1-d2-full",
   "book": "cilin",
   "reviewStatus": "unverified",
-  "notice": "词林正韵全量候选（19 部 / 33 子卷）：源自 chinese_word_rhyme 固定提交 ff0e9c13 的原表转载，仅登记部/声归属与平仄；反切、义项、今读一律为 null。前 14 部分平/仄两个子卷，第 15–19 部只标入声。来源仅标「仄声」的记录一律保留 ze_unspecified（不改写成上声或去声，也不臆测具体古声类）。本表不与平水韵做无依据的一字一部合并。reviewStatus=unverified，未经人审签，不得作为发布数据，也不得据此启用词牌或允许平仄通押。 本快照已在**导入层**剔除原表非汉字杂项 8 条（4 个字形：[]空格，）；原表 data/raw 字节未改动。",
+  "notice": "词林正韵全量候选（19 部 / 33 子卷）：源自 chinese_word_rhyme 固定提交 ff0e9c13 的原表转载，仅登记部/声归属与平仄；反切、义项、今读一律为 null。前 14 部分平/仄两个子卷，第 15–19 部只标入声。来源仅标「仄声」的记录一律保留 ze_unspecified（不改写成上声或去声，也不臆测具体古声类）。本表不与平水韵做无依据的一字一部合并。reviewStatus=unverified，未经人审签，不得作为发布数据，也不得据此启用词牌或允许平仄通押。 本快照已在**导入层**剔除原表非汉字杂项 8 条（4 个字形：[]空格，）；原表 data/raw 字节未改动。 生成器：scripts/data/build-cilin.ts@d3-1（数据源 chinese_word_rhyme@ff0e9c13）；快照 Schema 无版本字段，版本以此戳记为据。",
   "candidates": [
     {
       "id": "cilin:东:ping:第一部·平声",

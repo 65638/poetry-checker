@@ -61,6 +61,11 @@ function isRhymeCharacter(character: string): boolean {
   return [...character].length === 1 && HAN_SCRIPT.test(character);
 }
 
+/** 生成器戳记：快照 Schema 无版本字段，约定写进 notice，precheck 以正则识别。 */
+const GENERATOR_STAMP =
+  " 生成器：scripts/data/build-cilin.ts@d3-1（数据源 chinese_word_rhyme@ff0e9c13）；" +
+  "快照 Schema 无版本字段，版本以此戳记为据。";
+
 const NOTICE =  "词林正韵全量候选（19 部 / 33 子卷）：源自 chinese_word_rhyme 固定提交 ff0e9c13 的原表转载，" +
   "仅登记部/声归属与平仄；反切、义项、今读一律为 null。" +
   "前 14 部分平/仄两个子卷，第 15–19 部只标入声。" +
@@ -230,7 +235,7 @@ function main(): void {
     dataVersion: DATA_VERSION,
     book: "cilin",
     reviewStatus: "unverified",
-    notice: `${NOTICE} ${dropNote}`,
+    notice: `${NOTICE} ${dropNote}${GENERATOR_STAMP}`,
     candidates,
     groups,
     evidence,
