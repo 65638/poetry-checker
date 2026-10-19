@@ -41,9 +41,10 @@
       "ruleId": "TAIL.SANPING",
       "reviewStatus": "engineering-scope-released",
       "evidenceIds": [
-        "ev:rule:TAIL.SANPING:engineering-scope"
+        "ev:rule:TAIL.SANPING:engineering-scope",
+        "ctx:j03b2:08"
       ],
-      "releaseNote": "组长 2026-10-18「放行」：接受工程教学口径（文献部分依据+等级为工程口径不声称文献规定），依据 13_ 第二批第 8 条。"
+      "releaseNote": "组长 2026-10-18「放行」：接受工程教学口径（文献部分依据+等级为工程口径不声称文献规定），依据 13_ 第二批第 8 条。ctx:j03b2:08 为已审作品（平水版《黄鹤楼》l4c5–7）的语境/审批证据，只登记引用，不在 rules/evidence 复制。"
     },
     {
       "ruleId": "TAIL.SANZE",
