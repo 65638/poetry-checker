@@ -24,3 +24,14 @@ export type {
   ClosureProblem,
   ClosureResult,
 } from "./report/closure.js";
+// Codex 实现的已审作品特例适用层（C 只做公共导出，不编辑实现）。
+// 纯函数：通用核心之后、summary 之前调用；未命中时原样返回报告。
+export {
+  applyReviewedWorkExceptions,
+  parseReviewedWorkExceptions,
+  ReviewedWorkExceptionError,
+} from "./reviewed-exceptions/index.js";
+export type {
+  ApplyReviewedWorkExceptionsInput,
+  ReviewedWorkException,
+} from "./reviewed-exceptions/index.js";

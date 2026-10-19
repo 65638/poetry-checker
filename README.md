@@ -26,7 +26,14 @@ pnpm verify
 | 完整格律判定 | Codex 核心（evaluation.ts，D2 已并入）+ C 独立验收 82 项通过；规则卡人工审核清单已出 |
 | 数据与应用 | 真实 API 编排已上线（六步管线、证据门槛、清单装载）；三套全量韵书已入仓（暂全 unverified，词林来源 ID 冲突与新韵读音缺失待 A 修）；解析消歧、体裁、React Web 均已并入；真实金标准与 E2E 待 E |
 
-当前发布阻塞在数据侧而非引擎侧：全量候选证据均为 unverified，A 的两个数据缺陷（新韵 modernReading 全空、跨库来源 ID 冲突）修复并人工落库前，真实分析链路按证据门槛如实返回 503。合成 fixture 使用字面“平”“仄”构造，只验证结构和界面，版本为 fixture-only。
+当前状态（D3 起，2026-10-19，integrate/d3）分项标注：
+- **代码检查**：pnpm verify 全绿（45 文件 / 591 测试，基线复验于 f42172f）。
+- **真实 API**：平水三首 200 + Schema pass + 金标准 3/3（GLM 实跑 `scripts/probe-d3-matrix.ts`，九组合表见 data/reviews/d3-g02-nine-combos.json）；词林/新韵六组合如实 503（LOOKUP_EVIDENCE_UNVERIFIED，等 D3 批次三 A/B 供数）。
+- **浏览器**：`pnpm dev` 双服务可用（healthz ok / web 200 / 代理真数据）；GLM 沙箱内 dev.mjs 的 node→cmd.exe spawn 受阻，用 dev:api/dev:web 分启绕行（真人环境不受影响，免 shell 加固列入 D3 待办）。
+- **数据批准**：平水=三讲 1 部 + 83 条候选（J03 两批 + 有限批，登记于 data/reviews/approved-evidence.json，非全量审核）；三库快照级仍 unverified（整库审核为 D3 主线）。
+- **已审特例**：黄鹤楼 l4c5-7"空悠悠"三平尾按 13_ 第 8 条转 not_applicable/info（rules/exceptions/reviewed-works-v1.json，其余偏离保持原判、整诗仍如实 fail）。
+- **全库发布**：未发布；readyz 如实 503，唯一剩余门槛=三库快照级 approved。
+已知问题：黄鹤楼 l4c5”空悠悠”三平尾现报 fail/error，与 13_ 第二批第 8 条裁定（作特征保留不作 error）不一致——D3 批次一（Codex 特例适用层）待接入后修正。
 
 ## 发给每位成员
 

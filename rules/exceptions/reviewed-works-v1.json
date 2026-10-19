@@ -1,0 +1,30 @@
+[
+  {
+    "id": "exception:j03b2:huanghelou:l4:sanping:pingshui",
+    "version": "1",
+    "reviewStatus": "approved",
+    "workId": "work:huanghelou",
+    "textFingerprint": "7b65737ca79258301a2dd35cd880c41020415945c1ea006478eaf816edbf47a2",
+    "approvedLines": [
+      "昔人已乘黄鹤去",
+      "此地空余黄鹤楼",
+      "黄鹤一去不复返",
+      "白云千载空悠悠",
+      "晴川历历汉阳树",
+      "芳草萋萋鹦鹉洲",
+      "日暮乡关何处是",
+      "烟波江上使人愁"
+    ],
+    "book": "pingshui",
+    "formId": "qilv",
+    "ruleId": "TAIL.SANPING",
+    "ruleVersion": "1",
+    "target": { "line": 4, "columns": [5, 6, 7], "text": "空悠悠" },
+    "approval": {
+      "evidenceId": "ctx:j03b2:08",
+      "sourceId": "src:j03-review-batch2",
+      "locator": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md §五 第 8 条"
+    },
+    "message": "“空悠悠”实为平平平。依第 13 号第 8 条裁定，保留为本诗古风式律诗特征，本项不判出律；不是拗救，也不表示整首诗合律。其余逐位常格差异与规则仍独立列示。"
+  }
+]

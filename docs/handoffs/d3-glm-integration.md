@@ -1,0 +1,87 @@
+# D3 GLM 总集成交接单（第一日：2026-10-19）
+
+## 批次一：已审作品特例层接线（完成，2026-10-19，integrate/d3 @3733912）
+
+- 合入：origin/codex/d3-reviewed-exceptions @63de97b（PR #13，merge 7087e4f）。
+- 接线（3733912）：C 公共导出（Codex 指定原文，GLM 代加解除阻塞，**C 复核+独立验收仍归 C**）；resources.ts 严格解析+装载校验（workId/指纹/作品形式/审批 approved-context/来源闭合/work_metadata 依据；坏文件入 loadErrors→503 不静默）；orchestrator 在 evaluateProsody 后、deriveSummary 前调用 applyReviewedWorkExceptions；versions.rules=teaching-v1+reviewed-works-v1。
+- 验证：**pnpm verify 47 文件/651 测试全绿**（Codex 57 + GLM HTTP 3）；九组合矩阵复跑平水三行 200/Schema pass；HTTP 真链路断言：l4c5-7 转 not_applicable/info（PPP/位置/resolvedBy=null/引用第 13 号第 8 条）、l4c5 METER 仍 fail/error、≥8 条 error 保持、**summary 仍如实 fail（未硬改 pass）**、特例登记恰 1 条 approved 装载零错误。
+- README：平水批准范围更正为三讲 1 部+83 候选（approved-evidence.json 实数）+特例状态行。
+- **推送受阻**：GitHub 502/远端挂起（远端 integrate/d3 停在 d8688e9，本地 7087e4f+3733912 待推），网络恢复后 `git push origin integrate/d3` 即可。
+- 待他人：C 公共导出复核+独立验收+TAIL.SANPING 规则卡说明补一般规则与精确适用范围之别；E 把该裁定纳入金标准（整诗仍 fail 的预期单独列）。
+
+## 基线与分支
+
+- base：`f42172f`（D2 收口+三卡放行后的 main）
+- 分支：`integrate/d3`（首建；旧 `integrate` 分支更名 `legacy/integrate-d1` 让出命名空间）
+- head：本批提交见下
+- 任务包归档：`docs/team/D3_执行任务书_2026-10-18/`（11 份+MANIFEST+support，原样，未改审核原件）
+
+## 本批完成
+
+| 项 | 结果 | 留痕 |
+|---|---|---|
+| 未提交 d2-real-api-report.json 核对入库 | 与当前版本对齐（三首 200/金标准 3/3/loadErrors 空） | 随 df04566 提交 |
+| pnpm verify 基线复验 | exit 0，45 文件/591 测试，与 D2 基线一致 | verify-d3base.log |
+| 双服务启动检查 | healthz `{"status":"ok"}`；web `/` 200；Vite 代理回真数据（review3 版本、106 部）；无 POETRY_DEV_MOCK | dev-d3.log |
+| G03 前置复现：黄鹤楼三平尾 | **l4c5-c7"空悠悠" TAIL.SANPING=fail/error，summary=fail**——与 13_ 第二批第 8 条裁定不一致，已确认为批次一驱动项 | 本单下文 |
+| G02 九组合探针（新正式脚本） | `scripts/probe-d3-matrix.ts`（唯一矩阵探针入口，--json 落盘）；结果见下表 | data/reviews/d3-g02-nine-combos.json |
+| 旧 PR 收尾 | **PR #7、#10 已关闭**并留说明评论：#7 被 PR #11 取代；#10 内容经 codex/d2-closeout 整合扩展（main 内为其超集，--diff-filter=A 核对零独有文件） | GitHub PR 页 |
+| README 状态段 | 五项分标（代码检查/真实 API/浏览器/数据批准/全库发布） | 本批提交 |
+
+## G02 九组合实跑表（inject，2026-10-19）
+
+| 诗 | 库 | HTTP | summary | Schema | dataVersion |
+|---|---|---|---|---|---|
+| 登鹳雀楼 | 平水 | 200 | pass | pass | pingshui-…-review3 |
+| 登鹳雀楼 | 词林 | 503 | DATA_NOT_READY:LOOKUP_EVIDENCE_UNVERIFIED（l1c1 白） | - | - |
+| 登鹳雀楼 | 新韵 | 503 | 同上（l1c1 白） | - | - |
+| 静夜思 | 平水 | 200 | **not_applicable**（古绝身份正确生效） | pass | 同上 |
+| 静夜思 | 词林 | 503 | 同上（l1c1 床） | - | - |
+| 静夜思 | 新韵 | 503 | 同上（l1c1 床） | - | - |
+| 黄鹤楼 | 平水 | 200 | **fail**（三平尾 error，见已知问题） | pass | 同上 |
+| 黄鹤楼 | 词林 | 503 | 同上（l1c1 昔） | - | - |
+| 黄鹤楼 | 新韵 | 503 | 同上（l1c1 昔） | - | - |
+
+词林/新韵六组合的 503 属如实证据门槛（候选证据未审核），修复路径=批次三（A 已确认候选快照 + B 语境三文件 + manifest 更新），不是缺陷。
+
+## readyz 原因（当前唯一门槛）
+
+`快照未审核：pingshui、cilin、xinyun（开发联调可分析，发布门槛不放行）` —— 整库审核为 D3 主线；三库全库未批准前不生成"正式全量发布"包、不改 readyz 绿。
+
+## 已知问题与阻塞
+
+1. **黄鹤楼三平尾 fail/error 与 13_ 第 8 条裁定不一致**（批次一驱动）：修复设计=核心报告不变，Codex 纯特例适用层插在 summary 前把已审范围（黄鹤楼 l4c5 空悠悠）转非 error 且其他偏离仍可见。**等 Codex 导出签名（任务书 T+0.5h 承诺）+ C 公共导出**，GLM 负责装载/校验/传参/版本缓存。
+2. **dev.mjs 在 GLM 沙箱内 ENOENT（node→cmd.exe spawn 被沙箱阻断）**：真人环境不受影响（D2 曾实测）；GLM 侧用 `pnpm dev:api`+`pnpm dev:web` 分启绕行。免 shell 加固（spawn 直调 pnpm JS 入口）列入 D3 待办，优先级低于批次一/三。
+3. 示例入口为空（D 的批次二）。
+4. 浏览器 runner 待与 E 定（倾向 CDP 脚本归档；若 Playwright 由 GLM 一次性加依赖/脚本/CI，E 写用例，配置耗时上限 30 分钟）。
+
+## 实际命令与退出码
+
+- `pnpm verify` → exit 0（591/591）
+- `pnpm --filter @poetry/api dev` / `pnpm --filter @poetry/web dev` → 运行中（healthz 200/`/` 200）
+- `node node_modules/tsx/dist/cli.mjs scripts/probe-d3-matrix.ts --json data/reviews/d3-g02-nine-combos.json` → exit 0，9 行
+- PR 关闭/评论：GitHub API `state=closed`（200）、评论（201）
+
+## D4 接续
+
+批次一（特例适用层接入+G03/G04 验收）→ 批次二（D 示例）→ 批次三（词林/新韵供数+G02 补六组合）→ 批次四（Claude 展示切片）→ G05-G08 与 README 持续更新。每天最后 30 分钟只联调与登记。
+
+## 批次一回传块（2026-10-19，按 02 号简报格式）
+
+- 集成分支 / base / head：integrate/d3 / f42172f / c781fb2
+- Codex 与 C 合入提交：63de97b（Codex 特例层）+ ebd3213（C PR #14，C01-C10 验收+导出+卡片；3ca3e58 为 63de97b 等价 cherry-pick，diff 核实无重复）
+- 装载/调用/版本改动：resources.ts 严格解析+装载校验→Resources.reviewedWorkExceptions；orchestrator evaluateProsody 后 deriveSummary 前调用；versions.rules=teaching-v1+reviewed-works-v1；rules/:ruleId 详情含特例审批证据
+- pnpm verify 实际结果：48 文件 / 664 测试 exit 0
+- 黄鹤楼目标 Finding 结果：l4c5-7 TAIL.SANPING=not_applicable/info（PPP 保留、resolvedBy=null、引用第 13 号第 8 条）；l4c5 METER 仍 fail/error；≥8 条 error 保留；summary 如实 fail
+- 九组合报告路径：data/reviews/d3-g02-nine-combos.json（平水 3×200/Schema pass；词林新韵 6×503 证据门槛）
+- 正式入口与进程版本：http://localhost:5173/ 正式入口 + tsx watch 热载 API（规则详情实测已含 ctx:j03b2:08）；页面复验截图 docs/design/preview/d3-batch1-huanghelou-real.png（结论不合律+特例条目+偏离全可见）
+- 未完成项 / 下一责任人：D 示例与页面补全（批次二）；A+B 词林/新韵供数+manifest（批次三）；Claude 展示切片（批次四）；E 金标准纳入特例预期；C 规则卡"一般规则 vs 精确适用"说明（PR #14 已含卡片更新，复核归 Codex/组长线）
+
+## UI 发现（2026-10-19，组长报告"右侧汉字叠在一起"）
+
+组长截图实测定位：批注诗文逐字格在**极窄面板（约 250-310px）**下折行为每行 1-2 字，
+8 句诗变成一条近竖向的长列，观感即"汉字叠在一起"。DOM 实测（1280/658/375/360px
+四档）：无笔画级重叠、无横向溢出、行距正常（64px 格 + 4px 隙）——**是断点退化
+问题不是渲染 bug**。临时缓解：面板拉宽至 ~500px 以上。正式修复（窄断点的格宽/
+标记收纳/横向滚动容器，D2 已列 P1 的"逐行横向滚动"即此）归 **Claude 批次四**
+展示切片，建议随逐字谱视觉层级重设计一并处理。

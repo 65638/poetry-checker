@@ -34,7 +34,7 @@
     "body": {
       "error": {
         "code": "DATA_NOT_READY",
-        "message": "规则卡存在部分依据/待审核范围：RHYME.COMMON、TAIL.SANPING、TAIL.SANZE；快照未审核：pingshui、cilin、xinyun（开发联调可分析，发布门槛不放行）；资源或审核尚未就绪，详见 apps/api/README.md",
+        "message": "快照未审核：pingshui、cilin、xinyun（开发联调可分析，发布门槛不放行）；资源或审核尚未就绪，详见 apps/api/README.md",
         "fieldErrors": []
       }
     }
@@ -2780,28 +2780,28 @@
             "id": "ev:rule:RHYME.COMMON:engineering-scope",
             "sourceId": "src:project:teaching-v1-policy",
             "kind": "dictionary",
-            "locator": "docs/rule-sources.md §11；docs/reviews/12_J03人审记录_第一批.md 流/楼归部；完整出处待核",
+            "locator": "docs/rule-sources.md §11；docs/reviews/12_J03人审记录_第一批.md 流/楼归部；完整出处待核；组长 2026-10-18「放行」——接受工程教学口径发布（依据 13_ 第二批第 8 条裁定：三平尾于古风式律诗作特征保留不作 error）",
             "assertion": "同部交集为 teaching-v1 执行策略；流/楼十一尤已有 J03 证据；三库完整映射与邻韵通押未全量审核。",
             "excerpt": null,
-            "reviewStatus": "unverified"
+            "reviewStatus": "approved"
           },
           {
             "id": "ev:rule:TAIL.SANPING:engineering-scope",
             "sourceId": "src:wangli:wenji15",
             "kind": "dictionary",
-            "locator": "docs/rule-sources.md §9.9/13，印刷页371–372（部分依据）；J03 第一批第三部分备注",
+            "locator": "docs/rule-sources.md §9.9/13，印刷页371–372（部分依据）；J03 第一批第三部分备注；组长 2026-10-18「放行」——接受工程教学口径发布（依据 13_ 第二批第 8 条裁定：三平尾于古风式律诗作特征保留不作 error）",
             "assertion": "王力页371–372只提供古体尾式的部分依据；近体检查及 error/warning 等级是工程教学口径，不声称文献规定该等级。",
             "excerpt": null,
-            "reviewStatus": "unverified"
+            "reviewStatus": "approved"
           },
           {
             "id": "ev:rule:TAIL.SANZE:engineering-scope",
             "sourceId": "src:wangli:wenji15",
             "kind": "dictionary",
-            "locator": "docs/rule-sources.md §9.9/13，印刷页371–372（部分依据）；J03 第一批第三部分备注",
+            "locator": "docs/rule-sources.md §9.9/13，印刷页371–372（部分依据）；J03 第一批第三部分备注；组长 2026-10-18「放行」——接受工程教学口径发布（依据 13_ 第二批第 8 条裁定：三平尾于古风式律诗作特征保留不作 error）",
             "assertion": "王力页371–372只提供古体尾式的部分依据；近体检查及 error/warning 等级是工程教学口径，不声称文献规定该等级。",
             "excerpt": null,
-            "reviewStatus": "unverified"
+            "reviewStatus": "approved"
           },
           {
             "id": "ev:work:dengguanquelou:j03",
@@ -8626,28 +8626,28 @@
               "id": "ev:rule:RHYME.COMMON:engineering-scope",
               "sourceId": "src:project:teaching-v1-policy",
               "kind": "dictionary",
-              "locator": "docs/rule-sources.md §11；docs/reviews/12_J03人审记录_第一批.md 流/楼归部；完整出处待核",
+              "locator": "docs/rule-sources.md §11；docs/reviews/12_J03人审记录_第一批.md 流/楼归部；完整出处待核；组长 2026-10-18「放行」——接受工程教学口径发布（依据 13_ 第二批第 8 条裁定：三平尾于古风式律诗作特征保留不作 error）",
               "assertion": "同部交集为 teaching-v1 执行策略；流/楼十一尤已有 J03 证据；三库完整映射与邻韵通押未全量审核。",
               "excerpt": null,
-              "reviewStatus": "unverified"
+              "reviewStatus": "approved"
             },
             {
               "id": "ev:rule:TAIL.SANPING:engineering-scope",
               "sourceId": "src:wangli:wenji15",
               "kind": "dictionary",
-              "locator": "docs/rule-sources.md §9.9/13，印刷页371–372（部分依据）；J03 第一批第三部分备注",
+              "locator": "docs/rule-sources.md §9.9/13，印刷页371–372（部分依据）；J03 第一批第三部分备注；组长 2026-10-18「放行」——接受工程教学口径发布（依据 13_ 第二批第 8 条裁定：三平尾于古风式律诗作特征保留不作 error）",
               "assertion": "王力页371–372只提供古体尾式的部分依据；近体检查及 error/warning 等级是工程教学口径，不声称文献规定该等级。",
               "excerpt": null,
-              "reviewStatus": "unverified"
+              "reviewStatus": "approved"
             },
             {
               "id": "ev:rule:TAIL.SANZE:engineering-scope",
               "sourceId": "src:wangli:wenji15",
               "kind": "dictionary",
-              "locator": "docs/rule-sources.md §9.9/13，印刷页371–372（部分依据）；J03 第一批第三部分备注",
+              "locator": "docs/rule-sources.md §9.9/13，印刷页371–372（部分依据）；J03 第一批第三部分备注；组长 2026-10-18「放行」——接受工程教学口径发布（依据 13_ 第二批第 8 条裁定：三平尾于古风式律诗作特征保留不作 error）",
               "assertion": "王力页371–372只提供古体尾式的部分依据；近体检查及 error/warning 等级是工程教学口径，不声称文献规定该等级。",
               "excerpt": null,
-              "reviewStatus": "unverified"
+              "reviewStatus": "approved"
             },
             {
               "id": "ev:work:dengguanquelou:j03",
@@ -13174,28 +13174,28 @@
               "id": "ev:rule:RHYME.COMMON:engineering-scope",
               "sourceId": "src:project:teaching-v1-policy",
               "kind": "dictionary",
-              "locator": "docs/rule-sources.md §11；docs/reviews/12_J03人审记录_第一批.md 流/楼归部；完整出处待核",
+              "locator": "docs/rule-sources.md §11；docs/reviews/12_J03人审记录_第一批.md 流/楼归部；完整出处待核；组长 2026-10-18「放行」——接受工程教学口径发布（依据 13_ 第二批第 8 条裁定：三平尾于古风式律诗作特征保留不作 error）",
               "assertion": "同部交集为 teaching-v1 执行策略；流/楼十一尤已有 J03 证据；三库完整映射与邻韵通押未全量审核。",
               "excerpt": null,
-              "reviewStatus": "unverified"
+              "reviewStatus": "approved"
             },
             {
               "id": "ev:rule:TAIL.SANPING:engineering-scope",
               "sourceId": "src:wangli:wenji15",
               "kind": "dictionary",
-              "locator": "docs/rule-sources.md §9.9/13，印刷页371–372（部分依据）；J03 第一批第三部分备注",
+              "locator": "docs/rule-sources.md §9.9/13，印刷页371–372（部分依据）；J03 第一批第三部分备注；组长 2026-10-18「放行」——接受工程教学口径发布（依据 13_ 第二批第 8 条裁定：三平尾于古风式律诗作特征保留不作 error）",
               "assertion": "王力页371–372只提供古体尾式的部分依据；近体检查及 error/warning 等级是工程教学口径，不声称文献规定该等级。",
               "excerpt": null,
-              "reviewStatus": "unverified"
+              "reviewStatus": "approved"
             },
             {
               "id": "ev:rule:TAIL.SANZE:engineering-scope",
               "sourceId": "src:wangli:wenji15",
               "kind": "dictionary",
-              "locator": "docs/rule-sources.md §9.9/13，印刷页371–372（部分依据）；J03 第一批第三部分备注",
+              "locator": "docs/rule-sources.md §9.9/13，印刷页371–372（部分依据）；J03 第一批第三部分备注；组长 2026-10-18「放行」——接受工程教学口径发布（依据 13_ 第二批第 8 条裁定：三平尾于古风式律诗作特征保留不作 error）",
               "assertion": "王力页371–372只提供古体尾式的部分依据；近体检查及 error/warning 等级是工程教学口径，不声称文献规定该等级。",
               "excerpt": null,
-              "reviewStatus": "unverified"
+              "reviewStatus": "approved"
             },
             {
               "id": "ev:work:dengguanquelou:j03",
@@ -23624,28 +23624,28 @@
               "id": "ev:rule:RHYME.COMMON:engineering-scope",
               "sourceId": "src:project:teaching-v1-policy",
               "kind": "dictionary",
-              "locator": "docs/rule-sources.md §11；docs/reviews/12_J03人审记录_第一批.md 流/楼归部；完整出处待核",
+              "locator": "docs/rule-sources.md §11；docs/reviews/12_J03人审记录_第一批.md 流/楼归部；完整出处待核；组长 2026-10-18「放行」——接受工程教学口径发布（依据 13_ 第二批第 8 条裁定：三平尾于古风式律诗作特征保留不作 error）",
               "assertion": "同部交集为 teaching-v1 执行策略；流/楼十一尤已有 J03 证据；三库完整映射与邻韵通押未全量审核。",
               "excerpt": null,
-              "reviewStatus": "unverified"
+              "reviewStatus": "approved"
             },
             {
               "id": "ev:rule:TAIL.SANPING:engineering-scope",
               "sourceId": "src:wangli:wenji15",
               "kind": "dictionary",
-              "locator": "docs/rule-sources.md §9.9/13，印刷页371–372（部分依据）；J03 第一批第三部分备注",
+              "locator": "docs/rule-sources.md §9.9/13，印刷页371–372（部分依据）；J03 第一批第三部分备注；组长 2026-10-18「放行」——接受工程教学口径发布（依据 13_ 第二批第 8 条裁定：三平尾于古风式律诗作特征保留不作 error）",
               "assertion": "王力页371–372只提供古体尾式的部分依据；近体检查及 error/warning 等级是工程教学口径，不声称文献规定该等级。",
               "excerpt": null,
-              "reviewStatus": "unverified"
+              "reviewStatus": "approved"
             },
             {
               "id": "ev:rule:TAIL.SANZE:engineering-scope",
               "sourceId": "src:wangli:wenji15",
               "kind": "dictionary",
-              "locator": "docs/rule-sources.md §9.9/13，印刷页371–372（部分依据）；J03 第一批第三部分备注",
+              "locator": "docs/rule-sources.md §9.9/13，印刷页371–372（部分依据）；J03 第一批第三部分备注；组长 2026-10-18「放行」——接受工程教学口径发布（依据 13_ 第二批第 8 条裁定：三平尾于古风式律诗作特征保留不作 error）",
               "assertion": "王力页371–372只提供古体尾式的部分依据；近体检查及 error/warning 等级是工程教学口径，不声称文献规定该等级。",
               "excerpt": null,
-              "reviewStatus": "unverified"
+              "reviewStatus": "approved"
             },
             {
               "id": "ev:work:dengguanquelou:j03",
