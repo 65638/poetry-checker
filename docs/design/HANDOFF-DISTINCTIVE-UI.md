@@ -3,14 +3,15 @@
 ## 1. Identity
 - Branch: `feat/claude-distinctive-poetry-ui` (local, not pushed)
 - Base: `1917581` (codex/d3-b-integration 7918281 + brief docs commit)
-- Commits: `857906d` first initial/report pair; `7bbfd54` refinement round 1; docs commit on top
+- Commits: `857906d` first initial/report pair; `7bbfd54` refinement round 1; `21b343f` docs; `3e1d451` refinement round 2 (answers Codex review `589f59e`); docs commit on top
 - Direction: B "ink exhibition hall" - see `docs/design/DISTINCTIVE-UI-DIRECTION.md`
 - Visual review: **pending (Codex)**. Everything below marked "self" is code/metric self-review only.
 
 ## 2. Changed files (presentation scope only)
 - `apps/web/src/presentation/CheckerView.tsx` - stage header + `.pc-hall` (plinth / manuscript) + footer, busy bar, root mode classes
 - `apps/web/src/presentation/components/InkStage.tsx` - new, decorative, `aria-hidden`
-- `apps/web/src/presentation/components/ReportView.tsx` - WAAPI reveal keyed on `inputHash`, status glyph wrapper, section numerals
+- `apps/web/src/presentation/components/ReportView.tsx` - WAAPI reveal keyed on `inputHash`, status glyph wrapper, section numerals, findings tally + settled disclosure (round 2)
+- `apps/web/src/presentation/components/InputPanel.tsx` - round 2 only: `rows` 6 -> 4, examples block moved above the textarea (same elements, same handlers)
 - `apps/web/src/presentation/styles/{tokens,layout,input,report,evidence}.css`
 - Untouched: view-contract, app/api/features/hooks, main.tsx, packages, tests, lockfile, deps
 
@@ -35,7 +36,7 @@
 - Examples, real `/` route, evidence drawer (tab trap, Escape, focus restore), candidate override, export gating, status text+shape redundancy, IME, 44px targets
 - Evidence: e2e 18/18 below exercises these on the real route
 
-## 6. Commands (Node 24.19.0, pnpm 11.25.0) - results on `7bbfd54`
+## 6. Commands (Node 24.19.0, pnpm 11.25.0) - results on `3e1d451` (same on `7bbfd54`)
 - `pnpm verify` -> exit 0, 53 files / 733 tests passed
 - `pnpm test:e2e` -> exit 0, 18 passed, 0 blocked, 0 failed
 - Same results on `857906d`
@@ -44,6 +45,7 @@
 ## 7. Screenshots (disk only)
 - `docs/design/distinctive-ui/round0-857906d/` - 18 PNG + `manifest.json`
 - `docs/design/distinctive-ui/round1-7bbfd54/` - 18 PNG + `manifest.json`
+- `docs/design/distinctive-ui/round2-3e1d451/` - 23 PNG + `manifest.json`; file names now carry `WxH`; adds initial 1440x900 / 1366x768, report + findings 900x900, findings-open 1440x900
 - Manifest records sha, dirty flag, readiness, URL, viewport, mode, timestamp per file
 - States: opening motion frames, initial, report, report-poem, evidence (1440/375); initial + 黄鹤楼 report (768); reduced-motion initial/report; stale; cilin error alert
 - Re-run: `node docs/design/distinctive-ui/capture.mjs <outDir> <label>`; geometry: `node docs/design/distinctive-ui/probe.mjs`
@@ -54,10 +56,18 @@
 - 375 glyph 168 -> 128px, moved to stage bottom-right, clear of title box
 - scrollWidth <= viewport at 1440 / 768 / 375
 
+## 8b. Round-2 changes (Codex review `589f59e`; probe, reduced motion, 登鹳雀楼 pingshui)
+- Intermediate widths: `.pc-manuscript` is container `pc-sheet`; status actions stack under 680px sheet width, verse rows tighten under 520px; input column 400 / 360 (<1280) / 304px (<1100)
+- 900x900 report: status body 88 -> 322px; verse rows per line 2222 -> 1111; 899 stacks with status body 527px
+- First viewport: Analyze button bottom y=772 @1440x900, y=728 @1366x768 (was 961); examples now above the textarea (y=294 / 250)
+- Short desktop (>=900 wide, <=920 tall): textarea fixed to 3 ruled lines, still resizable; <=800 tall: stage 288px, kicker and vertical text hidden
+- Findings: tally chips (icon + text + count); fail / uncertain / unsupported listed first; pass / not_applicable inside `<details>` that auto-opens when one of its findings is selected; original numbering kept so every finding stays reachable
+- Report document height: 1440 5411 -> 1651px; 375 10882 -> 2215px; no horizontal overflow at 1440/1366/1280/1100/1024/900/899/768/375
+- Single column (<=899px): when a new report arrives while focus is inside the input plinth, the manuscript scrolls into view (smooth, or instant under reduced motion); focus is not moved, textarea not remounted
+
 ## 9. Known limitations
 - 375px: seven-character lines wrap at 44px cells (lead-approved P0 behaviour)
 - Font-stack dependency: Kaiti / Songti may fall back to SimSun on Windows; ruled-line alignment verified only by metrics
-- Examples sit below the fold at 1440 initial state
 - Visual review pending; no pixel-level verification done in this session
 
 ## 10. Integration notes

@@ -39,16 +39,19 @@ try {
   browser = await launchBrowser();
   const { cdp, evaluate } = browser;
 
+  let vh = 1000;
   const shot = async (name, width, mode, note, full = false) => {
     const image = await cdp.send("Page.captureScreenshot", { format: "png", captureBeyondViewport: full });
-    const file = `${name}-${width}.png`;
+    const file = `${name}-${width}x${vh}.png`;
     writeFileSync(join(out, file), Buffer.from(image.data, "base64"));
-    manifest.shots.push({ file, viewport: `${width}x${width < 600 ? 812 : 1000}`, mode, note, at: new Date().toISOString() });
+    manifest.shots.push({ file, viewport: `${width}x${vh}`, mode, note, at: new Date().toISOString() });
   };
-  const viewport = (width) =>
-    cdp.send("Emulation.setDeviceMetricsOverride", {
-      width, height: width < 600 ? 812 : 1000, deviceScaleFactor: 1, mobile: width < 600,
+  const viewport = (width, height = width < 600 ? 812 : 1000) => {
+    vh = height;
+    return cdp.send("Emulation.setDeviceMetricsOverride", {
+      width, height, deviceScaleFactor: 1, mobile: width < 600,
     });
+  };
   const reduced = (on) =>
     cdp.send("Emulation.setEmulatedMedia", {
       features: [{ name: "prefers-reduced-motion", value: on ? "reduce" : "no-preference" }],
@@ -88,6 +91,31 @@ try {
     await evaluate("document.querySelector('.pc-evidence__header button').click()");
     await sleep(300);
   }
+
+  for (const [w, h] of [[1440, 900], [1366, 768]]) {
+    await viewport(w, h);
+    await load();
+    await sleep(1200);
+    await shot("initial", w, "motion settled", "first viewport: examples, input, book, Analyze");
+  }
+  await viewport(900, 900);
+  await load();
+  await sleep(1200);
+  await analyzeExample(0);
+  await sleep(1000);
+  await shot("report", 900, "motion settled", "intermediate width report");
+  await evaluate("document.querySelector('.pc-notes').scrollIntoView({block:'start'})");
+  await sleep(300);
+  await shot("findings", 900, "motion settled", "findings tally + disclosure closed");
+  await viewport(1440, 900);
+  await load();
+  await sleep(1200);
+  await analyzeExample(0);
+  await sleep(1000);
+  await clickSel(".pc-settled__summary");
+  await evaluate("document.querySelector('.pc-notes').scrollIntoView({block:'start'})");
+  await sleep(300);
+  await shot("findings-open", 1440, "motion settled", "settled checks disclosure open");
 
   await viewport(768);
   await load();
