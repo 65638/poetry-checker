@@ -109,3 +109,34 @@ node tests/integration/e2e/d3-acceptance-api.mjs --spawn | grep BLOCKED
 - 新增 `tests/integration/e2e/d3-acceptance-last.json`（最近一次结果，含 SHA/时间）
 - 改名 `tests/integration/e2e/acceptance-api.py` → `d1-mock-api.py`（历史）
 - 修改 `tests/integration/acceptance-plan.md`（顶部标历史）
+
+---
+
+# D3 第二批（2026-10-19，基线 origin/codex/d3-b-integration @ f6b52ef）
+
+Codex 按组长授权接管 apps/api 就绪诊断、根命令与验收基础设施；E 改为在其交付上追加场景，不再维护第二套 runner。
+
+## 实跑结果
+
+| 命令                   | 结果                                                            |
+| ---------------------- | --------------------------------------------------------------- |
+| `pnpm verify`          | exit 0，**50 文件 / 684 测试**                                  |
+| `pnpm test:acceptance` | exit 2，**3 通过 / 6 阻断 / 0 判错**                            |
+| `pnpm test:e2e`        | exit 2，**9 通过 / 1 阻断 / 0 失败**（Edge 155.0.4283.62，CDP） |
+
+- 九格：平水三首 200/schema/证据齐备；词林/新韵六格 503 `LOOKUP_EVIDENCE_UNVERIFIED`（候选证据未审核，A/B 责任）。
+- 黄鹤楼平水：`qilv`、`summary=fail`（其他偏离）、**三平尾特例非 error**，runner 已精确断言 status/severity/字位/PPP/resolvedBy/审批依据 → 上一批的判错已消除。
+- 浏览器：正式入口三首手动输入真实响应、375/768/1440、reduced-motion、stale、词林 503 提示共 9 项通过；阻断项为示例按钮全部 disabled（D 批次二）。
+- 未运行：示例点击链路、编辑/切书/并发/复制导出、受控五态与网络故障、全键盘/焦点/触控、干净 clone、普通 PPP 对照。
+
+## 与上一批的关系
+
+- `tests/integration/e2e/d3-acceptance-api.mjs`（我上一批的 runner）**已被仓库 runner 取代**，仅留历史。
+- 我在 `d3-acceptance.md` 顶部登记了权威结果，旧数字保留标注。
+- 09 号验收表已按实跑填写（批次 `D3-E05-E08-01`），未运行项一律写「未运行」。
+
+## 仍存阻断
+
+1. 词林/新韵六格 503：候选证据未审核（`LOOKUP_EVIDENCE_UNVERIFIED`）——A/B 补审核批次后复跑。
+2. 示例按钮 disabled——D 批次二交付后补 E04 点击链路。
+3. `pnpm test:acceptance` / `test:e2e` 非零是**如实阻断**，不得改预期使其全绿。

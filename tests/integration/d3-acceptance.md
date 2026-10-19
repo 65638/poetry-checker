@@ -1,3 +1,9 @@
+> **2026-10-19 复跑（权威结果）**：在 `origin/codex/d3-b-integration@f6b52ef` 上用仓库 runner 实跑——
+> `pnpm test:acceptance` = 3 通过 / 6 阻断 / 0 判错（exit 2）；`pnpm test:e2e` = 9 通过 / 1 阻断 / 0 失败（exit 2）；
+> `pnpm verify` = exit 0（50 文件 / 684 项）。**本文档下方的“判错 1”是 f42172f 上的历史结果**，
+> 三平尾特例已由核心修复。矩阵与断言以 `pnpm test:acceptance`（`tests/acceptance/`）为准；
+> 本文件附带的 `tests/integration/e2e/d3-acceptance-api.mjs` 已被仓库 runner 取代，仅留历史，不再并行维护。
+
 # D3 系统验收矩阵（E 维护）
 
 > 更新 2026-10-19：下文为 E 在 main@f42172f 的首轮历史记录。当前整合分支复跑为 **3 通过 / 6 阻断 / 0 判错**；限定三平尾已修复。现有金标准 JSON 的 approved 范围以其 assertions/notes 和作品 review-closure 为准，不沿用下表“尚待签”的旧状态。runner 加固、B3–B5 接线与浏览器实测见 [Codex 复核交接](../../docs/handoffs/d3-e-review-codex.md)。证据数量非空不等于引用闭合；新版 runner 校验实际 Schema、有效候选已审证据和来源。
