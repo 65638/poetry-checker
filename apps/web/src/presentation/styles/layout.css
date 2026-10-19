@@ -411,6 +411,13 @@
     letter-spacing: 0.3em;
   }
 
+  .pc-stage__glyph {
+    right: -0.12em;
+    top: auto;
+    bottom: -0.22em;
+    font-size: 128px;
+  }
+
   .pc-stage__sub {
     font-size: var(--pc-text-sm);
     letter-spacing: 0.04em;

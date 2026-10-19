@@ -332,8 +332,18 @@
   display: grid;
   grid-template-columns: 2.4em minmax(0, 1fr);
   gap: var(--pc-space-3);
-  padding: var(--pc-space-4) 0;
+  padding: var(--pc-space-3) 0;
   border-bottom: 1px solid var(--pc-divider);
+}
+
+@media (min-width: 1280px) {
+  .pc-findings {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--pc-space-5);
+    align-items: start;
+  }
+
+  .pc-finding:last-child { border-bottom: 1px solid var(--pc-divider); }
 }
 
 .pc-finding:last-child { border-bottom: 0; }

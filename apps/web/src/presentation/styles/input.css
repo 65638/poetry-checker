@@ -23,7 +23,7 @@
   display: block;
   width: 100%;
   box-sizing: border-box;
-  min-height: 200px;
+  min-height: 168px;
   padding: 0 var(--pc-space-3);
   resize: vertical;
   font-family: var(--pc-font-serif);
