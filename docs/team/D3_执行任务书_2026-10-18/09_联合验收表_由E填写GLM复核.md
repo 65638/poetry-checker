@@ -163,3 +163,14 @@ E 第三批原回报的内层 Tab 实际为 0；剪贴板读取失败跳过、�
 `apps/web` 属 D 的目录，需明确由谁补该控件。
 
 另：D 的 PR #18 交接文档在 `origin/feat/d-d3-live-flow` 的 `docs/` 下**未找到**（只有 0001–0005 旧交接），需给路径或确认按 diff 读。
+
+## Codex 接管复验：D 示例与 E 第四批（2026-10-19）
+
+当前记录优先于 E 第四批的“13通过”：该批返回缺陷对象被 runner 误计为 pass，保留历史记录但不作为当前验收依据。
+
+- 批次：D3-CODEX-DE-TAKEOVER；实现 e18d487；最终浏览器 2386f6f，dirty=false。
+- 全仓：53文件/733项，exit0；真实HTTP：3通过/6阻断/0判错，exit2；浏览器：18通过/0阻断/0失败，exit0。
+- 已核：三首示例正文与配置、真实提交；更字选音重查与请求覆盖、选音后复制/导出一致；编辑/切书清覆盖；可控网络故障与恢复；busy/失败禁止复制导出；历史体裁标签。
+- 仍未运行：浏览器并发迟到全矩阵、浏览器30秒超时与受控needs_review/unsupported、全键盘矩阵、干净clone、真人审美。
+- 六格词林/新韵仍被依据门槛阻断；不扩大数据审批，不宣告D3完成。
+- 证据：tests/integration/e2e/evidence/d3-codex-de-takeover/；详情 docs/handoffs/d3-de-takeover-codex.md。
