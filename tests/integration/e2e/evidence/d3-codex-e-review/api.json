@@ -36,7 +36,11 @@
           {
             "status": "pass",
             "severity": "info",
-            "observed": ["Z", "P", "P"],
+            "observed": [
+              "Z",
+              "P",
+              "P"
+            ],
             "evidenceIds": [
               "ev:candidate:pingshui:一:ru:入声四质:j03",
               "ev:candidate:pingshui:层:ping:十蒸:d2-batch",
@@ -149,7 +153,11 @@
           {
             "status": "not_applicable",
             "severity": "info",
-            "observed": ["P", "P", "P"],
+            "observed": [
+              "P",
+              "P",
+              "P"
+            ],
             "evidenceIds": [
               "ctx:j03b2:08",
               "ev:candidate:pingshui:悠:ping:十一尤:d2-batch",
