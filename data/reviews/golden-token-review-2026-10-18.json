@@ -5,7 +5,7 @@
   "machineOutcomeScope": "all-candidates-before-context",
   "book": "pingshui",
   "snapshot": "data/normalized/pingshui.full-d2-patched.json",
-  "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3",
+  "dataVersion": "pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4",
   "snapshotReviewStatus": "unverified",
   "apiManifestSnapshot": "pingshui.full-d2-patched.json",
   "denominators": {

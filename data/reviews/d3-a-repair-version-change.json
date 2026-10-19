@@ -1,0 +1,156 @@
+{
+  "id": "d3-a-repair-version-change-2026-10-19",
+  "date": "2026-10-19",
+  "integrationBase": "2662ba593a8dbc1a40cd63869bc8827d044b9802",
+  "reviewedABranchHead": "5d23a6991b507432177e236213bdcbd7b57933c8",
+  "reason": "撤回A分支违反13号勘误的六部审批；保留既有83候选+三讲；保留生成器戳记与词林非汉字过滤，修改快照升新版本，不复用旧dataVersion。",
+  "approvalRecord": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md#codex-落库勘误2026-10-18",
+  "versions": [
+    {
+      "path": "data/normalized/pingshui.full-d2.json",
+      "before": {
+        "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-review3",
+        "sha256": "e2f7a467ccf7ceb63145483b0b9c2b1fc23b3c11a43f4f83cf76f83f2017644b",
+        "canonicalSha256": "344e7eac12e1a618d605ddbc783336eb7056d28935b54f4412df441251a93f7c",
+        "candidateCount": 10378,
+        "evidenceApproved": 83,
+        "evidenceTotal": 188,
+        "businessSha256": "60c416c8d0fe39fee07a82a2975ad0bbe1374b53985abb5a79f9723c04498f7e"
+      },
+      "rejectedA": {
+        "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-review3",
+        "sha256": "84b00cb339bc5595f50f10d1961538c71f40e9c54b97c0808fc5fe7eba8eb221",
+        "canonicalSha256": "4793138918aa35108b88e5e70e51f44436f5ed7d7f4e342d4bab59d3b136b311",
+        "candidateCount": 10378,
+        "evidenceApproved": 89,
+        "evidenceTotal": 188,
+        "businessSha256": "0f8bda54f9a62e903fb9af419bb78dab54c558b33af1939e2fbe82480f6362fe"
+      },
+      "after": {
+        "dataVersion": "pingshui-cwr-ff0e9c1-d3-full-review4",
+        "sha256": "199151ab01f876b7be39504e8ea67a6d1fcadc5ead423644448c635286424215",
+        "canonicalSha256": "9aa7a763cd8f8b7b35b7848bf219921fea285d1ebbfeb3daf192c45b90d55689",
+        "candidateCount": 10378,
+        "evidenceApproved": 83,
+        "evidenceTotal": 188,
+        "businessSha256": "a044f70af6d25ec6b64142a52f75c36b1689109a9ab5e29de2d47369a612d569"
+      },
+      "removedCandidateIds": [],
+      "addedCandidateIds": [],
+      "revokedWholeGroupEvidenceIds": [
+        "ev:pingshui:上平:一东",
+        "ev:pingshui:上平:四支",
+        "ev:pingshui:下平:七阳",
+        "ev:pingshui:下平:十蒸",
+        "ev:pingshui:去:十五翰",
+        "ev:pingshui:去:二十三漾"
+      ]
+    },
+    {
+      "path": "data/normalized/pingshui.full-d2-patched.json",
+      "before": {
+        "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3",
+        "sha256": "37a9e4681cad6a71d76468214907490854a543346dba2b54a5463a8fcb56da73",
+        "canonicalSha256": "7aa8f1d167f5eb2c09a961af0523b4f618d3e00ff131b12d10af6dbb16759c75",
+        "candidateCount": 10387,
+        "evidenceApproved": 84,
+        "evidenceTotal": 189,
+        "businessSha256": "6c9057412b85a3c7b4066f260e8d52b60b8be936c814380200f7ed9d7a71d6ef"
+      },
+      "rejectedA": {
+        "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3",
+        "sha256": "f91d15e40e0f92f632e576f401a297cb172f19f0bb97df305be1dd1e70a8540a",
+        "canonicalSha256": "2dd2fa67bce83c8d056f59120ebcc811be8e4b1ad98a204f27d83c9f0be8485a",
+        "candidateCount": 10387,
+        "evidenceApproved": 90,
+        "evidenceTotal": 189,
+        "businessSha256": "3f3020a5e696abf4489ab7054069cbf85bf0dcbc818440b7fffb2a0959d083c5"
+      },
+      "after": {
+        "dataVersion": "pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4",
+        "sha256": "4b6fc33ea23a4b49cfb70ecc68a31a90ba1e061be1c40219ca3ba35a4ace293f",
+        "canonicalSha256": "c9c27f037c1d68a1df2df019a22f6c3802c07383bc55a13994c6126f32301a92",
+        "candidateCount": 10387,
+        "evidenceApproved": 84,
+        "evidenceTotal": 189,
+        "businessSha256": "6d5082eeec8c1e96ec59259fec5c6ca1dd56c1500c3d7c1a48b9bf4567013121"
+      },
+      "removedCandidateIds": [],
+      "addedCandidateIds": [],
+      "revokedWholeGroupEvidenceIds": [
+        "ev:pingshui:上平:一东",
+        "ev:pingshui:上平:四支",
+        "ev:pingshui:下平:七阳",
+        "ev:pingshui:下平:十蒸",
+        "ev:pingshui:去:十五翰",
+        "ev:pingshui:去:二十三漾"
+      ]
+    },
+    {
+      "path": "data/normalized/cilin.full-d2.json",
+      "before": {
+        "dataVersion": "cilin-cwr-ff0e9c1-d2-full",
+        "sha256": "ac83def80ec7174ec1d90aa15a65272f26c898ddee2507bd78d91ccd106d9e85",
+        "canonicalSha256": "949ef07b9968d57b5ccbc579a0ee25946c362fb269dcfdcb3a4b6018914f3927",
+        "candidateCount": 5403,
+        "evidenceApproved": 0,
+        "evidenceTotal": 33,
+        "businessSha256": "bcbeb62ada9a5b6a72e69dbdee844f10e0466b40fd46939b0b3e4f56f09d38e8"
+      },
+      "rejectedA": {
+        "dataVersion": "cilin-cwr-ff0e9c1-d2-full",
+        "sha256": "b0e000f4de0d5de227e1e7556110667c6043c78c048695d018bbea030a926c40",
+        "canonicalSha256": "40d6152fb68f2d4a26320d0b53f9324150df2ff7c30dfe7d5410de48142e1b41",
+        "candidateCount": 5395,
+        "evidenceApproved": 0,
+        "evidenceTotal": 33,
+        "businessSha256": "091139958106885281aa69f6409644d4138564de83dba3f5afc54b0cf27b1f55"
+      },
+      "after": {
+        "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
+        "sha256": "ed7d80315b7cbaff6feef81d8927944b11ae90489bc1da909e251a2958887256",
+        "canonicalSha256": "611bf23bd5701c8e9cbfd8f84bcb4e093371fcae239b871e339e19106c436036",
+        "candidateCount": 5395,
+        "evidenceApproved": 0,
+        "evidenceTotal": 33,
+        "businessSha256": "c2531e69eb42170762556a0c03b4debdc61e0ec2d044a5e2e7116f016399d37b"
+      },
+      "removedCandidateIds": [
+        "cilin:[:ze_unspecified:第二部·仄声",
+        "cilin:]:ze_unspecified:第二部·仄声",
+        "cilin:[:ze_unspecified:第七部·仄声",
+        "cilin:]:ze_unspecified:第七部·仄声",
+        "cilin: :ze_unspecified:第七部·仄声",
+        "cilin:[:ru:第十八部·入声",
+        "cilin:，:ru:第十八部·入声",
+        "cilin:]:ru:第十八部·入声"
+      ],
+      "addedCandidateIds": [],
+      "revokedWholeGroupEvidenceIds": []
+    }
+  ],
+  "idMigration": "保留所有汉字候选、韵部、来源和证据ID；仅移除词林8条非汉字杂项候选，无替代ID；旧报告保留旧版本，需重新请求。",
+  "sourceFiles": [
+    {
+      "path": "data/raw/chinese_word_rhyme/Pingshui_Rhyme.json",
+      "sha256": "fd11164ca1b848eb6b777688d5d6628ce772d72d0a25a0efd12d6b58459c6e2e",
+      "unchangedFromIntegration": true
+    },
+    {
+      "path": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "unchangedFromIntegration": true
+    },
+    {
+      "path": "data/raw/pinyin-data/pinyin.txt",
+      "sha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "unchangedFromIntegration": true
+    }
+  ],
+  "releaseBoundary": "所有快照仍unverified；词林0/33、新韵0/56；48条候选批次机器初审不代表批准；未发布整库。",
+  "rebuildCommands": [
+    "pnpm exec tsx scripts/data/build-pingshui.ts",
+    "pnpm exec tsx scripts/data/build-cilin.ts"
+  ],
+  "restartRequired": "API重新加载新数据版本后才能反映本批；不沿用旧报告。"
+}

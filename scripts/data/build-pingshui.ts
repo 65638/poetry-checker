@@ -61,8 +61,8 @@ const OUT_DIR = path.join(ROOT, "data", "normalized");
 const CWR_REVISION = "ff0e9c13fb037c43e0eaa5dc929c0fe4fa2ffb18";
 const CWR_DATA_PATH = "data/Pingshui_Rhyme.json";
 
-const A_VERSION = "pingshui-cwr-ff0e9c1-d2-full-review3";
-const B_VERSION = "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3";
+const A_VERSION = "pingshui-cwr-ff0e9c1-d3-full-review4";
+const B_VERSION = "pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4";
 
 /** 已核事实：落盘字节身份（由人在真实文件上核对后提供，此处只做回归断言）。 */
 const WIKITEXT_OLDID = "8264804";
@@ -130,6 +130,14 @@ const SANJ_JIANG_BASE_CHARS = [...SANJ_JIANG_BASE_TEXT];
 const SANJ_JIANG_CHARS = SANJ_JIANG_BASE_CHARS.map(
   (character) => TRAD_TO_SIMP[character] ?? character,
 );
+
+/**
+ * 生成器戳记：快照 Schema 无 generatorVersion 字段，约定把脚本名与版本写进 notice，
+ * precheck 以 `生成器：scripts/data/<脚本>@<版本>` 正则识别，命中即视为已登记。
+ */
+const GENERATOR_STAMP =
+  " 生成器：scripts/data/build-pingshui.ts@d3-1（数据源 chinese_word_rhyme@ff0e9c13）；" +
+  "快照 Schema 无版本字段，版本以此戳记为据。";
 
 const A_NOTICE =
   "平水韵全量候选（105 部）：源自 chinese_word_rhyme 固定提交 ff0e9c13 的原表转载，" +
@@ -327,7 +335,7 @@ function main(): void {
         retrievedAt: null,
         license: "MIT（上游转载授权链未核实）",
       }),
-      notice: A_NOTICE,
+      notice: `${A_NOTICE}${GENERATOR_STAMP}`,
     },
     CANDIDATE_APPROVALS,
   );
@@ -340,7 +348,7 @@ function main(): void {
     dataVersion: B_VERSION,
     book: base.book,
     reviewStatus: base.reviewStatus,
-    notice: B_NOTICE,
+    notice: `${B_NOTICE}${GENERATOR_STAMP}`,
     candidates: [...base.candidates, ...buildSanJiangCandidates()],
     groups: [...base.groups, buildSanJiangGroup()],
     evidence: [...base.evidence, buildSanJiangEvidence()],
