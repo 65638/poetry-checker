@@ -213,7 +213,7 @@ export async function runLiveFlowScenarios({
     assert.equal(
       restored.body.poem.tokens.find((t) => t.tokenId === "l4c1")
         .selectionMethod,
-      "context",
+      "context_rule",
     );
     return {
       selectedCandidate: selected.request.readingOverrides[0],
