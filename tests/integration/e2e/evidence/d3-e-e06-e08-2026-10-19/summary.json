@@ -1,0 +1,70 @@
+{
+  "batch": "d3-e-e06-e08-2026-10-19",
+  "generatedAt": "2026-10-19T21:43:47",
+  "gitSha": "49079d1c767339615c00cd1ce744044281deaa6a",
+  "dirty": true,
+  "mode": "real",
+  "node": "v24.21.0",
+  "api": {
+    "total": 9,
+    "passed": 3,
+    "blocked": 6,
+    "failures": 0,
+    "unrun": 0,
+    "exitCode": 2
+  },
+  "browser": {
+    "passed": 11,
+    "blocked": 1,
+    "failed": 0,
+    "exitCode": 2
+  },
+  "browserRevision": "Edg/155.0.4283.62",
+  "newScenarios": [
+    {
+      "id": "E06-copy-download-consistency",
+      "status": "pass",
+      "detail": {
+        "permission": "granted",
+        "copied": {
+          "permission": "granted",
+          "feedback": "摘要已复制到剪贴板。",
+          "clipboardChecked": true,
+          "hasSummary": true,
+          "hasBook": true,
+          "hasGenre": true,
+          "hasDataVersion": true,
+          "hasRulesVersion": true,
+          "hasInputHash": true,
+          "hasText": true
+        },
+        "downloadedFile": "poetry-report-白日依山尽.json",
+        "blockedCopy": "当前报告已不对应当前输入，已阻止复制。",
+        "staleBlocksExport": true
+      }
+    },
+    {
+      "id": "E08-keyboard-token-dialog",
+      "status": "pass",
+      "detail": {
+        "tokenId": "l1c1",
+        "tokenText": "床平",
+        "tabsToReachToken": 3,
+        "innerTabsToClose": 0,
+        "closeLabel": "✕ 关闭",
+        "keysUsed": [
+          "Tab",
+          "Enter",
+          "Space",
+          "Escape"
+        ],
+        "focusReturn": {
+          "space": "l1c1",
+          "escape": "l1c1"
+        },
+        "dialogOpen": true
+      }
+    }
+  ],
+  "note": "E 本批新增场景与既有回归的实跑产物；E04/E05/E07 属 Codex 批已覆盖，不重复计新成果。"
+}
