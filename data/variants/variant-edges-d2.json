@@ -12,7 +12,8 @@
       "不是简繁转换表：不做逐字机械转换，边必须逐条给出依据。"
     ],
     "consumption": "消费方（B/API）必须先读取本文件并校验 status=approved 才可启用；当前为 pending_review，故等效于「未启用」。",
-    "futureWork": "全库简繁覆盖方案见 docs/handoffs/0008-a-j03-batch1-approval-and-variant-plan.md。"
+    "futureWork": "全库简繁覆盖方案见 docs/handoffs/0008-a-j03-batch1-approval-and-variant-plan.md。",
+    "contractLimit": "冻结契约 ReadingCandidate 无 variant 字段、Evidence.kind 无 variant 取值，因此异体关系只能以本文件的『候选边』承载，不写进任何快照、不新增候选、不改原表归属。若要让查询真正召回「樓」，需消费方读取 approved 边自行映射，或由契约层增字段（属契约变更，非 A 单方可改）。"
   },
   "edges": [
     {
@@ -27,8 +28,13 @@
         "data/raw/chinese_word_rhyme/Pingshui_Rhyme.json（下平十一尤，收「楼」）",
         "data/raw/chinese_word_rhyme/Cilin_Rhyme.json（收「楼」）"
       ],
-      "status": "pending_review",
-      "blockingDefect": "组长 J03 缺陷项 ①：楼↔樓 异体映射补齐",
+      "status": "approved",
+      "approvedBy": "组长（J03 第二批裁定，2026-10-18）",
+      "approvedAt": "2026-10-18",
+      "approvalBasis": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md 第二节：组长「异体映射直接同意」，楼↔樓 异体对应成立（简体楼/繁体樓，同下平十一尤），A 按契约生成异体候选（不覆盖原文）后直接落库，无需再审",
+      "approvalScope": "仅限 楼↔樓 这一组字对；全库其他简繁/异体映射仍按机器初审+异常复核流程，不因本条扩权",
+      "contractLimit": "冻结契约的 ReadingCandidate 无 variant 字段、Evidence.kind 无 variant 取值，故**不新增候选**（新增即等于声称平水韵收了「樓」，属伪造归属）。本边以「候选关联」形式落库，仅供查询召回，
+不得覆盖或替代原表收录事实。",
       "note": "补齐后「樓」可经本边定位到「楼」的候选；**不得**把「樓」写成新候选、也不得覆盖「楼」的归属。"
     },
     {
@@ -94,9 +100,9 @@
   ],
   "summary": {
     "total": 5,
-    "pending_review": 3,
+    "pending_review": 2,
     "applied_in_patch": 2,
-    "approved": 0
+    "approved": 1
   },
   "notes": [
     "本文件不参与任何 snapshot 的 dataVersion，也不改变现有查询结果。",
