@@ -304,6 +304,13 @@ function main(): void {
       "进 `failures` 由 exit code 表达，**不在此清单**。护栏当前状态见 precheck 报告的 `guards` 段。",
   );
   push("");
+  push(
+    "> **异常 ID 一经发布不回收。** 缺陷修掉后条目移入「已关闭」区并保留原 ID，" +
+      "以保证既有批次/报告的 `exceptionIds` 引用始终可解析。" +
+      "需要「当前未关闭集合」的消费方，应按本文件的 `status` 过滤，**不得按批次里的引用反推**" +
+      "——批次记的是「当时已知」，批次与本文不一致不等于 bug。",
+  );
+  push("");
 
   push("## 导航");
   push("");
@@ -320,6 +327,24 @@ function main(): void {
       `| ${category.title} | ${openInCategory} | ${closedInCategory} |`,
     );
   }
+  push("");
+  push(
+    "> ⚠️ **关于「跨库映射 | 0 | 0」这一行**：本行 0 是「**未发现缺陷**」，不是「无跨库待办」：",
+  );
+  push(
+    "> - A1 存在 **478 条两库差异待核实**（异体/归部粒度差，非缺陷）：见 precheck `supplement.a1`；",
+  );
+  push(
+    "> - A2 存在 **19 条部级映射草案，全部 `status=unverified`、`basis=null`**，不得当事实引用；",
+  );
+  push(
+    "> - 二者都不进异常清单，但都属于**待人格裁定**的存量——不能因本行 0 而认为跨库已收口。",
+  );
+  push("");
+  push(
+    "> 同理，其余各行的数字只表示「已登记缺陷数」，不表示该类工作量已清零；" +
+      "「结构达标」也不等于「内容审核通过」（见 AGENTS.md 韵书数据纪律第 1 条）。",
+  );
   push("");
 
   for (const category of CATEGORIES) {
