@@ -21,7 +21,10 @@ function draftOf(scenario: MockScenario): InputDraft {
   return scenarioDraft(scenario);
 }
 
-function makeStore(script: Array<Response | Promise<Response>>, draft = draftOf("pass")) {
+function makeStore(
+  script: Array<Response | Promise<Response>>,
+  draft = draftOf("pass"),
+) {
   const transport = scriptedTransport(script);
   const store = new CheckerStore(draft, { transport });
   return { store, transport };
@@ -29,7 +32,9 @@ function makeStore(script: Array<Response | Promise<Response>>, draft = draftOf(
 
 describe("首次提交（D-D1-01 的状态层）", () => {
   it("成功时写入 report/busy=false，并记录请求快照", async () => {
-    const { store, transport } = makeStore([okResponse(loadMockScenario("pass"))]);
+    const { store, transport } = makeStore([
+      okResponse(loadMockScenario("pass")),
+    ]);
     await store.analyze();
 
     const state = store.getState();
@@ -56,12 +61,15 @@ describe("首次提交（D-D1-01 的状态层）", () => {
   });
 
   it("非法草稿不发送请求，给可恢复错误", async () => {
-    const { store, transport } = makeStore([okResponse(loadMockScenario("pass"))], {
-      text: "，，。",
-      rhymeBook: "pingshui",
-      genreHint: "auto",
-      formHint: "auto",
-    });
+    const { store, transport } = makeStore(
+      [okResponse(loadMockScenario("pass"))],
+      {
+        text: "，，。",
+        rhymeBook: "pingshui",
+        genreHint: "auto",
+        formHint: "auto",
+      },
+    );
     await store.analyze();
     expect(transport.calls).toHaveLength(0);
     expect(store.getState().error?.code).toBe("INVALID_DRAFT");
@@ -154,7 +162,10 @@ describe("陈旧结果与失效（D-D1-03）", () => {
     const { store } = makeStore([pending.promise], draftOf("pass"));
 
     const run = store.analyze();
-    store.setDraft({ ...draftOf("pass"), text: `${draftOf("pass").text}\n仄仄平平仄` });
+    store.setDraft({
+      ...draftOf("pass"),
+      text: `${draftOf("pass").text}\n仄仄平平仄`,
+    });
     pending.resolve(okResponse(loadMockScenario("pass")));
     await run;
 
@@ -175,7 +186,10 @@ describe("陈旧结果与失效（D-D1-03）", () => {
     expect(store.getState().report?.summary.status).toBe("pass");
     expect(store.getState().stale).toBe(false);
 
-    store.setDraft({ ...draftOf("pass"), text: `${draftOf("pass").text}\n仄仄平平仄` });
+    store.setDraft({
+      ...draftOf("pass"),
+      text: `${draftOf("pass").text}\n仄仄平平仄`,
+    });
     expect(store.getState().report?.summary.status).toBe("pass");
     expect(store.getState().stale).toBe(true);
   });
@@ -186,7 +200,10 @@ describe("陈旧结果与失效（D-D1-03）", () => {
     store.selectFinding("fixture:check");
     expect(store.getState().selectedFindingId).toBe("fixture:check");
 
-    store.setDraft({ ...draftOf("pass"), text: `${draftOf("pass").text}\n仄仄平平仄` });
+    store.setDraft({
+      ...draftOf("pass"),
+      text: `${draftOf("pass").text}\n仄仄平平仄`,
+    });
     expect(store.getState().stale).toBe(true);
     expect(store.getState().selectedFindingId).toBeNull();
     expect(store.getState().selectedTokenId).toBeNull();
@@ -250,9 +267,8 @@ describe("选音请求构造与归属校验（D-D1-05 / D-D1-06）", () => {
   it("同一字位重复选择只保留最新一条覆盖", async () => {
     const pass = loadMockScenario("pass");
     const token = pass.poem.tokens[0]!;
-    const twoToneToken = pass.poem.tokens.find(
-      (item) => item.candidates.length > 1,
-    ) ?? token;
+    const twoToneToken =
+      pass.poem.tokens.find((item) => item.candidates.length > 1) ?? token;
     const first = twoToneToken.candidates[0]!;
     const second = twoToneToken.candidates[twoToneToken.candidates.length - 1]!;
 
@@ -264,18 +280,24 @@ describe("选音请求构造与归属校验（D-D1-05 / D-D1-06）", () => {
     const store = new CheckerStore(draftOf("pass"), { transport });
     await store.analyze();
 
-    await store.chooseReading({ tokenId: twoToneToken.tokenId, readingId: first.id });
+    await store.chooseReading({
+      tokenId: twoToneToken.tokenId,
+      readingId: first.id,
+    });
     // 成功后才提交：此时已生效覆盖 = 本次请求携带的覆盖。
-    const afterFirst = store.getState().overrides.filter(
-      (item) => item.tokenId === twoToneToken.tokenId,
-    );
+    const afterFirst = store
+      .getState()
+      .overrides.filter((item) => item.tokenId === twoToneToken.tokenId);
     expect(afterFirst).toHaveLength(1);
 
     if (first.id !== second.id) {
-      await store.chooseReading({ tokenId: twoToneToken.tokenId, readingId: second.id });
-      const afterSecond = store.getState().overrides.filter(
-        (item) => item.tokenId === twoToneToken.tokenId,
-      );
+      await store.chooseReading({
+        tokenId: twoToneToken.tokenId,
+        readingId: second.id,
+      });
+      const afterSecond = store
+        .getState()
+        .overrides.filter((item) => item.tokenId === twoToneToken.tokenId);
       expect(afterSecond).toEqual([
         { tokenId: twoToneToken.tokenId, readingId: second.id },
       ]);
@@ -290,7 +312,10 @@ describe("选音请求构造与归属校验（D-D1-05 / D-D1-06）", () => {
     await store.analyze();
     const before = transport.calls.length;
 
-    await store.chooseReading({ tokenId: "l1c1", readingId: "fixture:reading:无:Z" });
+    await store.chooseReading({
+      tokenId: "l1c1",
+      readingId: "fixture:reading:无:Z",
+    });
 
     expect(transport.calls.length).toBe(before);
     expect(store.getState().feedback).toContain("不属于字位");
@@ -303,7 +328,10 @@ describe("选音请求构造与归属校验（D-D1-05 / D-D1-06）", () => {
     await store.analyze();
     const before = transport.calls.length;
 
-    await store.chooseReading({ tokenId: "l9c9", readingId: "fixture:reading:平:P" });
+    await store.chooseReading({
+      tokenId: "l9c9",
+      readingId: "fixture:reading:平:P",
+    });
     expect(transport.calls.length).toBe(before);
     expect(store.getState().feedback).toContain("不属于当前报告");
   });
@@ -313,7 +341,10 @@ describe("选音请求构造与归属校验（D-D1-05 / D-D1-06）", () => {
     const transport = scriptedTransport([okResponse(pass)]);
     const store = new CheckerStore(draftOf("pass"), { transport });
     await store.analyze();
-    store.setDraft({ ...draftOf("pass"), text: `${draftOf("pass").text}\n仄仄平平仄` });
+    store.setDraft({
+      ...draftOf("pass"),
+      text: `${draftOf("pass").text}\n仄仄平平仄`,
+    });
     const before = transport.calls.length;
 
     const token = pass.poem.tokens[0]!;
@@ -414,7 +445,10 @@ describe("错误保留输入（D-D1-07 状态层）", () => {
     await store.analyze();
     expect(store.getState().report?.summary.status).toBe("pass");
 
-    const changed = { ...draftOf("pass"), text: `${draftOf("pass").text}\n仄仄平平仄` };
+    const changed = {
+      ...draftOf("pass"),
+      text: `${draftOf("pass").text}\n仄仄平平仄`,
+    };
     store.setDraft(changed);
     await store.analyze();
 
@@ -453,7 +487,10 @@ describe("选音与快照一致性（修复 2）", () => {
     await store.analyze();
     const token = pass.poem.tokens[0]!;
     const candidate = token.candidates[0]!;
-    await store.chooseReading({ tokenId: token.tokenId, readingId: candidate.id });
+    await store.chooseReading({
+      tokenId: token.tokenId,
+      readingId: candidate.id,
+    });
 
     const state = store.getState();
     expect(state.overrides).toEqual([
@@ -463,17 +500,21 @@ describe("选音与快照一致性（修复 2）", () => {
     expect(state.busy).toBe(false);
   });
 
-  it("成功报告 → 选音 → 503：导出的覆盖仍是旧快照，不混入新选音", async () => {
+  it("成功报告 → 选音 → 503：保留旧快照但禁止复制导出，重试后恢复", async () => {
     const pass = loadMockScenario("pass");
     const { store, written, downloaded } = makeExportableStore([
       okResponse(pass),
       errorResponse("DATA_NOT_READY", "数据尚未接入", 503),
+      okResponse(pass),
     ]);
     await store.analyze();
     const token = pass.poem.tokens[0]!;
     const candidate = token.candidates[0]!;
 
-    await store.chooseReading({ tokenId: token.tokenId, readingId: candidate.id });
+    await store.chooseReading({
+      tokenId: token.tokenId,
+      readingId: candidate.id,
+    });
 
     const state = store.getState();
     // 选音失败：旧报告与其快照保持，覆盖退回已生效值（空）。
@@ -483,21 +524,22 @@ describe("选音与快照一致性（修复 2）", () => {
     expect(state.report?.summary.status).toBe("pass");
     expect(state.stale).toBe(false);
 
-    // 失败后导出仍然必要且一致：导出覆盖必须与请求快照一致。
     store.downloadReport();
-    expect(downloaded).toHaveLength(1);
-    const payload = JSON.parse(downloaded[0]!.json) as {
-      readingOverrides: Array<{ tokenId: string; readingId: string }>;
-      request: { readingOverrides: Array<{ tokenId: string; readingId: string }> };
-    };
-    expect(payload.readingOverrides).toEqual([]);
-    expect(payload.request.readingOverrides).toEqual(payload.readingOverrides);
-
     await store.copySummary();
+    expect(downloaded).toHaveLength(0);
+    expect(written).toHaveLength(0);
+    expect(store.getState().feedback).toContain("已阻止");
+    await store.analyze();
+    store.downloadReport();
+    await store.copySummary();
+    expect(downloaded).toHaveLength(1);
     expect(written).toHaveLength(1);
+    const payload = JSON.parse(downloaded[0]!.json);
+    expect(payload.readingOverrides).toEqual([]);
+    expect(payload.request.readingOverrides).toEqual([]);
   });
 
-  it("网络失败同样不污染导出（覆盖保持旧快照）", async () => {
+  it("网络失败保留旧快照但阻止复制", async () => {
     const pass = loadMockScenario("pass");
     const transport = scriptedTransport([
       okResponse(pass),
@@ -520,9 +562,8 @@ describe("选音与快照一致性（修复 2）", () => {
     expect(store.getState().error?.code).toBe("NETWORK_ERROR");
     expect(store.getState().overrides).toEqual([]);
     await store.copySummary();
-    expect(written).toHaveLength(1);
-    // 摘要里的覆盖字段必须与快照一致（空）
-    expect(written[0]).toContain("请求快照");
+    expect(written).toHaveLength(0);
+    expect(store.getState().feedback).toContain("已阻止");
   });
 
   it("请求处理中禁止导出，避免新旧结果混用", async () => {
@@ -590,7 +631,10 @@ describe("编辑使在途请求失效（修复 3）", () => {
     expect(store.getState().busy).toBe(true);
 
     // 编辑但不重新提交
-    store.setDraft({ ...draftOf("pass"), text: `${draftOf("pass").text}\n仄仄平平仄` });
+    store.setDraft({
+      ...draftOf("pass"),
+      text: `${draftOf("pass").text}\n仄仄平平仄`,
+    });
     expect(store.getState().overrides).toEqual([]);
     expect(store.getState().pendingOverrides).toEqual([]);
     expect(store.getState().busy).toBe(false);
@@ -690,7 +734,10 @@ describe("编辑使在途请求失效（修复 3）", () => {
       tokenId: token.tokenId,
       readingId: token.candidates[0]!.id,
     });
-    store.setDraft({ ...draftOf("pass"), text: `${draftOf("pass").text}\n仄仄平平仄` });
+    store.setDraft({
+      ...draftOf("pass"),
+      text: `${draftOf("pass").text}\n仄仄平平仄`,
+    });
     const runIdAfterEdit = store.currentRunId;
 
     slow.resolve(errorResponse("INTERNAL_ERROR", "服务内部错误", 500));

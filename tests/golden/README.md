@@ -1,5 +1,9 @@
 # tests/golden
 
+当前说明（D3，2026-10-19）：三份 `cases/*.json` 已按 J03/已有确认落库；approved **仅限 JSON 内列明的固定正文、作者和体裁等断言**，不批准全部逐字音韵或三库全量。审批与来源映射在 `data/works/review-closure.json`。任务书所称 canonical 金标准就是这三份文件，未另设 canonical 目录。D3 精确特例独立断言由九格 runner 和 C 用例补充，依据 13 号第 8 条，不能从 API 输出反抄真值。
+
+以下保留 D1 初始建档说明，其中 pending/0次实跑是历史统计，不代表当前状态。
+
 负责人：队员 E / DeepSeek。状态：D1 建立格式与审核门槛，**未运行真实分析**。
 
 登记真实作品与语文学预期，区分 `approved` 与 `pending`。合成 P/Z 只验证算法，不计为作品金标准。

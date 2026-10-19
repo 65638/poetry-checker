@@ -27,3 +27,9 @@ pnpm exec tsx scripts/probe-d2-api.ts --require-golden
 默认监听 127.0.0.1:3000，`PORT` 可改。前后端同时启动使用根目录 `pnpm dev`，正式页面入口为 `/`；`presentation-preview.html` 是合成展示页。
 
 本批 API 快照为 `pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3`。**集成后重启 API** 以刷新资源缓存。真实 HTTP 注入探针在 `data/reviews/d2-real-api-report.json` 留存实际报告；本地 3/3 通过不替代集成后的浏览器验收，也不批准三库全量发布。
+
+## D3 就绪诊断补充（2026-10-19）
+
+`/readyz` 的 JSON 保持 contract-v1：未全库就绪仍 503/ErrorResponse；不在严格错误体中偷偷添加字段。
+200/503 响应均带 `X-Poetry-Mode: real|mock` 和 `X-Poetry-Versions`（`encodeURIComponent(JSON.stringify(versions))`，含每库 dataVersion 及规则/语境/作品版本）。
+验收 runner 用 `JSON.parse(decodeURIComponent(header))` 读取；运行模式与审核状态分别记录，real 不等于全库 approved。

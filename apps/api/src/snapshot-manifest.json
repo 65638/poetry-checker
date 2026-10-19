@@ -1,11 +1,11 @@
 {
   "pingshui": {
     "file": "pingshui.full-d2-patched.json",
-    "reason": "106部三讲补缺；J03已有15候选+14号组长接受机器初审68候选，原部级只批准三讲；review3，全库unverified"
+    "reason": "106部三讲补缺；J03已有15候选+14号组长接受机器初审68候选，原部级只批准三讲；D3 review4（生成器戳记；批准范围与 review3 一致），全库unverified"
   },
   "cilin": {
     "file": "cilin.full-d2.json",
-    "reason": "词林正韵 19 主部全量（33 声类子卷）"
+    "reason": "词林正韵 19 主部全量（33 声类子卷）；D3 clean1 过滤8条非汉字杂项，仍未批准"
   },
   "xinyun": {
     "file": "xinyun.full-d2.json",

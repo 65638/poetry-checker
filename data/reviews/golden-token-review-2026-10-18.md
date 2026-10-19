@@ -1,7 +1,7 @@
 # 三首金标准逐字机器初审表（96 字位）
 
 快照：`data/normalized/pingshui.full-d2-patched.json`
-dataVersion：`pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3`
+dataVersion：`pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4`
 分母：**96 字位**；有候选 96；缺字 0；多候选 22；其中平仄临界 10；evidence approved 标记 **84/189**。
 
 > 本表只统计快照标记并做语境筛选前的候选证据预检；不调用 resolveReadings，不代替真实 API 结果或批准任何证据。人工备注引用 J03 第一批及第二批记录。当前批准清单存在候选/部级范围冲突，approved 数量不等于相同范围的人审完成。
@@ -187,5 +187,5 @@ dataVersion：`pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3`
 ## 版本差异
 
 旧样本 `data/normalized/pingshui.sample-d1.json`（sample-pingshui-cwr-ff0e9c1-d1-review2）只有 7 个字；
-当前快照 `data/normalized/pingshui.full-d2-patched.json`（pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3）有 8240 个字、10387 条候选。
+当前快照 `data/normalized/pingshui.full-d2-patched.json`（pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4）有 8240 个字、10387 条候选。
 按任务书要求，本表全部使用当前快照，未使用旧七字样本的任何结果；旧样本只用于说明差异。

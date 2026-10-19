@@ -1,0 +1,77 @@
+{
+  "ranAt": "2026-10-18T21:30:05.537Z",
+  "rows": [
+    {
+      "poem": "登鹳雀楼",
+      "book": "pingshui",
+      "http": 200,
+      "summary": "pass",
+      "schema": "pass",
+      "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3"
+    },
+    {
+      "poem": "登鹳雀楼",
+      "book": "cilin",
+      "http": 503,
+      "summary": "DATA_NOT_READY:LOOKUP_EVIDENCE_UNVERIFIED：字位 l1c1（白）参与读音/平仄推导的候选 cilin:白:ru",
+      "schema": "-",
+      "dataVersion": "-"
+    },
+    {
+      "poem": "登鹳雀楼",
+      "book": "xinyun",
+      "http": 503,
+      "summary": "DATA_NOT_READY:LOOKUP_EVIDENCE_UNVERIFIED：字位 l1c1（白）参与读音/平仄推导的候选 xinyun:白:y",
+      "schema": "-",
+      "dataVersion": "-"
+    },
+    {
+      "poem": "静夜思",
+      "book": "pingshui",
+      "http": 200,
+      "summary": "not_applicable",
+      "schema": "pass",
+      "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3"
+    },
+    {
+      "poem": "静夜思",
+      "book": "cilin",
+      "http": 503,
+      "summary": "DATA_NOT_READY:LOOKUP_EVIDENCE_UNVERIFIED：字位 l1c1（床）参与读音/平仄推导的候选 cilin:床:pi",
+      "schema": "-",
+      "dataVersion": "-"
+    },
+    {
+      "poem": "静夜思",
+      "book": "xinyun",
+      "http": 503,
+      "summary": "DATA_NOT_READY:LOOKUP_EVIDENCE_UNVERIFIED：字位 l1c1（床）参与读音/平仄推导的候选 xinyun:床:y",
+      "schema": "-",
+      "dataVersion": "-"
+    },
+    {
+      "poem": "黄鹤楼",
+      "book": "pingshui",
+      "http": 200,
+      "summary": "fail",
+      "schema": "pass",
+      "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3"
+    },
+    {
+      "poem": "黄鹤楼",
+      "book": "cilin",
+      "http": 503,
+      "summary": "DATA_NOT_READY:LOOKUP_EVIDENCE_UNVERIFIED：字位 l1c1（昔）参与读音/平仄推导的候选 cilin:昔:ru",
+      "schema": "-",
+      "dataVersion": "-"
+    },
+    {
+      "poem": "黄鹤楼",
+      "book": "xinyun",
+      "http": 503,
+      "summary": "DATA_NOT_READY:LOOKUP_EVIDENCE_UNVERIFIED：字位 l1c1（昔）参与读音/平仄推导的候选 xinyun:昔:q",
+      "schema": "-",
+      "dataVersion": "-"
+    }
+  ]
+}

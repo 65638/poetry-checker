@@ -4,6 +4,7 @@ import type {
   AnalysisResponse, AnnotatedToken, BookId, CheckStatus, Finding, SummaryStatus,
 } from '@poetry/contracts';
 import type { CheckerViewProps } from '../../view-contract';
+import { trailingPunctuation } from '../punctuation';
 import '../styles/report.css';
 
 type ReportViewProps = Pick<
@@ -36,12 +37,6 @@ function toneOf(t: AnnotatedToken) {
     return t.tone === 'P' ? { label: '平', mod: 'ping' } : { label: '仄', mod: 'ze' };
   }
   return { label: '未定', mod: 'unknown' };
-}
-
-function trailing(original: string, token: AnnotatedToken, next: AnnotatedToken | undefined) {
-  const nl = original.indexOf('\n', token.endUtf16);
-  const end = next ? next.startUtf16 : nl === -1 ? original.length : nl;
-  return original.slice(token.endUtf16, end).trim();
 }
 
 function prefersReducedMotion() {
@@ -118,6 +113,9 @@ export function ReportView(props: ReportViewProps) {
           声调依据：{report.policy.toneBasis === 'historical' ? '传统四声（入声归仄）' : '普通话声调（可能与传统韵书结果不同）'}
         </span>
         <span>{report.policy.notice}</span>
+        {report.genre.historicalTags.length > 0 && (
+          <span className="pc-historical-tags">作品体裁说明：{report.genre.historicalTags.join('、')}（不改变逐项检查结论）</span>
+        )}
       </p>
 
       <section className="pc-reading" aria-labelledby="pc-grid-heading">
@@ -126,7 +124,7 @@ export function ReportView(props: ReportViewProps) {
           <p className="pc-legend">「韵」= 韵脚 · 「?」= 读音待定 · 虚线框 = 声调未定 · ◆ = 批注关联位置</p>
         </div>
         <ol ref={gridRef} className="pc-grid">
-          {report.poem.lines.map((line) => (
+          {report.poem.lines.map((line, lineIndex) => (
             <li key={line.line} className="pc-line">
               <span className="pc-line__no">第{line.line}句</span>
               <div className="pc-line__cells">
@@ -137,7 +135,17 @@ export function ReportView(props: ReportViewProps) {
                   const isRhyme = rhymeIds.has(id);
                   const pending = t.readingStatus !== 'resolved';
                   const isRelated = related.has(id);
-                  const punct = trailing(report.poem.originalText, t, tokens.get(line.tokenIds[i + 1] ?? ''));
+                  const nextToken = tokens.get(line.tokenIds[i + 1] ?? '');
+                  const nextLineToken = report.poem.lines[lineIndex + 1]?.tokenIds[0];
+                  const lineEndUtf16 = nextLineToken
+                    ? tokens.get(nextLineToken)?.startUtf16
+                    : undefined;
+                  const punct = trailingPunctuation(
+                    report.poem.originalText,
+                    t,
+                    nextToken,
+                    lineEndUtf16,
+                  );
                   const label = `第${t.line}句第${t.column}字「${t.text}」，${tone.label}${isRhyme ? '，韵脚' : ''}${pending ? '，读音待定' : ''}${isRelated ? '，批注关联位置' : ''}`;
                   return (
                     <span key={id} className="pc-cell-wrap">

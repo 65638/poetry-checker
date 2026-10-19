@@ -4,6 +4,12 @@
 
 ## 立即开始
 
+D3 D/E 接管复验（2026-10-19）：D 的三首示例和30秒超时已接入；修复失败后复制/导出旧报告，以及 E runner 把缺陷返回值误算通过的问题；补全实际选音重查、覆盖清理与历史体裁标签。最新全仓 **53 文件 / 733 项通过**，浏览器 **18 通过 / 0 阻断 / 0 失败**，真实 HTTP 九格仍 **3 通过 / 6 数据阻断 / 0 判错**。详见 [D/E 接管复核](docs/handoffs/d3-de-takeover-codex.md)。下列为此前各批记录。
+
+D3 A 数据修复（2026-10-19）：已接入 A 至 `5d23a69` 的有效增量并修复六部误批；平水升 review4、词林升 clean1，合法审批范围不变。最新全仓 **51 文件 / 711 项通过**；真实 HTTP 仍 **3 通过 / 6 数据阻断 / 0 判错**。48 条两库候选仅为机器初审，D3 尚未完成。见 [A 修复交接](docs/handoffs/d3-a-repair-codex.md)。
+
+D3 E 第三批复核（A 修复之前，2026-10-19，`codex/d3-b-integration`）：九格真实 HTTP **3 通过 / 6 数据阻断 / 0 判错**。平水黄鹤楼的限定三平尾已是 `not_applicable/info`，整诗仍由其他偏离推导 `fail`。E 第三批集成后浏览器 **11 通过 / 1 阻断 / 0 失败**，新增复制/导出一致性与字格/详情键盘场景；示例入口的 D 交付在 PR #18，尚待集成复验。全仓最新实跑 **50 文件 / 703 项**，仍不代表 E04–E08 全量或 D3 完成。具体执行 SHA、证据与范围见 [E 第三批复核](docs/handoffs/d3-e-third-review-codex.md)。
+
 环境锁定为 Node.js 24.19.0、pnpm 11.25.0。已有环境可直接执行：
 
 ```sh
@@ -26,7 +32,7 @@ pnpm verify
 | 完整格律判定 | Codex 核心（evaluation.ts，D2 已并入）+ C 独立验收 82 项通过；规则卡人工审核清单已出 |
 | 数据与应用 | 真实 API 编排已上线（六步管线、证据门槛、清单装载）；三套全量韵书已入仓（暂全 unverified，词林来源 ID 冲突与新韵读音缺失待 A 修）；解析消歧、体裁、React Web 均已并入；真实金标准与 E2E 待 E |
 
-当前状态（D3 起，2026-10-19，integrate/d3）分项标注：
+历史状态（D3 初期 integrate/d3；当前结果以顶部复核记录为准）分项标注：
 - **代码检查**：pnpm verify 全绿（45 文件 / 591 测试，基线复验于 f42172f）。
 - **真实 API**：平水三首 200 + Schema pass + 金标准 3/3（GLM 实跑 `scripts/probe-d3-matrix.ts`，九组合表见 data/reviews/d3-g02-nine-combos.json）；词林/新韵六组合如实 503（LOOKUP_EVIDENCE_UNVERIFIED，等 D3 批次三 A/B 供数）。
 - **浏览器**：`pnpm dev` 双服务可用（healthz ok / web 200 / 代理真数据）；GLM 沙箱内 dev.mjs 的 node→cmd.exe spawn 受阻，用 dev:api/dev:web 分启绕行（真人环境不受影响，免 shell 加固列入 D3 待办）。

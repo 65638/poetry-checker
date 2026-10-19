@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import type {
   AnnotatedPoem,
   AnnotatedToken,
+  BookId,
   Evidence,
   Finding,
   GenreDecision,
@@ -95,7 +96,7 @@ const HH_LINES = Array.from({ length: 8 }, (_, index) =>
   HH_ROWS.slice(index * 7, index * 7 + 7),
 );
 
-function buildPoem(options: { text?: string; book?: "pingshui" | "cilin"; userOverrideAt?: string } = {}): AnnotatedPoem {
+function buildPoem(options: { text?: string; book?: BookId; userOverrideAt?: string } = {}): AnnotatedPoem {
   const book = options.book ?? "pingshui";
   const plain = HH_LINES.map((line) => line.map((row) => row[1]).join("")).join("");
   const text = options.text ?? plain;
@@ -236,6 +237,25 @@ interface RunOptions {
   fingerprint?: string;
   evidence?: Evidence[];
   works?: WorkMetadata[];
+  sources?: SourceRecord[];
+}
+
+/** 已审作品元数据驱动的体裁决策；供 run 与“冻结输入”用例共用，避免两处口径漂移。 */
+function reviewedGenre(
+  candidates: ReturnType<typeof matchTemplates>,
+  selectedTemplateId: string,
+): GenreDecision {
+  return {
+    formFamily: "regulated",
+    formId: "qilv",
+    historicalTags: ["特殊拗律"],
+    applicability: "applicable",
+    basisType: "reviewed_metadata",
+    candidateTemplateIds: candidates.map((candidate) => candidate.id),
+    selectedTemplateId,
+    reasons: ["已审作品元数据（E 定版，组长确认）"],
+    evidenceIds: ["ev:work:huanghelou:j03"],
+  };
 }
 
 function run(poem: AnnotatedPoem, options: RunOptions = {}) {
@@ -248,17 +268,7 @@ function run(poem: AnnotatedPoem, options: RunOptions = {}) {
     applicability: "applicable",
     ruleSet: "teaching-v1",
   });
-  const genre: GenreDecision = {
-    formFamily: "regulated",
-    formId: "qilv",
-    historicalTags: ["特殊拗律"],
-    applicability: "applicable",
-    basisType: "reviewed_metadata",
-    candidateTemplateIds: candidates.map((candidate) => candidate.id),
-    selectedTemplateId,
-    reasons: ["已审作品元数据（E 定版，组长确认）"],
-    evidenceIds: ["ev:work:huanghelou:j03"],
-  };
+  const genre = reviewedGenre(candidates, selectedTemplateId);
   const adjusted = applyReviewedWorkExceptions({
     poem,
     textFingerprint: options.fingerprint ?? FINGERPRINT,
@@ -267,9 +277,9 @@ function run(poem: AnnotatedPoem, options: RunOptions = {}) {
     works: options.works ?? works(),
     exceptions: EXCEPTIONS,
     evidence: options.evidence ?? evidenceSet(),
-    sources: SOURCES,
+    sources: options.sources ?? SOURCES,
   });
-  return { report, adjusted, selectedTemplateId, candidates };
+  return { report, adjusted, selectedTemplateId, candidates, genre };
 }
 
 const tailOf = (report: ProsodyReport): Finding | undefined =>
@@ -472,5 +482,231 @@ describe("D3 已审特例：黄鹤楼三平尾（C01–C10）", () => {
         expect(["RESCUE.SELF", "RESCUE.TEAO", "RESCUE.DUIJU"]).toContain(check.resolvedBy);
       }
     }
+  });
+});
+
+// ---------------------------------------------------------------------------
+// D3 复核收尾：边界独立用例（C11–C16）
+//
+// 与 C01–C10 的分工：C01–C10 验证“正例成立 + 最基础反例”，本组补的是
+// 复核点名的六类边界，每条都独立构造输入，不依赖上一条的副作用。
+// ---------------------------------------------------------------------------
+
+const TAIL_TOKEN_IDS = ["l4c5", "l4c6", "l4c7"] as const;
+
+/** 只改一个字位，其余保持已审正文；用于构造未知/歧义/变仄。 */
+function replaceToken(
+  poem: AnnotatedPoem,
+  tokenId: string,
+  patch: Partial<AnnotatedToken>,
+): AnnotatedPoem {
+  return {
+    ...poem,
+    tokens: poem.tokens.map((token) =>
+      token.tokenId === tokenId ? { ...token, ...patch } : token,
+    ),
+  };
+}
+
+/** 尾式被判为 not_applicable/info 的记录条数；未命中时必须为 0。 */
+function interpretedTails(report: ProsodyReport): Finding[] {
+  return report.checks.filter(
+    (check) =>
+      check.ruleId === "TAIL.SANPING" &&
+      check.status === "not_applicable" &&
+      TAIL_TOKEN_IDS.every((tokenId) =>
+        check.locations.some((location) => location.tokenId === tokenId),
+      ),
+  );
+}
+
+function deepFreeze<T>(value: T): T {
+  if (value !== null && typeof value === "object" && !Object.isFrozen(value)) {
+    Object.freeze(value);
+    for (const key of Object.keys(value as Record<string, unknown>)) {
+      deepFreeze((value as Record<string, unknown>)[key]);
+    }
+  }
+  return value;
+}
+
+describe("D3 已审特例：边界反例（C11–C16）", () => {
+  it("C11 新韵：不继承平水已审特例", () => {
+    const poem = buildPoem({ book: "xinyun" });
+    const { report, adjusted } = run(poem);
+    expect(poem.book).toBe("xinyun");
+    // 核心原判不受韵书影响（尾式只看平仄），只是不得被“解释”
+    expect(tailOf(report)?.status).toBe("fail");
+    expect(tailOf(adjusted)?.status).toBe("fail");
+    expect(interpretedTails(adjusted)).toHaveLength(0);
+  });
+
+  it("C12 缺审批：审批证据或作品依据缺失都不生效", () => {
+    const poem = buildPoem();
+
+    // 只剩作品元数据证据，审批证据（ctx:j03b2:08）缺失
+    const withoutApproval = run(poem, {
+      evidence: evidenceSet().filter((item) => item.id !== "ctx:j03b2:08"),
+    });
+    expect(tailOf(withoutApproval.adjusted)?.status).toBe("fail");
+    expect(interpretedTails(withoutApproval.adjusted)).toHaveLength(0);
+
+    // 只剩审批证据，作品元数据证据缺失
+    const withoutWorkEvidence = run(poem, {
+      evidence: evidenceSet().filter((item) => item.id !== "ev:work:huanghelou:j03"),
+    });
+    expect(tailOf(withoutWorkEvidence.adjusted)?.status).toBe("fail");
+    expect(interpretedTails(withoutWorkEvidence.adjusted)).toHaveLength(0);
+
+    // 证据表整体为空：不得降级成“无证据也放行”
+    const noEvidence = run(poem, { evidence: [] });
+    expect(interpretedTails(noEvidence.adjusted)).toHaveLength(0);
+  });
+
+  it("C13 来源断链：证据在、来源不在，不生效", () => {
+    const poem = buildPoem();
+
+    // 来源表整体为空
+    const noSources = run(poem, { sources: [] });
+    expect(tailOf(noSources.adjusted)?.status).toBe("fail");
+    expect(interpretedTails(noSources.adjusted)).toHaveLength(0);
+
+    // 审批证据的 sourceId 指向不存在的来源
+    const brokenEvidence = evidenceSet().map((item) =>
+      item.id === "ctx:j03b2:08"
+        ? { ...item, sourceId: "src:missing:approval" }
+        : item,
+    );
+    const broken = run(poem, { evidence: brokenEvidence });
+    expect(interpretedTails(broken.adjusted)).toHaveLength(0);
+  });
+
+  it("C14 未知/歧义/变仄：尾字读音非唯一平声则不命中", () => {
+    const base = buildPoem();
+    const token = base.tokens.find((item) => item.tokenId === "l4c5")!;
+    const ping = token.candidates[0]!;
+    const ze = {
+      ...ping,
+      id: "pingshui:空:qu:一送",
+      toneClass: "qu" as const,
+      tone: "Z" as Tone,
+    };
+
+    const unknown = replaceToken(base, "l4c5", {
+      candidates: [],
+      effectiveCandidateIds: [],
+      readingStatus: "unknown",
+      selectedReadingId: null,
+      selectionMethod: "unresolved",
+      possibleTones: [],
+      toneStatus: "unknown",
+      tone: null,
+    });
+    const ambiguous = replaceToken(base, "l4c5", {
+      candidates: [ping, ze],
+      effectiveCandidateIds: [ping.id, ze.id],
+      readingStatus: "ambiguous",
+      selectedReadingId: null,
+      selectionMethod: "unresolved",
+      possibleTones: ["P", "Z"],
+      toneStatus: "ambiguous",
+      tone: null,
+    });
+    const changedToZe = replaceToken(base, "l4c5", {
+      candidates: [ze],
+      effectiveCandidateIds: [ze.id],
+      readingStatus: "resolved",
+      selectedReadingId: ze.id,
+      selectionMethod: "unique",
+      possibleTones: ["Z"],
+      toneStatus: "resolved",
+      tone: "Z",
+    });
+
+    const cases = [
+      ["unknown", unknown],
+      ["ambiguous", ambiguous],
+      ["变仄", changedToZe],
+    ] as const;
+    for (const [label, poem] of cases) {
+      const { adjusted } = run(poem);
+      expect(interpretedTails(adjusted), label).toHaveLength(0);
+    }
+  });
+
+  it("C15 冻结输入：应用层只读入参，原报告与其他入参不变", () => {
+    const poem = buildPoem();
+    const candidates = matchTemplates({ poem, formHint: "auto", ruleSet: "teaching-v1" });
+    const selectedTemplateId = bestQilv(poem);
+    const report = evaluateProsody({
+      poem,
+      candidates,
+      selectedTemplateId,
+      applicability: "applicable",
+      ruleSet: "teaching-v1",
+    });
+    const evidence = evidenceSet();
+    const worksList = works();
+    const snapshot = {
+      poem: JSON.stringify(poem),
+      report: JSON.stringify(report),
+      evidence: JSON.stringify(evidence),
+      works: JSON.stringify(worksList),
+    };
+
+    deepFreeze(poem);
+    deepFreeze(report);
+    deepFreeze(evidence);
+    deepFreeze(worksList);
+    deepFreeze(EXCEPTIONS);
+
+    const adjusted = applyReviewedWorkExceptions({
+      poem,
+      textFingerprint: FINGERPRINT,
+      genre: reviewedGenre(candidates, selectedTemplateId),
+      report,
+      works: worksList,
+      exceptions: EXCEPTIONS,
+      evidence,
+      sources: SOURCES,
+    });
+
+    expect(tailOf(adjusted)!.status).toBe("not_applicable");
+    expect(adjusted).not.toBe(report);
+    // 原报告必须仍是 fail：应用层不得就地改写，否则下游会看到被“解释”过的历史
+    expect(tailOf(report)!.status).toBe("fail");
+    expect(JSON.stringify(poem)).toBe(snapshot.poem);
+    expect(JSON.stringify(report)).toBe(snapshot.report);
+    expect(JSON.stringify(evidence)).toBe(snapshot.evidence);
+    expect(JSON.stringify(worksList)).toBe(snapshot.works);
+  });
+
+  it("C16 报告 evidence/source 闭合：所有引用可解析到合并表，且不重复挂证据", () => {
+    const poem = buildPoem();
+    const evidence = evidenceSet();
+    const { adjusted, genre } = run(poem, { evidence });
+    const evidenceById = new Map(evidence.map((item) => [item.id, item]));
+    const sourceIds = new Set(SOURCES.map((item) => item.id));
+
+    const referenced = new Set<string>([
+      ...adjusted.checks.flatMap((check) => check.evidenceIds),
+      ...genre.evidenceIds,
+      ...poem.tokens.flatMap((token) => token.evidenceIds),
+    ]);
+    expect(referenced.size).toBeGreaterThan(0);
+    for (const id of referenced) {
+      const record = evidenceById.get(id);
+      expect(record, `报告引用了未注册证据 ${id}`).toBeDefined();
+      expect(
+        sourceIds.has(record!.sourceId),
+        `${id} 的来源 ${record?.sourceId} 不可解析`,
+      ).toBe(true);
+    }
+
+    // 命中项必须挂上审批证据，且同一证据只挂一次
+    const tail = tailOf(adjusted)!;
+    expect(tail.evidenceIds.filter((id) => id === "ctx:j03b2:08")).toHaveLength(1);
+    // 逐条 finding 的引用必须来自报告可见的合并表，closure 仍然 ok
+    expect(checkReportClosure(adjusted, poem).ok).toBe(true);
   });
 });

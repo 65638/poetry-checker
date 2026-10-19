@@ -8,7 +8,7 @@ export default tseslint.config(
   ...tseslint.configs.recommended,
   { files: ["**/*.ts"], rules: { "no-undef": "off" } },
   {
-    files: ["scripts/**/*.mjs"],
+    files: ["scripts/**/*.mjs", "tests/**/*.mjs"],
     languageOptions: { globals: globals.node },
     rules: { "no-undef": "off" },
   },

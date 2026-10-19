@@ -13,7 +13,13 @@
  * - 异常分级只描述事实与影响；「韵字归属是否正确」一律标注需人审。
  * - 退出码只反映「初审本身是否跑通」，不因发现异常而变红（异常是本次要交付的产物）。
  */
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import {
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  readdirSync,
+  writeFileSync,
+} from "node:fs";
 import path from "node:path";
 
 import type {
@@ -884,15 +890,20 @@ function auditSnapshot(
   const generatorVersion =
     raw.book === "xinyun" ? XINYUN_GENERATOR_VERSION : null;
   const rulesVersion = raw.book === "xinyun" ? XINYUN_RULES_VERSION : null;
-  if (raw.book !== "xinyun") {
+  // 快照 Schema 无版本字段，因此约定用 notice 里的「生成器：<脚本>@<版本>」戳记登记。
+  // 命中即视为已登记（可 grep、可审计），不再报 F 类异常。
+  const noticeStamp =
+    /生成器[:：]\s*(scripts\/data\/[a-z-]+\.ts@[\w.-]+)/u.exec(raw.notice);
+  if (raw.book !== "xinyun" && noticeStamp === null) {
     add("F", "P2", {
       location: `${file} · 快照头`,
-      fact: "快照未登记生成器/规则版本字段",
+      fact: "快照未登记生成器/规则版本",
       basis:
-        "SnapshotInput 结构无 generatorVersion/rulesVersion；平水与词林由 build-*.ts 直接生成，版本只能从脚本名推断",
+        "SnapshotInput 结构无 generatorVersion/rulesVersion；平水与词林由 build-*.ts 直接生成，" +
+        "约定以 notice 内「生成器：<脚本>@<版本>」戳记登记，本快照未命中该戳记",
       impact: "无法仅凭数据包回答「这份数据由哪版脚本产出」",
       suggestedAction:
-        "在 notice 或独立 descriptor 中登记脚本版本（不改快照 Schema）",
+        "在 notice 追加「生成器：scripts/data/build-xxx.ts@<版本>」戳记（不改快照 Schema）",
       actionKind: "接线/脚本可修",
     });
   }
@@ -1094,10 +1105,29 @@ function computeReconciliation(audits: SnapshotAudit[]): Reconciliation {
   const findApproved = (dataVersion: string) =>
     approvedTable.find((entry) => entry.dataVersion === dataVersion);
 
-  const patched = findApproved(
-    "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3",
+  /**
+   * 部级已批证据在各快照中的实际命中数。
+   * 不能写死「候选数 + 1（仅三讲）」：J03 第二批落库后部级批准会增加，
+   * 写死会让报告把正常的审批增长判成 FAIL（假红）。
+   */
+  const approvedDeptIds =
+    readJson<{ approvedEvidenceIds?: string[] }>(APPROVED_FILE)
+      ?.approvedEvidenceIds ?? [];
+  const deptApprovedIn = (relative: string): number => {
+    const snapshot = readJson<RawSnapshot>(relative);
+    if (snapshot === null) return 0;
+    const ids = new Set(snapshot.evidence.map((item) => item.id));
+    return approvedDeptIds.filter((id) => ids.has(id)).length;
+  };
+  const deptPatched = deptApprovedIn(
+    "data/normalized/pingshui.full-d2-patched.json",
   );
-  const plain = findApproved("pingshui-cwr-ff0e9c1-d2-full-review3");
+  const deptPlain = deptApprovedIn("data/normalized/pingshui.full-d2.json");
+
+  const patched = findApproved(
+    "pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4",
+  );
+  const plain = findApproved("pingshui-cwr-ff0e9c1-d3-full-review4");
   const sampleRow = findApproved("sample-pingshui-cwr-ff0e9c1-d1-review2");
   const candidateCount =
     readJson<{ candidateApprovals: unknown[] }>(APPROVED_FILE)
@@ -1125,23 +1155,23 @@ function computeReconciliation(audits: SnapshotAudit[]): Reconciliation {
       ok: sourceIdsAcrossBooksDistinct,
     },
     {
-      claim: `④ 平水106部：三讲1条部级与${candidateCount}条候选证据`,
-      expected: `${candidateCount + 1} / ${candidateCount + 106}`,
+      claim: `④ 平水106部：${candidateCount}条候选级 + ${deptPatched}条部级（部级清单随审批增长动态计算）`,
+      expected: `${candidateCount + deptPatched} / ${candidateCount + 106}`,
       actual:
         patched === undefined
           ? "未取得"
           : `${patched.approved} / ${patched.total}`,
       ok:
-        patched?.approved === candidateCount + 1 &&
+        patched?.approved === candidateCount + deptPatched &&
         patched?.total === candidateCount + 106,
     },
     {
-      claim: `④ 平水105部：${candidateCount}条候选证据，不批准所属整部`,
-      expected: `${candidateCount} / ${candidateCount + 105}`,
+      claim: `④ 平水105部：${candidateCount}条候选级 + ${deptPlain}条部级（无三讲部）`,
+      expected: `${candidateCount + deptPlain} / ${candidateCount + 105}`,
       actual:
         plain === undefined ? "未取得" : `${plain.approved} / ${plain.total}`,
       ok:
-        plain?.approved === candidateCount &&
+        plain?.approved === candidateCount + deptPlain &&
         plain?.total === candidateCount + 105,
     },
     {
@@ -1187,24 +1217,100 @@ const MAPPING_DRAFT_FILE = `data/reviews/cilin-pingshui-mapping-draft-${REPORT_D
 const PINGSHUI_MAIN = "pingshui.full-d2-patched.json";
 const CILIN_FILE = "cilin.full-d2.json";
 
-/** 已登记的业务内容摘要（每项注明登记来源）。 */
-const REGISTERED_DIGESTS: Readonly<
-  Record<string, { digest: string; source: string }>
-> = {
-  "pingshui.full-d2.json": {
-    digest: "60c416c8d0fe39fee07a82a2975ad0bbe1374b53985abb5a79f9723c04498f7e",
-    source: "docs/handoffs/0012-codex-d2-closeout.md",
+/**
+ * 已登记的业务内容摘要护栏。
+ *
+ * **key = dataVersion（不是文件名）**：文件名会随 review2/review3 变，dataVersion 才是稳定标识。
+ * 但 dataVersion 本身也会因改名而变，所以每条**同时**登记 fileName 与 dataVersion，
+ * 并由 B1 断言「磁盘上该文件名的 dataVersion == 本项声明的 dataVersion」——
+ * 任何 reviewN→reviewM 的改名都会被拦下，强制走一次重登记。
+ *
+ * changelog 三态语义（不许混）：
+ * - 首次登记：from: null
+ * - 摘要变更：from: <旧登记值>
+ * - 无变化：**不写本字段**（不写 from==to 的空记录）
+ */
+interface RegisteredDigest {
+  fileName: string;
+  dataVersion: string;
+  digest: string;
+  source: string;
+  changelog?: {
+    from: string | null;
+    to: string;
+    reason: string;
+    registeredAt: string;
+  }[];
+}
+
+const REGISTERED_DIGESTS: Readonly<Record<string, RegisteredDigest>> = {
+  "pingshui-cwr-ff0e9c1-d3-full-review4": {
+    fileName: "pingshui.full-d2.json",
+    dataVersion: "pingshui-cwr-ff0e9c1-d3-full-review4",
+    digest: "a044f70af6d25ec6b64142a52f75c36b1689109a9ab5e29de2d47369a612d569",
+    source:
+      "data/reviews/d3-a-repair-version-change.json（旧集成与被拒A快照分别登记，不覆盖历史摘要）",
+    changelog: [
+      {
+        from: "60c416c8d0fe39fee07a82a2975ad0bbe1374b53985abb5a79f9723c04498f7e",
+        to: "a044f70af6d25ec6b64142a52f75c36b1689109a9ab5e29de2d47369a612d569",
+        reason:
+          "新dataVersion；保留生成器戳记。平水恢复合法范围，词林仅过滤8条非汉字杂项；审批原件与原始来源未变。",
+        registeredAt: "2026-10-19",
+      },
+    ],
   },
-  "pingshui.full-d2-patched.json": {
-    digest: "6c9057412b85a3c7b4066f260e8d52b60b8be936c814380200f7ed9d7a71d6ef",
-    source: "docs/handoffs/0012-codex-d2-closeout.md",
+  "pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4": {
+    fileName: "pingshui.full-d2-patched.json",
+    dataVersion: "pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4",
+    digest: "6d5082eeec8c1e96ec59259fec5c6ca1dd56c1500c3d7c1a48b9bf4567013121",
+    source:
+      "data/reviews/d3-a-repair-version-change.json（旧集成与被拒A快照分别登记，不覆盖历史摘要）",
+    changelog: [
+      {
+        from: "6c9057412b85a3c7b4066f260e8d52b60b8be936c814380200f7ed9d7a71d6ef",
+        to: "6d5082eeec8c1e96ec59259fec5c6ca1dd56c1500c3d7c1a48b9bf4567013121",
+        reason:
+          "新dataVersion；保留生成器戳记。平水恢复合法范围，词林仅过滤8条非汉字杂项；审批原件与原始来源未变。",
+        registeredAt: "2026-10-19",
+      },
+    ],
   },
-  "xinyun.full-d2.json": {
+  "cilin-cwr-ff0e9c1-d3-full-clean1": {
+    fileName: "cilin.full-d2.json",
+    dataVersion: "cilin-cwr-ff0e9c1-d3-full-clean1",
+    digest: "c2531e69eb42170762556a0c03b4debdc61e0ec2d044a5e2e7116f016399d37b",
+    source:
+      "data/reviews/d3-a-repair-version-change.json（旧集成与被拒A快照分别登记，不覆盖历史摘要）",
+    changelog: [
+      {
+        from: "bcbeb62ada9a5b6a72e69dbdee844f10e0466b40fd46939b0b3e4f56f09d38e8",
+        to: "c2531e69eb42170762556a0c03b4debdc61e0ec2d044a5e2e7116f016399d37b",
+        reason:
+          "新dataVersion；保留生成器戳记。平水恢复合法范围，词林仅过滤8条非汉字杂项；审批原件与原始来源未变。",
+        registeredAt: "2026-10-19",
+      },
+    ],
+  },
+  "sample-pingshui-cwr-ff0e9c1-d1-review2": {
+    fileName: "pingshui.sample-d1.json",
+    dataVersion: "sample-pingshui-cwr-ff0e9c1-d1-review2",
+    digest: "6a69795f13e2654b81b6225ed52442174ddfdf0584cca6a8d95dea1fddb3ccd1",
+    source: "重登记：2026-10-18 本报告实测（原登记值见 changelog）",
+    changelog: [
+      {
+        from: "d92508eaeb8c0d12bb7b82abb60385cc1cbd82afa78ac77ff965ff92bebff4ab",
+        to: "6a69795f13e2654b81b6225ed52442174ddfdf0584cca6a8d95dea1fddb3ccd1",
+        reason:
+          "sample 升 review2（候选级/部级证据分离）后摘要变化；此前 B1 未覆盖 sample，属漏检补登记",
+        registeredAt: "2026-10-18",
+      },
+    ],
+  },
+  "xinyun-rebuild-d2-full": {
+    fileName: "xinyun.full-d2.json",
+    dataVersion: "xinyun-rebuild-d2-full",
     digest: "4a68bd5782ec6e2de7e0682edca0a38534307f4dd28702db487875815c690ae5",
-    source: "docs/handoffs/0009-a-fix-source-id-and-modern-reading.md",
-  },
-  "pingshui.sample-d1.json": {
-    digest: "d92508eaeb8c0d12bb7b82abb60385cc1cbd82afa78ac77ff965ff92bebff4ab",
     source: "docs/handoffs/0009-a-fix-source-id-and-modern-reading.md",
   },
 };
@@ -1344,15 +1450,30 @@ interface SupplementResult {
     rule: string;
     results: {
       file: string;
+      dataVersion: string;
       digestFirst: string;
       digestSecond: string;
       repeatConsistent: boolean;
+      registeredFileName: string | null;
       registeredDigest: string | null;
       registeredSource: string | null;
+      registeredChangelog: {
+        from: string | null;
+        to: string;
+        reason: string;
+        registeredAt: string;
+      }[];
+      fileNameMatches: boolean | null;
       matchesRegistered: boolean | null;
     }[];
     allRepeatConsistent: boolean;
     allRegisteredMatch: boolean;
+    unregistered: string[];
+    digestDrift: string[];
+    fileNameMismatch: string[];
+    registeredWithoutFile: string[];
+    skippedNonSnapshots: string[];
+    sourceGroups: { source: string; dataVersions: string[] }[];
   };
   b2: {
     file: string;
@@ -1709,31 +1830,71 @@ function computeSupplement(): SupplementResult {
       : computeA1(pingshuiRaw, cilinRaw);
 
   // ---- B1：同 dataVersion 重复构建一致性（只读文件，不重跑构建） ----
+  // 遍历改为「扫 data/normalized 下的 JSON，按各自的 dataVersion 查登记」，
+  // 不再硬列文件名——再次改名/新增快照都能被自动覆盖。
   const b1Results: SupplementResult["b1"]["results"] = [];
-  for (const name of [
-    "pingshui.full-d2.json",
-    "pingshui.full-d2-patched.json",
-    "cilin.full-d2.json",
-    "xinyun.full-d2.json",
-  ]) {
-    const file = path.join(ROOT, "data", "normalized", name);
-    if (!existsSync(file)) continue;
+  const skippedNonSnapshots: string[] = [];
+  const normalizedDir = path.join(ROOT, "data", "normalized");
+  const normalizedFiles = existsSync(normalizedDir)
+    ? readdirSync(normalizedDir)
+        .filter((name) => name.endsWith(".json"))
+        .sort()
+    : [];
+  for (const name of normalizedFiles) {
+    const file = path.join(normalizedDir, name);
     const text = readFileSync(file, "utf8");
     // 两次独立 parse，模拟两次构建装载同一字节
-    const digestFirst = businessContentDigest(JSON.parse(text) as RawSnapshot);
+    const parsed = JSON.parse(text) as RawSnapshot;
+    // data/normalized 下还有非快照产物（如 works-coverage-d2.json），
+    // 它们没有 dataVersion/candidates，不能算「未登记快照」，显式跳过并记录。
+    if (
+      typeof parsed.dataVersion !== "string" ||
+      !Array.isArray(parsed.candidates)
+    ) {
+      skippedNonSnapshots.push(`data/normalized/${name}`);
+      continue;
+    }
+    const digestFirst = businessContentDigest(parsed);
     const digestSecond = businessContentDigest(JSON.parse(text) as RawSnapshot);
-    const registered = REGISTERED_DIGESTS[name] ?? null;
+    const registered = REGISTERED_DIGESTS[parsed.dataVersion] ?? null;
     b1Results.push({
       file: `data/normalized/${name}`,
+      dataVersion: parsed.dataVersion,
       digestFirst,
       digestSecond,
       repeatConsistent: digestFirst === digestSecond,
+      registeredFileName: registered?.fileName ?? null,
       registeredDigest: registered?.digest ?? null,
       registeredSource: registered?.source ?? null,
+      registeredChangelog: registered?.changelog ?? [],
+      fileNameMatches:
+        registered === null ? null : registered.fileName === name,
       matchesRegistered:
         registered === null ? null : registered.digest === digestFirst,
     });
   }
+  // 登记了但磁盘上没有对应文件（改名后遗留的悬空登记）
+  const registeredWithoutFile = Object.values(REGISTERED_DIGESTS)
+    .filter(
+      (entry) =>
+        !b1Results.some((result) => result.dataVersion === entry.dataVersion),
+    )
+    .map((entry) => `${entry.dataVersion} → ${entry.fileName}`);
+  const unregistered = b1Results
+    .filter((entry) => entry.matchesRegistered === null)
+    .map((entry) => `${entry.dataVersion}（${entry.file}）`);
+  const digestDrift = b1Results
+    .filter((entry) => entry.matchesRegistered === false)
+    .map(
+      (entry) =>
+        `${entry.dataVersion}（登记 ${String(entry.registeredDigest)} / 实测 ${entry.digestFirst}）`,
+    );
+  const fileNameMismatch = b1Results
+    .filter((entry) => entry.fileNameMatches === false)
+    .map(
+      (entry) =>
+        `${entry.dataVersion}：登记文件名 ${String(entry.registeredFileName)} / 磁盘 ${path.basename(entry.file)}`,
+    );
 
   // ---- B2：简繁/异体是否被未经依据合并 ----
   const variantFile = readJson<{
@@ -1788,10 +1949,16 @@ function computeSupplement(): SupplementResult {
     foundInXinyun:
       snapshotChars.get("xinyun.full-d2.json")?.has(character) ?? false,
   }));
-  const effectiveMerges =
-    (byStatus["approved"] ?? 0) +
-    traditionalFormProbe.filter((probe) => probe.foundInYunshu.length > 0)
-      .length;
+  /**
+   * 有效合并数 = 繁体/异体形**被塞进韵书表**的个数。
+   * 不把 approved 边计入：approved 边是经审批、仅供召回映射的「候选关联」，
+   * 它不写进任何快照、不改原表归属，本身不是合并。
+   * （旧写法把 approved 边数也加进来，导致合法审批被误报为「未经依据的合并」。）
+   */
+  const approvedEdges = byStatus["approved"] ?? 0;
+  const effectiveMerges = traditionalFormProbe.filter(
+    (probe) => probe.foundInYunshu.length > 0,
+  ).length;
   const xinyunHasTraditional = traditionalFormProbe.filter(
     (probe) => probe.foundInXinyun,
   ).length;
@@ -1820,13 +1987,34 @@ function computeSupplement(): SupplementResult {
     },
     b1: {
       rule:
-        "同 dataVersion 重复构建一致性：读同一落盘文件 → 两次独立 JSON.parse → 各算一次 businessContentDigest → 互比 → 再与 0009 已登记摘要比对。" +
+        "同 dataVersion 重复构建一致性：扫 data/normalized/*.json → 按各自 dataVersion 查 REGISTERED_DIGESTS → " +
+        "两次独立 JSON.parse 各算一次 businessContentDigest → 互比 → 与登记值比对；" +
+        "并断言「登记项的 fileName 与磁盘文件名一致」（防止 reviewN→reviewM 改名被静默吸收）。" +
         "**不重跑构建脚本**（重跑会产出新字节、污染已审文件）。",
       results: b1Results,
       allRepeatConsistent: b1Results.every((entry) => entry.repeatConsistent),
-      allRegisteredMatch: b1Results.every(
-        (entry) => entry.matchesRegistered !== false,
-      ),
+      allRegisteredMatch:
+        digestDrift.length === 0 &&
+        fileNameMismatch.length === 0 &&
+        registeredWithoutFile.length === 0,
+      unregistered,
+      digestDrift,
+      fileNameMismatch,
+      registeredWithoutFile,
+      skippedNonSnapshots,
+      sourceGroups: [
+        ...new Set(
+          Object.values(REGISTERED_DIGESTS).map((entry) => entry.source),
+        ),
+      ]
+        .sort()
+        .map((source) => ({
+          source,
+          dataVersions: Object.values(REGISTERED_DIGESTS)
+            .filter((entry) => entry.source === source)
+            .map((entry) => entry.dataVersion)
+            .sort(),
+        })),
     },
     b2: {
       file: VARIANTS_FILE,
@@ -1838,11 +2026,12 @@ function computeSupplement(): SupplementResult {
       traditionalFormProbe,
       verdict:
         effectiveMerges === 0
-          ? "未发现任何未经依据的合并：0 条边为 approved（3 条 pending_review 未启用）；" +
+          ? `未发现任何未经依据的合并：${approvedEdges} 条边为 approved（均已登记 approvalBasis，仅供召回映射、不写快照，不计为合并）；` +
+            `另有 ${byStatus["pending_review"] ?? 0} 条 pending_review 未启用；` +
             "韵书表（平水/词林）中「樓/餘/講/項」四个繁体形**均未出现**，说明繁体形没有被塞进韵书表；" +
             `新韵快照中含其中 ${xinyunHasTraditional} 个繁体形，属 pinyin-data 逐码位重建的预期（简繁各为独立码位，各成候选），**不是合并**。` +
             "applied_in_patch 的 2 条仅限三讲补丁内的 講→讲、項→项（已人审签），属补丁内转换，且未改动韵书表既有归属。"
-          : "发现可能未经依据的合并，见 traditionalFormProbe 与 byStatus。",
+          : `发现 ${effectiveMerges} 处繁体/异体形出现在韵书表中，见 traditionalFormProbe；这属疑似覆盖原表归属，须逐条核实。`,
     },
     b3: {
       generatorVersion: XINYUN_GENERATOR_VERSION,
@@ -1961,7 +2150,28 @@ function main(): void {
     `  A2 待核实映射草案：${supplement.a2.entryCount} 条（status=unverified / basis=null）→ ${MAPPING_DRAFT_FILE}`,
   );
   console.log(
-    `  B1 重复构建一致：${supplement.b1.allRepeatConsistent ? "是" : "否"}；与 0009 已登记摘要：${supplement.b1.allRegisteredMatch ? "一致" : "有差异"}`,
+    `  B1 重复构建一致：${supplement.b1.allRepeatConsistent ? "是" : "否"}；` +
+      `登记一致=${supplement.b1.digestDrift.length === 0 ? "是" : "否"}；` +
+      `文件名↔dataVersion 对应=${supplement.b1.fileNameMismatch.length === 0 ? "一致" : "不一致"}；` +
+      `未登记=${supplement.b1.unregistered.length}；悬空登记=${supplement.b1.registeredWithoutFile.length}`,
+  );
+
+  // B1 护栏：登记值漂移 / 文件名与 dataVersion 不符 / 悬空登记 → 进 failures（exit 1）
+  check(
+    supplement.b1.allRepeatConsistent,
+    "B1 每份快照两次生成的业务内容摘要一致（同输入同摘要）",
+  );
+  check(
+    supplement.b1.digestDrift.length === 0,
+    `B1 登记摘要与实际摘要一致（漂移 ${supplement.b1.digestDrift.length} 条${supplement.b1.digestDrift.length > 0 ? `：${supplement.b1.digestDrift.join("；")}` : ""}）`,
+  );
+  check(
+    supplement.b1.fileNameMismatch.length === 0,
+    `B1 登记项的 fileName 与磁盘文件名一致（不符 ${supplement.b1.fileNameMismatch.length} 条${supplement.b1.fileNameMismatch.length > 0 ? `：${supplement.b1.fileNameMismatch.join("；")}` : ""}）`,
+  );
+  check(
+    supplement.b1.registeredWithoutFile.length === 0,
+    `B1 没有悬空登记（登记了但磁盘无对应文件：${supplement.b1.registeredWithoutFile.length} 条）`,
   );
   console.log(
     `  B2 未经依据合并：${supplement.b2.effectiveMerges} 处（边状态 ${JSON.stringify(supplement.b2.byStatus)}）`,
@@ -2066,23 +2276,28 @@ function main(): void {
       suggestedAction:
         "核对 Cilin_Rhyme.json 对应行；若为注文/括号解析残留，应在适配器导入层过滤（不改原表字义事实）",
       actionKind: "接线/脚本可修",
-      affectedBooks: ["cilin-cwr-ff0e9c1-d2-full"],
+      affectedBooks: ["cilin-cwr-ff0e9c1-d3-full-clean1"],
     });
   }
 
   // 计数口径漂移（P3）
   addCross("F", "P3", {
-    location: "docs/data-quality.md / HANDOFF.md（D1 期「字形数」表述）",
+    location:
+      "docs/data-quality.md（字形数口径）· scripts/data/inspect.ts（读原表）",
     fact:
-      "D1/handoff 记「平水字形 8,232」，本次实测 105 部快照去重字符 = " +
-      `${supplement.a1.universe.pingshuiDistinctRaw === 0 ? "（未取得）" : "8232"}，**与 D1 一致、无漂移**；` +
-      `但词林 D1/inspect 记 5,037，其中含 ${supplement.a1.universe.cilinNonHan.count} 条非汉字，汉字实为 ${supplement.a1.universe.cilinHan}`,
+      "三处「词林字形数」口径不同，容易互相错位比较：" +
+      "① 原表 `Cilin_Rhyme.json` 去重 = **5,037**（含 4 个非汉字字形：`[` `]` 空格 `，`）；" +
+      "② 导入层已按 D3 过滤后，快照 `cilin.full-d2.json` 去重 = **5,033**（汉字全集）；" +
+      `③ \`inspect.ts\` 读的是原表，故仍报 5,037。` +
+      "平水侧：D1/handoff 记「8,232」，105 部快照实测 8232（106 部 8240），**与 D1 一致、无漂移**，且平水无此杂项",
     basis:
-      "raw / NFC / NFKC 三种去重方式结果完全相同（平水 106 部 8240、105 部 8232、词林 5037），可排除归一化重复；再按 \\p{Script=Han} 过滤得词林 5033",
+      "raw / NFC / NFKC 三种去重结果完全相同（平水 106 部 8240、105 部 8232、词林原表 5037），可排除归一化重复；" +
+      "快照侧按 \\p{Script=Han} 过滤后为 5033，与 build-cilin.ts 的 8 条 droppedNonHan 差额吻合",
     impact:
-      "同一「字形数」在不同文档可能指 raw（含非汉字）或汉字全集，跨文档比较会错位。这是口径未写明的漂移，不是数据错误",
+      "同一「字形数」在 原表 / 快照 / inspect 三处数字不同（5037 vs 5033），跨文档直接比较会得出「词林少了 4 个字」的错觉",
     suggestedAction:
-      "此后所有字形数一律注明口径（raw 含非汉字 / 汉字全集）；D1 的 8232 不需订正，词林 5,037 应补注「含 4 条非汉字」",
+      "此后所有字形数必须注明来源（原表含杂项 / 快照已过滤 / inspect 读原表）；" +
+      "D1 的 8232 不需订正；词林 5037 属原表口径、5033 属快照口径，两者都对但不可混用",
     actionKind: "接线/脚本可修",
   });
   addCross("F", "P2", {
@@ -2109,7 +2324,9 @@ function main(): void {
       `${supplement.b3.rulesVersion ?? "（未知）"} 与生成器版本 ${supplement.b3.generatorVersion ?? "（未知）"} ` +
       `只写在快照 notice 文本里（notice 命中：规则=${supplement.b3.noticeMentionsRules}、生成器=${supplement.b3.noticeMentionsGenerator}）；` +
       `pinyin-data revision=${supplement.b3.sourceRevision ?? "null"}、SHA-256 与落盘字节一致=${String(supplement.b3.pinyinDigestMatches)}；` +
-      "但快照 Schema **没有** generatorVersion/rulesVersion 字段，机器无法结构化读取；平水/词林同样无该字段",
+      "但快照 Schema **没有** generatorVersion/rulesVersion 字段，机器无法结构化读取。" +
+      "平水两版与词林现已在 notice 增补「生成器：scripts/data/build-*.ts@d3-1」戳记（可 grep），" +
+      "三条 F 类「未登记生成器版本」异常因此关闭；**本条的剩余问题只是「非结构化」**——读者仍须 grep 文案，不能用字段直读",
     basis:
       "读四份快照的 notice 与 sources；SnapshotInput 类型定义无版本字段；pinyin.txt 字节重算比对",
     impact:
@@ -2120,8 +2337,8 @@ function main(): void {
     actionKind: "接线/脚本可修",
     affectedBooks: [
       "pingshui-cwr-ff0e9c1-d2-full",
-      "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3",
-      "cilin-cwr-ff0e9c1-d2-full",
+      "pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4",
+      "cilin-cwr-ff0e9c1-d3-full-clean1",
       "xinyun-rebuild-d2-full",
     ],
   });
@@ -2166,12 +2383,31 @@ function main(): void {
   const appliedEdges = edges.filter(
     (edge) => edge.status === "applied_in_patch",
   );
+  const approvedEdgeList = edges.filter((edge) => edge.status === "approved");
+  // 未登记快照：属正常演进，单列 P2，**不进 failures**（与「登记值漂移」不同罚）
+  if (supplement.b1.unregistered.length > 0) {
+    addCross("F", "P2", {
+      location: "data/normalized/*.json · REGISTERED_DIGESTS",
+      fact: `有 ${supplement.b1.unregistered.length} 份快照未登记业务内容摘要：${supplement.b1.unregistered.join("；")}`,
+      basis:
+        "扫 data/normalized/*.json，按各自 dataVersion 查 REGISTERED_DIGESTS 未命中；按规则只出 P2，不进 failures",
+      impact:
+        "新快照属正常演进，但没有护栏值，此后任何内容变化都不会被 B1 发现",
+      suggestedAction:
+        "在 REGISTERED_DIGESTS 以 dataVersion 为 key 补登记，changelog 写 from: null",
+      actionKind: "接线/脚本可修",
+    });
+  }
+
   addCross("D", "P2", {
     location: VARIANTS_FILE,
     fact:
       `简繁/异体候选边共 ${edges.length} 条：pending_review ${pendingEdges.length} 条` +
       `（${pendingEdges.map((edge) => `${String(edge.from)}→${String(edge.to)}`).join("、")}）、` +
-      `applied_in_patch ${appliedEdges.length} 条、approved 0 条`,
+      `applied_in_patch ${appliedEdges.length} 条、approved ${approvedEdgeList.length} 条` +
+      (approvedEdgeList.length > 0
+        ? `（${approvedEdgeList.map((edge) => `${String(edge.from)}→${String(edge.to)}`).join("、")}，均已登记 approvalBasis）`
+        : ""),
     basis: "文件 summary 与 edges[].status 实测",
     impact:
       "未签边不生效：正文若写繁体（如「樓」）仍进 missing；已签边只属查询召回，不等于等价合并",
@@ -2292,10 +2528,10 @@ function main(): void {
       },
       {
         path: "docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
-        status: "已取得（空白工作表）",
+        status: "已取得（已归档裁定与范围勘误）",
         introducedBy: "fa1f466",
         detail:
-          "人工结论与审核人/时间均为 ____，见 §C4；不得从中读出任何批准。",
+          "第五节已归档十处裁定；文末勘误明确仅批准具体候选，不批准六个整韵部。签字占位不覆盖已归档电子裁定。",
       },
       {
         path: "docs/team/D2_审核任务书_2026-10-18/01_A_韵书数据与机器初审.md",
@@ -2375,6 +2611,19 @@ function main(): void {
       note: "第二批对应八个唯一选音候选（十处字位），已按精确候选落库；更在第一批已有批准。AI 备考不作依据，第六节整部批准指令已追加范围勘误。",
     },
     supplement,
+    guards: {
+      repeatBuildConsistent: supplement.b1.allRepeatConsistent,
+      digestRegistered: supplement.b1.digestDrift.length === 0,
+      fileNameMatchesDataVersion: supplement.b1.fileNameMismatch.length === 0,
+      noDanglingRegistration: supplement.b1.registeredWithoutFile.length === 0,
+      unregisteredSnapshots: supplement.b1.unregistered,
+      detail: {
+        digestDrift: supplement.b1.digestDrift,
+        fileNameMismatch: supplement.b1.fileNameMismatch,
+        registeredWithoutFile: supplement.b1.registeredWithoutFile,
+        skippedNonSnapshots: supplement.b1.skippedNonSnapshots,
+      },
+    },
     excluded: EXCLUDED,
     snapshots: audits,
     reconciliation,
@@ -2410,73 +2659,28 @@ function main(): void {
     ],
     verificationCommands: [
       {
-        command: "node --conditions=development scripts/data/inspect.ts",
-        executor: "A 侧在本机外部终端执行",
-        exitCode: 1,
+        command: "pnpm exec tsx scripts/data/check-normalized.ts",
+        executor: "独立验证（非本生成器执行）",
+        exitCode: null,
         result:
-          "ERR_MODULE_NOT_FOUND: packages/lexicon/src/adapters/chinese-word-rhyme.js",
-        note: "Node 24 不把相对 import 的 .js 改写成 .ts；验收命令本身不可用（见 C-cross-001）",
-      },
-      {
-        command: "node node_modules/tsx/dist/cli.mjs scripts/data/inspect.ts",
-        executor: "A 侧在本机外部终端执行",
-        exitCode: 0,
-        result:
-          "词林 19 部 / 33 子卷 / 归属 5575 / 字形 5037；新韵候选表 14 韵 / 56 子卷 / 归属 7693 / 字形 6730；平水发布门槛通过：否；新韵「一」冲突：十二齐·阴平 + 十二齐·去声",
-        note: "同一脚本改用 tsx 入口即通过",
+          "本生成器不执行；本批实际结果见 docs/handoffs/d3-a-repair-codex.md",
+        note: "不得复用A旧批次的测试数或将机器结构检查当作批准。",
       },
       {
         command: "pnpm exec vitest run packages/lexicon/tests",
-        executor: "A 侧在本机外部终端执行",
-        exitCode: 0,
-        result: "5 files / 66 tests，931ms",
-        note: "数字由人在外部终端执行后回传，本报告未改写",
+        executor: "独立验证（非本生成器执行）",
+        exitCode: null,
+        result:
+          "本生成器不执行；本批实际结果见 docs/handoffs/d3-a-repair-codex.md",
+        note: "不得复用A旧批次的测试数或将机器结构检查当作批准。",
       },
       {
         command: "pnpm verify",
-        executor: "A 侧在本机外部终端执行",
-        exitCode: 0,
-        result:
-          "28 files / 410 tests，7 of 8 projects 构建成功，8 契约/模板无漂移",
-        note: "同上；此为 D2 审核轮之前的实跑结果",
-      },
-      {
-        command: "node_modules/.bin/eslint .",
-        executor: "A 侧在本执行环境（绕过 pnpm 直接调二进制）",
-        exitCode: 0,
-        result: "0 error / 0 warning",
-        note: "等价于 pnpm verify 的 lint 关。此前本批新增脚本曾报 4 个 error（2×no-unused-vars、1×未用导入、1×no-misleading-character-class），已由 64b2652 修复",
-      },
-      {
-        command:
-          "node_modules/.bin/tsc --noEmit && node_modules/.bin/tsc --noEmit -p apps/web/tsconfig.json",
-        executor: "A 侧在本执行环境",
-        exitCode: 0,
-        result: "两个 tsconfig 均 0 error",
-        note: "等价于 pnpm verify 的 typecheck 关。此前 precheck-lexicon.ts 有 1 处 TS2345（RawSnapshot.reviewStatus 过宽），已由 64b2652 修复",
-      },
-      {
-        command: "node_modules/.bin/vitest run（全仓）",
-        executor: "A 侧在本执行环境",
-        exitCode: 1,
-        result:
-          "37 files / 529 tests：525 passed + 4 failed。4 条失败全在他人模块且均为「测试写死旧状态」：" +
-          "apps/api/tests/http-real.test.ts 1 条（断言 loadErrors 仍含 src:chinese_word_rhyme，该缺陷已由 474afd9 修复）、" +
-          "packages/readings/tests/real-pingshui.test.ts 3 条（断言快照无 approved 证据，已由 2cce583 的 J03 审批改变）",
-        note:
-          "这两处测试的期望值需由 GLM / B 各自更新；A 不越界修改 apps/ 与 packages/readings/。" +
-          "在它们更新前，全仓 vitest 与 pnpm verify 必然保持红——**这不是 A 侧数据错误**",
-      },
-      {
-        command:
-          "pnpm build && tsx scripts/generate-contracts.ts --check（即 pnpm check:generated）",
-        executor: "**未运行**",
+        executor: "独立验证（非本生成器执行）",
         exitCode: null,
-        result: "未运行",
-        note:
-          "本执行环境跑不了：`pnpm` 的 store 锁位于工作区之外（C:\\Users\\…\\pnpm-store-operation-locks，" +
-          "写入被沙箱以 os error 5 拒绝），因此 pnpm 的任何命令（含 pnpm -r build）都无法执行，check:generated 无法完成。" +
-          "**不得因未运行而声称通过**——该项只能由人在外部终端跑，或在 CI 上验证",
+        result:
+          "本生成器不执行；本批实际结果见 docs/handoffs/d3-a-repair-codex.md",
+        note: "不得复用A旧批次的测试数或将机器结构检查当作批准。",
       },
     ],
     reproduce: [
@@ -2555,6 +2759,20 @@ interface PrecheckOutput {
     note: string;
   };
   supplement: SupplementResult;
+  /** 护栏状态：机器自动红灯项，无可人审余地，必须落档（不能只打印在 stdout）。 */
+  guards: {
+    repeatBuildConsistent: boolean;
+    digestRegistered: boolean;
+    fileNameMatchesDataVersion: boolean;
+    noDanglingRegistration: boolean;
+    unregisteredSnapshots: string[];
+    detail: {
+      digestDrift: string[];
+      fileNameMismatch: string[];
+      registeredWithoutFile: string[];
+      skippedNonSnapshots: string[];
+    };
+  };
   excluded: readonly { file: string; reason: string }[];
   snapshots: SnapshotAudit[];
   reconciliation: Reconciliation;
@@ -2986,22 +3204,87 @@ function renderMarkdown(input: PrecheckOutput): string {
   push("");
   push(`规则：${input.supplement.b1.rule}`);
   push("");
-  push("| 快照 | 两次摘要一致 | 与 0009 已登记摘要 |");
-  push("|---|---|---|");
+  push(
+    "| 文件 | dataVersion | 两次摘要一致 | 文件名↔登记一致 | 与登记摘要 | changelog |",
+  );
+  push("|---|---|---|---|---|---|");
   for (const entry of input.supplement.b1.results) {
+    const fileNameCell =
+      entry.fileNameMatches === null
+        ? "（未登记）"
+        : entry.fileNameMatches
+          ? "✅"
+          : `❌ 登记为 \`${String(entry.registeredFileName)}\``;
+    const digestCell =
+      entry.matchesRegistered === null
+        ? "（未登记，见 P2）"
+        : entry.matchesRegistered
+          ? "✅ 一致"
+          : `❌ 漂移（登记 ${String(entry.registeredDigest).slice(0, 16)}…）`;
+    const changelogCell =
+      entry.registeredChangelog.length === 0
+        ? "（无变化，未写记录）"
+        : entry.registeredChangelog
+            .map(
+              (item) =>
+                `${item.from === null ? "首次登记" : "变更"} @${item.registeredAt}：${item.reason}`,
+            )
+            .join("<br>");
     push(
-      `| \`${entry.file.replace("data/normalized/", "")}\` | ${entry.repeatConsistent ? "✅" : "❌"} | ${
-        entry.matchesRegistered === null
-          ? "（无已登记值可比）"
-          : entry.matchesRegistered
-            ? "✅ 一致"
-            : `❌ 不一致（登记 ${String(entry.registeredDigest)}）`
-      } |`,
+      `| \`${entry.file.replace("data/normalized/", "")}\` | \`${entry.dataVersion}\` | ${entry.repeatConsistent ? "✅" : "❌"} | ${fileNameCell} | ${digestCell} | ${changelogCell} |`,
+    );
+  }
+  push("");
+  push("登记来源分组（不再笼统称「0009 登记」）：");
+  push("");
+  push("| 登记来源 | 覆盖的 dataVersion |");
+  push("|---|---|");
+  for (const group of input.supplement.b1.sourceGroups) {
+    push(
+      `| ${group.source} | ${group.dataVersions.map((version) => `\`${version}\``).join("<br>")} |`,
     );
   }
   push("");
   push(
-    `结论：重复构建摘要全部一致 = **${input.supplement.b1.allRepeatConsistent ? "是" : "否"}**；与已登记摘要无冲突 = **${input.supplement.b1.allRegisteredMatch ? "是" : "否"}**。`,
+    `结论：两次摘要全部一致 = **${input.supplement.b1.allRepeatConsistent ? "是" : "否"}**；` +
+      `登记摘要漂移 = **${input.supplement.b1.digestDrift.length}** 条；` +
+      `文件名↔dataVersion 不符 = **${input.supplement.b1.fileNameMismatch.length}** 条；` +
+      `悬空登记 = **${input.supplement.b1.registeredWithoutFile.length}** 条；` +
+      `未登记快照 = **${input.supplement.b1.unregistered.length}** 条（P2，不计入 failures）。`,
+  );
+  push("");
+  if (input.supplement.b1.skippedNonSnapshots.length > 0) {
+    push(
+      `跳过非快照产物（无 dataVersion/candidates，不参与 B1）：${input.supplement.b1.skippedNonSnapshots.map((file) => `\`${file}\``).join("、")}`,
+    );
+    push("");
+  }
+  push(
+    "护栏口径：**登记值漂移**与**文件名↔dataVersion 不符**属事故 → 进 failures（exit 1）；" +
+      "**未登记快照**属正常演进 → 只出 P2。两者不同罚，避免新快照把 exit code 顶红。",
+  );
+  push("");
+  push("#### 护栏状态（落档于 JSON 的 `guards` 段，可复核）");
+  push("");
+  push("| 护栏 | 结论 | 明细 |");
+  push("|---|---|---|");
+  push(
+    `| 同输入重复构建 → 同摘要 | ${input.guards.repeatBuildConsistent ? "✅" : "❌"} | — |`,
+  );
+  push(
+    `| 登记摘要 == 实测摘要 | ${input.guards.digestRegistered ? "✅" : "❌"} | ${input.guards.detail.digestDrift.join("；") || "无漂移"} |`,
+  );
+  push(
+    `| 登记 fileName == 磁盘文件名 | ${input.guards.fileNameMatchesDataVersion ? "✅" : "❌"} | ${input.guards.detail.fileNameMismatch.join("；") || "无不符"} |`,
+  );
+  push(
+    `| 无悬空登记 | ${input.guards.noDanglingRegistration ? "✅" : "❌"} | ${input.guards.detail.registeredWithoutFile.join("；") || "无悬空"} |`,
+  );
+  push(
+    `| 未登记快照（P2，不罚） | ${input.guards.unregisteredSnapshots.length === 0 ? "0 条" : `${input.guards.unregisteredSnapshots.length} 条`} | ${input.guards.unregisteredSnapshots.join("；") || "无"} |`,
+  );
+  push(
+    `| 跳过的非快照产物 | — | ${input.guards.detail.skippedNonSnapshots.join("；") || "无"} |`,
   );
   push("");
   push("### B2 简繁/异体是否被未经依据合并");
@@ -3297,23 +3580,10 @@ function renderMarkdown(input: PrecheckOutput): string {
     );
   }
   push("");
-  push("**两个执行环境必须分清**：");
-  push("");
   push(
-    "1. `pnpm exec vitest run packages/lexicon/tests` 与 `pnpm verify` 两条的原始数字由 **A 侧在本机外部终端**执行后回传（本环境跑不了 pnpm，见下），报告照抄未改写；",
-  );
-  push(
-    "2. `eslint`、`tsc`、全仓 `vitest` 三条由 **A 侧在本执行环境**直接调用 `node_modules/.bin/*` 二进制完成（绕过 pnpm）；",
-  );
-  push(
-    "3. **`check:generated` 在本环境未运行**：`pnpm` 的 store 锁在工作区外被沙箱拒绝（os error 5），`pnpm -r build` 无法执行。该项**未验证**，不得据此声称契约产物无漂移——须由人外部终端或 CI 验证。",
+    "测试结果按执行 SHA 单独归档；本生成器只登记待执行命令，不输出虚构的绿灯。旧版 A 报告见 Git 历史，不能代替本批验证。",
   );
   push("");
-  push(
-    "**当前全仓测试状态（A 侧实测）**：525 passed / 4 failed，4 条失败均属跨模块测试写死旧状态（GLM 1 条、B 3 条），已列明在上表备注中，**不是 A 侧数据错误**。",
-  );
-  push("");
-
   push("## 9. 复现方式");
   push("");
   push("```powershell");

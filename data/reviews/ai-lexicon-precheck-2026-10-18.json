@@ -19,9 +19,9 @@
     },
     {
       "path": "docs/reviews/13_J03三首核心诗逐字人审_第二批.md",
-      "status": "已取得（空白工作表）",
+      "status": "已取得（已归档裁定与范围勘误）",
       "introducedBy": "fa1f466",
-      "detail": "人工结论与审核人/时间均为 ____，见 §C4；不得从中读出任何批准。"
+      "detail": "第五节已归档十处裁定；文末勘误明确仅批准具体候选，不批准六个整韵部。签字占位不覆盖已归档电子裁定。"
     },
     {
       "path": "docs/team/D2_审核任务书_2026-10-18/01_A_韵书数据与机器初审.md",
@@ -59,11 +59,11 @@
     "measured": {
       "pingshuiPatchedRaw": 8240,
       "pingshui105Raw": 0,
-      "cilinRaw": 5037,
+      "cilinRaw": 5033,
       "cilinHan": 5033,
       "allNormalizationsEqual": true,
       "nonHanInPingshui": 0,
-      "nonHanInCilin": 4
+      "nonHanInCilin": 0
     },
     "attempts": [
       "raw 去重：平水 106 部 8240、105 部 8232、词林 5037",
@@ -124,30 +124,16 @@
       "caliberDifference": "口径差异（不计为异常）：平水上声与去声在词林中同属「仄声」子卷，词林不区分上/去。因此「平水上 vs 平水去」的层次差在本比对中**被有意抹平**，只按三层论。同样，词林第 15–19 部只有入声子卷，与平水入声 17 部同属「入」层。",
       "universe": {
         "pingshuiDistinctRaw": 8240,
-        "cilinDistinctRaw": 5037,
+        "cilinDistinctRaw": 5033,
         "pingshuiNonHan": {
           "count": 0,
           "characters": [],
           "sampleIds": []
         },
         "cilinNonHan": {
-          "count": 4,
-          "characters": [
-            " ",
-            "[",
-            "]",
-            "，"
-          ],
-          "sampleIds": [
-            "cilin:[:ze_unspecified:第二部·仄声",
-            "cilin:[:ze_unspecified:第七部·仄声",
-            "cilin:[:ru:第十八部·入声",
-            "cilin:]:ze_unspecified:第二部·仄声",
-            "cilin:]:ze_unspecified:第七部·仄声",
-            "cilin:]:ru:第十八部·入声",
-            "cilin: :ze_unspecified:第七部·仄声",
-            "cilin:，:ru:第十八部·入声"
-          ]
+          "count": 0,
+          "characters": [],
+          "sampleIds": []
         },
         "pingshuiHan": 8240,
         "cilinHan": 5033,
@@ -26392,53 +26378,140 @@
       "headerNote": "本文件是「待核实映射草案」：status 一律 unverified、basis 一律 null。所有条目仅由同字共现统计导出，**不得被任何快照或报告当作事实引用**，也不得据此认定词林某部等于平水某部。"
     },
     "b1": {
-      "rule": "同 dataVersion 重复构建一致性：读同一落盘文件 → 两次独立 JSON.parse → 各算一次 businessContentDigest → 互比 → 再与 0009 已登记摘要比对。**不重跑构建脚本**（重跑会产出新字节、污染已审文件）。",
+      "rule": "同 dataVersion 重复构建一致性：扫 data/normalized/*.json → 按各自 dataVersion 查 REGISTERED_DIGESTS → 两次独立 JSON.parse 各算一次 businessContentDigest → 互比 → 与登记值比对；并断言「登记项的 fileName 与磁盘文件名一致」（防止 reviewN→reviewM 改名被静默吸收）。**不重跑构建脚本**（重跑会产出新字节、污染已审文件）。",
       "results": [
         {
-          "file": "data/normalized/pingshui.full-d2.json",
-          "digestFirst": "60c416c8d0fe39fee07a82a2975ad0bbe1374b53985abb5a79f9723c04498f7e",
-          "digestSecond": "60c416c8d0fe39fee07a82a2975ad0bbe1374b53985abb5a79f9723c04498f7e",
+          "file": "data/normalized/cilin.full-d2.json",
+          "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
+          "digestFirst": "c2531e69eb42170762556a0c03b4debdc61e0ec2d044a5e2e7116f016399d37b",
+          "digestSecond": "c2531e69eb42170762556a0c03b4debdc61e0ec2d044a5e2e7116f016399d37b",
           "repeatConsistent": true,
-          "registeredDigest": "60c416c8d0fe39fee07a82a2975ad0bbe1374b53985abb5a79f9723c04498f7e",
-          "registeredSource": "docs/handoffs/0012-codex-d2-closeout.md",
+          "registeredFileName": "cilin.full-d2.json",
+          "registeredDigest": "c2531e69eb42170762556a0c03b4debdc61e0ec2d044a5e2e7116f016399d37b",
+          "registeredSource": "data/reviews/d3-a-repair-version-change.json（旧集成与被拒A快照分别登记，不覆盖历史摘要）",
+          "registeredChangelog": [
+            {
+              "from": "bcbeb62ada9a5b6a72e69dbdee844f10e0466b40fd46939b0b3e4f56f09d38e8",
+              "to": "c2531e69eb42170762556a0c03b4debdc61e0ec2d044a5e2e7116f016399d37b",
+              "reason": "新dataVersion；保留生成器戳记。平水恢复合法范围，词林仅过滤8条非汉字杂项；审批原件与原始来源未变。",
+              "registeredAt": "2026-10-19"
+            }
+          ],
+          "fileNameMatches": true,
           "matchesRegistered": true
         },
         {
           "file": "data/normalized/pingshui.full-d2-patched.json",
-          "digestFirst": "6c9057412b85a3c7b4066f260e8d52b60b8be936c814380200f7ed9d7a71d6ef",
-          "digestSecond": "6c9057412b85a3c7b4066f260e8d52b60b8be936c814380200f7ed9d7a71d6ef",
+          "dataVersion": "pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4",
+          "digestFirst": "6d5082eeec8c1e96ec59259fec5c6ca1dd56c1500c3d7c1a48b9bf4567013121",
+          "digestSecond": "6d5082eeec8c1e96ec59259fec5c6ca1dd56c1500c3d7c1a48b9bf4567013121",
           "repeatConsistent": true,
-          "registeredDigest": "6c9057412b85a3c7b4066f260e8d52b60b8be936c814380200f7ed9d7a71d6ef",
-          "registeredSource": "docs/handoffs/0012-codex-d2-closeout.md",
+          "registeredFileName": "pingshui.full-d2-patched.json",
+          "registeredDigest": "6d5082eeec8c1e96ec59259fec5c6ca1dd56c1500c3d7c1a48b9bf4567013121",
+          "registeredSource": "data/reviews/d3-a-repair-version-change.json（旧集成与被拒A快照分别登记，不覆盖历史摘要）",
+          "registeredChangelog": [
+            {
+              "from": "6c9057412b85a3c7b4066f260e8d52b60b8be936c814380200f7ed9d7a71d6ef",
+              "to": "6d5082eeec8c1e96ec59259fec5c6ca1dd56c1500c3d7c1a48b9bf4567013121",
+              "reason": "新dataVersion；保留生成器戳记。平水恢复合法范围，词林仅过滤8条非汉字杂项；审批原件与原始来源未变。",
+              "registeredAt": "2026-10-19"
+            }
+          ],
+          "fileNameMatches": true,
           "matchesRegistered": true
         },
         {
-          "file": "data/normalized/cilin.full-d2.json",
-          "digestFirst": "bcbeb62ada9a5b6a72e69dbdee844f10e0466b40fd46939b0b3e4f56f09d38e8",
-          "digestSecond": "bcbeb62ada9a5b6a72e69dbdee844f10e0466b40fd46939b0b3e4f56f09d38e8",
+          "file": "data/normalized/pingshui.full-d2.json",
+          "dataVersion": "pingshui-cwr-ff0e9c1-d3-full-review4",
+          "digestFirst": "a044f70af6d25ec6b64142a52f75c36b1689109a9ab5e29de2d47369a612d569",
+          "digestSecond": "a044f70af6d25ec6b64142a52f75c36b1689109a9ab5e29de2d47369a612d569",
           "repeatConsistent": true,
-          "registeredDigest": null,
-          "registeredSource": null,
-          "matchesRegistered": null
+          "registeredFileName": "pingshui.full-d2.json",
+          "registeredDigest": "a044f70af6d25ec6b64142a52f75c36b1689109a9ab5e29de2d47369a612d569",
+          "registeredSource": "data/reviews/d3-a-repair-version-change.json（旧集成与被拒A快照分别登记，不覆盖历史摘要）",
+          "registeredChangelog": [
+            {
+              "from": "60c416c8d0fe39fee07a82a2975ad0bbe1374b53985abb5a79f9723c04498f7e",
+              "to": "a044f70af6d25ec6b64142a52f75c36b1689109a9ab5e29de2d47369a612d569",
+              "reason": "新dataVersion；保留生成器戳记。平水恢复合法范围，词林仅过滤8条非汉字杂项；审批原件与原始来源未变。",
+              "registeredAt": "2026-10-19"
+            }
+          ],
+          "fileNameMatches": true,
+          "matchesRegistered": true
+        },
+        {
+          "file": "data/normalized/pingshui.sample-d1.json",
+          "dataVersion": "sample-pingshui-cwr-ff0e9c1-d1-review2",
+          "digestFirst": "6a69795f13e2654b81b6225ed52442174ddfdf0584cca6a8d95dea1fddb3ccd1",
+          "digestSecond": "6a69795f13e2654b81b6225ed52442174ddfdf0584cca6a8d95dea1fddb3ccd1",
+          "repeatConsistent": true,
+          "registeredFileName": "pingshui.sample-d1.json",
+          "registeredDigest": "6a69795f13e2654b81b6225ed52442174ddfdf0584cca6a8d95dea1fddb3ccd1",
+          "registeredSource": "重登记：2026-10-18 本报告实测（原登记值见 changelog）",
+          "registeredChangelog": [
+            {
+              "from": "d92508eaeb8c0d12bb7b82abb60385cc1cbd82afa78ac77ff965ff92bebff4ab",
+              "to": "6a69795f13e2654b81b6225ed52442174ddfdf0584cca6a8d95dea1fddb3ccd1",
+              "reason": "sample 升 review2（候选级/部级证据分离）后摘要变化；此前 B1 未覆盖 sample，属漏检补登记",
+              "registeredAt": "2026-10-18"
+            }
+          ],
+          "fileNameMatches": true,
+          "matchesRegistered": true
         },
         {
           "file": "data/normalized/xinyun.full-d2.json",
+          "dataVersion": "xinyun-rebuild-d2-full",
           "digestFirst": "4a68bd5782ec6e2de7e0682edca0a38534307f4dd28702db487875815c690ae5",
           "digestSecond": "4a68bd5782ec6e2de7e0682edca0a38534307f4dd28702db487875815c690ae5",
           "repeatConsistent": true,
+          "registeredFileName": "xinyun.full-d2.json",
           "registeredDigest": "4a68bd5782ec6e2de7e0682edca0a38534307f4dd28702db487875815c690ae5",
           "registeredSource": "docs/handoffs/0009-a-fix-source-id-and-modern-reading.md",
+          "registeredChangelog": [],
+          "fileNameMatches": true,
           "matchesRegistered": true
         }
       ],
       "allRepeatConsistent": true,
-      "allRegisteredMatch": true
+      "allRegisteredMatch": true,
+      "unregistered": [],
+      "digestDrift": [],
+      "fileNameMismatch": [],
+      "registeredWithoutFile": [],
+      "skippedNonSnapshots": [
+        "data/normalized/works-coverage-d2.json"
+      ],
+      "sourceGroups": [
+        {
+          "source": "data/reviews/d3-a-repair-version-change.json（旧集成与被拒A快照分别登记，不覆盖历史摘要）",
+          "dataVersions": [
+            "cilin-cwr-ff0e9c1-d3-full-clean1",
+            "pingshui-cwr-ff0e9c1-d3-full-review4",
+            "pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4"
+          ]
+        },
+        {
+          "source": "docs/handoffs/0009-a-fix-source-id-and-modern-reading.md",
+          "dataVersions": [
+            "xinyun-rebuild-d2-full"
+          ]
+        },
+        {
+          "source": "重登记：2026-10-18 本报告实测（原登记值见 changelog）",
+          "dataVersions": [
+            "sample-pingshui-cwr-ff0e9c1-d1-review2"
+          ]
+        }
+      ]
     },
     "b2": {
       "file": "data/variants/variant-edges-d2.json",
       "totalEdges": 5,
       "byStatus": {
-        "pending_review": 3,
+        "approved": 1,
+        "pending_review": 2,
         "applied_in_patch": 2
       },
       "appliedEdges": [
@@ -26456,12 +26529,6 @@
         }
       ],
       "pendingEdges": [
-        {
-          "id": "edge-樓-楼",
-          "from": "樓",
-          "to": "楼",
-          "status": "pending_review"
-        },
         {
           "id": "edge-餘-余",
           "from": "餘",
@@ -26498,7 +26565,7 @@
           "foundInXinyun": true
         }
       ],
-      "verdict": "未发现任何未经依据的合并：0 条边为 approved（3 条 pending_review 未启用）；韵书表（平水/词林）中「樓/餘/講/項」四个繁体形**均未出现**，说明繁体形没有被塞进韵书表；新韵快照中含其中 4 个繁体形，属 pinyin-data 逐码位重建的预期（简繁各为独立码位，各成候选），**不是合并**。applied_in_patch 的 2 条仅限三讲补丁内的 講→讲、項→项（已人审签），属补丁内转换，且未改动韵书表既有归属。"
+      "verdict": "未发现任何未经依据的合并：1 条边为 approved（均已登记 approvalBasis，仅供召回映射、不写快照，不计为合并）；另有 2 条 pending_review 未启用；韵书表（平水/词林）中「樓/餘/講/項」四个繁体形**均未出现**，说明繁体形没有被塞进韵书表；新韵快照中含其中 4 个繁体形，属 pinyin-data 逐码位重建的预期（简繁各为独立码位，各成候选），**不是合并**。applied_in_patch 的 2 条仅限三讲补丁内的 講→讲、項→项（已人审签），属补丁内转换，且未改动韵书表既有归属。"
     },
     "b3": {
       "generatorVersion": "xinyun-rebuild-gen/0.1.0",
@@ -26513,6 +26580,21 @@
       "verdict": "新韵三项可追溯但**不结构化**：规则版本与生成器版本只写在快照 notice 文本里（可 grep 到），pinyin-data 的 revision 与 SHA-256 写在 source 记录里且与落盘字节一致；快照 Schema 没有 generatorVersion/rulesVersion 字段，机器无法直接读取。"
     }
   },
+  "guards": {
+    "repeatBuildConsistent": true,
+    "digestRegistered": true,
+    "fileNameMatchesDataVersion": true,
+    "noDanglingRegistration": true,
+    "unregisteredSnapshots": [],
+    "detail": {
+      "digestDrift": [],
+      "fileNameMismatch": [],
+      "registeredWithoutFile": [],
+      "skippedNonSnapshots": [
+        "data/normalized/works-coverage-d2.json"
+      ]
+    }
+  },
   "excluded": [
     {
       "file": "pingshui.sample-d1.json",
@@ -26522,7 +26604,7 @@
   "snapshots": [
     {
       "file": "data/normalized/pingshui.full-d2.json",
-      "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-review3",
+      "dataVersion": "pingshui-cwr-ff0e9c1-d3-full-review4",
       "book": "pingshui",
       "reviewStatus": "unverified",
       "structure": {
@@ -26783,8 +26865,8 @@
         "listMissingNote": "审批清单未命中 1 条，均属预期（跨库全局清单 + 105/106 部差异），不计为异常。"
       },
       "metadata": {
-        "businessDigest": "60c416c8d0fe39fee07a82a2975ad0bbe1374b53985abb5a79f9723c04498f7e",
-        "canonicalDigest": "344e7eac12e1a618d605ddbc783336eb7056d28935b54f4412df441251a93f7c",
+        "businessDigest": "a044f70af6d25ec6b64142a52f75c36b1689109a9ab5e29de2d47369a612d569",
+        "canonicalDigest": "9aa7a763cd8f8b7b35b7848bf219921fea285d1ebbfeb3daf192c45b90d55689",
         "sources": [
           {
             "id": "src:chinese_word_rhyme:pingshui",
@@ -26836,7 +26918,7 @@
           "id": "A-pingshui-001",
           "class": "A",
           "book": "pingshui",
-          "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-review3",
+          "dataVersion": "pingshui-cwr-ff0e9c1-d3-full-review4",
           "severity": "P1",
           "location": "data/normalized/pingshui.full-d2.json · groups",
           "fact": "缺失韵目 1 个：三讲；连带结果：韵部 105/106，分部 {\"上平\":15,\"下平\":15,\"上\":28,\"去\":30,\"入\":17}（应有 {\"上平\":15,\"下平\":15,\"上\":29,\"去\":30,\"入\":17}）",
@@ -26844,25 +26926,12 @@
           "impact": "该韵部下的字无法归部，按韵部查询会漏；结构门槛不通过",
           "suggestedAction": "数据缺口，需补来源后重构建；不得新增空韵目凑数",
           "actionKind": "数据事实需人审"
-        },
-        {
-          "id": "F-pingshui-002",
-          "class": "F",
-          "book": "pingshui",
-          "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-review3",
-          "severity": "P2",
-          "location": "data/normalized/pingshui.full-d2.json · 快照头",
-          "fact": "快照未登记生成器/规则版本字段",
-          "basis": "SnapshotInput 结构无 generatorVersion/rulesVersion；平水与词林由 build-*.ts 直接生成，版本只能从脚本名推断",
-          "impact": "无法仅凭数据包回答「这份数据由哪版脚本产出」",
-          "suggestedAction": "在 notice 或独立 descriptor 中登记脚本版本（不改快照 Schema）",
-          "actionKind": "接线/脚本可修"
         }
       ]
     },
     {
       "file": "data/normalized/pingshui.full-d2-patched.json",
-      "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3",
+      "dataVersion": "pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4",
       "book": "pingshui",
       "reviewStatus": "unverified",
       "structure": {
@@ -27119,8 +27188,8 @@
         "listMissingNote": "审批清单 ID 在本快照内全部命中。"
       },
       "metadata": {
-        "businessDigest": "6c9057412b85a3c7b4066f260e8d52b60b8be936c814380200f7ed9d7a71d6ef",
-        "canonicalDigest": "7aa8f1d167f5eb2c09a961af0523b4f618d3e00ff131b12d10af6dbb16759c75",
+        "businessDigest": "6d5082eeec8c1e96ec59259fec5c6ca1dd56c1500c3d7c1a48b9bf4567013121",
+        "canonicalDigest": "c9c27f037c1d68a1df2df019a22f6c3802c07383bc55a13994c6126f32301a92",
         "sources": [
           {
             "id": "src:chinese_word_rhyme:pingshui",
@@ -27178,25 +27247,11 @@
           "bothGroups": "not_applicable"
         }
       ],
-      "anomalies": [
-        {
-          "id": "F-pingshui-001",
-          "class": "F",
-          "book": "pingshui",
-          "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3",
-          "severity": "P2",
-          "location": "data/normalized/pingshui.full-d2-patched.json · 快照头",
-          "fact": "快照未登记生成器/规则版本字段",
-          "basis": "SnapshotInput 结构无 generatorVersion/rulesVersion；平水与词林由 build-*.ts 直接生成，版本只能从脚本名推断",
-          "impact": "无法仅凭数据包回答「这份数据由哪版脚本产出」",
-          "suggestedAction": "在 notice 或独立 descriptor 中登记脚本版本（不改快照 Schema）",
-          "actionKind": "接线/脚本可修"
-        }
-      ]
+      "anomalies": []
     },
     {
       "file": "data/normalized/cilin.full-d2.json",
-      "dataVersion": "cilin-cwr-ff0e9c1-d2-full",
+      "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
       "book": "cilin",
       "reviewStatus": "unverified",
       "structure": {
@@ -27252,9 +27307,9 @@
         "bucketCountsMatch": true
       },
       "candidates": {
-        "total": 5403,
-        "distinctCharacters": 5037,
-        "multiGroupCharacters": 354,
+        "total": 5395,
+        "distinctCharacters": 5033,
+        "multiGroupCharacters": 352,
         "sameGroupMultiCandidates": 0,
         "sameParentMultiCandidates": 205,
         "sameParentExamples": [
@@ -27456,7 +27511,7 @@
         "toneClassVsGroupMismatch": [],
         "toneVsToneClassMismatch": [],
         "zeUnspecified": {
-          "count": 2237,
+          "count": 2232,
           "groups": [
             "第一部·仄声",
             "第七部·仄声",
@@ -27477,7 +27532,7 @@
         }
       },
       "charCheck": {
-        "checked": 5403,
+        "checked": 5395,
         "violations": []
       },
       "closure": {
@@ -27579,8 +27634,8 @@
         "listMissingNote": "审批清单未命中 84 条，均属预期（跨库全局清单 + 105/106 部差异），不计为异常。"
       },
       "metadata": {
-        "businessDigest": "bcbeb62ada9a5b6a72e69dbdee844f10e0466b40fd46939b0b3e4f56f09d38e8",
-        "canonicalDigest": "949ef07b9968d57b5ccbc579a0ee25946c362fb269dcfdcb3a4b6018914f3927",
+        "businessDigest": "c2531e69eb42170762556a0c03b4debdc61e0ec2d044a5e2e7116f016399d37b",
+        "canonicalDigest": "611bf23bd5701c8e9cbfd8f84bcb4e093371fcae239b871e339e19106c436036",
         "sources": [
           {
             "id": "src:chinese_word_rhyme:cilin",
@@ -27627,27 +27682,14 @@
           "id": "B-cilin-001",
           "class": "B",
           "book": "cilin",
-          "dataVersion": "cilin-cwr-ff0e9c1-d2-full",
+          "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
           "severity": "P3",
           "location": "data/normalized/cilin.full-d2.json · candidates",
-          "fact": "词林 ze_unspecified 共 2237 条，分布于 14 个仄声子卷",
+          "fact": "词林 ze_unspecified 共 2232 条，分布于 14 个仄声子卷",
           "basis": "统计 toneClass=ze_unspecified 的候选及其所在子卷",
           "impact": "这些是「来源只标仄声」的如实记录：不得臆补成上声或去声；本次核出越界 0 条",
           "suggestedAction": "保持现状；人审时只需确认来源确实只标仄",
           "actionKind": "数据事实需人审"
-        },
-        {
-          "id": "F-cilin-002",
-          "class": "F",
-          "book": "cilin",
-          "dataVersion": "cilin-cwr-ff0e9c1-d2-full",
-          "severity": "P2",
-          "location": "data/normalized/cilin.full-d2.json · 快照头",
-          "fact": "快照未登记生成器/规则版本字段",
-          "basis": "SnapshotInput 结构无 generatorVersion/rulesVersion；平水与词林由 build-*.ts 直接生成，版本只能从脚本名推断",
-          "impact": "无法仅凭数据包回答「这份数据由哪版脚本产出」",
-          "suggestedAction": "在 notice 或独立 descriptor 中登记脚本版本（不改快照 Schema）",
-          "actionKind": "接线/脚本可修"
         }
       ]
     },
@@ -28125,14 +28167,14 @@
     "sourceIds": [
       {
         "book": "pingshui",
-        "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-review3",
+        "dataVersion": "pingshui-cwr-ff0e9c1-d3-full-review4",
         "sourceIds": [
           "src:chinese_word_rhyme:pingshui"
         ]
       },
       {
         "book": "pingshui",
-        "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3",
+        "dataVersion": "pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4",
         "sourceIds": [
           "src:chinese_word_rhyme:pingshui",
           "src:wikisource:pingshuiyun"
@@ -28140,7 +28182,7 @@
       },
       {
         "book": "cilin",
-        "dataVersion": "cilin-cwr-ff0e9c1-d2-full",
+        "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
         "sourceIds": [
           "src:chinese_word_rhyme:cilin"
         ]
@@ -28158,21 +28200,21 @@
       {
         "file": "data/normalized/pingshui.full-d2.json",
         "book": "pingshui",
-        "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-review3",
+        "dataVersion": "pingshui-cwr-ff0e9c1-d3-full-review4",
         "approved": 83,
         "total": 188
       },
       {
         "file": "data/normalized/pingshui.full-d2-patched.json",
         "book": "pingshui",
-        "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3",
+        "dataVersion": "pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4",
         "approved": 84,
         "total": 189
       },
       {
         "file": "data/normalized/cilin.full-d2.json",
         "book": "cilin",
-        "dataVersion": "cilin-cwr-ff0e9c1-d2-full",
+        "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
         "approved": 0,
         "total": 33
       },
@@ -28211,13 +28253,13 @@
         "ok": true
       },
       {
-        "claim": "④ 平水106部：三讲1条部级与83条候选证据",
+        "claim": "④ 平水106部：83条候选级 + 1条部级（部级清单随审批增长动态计算）",
         "expected": "84 / 189",
         "actual": "84 / 189",
         "ok": true
       },
       {
-        "claim": "④ 平水105部：83条候选证据，不批准所属整部",
+        "claim": "④ 平水105部：83条候选级 + 0条部级（无三讲部）",
         "expected": "83 / 188",
         "actual": "83 / 188",
         "ok": true
@@ -28245,36 +28287,20 @@
       "actionKind": "接线/脚本可修"
     },
     {
-      "id": "D-cross-002",
-      "class": "D",
-      "book": "cross",
-      "dataVersion": "*",
-      "severity": "P1",
-      "location": "cilin.full-d2.json · candidates",
-      "fact": "词林快照含 4 条**非汉字**候选：空格(U+0020)、[(U+5B)、](U+5D)、，(U+FF0C)；示例候选 ID：cilin:[:ze_unspecified:第二部·仄声、cilin:[:ze_unspecified:第七部·仄声、cilin:[:ru:第十八部·入声、cilin:]:ze_unspecified:第二部·仄声",
-      "basis": "以 \\p{Script=Han} 判定。这些条目都是**单码点**，所以「单码点校验」抓不到；但字符本身不是汉字，属解析/导入残留",
-      "impact": "污染字形统计（raw 去重 5037 vs 汉字 5033），并使 A1 交叉比对的字符全集虚高；用户永远查不到它们，但统计会被抬高",
-      "suggestedAction": "核对 Cilin_Rhyme.json 对应行；若为注文/括号解析残留，应在适配器导入层过滤（不改原表字义事实）",
-      "actionKind": "接线/脚本可修",
-      "affectedBooks": [
-        "cilin-cwr-ff0e9c1-d2-full"
-      ]
-    },
-    {
-      "id": "F-cross-003",
+      "id": "F-cross-002",
       "class": "F",
       "book": "cross",
       "dataVersion": "*",
       "severity": "P3",
-      "location": "docs/data-quality.md / HANDOFF.md（D1 期「字形数」表述）",
-      "fact": "D1/handoff 记「平水字形 8,232」，本次实测 105 部快照去重字符 = 8232，**与 D1 一致、无漂移**；但词林 D1/inspect 记 5,037，其中含 4 条非汉字，汉字实为 5033",
-      "basis": "raw / NFC / NFKC 三种去重方式结果完全相同（平水 106 部 8240、105 部 8232、词林 5037），可排除归一化重复；再按 \\p{Script=Han} 过滤得词林 5033",
-      "impact": "同一「字形数」在不同文档可能指 raw（含非汉字）或汉字全集，跨文档比较会错位。这是口径未写明的漂移，不是数据错误",
-      "suggestedAction": "此后所有字形数一律注明口径（raw 含非汉字 / 汉字全集）；D1 的 8232 不需订正，词林 5,037 应补注「含 4 条非汉字」",
+      "location": "docs/data-quality.md（字形数口径）· scripts/data/inspect.ts（读原表）",
+      "fact": "三处「词林字形数」口径不同，容易互相错位比较：① 原表 `Cilin_Rhyme.json` 去重 = **5,037**（含 4 个非汉字字形：`[` `]` 空格 `，`）；② 导入层已按 D3 过滤后，快照 `cilin.full-d2.json` 去重 = **5,033**（汉字全集）；③ `inspect.ts` 读的是原表，故仍报 5,037。平水侧：D1/handoff 记「8,232」，105 部快照实测 8232（106 部 8240），**与 D1 一致、无漂移**，且平水无此杂项",
+      "basis": "raw / NFC / NFKC 三种去重结果完全相同（平水 106 部 8240、105 部 8232、词林原表 5037），可排除归一化重复；快照侧按 \\p{Script=Han} 过滤后为 5033，与 build-cilin.ts 的 8 条 droppedNonHan 差额吻合",
+      "impact": "同一「字形数」在 原表 / 快照 / inspect 三处数字不同（5037 vs 5033），跨文档直接比较会得出「词林少了 4 个字」的错觉",
+      "suggestedAction": "此后所有字形数必须注明来源（原表含杂项 / 快照已过滤 / inspect 读原表）；D1 的 8232 不需订正；词林 5037 属原表口径、5033 属快照口径，两者都对但不可混用",
       "actionKind": "接线/脚本可修"
     },
     {
-      "id": "F-cross-004",
+      "id": "F-cross-003",
       "class": "F",
       "book": "cross",
       "dataVersion": "*",
@@ -28287,26 +28313,26 @@
       "actionKind": "数据事实需人审"
     },
     {
-      "id": "F-cross-005",
+      "id": "F-cross-004",
       "class": "F",
       "book": "cross",
       "dataVersion": "*",
       "severity": "P2",
       "location": "data/normalized/*.json（快照头）· SnapshotInput 结构",
-      "fact": "新韵的规则版本 xinyun-14-rules-d1 与生成器版本 xinyun-rebuild-gen/0.1.0 只写在快照 notice 文本里（notice 命中：规则=true、生成器=true）；pinyin-data revision=fa9761fff402f8560196b1ba085c437c52b56d7c、SHA-256 与落盘字节一致=true；但快照 Schema **没有** generatorVersion/rulesVersion 字段，机器无法结构化读取；平水/词林同样无该字段",
+      "fact": "新韵的规则版本 xinyun-14-rules-d1 与生成器版本 xinyun-rebuild-gen/0.1.0 只写在快照 notice 文本里（notice 命中：规则=true、生成器=true）；pinyin-data revision=fa9761fff402f8560196b1ba085c437c52b56d7c、SHA-256 与落盘字节一致=true；但快照 Schema **没有** generatorVersion/rulesVersion 字段，机器无法结构化读取。平水两版与词林现已在 notice 增补「生成器：scripts/data/build-*.ts@d3-1」戳记（可 grep），三条 F 类「未登记生成器版本」异常因此关闭；**本条的剩余问题只是「非结构化」**——读者仍须 grep 文案，不能用字段直读",
       "basis": "读四份快照的 notice 与 sources；SnapshotInput 类型定义无版本字段；pinyin.txt 字节重算比对",
       "impact": "「同一 dataVersion 对应哪版脚本与规则」只能靠读文案回答，不能机器校验；对方案 §2.1「检查生成器版本、规则版本和 pinyin-data SHA」只能给部分答案",
       "suggestedAction": "由 GLM 决定是否在快照外围加 descriptor（不改契约字段）；在此之前，版本以 notice 文本 + 本报告为准",
       "actionKind": "接线/脚本可修",
       "affectedBooks": [
         "pingshui-cwr-ff0e9c1-d2-full",
-        "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3",
-        "cilin-cwr-ff0e9c1-d2-full",
+        "pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4",
+        "cilin-cwr-ff0e9c1-d3-full-clean1",
         "xinyun-rebuild-d2-full"
       ]
     },
     {
-      "id": "H-cross-006",
+      "id": "H-cross-005",
       "class": "H",
       "book": "cross",
       "dataVersion": "*",
@@ -28319,7 +28345,7 @@
       "actionKind": "数据事实需人审"
     },
     {
-      "id": "H-cross-007",
+      "id": "H-cross-006",
       "class": "H",
       "book": "cross",
       "dataVersion": "*",
@@ -28332,20 +28358,20 @@
       "actionKind": "接线/脚本可修"
     },
     {
-      "id": "D-cross-008",
+      "id": "D-cross-007",
       "class": "D",
       "book": "cross",
       "dataVersion": "*",
       "severity": "P2",
       "location": "data/variants/variant-edges-d2.json",
-      "fact": "简繁/异体候选边共 5 条：pending_review 3 条（樓→楼、餘→余、馀→余）、applied_in_patch 2 条、approved 0 条",
+      "fact": "简繁/异体候选边共 5 条：pending_review 2 条（餘→余、馀→余）、applied_in_patch 2 条、approved 1 条（樓→楼，均已登记 approvalBasis）",
       "basis": "文件 summary 与 edges[].status 实测",
       "impact": "未签边不生效：正文若写繁体（如「樓」）仍进 missing；已签边只属查询召回，不等于等价合并",
       "suggestedAction": "按 0008 方案逐条人审签；签前不得让消费方启用",
       "actionKind": "数据事实需人审"
     },
     {
-      "id": "G-cross-009",
+      "id": "G-cross-008",
       "class": "G",
       "book": "cross",
       "dataVersion": "*",
@@ -28358,7 +28384,7 @@
       "actionKind": "数据事实需人审"
     },
     {
-      "id": "E-cross-010",
+      "id": "E-cross-009",
       "class": "E",
       "book": "cross",
       "dataVersion": "*",
@@ -28371,7 +28397,7 @@
       "actionKind": "接线/脚本可修"
     },
     {
-      "id": "E-cross-011",
+      "id": "E-cross-010",
       "class": "E",
       "book": "cross",
       "dataVersion": "*",
@@ -28386,12 +28412,12 @@
   ],
   "severityCounts": {
     "P0": 0,
-    "P1": 4,
-    "P2": 7,
+    "P1": 3,
+    "P2": 4,
     "P3": 5
   },
   "anomalyTotals": {
-    "total": 16,
+    "total": 12,
     "byClass": [
       {
         "class": "A",
@@ -28407,7 +28433,7 @@
       },
       {
         "class": "D",
-        "count": 2
+        "count": 1
       },
       {
         "class": "E",
@@ -28415,7 +28441,7 @@
       },
       {
         "class": "F",
-        "count": 6
+        "count": 3
       },
       {
         "class": "G",
@@ -28431,7 +28457,7 @@
     "zeUnspecified": [
       {
         "book": "cilin",
-        "count": 2237,
+        "count": 2232,
         "groups": 14,
         "violations": 0
       }
@@ -28456,60 +28482,25 @@
   ],
   "verificationCommands": [
     {
-      "command": "node --conditions=development scripts/data/inspect.ts",
-      "executor": "A 侧在本机外部终端执行",
-      "exitCode": 1,
-      "result": "ERR_MODULE_NOT_FOUND: packages/lexicon/src/adapters/chinese-word-rhyme.js",
-      "note": "Node 24 不把相对 import 的 .js 改写成 .ts；验收命令本身不可用（见 C-cross-001）"
-    },
-    {
-      "command": "node node_modules/tsx/dist/cli.mjs scripts/data/inspect.ts",
-      "executor": "A 侧在本机外部终端执行",
-      "exitCode": 0,
-      "result": "词林 19 部 / 33 子卷 / 归属 5575 / 字形 5037；新韵候选表 14 韵 / 56 子卷 / 归属 7693 / 字形 6730；平水发布门槛通过：否；新韵「一」冲突：十二齐·阴平 + 十二齐·去声",
-      "note": "同一脚本改用 tsx 入口即通过"
+      "command": "pnpm exec tsx scripts/data/check-normalized.ts",
+      "executor": "独立验证（非本生成器执行）",
+      "exitCode": null,
+      "result": "本生成器不执行；本批实际结果见 docs/handoffs/d3-a-repair-codex.md",
+      "note": "不得复用A旧批次的测试数或将机器结构检查当作批准。"
     },
     {
       "command": "pnpm exec vitest run packages/lexicon/tests",
-      "executor": "A 侧在本机外部终端执行",
-      "exitCode": 0,
-      "result": "5 files / 66 tests，931ms",
-      "note": "数字由人在外部终端执行后回传，本报告未改写"
+      "executor": "独立验证（非本生成器执行）",
+      "exitCode": null,
+      "result": "本生成器不执行；本批实际结果见 docs/handoffs/d3-a-repair-codex.md",
+      "note": "不得复用A旧批次的测试数或将机器结构检查当作批准。"
     },
     {
       "command": "pnpm verify",
-      "executor": "A 侧在本机外部终端执行",
-      "exitCode": 0,
-      "result": "28 files / 410 tests，7 of 8 projects 构建成功，8 契约/模板无漂移",
-      "note": "同上；此为 D2 审核轮之前的实跑结果"
-    },
-    {
-      "command": "node_modules/.bin/eslint .",
-      "executor": "A 侧在本执行环境（绕过 pnpm 直接调二进制）",
-      "exitCode": 0,
-      "result": "0 error / 0 warning",
-      "note": "等价于 pnpm verify 的 lint 关。此前本批新增脚本曾报 4 个 error（2×no-unused-vars、1×未用导入、1×no-misleading-character-class），已由 64b2652 修复"
-    },
-    {
-      "command": "node_modules/.bin/tsc --noEmit && node_modules/.bin/tsc --noEmit -p apps/web/tsconfig.json",
-      "executor": "A 侧在本执行环境",
-      "exitCode": 0,
-      "result": "两个 tsconfig 均 0 error",
-      "note": "等价于 pnpm verify 的 typecheck 关。此前 precheck-lexicon.ts 有 1 处 TS2345（RawSnapshot.reviewStatus 过宽），已由 64b2652 修复"
-    },
-    {
-      "command": "node_modules/.bin/vitest run（全仓）",
-      "executor": "A 侧在本执行环境",
-      "exitCode": 1,
-      "result": "37 files / 529 tests：525 passed + 4 failed。4 条失败全在他人模块且均为「测试写死旧状态」：apps/api/tests/http-real.test.ts 1 条（断言 loadErrors 仍含 src:chinese_word_rhyme，该缺陷已由 474afd9 修复）、packages/readings/tests/real-pingshui.test.ts 3 条（断言快照无 approved 证据，已由 2cce583 的 J03 审批改变）",
-      "note": "这两处测试的期望值需由 GLM / B 各自更新；A 不越界修改 apps/ 与 packages/readings/。在它们更新前，全仓 vitest 与 pnpm verify 必然保持红——**这不是 A 侧数据错误**"
-    },
-    {
-      "command": "pnpm build && tsx scripts/generate-contracts.ts --check（即 pnpm check:generated）",
-      "executor": "**未运行**",
+      "executor": "独立验证（非本生成器执行）",
       "exitCode": null,
-      "result": "未运行",
-      "note": "本执行环境跑不了：`pnpm` 的 store 锁位于工作区之外（C:\\Users\\…\\pnpm-store-operation-locks，写入被沙箱以 os error 5 拒绝），因此 pnpm 的任何命令（含 pnpm -r build）都无法执行，check:generated 无法完成。**不得因未运行而声称通过**——该项只能由人在外部终端跑，或在 CI 上验证"
+      "result": "本生成器不执行；本批实际结果见 docs/handoffs/d3-a-repair-codex.md",
+      "note": "不得复用A旧批次的测试数或将机器结构检查当作批准。"
     }
   ],
   "reproduce": [

@@ -1,3 +1,7 @@
+"""历史脚本（D1 mock 阶段）。**不要用它对真实模式做验收**。
+真实九格验收见 d3-acceptance-api.mjs。
+"""
+
 """D1 系统验收：API 层实测（E，D1 收口）。
 
 覆盖：healthz / readyz / rhyme-books / 五种报告状态 / 422 / 413 / 503 x3。

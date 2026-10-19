@@ -1,8 +1,8 @@
 {
-  "dataVersion": "cilin-cwr-ff0e9c1-d2-full",
+  "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
   "book": "cilin",
   "reviewStatus": "unverified",
-  "notice": "词林正韵全量候选（19 部 / 33 子卷）：源自 chinese_word_rhyme 固定提交 ff0e9c13 的原表转载，仅登记部/声归属与平仄；反切、义项、今读一律为 null。前 14 部分平/仄两个子卷，第 15–19 部只标入声。来源仅标「仄声」的记录一律保留 ze_unspecified（不改写成上声或去声，也不臆测具体古声类）。本表不与平水韵做无依据的一字一部合并。reviewStatus=unverified，未经人审签，不得作为发布数据，也不得据此启用词牌或允许平仄通押。",
+  "notice": "词林正韵全量候选（19 部 / 33 子卷）：源自 chinese_word_rhyme 固定提交 ff0e9c13 的原表转载，仅登记部/声归属与平仄；反切、义项、今读一律为 null。前 14 部分平/仄两个子卷，第 15–19 部只标入声。来源仅标「仄声」的记录一律保留 ze_unspecified（不改写成上声或去声，也不臆测具体古声类）。本表不与平水韵做无依据的一字一部合并。reviewStatus=unverified，未经人审签，不得作为发布数据，也不得据此启用词牌或允许平仄通押。 本快照已在**导入层**剔除原表非汉字杂项 8 条（4 个字形：[]空格，）；原表 data/raw 字节未改动。 生成器：scripts/data/build-cilin.ts@d3-1（数据源 chinese_word_rhyme@ff0e9c13）；快照 Schema 无版本字段，版本以此戳记为据。",
   "candidates": [
     {
       "id": "cilin:东:ping:第一部·平声",
@@ -7109,40 +7109,8 @@
       ]
     },
     {
-      "id": "cilin:[:ze_unspecified:第二部·仄声",
-      "character": "[",
-      "book": "cilin",
-      "toneClass": "ze_unspecified",
-      "tone": "Z",
-      "groupIds": [
-        "group:cilin:第二部:第二部·仄声"
-      ],
-      "gloss": null,
-      "modernReading": null,
-      "fanqie": null,
-      "evidenceIds": [
-        "ev:cilin:第二部:第二部·仄声"
-      ]
-    },
-    {
       "id": "cilin:肮:ze_unspecified:第二部·仄声",
       "character": "肮",
-      "book": "cilin",
-      "toneClass": "ze_unspecified",
-      "tone": "Z",
-      "groupIds": [
-        "group:cilin:第二部:第二部·仄声"
-      ],
-      "gloss": null,
-      "modernReading": null,
-      "fanqie": null,
-      "evidenceIds": [
-        "ev:cilin:第二部:第二部·仄声"
-      ]
-    },
-    {
-      "id": "cilin:]:ze_unspecified:第二部·仄声",
-      "character": "]",
       "book": "cilin",
       "toneClass": "ze_unspecified",
       "tone": "Z",
@@ -42325,40 +42293,8 @@
       ]
     },
     {
-      "id": "cilin:[:ze_unspecified:第七部·仄声",
-      "character": "[",
-      "book": "cilin",
-      "toneClass": "ze_unspecified",
-      "tone": "Z",
-      "groupIds": [
-        "group:cilin:第七部:第七部·仄声"
-      ],
-      "gloss": null,
-      "modernReading": null,
-      "fanqie": null,
-      "evidenceIds": [
-        "ev:cilin:第七部:第七部·仄声"
-      ]
-    },
-    {
       "id": "cilin:联:ze_unspecified:第七部·仄声",
       "character": "联",
-      "book": "cilin",
-      "toneClass": "ze_unspecified",
-      "tone": "Z",
-      "groupIds": [
-        "group:cilin:第七部:第七部·仄声"
-      ],
-      "gloss": null,
-      "modernReading": null,
-      "fanqie": null,
-      "evidenceIds": [
-        "ev:cilin:第七部:第七部·仄声"
-      ]
-    },
-    {
-      "id": "cilin:]:ze_unspecified:第七部·仄声",
-      "character": "]",
       "book": "cilin",
       "toneClass": "ze_unspecified",
       "tone": "Z",
@@ -44183,22 +44119,6 @@
     {
       "id": "cilin:溅:ze_unspecified:第七部·仄声",
       "character": "溅",
-      "book": "cilin",
-      "toneClass": "ze_unspecified",
-      "tone": "Z",
-      "groupIds": [
-        "group:cilin:第七部:第七部·仄声"
-      ],
-      "gloss": null,
-      "modernReading": null,
-      "fanqie": null,
-      "evidenceIds": [
-        "ev:cilin:第七部:第七部·仄声"
-      ]
-    },
-    {
-      "id": "cilin: :ze_unspecified:第七部·仄声",
-      "character": " ",
       "book": "cilin",
       "toneClass": "ze_unspecified",
       "tone": "Z",
@@ -81141,40 +81061,8 @@
       ]
     },
     {
-      "id": "cilin:[:ru:第十八部·入声",
-      "character": "[",
-      "book": "cilin",
-      "toneClass": "ru",
-      "tone": "Z",
-      "groupIds": [
-        "group:cilin:第十八部:第十八部·入声"
-      ],
-      "gloss": null,
-      "modernReading": null,
-      "fanqie": null,
-      "evidenceIds": [
-        "ev:cilin:第十八部:第十八部·入声"
-      ]
-    },
-    {
       "id": "cilin:馥:ru:第十八部·入声",
       "character": "馥",
-      "book": "cilin",
-      "toneClass": "ru",
-      "tone": "Z",
-      "groupIds": [
-        "group:cilin:第十八部:第十八部·入声"
-      ],
-      "gloss": null,
-      "modernReading": null,
-      "fanqie": null,
-      "evidenceIds": [
-        "ev:cilin:第十八部:第十八部·入声"
-      ]
-    },
-    {
-      "id": "cilin:，:ru:第十八部·入声",
-      "character": "，",
       "book": "cilin",
       "toneClass": "ru",
       "tone": "Z",
@@ -81223,22 +81111,6 @@
     {
       "id": "cilin:哉:ru:第十八部·入声",
       "character": "哉",
-      "book": "cilin",
-      "toneClass": "ru",
-      "tone": "Z",
-      "groupIds": [
-        "group:cilin:第十八部:第十八部·入声"
-      ],
-      "gloss": null,
-      "modernReading": null,
-      "fanqie": null,
-      "evidenceIds": [
-        "ev:cilin:第十八部:第十八部·入声"
-      ]
-    },
-    {
-      "id": "cilin:]:ru:第十八部·入声",
-      "character": "]",
       "book": "cilin",
       "toneClass": "ru",
       "tone": "Z",
@@ -86785,7 +86657,7 @@
       "sourceId": "src:chinese_word_rhyme:cilin",
       "kind": "rhyme_entry",
       "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第二部/仄声",
-      "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第二部/仄声 共收录 135 个字形（原表条目 142 条）；来源只标仄声，故保留 ze_unspecified，不臆补上声或去声。",
+      "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第二部/仄声 共收录 133 个字形（原表条目 142 条）；来源只标仄声，故保留 ze_unspecified，不臆补上声或去声。",
       "excerpt": null,
       "reviewStatus": "unverified"
     },
@@ -86875,7 +86747,7 @@
       "sourceId": "src:chinese_word_rhyme:cilin",
       "kind": "rhyme_entry",
       "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第七部/仄声",
-      "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第七部/仄声 共收录 288 个字形（原表条目 325 条）；来源只标仄声，故保留 ze_unspecified，不臆补上声或去声。",
+      "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第七部/仄声 共收录 285 个字形（原表条目 325 条）；来源只标仄声，故保留 ze_unspecified，不臆补上声或去声。",
       "excerpt": null,
       "reviewStatus": "unverified"
     },
@@ -87037,7 +86909,7 @@
       "sourceId": "src:chinese_word_rhyme:cilin",
       "kind": "rhyme_entry",
       "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十八部/入声",
-      "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十八部/入声 共收录 274 个字形（原表条目 287 条）；声类按来源标为 ru。",
+      "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十八部/入声 共收录 271 个字形（原表条目 287 条）；声类按来源标为 ru。",
       "excerpt": null,
       "reviewStatus": "unverified"
     },

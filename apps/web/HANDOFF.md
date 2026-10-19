@@ -1,4 +1,11 @@
-# Web 交接记录：D1 视图契约与业务状态基础
+# Web 交接记录
+
+> **当前状态：D3（示例接入与正式页面闭环）**。基线 `main` = `f42172f`，分支 `feat/d-d3-live-flow`。
+> D3 的改动、真实操作记录、阻塞与待办见 [`HANDOFF-D3.md`](./HANDOFF-D3.md) 与
+> `docs/handoffs/d3-d-web.md`；D2 记录见 [`HANDOFF-D2.md`](./HANDOFF-D2.md)。
+> 以下为 D1 历史，保留原文不改。
+
+# D1：视图契约与业务状态基础
 
 日期：2026-10-17（D1）。执行者：队员 D + DeepSeek。
 
