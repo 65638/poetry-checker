@@ -34,10 +34,11 @@
 - 楷体 / 宋体字体栈：Windows 可能回退到 SimSun，横线对齐只做过度量核对。
 - 视觉评审：**待 Codex 审阅**（本会话只有文字度量自查，截图在 `docs/design/distinctive-ui/round*/`）。
 
-## 验收（3e1d451）
+## 验收（bcaf7fb，视觉同 3e1d451）
 | 项目 | 结果 |
 | --- | --- |
 | `pnpm verify` | exit 0，53 文件 / 733 测试通过 |
 | `pnpm test:e2e` | exit 0，通过 18、阻断 0、失败 0 |
+| 单栏分析后结果定位（reveal-regression.mjs） | 9/9 通过；指针与 Ctrl+Enter、失败/编辑/滚动不跳转，见 HANDOFF 第 8b 节 |
 | 横向溢出 1440 / 768 / 375 | 无（probe.mjs，scrollWidth ≤ 视口） |
 | 像素级视觉核对 | 未执行（待 Codex） |

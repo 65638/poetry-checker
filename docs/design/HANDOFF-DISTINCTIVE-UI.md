@@ -3,7 +3,7 @@
 ## 1. Identity
 - Branch: `feat/claude-distinctive-poetry-ui` (local, not pushed)
 - Base: `1917581` (codex/d3-b-integration 7918281 + brief docs commit)
-- Commits: `857906d` first initial/report pair; `7bbfd54` refinement round 1; `21b343f` docs; `3e1d451` refinement round 2 (answers Codex review `589f59e`); docs commit on top
+- Commits: `857906d` first initial/report pair; `7bbfd54` refinement round 1; `21b343f` docs; `3e1d451` refinement round 2 (answers Codex review `589f59e`); docs commit on top; `bcaf7fb` interaction fix for the mobile reveal P2 from Codex review `c28b342`
 - Direction: B "ink exhibition hall" - see `docs/design/DISTINCTIVE-UI-DIRECTION.md`
 - Visual review: **pending (Codex)**. Everything below marked "self" is code/metric self-review only.
 
@@ -36,10 +36,11 @@
 - Examples, real `/` route, evidence drawer (tab trap, Escape, focus restore), candidate override, export gating, status text+shape redundancy, IME, 44px targets
 - Evidence: e2e 18/18 below exercises these on the real route
 
-## 6. Commands (Node 24.19.0, pnpm 11.25.0) - results on `3e1d451` (same on `7bbfd54`)
+## 6. Commands (Node 24.19.0, pnpm 11.25.0) - results on `bcaf7fb` (same on `3e1d451`, `7bbfd54`)
 - `pnpm verify` -> exit 0, 53 files / 733 tests passed
 - `pnpm test:e2e` -> exit 0, 18 passed, 0 blocked, 0 failed
 - Same results on `857906d`
+- `node docs/design/distinctive-ui/reveal-regression.mjs` on `bcaf7fb` -> 9/9 (pointer first + same-text re-analysis, normal and reduced motion; failure; edit-during-request; wheel while pending; 1440 no-op); reviewer `artifacts/acceptance/ui-round2-targeted.mjs` -> 8/8
 - Preview: `pnpm --filter @poetry/web exec vite --port 5199 --strictPort` (needs the API running); capture.mjs starts its own isolated stack on port 0
 
 ## 7. Screenshots (disk only)
@@ -63,7 +64,7 @@
 - Short desktop (>=900 wide, <=920 tall): textarea fixed to 3 ruled lines, still resizable; <=800 tall: stage 288px, kicker and vertical text hidden
 - Findings: tally chips (icon + text + count); fail / uncertain / unsupported listed first; pass / not_applicable inside `<details>` that auto-opens when one of its findings is selected; original numbering kept so every finding stays reachable
 - Report document height: 1440 5411 -> 1651px; 375 10882 -> 2215px; no horizontal overflow at 1440/1366/1280/1100/1024/900/899/768/375
-- Single column (<=899px): when a new report arrives while focus is inside the input plinth, the manuscript scrolls into view (smooth, or instant under reduced motion); focus is not moved, textarea not remounted
+- Single column (<=899px): Analyze (pointer or Ctrl+Enter) records a reveal intent before `onAnalyze`; when that request yields a new report object (same `inputHash` counts), the manuscript scrolls into view (smooth, or instant under reduced motion). The intent is cleared on failure, on any draft edit (the store cancels the request), and on user wheel/touch/scroll keys while pending, so there is never a delayed jump. Focus is not moved, textarea not remounted. No visual change.
 
 ## 9. Known limitations
 - 375px: seven-character lines wrap at 44px cells (lead-approved P0 behaviour)
