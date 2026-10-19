@@ -119,3 +119,21 @@ D4处理有限修复与定稿，D5至少半天留联调和彩排。若D3九组�
 ### 本批发现并修复的 runner 缺陷
 
 `tests/e2e/cdp.mjs` 的 `key()` 只发 `keyDown/keyUp`、不带 `text`，因此 **Enter/Space 无法激活按钮**（实测：复制按钮已聚焦但 6 秒无反馈）。已扩展 `key()` 支持可选 `text`（旧调用保持兼容），并在 Enter/Space 调用处传入 `\r` / 空格。该修复是本批 E06/E08 能通过的前提。
+
+## 八、Codex 第三批独立复核（当前增量）
+
+执行者 Codex；Node v24.19.0 / pnpm 11.25.0 / Edge 155.0.4283.45。
+
+| 项目 | 实际结果 |
+|---|---|
+| 全仓检查 | `f7a33bd`，`pnpm verify` exit 0，50 文件/703 项；比此前集成版新增 9 项校验器检查 |
+| 九格 HTTP | `643f96e`、dirty=false，3 通过/6 阻断/0 判错，JSON exitCode=2 |
+| 浏览器 | `f7a33bd`、dirty=false，11 通过/1 阻断/0 失败，pageErrors=[]，JSON exitCode=2 |
+| CHECK-05 / E06 | 复制摘要/下载完整报告与实际请求和响应一致；stale 后剪贴板不同测试标记保留、下载文件名及哈希不变。请求失败/进行中/选音后的导出仍待补 |
+| CHECK-06 / E08 | 实际 Tab 3 次到字格，再在详情中 Tab 3 次到关闭按钮，期间焦点留在对话框；Enter/Space 打开，Space/Escape 关闭回原字位。分析准备使用鼠标，完整页面纯键盘矩阵仍未完成 |
+| 证据目录 | `tests/integration/e2e/evidence/d3-codex-e-third-review/`；含初次失败、最终结果、布局截图与真实下载 JSON |
+| 基线整合 | 保留 C/前批 E 内容，解决 E 旧基线文档追加冲突；D PR #18 及 A 新分支未在本批接入 |
+
+E 第三批原回报的内层 Tab 实际为 0；剪贴板读取失败跳过、复用旧下载文件和部分字段比较的问题均已在本批修复。首次复验因 Codex 的 Windows 换行/初始焦点假设失败，已修正并复跑，详见 `docs/handoffs/d3-e-third-review-codex.md`。
+
+第七节“上批原始产物已归档”仅能证明其列出的第三批 fdfac79 产物，不证明第二批 f6b52ef 原件已补交。原文件保留其实际 SHA；Codex 的新运行独立归档，不冒充 E 的历史执行。D3 仍未收口。

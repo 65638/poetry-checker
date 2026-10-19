@@ -4,7 +4,7 @@
 > `main@f42172f` 包含 D1/D2 交付，PR #11 已合并。D3 工作位于 `integrate/d3` 及其上游待合批次 `codex/d3-b-integration`（PR #16），尚不等于已进入 main。
 > D3 特例已接入 orchestrator，真实 HTTP 已验证平水《黄鹤楼》限定尾式为 `not_applicable/info`，其他偏离保留。C 的 PR #14 新增收尾提交 `8dcec2c`、`803e52a` 已纳入本集成分支。
 > 三首 golden 的 approved 仅覆盖已有正文/体裁等断言；词林、新韵六格仍有数据阻断，不能宣告 D3 全部完成。
-> 当前 C 复核见 [`docs/handoffs/d3-c-closeout-review-codex.md`](docs/handoffs/d3-c-closeout-review-codex.md)；E 的实跑与后续验收见 [`docs/handoffs/d3-e-review-codex.md`](docs/handoffs/d3-e-review-codex.md)。
+> 当前 C 复核见 [`docs/handoffs/d3-c-closeout-review-codex.md`](docs/handoffs/d3-c-closeout-review-codex.md)；E 第三批已新增复制/导出与键盘验收，最新实跑 703 项 / 浏览器 11 通过、1 阻断，详见 [`docs/handoffs/d3-e-third-review-codex.md`](docs/handoffs/d3-e-third-review-codex.md)。
 
 日期：2026-10-16。执行者：Codex。文档包已更新至 v1.3，公共契约仍为 v1.0 候选。当前交付工程底座与成员任务书；完整应用尚未实现，D1 人工冻结尚待组长完成。
 
