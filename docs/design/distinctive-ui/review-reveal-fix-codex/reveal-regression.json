@@ -1,0 +1,78 @@
+{
+  "revision": {
+    "commit": "ee805cd0f8bafa6e73eb165c5c89cbfcf5b38a36",
+    "dirty": false
+  },
+  "at": "2026-10-19T20:22:59.420Z",
+  "viewport": "375x812",
+  "scenarios": [
+    {
+      "name": "pointer-first-reduced",
+      "status": "pass",
+      "detail": {
+        "calls": 1
+      }
+    },
+    {
+      "name": "pointer-same-text-reanalysis-reduced",
+      "status": "pass",
+      "detail": {
+        "calls": 1
+      }
+    },
+    {
+      "name": "pointer-first-normal",
+      "status": "pass",
+      "detail": {
+        "calls": 1
+      }
+    },
+    {
+      "name": "pointer-same-text-reanalysis-normal",
+      "status": "pass",
+      "detail": {
+        "calls": 1
+      }
+    },
+    {
+      "name": "failure-no-scroll",
+      "status": "pass",
+      "detail": {
+        "calls": 0,
+        "error": true
+      }
+    },
+    {
+      "name": "failure-no-delayed-scroll",
+      "status": "pass",
+      "detail": {
+        "calls": 0
+      }
+    },
+    {
+      "name": "edit-during-request-cancels-no-delayed-scroll",
+      "status": "pass",
+      "detail": {
+        "calls": 0,
+        "busy": false,
+        "report": false
+      }
+    },
+    {
+      "name": "user-scroll-while-pending-no-reveal",
+      "status": "pass",
+      "detail": {
+        "calls": 0,
+        "report": true
+      }
+    },
+    {
+      "name": "desktop-1440-no-reveal",
+      "status": "pass",
+      "detail": {
+        "calls": 0
+      }
+    }
+  ],
+  "url": "http://127.0.0.1:59978/"
+}
