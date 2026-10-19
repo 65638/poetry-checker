@@ -26392,47 +26392,133 @@
       "headerNote": "本文件是「待核实映射草案」：status 一律 unverified、basis 一律 null。所有条目仅由同字共现统计导出，**不得被任何快照或报告当作事实引用**，也不得据此认定词林某部等于平水某部。"
     },
     "b1": {
-      "rule": "同 dataVersion 重复构建一致性：读同一落盘文件 → 两次独立 JSON.parse → 各算一次 businessContentDigest → 互比 → 再与 0009 已登记摘要比对。**不重跑构建脚本**（重跑会产出新字节、污染已审文件）。",
+      "rule": "同 dataVersion 重复构建一致性：扫 data/normalized/*.json → 按各自 dataVersion 查 REGISTERED_DIGESTS → 两次独立 JSON.parse 各算一次 businessContentDigest → 互比 → 与登记值比对；并断言「登记项的 fileName 与磁盘文件名一致」（防止 reviewN→reviewM 改名被静默吸收）。**不重跑构建脚本**（重跑会产出新字节、污染已审文件）。",
       "results": [
         {
-          "file": "data/normalized/pingshui.full-d2.json",
-          "digestFirst": "17121e27b1229c67b336e9e8b80fae4d4c511225f301c00d01444fa17a00174c",
-          "digestSecond": "17121e27b1229c67b336e9e8b80fae4d4c511225f301c00d01444fa17a00174c",
-          "repeatConsistent": true,
-          "registeredDigest": "60c416c8d0fe39fee07a82a2975ad0bbe1374b53985abb5a79f9723c04498f7e",
-          "registeredSource": "docs/handoffs/0012-codex-d2-closeout.md",
-          "matchesRegistered": false
-        },
-        {
-          "file": "data/normalized/pingshui.full-d2-patched.json",
-          "digestFirst": "cae183af3d83bb33f3ecc57dd85d9dbada0cdc4f8bf55437b2f46ba6af4ced7c",
-          "digestSecond": "cae183af3d83bb33f3ecc57dd85d9dbada0cdc4f8bf55437b2f46ba6af4ced7c",
-          "repeatConsistent": true,
-          "registeredDigest": "6c9057412b85a3c7b4066f260e8d52b60b8be936c814380200f7ed9d7a71d6ef",
-          "registeredSource": "docs/handoffs/0012-codex-d2-closeout.md",
-          "matchesRegistered": false
-        },
-        {
           "file": "data/normalized/cilin.full-d2.json",
+          "dataVersion": "cilin-cwr-ff0e9c1-d2-full",
           "digestFirst": "bcbeb62ada9a5b6a72e69dbdee844f10e0466b40fd46939b0b3e4f56f09d38e8",
           "digestSecond": "bcbeb62ada9a5b6a72e69dbdee844f10e0466b40fd46939b0b3e4f56f09d38e8",
           "repeatConsistent": true,
-          "registeredDigest": null,
-          "registeredSource": null,
-          "matchesRegistered": null
+          "registeredFileName": "cilin.full-d2.json",
+          "registeredDigest": "bcbeb62ada9a5b6a72e69dbdee844f10e0466b40fd46939b0b3e4f56f09d38e8",
+          "registeredSource": "首次登记：2026-10-18 本报告实测",
+          "registeredChangelog": [
+            {
+              "from": null,
+              "to": "bcbeb62ada9a5b6a72e69dbdee844f10e0466b40fd46939b0b3e4f56f09d38e8",
+              "reason": "首次登记（此前护栏从未覆盖词林快照）",
+              "registeredAt": "2026-10-18"
+            }
+          ],
+          "fileNameMatches": true,
+          "matchesRegistered": true
+        },
+        {
+          "file": "data/normalized/pingshui.full-d2-patched.json",
+          "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3",
+          "digestFirst": "cae183af3d83bb33f3ecc57dd85d9dbada0cdc4f8bf55437b2f46ba6af4ced7c",
+          "digestSecond": "cae183af3d83bb33f3ecc57dd85d9dbada0cdc4f8bf55437b2f46ba6af4ced7c",
+          "repeatConsistent": true,
+          "registeredFileName": "pingshui.full-d2-patched.json",
+          "registeredDigest": "cae183af3d83bb33f3ecc57dd85d9dbada0cdc4f8bf55437b2f46ba6af4ced7c",
+          "registeredSource": "重登记：2026-10-18 本报告实测（原登记值见 changelog）",
+          "registeredChangelog": [
+            {
+              "from": "6c9057412b85a3c7b4066f260e8d52b60b8be936c814380200f7ed9d7a71d6ef",
+              "to": "cae183af3d83bb33f3ecc57dd85d9dbada0cdc4f8bf55437b2f46ba6af4ced7c",
+              "reason": "review2→review3 版本改名 + J03 第二批 6 部归部落库后重建",
+              "registeredAt": "2026-10-18"
+            }
+          ],
+          "fileNameMatches": true,
+          "matchesRegistered": true
+        },
+        {
+          "file": "data/normalized/pingshui.full-d2.json",
+          "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-review3",
+          "digestFirst": "17121e27b1229c67b336e9e8b80fae4d4c511225f301c00d01444fa17a00174c",
+          "digestSecond": "17121e27b1229c67b336e9e8b80fae4d4c511225f301c00d01444fa17a00174c",
+          "repeatConsistent": true,
+          "registeredFileName": "pingshui.full-d2.json",
+          "registeredDigest": "17121e27b1229c67b336e9e8b80fae4d4c511225f301c00d01444fa17a00174c",
+          "registeredSource": "重登记：2026-10-18 本报告实测（原登记值见 changelog）",
+          "registeredChangelog": [
+            {
+              "from": "60c416c8d0fe39fee07a82a2975ad0bbe1374b53985abb5a79f9723c04498f7e",
+              "to": "17121e27b1229c67b336e9e8b80fae4d4c511225f301c00d01444fa17a00174c",
+              "reason": "review2→review3 版本改名（dataVersion 参与业务内容摘要，改名必然改摘要）+ J03 第二批 6 部归部落库后重建",
+              "registeredAt": "2026-10-18"
+            }
+          ],
+          "fileNameMatches": true,
+          "matchesRegistered": true
+        },
+        {
+          "file": "data/normalized/pingshui.sample-d1.json",
+          "dataVersion": "sample-pingshui-cwr-ff0e9c1-d1-review2",
+          "digestFirst": "6a69795f13e2654b81b6225ed52442174ddfdf0584cca6a8d95dea1fddb3ccd1",
+          "digestSecond": "6a69795f13e2654b81b6225ed52442174ddfdf0584cca6a8d95dea1fddb3ccd1",
+          "repeatConsistent": true,
+          "registeredFileName": "pingshui.sample-d1.json",
+          "registeredDigest": "6a69795f13e2654b81b6225ed52442174ddfdf0584cca6a8d95dea1fddb3ccd1",
+          "registeredSource": "重登记：2026-10-18 本报告实测（原登记值见 changelog）",
+          "registeredChangelog": [
+            {
+              "from": "d92508eaeb8c0d12bb7b82abb60385cc1cbd82afa78ac77ff965ff92bebff4ab",
+              "to": "6a69795f13e2654b81b6225ed52442174ddfdf0584cca6a8d95dea1fddb3ccd1",
+              "reason": "sample 升 review2（候选级/部级证据分离）后摘要变化；此前 B1 未覆盖 sample，属漏检补登记",
+              "registeredAt": "2026-10-18"
+            }
+          ],
+          "fileNameMatches": true,
+          "matchesRegistered": true
         },
         {
           "file": "data/normalized/xinyun.full-d2.json",
+          "dataVersion": "xinyun-rebuild-d2-full",
           "digestFirst": "4a68bd5782ec6e2de7e0682edca0a38534307f4dd28702db487875815c690ae5",
           "digestSecond": "4a68bd5782ec6e2de7e0682edca0a38534307f4dd28702db487875815c690ae5",
           "repeatConsistent": true,
+          "registeredFileName": "xinyun.full-d2.json",
           "registeredDigest": "4a68bd5782ec6e2de7e0682edca0a38534307f4dd28702db487875815c690ae5",
           "registeredSource": "docs/handoffs/0009-a-fix-source-id-and-modern-reading.md",
+          "registeredChangelog": [],
+          "fileNameMatches": true,
           "matchesRegistered": true
         }
       ],
       "allRepeatConsistent": true,
-      "allRegisteredMatch": false
+      "allRegisteredMatch": true,
+      "unregistered": [],
+      "digestDrift": [],
+      "fileNameMismatch": [],
+      "registeredWithoutFile": [],
+      "skippedNonSnapshots": [
+        "data/normalized/works-coverage-d2.json"
+      ],
+      "sourceGroups": [
+        {
+          "source": "docs/handoffs/0009-a-fix-source-id-and-modern-reading.md",
+          "dataVersions": [
+            "xinyun-rebuild-d2-full"
+          ]
+        },
+        {
+          "source": "重登记：2026-10-18 本报告实测（原登记值见 changelog）",
+          "dataVersions": [
+            "pingshui-cwr-ff0e9c1-d2-full-review3",
+            "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3",
+            "sample-pingshui-cwr-ff0e9c1-d1-review2"
+          ]
+        },
+        {
+          "source": "首次登记：2026-10-18 本报告实测",
+          "dataVersions": [
+            "cilin-cwr-ff0e9c1-d2-full"
+          ]
+        }
+      ]
     },
     "b2": {
       "file": "data/variants/variant-edges-d2.json",
@@ -28345,7 +28431,7 @@
       "dataVersion": "*",
       "severity": "P2",
       "location": "data/variants/variant-edges-d2.json",
-      "fact": "简繁/异体候选边共 5 条：pending_review 2 条（餘→余、馀→余）、applied_in_patch 2 条、approved 0 条",
+      "fact": "简繁/异体候选边共 5 条：pending_review 2 条（餘→余、馀→余）、applied_in_patch 2 条、approved 1 条（樓→楼，均已登记 approvalBasis）",
       "basis": "文件 summary 与 edges[].status 实测",
       "impact": "未签边不生效：正文若写繁体（如「樓」）仍进 missing；已签边只属查询召回，不等于等价合并",
       "suggestedAction": "按 0008 方案逐条人审签；签前不得让消费方启用",

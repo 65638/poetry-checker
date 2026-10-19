@@ -295,16 +295,29 @@
 
 ### B1 同 dataVersion 重复构建一致性
 
-规则：同 dataVersion 重复构建一致性：读同一落盘文件 → 两次独立 JSON.parse → 各算一次 businessContentDigest → 互比 → 再与 0009 已登记摘要比对。**不重跑构建脚本**（重跑会产出新字节、污染已审文件）。
+规则：同 dataVersion 重复构建一致性：扫 data/normalized/*.json → 按各自 dataVersion 查 REGISTERED_DIGESTS → 两次独立 JSON.parse 各算一次 businessContentDigest → 互比 → 与登记值比对；并断言「登记项的 fileName 与磁盘文件名一致」（防止 reviewN→reviewM 改名被静默吸收）。**不重跑构建脚本**（重跑会产出新字节、污染已审文件）。
 
-| 快照 | 两次摘要一致 | 与 0009 已登记摘要 |
-|---|---|---|
-| `pingshui.full-d2.json` | ✅ | ❌ 不一致（登记 60c416c8d0fe39fee07a82a2975ad0bbe1374b53985abb5a79f9723c04498f7e） |
-| `pingshui.full-d2-patched.json` | ✅ | ❌ 不一致（登记 6c9057412b85a3c7b4066f260e8d52b60b8be936c814380200f7ed9d7a71d6ef） |
-| `cilin.full-d2.json` | ✅ | （无已登记值可比） |
-| `xinyun.full-d2.json` | ✅ | ✅ 一致 |
+| 文件 | dataVersion | 两次摘要一致 | 文件名↔登记一致 | 与登记摘要 | changelog |
+|---|---|---|---|---|---|
+| `cilin.full-d2.json` | `cilin-cwr-ff0e9c1-d2-full` | ✅ | ✅ | ✅ 一致 | 首次登记 @2026-10-18：首次登记（此前护栏从未覆盖词林快照） |
+| `pingshui.full-d2-patched.json` | `pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3` | ✅ | ✅ | ✅ 一致 | 变更 @2026-10-18：review2→review3 版本改名 + J03 第二批 6 部归部落库后重建 |
+| `pingshui.full-d2.json` | `pingshui-cwr-ff0e9c1-d2-full-review3` | ✅ | ✅ | ✅ 一致 | 变更 @2026-10-18：review2→review3 版本改名（dataVersion 参与业务内容摘要，改名必然改摘要）+ J03 第二批 6 部归部落库后重建 |
+| `pingshui.sample-d1.json` | `sample-pingshui-cwr-ff0e9c1-d1-review2` | ✅ | ✅ | ✅ 一致 | 变更 @2026-10-18：sample 升 review2（候选级/部级证据分离）后摘要变化；此前 B1 未覆盖 sample，属漏检补登记 |
+| `xinyun.full-d2.json` | `xinyun-rebuild-d2-full` | ✅ | ✅ | ✅ 一致 | （无变化，未写记录） |
 
-结论：重复构建摘要全部一致 = **是**；与已登记摘要无冲突 = **否**。
+登记来源分组（不再笼统称「0009 登记」）：
+
+| 登记来源 | 覆盖的 dataVersion |
+|---|---|
+| docs/handoffs/0009-a-fix-source-id-and-modern-reading.md | `xinyun-rebuild-d2-full` |
+| 重登记：2026-10-18 本报告实测（原登记值见 changelog） | `pingshui-cwr-ff0e9c1-d2-full-review3`<br>`pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3`<br>`sample-pingshui-cwr-ff0e9c1-d1-review2` |
+| 首次登记：2026-10-18 本报告实测 | `cilin-cwr-ff0e9c1-d2-full` |
+
+结论：两次摘要全部一致 = **是**；登记摘要漂移 = **0** 条；文件名↔dataVersion 不符 = **0** 条；悬空登记 = **0** 条；未登记快照 = **0** 条（P2，不计入 failures）。
+
+跳过非快照产物（无 dataVersion/candidates，不参与 B1）：`data/normalized/works-coverage-d2.json`
+
+护栏口径：**登记值漂移**与**文件名↔dataVersion 不符**属事故 → 进 failures（exit 1）；**未登记快照**属正常演进 → 只出 P2。两者不同罚，避免新快照把 exit code 顶红。
 
 ### B2 简繁/异体是否被未经依据合并
 
@@ -504,7 +517,7 @@
 | F-cilin-002 | F | cilin | `data/normalized/cilin.full-d2.json · 快照头` | 快照未登记生成器/规则版本字段 | SnapshotInput 结构无 generatorVersion/rulesVersion；平水与词林由 build-*.ts 直接生成，版本只能从脚本名推断 | 无法仅凭数据包回答「这份数据由哪版脚本产出」 | 在 notice 或独立 descriptor 中登记脚本版本（不改快照 Schema） | 接线/脚本可修 |
 | F-cross-004 | F | cross | `data/sources/manifest.json · src:wikisource:pingshuiyun.license` | 该来源的许可为**两层**：作品层 {{PD-old}}（落盘字节第 655-656 行页脚，已核）；站点层 CC BY-SA 4.0（Wikimedia 站点条款，页面模板里没有，条款文本未取得）。manifest 已改为 workLayer / siteLayer / conclusion 三键分别登记，不作单一许可结论 | 字节实测（页脚模板）+ 组长 2026-10-18 定论：两层不是矛盾也不是笔误；站点层条款文本未取得 → pendingReview | 若只引任一层都会出错：只引 PD-old 会漏掉站点署名义务；只引 CC BY-SA 会与字节不符。两层均不构成「可商用」证明 | 保持双层登记；取得站点条款文本或确认署名方式后，仅更新 siteLayer.status，不改作品层 | 数据事实需人审 |
 | F-cross-005 | F | cross<br>affected: `pingshui-cwr-ff0e9c1-d2-full`<br>`pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3`<br>`cilin-cwr-ff0e9c1-d2-full`<br>`xinyun-rebuild-d2-full` | `data/normalized/*.json（快照头）· SnapshotInput 结构` | 新韵的规则版本 xinyun-14-rules-d1 与生成器版本 xinyun-rebuild-gen/0.1.0 只写在快照 notice 文本里（notice 命中：规则=true、生成器=true）；pinyin-data revision=fa9761fff402f8560196b1ba085c437c52b56d7c、SHA-256 与落盘字节一致=true；但快照 Schema **没有** generatorVersion/rulesVersion 字段，机器无法结构化读取；平水/词林同样无该字段 | 读四份快照的 notice 与 sources；SnapshotInput 类型定义无版本字段；pinyin.txt 字节重算比对 | 「同一 dataVersion 对应哪版脚本与规则」只能靠读文案回答，不能机器校验；对方案 §2.1「检查生成器版本、规则版本和 pinyin-data SHA」只能给部分答案 | 由 GLM 决定是否在快照外围加 descriptor（不改契约字段）；在此之前，版本以 notice 文本 + 本报告为准 | 接线/脚本可修 |
-| D-cross-008 | D | cross | `data/variants/variant-edges-d2.json` | 简繁/异体候选边共 5 条：pending_review 2 条（餘→余、馀→余）、applied_in_patch 2 条、approved 0 条 | 文件 summary 与 edges[].status 实测 | 未签边不生效：正文若写繁体（如「樓」）仍进 missing；已签边只属查询召回，不等于等价合并 | 按 0008 方案逐条人审签；签前不得让消费方启用 | 数据事实需人审 |
+| D-cross-008 | D | cross | `data/variants/variant-edges-d2.json` | 简繁/异体候选边共 5 条：pending_review 2 条（餘→余、馀→余）、applied_in_patch 2 条、approved 1 条（樓→楼，均已登记 approvalBasis） | 文件 summary 与 edges[].status 实测 | 未签边不生效：正文若写繁体（如「樓」）仍进 missing；已签边只属查询召回，不等于等价合并 | 按 0008 方案逐条人审签；签前不得让消费方启用 | 数据事实需人审 |
 | E-cross-010 | E | cross | `data/patches/xinyun-reading-collisions.dev.json` | 同(字形,子卷)多读音 1508 组（条目数 1508）：候选只承载一条 modernReading，其余在此列明 | 文件 count 与 items.length 实测 | 「同归部」不等于「同读音」：把子卷内多读音并成一条会丢真实读音 | 保留清单；下游需要多读音时按本清单取，不得合并 | 接线/脚本可修 |
 
 ### P3（5 条）
