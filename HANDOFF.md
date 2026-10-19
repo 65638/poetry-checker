@@ -1,10 +1,10 @@
 # 首批工程底座交付记录
 
-> **当前状态（2026-10-19，C 复核更新）**：本文是按交付批次**追加**的历史记录，最早一节的状态不代表当前。
-> 当前事实：D1/D2 六模块与真实 API 编排已并入 `main`；**PR #11**（C 的 D2 异常报告批次，head `55e88e1`）**已合并**；
-> D3 已审作品特例层在 **PR #14**（`feat/c-d3-exception-acceptance`），等 GLM 在 orchestrator 接线。
-> 下文 GLM 小节的「待办（按任务书）」属 D1 期条目，已就地标注为**历史**。
-> D3 的当前状态、C01–C16 验收与发布卡闭合口径见 [`docs/handoffs/d3-c-acceptance.md`](docs/handoffs/d3-c-acceptance.md)。
+> **当前状态（2026-10-19，Codex 集成复核）**：本文按交付批次追加，以下 D1 段落为历史。
+> `main@f42172f` 包含 D1/D2 交付，PR #11 已合并。D3 工作位于 `integrate/d3` 及其上游待合批次 `codex/d3-b-integration`（PR #16），尚不等于已进入 main。
+> D3 特例已接入 orchestrator，真实 HTTP 已验证平水《黄鹤楼》限定尾式为 `not_applicable/info`，其他偏离保留。C 的 PR #14 新增收尾提交 `8dcec2c`、`803e52a` 已纳入本集成分支。
+> 三首 golden 的 approved 仅覆盖已有正文/体裁等断言；词林、新韵六格仍有数据阻断，不能宣告 D3 全部完成。
+> 当前 C 复核见 [`docs/handoffs/d3-c-closeout-review-codex.md`](docs/handoffs/d3-c-closeout-review-codex.md)；E 的实跑与后续验收见 [`docs/handoffs/d3-e-review-codex.md`](docs/handoffs/d3-e-review-codex.md)。
 
 日期：2026-10-16。执行者：Codex。文档包已更新至 v1.3，公共契约仍为 v1.0 候选。当前交付工程底座与成员任务书；完整应用尚未实现，D1 人工冻结尚待组长完成。
 

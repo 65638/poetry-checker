@@ -1,7 +1,8 @@
 # D3 · C 交付：已审特例独立验收（2026-10-19）
 
-> 状态：**GREEN**（C01–C16 全部有独立断言并通过；全仓 47 文件 669 项通过）
+> C 分支交付状态：**GREEN**（C01–C16 全部有独立断言并通过；C 本机基线为全仓 47 文件 669 项，不能用作最新集成版计数）。
 > PR：**#14** https://github.com/65638/poetry-checker/pull/14 （`feat/c-d3-exception-acceptance` → `main`；创建时 head `dbc5a6a`，复核前 `ebd3213`，收尾提交见 PR 当前 head）
+> Codex 已接收收尾提交 `8dcec2c`、`803e52a` 至 `codex/d3-b-integration`；跨模块当前事实与独立复验见 [本轮复核](d3-c-closeout-review-codex.md)。下方 C 本机测试记录保留原值。
 
 ## 基线与分叉
 
@@ -82,14 +83,16 @@ tsc --noEmit / eslint . / generate-contracts --check  → 均 exit 0
 - **断链不降级**：C13 覆盖「来源表为空」与「审批证据 sourceId 指向不存在来源」两种情况——实现里的 `approvedEvidence` 要求来源可解析，两种都保持核心 `fail`，不会因为证据侧缺件而把尾式放行。
 - **冻结输入**：C15 把诗、报告、证据、作品与例外记录全部深层 `Object.freeze` 后调用，既验证纯函数不改入参，也验证不会就地改写原报告（原报告仍为 `fail`）。
 
-## 当前状态（2026-10-19）
+## 当前状态（2026-10-19，Codex 按集成分支校正）
 
 | 项 | 状态 | 依据 |
 |---|---|---|
 | PR #11（C 的 D2 异常报告基础批次，head `55e88e1`） | **已合并** | `git merge-base --is-ancestor 55e88e1 origin/main` → exit 0；`origin/main` 当前 `f42172f` |
-| PR #14（本分支） | **待合入** | `feat/c-d3-exception-acceptance` → `main`；`main` 未包含本分支提交 |
-| D3 已审特例层（Codex `63de97b`） | 已进入本分支并通过 C 的独立验收 | 本文件 C01–C16 |
-| GLM 的 orchestrator 接线 | **未做**，仍是 D3 唯一阻塞项 | 见下节第 1 条 |
+| PR #14（C 分支） | GitHub PR 仍 open；内容已纳入 D3 集成分支 | 前批 `ebd3213` 已在 D3 基线；本轮仅接收 `8dcec2c`、`803e52a`，不重复搬入核心；main 尚未含 D3 |
+| D3 已审特例层（Codex `63de97b`） | 已接入真实 API，并通过 C 的独立验收 | 本文件 C01–C16；API 断言见 `apps/api/tests/reviewed-exceptions-http.test.ts` |
+| orchestrator 接线 | **已完成** | `apps/api/src/orchestrator.ts` 调用 `applyReviewedWorkExceptions`，规则版本为 `teaching-v1+reviewed-works-v1`；旧“唯一阻塞”判断仅反映 C 分支当时所见 |
+| 三首 golden | **已有断言按限定范围 approved** | `tests/golden/cases/*.json` 与 `data/works/review-closure.json`；不等于全部逐字/三库审核通过 |
+| D3 整体 | **未完成** | 词林/新韵六格仍受数据阻断，示例按钮与完整浏览器验收待后续批次 |
 
 **历史待办（不再作为当前任务）**：
 
@@ -102,9 +105,9 @@ tsc --noEmit / eslint . / generate-contracts --check  → 均 exit 0
 
 ## 未覆盖 / 后续（非 C 单方可完成）
 
-1. **GLM**：在 orchestrator 中调用 `applyReviewedWorkExceptions`（传入 genre 决策、真实指纹、`rules/exceptions` 记录、合并后的 evidence/sources），并用真实黄鹤楼走 `/analyze` 验证；C 的包测试不能替代页面/HTTP 验收。
-2. **E**：把第 13 号第 8 条写进金标准逐字预期（TAIL.SANPING=保留特征），三首 golden 的 reviewStatus 仍 pending。
-3. **Codex**：`rules/exceptions` 记录与 `data/context/evidence.json` 的 `ctx:j03b2:08` 已在测试中按同 locator 对齐；若后续改 locator 需同步。**本次把该 ID 写进了发布卡，改 locator 时发布卡与运行审核表必须同改。**
+1. **Codex（接管 GLM 集成）**：接线与真实黄鹤楼 HTTP 验证已完成，保留后续集成回归；C 无需重复实现。C 的包测试仍不能替代完整浏览器验收。
+2. **E**：三首 golden 当前已有正文/体裁断言 approved；第 13 号第 8 条的尾式独立断言已在 API 测试与九格 runner 覆盖。若补进 golden JSON，应精确引用既有裁定并由集成复核，不扩大成三库逐字全部批准；继续未执行的系统验收场景。
+3. **Codex/C**：`rules/exceptions` 与 `data/context/evidence.json` 引用同一既有裁定；发布卡与运行审核表只登记 `ctx:j03b2:08`，不复制证据。不改原审批原件；未来若需调整定位或引用，先逐项检查依赖，不能静默改证据内容。
 4. **发布门槛**：TAIL.SANPING 现在同时引用规则依据与已审作品语境证据；卡已闭合，但三库快照仍为 `unverified`，`/readyz` 的 503 不会因此改变，不能据此宣称数据侧发布通过。
 
 ## 依据/版本影响
