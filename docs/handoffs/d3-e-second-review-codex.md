@@ -29,6 +29,23 @@ Codex 本轮接管根配置、runner 注释及上述交接纠偏；E 后续继�
 - 本轮已执行：证据字节比较、Prettier 忽略检查、runner ESLint、`git diff --check`。都是实际执行，不把它们替代浏览器操作。
 - E 提及的 `artifacts/acceptance/` 被 `.gitignore` 忽略，PR #17 没有带入其本轮 JSON/截图。E 应将该批原始产物按独立目录归档；若原件已经丢失，应在当前干净提交上重跑，使用新的时间/SHA，不能重写旧数据伪装为旧批次。
 
+## Codex 本轮独立 HTTP / 浏览器实跑
+
+执行提交：`e0eefe17ad9aadfe328e40f32866069c63500107`，两份报告均 `dirty=false`。Node v24.19.0 / pnpm 11.25.0；浏览器为 Edge 155.0.4283.45（与 E 回报的 .62 不同，分别记录）。两个 runner 各自启动临时进程和空闲端口，不切换或停止用户已有服务。
+
+| 命令 | 实际结果 |
+|---|---|
+| `pnpm test:acceptance --out artifacts/acceptance/d3-e-second-review/api.json` | 3 通过 / 6 阻断 / 0 判错 / 0 未运行；JSON exitCode=2 |
+| `pnpm test:e2e --out artifacts/acceptance/d3-e-second-review/browser` | 9 通过 / 1 阻断 / 0 失败，pageErrors=[]；JSON exitCode=2 |
+
+pnpm 日志均明确子命令 exit 2；当前 PowerShell/命令包装层返回非零 1。保留两层结果，不称作 exit 0。
+
+原样归档到 `tests/integration/e2e/evidence/d3-codex-e-second-review/`：`api.json`、`browser.json`、`report-375.png`、`report-1440.png`。这些是 **Codex 在新提交上重跑的证据**，不是 E 在 f6b52ef 上的产物，不覆盖旧目录。
+
+六格确为候选证据门槛阻断；日志只显示每格遇到的首个问题，**不代表只补「白/床/昔」就能让全部字位通过**。A/B 仍须按完整批次列出缺口、来源与候选，不删竞争候选、不靠改状态过关。平水《黄鹤楼》限定尾式仍是 not_applicable/info，整诗 summary=fail 保留其他偏离。示例按钮仍全部 disabled。
+
+本轮只是复验已实现覆盖，没有宣称 E05–E08 全矩阵完成，也没有新跑全仓 verify：其最新本地依据仍是上轮 C 集成的 694 项；推送后的基础 CI 以当前 head 为准。
+
 ## 可直接转发给 E：下一批两小时
 
 ```text

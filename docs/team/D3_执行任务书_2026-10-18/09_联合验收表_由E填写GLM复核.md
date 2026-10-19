@@ -38,10 +38,10 @@
 | 黄鹤楼 | 平水 | **200 / schema pass** | 七律 `regulated/qilv`；summary=**fail**（来自其他偏离）；**三平尾特例非 error**（runner 精确断言 status/severity/字位/PPP/resolvedBy/审批依据） | 齐备：ev=302 | PASS |
 | 登鹳雀楼 | 词林 | **503 `DATA_NOT_READY`** | 未产出（保护行为正确，可用范围未完成） | 阻断：`LOOKUP_EVIDENCE_UNVERIFIED` l1c1「白」候选 `cilin:白:ru:第十七部·入声` 无已审核证据 | BLOCKED |
 | 静夜思 | 词林 | **503** | 未产出 | 阻断：l1c1「床」候选 `cilin:床:ping:第二部·平声` 无已审核证据 | BLOCKED |
-| 黄鹤楼 | 词林 | **503** | 未产出 | 阻断：l1c1「昔」候选无已审核证据 | BLOCKED |
-| 登鹳雀楼 | 新韵 | **503** | 未产出 | 阻断：l1c1「白」候选 `xinyun:白:yangping:二波/四开` 无已审核证据 | BLOCKED |
-| 静夜思 | 新韵 | **503** | 未产出 | 阻断：l1c1「床」候选无已审核证据 | BLOCKED |
-| 黄鹤楼 | 新韵 | **503** | 未产出 | 阻断：l1c1「昔」候选（去声/阴平）无已审核证据 | BLOCKED |
+| 黄鹤楼 | 词林 | **503** | 未产出 | 阻断：l1c1「昔」候选 `cilin:昔:ru:第十七部·入声` 无已审核证据 | BLOCKED |
+| 登鹳雀楼 | 新韵 | **503** | 未产出 | 阻断：l1c1「白」候选 `xinyun:白:yangping:二波·阳平`、`xinyun:白:yangping:四开·阳平` 无已审核证据 | BLOCKED |
+| 静夜思 | 新韵 | **503** | 未产出 | 阻断：l1c1「床」候选 `xinyun:床:yangping:十唐·阳平` 无已审核证据 | BLOCKED |
+| 黄鹤楼 | 新韵 | **503** | 未产出 | 阻断：l1c1「昔」候选 `xinyun:昔:qu:二波·去声`、`xinyun:昔:yinping:十二齐·阴平` 无已审核证据 | BLOCKED |
 
 **汇总：通过 3 / 阻断 6 / 判错 0 / 未运行 0；runner exit 2。**
 按本表定义：503 属「保护行为正确、可用范围未完成」，**这 6 格不记为完成**，列入 D3 功能主线欠账。
@@ -87,3 +87,13 @@
 | 证据位置 | `artifacts/acceptance/d3-api.json`、`artifacts/acceptance/browser/result.json`、`tests/integration/d3-acceptance.md`、`docs/handoffs/d3-e-system.md` |
 
 D4处理有限修复与定稿，D5至少半天留联调和彩排。若D3九组合仍存在503，将其列功能主线欠账，不把它移成可选加分项。
+
+## 六、Codex 对第二批的独立复核（不覆盖 E 上述历史回报）
+
+- 批次：D3-CODEX-E-SECOND-REVIEW；执行 SHA：`e0eefe17ad9aadfe328e40f32866069c63500107`，工作树干净，真实模式。
+- Node v24.19.0 / pnpm 11.25.0 / Edge 155.0.4283.45；临时 API/Vite，实际 URL/时间/版本均在原始 JSON。
+- 真实 HTTP：3 通过 / 6 阻断 / 0 判错；浏览器：9 通过 / 1 阻断 / 0 失败，pageErrors=[]；两个 runner JSON 均 exitCode=2。未改数据门槛。
+- 归档：`tests/integration/e2e/evidence/d3-codex-e-second-review/api.json`、`browser.json`、`report-375.png`、`report-1440.png`。
+- 上表六格补齐了实际候选 ID。它们只是每个请求早停时的首个缺口，不是完整待审字表；不据此宣称审核三个字即可解除六格。
+- 本次未新增 E05–E08 场景，也未重新跑全仓 verify。最新本地全仓依据为 C 集成的 694 项；本次没有把这 10 项增量计成 E 新交付。
+- E 后续场景与原始产物要求见 `docs/handoffs/d3-e-second-review-codex.md`。D3 仍未收口。
