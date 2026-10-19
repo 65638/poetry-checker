@@ -15,7 +15,8 @@ const PROBE = `(() => {
     stage: r('.pc-stage'), title: r('.pc-title'), titleFont: fs('.pc-title'), glyph: r('.pc-stage__glyph'),
     plinth: r('.pc-plinth'), textarea: r('.pc-input__text'), submit: r('.pc-input__submit'), manuscript: r('.pc-manuscript'),
     status: r('.pc-status'), statusLabel: fs('.pc-status__label'), reading: r('.pc-reading'), cell: r('.pc-cell'), cellFont: fs('.pc-cell__char'),
-    rowsPerLine: lines, dialog: r('[role=dialog]') };
+    rowsPerLine: lines, dialog: r('[role=dialog]'), statusBody: r('.pc-status > div:nth-child(2)'), examples: r('.pc-examples'), parts: [...document.querySelectorAll('.pc-plinth, .pc-plinth__heading, .pc-input > *')].map(e => e.className.split(' ')[0] + ':' + Math.round(e.getBoundingClientRect().y) + '+' + Math.round(e.getBoundingClientRect().height)).join(' '),
+    attention: document.querySelectorAll('.pc-findings:not(.pc-findings--settled) > li').length, settled: document.querySelectorAll('.pc-findings--settled > li').length };
 })()`;
 
 let api, web, browser;
@@ -32,8 +33,9 @@ try {
   browser = await launchBrowser();
   const { cdp, evaluate } = browser;
   await cdp.send("Emulation.setEmulatedMedia", { features: [{ name: "prefers-reduced-motion", value: "reduce" }] });
-  for (const width of [1440, 768, 375]) {
-    await cdp.send("Emulation.setDeviceMetricsOverride", { width, height: width < 600 ? 812 : 1000, deviceScaleFactor: 1, mobile: width < 600 });
+  const sizes = (process.env.PROBE_SIZES || "1440x1000,768x1000,375x812").split(",").map((s) => s.split("x").map(Number));
+  for (const [width, height] of sizes) {
+    await cdp.send("Emulation.setDeviceMetricsOverride", { width, height, deviceScaleFactor: 1, mobile: width < 600 });
     await cdp.send("Page.navigate", { url });
     await waitFor(() => evaluate("Boolean(document.querySelector('.pc-input__text'))"));
     await sleep(200);

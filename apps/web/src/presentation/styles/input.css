@@ -1,6 +1,6 @@
 .pc-input {
   display: grid;
-  gap: var(--pc-space-4);
+  gap: var(--pc-space-3);
 }
 
 .pc-input__label {
@@ -235,8 +235,16 @@
 }
 
 .pc-examples {
-  border-top: 1px solid var(--pc-divider);
-  padding-top: var(--pc-space-4);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--pc-space-2) var(--pc-space-3);
+  padding-bottom: var(--pc-space-3);
+  border-bottom: 1px solid var(--pc-divider);
+}
+
+.pc-examples .pc-input__label {
+  margin: 0;
 }
 
 .pc-examples__list {

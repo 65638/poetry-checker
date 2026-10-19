@@ -111,8 +111,8 @@ body {
   --pc-seal-size: 52px;
   --pc-status-icon: 64px;
   --pc-band-pad: var(--pc-space-3);
-  --pc-stage-height: 420px;
-  --pc-stage-overlap: 132px;
+  --pc-stage-height: 332px;
+  --pc-stage-overlap: 112px;
   --pc-page-max: 1320px;
   --pc-page-margin: 40px;
   --pc-input-col: 400px;
@@ -150,13 +150,20 @@ body {
   min-height: 100vh;
 }
 
+@media (max-width: 1279px) {
+  .pc-root {
+    --pc-input-col: 360px;
+  }
+}
+
 @media (max-width: 1099px) {
   .pc-root {
+    --pc-input-col: 304px;
     --pc-page-margin: 24px;
     --pc-col-gap: 24px;
     --pc-text-display: 52px;
-    --pc-stage-height: 340px;
-    --pc-stage-overlap: 96px;
+    --pc-stage-height: 292px;
+    --pc-stage-overlap: 88px;
     --pc-cell: 56px;
     --pc-text-poem: 34px;
   }

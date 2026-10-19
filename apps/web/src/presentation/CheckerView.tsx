@@ -19,6 +19,8 @@ export function CheckerView(props: CheckerViewProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const returnFocusRef = useRef<HTMLElement | null>(null);
   const prevTokenIdRef = useRef<string | null>(selectedTokenId);
+  const manuscriptRef = useRef<HTMLElement>(null);
+  const reportKey = report?.inputHash ?? null;
 
   const selectedToken =
     report !== null && selectedTokenId !== null
@@ -39,6 +41,16 @@ export function CheckerView(props: CheckerViewProps) {
     }
     props.onSelectToken(tokenId);
   };
+
+  // Single-column only: bring a fresh result into view when it was requested from the input form.
+  useEffect(() => {
+    const sheet = manuscriptRef.current;
+    if (reportKey === null || !sheet || typeof sheet.scrollIntoView !== 'function') return;
+    if (!document.activeElement?.closest('.pc-plinth')) return;
+    if (typeof window.matchMedia !== 'function' || !window.matchMedia('(max-width: 899px)').matches) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    sheet.scrollIntoView({ block: 'start', behavior: reduce ? 'auto' : 'smooth' });
+  }, [reportKey]);
 
   useEffect(() => {
     const prev = prevTokenIdRef.current;
@@ -90,6 +102,7 @@ export function CheckerView(props: CheckerViewProps) {
           </section>
 
           <section
+            ref={manuscriptRef}
             className="pc-manuscript"
             aria-labelledby="pc-report-heading"
             aria-busy={busy}

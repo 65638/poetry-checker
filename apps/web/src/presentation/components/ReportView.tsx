@@ -28,6 +28,8 @@ const CHECK: Record<CheckStatus, { label: string; icon: string }> = {
   uncertain: { label: '待复核', icon: '?' }, not_applicable: { label: '不适用', icon: '–' },
   unsupported: { label: '未支持', icon: '∅' },
 };
+const TALLY_ORDER: CheckStatus[] = ['fail', 'uncertain', 'unsupported', 'pass', 'not_applicable'];
+const SETTLED = new Set<CheckStatus>(['pass', 'not_applicable']);
 const SEVERITY: Record<Finding['severity'], string> = { error: '错误', warning: '警示', info: '提示' };
 const BOOK: Record<BookId, string> = { pingshui: '平水韵', cilin: '词林正韵', xinyun: '中华新韵' };
 const toneText = (t: string) => (t === 'P' ? '平' : t === 'Z' ? '仄' : t);
@@ -48,6 +50,7 @@ export function ReportView(props: ReportViewProps) {
   const { report, stale, selectedTokenId, selectedFindingId } = props;
   const rootRef = useRef<HTMLElement>(null);
   const gridRef = useRef<HTMLOListElement>(null);
+  const settledRef = useRef<HTMLDetailsElement>(null);
   const tokens = new Map(report.poem.tokens.map((t) => [t.tokenId, t]));
   const rhymeIds = new Set(report.prosody.rhyme.tokenIds);
   const checks = report.prosody.checks;
@@ -59,6 +62,42 @@ export function ReportView(props: ReportViewProps) {
   const summary = SUMMARY[report.summary.status];
   const firstRelated = selectedFinding?.locations[0]?.tokenId ?? null;
   const reportId = report.inputHash;
+  const renderFinding = ({ f, n }: { f: Finding; n: number }) => {
+    const st = CHECK[f.status];
+    const rule = report.provenance.rules.find((r) => r.id === f.ruleId);
+    const where = f.locations.map((l) => `第${l.line}句第${l.column}字`).join('、') || '整首';
+    return (
+      <li key={f.id} className={`pc-finding pc-finding--${f.status}${f.id === selectedFindingId ? ' pc-finding--selected' : ''}`}>
+        <span className="pc-finding__no" aria-hidden="true">{n}</span>
+        <div className="pc-finding__body">
+          <div className="pc-finding__head">
+            <span className="pc-tag"><span aria-hidden="true">{st.icon}</span> {st.label}</span>
+            <span className="pc-tag pc-tag--quiet">{SEVERITY[f.severity]}</span>
+            <span className="pc-finding__rule">{rule ? rule.name : f.ruleId}</span>
+          </div>
+          <p className="pc-finding__msg">{f.message}</p>
+          <dl className="pc-finding__compare">
+            <div><dt>应为</dt><dd>{f.expected.map(toneText).join(' / ') || '无记录'}</dd></div>
+            <div><dt>实际</dt><dd>{f.observed.map(toneText).join(' / ') || '无记录'}</dd></div>
+          </dl>
+          <button
+            type="button"
+            className="pc-button pc-button--quiet pc-finding__locate"
+            aria-pressed={f.id === selectedFindingId}
+            onClick={() => props.onSelectFinding(f.id)}
+          >
+            ◆ 在诗中定位：{where}
+          </button>
+        </div>
+      </li>
+    );
+  };
+  const numbered = checks.map((f, i) => ({ f, n: i + 1 }));
+  const attention = numbered.filter(({ f }) => !SETTLED.has(f.status));
+  const settled = numbered.filter(({ f }) => SETTLED.has(f.status));
+  const tally = Object.fromEntries(
+    TALLY_ORDER.map((s) => [s, checks.filter((f) => f.status === s).length]),
+  ) as Record<CheckStatus, number>;
 
   useEffect(() => {
     const el = rootRef.current;
@@ -90,6 +129,12 @@ export function ReportView(props: ReportViewProps) {
       );
     });
   }, [reportId]);
+
+  useEffect(() => {
+    if (selectedFinding && SETTLED.has(selectedFinding.status) && settledRef.current) {
+      settledRef.current.open = true;
+    }
+  }, [selectedFinding]);
 
   useEffect(() => {
     if (firstRelated === null) return;
@@ -203,38 +248,29 @@ export function ReportView(props: ReportViewProps) {
         {checks.length === 0 ? (
           <p className="pc-legend">本报告未列出批注条目；结论以上方状态为准。</p>
         ) : (
-          <ol className="pc-findings">
-            {checks.map((f, i) => {
-              const st = CHECK[f.status];
-              const rule = report.provenance.rules.find((r) => r.id === f.ruleId);
-              const where = f.locations.map((l) => `第${l.line}句第${l.column}字`).join('、') || '整首';
-              return (
-                <li key={f.id} className={`pc-finding pc-finding--${f.status}${f.id === selectedFindingId ? ' pc-finding--selected' : ''}`}>
-                  <span className="pc-finding__no" aria-hidden="true">{i + 1}</span>
-                  <div className="pc-finding__body">
-                    <div className="pc-finding__head">
-                      <span className="pc-tag"><span aria-hidden="true">{st.icon}</span> {st.label}</span>
-                      <span className="pc-tag pc-tag--quiet">{SEVERITY[f.severity]}</span>
-                      <span className="pc-finding__rule">{rule ? rule.name : f.ruleId}</span>
-                    </div>
-                    <p className="pc-finding__msg">{f.message}</p>
-                    <dl className="pc-finding__compare">
-                      <div><dt>应为</dt><dd>{f.expected.map(toneText).join(' / ') || '无记录'}</dd></div>
-                      <div><dt>实际</dt><dd>{f.observed.map(toneText).join(' / ') || '无记录'}</dd></div>
-                    </dl>
-                    <button
-                      type="button"
-                      className="pc-button pc-button--quiet pc-finding__locate"
-                      aria-pressed={f.id === selectedFindingId}
-                      onClick={() => props.onSelectFinding(f.id)}
-                    >
-                      ◆ 在诗中定位：{where}
-                    </button>
-                  </div>
+          <>
+            <ul className="pc-tally" aria-label="批注统计">
+              {TALLY_ORDER.filter((s) => tally[s] > 0).map((s) => (
+                <li key={s} className={`pc-tally__item pc-finding--${s}`}>
+                  <span aria-hidden="true">{CHECK[s].icon}</span> {CHECK[s].label}
+                  <strong className="pc-tally__count">{tally[s]}</strong>
                 </li>
-              );
-            })}
-          </ol>
+              ))}
+            </ul>
+            {attention.length > 0 ? (
+              <ol className="pc-findings">{attention.map(renderFinding)}</ol>
+            ) : (
+              <p className="pc-legend">没有违规、待复核或未支持的条目。</p>
+            )}
+            {settled.length > 0 && (
+              <details ref={settledRef} className="pc-settled">
+                <summary className="pc-settled__summary">
+                  已通过或不适用的检查（{settled.length} 条）
+                </summary>
+                <ol className="pc-findings pc-findings--settled">{settled.map(renderFinding)}</ol>
+              </details>
+            )}
+          </>
         )}
       </section>
     </article>

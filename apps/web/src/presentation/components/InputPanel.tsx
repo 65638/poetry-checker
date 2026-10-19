@@ -46,13 +46,38 @@ export function InputPanel(props: InputPanelProps) {
         analyze();
       }}
     >
+      {examples.length > 0 && (
+        <div className="pc-examples">
+          <p id={`${uid}-examples`} className="pc-input__label">
+            示例
+          </p>
+          <ul className="pc-examples__list" aria-labelledby={`${uid}-examples`}>
+            {examples.map((ex) => {
+              const pending = ex.text.trim() === '';
+              return (
+                <li key={ex.id}>
+                  <button
+                    type="button"
+                    className="pc-button pc-button--quiet pc-examples__item"
+                    disabled={pending}
+                    onClick={() => onLoadExample(ex.id)}
+                  >
+                    {ex.title}
+                    {pending && <span className="pc-examples__pending">待核对</span>}
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      )}
       <label className="pc-input__label" htmlFor={`${uid}-text`}>
         诗文
       </label>
       <textarea
         id={`${uid}-text`}
         className="pc-input__text"
-        rows={6}
+        rows={4}
         spellCheck={false}
         placeholder="每行一句，可直接粘贴整首诗"
         aria-describedby={`${uid}-text-hint`}
@@ -77,7 +102,7 @@ export function InputPanel(props: InputPanelProps) {
           }
         }}
       />
-      <p id={`${uid}-text-hint`} className="pc-input__hint">
+      <p id={`${uid}-text-hint`} className="pc-input__hint pc-input__hint--keys">
         Ctrl + Enter 也可开始分析。
       </p>
 
@@ -117,31 +142,6 @@ export function InputPanel(props: InputPanelProps) {
         </p>
       )}
 
-      {examples.length > 0 && (
-        <div className="pc-examples">
-          <p id={`${uid}-examples`} className="pc-input__label">
-            示例
-          </p>
-          <ul className="pc-examples__list" aria-labelledby={`${uid}-examples`}>
-            {examples.map((ex) => {
-              const pending = ex.text.trim() === '';
-              return (
-                <li key={ex.id}>
-                  <button
-                    type="button"
-                    className="pc-button pc-button--quiet pc-examples__item"
-                    disabled={pending}
-                    onClick={() => onLoadExample(ex.id)}
-                  >
-                    {ex.title}
-                    {pending && <span className="pc-examples__pending">待核对</span>}
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      )}
     </form>
   );
 }
