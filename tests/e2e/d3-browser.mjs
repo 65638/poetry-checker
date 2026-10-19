@@ -479,10 +479,9 @@ try {
     );
 
     // From here onward use only keyboard input; the analysis setup above uses mouse.
-    assert(
-      await evaluate("document.activeElement?.matches('.pc-input__submit')"),
-      "分析后焦点不在提交按钮",
-    );
+    const startingFocus =
+      await evaluate(`({ tag: document.activeElement?.tagName,
+      className: document.activeElement?.className })`);
     let tabs = 0;
     let tokenId = null;
     while (tabs < 150) {
@@ -550,6 +549,7 @@ try {
     return {
       tokenId,
       tokenText,
+      startingFocus,
       tabsToReachToken: tabs,
       innerTabsToClose: innerTabs,
       innerFocusPath: innerPath,

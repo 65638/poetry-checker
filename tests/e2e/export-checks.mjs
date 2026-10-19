@@ -4,6 +4,8 @@ import assert from "node:assert/strict";
 export function assertSummaryExport(text, report, request) {
   assert.equal(typeof text, "string", "剪贴板内容不可读");
   assert(text.trim().length > 0, "剪贴板为空，不能跳过内容验收");
+  // Windows clipboard exposes CRLF; compare textual lines without treating that as corruption.
+  text = text.replace(/\r\n/g, "\n");
   const form = report.genre.formId ? ` / ${report.genre.formId}` : "";
   for (const [label, expected] of [
     ["结论", `结论：${report.summary.status} — ${report.summary.message}`],
@@ -15,7 +17,7 @@ export function assertSummaryExport(text, report, request) {
     ["规则版本", `规则版本：${report.versions.rules}`],
     ["数据版本", `数据版本：${report.versions.data}`],
     ["inputHash", `原文摘要：${report.inputHash}`],
-    ["原文", `原文：\n${report.poem.originalText}\n`],
+    ["原文", `原文：\n${report.poem.originalText.replace(/\r\n/g, "\n")}\n`],
   ])
     assert(text.includes(expected), `复制内容 ${label} 与当前报告不一致`);
   const snapshot = text

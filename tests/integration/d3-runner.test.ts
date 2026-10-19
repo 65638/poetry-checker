@@ -65,6 +65,11 @@ describe("E06 验收不得把内容缺失或旧报告判成通过", () => {
       expect(() => assertSummaryExport(text, report, request)).toThrow();
     }
   });
+  it("Windows 剪贴板 CRLF 与同一正文的 LF 表达等价", () => {
+    expect(() =>
+      assertSummaryExport(summary().replace(/\n/g, "\r\n"), report, request),
+    ).not.toThrow();
+  });
   it("体裁大类相同但具体体式错误也拒绝", () => {
     expect(() =>
       assertSummaryExport(
