@@ -1,5 +1,11 @@
 # 首批工程底座交付记录
 
+> **当前状态（2026-10-19，C 复核更新）**：本文是按交付批次**追加**的历史记录，最早一节的状态不代表当前。
+> 当前事实：D1/D2 六模块与真实 API 编排已并入 `main`；**PR #11**（C 的 D2 异常报告批次，head `55e88e1`）**已合并**；
+> D3 已审作品特例层在 **PR #14**（`feat/c-d3-exception-acceptance`），等 GLM 在 orchestrator 接线。
+> 下文 GLM 小节的「待办（按任务书）」属 D1 期条目，已就地标注为**历史**。
+> D3 的当前状态、C01–C16 验收与发布卡闭合口径见 [`docs/handoffs/d3-c-acceptance.md`](docs/handoffs/d3-c-acceptance.md)。
+
 日期：2026-10-16。执行者：Codex。文档包已更新至 v1.3，公共契约仍为 v1.0 候选。当前交付工程底座与成员任务书；完整应用尚未实现，D1 人工冻结尚待组长完成。
 
 ## 已实现
@@ -57,11 +63,14 @@ Claude 接入后负责视觉/展示组件，D 与 DeepSeek 负责业务工程；
 - 根配置：新增 `dev` / `dev:api` 脚本；tsconfig include 与 vitest include 纳入 `apps/**`；新增依赖 fastify 5.1.0 并更新 lockfile。
 - 验证：`pnpm verify` 36 项测试通过（原 27 + api 9）；真实启动冒烟：healthz 200 / analyze 200+出站校验 / 非法枚举 422 / 坏 JSON 400 / 未知路由 404 / 数据未就绪 503。
 
-## 待办（按任务书）
+## 待办（按任务书；以下为 D1 期记录，2026-10-19 全部标为历史）
 
-- API 真实编排：A/B/C/E 模块就绪后按契约第 4 节顺序接入，替换 mock 选 fixture 逻辑；`readyz` 改为反映真实数据装载。
-- D 接入 web 后把 `pnpm dev` 扩展为同时启动 API 与 Web。
-- 组长 D1 决策项：中华新韵底本（建议直接采用十四韵规则 + pinyin-data 重建并标注重建表）。
+- **【历史】** API 真实编排：A/B/C/E 模块就绪后按契约第 4 节顺序接入，替换 mock 选 fixture 逻辑；`readyz` 改为反映真实数据装载。
+  → 已由 D2 的 GLM 批次落地（真实六步编排，`analyze` 不再是 fixture mock）。
+- **【历史】** D 接入 web 后把 `pnpm dev` 扩展为同时启动 API 与 Web。
+  → 已由 `scripts/dev.mjs` 提供一条命令双边启动。
+- **【历史】** 组长 D1 决策项：中华新韵底本（建议直接采用十四韵规则 + pinyin-data 重建并标注重建表）。
+  → 已按该口径重建并在数据文档标注，归 A 的 D1/D2 数据侧结论。
 
 ---
 

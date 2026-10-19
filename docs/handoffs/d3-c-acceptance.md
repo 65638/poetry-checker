@@ -1,7 +1,7 @@
 # D3 · C 交付：已审特例独立验收（2026-10-19）
 
-> 状态：**GREEN**（C01–C10 全部有独立断言并通过；全仓 47 文件 659 项通过）
-> PR：**#14** https://github.com/65638/poetry-checker/pull/14 （`feat/c-d3-exception-acceptance` → `main`；创建时 head `dbc5a6a`，已用 `git ls-remote refs/pull/14/head` 核对）
+> 状态：**GREEN**（C01–C16 全部有独立断言并通过；全仓 47 文件 669 项通过）
+> PR：**#14** https://github.com/65638/poetry-checker/pull/14 （`feat/c-d3-exception-acceptance` → `main`；创建时 head `dbc5a6a`，复核前 `ebd3213`，收尾提交见 PR 当前 head）
 
 ## 基线与分叉
 
@@ -15,9 +15,10 @@
 ## 变更路径（均在 C 授权范围）
 
 - `packages/prosody/src/index.ts`：新增 `applyReviewedWorkExceptions` / `parseReviewedWorkExceptions` / `ReviewedWorkExceptionError` 与 `ApplyReviewedWorkExceptionsInput` / `ReviewedWorkException` 的**公共导出**（不编辑实现）。
-- `packages/prosody/tests/acceptance/d3-reviewed-exceptions.test.ts`：新增 **C01–C10 共 11 项**独立验收（含 C04a 五绝 / C04b 七律两个反例）。
-- `packages/prosody/tests/acceptance/cards.test.ts`：证据命名断言放宽到 `ev:rule:` / `ev:work:` / `ctx:` 并校验 source 可解析。
-- `rules/cards/teaching-v1.json`：**TAIL.SANPING** 说明改为「一般近体三平尾 error；已审作品字位按登记范围作特征解释（not_applicable/info，非拗救、不豁免其他规则）」，limitations 列明范围与继承限制。
+- `packages/prosody/tests/acceptance/d3-reviewed-exceptions.test.ts`：新增 **C01–C10 共 11 项**独立验收（含 C04a 五绝 / C04b 七律两个反例）；复核收尾再加 **C11–C16 共 6 项**边界反例（见下）。
+- `packages/prosody/tests/acceptance/cards.test.ts`：证据命名断言放宽到 `ev:rule:` / `ev:work:` / `ctx:` 并校验 source 可解析；复核收尾再加**发布注册表 × 合并证据/来源注册表的闭合断言 4 项**。
+- `rules/cards/teaching-v1.json`：**TAIL.SANPING** 说明改为「一般近体三平尾 error；已审作品字位按登记范围作特征解释（not_applicable/info，非拗救、不豁免其他规则）」，limitations 列明范围与继承限制；`evidenceIds` 追加既有 **`ctx:j03b2:08`**（只追加引用，不复制证据本体）。
+- `rules/cards/runtime-review-status.json`：TAIL.SANPING 的 `evidenceIds` 同步追加 `ctx:j03b2:08`，并在 `releaseNote` 说明该 ID 属已审作品语境证据、不在 `rules/evidence` 复制。
 - `docs/handoffs/d3-c-acceptance.md`（本文件）。
 
 **未改**：`src/core/`、`src/reviewed-exceptions/`（Codex 单写）、`rules/exceptions/`（Codex 单写）、`apps/api`、根配置、契约、A/B/E 的审批记录与数据。
@@ -32,9 +33,9 @@
 
 ```text
 pnpm exec vitest run packages/prosody/tests/acceptance
-  → exit 0；6 文件、94 项通过（含 D3 新增 11）
-pnpm exec vitest run --maxWorkers=1（全仓）
-  → exit 0；47 文件、659 项通过
+  → exit 0；6 文件、104 项通过（原 94 + C11–C16 共 6 项 + 发布卡闭合 4 项）
+pnpm verify（全仓；lint / typecheck / test / check:generated）
+  → exit 0；47 文件、669 项通过
 tsc --noEmit / eslint . / generate-contracts --check  → 均 exit 0
 ```
 
@@ -50,6 +51,12 @@ tsc --noEmit / eslint . / generate-contracts --check  → 均 exit 0
 | C08 | 同诗其他字位硬错保留（硬错数恰好 −1，仅尾式转 info）；METER 判读不被顺手消除 | ✅ |
 | C09 | 两次运行一致；对已应用报告再应用一次结果不变（幂等） | ✅ |
 | C10 | `checkReportClosure` ok；ruleId ∈ 10 固定 ID；resolvedBy 不伪填 RESCUE | ✅ |
+| C11 | 换 `xinyun`：原判仍 `fail`，`interpretedTails`（尾式被判 not_applicable 的条数）恒为 0 | ✅ |
+| C12 | 只删审批证据 `ctx:j03b2:08` / 只删作品证据 `ev:work:huanghelou:j03` / 证据表为空：三种都不生效 | ✅ |
+| C13 | 来源表为空、审批证据 `sourceId` 指向不存在来源：两种都不生效（不降级成放行） | ✅ |
+| C14 | l4c5 读音为 unknown / 平仄歧义（P+Z）/ 变仄（Z）：三种都不命中，`interpretedTails`=0 | ✅ |
+| C15 | 诗/报告/证据/作品/例外记录全部 `Object.freeze` 后调用：结果仍生效，原报告仍 `fail`，四份入参 JSON 前后逐字相等 | ✅ |
+| C16 | 报告所有 `evidenceIds`（checks + genre + tokens）都能在合并表解析、`sourceId` 可解析；命中项只挂一次 `ctx:j03b2:08`；closure 仍 ok | ✅ |
 
 ## 与任务书/07 号的对照
 
@@ -58,12 +65,47 @@ tsc --noEmit / eslint . / generate-contracts --check  → 均 exit 0
 - 07 号要求「不凭题名/标签/templateId 免责」：C03/C05/C06 断言改字、换书、缺审批均不命中。
 - 07 号要求「不伪写 pass、不造 ruleId」：断言 `status=not_applicable`、`severity=info`、`resolvedBy=null`，10 个 ruleId 不变。
 
+## 复核收尾（2026-10-19，组长 PR #14 复验后）
+
+组长复验结论：`pnpm verify` 全绿（47 文件 / 659 项），公共导出与主要用例可供 GLM 接线。本轮只做三件收尾，**不新增规则、不改实现、不改契约**：
+
+| # | 要求 | 落点 | 结果 |
+|---|---|---|---|
+| 1 | TAIL.SANPING 发布卡 `evidenceIds` 追加现有 `ctx:j03b2:08`，勿复制证据；补发布卡对合并证据/来源注册表的闭合断言 | `rules/cards/teaching-v1.json`、`rules/cards/runtime-review-status.json`、`cards.test.ts`（+4 项） | ✅ |
+| 2 | 补 xinyun、缺审批、来源断链、未知/歧义/变仄、冻结输入、报告 evidence/source 闭合的独立用例 | `d3-reviewed-exceptions.test.ts` C11–C16（+6 项） | ✅ |
+| 3 | 更新当前状态：PR #11 已合并，旧 D1/mock 待办标成历史 | 本文件 + 根 `HANDOFF.md` 状态标注 | ✅ |
+
+要点说明：
+
+- **只追加引用**：`ctx:j03b2:08` 仍只存在于 `data/context/evidence.json`（B 单写）；`rules/evidence/teaching-v1.json` 未新增该记录。新增用例断言该 ID 在「rules/evidence + data/context + data/works」三表合并视图里**恰好出现一次**，防止两处副本悄悄漂移。
+- **闭合口径与 API 一致**：`cards.test.ts` 的三表合并顺序与 `apps/api/src/resources.ts` 的 `loadSupplementalResources` 相同，因此包内断言与运行时装载口径不会分叉；同时校验每条证据 `reviewStatus=approved` 且 `sourceId` 可在合并来源表解析。
+- **断链不降级**：C13 覆盖「来源表为空」与「审批证据 sourceId 指向不存在来源」两种情况——实现里的 `approvedEvidence` 要求来源可解析，两种都保持核心 `fail`，不会因为证据侧缺件而把尾式放行。
+- **冻结输入**：C15 把诗、报告、证据、作品与例外记录全部深层 `Object.freeze` 后调用，既验证纯函数不改入参，也验证不会就地改写原报告（原报告仍为 `fail`）。
+
+## 当前状态（2026-10-19）
+
+| 项 | 状态 | 依据 |
+|---|---|---|
+| PR #11（C 的 D2 异常报告基础批次，head `55e88e1`） | **已合并** | `git merge-base --is-ancestor 55e88e1 origin/main` → exit 0；`origin/main` 当前 `f42172f` |
+| PR #14（本分支） | **待合入** | `feat/c-d3-exception-acceptance` → `main`；`main` 未包含本分支提交 |
+| D3 已审特例层（Codex `63de97b`） | 已进入本分支并通过 C 的独立验收 | 本文件 C01–C16 |
+| GLM 的 orchestrator 接线 | **未做**，仍是 D3 唯一阻塞项 | 见下节第 1 条 |
+
+**历史待办（不再作为当前任务）**：
+
+1. ~~「API 真实编排：A/B/C/E 模块就绪后接入，替换 mock 选 fixture 逻辑；`readyz` 改为反映真实数据装载」~~ —— D2 已由 GLM 落地真实六步编排，`analyze` 不再是 fixture mock；此项仅保留为 D1 期记录。
+2. ~~「D 接入 web 后把 `pnpm dev` 扩展为同时启动 API 与 Web」~~ —— `scripts/dev.mjs` 已提供一条命令双边启动。
+3. ~~「组长 D1 决策项：中华新韵底本」~~ —— 已按十四韵规则 + `pinyin-data` 重建并在数据文档标注，属 A 的 D1/D2 数据侧结论。
+4. ~~「旧 PR #7 的三次审批提交与当前 main 的逐项对照，留 GLM 处理」~~ —— PR #11 已并入 `main`，该对照的输入侧（C 的异常报告与规则卡批次）已落地；剩余部分属 GLM 的集成台账，不在 C 范围。
+
+（以上四项在根 `HANDOFF.md` 的 GLM 小节按同一口径标为「历史」。）
+
 ## 未覆盖 / 后续（非 C 单方可完成）
 
 1. **GLM**：在 orchestrator 中调用 `applyReviewedWorkExceptions`（传入 genre 决策、真实指纹、`rules/exceptions` 记录、合并后的 evidence/sources），并用真实黄鹤楼走 `/analyze` 验证；C 的包测试不能替代页面/HTTP 验收。
 2. **E**：把第 13 号第 8 条写进金标准逐字预期（TAIL.SANPING=保留特征），三首 golden 的 reviewStatus 仍 pending。
-3. **Codex**：`rules/exceptions` 记录与 `data/context/evidence.json` 的 `ctx:j03b2:08` 已在测试中按同 locator 对齐；若后续改 locator 需同步。
-4. 旧 PR #7 的三次审批提交与当前 main 的逐项对照：C 未重复合并，留 GLM 处理。
+3. **Codex**：`rules/exceptions` 记录与 `data/context/evidence.json` 的 `ctx:j03b2:08` 已在测试中按同 locator 对齐；若后续改 locator 需同步。**本次把该 ID 写进了发布卡，改 locator 时发布卡与运行审核表必须同改。**
+4. **发布门槛**：TAIL.SANPING 现在同时引用规则依据与已审作品语境证据；卡已闭合，但三库快照仍为 `unverified`，`/readyz` 的 503 不会因此改变，不能据此宣称数据侧发布通过。
 
 ## 依据/版本影响
 
