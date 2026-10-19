@@ -55,8 +55,13 @@ const TONE_MAP: Readonly<
   入声: { toneClass: "ru", tone: "Z" },
 };
 
-const NOTICE =
-  "词林正韵全量候选（19 部 / 33 子卷）：源自 chinese_word_rhyme 固定提交 ff0e9c13 的原表转载，" +
+/** 导入层「这算不算韵字」的判定：单码点 + Han 脚本。 */
+const HAN_SCRIPT = /\p{Script=Han}/u;
+function isRhymeCharacter(character: string): boolean {
+  return [...character].length === 1 && HAN_SCRIPT.test(character);
+}
+
+const NOTICE =  "词林正韵全量候选（19 部 / 33 子卷）：源自 chinese_word_rhyme 固定提交 ff0e9c13 的原表转载，" +
   "仅登记部/声归属与平仄；反切、义项、今读一律为 null。" +
   "前 14 部分平/仄两个子卷，第 15–19 部只标入声。" +
   "来源仅标「仄声」的记录一律保留 ze_unspecified（不改写成上声或去声，也不臆测具体古声类）。" +
@@ -108,6 +113,53 @@ function main(): void {
   const seenCandidateIds = new Set<string>();
   const subVolumeCounts = new Map<string, number>();
 
+  // ---- 导入层过滤：原表含非汉字杂项（标点/空格），不是韵字 ----
+  // 双重判定：① \p{Script=Han}（排除 Common 脚本的全角逗号、空格等）② 单个 Unicode 码点
+  //（防止未来出现组合序列或半角数字串）。**data/raw 字节不动**，只在这里剔除并留审计。
+  interface DroppedNonHan {
+    character: string;
+    codePoint: string;
+    groupName: string;
+    sourceLocator: string;
+  }
+  const droppedNonHan: DroppedNonHan[] = [];
+  const rawNonHanGlyphs = new Set<string>();
+  let rawNonHanEntries = 0;
+  for (const [ordinal, tones] of Object.entries(table)) {
+    for (const [toneName, characters] of Object.entries(tones)) {
+      for (const character of characters) {
+        if (isRhymeCharacter(character)) continue;
+        rawNonHanEntries += 1;
+        rawNonHanGlyphs.add(character);
+        droppedNonHan.push({
+          character,
+          codePoint: `U+${(character.codePointAt(0) ?? 0)
+            .toString(16)
+            .toUpperCase()
+            .padStart(4, "0")}`,
+          groupName: `${ordinal}·${toneName}`,
+          sourceLocator: `${RAW_REL} ${ordinal}/${toneName}`,
+        });
+      }
+    }
+  }
+
+  // 过滤前的理论值（用于断言「差额必须能被这 8/4 解释」）
+  const beforeGlyphs = new Set<string>();
+  const beforeCandidateIds = new Set<string>();
+  for (const [ordinal, tones] of Object.entries(table)) {
+    for (const [toneName, characters] of Object.entries(tones)) {
+      const mapping = TONE_MAP[toneName];
+      if (mapping === undefined) continue;
+      for (const character of new Set(characters)) {
+        beforeGlyphs.add(character);
+        beforeCandidateIds.add(
+          makeCandidateId("cilin", character, mapping.toneClass, `${ordinal}·${toneName}`),
+        );
+      }
+    }
+  }
+
   for (const [ordinal, tones] of Object.entries(table)) {
     for (const [toneName, characters] of Object.entries(tones)) {
       const mapping = TONE_MAP[toneName];
@@ -119,7 +171,7 @@ function main(): void {
       const groupId = `group:cilin:${ordinal}:${groupName}`;
       const evidenceId = `ev:cilin:${ordinal}:${groupName}`;
       const locator = `${RAW_REL} ${ordinal}/${toneName}`;
-      const unique = [...new Set(characters)];
+      const unique = [...new Set(characters)].filter(isRhymeCharacter);
 
       subVolumeCounts.set(toneName, (subVolumeCounts.get(toneName) ?? 0) + 1);
 
@@ -169,11 +221,16 @@ function main(): void {
     }
   }
 
+  const dropNote =
+    `本快照已在**导入层**剔除原表非汉字杂项 ${rawNonHanEntries} 条（${rawNonHanGlyphs.size} 个字形：` +
+    `${[...rawNonHanGlyphs].map((character) => (character.trim() === "" ? "空格" : character)).join("")}）；` +
+    "原表 data/raw 字节未改动。";
+
   const input: SnapshotInput = {
     dataVersion: DATA_VERSION,
     book: "cilin",
     reviewStatus: "unverified",
-    notice: NOTICE,
+    notice: `${NOTICE} ${dropNote}`,
     candidates,
     groups,
     evidence,
@@ -186,6 +243,44 @@ function main(): void {
 
   section("断言");
   check(ordinals.length === 19, `部数 19（实际 ${ordinals.length}）`);
+
+  // ---- 导入层过滤：8 条条目 / 4 个字形，且差额必须能被它们解释 ----
+  const nonHanGlyphLabel = [...rawNonHanGlyphs]
+    .map((character) =>
+      character.trim() === "" ? "空格" : `${character}(U+${(character.codePointAt(0) ?? 0).toString(16).toUpperCase()})`,
+    )
+    .join(" ");
+  check(
+    rawNonHanEntries === 8,
+    `词林原表非汉字条目 8 条（实际 ${rawNonHanEntries}）`,
+  );
+  check(
+    rawNonHanGlyphs.size === 4,
+    `非汉字字形 4 个（实际 ${rawNonHanGlyphs.size}：${nonHanGlyphLabel}）`,
+  );
+  const afterGlyphCount = new Set(candidates.map((candidate) => candidate.character)).size;
+  check(
+    beforeCandidateIds.size - candidates.length === rawNonHanEntries,
+    `候选数差额 ${rawNonHanEntries}（实际 ${beforeCandidateIds.size - candidates.length}；过滤前 ${beforeCandidateIds.size} → 过滤后 ${candidates.length}）`,
+  );
+  check(
+    beforeGlyphs.size - afterGlyphCount === rawNonHanGlyphs.size,
+    `字形数差额 ${rawNonHanGlyphs.size}（实际 ${beforeGlyphs.size - afterGlyphCount}；过滤前 ${beforeGlyphs.size} → 过滤后 ${afterGlyphCount}）`,
+  );
+  check(
+    droppedNonHan.length === rawNonHanEntries &&
+      droppedNonHan.every(
+        (entry) => entry.groupName !== "" && entry.sourceLocator !== "",
+      ),
+    `droppedNonHan ${rawNonHanEntries} 条且每条带 groupName + sourceLocator`,
+  );
+  console.log("\n  被剔除的非汉字杂项（逐条可审计）：");
+  for (const entry of droppedNonHan) {
+    console.log(
+      `    ${entry.codePoint}  「${entry.character.trim() === "" ? "空格" : entry.character}」  ${entry.groupName}  ← ${entry.sourceLocator}`,
+    );
+  }
+
   check(report.groupCount === 33, `子卷数 33（实际 ${report.groupCount}）`);
   check(
     subVolumeCounts.get("平声") === 14 &&

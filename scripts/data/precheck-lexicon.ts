@@ -1269,13 +1269,20 @@ const REGISTERED_DIGESTS: Readonly<Record<string, RegisteredDigest>> = {
     fileName: "cilin.full-d2.json",
     dataVersion: "cilin-cwr-ff0e9c1-d2-full",
     digest:
-      "bcbeb62ada9a5b6a72e69dbdee844f10e0466b40fd46939b0b3e4f56f09d38e8",
-    source: "首次登记：2026-10-18 本报告实测",
+      "52f98e9c7f18463ad967a6f95986ac3e90fdf7131b5ad41b535b0b29134aadb5",
+    source: "重登记：2026-10-18 导入层过滤后实测（原登记值见 changelog）",
     changelog: [
       {
         from: null,
         to: "bcbeb62ada9a5b6a72e69dbdee844f10e0466b40fd46939b0b3e4f56f09d38e8",
         reason: "首次登记（此前护栏从未覆盖词林快照）",
+        registeredAt: "2026-10-18",
+      },
+      {
+        from: "bcbeb62ada9a5b6a72e69dbdee844f10e0466b40fd46939b0b3e4f56f09d38e8",
+        to: "52f98e9c7f18463ad967a6f95986ac3e90fdf7131b5ad41b535b0b29134aadb5",
+        reason:
+          "导入层剔除原表 8 条非汉字杂项（4 个字形）后重建：候选 5403→5395、字形 5037→5033；data/raw 字节未改",
         registeredAt: "2026-10-18",
       },
     ],
@@ -2273,17 +2280,21 @@ function main(): void {
 
   // 计数口径漂移（P3）
   addCross("F", "P3", {
-    location: "docs/data-quality.md / HANDOFF.md（D1 期「字形数」表述）",
+    location: "docs/data-quality.md（字形数口径）· scripts/data/inspect.ts（读原表）",
     fact:
-      "D1/handoff 记「平水字形 8,232」，本次实测 105 部快照去重字符 = " +
-      `${supplement.a1.universe.pingshuiDistinctRaw === 0 ? "（未取得）" : "8232"}，**与 D1 一致、无漂移**；` +
-      `但词林 D1/inspect 记 5,037，其中含 ${supplement.a1.universe.cilinNonHan.count} 条非汉字，汉字实为 ${supplement.a1.universe.cilinHan}`,
+      "三处「词林字形数」口径不同，容易互相错位比较：" +
+      "① 原表 `Cilin_Rhyme.json` 去重 = **5,037**（含 4 个非汉字字形：`[` `]` 空格 `，`）；" +
+      "② 导入层已按 D3 过滤后，快照 `cilin.full-d2.json` 去重 = **5,033**（汉字全集）；" +
+      `③ \`inspect.ts\` 读的是原表，故仍报 5,037。` +
+      "平水侧：D1/handoff 记「8,232」，105 部快照实测 8232（106 部 8240），**与 D1 一致、无漂移**，且平水无此杂项",
     basis:
-      "raw / NFC / NFKC 三种去重方式结果完全相同（平水 106 部 8240、105 部 8232、词林 5037），可排除归一化重复；再按 \\p{Script=Han} 过滤得词林 5033",
+      "raw / NFC / NFKC 三种去重结果完全相同（平水 106 部 8240、105 部 8232、词林原表 5037），可排除归一化重复；" +
+      "快照侧按 \\p{Script=Han} 过滤后为 5033，与 build-cilin.ts 的 8 条 droppedNonHan 差额吻合",
     impact:
-      "同一「字形数」在不同文档可能指 raw（含非汉字）或汉字全集，跨文档比较会错位。这是口径未写明的漂移，不是数据错误",
+      "同一「字形数」在 原表 / 快照 / inspect 三处数字不同（5037 vs 5033），跨文档直接比较会得出「词林少了 4 个字」的错觉",
     suggestedAction:
-      "此后所有字形数一律注明口径（raw 含非汉字 / 汉字全集）；D1 的 8232 不需订正，词林 5,037 应补注「含 4 条非汉字」",
+      "此后所有字形数必须注明来源（原表含杂项 / 快照已过滤 / inspect 读原表）；" +
+      "D1 的 8232 不需订正；词林 5037 属原表口径、5033 属快照口径，两者都对但不可混用",
     actionKind: "接线/脚本可修",
   });
   addCross("F", "P2", {
@@ -2595,6 +2606,19 @@ function main(): void {
       note: "第二批对应八个唯一选音候选（十处字位），已按精确候选落库；更在第一批已有批准。AI 备考不作依据，第六节整部批准指令已追加范围勘误。",
     },
     supplement,
+    guards: {
+      repeatBuildConsistent: supplement.b1.allRepeatConsistent,
+      digestRegistered: supplement.b1.digestDrift.length === 0,
+      fileNameMatchesDataVersion: supplement.b1.fileNameMismatch.length === 0,
+      noDanglingRegistration: supplement.b1.registeredWithoutFile.length === 0,
+      unregisteredSnapshots: supplement.b1.unregistered,
+      detail: {
+        digestDrift: supplement.b1.digestDrift,
+        fileNameMismatch: supplement.b1.fileNameMismatch,
+        registeredWithoutFile: supplement.b1.registeredWithoutFile,
+        skippedNonSnapshots: supplement.b1.skippedNonSnapshots,
+      },
+    },
     excluded: EXCLUDED,
     snapshots: audits,
     reconciliation,
@@ -2775,6 +2799,20 @@ interface PrecheckOutput {
     note: string;
   };
   supplement: SupplementResult;
+  /** 护栏状态：机器自动红灯项，无可人审余地，必须落档（不能只打印在 stdout）。 */
+  guards: {
+    repeatBuildConsistent: boolean;
+    digestRegistered: boolean;
+    fileNameMatchesDataVersion: boolean;
+    noDanglingRegistration: boolean;
+    unregisteredSnapshots: string[];
+    detail: {
+      digestDrift: string[];
+      fileNameMismatch: string[];
+      registeredWithoutFile: string[];
+      skippedNonSnapshots: string[];
+    };
+  };
   excluded: readonly { file: string; reason: string }[];
   snapshots: SnapshotAudit[];
   reconciliation: Reconciliation;
@@ -3264,6 +3302,29 @@ function renderMarkdown(input: PrecheckOutput): string {
   push(
     "护栏口径：**登记值漂移**与**文件名↔dataVersion 不符**属事故 → 进 failures（exit 1）；" +
       "**未登记快照**属正常演进 → 只出 P2。两者不同罚，避免新快照把 exit code 顶红。",
+  );
+  push("");
+  push("#### 护栏状态（落档于 JSON 的 `guards` 段，可复核）");
+  push("");
+  push("| 护栏 | 结论 | 明细 |");
+  push("|---|---|---|");
+  push(
+    `| 同输入重复构建 → 同摘要 | ${input.guards.repeatBuildConsistent ? "✅" : "❌"} | — |`,
+  );
+  push(
+    `| 登记摘要 == 实测摘要 | ${input.guards.digestRegistered ? "✅" : "❌"} | ${input.guards.detail.digestDrift.join("；") || "无漂移"} |`,
+  );
+  push(
+    `| 登记 fileName == 磁盘文件名 | ${input.guards.fileNameMatchesDataVersion ? "✅" : "❌"} | ${input.guards.detail.fileNameMismatch.join("；") || "无不符"} |`,
+  );
+  push(
+    `| 无悬空登记 | ${input.guards.noDanglingRegistration ? "✅" : "❌"} | ${input.guards.detail.registeredWithoutFile.join("；") || "无悬空"} |`,
+  );
+  push(
+    `| 未登记快照（P2，不罚） | ${input.guards.unregisteredSnapshots.length === 0 ? "0 条" : `${input.guards.unregisteredSnapshots.length} 条`} | ${input.guards.unregisteredSnapshots.join("；") || "无"} |`,
+  );
+  push(
+    `| 跳过的非快照产物 | — | ${input.guards.detail.skippedNonSnapshots.join("；") || "无"} |`,
   );
   push("");
   push("### B2 简繁/异体是否被未经依据合并");
