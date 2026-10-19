@@ -1,6 +1,6 @@
 # 视觉规格（独特化重设计：「山·墨·诗」墨色展厅）
 
-> 下一轮待执行方向：组长已选择 [月下江山计划](MOONLIT-LANDSCAPE-PLAN.md)，包含长诗工具栏、连续山水背景、月光指针与细腻操作动画。**仅记入计划，尚未实施；本文件下述内容仍描述当前页面。**
+> 下一轮：[月下江山 V2 方案](MOONLIT-LANDSCAPE-PLAN.md)，包含长诗工具栏、连续山水背景、月光指针、静置环境动效与操作动画。[Claude 实施任务书](CLAUDE-MOONLIT-UI-BRIEF-EN.md) 已准备。**页面尚未实施；本文件下述内容仍描述现有页面，不是新效果的验收。**
 
 范围：`apps/web/src/presentation/`。颜色、尺寸、时长只在 `styles/tokens.css` 定义。完整交接（文件、命令、截图、限制）见 `HANDOFF-DISTINCTIVE-UI.md`；方向比较见 `DISTINCTIVE-UI-DIRECTION.md`。旧「校对台 / 写作台」规格已被本方向取代。
 
