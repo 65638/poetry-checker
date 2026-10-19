@@ -26436,10 +26436,40 @@
     },
     "b2": {
       "file": "data/variants/variant-edges-d2.json",
-      "totalEdges": 0,
-      "byStatus": {},
-      "appliedEdges": [],
-      "pendingEdges": [],
+      "totalEdges": 5,
+      "byStatus": {
+        "approved": 1,
+        "pending_review": 2,
+        "applied_in_patch": 2
+      },
+      "appliedEdges": [
+        {
+          "id": "edge-講-讲",
+          "from": "講",
+          "to": "讲",
+          "status": "applied_in_patch"
+        },
+        {
+          "id": "edge-項-项",
+          "from": "項",
+          "to": "项",
+          "status": "applied_in_patch"
+        }
+      ],
+      "pendingEdges": [
+        {
+          "id": "edge-餘-余",
+          "from": "餘",
+          "to": "余",
+          "status": "pending_review"
+        },
+        {
+          "id": "edge-馀-余",
+          "from": "馀",
+          "to": "余",
+          "status": "pending_review"
+        }
+      ],
       "effectiveMerges": 0,
       "traditionalFormProbe": [
         {
@@ -26463,7 +26493,7 @@
           "foundInXinyun": true
         }
       ],
-      "verdict": "未发现任何未经依据的合并：0 条边为 approved（3 条 pending_review 未启用）；韵书表（平水/词林）中「樓/餘/講/項」四个繁体形**均未出现**，说明繁体形没有被塞进韵书表；新韵快照中含其中 4 个繁体形，属 pinyin-data 逐码位重建的预期（简繁各为独立码位，各成候选），**不是合并**。applied_in_patch 的 2 条仅限三讲补丁内的 講→讲、項→项（已人审签），属补丁内转换，且未改动韵书表既有归属。"
+      "verdict": "未发现任何未经依据的合并：1 条边为 approved（均已登记 approvalBasis，仅供召回映射、不写快照，不计为合并）；另有 2 条 pending_review 未启用；韵书表（平水/词林）中「樓/餘/講/項」四个繁体形**均未出现**，说明繁体形没有被塞进韵书表；新韵快照中含其中 4 个繁体形，属 pinyin-data 逐码位重建的预期（简繁各为独立码位，各成候选），**不是合并**。applied_in_patch 的 2 条仅限三讲补丁内的 講→讲、項→项（已人审签），属补丁内转换，且未改动韵书表既有归属。"
     },
     "b3": {
       "generatorVersion": "xinyun-rebuild-gen/0.1.0",
@@ -28315,7 +28345,7 @@
       "dataVersion": "*",
       "severity": "P2",
       "location": "data/variants/variant-edges-d2.json",
-      "fact": "简繁/异体候选边共 0 条：pending_review 0 条（）、applied_in_patch 0 条、approved 0 条",
+      "fact": "简繁/异体候选边共 5 条：pending_review 2 条（餘→余、馀→余）、applied_in_patch 2 条、approved 0 条",
       "basis": "文件 summary 与 edges[].status 实测",
       "impact": "未签边不生效：正文若写繁体（如「樓」）仍进 missing；已签边只属查询召回，不等于等价合并",
       "suggestedAction": "按 0008 方案逐条人审签；签前不得让消费方启用",

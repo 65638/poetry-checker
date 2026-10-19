@@ -1807,10 +1807,16 @@ function computeSupplement(): SupplementResult {
     foundInXinyun:
       snapshotChars.get("xinyun.full-d2.json")?.has(character) ?? false,
   }));
-  const effectiveMerges =
-    (byStatus["approved"] ?? 0) +
-    traditionalFormProbe.filter((probe) => probe.foundInYunshu.length > 0)
-      .length;
+  /**
+   * 有效合并数 = 繁体/异体形**被塞进韵书表**的个数。
+   * 不把 approved 边计入：approved 边是经审批、仅供召回映射的「候选关联」，
+   * 它不写进任何快照、不改原表归属，本身不是合并。
+   * （旧写法把 approved 边数也加进来，导致合法审批被误报为「未经依据的合并」。）
+   */
+  const approvedEdges = byStatus["approved"] ?? 0;
+  const effectiveMerges = traditionalFormProbe.filter(
+    (probe) => probe.foundInYunshu.length > 0,
+  ).length;
   const xinyunHasTraditional = traditionalFormProbe.filter(
     (probe) => probe.foundInXinyun,
   ).length;
@@ -1857,11 +1863,12 @@ function computeSupplement(): SupplementResult {
       traditionalFormProbe,
       verdict:
         effectiveMerges === 0
-          ? "未发现任何未经依据的合并：0 条边为 approved（3 条 pending_review 未启用）；" +
+          ? `未发现任何未经依据的合并：${approvedEdges} 条边为 approved（均已登记 approvalBasis，仅供召回映射、不写快照，不计为合并）；` +
+            `另有 ${byStatus["pending_review"] ?? 0} 条 pending_review 未启用；` +
             "韵书表（平水/词林）中「樓/餘/講/項」四个繁体形**均未出现**，说明繁体形没有被塞进韵书表；" +
             `新韵快照中含其中 ${xinyunHasTraditional} 个繁体形，属 pinyin-data 逐码位重建的预期（简繁各为独立码位，各成候选），**不是合并**。` +
             "applied_in_patch 的 2 条仅限三讲补丁内的 講→讲、項→项（已人审签），属补丁内转换，且未改动韵书表既有归属。"
-          : "发现可能未经依据的合并，见 traditionalFormProbe 与 byStatus。",
+          : `发现 ${effectiveMerges} 处繁体/异体形出现在韵书表中，见 traditionalFormProbe；这属疑似覆盖原表归属，须逐条核实。`,
     },
     b3: {
       generatorVersion: XINYUN_GENERATOR_VERSION,
