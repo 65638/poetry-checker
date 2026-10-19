@@ -562,6 +562,134 @@ try {
     };
   });
 
+  // ---------- E07：可控网络故障（只挡 /api/v1/analyze，不动其他请求） ----------
+  await scenario("E07-controlled-network-failure", async () => {
+    const poem = POEMS[0];
+    const openClean = async () => {
+      await cdp.send("Page.navigate", { url: payload.url });
+      await waitFor(() =>
+        evaluate("Boolean(document.querySelector('.pc-input__text'))"),
+      );
+      await click(".pc-segmented__option:has(input[value=pingshui])");
+      await waitFor(() =>
+        evaluate("document.querySelector('input[value=pingshui]').checked"),
+      );
+      await click(".pc-input__text");
+      await key("a", "KeyA", 65, 2);
+      await cdp.send("Input.insertText", { text: poem.text });
+    };
+    await openClean();
+    let before = responses.length;
+    await click(".pc-input__submit");
+    await waitFor(
+      () => responses.length > before && complete.has(responses.at(-1).requestId),
+    );
+    await waitFor(() => evaluate("!document.querySelector('.pc-report--stale')"));
+
+    // 只阻断 analyze：受控故障替身，明确标识
+    await cdp.send("Network.enable");
+    await cdp.send("Network.setBlockedURLs", { urls: ["*/api/v1/analyze"] });
+    before = responses.length;
+    await click(".pc-input__submit");
+    await waitFor(() =>
+      evaluate("Boolean(document.querySelector('[role=alert]'))"),
+    );
+    const alertText = await evaluate(
+      "document.querySelector('[role=alert]').textContent.trim()",
+    );
+    await waitFor(() =>
+      evaluate("!document.querySelector('.pc-input__submit').disabled"),
+    );
+    const submitEnabledAfterFailure = await evaluate(
+      "!document.querySelector('.pc-input__submit').disabled",
+    );
+
+    // 恢复网络后必须能再次成功（故障是可控的，不是坏环境）
+    await cdp.send("Network.setBlockedURLs", { urls: [] });
+    before = responses.length;
+    await click(".pc-input__submit");
+    await waitFor(
+      () => responses.length > before && complete.has(responses.at(-1).requestId),
+    );
+    const recovered = responses.at(-1).response.status;
+    assert.equal(recovered, 200, "恢复网络后应重新得到 200");
+    return {
+      faultInjection: "CDP Network.setBlockedURLs(*/api/v1/analyze)",
+      alertText,
+      submitEnabledAfterFailure,
+      recoveredStatus: recovered,
+      note: "阻断了 analyze 一条路径，未使用改端口/停服务等不可控手段。",
+    };
+  });
+
+  // ---------- E05 增量：请求失败后不得导出旧结论（缺陷探针，如实记录） ----------
+  await scenario("E05-failure-blocks-export", async () => {
+    const poem = POEMS[0];
+    await cdp.send("Page.navigate", { url: payload.url });
+    await waitFor(() =>
+      evaluate("Boolean(document.querySelector('.pc-input__text'))"),
+    );
+    await click(".pc-segmented__option:has(input[value=pingshui])");
+    await waitFor(() =>
+      evaluate("document.querySelector('input[value=pingshui]').checked"),
+    );
+    await click(".pc-input__text");
+    await key("a", "KeyA", 65, 2);
+    await cdp.send("Input.insertText", { text: poem.text });
+    let before = responses.length;
+    await click(".pc-input__submit");
+    await waitFor(
+      () => responses.length > before && complete.has(responses.at(-1).requestId),
+    );
+    await waitFor(() => evaluate("!document.querySelector('.pc-report--stale')"));
+
+    // 失败一次（只挡 analyze）
+    await cdp.send("Network.enable");
+    await cdp.send("Network.setBlockedURLs", { urls: ["*/api/v1/analyze"] });
+    await click(".pc-input__submit");
+    await waitFor(() =>
+      evaluate("Boolean(document.querySelector('[role=alert]'))"),
+    );
+    await waitFor(() =>
+      evaluate("!document.querySelector('.pc-input__submit').disabled"),
+    );
+
+    // 每轮新目录，避免把上一次文件当成本轮结果
+    const dlDir = join(options.out, `downloads-failure-${Date.now()}`);
+    mkdirSync(dlDir, { recursive: true });
+    await cdp.send("Browser.setDownloadBehavior", {
+      behavior: "allow",
+      downloadPath: dlDir,
+      eventsEnabled: true,
+    });
+    const focusButton = (label) =>
+      evaluate(
+        `(() => { const b = [...document.querySelectorAll('button')].find(x => x.textContent.includes(${JSON.stringify(label)})); if (!b) return false; b.focus(); return Boolean(document.activeElement && document.activeElement.textContent.includes(${JSON.stringify(label)})); })()`,
+      );
+    assert(await focusButton("下载报告"), "找不到下载按钮");
+    await key("Enter", "Enter", 13, 0, "\r");
+    await new Promise((r) => setTimeout(r, 2000));
+    const files = readdirSync(dlDir);
+    const feedback = await evaluate(
+      "document.querySelector('.pc-feedback')?.textContent?.trim() ?? ''",
+    );
+    await cdp.send("Network.setBlockedURLs", { urls: [] });
+
+    const blocked = files.length === 0 && /已阻止|尚无报告/.test(feedback);
+    if (!blocked) {
+      return {
+        status: "blocked",
+        defect:
+          "请求失败后仍可导出旧结论：导出目录新增文件或未给出阻止提示（期望：不得导出）",
+        files,
+        feedback,
+        repro:
+          "平水成功分析→CDP 阻断 */api/v1/analyze→再次提交并等待错误横幅→点“下载报告”→观察 downloads 目录与反馈",
+      };
+    }
+    return { blocked: true, feedback };
+  });
+
   payload.pageErrors = pageErrors;
   if (pageErrors.length) throw new Error("浏览器出现未捕获异常");
 } catch (err) {
