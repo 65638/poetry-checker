@@ -1,14 +1,55 @@
 import type { InputDraft } from "../view-contract";
 
 /**
- * 示例入口。正文必须来自审核案例；当前尚无审核通过的版本，
- * 因此占位为空字符串，并在 UI 里标注「待 E 的来源/版本核对」。
- * 不把合成 fixture 挂上《登鹳雀楼》《静夜思》《黄鹤楼》的名字。
+ * 示例入口：三首已批准固定正文。
+ *
+ * 正文来源与授权范围（不是"网上通行版"，是仓库内的已审记录）：
+ * - 批准记录 `tests/golden/cases/{dengguanquelou,jingyesi,huanghelou}.json`，
+ *   其 `reviewStatus = "approved"`，审查者为组长 J03（2026-10-18 电子裁定）
+ *   与 C（文本及体裁来源核对，见 docs/rule-sources.md）。
+ * - 作品元数据 `data/works/metadata.json` 给出 `approvedTextFingerprints`，
+ *   由 `packages/genre` 的 `fingerprintText`（去标点空白、保留字形字序）判定。
+ * - 语言证据 `ev:work:{dengguanquelou,jingyesi,huanghelou}:j03`。
+ *
+ * 边界（务必保持）：
+ * 1. 只取**题名与正文**。不把来源报告、逐字审核表或证据正文打进前端包。
+ * 2. 正文逐字照抄已批版本（含原标点），不简化、不改字、不做简繁转换。
+ *    一致性由 `tests/examples.test.ts` 对照 golden 用例与 SHA-256 指纹强制。
+ * 3. 三个示例的正文已含句读，`parseText` 把换行与句读都当句边界，
+ *    因此这里不再手工插换行——照抄原文即可正确切成四句/八句。
+ * 4. 审批只覆盖上述固定正文与体裁断言；**不代表全库发布已批准**。
+ *    `/readyz` 仍可能因其他范围未审核而 503，那是发布门槛，不是"分析不可用"。
  */
-export const EXAMPLES: Array<{ id: string; title: string; text: string }> = [
-  { id: "deng-guan-que-lou", title: "登鹳雀楼", text: "" },
-  { id: "jing-ye-si", title: "静夜思", text: "" },
-  { id: "huang-he-lou", title: "黄鹤楼", text: "" },
+export interface ExampleWork {
+  id: string;
+  title: string;
+  author: string;
+  /** 已批准固定正文：逐字取自 tests/golden/cases，正文内不插换行。 */
+  text: string;
+}
+
+export const EXAMPLES: ExampleWork[] = [
+  {
+    id: "deng-guan-que-lou",
+    title: "登鹳雀楼",
+    author: "王之涣",
+    // golden-dengguanquelou-ps-v1；指纹 33836d10…（wujue / applicable）
+    text: "白日依山尽，黄河入海流。欲穷千里目，更上一层楼。",
+  },
+  {
+    id: "jing-ye-si",
+    title: "静夜思",
+    author: "李白",
+    // golden-jingyesi-ps-v1；指纹 9d68fef6…（ancient / not_applicable）
+    text: "床前明月光，疑是地上霜。举头望明月，低头思故乡。",
+  },
+  {
+    id: "huang-he-lou",
+    title: "黄鹤楼",
+    author: "崔颢",
+    // golden-huanghelou-ps-v1；指纹 7b65737c…（qilv / 特殊拗律）
+    text: "昔人已乘黄鹤去，此地空余黄鹤楼。黄鹤一去不复返，白云千载空悠悠。晴川历历汉阳树，芳草萋萋鹦鹉洲。日暮乡关何处是，烟波江上使人愁。",
+  },
 ];
 
 /** 正文上限，与公共契约 AnalyzeRequestSchema 的 2,000 码点一致。 */

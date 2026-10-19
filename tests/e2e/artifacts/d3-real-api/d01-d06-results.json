@@ -1,0 +1,95 @@
+{
+  "results": [
+    {
+      "id": "D01 登鹳雀楼 按钮可用且填入已批正文",
+      "ok": true,
+      "detail": "click=clicked, 长度 24, 与已批正文一致=true"
+    },
+    {
+      "id": "D01 登鹳雀楼 不偷偷切换韵书",
+      "ok": true,
+      "detail": "韵书 前=pingshui 后=pingshui"
+    },
+    {
+      "id": "D01 静夜思 按钮可用且填入已批正文",
+      "ok": true,
+      "detail": "click=clicked, 长度 24, 与已批正文一致=true"
+    },
+    {
+      "id": "D01 静夜思 不偷偷切换韵书",
+      "ok": true,
+      "detail": "韵书 前=pingshui 后=pingshui"
+    },
+    {
+      "id": "D01 黄鹤楼 按钮可用且填入已批正文",
+      "ok": true,
+      "detail": "click=clicked, 长度 64, 与已批正文一致=true"
+    },
+    {
+      "id": "D01 黄鹤楼 不偷偷切换韵书",
+      "ok": true,
+      "detail": "韵书 前=pingshui 后=pingshui"
+    },
+    {
+      "id": "D02 登鹳雀楼 20 字位",
+      "ok": true,
+      "detail": "tokens=20"
+    },
+    {
+      "id": "D02 非合成 fixture 文案",
+      "ok": true,
+      "detail": "含「合成」=false"
+    },
+    {
+      "id": "D02 显示结论文案",
+      "ok": true,
+      "detail": "含「结论」=true"
+    },
+    {
+      "id": "D03 静夜思 不适用且仍可看逐字",
+      "ok": true,
+      "detail": "不适用=true, tokens=20"
+    },
+    {
+      "id": "D03 黄鹤楼 56 字位并保留特殊拗律标签",
+      "ok": false,
+      "detail": "tokens=56, 特殊拗律=false"
+    },
+    {
+      "id": "D03 黄鹤楼 真实诊断未被隐藏",
+      "ok": true,
+      "detail": "含不合律/违规=true（任务书要求保留真实红字）"
+    },
+    {
+      "id": "D04 字位可开证据抽屉并显示候选",
+      "ok": true,
+      "detail": "l4c1(第4句第1字「更」，仄), 候选=候选读音（2）, 可选=1, 有依据=true"
+    },
+    {
+      "id": "D04 选音后重查且标注用户选择",
+      "ok": true,
+      "detail": "click=clicked, tokens=20, 标注=false"
+    },
+    {
+      "id": "D05 编辑正文 → 旧报告 stale",
+      "ok": true,
+      "detail": "stale=true"
+    },
+    {
+      "id": "D05 stale 时导出被阻止并给出原因",
+      "ok": true,
+      "detail": "按钮存在=true, 反馈=\"当前报告已不对应当前输入，已阻止导出。\""
+    },
+    {
+      "id": "D05 换韵书 → stale 保持",
+      "ok": true,
+      "detail": "stale=true, 书=cilin"
+    },
+    {
+      "id": "D06 复制摘要与当前报告一致",
+      "ok": true,
+      "detail": "长度=585, 含合成=false"
+    }
+  ],
+  "errors": []
+}
