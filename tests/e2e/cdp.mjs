@@ -169,8 +169,19 @@ export async function launchBrowser(executable) {
         ...point,
       });
     };
-    const key = async (key, code, windowsVirtualKeyCode, modifiers = 0) => {
+    // text 用于 Enter/Space 等需要产生可编辑字符才对按钮生效的键；不传则与旧行为一致。
+    const key = async (
+      key,
+      code,
+      windowsVirtualKeyCode,
+      modifiers = 0,
+      text = undefined,
+    ) => {
       const params = { key, code, windowsVirtualKeyCode, modifiers };
+      if (text !== undefined) {
+        params.text = text;
+        params.unmodifiedText = text;
+      }
       await cdp.send("Input.dispatchKeyEvent", { type: "keyDown", ...params });
       await cdp.send("Input.dispatchKeyEvent", { type: "keyUp", ...params });
     };
