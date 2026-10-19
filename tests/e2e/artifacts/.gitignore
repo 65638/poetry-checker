@@ -1,0 +1,3 @@
+# Chrome 临时 profile 与下载目录不入库（每次跑驱动脚本都会重建）
+.chrome-profile*/
+downloads/

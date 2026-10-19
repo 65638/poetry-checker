@@ -58,7 +58,18 @@ export interface StoreOptions {
   /** 下载实现可注入，便于在无 DOM 环境测试。 */
   download?: (filename: string, json: string) => void;
   createAbortController?: () => AbortController;
+  /**
+   * 单次分析的客户端超时（毫秒），默认 {@link DEFAULT_REQUEST_TIMEOUT_MS}。
+   *
+   * 服务端偶发不返回时，没有超时会让 `busy` 永久为真、按钮一直「分析中…」，
+   * 用户既不能重试也拿不到解释。超时按可重试的失败处理，与用户主动取消区分。
+   * 传 0 或负数表示不设超时（仅供需要挂起语义的测试使用）。
+   */
+  requestTimeoutMs?: number;
 }
+
+/** 默认 30 秒：足够慢网络下的真实编排，又不至于让用户干等。 */
+export const DEFAULT_REQUEST_TIMEOUT_MS = 30_000;
 
 function initialState(draft: InputDraft): CheckerState {
   return {
@@ -221,6 +232,17 @@ export class CheckerStore {
       pendingOverrides: requestOverrides,
     });
 
+    // 客户端超时：到点主动 abort，并把「因超时中止」与「用户取消」区分开。
+    const timeoutMs = this.options.requestTimeoutMs ?? DEFAULT_REQUEST_TIMEOUT_MS;
+    let timedOut = false;
+    const timer =
+      timeoutMs > 0
+        ? setTimeout(() => {
+            timedOut = true;
+            controller.abort();
+          }, timeoutMs)
+        : null;
+
     let outcome: AnalyzeOutcome;
     try {
       outcome = await runAnalyze(
@@ -234,6 +256,8 @@ export class CheckerStore {
         ok: false,
         error: new ApiError("CONTRACT_ERROR", "请求执行异常", { cause }),
       };
+    } finally {
+      if (timer !== null) clearTimeout(timer);
     }
 
     // 身份守卫：被新请求或编辑失效后，旧响应的任何结果都不得写状态。
@@ -258,6 +282,19 @@ export class CheckerStore {
 
     const error = outcome.error;
     if (error.code === "ABORTED") {
+      // 超时与主动取消都走 ABORTED，但对用户的意义不同：
+      // 超时要说明"没等到结果、可以重试"，取消则不需要报错。
+      if (timedOut) {
+        this.commit({
+          busy: false,
+          error: {
+            code: "TIMEOUT",
+            message: `分析超时：服务在 ${Math.round(timeoutMs / 1000)} 秒内没有返回结果，请重试。输入内容已保留，未展示任何旧报告结论。`,
+          },
+          pendingOverrides: this.state.overrides,
+        });
+        return;
+      }
       this.commit({ busy: false, pendingOverrides: this.state.overrides });
       return;
     }

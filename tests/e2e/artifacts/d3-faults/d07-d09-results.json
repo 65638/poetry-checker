@@ -1,0 +1,75 @@
+{
+  "results": [
+    {
+      "id": "D07 503：保留输入、忙碌结束、显示可执行原因",
+      "ok": true,
+      "detail": "click=clicked, busy=false, 输入保留=true, 错误=!分析未完成分析数据尚未就绪，请稍后重试。输入内容已保留。\n原因：合成故障注入：快照 pingshui 未审核，拒绝支撑读音结论错误代码：HTTP_503"
+    },
+    {
+      "id": "D07 503：首次失败不伪造报告",
+      "ok": true,
+      "detail": "字位=0"
+    },
+    {
+      "id": "D07 离线：保留输入、忙碌结束、提示网络问题",
+      "ok": true,
+      "detail": "busy=false, 输入保留=true, 错误=!分析未完成无法连接分析服务，请检查网络后重试。输入内容已保留。错误代码：NETWORK_ERROR"
+    },
+    {
+      "id": "D07 超时：忙碌能在客户端结束（可重试）",
+      "ok": true,
+      "detail": "等待 29500ms 后 busy=false, 错误码文案=!分析未完成分析超时：服务在 30 秒内没有返回结果，请重试。输入内容已保留，未展示任何旧报告结论。错误代码：TIMEO"
+    },
+    {
+      "id": "D07 超时：保留输入且不伪造报告",
+      "ok": true,
+      "detail": "输入保留=true, 字位=0"
+    },
+    {
+      "id": "D08 375px 无横向溢出",
+      "ok": true,
+      "detail": "scrollWidth=375 clientWidth=375 溢出=0px, 字位=20"
+    },
+    {
+      "id": "D08 375px 触控目标 ≥44px（正式 UI）",
+      "ok": true,
+      "detail": "正式按钮最小边=44px；开发壳最小边=25px（仅 DEV，不计入）"
+    },
+    {
+      "id": "D08 768px 无横向溢出",
+      "ok": true,
+      "detail": "scrollWidth=753 clientWidth=753 溢出=0px, 字位=20"
+    },
+    {
+      "id": "D08 768px 触控目标 ≥44px（正式 UI）",
+      "ok": true,
+      "detail": "正式按钮最小边=44px；开发壳最小边=25px（仅 DEV，不计入）"
+    },
+    {
+      "id": "D08 1440px 无横向溢出",
+      "ok": true,
+      "detail": "scrollWidth=1425 clientWidth=1425 溢出=0px, 字位=20"
+    },
+    {
+      "id": "D08 1440px 触控目标 ≥44px（正式 UI）",
+      "ok": true,
+      "detail": "正式按钮最小边=44px；开发壳最小边=25px（仅 DEV，不计入）"
+    },
+    {
+      "id": "D08 Enter 打开抽屉且焦点进入",
+      "ok": true,
+      "detail": "open=true, focusInside=true"
+    },
+    {
+      "id": "D08 Escape 关闭且焦点返回字位",
+      "ok": true,
+      "detail": "关闭=true, 焦点字位=l1c1"
+    },
+    {
+      "id": "D09 reduced-motion 下仍可完成分析且不人为延迟",
+      "ok": true,
+      "detail": "耗时=285ms, 字位=20"
+    }
+  ],
+  "errors": []
+}
