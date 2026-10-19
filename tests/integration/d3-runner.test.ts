@@ -6,12 +6,25 @@ import {
   POEMS,
 } from "./e2e/d3-acceptance-api.mjs";
 import type { AnalysisResponse } from "@poetry/contracts";
+import { passedScenario } from "../e2e/scenario-result.mjs";
 import {
   assertReportExport,
   assertSummaryExport,
 } from "../e2e/export-checks.mjs";
 
 const poem = POEMS.find((p: { id: string }) => p.id === "huanghelou")!;
+describe("浏览器场景不得把缺陷返回值算为通过", () => {
+  it.each([
+    { status: "blocked", defect: "旧报告已下载" },
+    { status: "fail" },
+    { defect: "文件数量变化" },
+  ])("拒绝未通过结果 %j", (detail) => {
+    expect(() => passedScenario("test", detail)).toThrow("场景未通过");
+  });
+  it("明确成功的实际断言结果可以记录", () => {
+    expect(passedScenario("test", { blockedExport: true }).status).toBe("pass");
+  });
+});
 const app = buildApp();
 const request = {
   text: poem.text,

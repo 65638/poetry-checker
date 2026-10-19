@@ -113,6 +113,9 @@ export function ReportView(props: ReportViewProps) {
           声调依据：{report.policy.toneBasis === 'historical' ? '传统四声（入声归仄）' : '普通话声调（可能与传统韵书结果不同）'}
         </span>
         <span>{report.policy.notice}</span>
+        {report.genre.historicalTags.length > 0 && (
+          <span className="pc-historical-tags">作品体裁说明：{report.genre.historicalTags.join('、')}（不改变逐项检查结论）</span>
+        )}
       </p>
 
       <section className="pc-reading" aria-labelledby="pc-grid-heading">

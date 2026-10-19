@@ -1,4 +1,3 @@
-﻿/* global process, console, fetch, setTimeout, Buffer, WebSocket */
 /**
  * D3 故障注入 + 视口 + 键盘 + reduced-motion（D07–D09）。
  *

@@ -1,4 +1,3 @@
-﻿/* global process, console, fetch, setTimeout, Buffer, WebSocket */
 /**
  * D3 正式页面业务验收（真实 API）。D01–D06。
  *

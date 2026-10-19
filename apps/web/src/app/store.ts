@@ -233,7 +233,8 @@ export class CheckerStore {
     });
 
     // 客户端超时：到点主动 abort，并把「因超时中止」与「用户取消」区分开。
-    const timeoutMs = this.options.requestTimeoutMs ?? DEFAULT_REQUEST_TIMEOUT_MS;
+    const timeoutMs =
+      this.options.requestTimeoutMs ?? DEFAULT_REQUEST_TIMEOUT_MS;
     let timedOut = false;
     const timer =
       timeoutMs > 0
@@ -309,7 +310,7 @@ export class CheckerStore {
   /**
    * 选择当前候选读音。只接受当前报告中存在、且候选 ID 有效的覆盖；
    * 携带该报告的 inputHash 重新请求，不直接改写原报告候选/证据。
-   * 失败或迟到时，导出仍只用上一次成功计算的覆盖。
+   * 失败时保留旧快照供查看，复制/导出须等重试成功后恢复。
    */
   async chooseReading(override: ReadingOverride): Promise<void> {
     const { report, busy, stale } = this.state;
@@ -318,7 +319,9 @@ export class CheckerStore {
       return;
     }
     if (stale) {
-      this.commit({ feedback: "当前报告已不对应当前输入，请重新分析后再选音。" });
+      this.commit({
+        feedback: "当前报告已不对应当前输入，请重新分析后再选音。",
+      });
       return;
     }
     if (busy) {
@@ -357,7 +360,9 @@ export class CheckerStore {
   selectToken(tokenId: string | null): void {
     const { report } = this.state;
     if (tokenId !== null && report !== null) {
-      const exists = report.poem.tokens.some((token) => token.tokenId === tokenId);
+      const exists = report.poem.tokens.some(
+        (token) => token.tokenId === tokenId,
+      );
       if (!exists) {
         this.commit({ feedback: `字位 ${tokenId} 不在当前报告中。` });
         return;
@@ -389,7 +394,7 @@ export class CheckerStore {
    * 请求进行中说明存在待提交覆盖，此时拒绝导出，避免拼出新旧混合的结果。
    */
   private exportState() {
-    const { report, requestSnapshot, overrides, busy } = this.state;
+    const { report, requestSnapshot, overrides, busy, error } = this.state;
     if (report === null || requestSnapshot === null) {
       return { ok: false as const, reason: "尚无报告可导出。" };
     }
@@ -397,6 +402,12 @@ export class CheckerStore {
       return {
         ok: false as const,
         reason: "正在重新分析，请等待本次请求完成后再导出，避免新旧结果混用。",
+      };
+    }
+    if (error !== null) {
+      return {
+        ok: false as const,
+        reason: "本次分析未完成，已阻止复制和导出旧报告；请重试成功后再操作。",
       };
     }
     return {

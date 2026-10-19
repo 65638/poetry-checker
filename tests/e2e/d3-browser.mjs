@@ -21,6 +21,8 @@ import {
 } from "../../scripts/acceptance-runtime.mjs";
 import { launchBrowser } from "./cdp.mjs";
 import { assertReportExport, assertSummaryExport } from "./export-checks.mjs";
+import { passedScenario } from "./scenario-result.mjs";
+import { runLiveFlowScenarios } from "./live-flow-scenarios.mjs";
 import { POEMS, checkCell } from "../integration/e2e/d3-acceptance-api.mjs";
 
 const options = {
@@ -40,9 +42,9 @@ const payload = {
   scope: "D3 浏览器基础回归（部分系统验收）",
   results: [],
   notRun: [
-    "E05 人工选音、跨书旧覆盖、并发迟到全矩阵",
-    "E06 请求失败/进行中、选音后的复制导出（本轮覆盖正常报告及编辑 stale）",
-    "E07 needs_review/unsupported/网络故障受控替身",
+    "E05 浏览器并发迟到全矩阵（单元测试已覆盖）",
+    "E06 浏览器超时后的复制导出（失败与进行中已覆盖；超时由业务测试覆盖）",
+    "E07 needs_review/unsupported 合成状态与浏览器30秒超时场景",
     "E08 全键盘矩阵与真人审美反馈",
     "E09 干净 clone",
   ],
@@ -51,7 +53,7 @@ let api, web, browser;
 async function scenario(id, run) {
   try {
     const detail = await run();
-    payload.results.push({ id, status: "pass", detail });
+    payload.results.push(passedScenario(id, detail));
     console.log(`[PASS] ${id}`);
   } catch (err) {
     payload.results.push({ id, status: "fail", error: err.message });
@@ -121,7 +123,7 @@ try {
         : "blocked",
     detail: {
       examples,
-      note: "这里只核入口可用性；正文载入/配置保留仍需 D 的示例交付后补测。",
+      note: "入口检查；正文载入、配置保留与真实提交见 E04-example-flow 三个场景。",
     },
   });
 
@@ -562,132 +564,13 @@ try {
     };
   });
 
-  // ---------- E07：可控网络故障（只挡 /api/v1/analyze，不动其他请求） ----------
-  await scenario("E07-controlled-network-failure", async () => {
-    const poem = POEMS[0];
-    const openClean = async () => {
-      await cdp.send("Page.navigate", { url: payload.url });
-      await waitFor(() =>
-        evaluate("Boolean(document.querySelector('.pc-input__text'))"),
-      );
-      await click(".pc-segmented__option:has(input[value=pingshui])");
-      await waitFor(() =>
-        evaluate("document.querySelector('input[value=pingshui]').checked"),
-      );
-      await click(".pc-input__text");
-      await key("a", "KeyA", 65, 2);
-      await cdp.send("Input.insertText", { text: poem.text });
-    };
-    await openClean();
-    let before = responses.length;
-    await click(".pc-input__submit");
-    await waitFor(
-      () => responses.length > before && complete.has(responses.at(-1).requestId),
-    );
-    await waitFor(() => evaluate("!document.querySelector('.pc-report--stale')"));
-
-    // 只阻断 analyze：受控故障替身，明确标识
-    await cdp.send("Network.enable");
-    await cdp.send("Network.setBlockedURLs", { urls: ["*/api/v1/analyze"] });
-    before = responses.length;
-    await click(".pc-input__submit");
-    await waitFor(() =>
-      evaluate("Boolean(document.querySelector('[role=alert]'))"),
-    );
-    const alertText = await evaluate(
-      "document.querySelector('[role=alert]').textContent.trim()",
-    );
-    await waitFor(() =>
-      evaluate("!document.querySelector('.pc-input__submit').disabled"),
-    );
-    const submitEnabledAfterFailure = await evaluate(
-      "!document.querySelector('.pc-input__submit').disabled",
-    );
-
-    // 恢复网络后必须能再次成功（故障是可控的，不是坏环境）
-    await cdp.send("Network.setBlockedURLs", { urls: [] });
-    before = responses.length;
-    await click(".pc-input__submit");
-    await waitFor(
-      () => responses.length > before && complete.has(responses.at(-1).requestId),
-    );
-    const recovered = responses.at(-1).response.status;
-    assert.equal(recovered, 200, "恢复网络后应重新得到 200");
-    return {
-      faultInjection: "CDP Network.setBlockedURLs(*/api/v1/analyze)",
-      alertText,
-      submitEnabledAfterFailure,
-      recoveredStatus: recovered,
-      note: "阻断了 analyze 一条路径，未使用改端口/停服务等不可控手段。",
-    };
-  });
-
-  // ---------- E05 增量：请求失败后不得导出旧结论（缺陷探针，如实记录） ----------
-  await scenario("E05-failure-blocks-export", async () => {
-    const poem = POEMS[0];
-    await cdp.send("Page.navigate", { url: payload.url });
-    await waitFor(() =>
-      evaluate("Boolean(document.querySelector('.pc-input__text'))"),
-    );
-    await click(".pc-segmented__option:has(input[value=pingshui])");
-    await waitFor(() =>
-      evaluate("document.querySelector('input[value=pingshui]').checked"),
-    );
-    await click(".pc-input__text");
-    await key("a", "KeyA", 65, 2);
-    await cdp.send("Input.insertText", { text: poem.text });
-    let before = responses.length;
-    await click(".pc-input__submit");
-    await waitFor(
-      () => responses.length > before && complete.has(responses.at(-1).requestId),
-    );
-    await waitFor(() => evaluate("!document.querySelector('.pc-report--stale')"));
-
-    // 失败一次（只挡 analyze）
-    await cdp.send("Network.enable");
-    await cdp.send("Network.setBlockedURLs", { urls: ["*/api/v1/analyze"] });
-    await click(".pc-input__submit");
-    await waitFor(() =>
-      evaluate("Boolean(document.querySelector('[role=alert]'))"),
-    );
-    await waitFor(() =>
-      evaluate("!document.querySelector('.pc-input__submit').disabled"),
-    );
-
-    // 每轮新目录，避免把上一次文件当成本轮结果
-    const dlDir = join(options.out, `downloads-failure-${Date.now()}`);
-    mkdirSync(dlDir, { recursive: true });
-    await cdp.send("Browser.setDownloadBehavior", {
-      behavior: "allow",
-      downloadPath: dlDir,
-      eventsEnabled: true,
-    });
-    const focusButton = (label) =>
-      evaluate(
-        `(() => { const b = [...document.querySelectorAll('button')].find(x => x.textContent.includes(${JSON.stringify(label)})); if (!b) return false; b.focus(); return Boolean(document.activeElement && document.activeElement.textContent.includes(${JSON.stringify(label)})); })()`,
-      );
-    assert(await focusButton("下载报告"), "找不到下载按钮");
-    await key("Enter", "Enter", 13, 0, "\r");
-    await new Promise((r) => setTimeout(r, 2000));
-    const files = readdirSync(dlDir);
-    const feedback = await evaluate(
-      "document.querySelector('.pc-feedback')?.textContent?.trim() ?? ''",
-    );
-    await cdp.send("Network.setBlockedURLs", { urls: [] });
-
-    const blocked = files.length === 0 && /已阻止|尚无报告/.test(feedback);
-    if (!blocked) {
-      return {
-        status: "blocked",
-        defect:
-          "请求失败后仍可导出旧结论：导出目录新增文件或未给出阻止提示（期望：不得导出）",
-        files,
-        feedback,
-        repro:
-          "平水成功分析→CDP 阻断 */api/v1/analyze→再次提交并等待错误横幅→点“下载报告”→观察 downloads 目录与反馈",
-      };
-    }
-    return { blocked: true, feedback };
+  await runLiveFlowScenarios({
+    browser,
+    payload,
+    options,
+    responses,
+    complete,
+    scenario,
   });
 
   payload.pageErrors = pageErrors;
