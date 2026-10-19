@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { mkdtempSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { waitFor } from "../../scripts/acceptance-runtime.mjs";
@@ -185,7 +186,7 @@ export async function runLiveFlowScenarios({
     const selected = await choose();
     assert.equal(selected.request.inputHash, original.body.inputHash);
     const exported = await exportMatches(selected);
-    // Edit actual text; next network request must not carry the old override/hash.
+    // Edit actual text; the next request must clear overrides and recompute its hash.
     await fill(POEMS[0].text + "\n");
     assert(
       await evaluate("Boolean(document.querySelector('.pc-report--stale'))"),
@@ -193,14 +194,18 @@ export async function runLiveFlowScenarios({
     const edited = await submit();
     assert.equal(edited.status, 200);
     assert.deepEqual(edited.request.readingOverrides, []);
-    assert.equal(edited.request.inputHash, undefined);
+    assert.equal(
+      edited.request.inputHash,
+      createHash("sha256").update(edited.request.text).digest("hex"),
+    );
+    assert.notEqual(edited.request.inputHash, original.body.inputHash);
     await choose();
     await click(".pc-segmented__option:has(input[value=cilin])");
     const otherBook = await submit();
     assert.equal(otherBook.status, 503);
     assert.equal(otherBook.body.error.code, "DATA_NOT_READY");
     assert.deepEqual(otherBook.request.readingOverrides, []);
-    assert.equal(otherBook.request.inputHash, undefined);
+    assert.equal(otherBook.request.inputHash, edited.request.inputHash);
     await click(".pc-segmented__option:has(input[value=pingshui])");
     const restored = await submit();
     assert.equal(restored.status, 200);
