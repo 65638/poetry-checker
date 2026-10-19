@@ -25,9 +25,12 @@ E 原脚本在包含 D3 特例接线的分支复跑：3 通过 / 6 阻断 / 0 �
 
 ## 实际验证与边界
 
+可复现实现提交：`c803952`；下面两份 JSON 在该提交的干净工作树上通过真实独立进程再次生成。证据归档：
+`tests/integration/e2e/evidence/d3-codex-e-review/api.json`、`browser.json`，同目录 375/1440 视口截图。报告中的 SHA 指向运行的实现，不指向其后仅存档证据的提交。
+
 - 环境：Node v24.19.0、pnpm 11.25.0。
 - `pnpm verify`：exit 0，50 文件 / 684 测试；lint、typecheck、构建与生成契约检查全部通过。
-- 九格真实 HTTP：3 通过 / 6 阻断 / 0 判错。runner exit 2，当前环境 pnpm 外层折叠为非零 1，JSON 保留 exitCode=2。平水黄鹤楼特例精确检查 status、severity、字位、PPP、resolvedBy、审批依据，并检查其他偏离仍保留。
+- 九格真实 HTTP：3 通过 / 6 阻断 / 0 判错。runner exit 2，当前 PowerShell/命令包装层报告非零 1，JSON 保留 exitCode=2。平水黄鹤楼特例精确检查 status、severity、字位、PPP、resolvedBy、审批依据，并检查其他偏离仍保留。
 - 浏览器：Edge 155 + CDP，正式 `/`，自起临时 API/Vite：9 通过 / 1 阻断 / 0 失败；三首手动输入、真实响应、候选/来源、Esc 返回焦点、375/768/1440、减弱动效、编辑 stale、真实词林 503 提示已运行。阻断是示例按钮全部 disabled，归 D 批次二。
 - 右侧汉字异常：新浏览器回归确认句末标点节点不含后续汉字，375px 截图无串字；七言换行仍是已接受的 P0 行为。
 - 未运行：人工选音与竞态全矩阵、复制/导出内容、受控五态与网络故障、全键盘矩阵、真人审美、干净 clone；不宣告 E04–E08 全部通过。
