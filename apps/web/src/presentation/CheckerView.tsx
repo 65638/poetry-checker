@@ -20,7 +20,7 @@ export function CheckerView(props: CheckerViewProps) {
   const returnFocusRef = useRef<HTMLElement | null>(null);
   const prevTokenIdRef = useRef<string | null>(selectedTokenId);
   const manuscriptRef = useRef<HTMLElement>(null);
-  const reportKey = report?.inputHash ?? null;
+  const revealIntentRef = useRef<{ from: CheckerViewProps['report']; sawBusy: boolean } | null>(null);
 
   const selectedToken =
     report !== null && selectedTokenId !== null
@@ -42,15 +42,50 @@ export function CheckerView(props: CheckerViewProps) {
     props.onSelectToken(tokenId);
   };
 
-  // Single-column only: bring a fresh result into view when it was requested from the input form.
+  const handleAnalyze = () => {
+    revealIntentRef.current = { from: report, sawBusy: false };
+    props.onAnalyze();
+  };
+
+  const handleDraftChange: CheckerViewProps['onDraftChange'] = (next) => {
+    revealIntentRef.current = null;
+    props.onDraftChange(next);
+  };
+
+  // Intent is dropped as soon as the user scrolls on their own while the request is pending.
   useEffect(() => {
+    const drop = () => { revealIntentRef.current = null; };
+    const onKey = (e: KeyboardEvent) => {
+      if (['PageDown', 'PageUp', 'Home', 'End', 'ArrowDown', 'ArrowUp', ' '].includes(e.key)
+        && !(e.target instanceof HTMLElement && e.target.closest('textarea, input, button, [role=dialog]'))) drop();
+    };
+    window.addEventListener('wheel', drop, { passive: true });
+    window.addEventListener('touchmove', drop, { passive: true });
+    window.addEventListener('keydown', onKey);
+    return () => {
+      window.removeEventListener('wheel', drop);
+      window.removeEventListener('touchmove', drop);
+      window.removeEventListener('keydown', onKey);
+    };
+  }, []);
+
+  // Single column only: reveal the result of an Analyze the user just submitted.
+  useEffect(() => {
+    const intent = revealIntentRef.current;
+    if (intent === null) return;
+    if (busy) {
+      intent.sawBusy = true;
+      return;
+    }
+    if (!intent.sawBusy && report === intent.from && error === null) return;
+    revealIntentRef.current = null;
     const sheet = manuscriptRef.current;
-    if (reportKey === null || !sheet || typeof sheet.scrollIntoView !== 'function') return;
-    if (!document.activeElement?.closest('.pc-plinth')) return;
-    if (typeof window.matchMedia !== 'function' || !window.matchMedia('(max-width: 899px)').matches) return;
+    if (report === null || report === intent.from || error !== null || stale || !sheet) return;
+    if (typeof sheet.scrollIntoView !== 'function' || typeof window.matchMedia !== 'function') return;
+    if (!window.matchMedia('(max-width: 899px)').matches) return;
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     sheet.scrollIntoView({ block: 'start', behavior: reduce ? 'auto' : 'smooth' });
-  }, [reportKey]);
+  }, [busy, report, error, stale]);
 
   useEffect(() => {
     const prev = prevTokenIdRef.current;
@@ -95,8 +130,8 @@ export function CheckerView(props: CheckerViewProps) {
               draft={draft}
               busy={busy}
               examples={props.examples}
-              onDraftChange={props.onDraftChange}
-              onAnalyze={props.onAnalyze}
+              onDraftChange={handleDraftChange}
+              onAnalyze={handleAnalyze}
               onLoadExample={props.onLoadExample}
             />
           </section>
