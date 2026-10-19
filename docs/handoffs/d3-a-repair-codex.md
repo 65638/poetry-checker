@@ -27,10 +27,24 @@
 | `check-normalized.ts` / `precheck-lexicon.ts` | exit 0；平水 105/106 两快照保留，来源及引用完整；发布门槛仍不通过 |
 | 平水/词林两轮实际构建 | 两轮 exit 0，三份快照字节与版本登记完全一致；见 `data/reviews/d3-a-rebuild-verification.json` |
 | 批次/抽样/异常/逐字报告重建 | 48 候选 / 338 抽样条目；逐字 96 字位、84/189 已审证据；异常表按实际检查保留待办 |
-| 真实 HTTP 九格 | 待在提交后独立临时端口运行，不占用户开发服务 |
+| 真实 HTTP 九格 | `3b0468d`，dirty=false；3 通过 / 6 数据阻断 / 0 判错，exit 2；平水响应声明新 review4 版本 |
 
 过程中的失败也保留说明：首次登记混用了完整规范化摘要和业务摘要，precheck 拒绝三份登记；已分字段记录并按 `businessContentDigest` 修正。一次重复构建在 Windows 写入词林快照时报 UNKNOWN，停止后串行两轮重建成功，无字节漂移。两者都未通过放松断言处理。
 
 ## 发布边界
 
 三库快照仍为 unverified；词林与新韵证据仍未批准。48 条候选批次仅覆盖《登鹳雀楼》两个韵书，审批记录仍为空。此修复不解除六格数据阻断，不批准全库发布。
+
+## 交付与 A 后续操作
+
+实现提交 `3b0468d` 合并保留 A 原提交历史；HTTP 证据原样保存于 `tests/integration/e2e/evidence/d3-codex-a-repair/api.json`。全仓检查在相同实现的工作树执行，最后仅修订报告文案，不把 711 项称作浏览器全量验收。
+
+可直接转发 A：
+
+```text
+Codex 已接管修复六部误批和数据版本复用，保留你的48候选、非汉字过滤、生成器戳记和异体边。以最新 origin/codex/d3-b-integration 新建后续分支，别从旧 feat/a-d3-evidence-batches 继续整包合并，否则会带回错误审批或旧版本。
+
+平水是83候选+三讲，词林/新韵未新增批准；机器初审批次不等于approved。版本与删除8条杂项的完整差异见 data/reviews/d3-a-repair-version-change.json。
+
+继续其余两首的词林/新韵精确候选批次及来源/规则异常核对，与B用实际candidateId对接。不需要重复做本批修复，不改既有审批原件，不改测试来放宽范围。历史测试数字不能复制成新批次结果；交付前跑 pnpm verify。
+```

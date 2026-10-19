@@ -1,5 +1,7 @@
 # 首批工程底座交付记录
 
+> **D3 A 修复（2026-10-19）**：六部误批已撤回，保留83候选+三讲；平水 review4、词林 clean1。全仓711项通过，真实九格3/6/0，48条新候选仍待批准。详见 [A 修复交接](docs/handoffs/d3-a-repair-codex.md)。
+
 > **当前状态（2026-10-19，Codex 集成复核）**：本文按交付批次追加，以下 D1 段落为历史。
 > `main@f42172f` 包含 D1/D2 交付，PR #11 已合并。D3 工作位于 `integrate/d3` 及其上游待合批次 `codex/d3-b-integration`（PR #16），尚不等于已进入 main。
 > D3 特例已接入 orchestrator，真实 HTTP 已验证平水《黄鹤楼》限定尾式为 `not_applicable/info`，其他偏离保留。C 的 PR #14 新增收尾提交 `8dcec2c`、`803e52a` 已纳入本集成分支。
