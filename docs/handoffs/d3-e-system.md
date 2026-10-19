@@ -142,6 +142,7 @@ Codex 按组长授权接管 apps/api 就绪诊断、根命令与验收基础设�
 1. 词林/新韵六格 503：候选证据未审核（`LOOKUP_EVIDENCE_UNVERIFIED`）——A/B 补审核批次后复跑。
 2. 示例按钮 disabled——D 批次二交付后补 E04 点击链路。
 3. `pnpm test:acceptance` / `test:e2e` 非零是**如实阻断**，不得改预期使其全绿。
+
 ---
 
 # D3 第三批：E06 / E08 场景增量（2026-10-19）
@@ -202,3 +203,50 @@ Codex 按组长授权接管 apps/api 就绪诊断、根命令与验收基础设�
 2. E07：明确标识的可控故障替身（网络失败/超时/迟到）。
 3. 数据六格与示例按钮到位后复跑对应阻断项。
 4. 若 codex 分支已前进：rebase 后重跑三条命令并重出证据（不沿用旧 SHA）。
+
+---
+
+# D3 第四批：E07 可控故障 + 失败态导出闸门（2026-10-19）
+
+批次 `D3-E05-E07-01`。分支 `feat/e-d3-e05-e07`，基线 `origin/codex/d3-b-integration@2662ba5`。
+
+## SHA 区分（按要求）
+
+| 用途             | SHA                                      |
+| ---------------- | ---------------------------------------- |
+| **实际运行 SHA** | `c887a4c801de`（dirty=false，mode=real） |
+| **归档提交 SHA** | `d4a94c8b1ee5`（证据目录由该提交引入）   |
+
+## 新增场景
+
+- **E07-controlled-network-failure**：CDP `Network.setBlockedURLs` 只阻断 `/api/v1/analyze`；
+  断言错误横幅 `[role=alert]` 出现、提交按钮恢复可用、解除阻断后重新 200。
+  不使用停服务/改端口等不可控手段。
+- **E05-failure-blocks-export**：请求失败后点“下载报告”→ 被阻止且导出目录无文件；
+  每轮用新的下载目录（复用 Codex 加固口径）。若将来允许导出旧结论，场景以 `blocked + defect + repro` 记录，不改预期。
+
+## 实跑
+
+| 命令                   | 结果                                                      |
+| ---------------------- | --------------------------------------------------------- |
+| `pnpm verify`          | exit 0，50 文件 / **703 项**                              |
+| `pnpm test:acceptance` | exit 2，3 通过 / 6 阻断 / 0 判错                          |
+| `pnpm test:e2e`        | exit 2，**13 通过 / 1 阻断 / 0 失败**（上批 11，本批 +2） |
+
+## 证据
+
+`tests/integration/e2e/evidence/d3-e-e05-e07-2026-10-19/`：`api.json`、`browser.json`、
+`report-1440/768/375.png`、`summary.json`（`runSha`、`runDirty=false`、`mode=real`、计数、`notRun`）。
+不覆盖 Codex 的既有证据目录。
+
+## 阻塞：E05 主体无法用页面驱动
+
+`EvidencePanel.tsx:118-135` 的候选是只读 `<li>`；`apps/web` 全量搜索无 `onSelect/setOverride` 消费者，
+`pendingOverrides` 只在 `store.ts` 内部。因此“选音→真实重查”缺少 UI 入口，**未运行**。
+不用控制台直调 store 伪造通过。`apps/web` 属 D 目录，需明确由谁补控件。
+
+## 其他
+
+- D 的 PR #18 交接在 `origin/feat/d-d3-live-flow` 的 docs 下未找到，需路径或允许按 diff 读；示例链路仍未复跑，1 阻断未消除。
+- 仍未运行：编辑/切书旧覆盖清理（当前无覆盖可清）、busy 中导出分支、全键盘矩阵、干净 clone。
+- 网络 fetch 本次一次成功；若再次持续失败，只记录一次具体错误即报告，不再连试十次。
