@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-19T13:43:30.365Z",
+  "generatedAt": "2026-10-19T13:44:31.930Z",
   "runnerRevision": {
-    "commit": "49079d1c767339615c00cd1ce744044281deaa6a",
-    "dirty": true
+    "commit": "fdfac790e6a97a757bd0d440455d5784d2620b5a",
+    "dirty": false
   },
   "serverRevision": {
-    "commit": "49079d1c767339615c00cd1ce744044281deaa6a",
-    "dirty": true
+    "commit": "fdfac790e6a97a757bd0d440455d5784d2620b5a",
+    "dirty": false
   },
   "node": "v24.21.0",
   "results": [
@@ -19,7 +19,7 @@
       "facts": {
         "http": 200,
         "schema": "pass",
-        "ms": 31,
+        "ms": 21,
         "formFamily": "regulated",
         "formId": "wujue",
         "summary": "pass",
@@ -85,7 +85,7 @@
       "facts": {
         "http": 200,
         "schema": "pass",
-        "ms": 19,
+        "ms": 30,
         "formFamily": "ancient",
         "formId": null,
         "summary": "not_applicable",
@@ -136,7 +136,7 @@
       "facts": {
         "http": 200,
         "schema": "pass",
-        "ms": 12,
+        "ms": 11,
         "formFamily": "regulated",
         "formId": "qilv",
         "summary": "fail",
@@ -195,7 +195,7 @@
     }
   ],
   "total": 9,
-  "apiUrl": "http://127.0.0.1:49875",
+  "apiUrl": "http://127.0.0.1:62588",
   "readiness": {
     "http": 503,
     "mode": "real",
