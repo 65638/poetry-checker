@@ -1,6 +1,7 @@
 # D3 · C 交付：已审特例独立验收（2026-10-19）
 
 > 状态：**GREEN**（C01–C10 全部有独立断言并通过；全仓 47 文件 659 项通过）
+> PR：**#14** https://github.com/65638/poetry-checker/pull/14 （`feat/c-d3-exception-acceptance` → `main`；创建时 head `dbc5a6a`，已用 `git ls-remote refs/pull/14/head` 核对）
 
 ## 基线与分叉
 
@@ -9,7 +10,7 @@
 | base | `main @ f42172f`（含 f42172f，`merge-base --is-ancestor` 已验证） |
 | Codex 实现 | `codex/d3-reviewed-exceptions @ 63de97b`，按单提交 cherry-pick 到本分支（未改实现） |
 | branch | `feat/c-d3-exception-acceptance` |
-| head | 见本提交 |
+| head | 见本提交（PR #14 创建时为 `dbc5a6a`） |
 
 ## 变更路径（均在 C 授权范围）
 
