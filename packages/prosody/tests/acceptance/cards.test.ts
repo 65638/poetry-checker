@@ -18,6 +18,7 @@ interface CardEntry {
 
 interface EvidenceRecord {
   id: string;
+  sourceId: string;
   reviewStatus: string;
   locator: string;
 }
@@ -105,8 +106,9 @@ describe("规则卡与证据闭合（J03 第一批·第三部分）", () => {
       }
     }
     for (const record of bundle.evidence) {
-      expect(record.id.startsWith("ev:rule:")).toBe(true);
-      expect(sourceIds.size).toBeGreaterThan(0);
+      // 证据命名约定：规则证据 ev:rule:*，作品/语境证据 ev:work:* / ctx:*；都必须在 sources 解析
+      expect(record.id).toMatch(/^(ev:rule:|ev:work:|ctx:)/);
+      expect(sourceIds.has(record.sourceId)).toBe(true);
     }
   });
 
