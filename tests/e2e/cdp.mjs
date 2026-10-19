@@ -169,7 +169,7 @@ export async function launchBrowser(executable) {
         ...point,
       });
     };
-    // text 用于 Enter/Space 等需要产生可编辑字符才对按钮生效的键；不传则与旧行为一致。
+    // 为 Enter/Space 提供 Chromium 的字符语义以触发原生按钮默认动作；仅 keyDown 带 text。
     const key = async (
       key,
       code,
@@ -178,11 +178,12 @@ export async function launchBrowser(executable) {
       text = undefined,
     ) => {
       const params = { key, code, windowsVirtualKeyCode, modifiers };
+      const down = { ...params };
       if (text !== undefined) {
-        params.text = text;
-        params.unmodifiedText = text;
+        down.text = text;
+        down.unmodifiedText = text;
       }
-      await cdp.send("Input.dispatchKeyEvent", { type: "keyDown", ...params });
+      await cdp.send("Input.dispatchKeyEvent", { type: "keyDown", ...down });
       await cdp.send("Input.dispatchKeyEvent", { type: "keyUp", ...params });
     };
     return { cdp, evaluate, click, key, stop };

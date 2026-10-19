@@ -1,7 +1,14 @@
 #!/usr/bin/env node
 /** 正式 / 入口 + 真实 API 的首批浏览器回归；不等价于 E04–E08 全量验收。 */
 import assert from "node:assert/strict";
-import { mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import {
+  mkdirSync,
+  mkdtempSync,
+  readdirSync,
+  readFileSync,
+  writeFileSync,
+} from "node:fs";
+import { createHash } from "node:crypto";
 import { createRequire } from "node:module";
 import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
@@ -13,6 +20,7 @@ import {
   waitFor,
 } from "../../scripts/acceptance-runtime.mjs";
 import { launchBrowser } from "./cdp.mjs";
+import { assertReportExport, assertSummaryExport } from "./export-checks.mjs";
 import { POEMS, checkCell } from "../integration/e2e/d3-acceptance-api.mjs";
 
 const options = {
@@ -33,7 +41,7 @@ const payload = {
   results: [],
   notRun: [
     "E05 人工选音、跨书旧覆盖、并发迟到全矩阵",
-    "E06 剪贴板/报告文件内容核对",
+    "E06 请求失败/进行中、选音后的复制导出（本轮覆盖正常报告及编辑 stale）",
     "E07 needs_review/unsupported/网络故障受控替身",
     "E08 全键盘矩阵与真人审美反馈",
     "E09 干净 clone",
@@ -290,20 +298,31 @@ try {
     const report = JSON.parse(
       raw.base64Encoded ? Buffer.from(raw.body, "base64").toString() : raw.body,
     );
+    const checked = checkCell(poem, "pingshui", {
+      status: response.response.status,
+      body: report,
+    });
+    assert.equal(checked.ok, true, JSON.stringify(checked.issues));
+    const { postData } = await cdp.send("Network.getRequestPostData", {
+      requestId: response.requestId,
+    });
+    const request = JSON.parse(postData);
     await waitFor(() =>
-      evaluate("!document.querySelector('.pc-report--stale')"),
+      evaluate(
+        `Boolean(document.querySelector('.pc-status--${report.summary.status}')) && !document.querySelector('.pc-report--stale')`,
+      ),
     );
 
-    let permission;
-    try {
-      await cdp.send("Browser.grantPermissions", {
-        origin: new URL(payload.url).origin,
-        permissions: ["clipboardReadWrite", "clipboardSanitizedWrite"],
-      });
-      permission = "granted";
-    } catch {
-      permission = "grant-failed";
-    }
+    await cdp.send("Browser.grantPermissions", {
+      origin: new URL(payload.url).origin,
+      permissions: ["clipboardReadWrite", "clipboardSanitizedWrite"],
+    });
+    const permission = "granted";
+    await cdp.send("Page.bringToFront");
+    // Ensure a no-op copy cannot pass by retaining a previous run's matching summary.
+    await evaluate(
+      `navigator.clipboard.writeText(${JSON.stringify(`before-copy-${Date.now()}`)})`,
+    );
 
     const focusButton = (label) =>
       evaluate(
@@ -326,12 +345,9 @@ try {
       );
       throw new Error(`复制后无反馈: ${JSON.stringify(copiedDiag)}`);
     }
-    let clipboardText;
-    try {
-      clipboardText = await evaluate("navigator.clipboard.readText()");
-    } catch {
-      clipboardText = "";
-    }
+    assert.equal(feedback, "摘要已复制到剪贴板。", "复制未成功");
+    const clipboardText = await evaluate("navigator.clipboard.readText()");
+    assertSummaryExport(clipboardText, report, request);
     const copied = {
       permission,
       feedback,
@@ -344,19 +360,8 @@ try {
       hasInputHash: clipboardText.includes(report.inputHash),
       hasText: clipboardText.includes(report.poem.originalText),
     };
-    if (clipboardText) {
-      assert(copied.hasSummary, "复制内容缺少结论");
-      assert(copied.hasBook, "复制内容缺少韵书");
-      assert(copied.hasGenre, "复制内容缺少体式");
-      assert(
-        copied.hasDataVersion && copied.hasRulesVersion,
-        "复制内容缺少版本",
-      );
-      assert(copied.hasInputHash, "复制内容缺少 inputHash");
-      assert(copied.hasText, "复制内容缺少原文");
-    }
-    const dlDir = join(options.out, "downloads");
-    mkdirSync(dlDir, { recursive: true });
+    // New directory for every run: no existing JSON can masquerade as this download.
+    const dlDir = mkdtempSync(join(options.out, "downloads-"));
     await cdp.send("Browser.setDownloadBehavior", {
       behavior: "allow",
       downloadPath: dlDir,
@@ -379,32 +384,7 @@ try {
       }
     }
     assert(downloaded, "未产生可解析的导出 JSON");
-    assert.equal(
-      downloaded.inputHash,
-      report.inputHash,
-      "导出 inputHash 不一致",
-    );
-    assert.equal(
-      downloaded.originalText,
-      report.poem.originalText,
-      "导出原文不一致",
-    );
-    assert.equal(
-      downloaded.report.summary.status,
-      report.summary.status,
-      "导出 summary 不一致",
-    );
-    assert.equal(
-      downloaded.report.versions.data,
-      report.versions.data,
-      "导出数据版本不一致",
-    );
-    assert.equal(
-      downloaded.report.poem.tokens.length,
-      report.poem.tokens.length,
-      "导出字位数量不一致",
-    );
-    assert.equal(downloaded.request.text, poem.text, "导出请求快照不一致");
+    assertReportExport(downloaded, report, request);
 
     // stale 闸门：不得复制/导出旧结论
     await click(".pc-input__text");
@@ -412,9 +392,21 @@ try {
     await waitFor(() =>
       evaluate("Boolean(document.querySelector('.pc-report--stale'))"),
     );
-    const jsonBefore = readdirSync(dlDir).filter((n) =>
-      n.endsWith(".json"),
-    ).length;
+    const filesSnapshot = () =>
+      readdirSync(dlDir)
+        .sort()
+        .map((name) => ({
+          name,
+          sha256: createHash("sha256")
+            .update(readFileSync(join(dlDir, name)))
+            .digest("hex"),
+        }));
+    const filesBefore = filesSnapshot();
+    // A different sentinel catches incorrectly re-copying the same old summary.
+    const staleSentinel = `stale-copy-must-not-write-${Date.now()}`;
+    await evaluate(
+      `navigator.clipboard.writeText(${JSON.stringify(staleSentinel)})`,
+    );
     assert(await focusButton("复制摘要"), "stale 后找不到复制按钮");
     await key("Enter", "Enter", 13, 0, "\r");
     await waitFor(() =>
@@ -425,24 +417,29 @@ try {
     const blockedCopy = await evaluate(
       "document.querySelector('.pc-feedback').textContent.trim()",
     );
-    let clipboardAfter;
-    try {
-      clipboardAfter = await evaluate("navigator.clipboard.readText()");
-    } catch {
-      clipboardAfter = clipboardText;
-    }
-    assert.equal(clipboardAfter, clipboardText, "stale 后剪贴板内容变化");
+    const clipboardAfter = await evaluate("navigator.clipboard.readText()");
+    assert.equal(clipboardAfter, staleSentinel, "stale 后剪贴板内容变化");
     assert(await focusButton("下载报告"), "stale 后找不到下载按钮");
     await key("Enter", "Enter", 13, 0, "\r");
+    await waitFor(() =>
+      evaluate(
+        "document.querySelector('.pc-feedback')?.textContent.includes('已阻止导出')",
+      ),
+    );
     await new Promise((r) => setTimeout(r, 1500));
-    const jsonAfter = readdirSync(dlDir).filter((n) =>
-      n.endsWith(".json"),
-    ).length;
-    assert.equal(jsonAfter, jsonBefore, "stale 后仍新增导出文件");
+    assert.deepEqual(
+      filesSnapshot(),
+      filesBefore,
+      "stale 后导出目录有新增或改写（含临时文件）",
+    );
     return {
       permission,
       copied,
       downloadedFile: downloaded.name,
+      downloadedReportMatchesEntireResponse: true,
+      copiedAndDownloadedRequestMatchesNetworkRequest: true,
+      downloadDirectory: dlDir,
+      staleClipboardSentinelPreserved: true,
       blockedCopy,
       staleBlocksExport: true,
     };
@@ -481,7 +478,11 @@ try {
       evaluate("document.querySelectorAll('[data-token-id]').length > 0"),
     );
 
-    await evaluate("document.body.focus()");
+    // From here onward use only keyboard input; the analysis setup above uses mouse.
+    assert(
+      await evaluate("document.activeElement?.matches('.pc-input__submit')"),
+      "分析后焦点不在提交按钮",
+    );
     let tabs = 0;
     let tokenId = null;
     while (tabs < 150) {
@@ -506,16 +507,26 @@ try {
     const dialogOpen = await evaluate(
       "Boolean(document.querySelector('[role=dialog]'))",
     );
+    assert(dialogOpen, "Enter 未打开详情");
 
     let innerTabs = 0;
     let closeLabel = null;
-    while (innerTabs < 8) {
-      closeLabel = await evaluate(
-        "(() => { const a = document.activeElement; if (!a || !a.closest || !a.closest('[role=dialog]')) return null; return a.tagName === 'BUTTON' ? a.textContent.trim() : null; })()",
-      );
-      if (closeLabel) break;
+    const innerPath = [];
+    while (innerTabs < 80) {
+      // Always press Tab at least once; initial auto-focus on close is not Tab coverage.
       await key("Tab", "Tab", 9);
       innerTabs += 1;
+      const focus = await evaluate(`(() => {
+        const a = document.activeElement;
+        return { inside: Boolean(a?.closest('[role=dialog]')), tag: a?.tagName,
+          text: a?.textContent?.trim(), close: Boolean(a?.matches('.pc-evidence__header button')) };
+      })()`);
+      assert(focus.inside, "Tab 焦点逃出对话框");
+      innerPath.push(focus);
+      closeLabel = await evaluate(
+        "document.activeElement?.matches('.pc-evidence__header button') ? document.activeElement.textContent.trim() : null",
+      );
+      if (closeLabel) break;
     }
     assert(closeLabel, "对话框内 Tab 未落到可操作按钮");
     await key(" ", "Space", 32, 0, " ");
@@ -541,10 +552,13 @@ try {
       tokenText,
       tabsToReachToken: tabs,
       innerTabsToClose: innerTabs,
+      innerFocusPath: innerPath,
       closeLabel,
       keysUsed: ["Tab", "Enter", "Space", "Escape"],
       focusReturn: { space: focusAfterSpace, escape: focusAfterEscape },
       dialogOpen,
+      scope:
+        "分析前置用鼠标；提交后的 Tab→字格→详情→关闭全程真实按键，无 DOM focus/click 代替",
     };
   });
 
