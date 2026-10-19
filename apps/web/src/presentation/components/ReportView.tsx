@@ -65,14 +65,30 @@ export function ReportView(props: ReportViewProps) {
     if (!el || typeof el.animate !== 'function' || prefersReducedMotion()) return;
     const ms = parseFloat(getComputedStyle(el).getPropertyValue('--pc-dur-report'));
     if (!(ms > 0)) return;
-    const shift = getComputedStyle(el).getPropertyValue('--pc-shift-report').trim() || '0px';
-    el.animate(
+    const style = getComputedStyle(el);
+    const shift = style.getPropertyValue('--pc-shift-report').trim() || '0px';
+    const stagger = parseFloat(style.getPropertyValue('--pc-stagger-line')) || 0;
+    const easing = 'cubic-bezier(0.2, 0.7, 0.2, 1)';
+    el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: ms * 0.6, easing });
+    el.querySelector('.pc-status')?.animate(
       [
-        { opacity: 0, transform: `translateY(${shift})` },
+        { opacity: 0, transform: 'scale(1.04)' },
         { opacity: 1, transform: 'none' },
       ],
-      { duration: ms, easing: 'cubic-bezier(0.2, 0.7, 0.2, 1)' },
+      { duration: ms, easing: 'cubic-bezier(0.3, 1.4, 0.5, 1)' },
     );
+    const lines = Array.from(el.querySelectorAll<HTMLElement>('.pc-line'));
+    // Total reveal stays near 650ms regardless of poem length.
+    const step = lines.length > 1 ? Math.min(stagger, 290 / (lines.length - 1)) : 0;
+    lines.forEach((line, i) => {
+      line.animate(
+        [
+          { opacity: 0, transform: `translateY(${shift})` },
+          { opacity: 1, transform: 'none' },
+        ],
+        { duration: ms, delay: i * step, easing, fill: 'backwards' },
+      );
+    });
   }, [reportId]);
 
   useEffect(() => {
@@ -94,7 +110,9 @@ export function ReportView(props: ReportViewProps) {
       )}
 
       <header className={`pc-status pc-status--${report.summary.status}`}>
-        <span className="pc-status__icon" aria-hidden="true">{summary.icon}</span>
+        <span className="pc-status__icon" aria-hidden="true">
+          <span className="pc-status__glyph">{summary.icon}</span>
+        </span>
         <div className="pc-status__body">
           <h3 className="pc-status__label">结论：{summary.label}</h3>
           <p className="pc-status__text">{summary.desc}</p>
@@ -120,7 +138,10 @@ export function ReportView(props: ReportViewProps) {
 
       <section className="pc-reading" aria-labelledby="pc-grid-heading">
         <div className="pc-reading__head">
-          <h3 id="pc-grid-heading" className="pc-section-title">批注诗文</h3>
+          <h3 id="pc-grid-heading" className="pc-section-title">
+            <span className="pc-section-title__no" aria-hidden="true">贰</span>
+            批注诗文
+          </h3>
           <p className="pc-legend">「韵」= 韵脚 · 「?」= 读音待定 · 虚线框 = 声调未定 · ◆ = 批注关联位置</p>
         </div>
         <ol ref={gridRef} className="pc-grid">
@@ -175,7 +196,10 @@ export function ReportView(props: ReportViewProps) {
       </section>
 
       <section className="pc-notes" aria-labelledby="pc-findings-heading">
-        <h3 id="pc-findings-heading" className="pc-section-title">批注</h3>
+        <h3 id="pc-findings-heading" className="pc-section-title">
+          <span className="pc-section-title__no" aria-hidden="true">叁</span>
+          批注
+        </h3>
         {checks.length === 0 ? (
           <p className="pc-legend">本报告未列出批注条目；结论以上方状态为准。</p>
         ) : (

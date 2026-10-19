@@ -5,55 +5,71 @@ body {
 }
 
 .pc-root {
-  --pc-bg: #f7f5ef;
-  --pc-surface: #ffffff;
-  --pc-surface-sheet: #fdfcf8;
-  --pc-surface-sunken: #f0ede5;
-  --pc-surface-hover: #e8e4d9;
+  /* Stage: the dark ink exhibition wall. Decorative glyph tones are aria-hidden art, not text. */
+  --pc-ink-900: #14181a;
+  --pc-ink-800: #1d2427;
+  --pc-ink-700: #283135;
+  --pc-ink-600: #36413f;
+  --pc-ink-500: #4a5653;
+  --pc-ink-glyph: #232b2e;
+  --pc-on-ink: #efe6d2;
+  --pc-on-ink-muted: #a39c8a;
+  --pc-on-ink-accent: #e0583f;
+  --pc-on-ink-gold: #d9a441;
+
+  /* Paper: working surfaces. Body text 14.3:1, muted 6.0:1 on --pc-bg. */
+  --pc-bg: #f4efe4;
+  --pc-surface: #fffdf8;
+  --pc-surface-sheet: #faf7f0;
+  --pc-surface-sunken: #efe9db;
+  --pc-surface-hover: #e6dfcd;
   --pc-paper-texture: url("/design/paper-grain.svg");
   --pc-paper-tile: 240px;
-  --pc-motif: url("/design/mountain-contour.svg");
-  --pc-divider: #ddd8cc;
-  --pc-ruling: #e6e1d4;
-  --pc-border-control: #8a8578;
-  --pc-rule: #8a8578;
-  --pc-seal: #a8362a;
+  --pc-divider: #ddd5c3;
+  --pc-ruling: #e3dccb;
+  --pc-border-control: #857f70;
+  --pc-rule: #857f70;
+  --pc-seal: #b8321f;
+  --pc-seal-hover: #9c2a1a;
+  --pc-seal-press: #82220f;
+  --pc-seal-ink: #ffffff;
 
-  --pc-text: #262923;
-  --pc-text-muted: #666a61;
+  --pc-text: #1c2023;
+  --pc-text-muted: #5c5a52;
   --pc-text-on-accent: #ffffff;
 
-  --pc-accent: #245c4b;
-  --pc-accent-hover: #1b4a3c;
-  --pc-accent-press: #143a2f;
-  --pc-accent-soft: #e8f1ed;
+  --pc-accent: #1f6b55;
+  --pc-accent-hover: #185743;
+  --pc-accent-press: #114233;
+  --pc-accent-soft: #e3efe9;
 
-  --pc-pass-fg: #245c4b;
-  --pc-pass-bg: #e8f1ed;
-  --pc-pass-bg-strong: #dcebe3;
-  --pc-pass-border: #245c4b;
+  --pc-pass-fg: #1f6b55;
+  --pc-pass-bg: #e3efe9;
+  --pc-pass-bg-strong: #d2e6dc;
+  --pc-pass-border: #1f6b55;
 
   --pc-fail-fg: #a52f2f;
-  --pc-fail-bg: #fff1ef;
-  --pc-fail-bg-strong: #fbe3df;
+  --pc-fail-bg: #fdeeeb;
+  --pc-fail-bg-strong: #f8ddd7;
   --pc-fail-border: #a52f2f;
 
   --pc-review-fg: #805500;
-  --pc-review-bg: #fff6de;
-  --pc-review-bg-strong: #fcefc6;
+  --pc-review-bg: #fdf3d8;
+  --pc-review-bg-strong: #f8e8bb;
   --pc-review-border: #805500;
 
-  --pc-neutral-fg: #4a4d46;
-  --pc-neutral-bg: #f0ede5;
-  --pc-neutral-bg-strong: #e8e4d9;
-  --pc-neutral-border: #8a8578;
+  --pc-neutral-fg: #45483f;
+  --pc-neutral-bg: #efe9db;
+  --pc-neutral-bg-strong: #e6dfcd;
+  --pc-neutral-border: #857f70;
 
-  --pc-tone-ping: #245c4b;
-  --pc-tone-ze: #262923;
+  --pc-tone-ping: #1f6b55;
+  --pc-tone-ze: #1c2023;
   --pc-tone-unknown: #805500;
 
   --pc-focus: #1d4ed8;
-  --pc-focus-width: 2px;
+  --pc-focus-on-ink: #8fb4ff;
+  --pc-focus-width: 3px;
   --pc-focus-offset: 2px;
 
   --pc-space-1: 4px;
@@ -64,51 +80,66 @@ body {
   --pc-space-6: 32px;
   --pc-space-7: 48px;
   --pc-space-8: 64px;
+  --pc-space-9: 96px;
 
-  --pc-radius: 8px;
-  --pc-radius-panel: 12px;
-  --pc-radius-sheet: 4px;
+  --pc-radius: 6px;
+  --pc-radius-panel: 10px;
+  --pc-radius-sheet: 3px;
 
   --pc-font-sans: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Hiragino Sans GB",
     "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC", sans-serif;
   --pc-font-serif: "Songti SC", "STSong", "SimSun", "NSimSun", "Noto Serif CJK SC",
     "Source Han Serif SC", "SimSun-ExtB", "MingLiU-ExtB", serif;
+  --pc-font-display: "Kaiti SC", "STKaiti", "KaiTi", "Noto Serif CJK SC", "Songti SC",
+    "STSong", "SimSun", serif;
 
   --pc-text-xs: 12px;
   --pc-text-sm: 14px;
   --pc-text-md: 16px;
   --pc-text-lg: 20px;
-  --pc-text-xl: 24px;
-  --pc-text-display: 32px;
-  --pc-text-poem: 32px;
+  --pc-text-xl: 26px;
+  --pc-text-display: 64px;
+  --pc-text-giant: clamp(220px, 24vw, 360px);
+  --pc-text-poem: 40px;
   --pc-text-draft: 22px;
   --pc-leading-body: 1.6;
   --pc-leading-evidence: 1.7;
   --pc-leading-draft: 2;
 
-  --pc-cell: 44px;
-  --pc-seal-size: 36px;
-  --pc-status-icon: 32px;
-  --pc-cell-gap: 4px;
+  --pc-cell: 64px;
+  --pc-cell-gap: 6px;
+  --pc-seal-size: 52px;
+  --pc-status-icon: 64px;
   --pc-band-pad: var(--pc-space-3);
-  --pc-page-max: 1200px;
-  --pc-page-margin: 32px;
-  --pc-input-col: 380px;
-  --pc-desk-col: 680px;
+  --pc-stage-height: 420px;
+  --pc-stage-overlap: 132px;
+  --pc-page-max: 1320px;
+  --pc-page-margin: 40px;
+  --pc-input-col: 400px;
   --pc-col-gap: 40px;
-  --pc-panel-width: 440px;
+  --pc-panel-width: 480px;
 
-  --pc-shadow-sheet: 0 1px 2px rgb(38 41 35 / 6%), 0 4px 16px rgb(38 41 35 / 5%);
-  --pc-shadow-panel: 0 8px 32px rgb(38 41 35 / 20%);
-  --pc-backdrop: rgb(38 41 35 / 40%);
+  --pc-shadow-sheet: 0 1px 2px rgb(20 24 26 / 8%), 0 18px 48px rgb(20 24 26 / 14%);
+  --pc-shadow-plinth: 0 2px 4px rgb(20 24 26 / 12%), 0 28px 64px rgb(20 24 26 / 28%);
+  --pc-shadow-panel: -24px 0 64px rgb(20 24 26 / 32%);
+  --pc-backdrop: rgb(20 24 26 / 55%);
 
+  /* Motion. Opening and report reveal are staged; controls never wait on them. */
   --pc-ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --pc-dur-control: 140ms;
-  --pc-dur-panel: 220ms;
-  --pc-dur-report: 280ms;
-  --pc-shift-panel: 16px;
-  --pc-shift-report: 8px;
-  --pc-press-scale: 0.97;
+  --pc-ease-stamp: cubic-bezier(0.3, 1.4, 0.5, 1);
+  --pc-dur-control: 160ms;
+  --pc-dur-panel: 300ms;
+  --pc-dur-panel-out: 200ms;
+  --pc-dur-stage: 760ms;
+  --pc-delay-stage: 120ms;
+  --pc-dur-report: 360ms;
+  --pc-stagger-line: 60ms;
+  --pc-dur-busy: 1100ms;
+  --pc-dur-pulse: 700ms;
+  --pc-shift-panel: 64px;
+  --pc-shift-report: 18px;
+  --pc-shift-stage: 40px;
+  --pc-press-scale: 0.96;
 
   background: var(--pc-bg) var(--pc-paper-texture) repeat;
   background-size: var(--pc-paper-tile);
@@ -116,23 +147,36 @@ body {
   font-family: var(--pc-font-sans);
   font-size: var(--pc-text-md);
   line-height: var(--pc-leading-body);
+  min-height: 100vh;
 }
 
 @media (max-width: 1099px) {
   .pc-root {
     --pc-page-margin: 24px;
     --pc-col-gap: 24px;
+    --pc-text-display: 52px;
+    --pc-stage-height: 340px;
+    --pc-stage-overlap: 96px;
+    --pc-cell: 56px;
+    --pc-text-poem: 34px;
   }
 }
 
 @media (max-width: 599px) {
   .pc-root {
     --pc-page-margin: 16px;
-    --pc-text-poem: 24px;
-    --pc-text-display: 26px;
+    --pc-text-display: 34px;
+    --pc-text-giant: 168px;
+    --pc-text-poem: 26px;
     --pc-text-draft: 20px;
-    --pc-seal-size: 30px;
+    --pc-cell: 44px;
+    --pc-cell-gap: 4px;
+    --pc-seal-size: 40px;
+    --pc-status-icon: 48px;
+    --pc-stage-height: 196px;
+    --pc-stage-overlap: 28px;
     --pc-band-pad: var(--pc-space-2);
+    --pc-shift-stage: 20px;
   }
 }
 
@@ -140,9 +184,16 @@ body {
   .pc-root {
     --pc-dur-control: 0ms;
     --pc-dur-panel: 0ms;
+    --pc-dur-panel-out: 0ms;
+    --pc-dur-stage: 0ms;
+    --pc-delay-stage: 0ms;
     --pc-dur-report: 0ms;
+    --pc-stagger-line: 0ms;
+    --pc-dur-busy: 0ms;
+    --pc-dur-pulse: 0ms;
     --pc-shift-panel: 0px;
     --pc-shift-report: 0px;
+    --pc-shift-stage: 0px;
     --pc-press-scale: 1;
   }
 }
