@@ -274,7 +274,8 @@ try {
     await click(".pc-input__submit");
     try {
       await waitFor(
-        () => responses.length > before && complete.has(responses.at(-1).requestId),
+        () =>
+          responses.length > before && complete.has(responses.at(-1).requestId),
       );
     } catch (error) {
       const diag = await evaluate(
@@ -289,7 +290,9 @@ try {
     const report = JSON.parse(
       raw.base64Encoded ? Buffer.from(raw.body, "base64").toString() : raw.body,
     );
-    await waitFor(() => evaluate("!document.querySelector('.pc-report--stale')"));
+    await waitFor(() =>
+      evaluate("!document.querySelector('.pc-report--stale')"),
+    );
 
     let permission;
     try {
@@ -376,7 +379,11 @@ try {
       }
     }
     assert(downloaded, "未产生可解析的导出 JSON");
-    assert.equal(downloaded.inputHash, report.inputHash, "导出 inputHash 不一致");
+    assert.equal(
+      downloaded.inputHash,
+      report.inputHash,
+      "导出 inputHash 不一致",
+    );
     assert.equal(
       downloaded.originalText,
       report.poem.originalText,
@@ -428,7 +435,9 @@ try {
     assert(await focusButton("下载报告"), "stale 后找不到下载按钮");
     await key("Enter", "Enter", 13, 0, "\r");
     await new Promise((r) => setTimeout(r, 1500));
-    const jsonAfter = readdirSync(dlDir).filter((n) => n.endsWith(".json")).length;
+    const jsonAfter = readdirSync(dlDir).filter((n) =>
+      n.endsWith(".json"),
+    ).length;
     assert.equal(jsonAfter, jsonBefore, "stale 后仍新增导出文件");
     return {
       permission,
@@ -459,7 +468,8 @@ try {
     await click(".pc-input__submit");
     try {
       await waitFor(
-        () => responses.length > before && complete.has(responses.at(-1).requestId),
+        () =>
+          responses.length > before && complete.has(responses.at(-1).requestId),
       );
     } catch (error) {
       const diag = await evaluate(
@@ -477,7 +487,9 @@ try {
     while (tabs < 150) {
       await key("Tab", "Tab", 9);
       tabs += 1;
-      tokenId = await evaluate("document.activeElement?.dataset?.tokenId ?? null");
+      tokenId = await evaluate(
+        "document.activeElement?.dataset?.tokenId ?? null",
+      );
       if (tokenId) break;
     }
     assert(tokenId, `Tab 走了 ${tabs} 次仍未到达字格`);

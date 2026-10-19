@@ -97,3 +97,25 @@ D4处理有限修复与定稿，D5至少半天留联调和彩排。若D3九组�
 - 上表六格补齐了实际候选 ID。它们只是每个请求早停时的首个缺口，不是完整待审字表；不据此宣称审核三个字即可解除六格。
 - 本次未新增 E05–E08 场景，也未重新跑全仓 verify。最新本地全仓依据为 C 集成的 694 项；本次没有把这 10 项增量计成 E 新交付。
 - E 后续场景与原始产物要求见 `docs/handoffs/d3-e-second-review-codex.md`。D3 仍未收口。
+
+## 七、E 第三批原始回报（D3-E06-E08-02，2026-10-19）
+
+> **说明**：保留 E 在旧基线上的原始回报。当前集成版保留上方已填写的第二批台账，本节不覆盖历史结果。第三批独立复验及发现的覆盖缺口见 `docs/handoffs/d3-e-third-review-codex.md`。
+
+
+| 项 | 结果 |
+| --- | --- |
+| 基线 / 分支 | 本地 `origin/codex/d3-b-integration` @ `f6b52ef`（`git fetch` 连续 10 次失败，未能确认是否最新）；分支 `feat/e-d3-e06-e08-scenarios` |
+| 实跑 SHA / 模式 | `fdfac790e6a9`，**dirty=false**，`mode=real`，Node v24.21.0 |
+| `pnpm test:acceptance` | exit 2：3 通过 / 6 阻断 / 0 判错（与上批一致，**未新增覆盖**） |
+| `pnpm test:e2e` | exit 2：**11 通过 / 1 阻断 / 0 失败**（上批 9 通过，本批 **+2**） |
+| `pnpm verify` | exit 0：50 文件 / 684 测试 |
+| **新增 E06**（CHECK-05 增量） | 复制摘要与下载 JSON 与当前真实报告逐项一致：结论、韵书、体式、数据版本、规则版本、inputHash、原文、字位数量、请求快照；编辑致 stale 后**复制被阻止、剪贴板不变、导出目录不新增文件** |
+| **新增 E08**（CHECK-06 增量） | 纯键盘：Tab→字格、Enter/Space 打开详情、对话框内 Tab 到可操作按钮、Space 激活关闭、Space/Escape 关闭后**焦点回到触发字**；实际用键 Tab/Enter/Space/Escape |
+| 证据目录 | `tests/integration/e2e/evidence/d3-e-e06-e08-2026-10-19/`：`api.json`、`browser.json`、`report-1440/768/375.png`、`summary.json`（含 SHA/mode/时间/计数） |
+| 覆盖声明 | E04/E05/E07 属 Codex 批既有覆盖，**不计入 E 本批新成果**；上批 E 的原始产物已归档，未造历史记录 |
+| 仍未运行 | 已审候选选音→重查、正文/切书后的旧覆盖清理、受控五态与网络故障替身、全键盘矩阵（焦点环/跳过链接）、干净 clone、真人审美 |
+
+### 本批发现并修复的 runner 缺陷
+
+`tests/e2e/cdp.mjs` 的 `key()` 只发 `keyDown/keyUp`、不带 `text`，因此 **Enter/Space 无法激活按钮**（实测：复制按钮已聚焦但 6 秒无反馈）。已扩展 `key()` 支持可选 `text`（旧调用保持兼容），并在 Enter/Space 调用处传入 `\r` / 空格。该修复是本批 E06/E08 能通过的前提。
