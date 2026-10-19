@@ -1,5 +1,7 @@
 # D3 系统验收矩阵（E 维护）
 
+> 更新 2026-10-19：下文为 E 在 main@f42172f 的首轮历史记录。当前整合分支复跑为 **3 通过 / 6 阻断 / 0 判错**；限定三平尾已修复。现有金标准 JSON 的 approved 范围以其 assertions/notes 和作品 review-closure 为准，不沿用下表“尚待签”的旧状态。runner 加固、B3–B5 接线与浏览器实测见 [Codex 复核交接](../../docs/handoffs/d3-e-review-codex.md)。证据数量非空不等于引用闭合；新版 runner 校验实际 Schema、有效候选已审证据和来源。
+
 日期：2026-10-18。分支 `feat/e-d3-system-acceptance`（基线 `main @ f42172f`）。
 取代 `tests/integration/acceptance-plan.md`（D1 版本已标历史）。
 运行脚本：`tests/integration/e2e/d3-acceptance-api.mjs`（真实 HTTP，非 mock）。

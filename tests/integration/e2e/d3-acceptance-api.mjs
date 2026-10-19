@@ -1,375 +1,302 @@
 #!/usr/bin/env node
-/* global fetch, AbortSignal, process, console, setTimeout */
-/**
- * D3 九格金标准验收（E 维护）。
- *
- * 三首固定作品 × 平水/词林/新韵 = 9 格，逐格真实 HTTP 请求 /api/v1/analyze。
- * 目标：证据齐备时 200 且结论诚实；不预设三库同调、不预设全部 pass。
- *
- * 用法：
- *   node tests/integration/e2e/d3-acceptance-api.mjs --api-url http://127.0.0.1:3000
- *   node tests/integration/e2e/d3-acceptance-api.mjs --spawn        # 自起服务（随机空闲端口）
- *   node tests/integration/e2e/d3-acceptance-api.mjs --spawn --out results.json
- *
- * 约定：不杀非自身进程；不假定 3000 空闲；超时 20s；失败退出码 1；结果 JSON 含 SHA 与时间。
- */
-
+/** E 的九格独立验收。真实 HTTP；数据阻断、判错、未运行分别记录。 */
 import { createHash } from "node:crypto";
-import { spawn } from "node:child_process";
-import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { readFileSync, mkdirSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
-import { createServer } from "node:net";
+import { pathToFileURL } from "node:url";
+import { AnalysisResponseSchema, ErrorResponseSchema } from "@poetry/contracts";
+import { checkReportClosure } from "@poetry/prosody";
+import {
+  REPO_ROOT,
+  revision,
+  startApi,
+  readiness,
+} from "../../../scripts/acceptance-runtime.mjs";
 
-const HERE = dirname(fileURLToPath(import.meta.url));
-const REPO_ROOT = resolve(HERE, "../../..");
-
-const POEMS = [
-  {
-    id: "dengguanquelou",
-    title: "登鹳雀楼",
-    text: "白日依山尽，黄河入海流。欲穷千里目，更上一层楼。",
-    expectFormFamily: "regulated",
-    expectFormId: "wujue",
-    expectSummaryNotPass: false,
-  },
-  {
-    id: "jingyesi",
-    title: "静夜思",
-    text: "床前明月光，疑是地上霜。举头望明月，低头思故乡。",
-    expectFormFamily: "ancient",
-    expectFormId: null,
-    expectSummaryNotPass: false,
-  },
-  {
-    id: "huanghelou",
-    title: "黄鹤楼",
-    text: "昔人已乘黄鹤去，此地空余黄鹤楼。黄鹤一去不复返，白云千载空悠悠。晴川历历汉阳树，芳草萋萋鹦鹉洲。日暮乡关何处是，烟波江上使人愁。",
-    expectFormFamily: "regulated",
-    expectFormId: "qilv",
-    expectSummaryNotPass: true,
-  },
-];
-
+export const POEMS = ["dengguanquelou", "jingyesi", "huanghelou"].map((id) => {
+  const canonical = JSON.parse(
+    readFileSync(join(REPO_ROOT, "tests/golden/cases", `${id}.json`), "utf8"),
+  );
+  return {
+    id,
+    title: canonical.title,
+    text: canonical.text,
+    expectFormFamily: id === "jingyesi" ? "ancient" : "regulated",
+    expectFormId:
+      id === "jingyesi" ? null : id === "dengguanquelou" ? "wujue" : "qilv",
+  };
+});
 const BOOKS = ["pingshui", "cilin", "xinyun"];
 
-function parseArgs(argv) {
-  const args = { apiUrl: null, spawn: false, out: null, timeoutMs: 20000 };
-  for (let i = 2; i < argv.length; i += 1) {
-    const key = argv[i];
-    if (key === "--api-url") args.apiUrl = argv[++i];
-    else if (key === "--spawn") args.spawn = true;
-    else if (key === "--out") args.out = argv[++i];
-    else if (key === "--timeout-ms") args.timeoutMs = Number(argv[++i]);
-    else if (key === "--help" || key === "-h") args.help = true;
-  }
-  return args;
+/** 0=全部完成；1=判错/执行错误；2=仅数据阻断（并非全部验收通过）。 */
+export function acceptanceExitCode(failures, blocked) {
+  return failures > 0 ? 1 : blocked > 0 ? 2 : 0;
 }
 
-function freePort() {
-  return new Promise((res, rej) => {
-    const srv = createServer();
-    srv.once("error", rej);
-    srv.listen(0, "127.0.0.1", () => {
-      const { port } = srv.address();
-      srv.close(() => res(port));
-    });
-  });
-}
-
-async function waitForHealth(baseUrl, timeoutMs) {
-  const deadline = Date.now() + timeoutMs;
-  while (Date.now() < deadline) {
-    try {
-      const res = await fetch(`${baseUrl}/healthz`, {
-        signal: AbortSignal.timeout(3000),
-      });
-      if (res.ok) return true;
-    } catch {
-      /* 服务尚未起来 */
-    }
-    await new Promise((r) => setTimeout(r, 400));
-  }
-  return false;
-}
-
-async function startServer() {
-  const nodeBin = process.env.NODE_BIN || process.execPath;
-  const tsxCli = join(REPO_ROOT, "node_modules/tsx/dist/cli.mjs");
-  if (!existsSync(tsxCli))
-    throw new Error(
-      `找不到 tsx：${tsxCli}（先 pnpm install --frozen-lockfile）`,
-    );
-  const port = await freePort();
-  const child = spawn(nodeBin, [tsxCli, "apps/api/src/server.ts"], {
-    cwd: REPO_ROOT,
-    env: { ...process.env, PORT: String(port) },
-    stdio: ["ignore", "pipe", "pipe"],
-  });
-  const logs = [];
-  child.stdout.on("data", (d) => logs.push(String(d)));
-  child.stderr.on("data", (d) => logs.push(String(d)));
-  const baseUrl = `http://127.0.0.1:${port}`;
-  const ok = await waitForHealth(baseUrl, 25000);
-  if (!ok) {
-    child.kill();
-    throw new Error(`服务未在超时内就绪；日志：\n${logs.join("")}`);
-  }
-  return { child, baseUrl, logs, port };
-}
-
-async function analyze(baseUrl, book, text, timeoutMs) {
-  const started = Date.now();
-  const res = await fetch(`${baseUrl}/api/v1/analyze`, {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify({
-      text,
-      rhymeBook: book,
-      genreHint: "auto",
-      formHint: "auto",
-      ruleSet: "teaching-v1",
-      readingOverrides: [],
-    }),
-    signal: AbortSignal.timeout(timeoutMs),
-  });
-  const bodyText = await res.text();
-  let body;
-  try {
-    body = JSON.parse(bodyText);
-  } catch {
-    body = { nonJson: bodyText.slice(0, 300) };
-  }
-  return { status: res.status, body, ms: Date.now() - started };
-}
-
-/** 校验单格，返回 {ok, issues[], facts{}} */
-function checkCell(poem, book, res) {
-  const issues = [];
+export function checkCell(poem, book, res) {
   const body = res.body ?? {};
-  if (res.status === 503 && body?.error?.code === "DATA_NOT_READY") {
+  if (
+    res.status === 503 &&
+    ErrorResponseSchema.safeParse(body).success &&
+    body.error.code === "DATA_NOT_READY"
+  ) {
     return {
       ok: false,
       blocked: true,
-      issues: [`BLOCKED：该韵书数据未就绪（DATA_NOT_READY），不是判定错误`],
-      facts: { http: 503 },
+      issues: [body.error.message],
+      facts: { http: 503, code: body.error.code },
     };
   }
   if (res.status !== 200) {
-    issues.push(
-      `HTTP ${res.status}（期望 200）: ${body?.error?.code ?? JSON.stringify(body).slice(0, 120)}`,
-    );
-    return { ok: false, issues, facts: {} };
+    return {
+      ok: false,
+      issues: [`HTTP ${res.status}: ${body.error?.code ?? "非标准错误体"}`],
+      facts: { http: res.status },
+    };
   }
-  const genre = body.genre ?? {};
-  const summary = body.summary ?? {};
-  const prosody = body.prosody ?? {};
-  const tokens = body.poem?.tokens ?? [];
-  const evidence = body.provenance?.evidence ?? [];
-  const rules = body.provenance?.rules ?? [];
-
-  // 1) 契约字段与版本
-  for (const key of [
-    "inputHash",
-    "genre",
-    "prosody",
-    "summary",
-    "provenance",
-    "policy",
-  ]) {
-    if (!(key in body)) issues.push(`响应缺少 ${key}`);
+  const parsed = AnalysisResponseSchema.safeParse(body);
+  if (!parsed.success) {
+    return {
+      ok: false,
+      issues: parsed.error.issues.map(
+        (i) => `Schema ${i.path.join(".")}: ${i.message}`,
+      ),
+      facts: { http: 200, schema: "fail" },
+    };
   }
-  if (body.poem?.book !== book)
-    issues.push(`poem.book=${body.poem?.book}，期望 ${book}`);
-  if (!evidence.length) issues.push("证据为空（provenance.evidence 长度 0）");
-  if (!rules.length) issues.push("规则为空（provenance.rules 长度 0）");
-
-  // 2) 体裁（不是唯一依据，只是其中一条）
-  if (genre.formFamily !== poem.expectFormFamily) {
-    issues.push(
-      `genre.formFamily=${genre.formFamily}，期望 ${poem.expectFormFamily}`,
-    );
-  }
-  if ((genre.formId ?? null) !== poem.expectFormId) {
-    issues.push(`genre.formId=${genre.formId}，期望 ${poem.expectFormId}`);
-  }
-
-  // 3) 九格差异：同一首在三库之间不应被强制相同
-  const toneOf = (tokenId) =>
-    tokens.find((t) => t.tokenId === tokenId)?.tone ?? null;
-
-  if (poem.id === "huanghelou" && book === "pingshui") {
-    // 13 号第 8 条：空取平声，三平尾成立，作古风式律诗特征保留，不判出律
-    const tail = ["l4c5", "l4c6", "l4c7"].map((id) => ({
-      id,
-      tone: toneOf(id),
-    }));
-    const ppp = tail.every((t) => t.tone === "P");
-    if (!ppp)
-      issues.push(
-        `三平尾不成立：${JSON.stringify(tail)}（13 号第 8 条要求 l4c5=空 取平）`,
-      );
-    const tailFindings = (prosody.checks ?? []).filter(
-      (c) =>
-        String(c.ruleId ?? "").startsWith("TAIL.SANPING") &&
-        (c.locations ?? []).some((l) => l.line === 4),
-    );
-    const bad = tailFindings.filter(
-      (c) => c.status === "error" || c.status === "fail",
-    );
-    if (bad.length)
-      issues.push(
-        `三平尾被判 ${bad.map((c) => c.status).join("/")}，但 13 号第 8 条要求不判出律`,
-      );
-    if (!tailFindings.length)
-      issues.push("没有 TAIL.SANPING 相关检查记录（无法证明特例被显式处理）");
-    if (
-      tailFindings.length &&
-      !tailFindings.every((c) => (c.evidenceIds ?? []).length > 0)
-    ) {
-      issues.push("三平尾特例缺少 evidenceIds（“有依据”不满足）");
+  const { genre, summary, prosody, provenance, poem: annotated } = parsed.data;
+  const issues = [];
+  const require = (condition, message) => {
+    if (!condition) issues.push(message);
+  };
+  require(annotated.book === book &&
+    body.policy.rhymeBook === book, "响应韵书与请求不同");
+  require(annotated.originalText ===
+    poem.text, "响应正文与 canonical 请求不同");
+  require(body.inputHash ===
+    createHash("sha256")
+      .update(poem.text)
+      .digest("hex"), "inputHash 与请求正文不同");
+  require(genre.formFamily ===
+    poem.expectFormFamily, `体裁应为 ${poem.expectFormFamily}`);
+  require(genre.formId === poem.expectFormId, `体式应为 ${poem.expectFormId}`);
+  require(!Object.values(body.versions).some((v) =>
+    /fixture|mock/i.test(v),
+  ), "真实验收收到合成版本");
+  const closure = checkReportClosure(prosody, annotated);
+  issues.push(...closure.problems.map((p) => `引用未闭合: ${p.detail}`));
+  const evidence = new Map(provenance.evidence.map((e) => [e.id, e]));
+  const sourceIds = new Set(provenance.sources.map((s) => s.id));
+  require(provenance.rules.length > 0, "规则卡为空");
+  for (const e of provenance.evidence)
+    require(sourceIds.has(e.sourceId), `证据缺来源: ${e.id}`);
+  for (const token of annotated.tokens) {
+    for (const id of token.effectiveCandidateIds) {
+      const candidate = token.candidates.find((c) => c.id === id);
+      require(candidate?.evidenceIds.some(
+        (eid) => evidence.get(eid)?.reviewStatus === "approved",
+      ), `有效候选缺已审依据: ${id}`);
     }
-    // 其他偏离必须保留：黄鹤楼整体不应是 pass
-    if (summary.status === "pass")
-      issues.push("summary=pass，但黄鹤楼存在特殊拗律，其他偏离应保留可见");
   }
-
-  if (poem.expectSummaryNotPass && summary.status === "pass") {
-    issues.push(`summary=pass 与预期不符（${poem.title}）`);
+  for (const finding of prosody.checks) {
+    require(provenance.rules.some(
+      (r) => r.id === finding.ruleId,
+    ), `诊断缺规则卡: ${finding.id}`);
+    for (const id of finding.evidenceIds)
+      require(evidence.has(id), `诊断缺证据: ${id}`);
   }
-
+  if (poem.id === "dengguanquelou" && book === "pingshui")
+    require(summary.status === "pass", "平水登鹳雀楼应为 pass");
+  if (poem.id === "jingyesi")
+    require(summary.status === "not_applicable", "静夜思应保留古体不适用");
+  if (poem.id === "huanghelou" && book === "pingshui") {
+    const ids = ["l4c5", "l4c6", "l4c7"];
+    require(ids.every((id) => {
+      const t = annotated.tokens.find((t) => t.tokenId === id);
+      return t?.toneStatus === "resolved" && t.tone === "P";
+    }), "空悠悠必须保持 PPP");
+    const tails = prosody.checks.filter(
+      (c) =>
+        c.ruleId === "TAIL.SANPING" && c.locations.some((l) => l.line === 4),
+    );
+    require(tails.length === 1, "须保留一条精确三平尾特例记录");
+    for (const f of tails) {
+      require(f.status === "not_applicable" &&
+        f.severity ===
+          "info", "特例须 not_applicable/info，不能是 error 或伪造 pass");
+      require(JSON.stringify(f.locations.map((l) => l.tokenId)) ===
+        JSON.stringify(ids), "特例范围必须为 l4c5–l4c7");
+      require(JSON.stringify(f.observed) === '["P","P","P"]' &&
+        f.resolvedBy === null, "PPP 观察须保留；特例不是拗救");
+      const approval = evidence.get("ctx:j03b2:08");
+      require(f.evidenceIds.includes("ctx:j03b2:08") &&
+        approval?.reviewStatus === "approved" &&
+        approval.sourceId === "src:j03-review-batch2" &&
+        sourceIds.has(approval.sourceId), "特例须引用第 13 号第 8 条已审来源");
+    }
+    require(prosody.checks.some(
+      (c) =>
+        c.ruleId !== "TAIL.SANPING" &&
+        c.status === "fail" &&
+        c.severity === "error",
+    ), "其他明确偏离必须保留");
+    require(summary.status === "fail", "本固定平水黄鹤楼仍按其他偏离推导 fail");
+  }
   return {
     ok: issues.length === 0,
+    blocked: false,
     issues,
     facts: {
-      http: res.status,
+      http: 200,
+      schema: "pass",
       ms: res.ms,
       formFamily: genre.formFamily,
-      formId: genre.formId ?? null,
+      formId: genre.formId,
       summary: summary.status,
-      evidence: evidence.length,
-      rules: rules.length,
-      checks: (prosody.checks ?? []).length,
-      inputHash: body.inputHash?.slice(0, 12) ?? null,
+      evidence: provenance.evidence.length,
+      rules: provenance.rules.length,
+      versions: body.versions,
+      inputHash: body.inputHash,
+      reviewedTail: prosody.checks
+        .filter(
+          (c) =>
+            c.ruleId === "TAIL.SANPING" &&
+            c.locations.some((l) => l.line === 4),
+        )
+        .map((c) => ({
+          status: c.status,
+          severity: c.severity,
+          observed: c.observed,
+          evidenceIds: c.evidenceIds,
+        })),
     },
   };
 }
 
+function parseArgs(argv) {
+  const args = {
+    spawn: false,
+    apiUrl: null,
+    out: join(REPO_ROOT, "artifacts/acceptance/d3-api.json"),
+    timeoutMs: 20000,
+  };
+  for (let i = 0; i < argv.length; i++) {
+    const key = argv[i];
+    if (key === "--spawn") args.spawn = true;
+    else if (key === "--api-url") args.apiUrl = argv[++i];
+    else if (key === "--out") args.out = argv[++i];
+    else if (key === "--timeout-ms") args.timeoutMs = Number(argv[++i]);
+    else if (key === "--help" || key === "-h") args.help = true;
+    else throw new Error(`未知参数 ${key}`);
+  }
+  if (
+    !args.help &&
+    (args.spawn === Boolean(args.apiUrl) ||
+      !args.out ||
+      !Number.isFinite(args.timeoutMs) ||
+      args.timeoutMs <= 0)
+  ) {
+    throw new Error(
+      "选择 --spawn 或 --api-url URL 之一；timeout-ms 须为正数，out 须有路径",
+    );
+  }
+  return args;
+}
+
 async function main() {
-  const args = parseArgs(process.argv);
+  const args = parseArgs(process.argv.slice(2));
   if (args.help) {
     console.log(
-      "node tests/integration/e2e/d3-acceptance-api.mjs [--api-url URL | --spawn] [--out FILE] [--timeout-ms N]",
+      "node tests/integration/e2e/d3-acceptance-api.mjs [--spawn | --api-url URL] [--out FILE] [--timeout-ms N]",
     );
     return 0;
   }
-
-  let server = null;
-  let baseUrl = args.apiUrl;
-  if (!baseUrl) {
-    if (!args.spawn) {
-      console.error(
-        "需要 --api-url（已在运行的真实 API）或 --spawn（自起开发服务）",
-      );
-      return 2;
-    }
-    server = await startServer();
-    baseUrl = server.baseUrl;
-  }
-
-  const readyz = await fetch(`${baseUrl}/readyz`, {
-    signal: AbortSignal.timeout(5000),
-  })
-    .then((r) => r.json())
-    .catch(() => null);
-  const versions = readyz?.versions ?? {};
-  const dataVersions = Object.entries(versions).map(
-    ([k, v]) => `${k}=${typeof v === "object" ? JSON.stringify(v) : v}`,
-  );
-  const mode =
-    dataVersions.length === 0
-      ? "未声明（readyz 无 versions）"
-      : dataVersions.some((v) => v.includes("fixture"))
-        ? "fixture/开发模式（结论不得当作已审核）"
-        : "真实数据模式";
-
-  console.log(`API: ${baseUrl}`);
-  console.log(`readyz: ${dataVersions.join(" ") || "(无 versions)"}`);
-  console.log(`模式: ${mode}`);
-  console.log("");
-
-  const rows = [];
-  const results = [];
-  let failures = 0;
-  let blocked = 0;
-  for (const poem of POEMS) {
-    for (const book of BOOKS) {
-      const res = await analyze(baseUrl, book, poem.text, args.timeoutMs);
-      const check = checkCell(poem, book, res);
-      if (!check.ok && !check.blocked) failures += 1;
-      if (check.blocked) blocked += 1;
-      rows.push({
-        poem: poem.title,
-        book,
-        ...check.facts,
-        ok: check.ok,
-        issues: check.issues,
-      });
-      results.push({ poem: poem.id, book, status: res.status, ...check });
-      console.log(
-        `[${check.ok ? "PASS" : check.blocked ? "BLOCKED" : "FAIL"}] ${poem.title} / ${book}  ` +
-          `http=${check.facts.http ?? res.status} summary=${check.facts.summary ?? "-"} ` +
-          `form=${check.facts.formFamily ?? "-"}/${check.facts.formId ?? "null"} ` +
-          `ev=${check.facts.evidence ?? 0} rules=${check.facts.rules ?? 0}`,
-      );
-      for (const issue of check.issues) console.log(`        · ${issue}`);
-    }
-  }
-
-  console.log("");
-  console.log("=== 九格总览 ===");
-  for (const row of rows) {
-    console.log(
-      `${row.poem.padEnd(6)} ${row.book.padEnd(9)} ` +
-        `http=${String(row.http ?? "-").padEnd(4)} summary=${String(row.summary ?? "-").padEnd(12)} ` +
-        `form=${row.formFamily ?? "-"}/${row.formId ?? "null"} ev=${row.evidence ?? 0} ${row.ok ? "ok" : "FAIL"}`,
-    );
-  }
-
+  let server;
+  const rev = revision();
   const payload = {
     generatedAt: new Date().toISOString(),
-    apiUrl: baseUrl,
-    apiUrlSha256: createHash("sha256")
-      .update(baseUrl)
-      .digest("hex")
-      .slice(0, 12),
-    mode,
-    dataVersions,
-    repoRoot: REPO_ROOT,
+    runnerRevision: rev,
+    serverRevision: args.spawn ? rev : null,
     node: process.version,
-    failures,
-    total: rows.length,
-    results,
+    results: [],
+    total: 9,
   };
-  const outPath = args.out
-    ? resolve(args.out)
-    : join(REPO_ROOT, "tests/integration/e2e/d3-acceptance-last.json");
-  mkdirSync(dirname(outPath), { recursive: true });
-  writeFileSync(outPath, `${JSON.stringify(payload, null, 2)}\n`, "utf8");
-  console.log(`\n结果已写入: ${outPath}`);
-
-  if (server) {
-    server.child.kill();
+  try {
+    if (args.spawn) server = await startApi(args.timeoutMs);
+    const baseUrl = server?.baseUrl ?? args.apiUrl;
+    payload.apiUrl = baseUrl;
+    payload.readiness = await readiness(baseUrl);
+    if (payload.readiness.mode !== "real")
+      throw new Error(`真实模式未确认: ${payload.readiness.mode}`);
+    for (const poem of POEMS) {
+      for (const book of BOOKS) {
+        let check;
+        try {
+          const start = Date.now();
+          const res = await fetch(`${baseUrl}/api/v1/analyze`, {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({
+              text: poem.text,
+              rhymeBook: book,
+              genreHint: "auto",
+              formHint: "auto",
+              ruleSet: "teaching-v1",
+              readingOverrides: [],
+            }),
+            signal: AbortSignal.timeout(args.timeoutMs),
+          });
+          check = checkCell(poem, book, {
+            status: res.status,
+            body: await res.json(),
+            ms: Date.now() - start,
+          });
+        } catch (err) {
+          check = {
+            ok: false,
+            blocked: false,
+            issues: [err.message],
+            facts: {},
+          };
+        }
+        payload.results.push({ poem: poem.id, book, ...check });
+        console.log(
+          `[${check.ok ? "PASS" : check.blocked ? "BLOCKED" : "FAIL"}] ${poem.title}/${book} HTTP ${check.facts.http ?? "-"} ${check.facts.summary ?? ""}`,
+        );
+        if (!check.ok) console.log(check.issues.join("\n"));
+      }
+    }
+  } catch (err) {
+    payload.runnerError = err.message;
+  } finally {
+    if (server) await server.stop();
+    payload.passed = payload.results.filter((r) => r.ok).length;
+    payload.blocked = payload.results.filter((r) => r.blocked).length;
+    payload.failures =
+      payload.results.filter((r) => !r.ok && !r.blocked).length +
+      (payload.runnerError ? 1 : 0);
+    payload.unrun = payload.total - payload.results.length;
+    payload.exitCode = acceptanceExitCode(payload.failures, payload.blocked);
+    const out = resolve(args.out);
+    mkdirSync(dirname(out), { recursive: true });
+    writeFileSync(out, JSON.stringify(payload, null, 2) + "\n");
+    console.log(
+      `九格：通过 ${payload.passed} / 阻断 ${payload.blocked} / 判错或执行错误 ${payload.failures} / 未运行 ${payload.unrun}；exit ${payload.exitCode}\n${out}`,
+    );
   }
-  console.log(
-    `\n九格：通过 ${rows.length - failures - blocked}，阻断 ${blocked}，判错 ${failures}`,
-  );
-  return failures === 0 ? 0 : 1;
+  return payload.exitCode;
 }
 
-main()
-  .then((code) => process.exit(code))
-  .catch((err) => {
-    console.error("验收脚本异常：", err?.message ?? err);
-    process.exit(1);
-  });
+if (
+  process.argv[1] &&
+  pathToFileURL(resolve(process.argv[1])).href === import.meta.url
+) {
+  main()
+    .then((code) => {
+      process.exitCode = code;
+    })
+    .catch((err) => {
+      console.error(err.message);
+      process.exitCode = 1;
+    });
+}

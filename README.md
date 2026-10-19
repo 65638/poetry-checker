@@ -4,6 +4,8 @@
 
 ## 立即开始
 
+D3 最新复核（2026-10-19，`codex/d3-b-integration`）：E 的九格 runner 已接入，当前 **3 通过 / 6 数据阻断 / 0 判错**。平水黄鹤楼的限定三平尾已是 `not_applicable/info`，整诗仍由其他偏离推导 `fail`。浏览器基础回归 **9 通过 / 1 阻断 / 0 失败**，阻断为 D 待交付的示例入口；不代表 E04–E08 全部完成。具体版本、命令与待办见 [E 首批复核](docs/handoffs/d3-e-review-codex.md)。
+
 环境锁定为 Node.js 24.19.0、pnpm 11.25.0。已有环境可直接执行：
 
 ```sh
@@ -26,7 +28,7 @@ pnpm verify
 | 完整格律判定 | Codex 核心（evaluation.ts，D2 已并入）+ C 独立验收 82 项通过；规则卡人工审核清单已出 |
 | 数据与应用 | 真实 API 编排已上线（六步管线、证据门槛、清单装载）；三套全量韵书已入仓（暂全 unverified，词林来源 ID 冲突与新韵读音缺失待 A 修）；解析消歧、体裁、React Web 均已并入；真实金标准与 E2E 待 E |
 
-当前状态（D3 起，2026-10-19，integrate/d3）分项标注：
+历史状态（D3 初期 integrate/d3；当前结果以顶部复核记录为准）分项标注：
 - **代码检查**：pnpm verify 全绿（45 文件 / 591 测试，基线复验于 f42172f）。
 - **真实 API**：平水三首 200 + Schema pass + 金标准 3/3（GLM 实跑 `scripts/probe-d3-matrix.ts`，九组合表见 data/reviews/d3-g02-nine-combos.json）；词林/新韵六组合如实 503（LOOKUP_EVIDENCE_UNVERIFIED，等 D3 批次三 A/B 供数）。
 - **浏览器**：`pnpm dev` 双服务可用（healthz ok / web 200 / 代理真数据）；GLM 沙箱内 dev.mjs 的 node→cmd.exe spawn 受阻，用 dev:api/dev:web 分启绕行（真人环境不受影响，免 shell 加固列入 D3 待办）。
