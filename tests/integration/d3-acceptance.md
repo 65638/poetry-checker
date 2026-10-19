@@ -1,8 +1,8 @@
-> **2026-10-19 复跑（权威结果）**：在 `origin/codex/d3-b-integration@f6b52ef` 上用仓库 runner 实跑——
+> **2026-10-19 E 第二批回报**：E 在 `origin/codex/d3-b-integration@f6b52ef` 上报告仓库 runner 实跑——
 > `pnpm test:acceptance` = 3 通过 / 6 阻断 / 0 判错（exit 2）；`pnpm test:e2e` = 9 通过 / 1 阻断 / 0 失败（exit 2）；
 > `pnpm verify` = exit 0（50 文件 / 684 项）。**本文档下方的“判错 1”是 f42172f 上的历史结果**，
-> 三平尾特例已由核心修复。矩阵与断言以 `pnpm test:acceptance`（`tests/acceptance/`）为准；
-> 本文件附带的 `tests/integration/e2e/d3-acceptance-api.mjs` 已被仓库 runner 取代，仅留历史，不再并行维护。
+> 三平尾特例已由核心修复。`pnpm test:acceptance` 仍执行 `tests/integration/e2e/d3-acceptance-api.mjs`；它在原路径上加固，没有另一个 `tests/acceptance/` 入口。
+> E 本批原始 JSON/截图仅引用本机被 Git 忽略的 `artifacts/acceptance/`，未随 PR 入仓。此处保留其回报，不将 Codex 上轮归档冒称 E 本轮产物；本轮复核见 [E 第二批复核](../../docs/handoffs/d3-e-second-review-codex.md)。
 
 # D3 系统验收矩阵（E 维护）
 

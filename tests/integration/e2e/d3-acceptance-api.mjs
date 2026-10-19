@@ -1,9 +1,5 @@
 #!/usr/bin/env node
-/**
- * 历史脚本（E 的 D3 首批 runner）。
- * 已被仓库 runner 取代：`pnpm test:acceptance`（tests/acceptance/）。
- * 保留用于对照早期九格实现，不要并行维护两套框架。
- */
+/** pnpm test:acceptance 的当前入口；E 首批实现经 Codex 原位加固，继续维护这一套 runner。 */
 /** E 的九格独立验收。真实 HTTP；数据阻断、判错、未运行分别记录。 */
 import { createHash } from "node:crypto";
 import { readFileSync, mkdirSync, writeFileSync } from "node:fs";

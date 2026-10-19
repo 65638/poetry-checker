@@ -5,6 +5,7 @@
 基线：包含 `f42172f` 的最新main。
 > **本次填写（2026-10-19，队员 E）**：批次 `D3-E05-E08-01`，基于 `origin/codex/d3-b-integration`。
 > 只填**实跑**项；没有执行的一律写「未运行」。历史数字不照抄。
+> Codex 复核说明：以下数值保留 E 在 `f6b52ef` 的回报。其原始运行 JSON/截图未随 PR #17 入仓，不能用别人的旧归档冒充；runner 已有覆盖的描述已按代码校正。复核与后续验收见 `docs/handoffs/d3-e-second-review-codex.md`。
 
 ## 一、每次验收先填
 
@@ -49,13 +50,13 @@
 
 | 编号 | 检查 | 负责人 | 结果/证据 |
 |---|---|---|---|
-| D3-CHECK-01 | 固定黄鹤楼特例正确；普通PPP仍error；换字/错书/缺证据不免责 | Codex/C/E | **部分**：特例正确（`test:acceptance` 平水黄鹤楼 PASS，含 resolvedBy/审批依据）；普通 PPP 对照、换字/错书/缺证据免责 **未运行**（D4 补合成用例） |
+| D3-CHECK-01 | 固定黄鹤楼特例正确；普通PPP仍error；换字/错书/缺证据不免责 | Codex/C/E | **部分**：真实黄鹤楼特例已过；C 的独立包测试已覆盖普通 PPP、换字/错书/缺证据（见 C 收尾复核）；E 层系统对照尚未运行，作为 D3 后续任务，不自动推迟到 D4 |
 | D3-CHECK-02 | 三首示例可点、正文正确、配置不被偷换 | D/E | **阻断**：示例按钮全部 disabled（1 个阻断项），归 D 批次二 |
-| D3-CHECK-03 | 正式首页三首→诊断→字位依据→规则来源 | D/E | **部分**：正式 `/` 三首手动输入真实响应 PASS（E04×3）；示例入口阻断；点字/候选/规则来源等交互**未运行** |
+| D3-CHECK-03 | 正式首页三首→诊断→字位依据→规则来源 | D/E | **部分**：E04×3 包含正式 `/` 手动输入→真实响应→点首字→候选/来源文本可见→Esc 返回焦点；示例入口阻断，完整规则详情打开及证据 ID/来源逐项 UI 核对未覆盖 |
 | D3-CHECK-04 | 已审可用候选的人工覆盖、重查、旧hash/跨书拒绝 | B/D/E | **未运行** |
-| D3-CHECK-05 | 编辑/切书/并发迟到/stale/复制导出 | D/E | **部分**：`E05-stale` PASS；编辑/切书/并发迟到/复制导出 **未运行** |
-| D3-CHECK-06 | 375/768/1440、键盘、焦点返回、触控与减弱动效 | D/E | **部分**：1440/768/375 + reduced-motion PASS；全键盘矩阵、焦点返回、触控 **未运行** |
-| D3-CHECK-07 | 可复现API/浏览器runner，个人路径移除，CI覆盖范围明确 | E/GLM | **通过**：`pnpm test:acceptance` / `pnpm test:e2e` 均为仓库内 runner，无个人绝对路径；README 说明 CI 只跑 verify |
+| D3-CHECK-05 | 编辑/切书/并发迟到/stale/复制导出 | D/E | **部分**：正文编辑触发 `E05-stale`、切词林真实提交显示 503 已覆盖；选音覆盖清理、迟到响应、复制导出未运行 |
+| D3-CHECK-06 | 375/768/1440、键盘、焦点返回、触控与减弱动效 | D/E | **部分**：三档布局、字格宽度≥44px、reduced-motion、Esc 回原字位已覆盖；全键盘矩阵、其他焦点路径及真实触控未运行 |
+| D3-CHECK-07 | 可复现API/浏览器runner，个人路径移除，CI覆盖范围明确 | E/GLM | **工具已具备，E 本批产物待归档**：两条命令使用仓库内单一 runner；push/PR CI 跑 verify，另有手动 workflow_dispatch 验收并上传产物，本批未触发该云端验收 |
 | D3-CHECK-08 | 当前commit pnpm verify与GitHub CI通过 | GLM | **部分**：本地 `pnpm verify` exit 0（684 项）；GitHub CI 由 GLM 核对 |
 | D3-CHECK-09 | 两个视觉代表页、实际触发动效、前后对照 | Claude/GLM/Codex | **未运行**（非 E） |
 | D3-CHECK-10 | 组长对代表页观感反馈，与技术检查分开 | 组长 | **未运行**（非 E） |
@@ -73,7 +74,7 @@
 
 `/readyz` 未全库发布时允许503；报告要说明原因。健康检查`/healthz`只表示进程活着。不能删数据或改门槛让这两者都绿。
 
-**本次 `/readyz`**：503 `DATA_NOT_READY`，`mode=real`，versions 如上；原因：三库候选仍有未审核证据（`LOOKUP_EVIDENCE_UNVERIFIED`）。属保护行为，不是故障。
+**本次 `/readyz`**：503 `DATA_NOT_READY`，`mode=real`，versions 如上，表示整库发布条件未满足。九格 `/analyze` 错误 message 内的 `LOOKUP_EVIDENCE_UNVERIFIED` 则定位某次请求的候选证据问题；两者不能混作同一响应。
 
 ## 五、D3结束回传（E 填写部分）
 
@@ -82,7 +83,7 @@
 | 已通过 | 工程：`pnpm verify` 684 项；API：平水三首 200/schema/证据齐备；特例：黄鹤楼三平尾非 error 且有审批依据；浏览器：正式入口三首手动输入、375/768/1440、reduced-motion、stale、词林 503 提示（9 项） |
 | 失败 | **0** 项（本批） |
 | 阻塞 | ①词林/新韵六格 503（`LOOKUP_EVIDENCE_UNVERIFIED`，A/B 证据审核）②示例按钮 disabled（D 批次二） |
-| 未运行 | E04 的示例→点击链路、E05 编辑/切书/并发/复制导出、E06 导出内容、E07 受控五态与网络故障、E08 全键盘/焦点/触控、E09 干净 clone、E10 普通 PPP 对照 |
+| 未运行 | E04 示例→点击及完整规则详情链路；E05 选音/覆盖清理/并发；E06 复制导出；E07 受控五态与网络故障；E08 全键盘/其他焦点路径/真实触控；E09 干净 clone；E10 系统层普通 PPP 对照 |
 | 证据位置 | `artifacts/acceptance/d3-api.json`、`artifacts/acceptance/browser/result.json`、`tests/integration/d3-acceptance.md`、`docs/handoffs/d3-e-system.md` |
 
 D4处理有限修复与定稿，D5至少半天留联调和彩排。若D3九组合仍存在503，将其列功能主线欠账，不把它移成可选加分项。

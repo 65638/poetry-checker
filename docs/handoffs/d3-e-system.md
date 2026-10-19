@@ -1,5 +1,7 @@
 # D3 系统验收交接（E）
 
+> 下方第一至十节为首批历史；第二批见文末。Codex 对 PR #17@31072cd 的接收范围、台账校正与后续任务见 [第二批复核](d3-e-second-review-codex.md)。第二批是复跑与台账交付，尚未新增 E05–E08 场景代码。
+
 日期：2026-10-18。执行者：队员 E / DeepSeek。
 基线：`main @ f42172f`（release：三张工程口径规则卡升 approved）。分支：`feat/e-d3-system-acceptance`。
 环境：Node **v24.21.0**（任务书要求 24.19.0，`engines >=24 <25` 满足，差异已记录）、pnpm 11.25.0。
@@ -124,14 +126,14 @@ Codex 按组长授权接管 apps/api 就绪诊断、根命令与验收基础设�
 | `pnpm test:acceptance` | exit 2，**3 通过 / 6 阻断 / 0 判错**                            |
 | `pnpm test:e2e`        | exit 2，**9 通过 / 1 阻断 / 0 失败**（Edge 155.0.4283.62，CDP） |
 
-- 九格：平水三首 200/schema/证据齐备；词林/新韵六格 503 `LOOKUP_EVIDENCE_UNVERIFIED`（候选证据未审核，A/B 责任）。
+- 九格：平水三首 200/schema/证据齐备；词林/新韵六格 HTTP 503，公开错误码仍为 `DATA_NOT_READY`，message 中含 `LOOKUP_EVIDENCE_UNVERIFIED` 的具体候选定位（A/B 处理依据与语境，集成方装载；新异常按既有审批流程处理）。
 - 黄鹤楼平水：`qilv`、`summary=fail`（其他偏离）、**三平尾特例非 error**，runner 已精确断言 status/severity/字位/PPP/resolvedBy/审批依据 → 上一批的判错已消除。
 - 浏览器：正式入口三首手动输入真实响应、375/768/1440、reduced-motion、stale、词林 503 提示共 9 项通过；阻断项为示例按钮全部 disabled（D 批次二）。
-- 未运行：示例点击链路、编辑/切书/并发/复制导出、受控五态与网络故障、全键盘/焦点/触控、干净 clone、普通 PPP 对照。
+- 已有 runner 还包含点字后候选/来源文本可见、Esc 关闭且焦点回原字位、正文编辑触发 stale、切词林后的真实 503 提示、字格宽度不小于 44px；不把这些写成未运行。未覆盖的是示例点击链路、完整选音/编辑/切书覆盖清理与并发、复制导出、受控五态与网络故障、全键盘/所有焦点路径/真实触控、干净 clone、E 层普通 PPP 对照。
 
 ## 与上一批的关系
 
-- `tests/integration/e2e/d3-acceptance-api.mjs`（我上一批的 runner）**已被仓库 runner 取代**，仅留历史。
+- `tests/integration/e2e/d3-acceptance-api.mjs` 是当前 `pnpm test:acceptance` 入口，Codex 在原路径加固；本次没有新建第二套 runner。
 - 我在 `d3-acceptance.md` 顶部登记了权威结果，旧数字保留标注。
 - 09 号验收表已按实跑填写（批次 `D3-E05-E08-01`），未运行项一律写「未运行」。
 
