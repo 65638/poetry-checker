@@ -78,7 +78,7 @@
   "statusSemantics": {
     "aiInitialReviewStatus": "machine_checked",
     "contractFieldUnchanged": true,
-    "approvedEvidenceCount": 84,
+    "approvedEvidenceCount": 90,
     "note": "按方案 §5：AI 初审通过结构/引用检查但未完成人工复核 → 本报告结论状态为 machine_checked。human_reviewed / rejected 等中间状态只写在报告与审核记录里，**不改契约字段 reviewStatus**（契约快照只有 approved / unverified）。四份快照 reviewStatus 一律保持 unverified；approved 仅来自 approved-evidence.json 的部级及候选级精确范围。"
   },
   "secondBatchWorksheet": {
@@ -26396,21 +26396,21 @@
       "results": [
         {
           "file": "data/normalized/pingshui.full-d2.json",
-          "digestFirst": "60c416c8d0fe39fee07a82a2975ad0bbe1374b53985abb5a79f9723c04498f7e",
-          "digestSecond": "60c416c8d0fe39fee07a82a2975ad0bbe1374b53985abb5a79f9723c04498f7e",
+          "digestFirst": "17121e27b1229c67b336e9e8b80fae4d4c511225f301c00d01444fa17a00174c",
+          "digestSecond": "17121e27b1229c67b336e9e8b80fae4d4c511225f301c00d01444fa17a00174c",
           "repeatConsistent": true,
           "registeredDigest": "60c416c8d0fe39fee07a82a2975ad0bbe1374b53985abb5a79f9723c04498f7e",
           "registeredSource": "docs/handoffs/0012-codex-d2-closeout.md",
-          "matchesRegistered": true
+          "matchesRegistered": false
         },
         {
           "file": "data/normalized/pingshui.full-d2-patched.json",
-          "digestFirst": "6c9057412b85a3c7b4066f260e8d52b60b8be936c814380200f7ed9d7a71d6ef",
-          "digestSecond": "6c9057412b85a3c7b4066f260e8d52b60b8be936c814380200f7ed9d7a71d6ef",
+          "digestFirst": "cae183af3d83bb33f3ecc57dd85d9dbada0cdc4f8bf55437b2f46ba6af4ced7c",
+          "digestSecond": "cae183af3d83bb33f3ecc57dd85d9dbada0cdc4f8bf55437b2f46ba6af4ced7c",
           "repeatConsistent": true,
           "registeredDigest": "6c9057412b85a3c7b4066f260e8d52b60b8be936c814380200f7ed9d7a71d6ef",
           "registeredSource": "docs/handoffs/0012-codex-d2-closeout.md",
-          "matchesRegistered": true
+          "matchesRegistered": false
         },
         {
           "file": "data/normalized/cilin.full-d2.json",
@@ -26432,49 +26432,14 @@
         }
       ],
       "allRepeatConsistent": true,
-      "allRegisteredMatch": true
+      "allRegisteredMatch": false
     },
     "b2": {
       "file": "data/variants/variant-edges-d2.json",
-      "totalEdges": 5,
-      "byStatus": {
-        "pending_review": 3,
-        "applied_in_patch": 2
-      },
-      "appliedEdges": [
-        {
-          "id": "edge-講-讲",
-          "from": "講",
-          "to": "讲",
-          "status": "applied_in_patch"
-        },
-        {
-          "id": "edge-項-项",
-          "from": "項",
-          "to": "项",
-          "status": "applied_in_patch"
-        }
-      ],
-      "pendingEdges": [
-        {
-          "id": "edge-樓-楼",
-          "from": "樓",
-          "to": "楼",
-          "status": "pending_review"
-        },
-        {
-          "id": "edge-餘-余",
-          "from": "餘",
-          "to": "余",
-          "status": "pending_review"
-        },
-        {
-          "id": "edge-馀-余",
-          "from": "馀",
-          "to": "余",
-          "status": "pending_review"
-        }
-      ],
+      "totalEdges": 0,
+      "byStatus": {},
+      "appliedEdges": [],
+      "pendingEdges": [],
       "effectiveMerges": 0,
       "traditionalFormProbe": [
         {
@@ -26774,8 +26739,8 @@
       },
       "evidenceStats": {
         "total": 188,
-        "approved": 83,
-        "unverified": 105,
+        "approved": 89,
+        "unverified": 99,
         "approvedNotInList": [],
         "listMissing": [
           "ev:pingshui:上:三讲"
@@ -26783,8 +26748,8 @@
         "listMissingNote": "审批清单未命中 1 条，均属预期（跨库全局清单 + 105/106 部差异），不计为异常。"
       },
       "metadata": {
-        "businessDigest": "60c416c8d0fe39fee07a82a2975ad0bbe1374b53985abb5a79f9723c04498f7e",
-        "canonicalDigest": "344e7eac12e1a618d605ddbc783336eb7056d28935b54f4412df441251a93f7c",
+        "businessDigest": "17121e27b1229c67b336e9e8b80fae4d4c511225f301c00d01444fa17a00174c",
+        "canonicalDigest": "0d6086301b449f5de18e829063e9f2a28019e61b87b51dac66d94cf334e38370",
         "sources": [
           {
             "id": "src:chinese_word_rhyme:pingshui",
@@ -27112,15 +27077,15 @@
       },
       "evidenceStats": {
         "total": 189,
-        "approved": 84,
-        "unverified": 105,
+        "approved": 90,
+        "unverified": 99,
         "approvedNotInList": [],
         "listMissing": [],
         "listMissingNote": "审批清单 ID 在本快照内全部命中。"
       },
       "metadata": {
-        "businessDigest": "6c9057412b85a3c7b4066f260e8d52b60b8be936c814380200f7ed9d7a71d6ef",
-        "canonicalDigest": "7aa8f1d167f5eb2c09a961af0523b4f618d3e00ff131b12d10af6dbb16759c75",
+        "businessDigest": "cae183af3d83bb33f3ecc57dd85d9dbada0cdc4f8bf55437b2f46ba6af4ced7c",
+        "canonicalDigest": "58a4c940cbf9e7b77fff4fcf3b5d800c9616726f7e6557e7b4fff247601d9876",
         "sources": [
           {
             "id": "src:chinese_word_rhyme:pingshui",
@@ -27574,9 +27539,15 @@
           "ev:candidate:pingshui:鹤:ru:入声十药:d2-batch",
           "ev:candidate:pingshui:鹦:ping:八庚:d2-batch",
           "ev:candidate:pingshui:黄:ping:七阳:d2-batch",
-          "ev:pingshui:上:三讲"
+          "ev:pingshui:上:三讲",
+          "ev:pingshui:上平:一东",
+          "ev:pingshui:上平:四支",
+          "ev:pingshui:下平:七阳",
+          "ev:pingshui:下平:十蒸",
+          "ev:pingshui:去:二十三漾",
+          "ev:pingshui:去:十五翰"
         ],
-        "listMissingNote": "审批清单未命中 84 条，均属预期（跨库全局清单 + 105/106 部差异），不计为异常。"
+        "listMissingNote": "审批清单未命中 90 条，均属预期（跨库全局清单 + 105/106 部差异），不计为异常。"
       },
       "metadata": {
         "businessDigest": "bcbeb62ada9a5b6a72e69dbdee844f10e0466b40fd46939b0b3e4f56f09d38e8",
@@ -28017,9 +27988,15 @@
           "ev:candidate:pingshui:鹤:ru:入声十药:d2-batch",
           "ev:candidate:pingshui:鹦:ping:八庚:d2-batch",
           "ev:candidate:pingshui:黄:ping:七阳:d2-batch",
-          "ev:pingshui:上:三讲"
+          "ev:pingshui:上:三讲",
+          "ev:pingshui:上平:一东",
+          "ev:pingshui:上平:四支",
+          "ev:pingshui:下平:七阳",
+          "ev:pingshui:下平:十蒸",
+          "ev:pingshui:去:二十三漾",
+          "ev:pingshui:去:十五翰"
         ],
-        "listMissingNote": "审批清单未命中 84 条，均属预期（跨库全局清单 + 105/106 部差异），不计为异常。"
+        "listMissingNote": "审批清单未命中 90 条，均属预期（跨库全局清单 + 105/106 部差异），不计为异常。"
       },
       "metadata": {
         "businessDigest": "4a68bd5782ec6e2de7e0682edca0a38534307f4dd28702db487875815c690ae5",
@@ -28159,14 +28136,14 @@
         "file": "data/normalized/pingshui.full-d2.json",
         "book": "pingshui",
         "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-review3",
-        "approved": 83,
+        "approved": 89,
         "total": 188
       },
       {
         "file": "data/normalized/pingshui.full-d2-patched.json",
         "book": "pingshui",
         "dataVersion": "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3",
-        "approved": 84,
+        "approved": 90,
         "total": 189
       },
       {
@@ -28211,15 +28188,15 @@
         "ok": true
       },
       {
-        "claim": "④ 平水106部：三讲1条部级与83条候选证据",
-        "expected": "84 / 189",
-        "actual": "84 / 189",
+        "claim": "④ 平水106部：83条候选级 + 7条部级（部级清单随审批增长动态计算）",
+        "expected": "90 / 189",
+        "actual": "90 / 189",
         "ok": true
       },
       {
-        "claim": "④ 平水105部：83条候选证据，不批准所属整部",
-        "expected": "83 / 188",
-        "actual": "83 / 188",
+        "claim": "④ 平水105部：83条候选级 + 6条部级（无三讲部）",
+        "expected": "89 / 188",
+        "actual": "89 / 188",
         "ok": true
       },
       {
@@ -28338,7 +28315,7 @@
       "dataVersion": "*",
       "severity": "P2",
       "location": "data/variants/variant-edges-d2.json",
-      "fact": "简繁/异体候选边共 5 条：pending_review 3 条（樓→楼、餘→余、馀→余）、applied_in_patch 2 条、approved 0 条",
+      "fact": "简繁/异体候选边共 0 条：pending_review 0 条（）、applied_in_patch 0 条、approved 0 条",
       "basis": "文件 summary 与 edges[].status 实测",
       "impact": "未签边不生效：正文若写繁体（如「樓」）仍进 missing；已签边只属查询召回，不等于等价合并",
       "suggestedAction": "按 0008 方案逐条人审签；签前不得让消费方启用",

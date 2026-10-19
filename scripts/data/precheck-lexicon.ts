@@ -1094,6 +1094,25 @@ function computeReconciliation(audits: SnapshotAudit[]): Reconciliation {
   const findApproved = (dataVersion: string) =>
     approvedTable.find((entry) => entry.dataVersion === dataVersion);
 
+  /**
+   * 部级已批证据在各快照中的实际命中数。
+   * 不能写死「候选数 + 1（仅三讲）」：J03 第二批落库后部级批准会增加，
+   * 写死会让报告把正常的审批增长判成 FAIL（假红）。
+   */
+  const approvedDeptIds =
+    readJson<{ approvedEvidenceIds?: string[] }>(APPROVED_FILE)
+      ?.approvedEvidenceIds ?? [];
+  const deptApprovedIn = (relative: string): number => {
+    const snapshot = readJson<RawSnapshot>(relative);
+    if (snapshot === null) return 0;
+    const ids = new Set(snapshot.evidence.map((item) => item.id));
+    return approvedDeptIds.filter((id) => ids.has(id)).length;
+  };
+  const deptPatched = deptApprovedIn(
+    "data/normalized/pingshui.full-d2-patched.json",
+  );
+  const deptPlain = deptApprovedIn("data/normalized/pingshui.full-d2.json");
+
   const patched = findApproved(
     "pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3",
   );
@@ -1125,23 +1144,23 @@ function computeReconciliation(audits: SnapshotAudit[]): Reconciliation {
       ok: sourceIdsAcrossBooksDistinct,
     },
     {
-      claim: `④ 平水106部：三讲1条部级与${candidateCount}条候选证据`,
-      expected: `${candidateCount + 1} / ${candidateCount + 106}`,
+      claim: `④ 平水106部：${candidateCount}条候选级 + ${deptPatched}条部级（部级清单随审批增长动态计算）`,
+      expected: `${candidateCount + deptPatched} / ${candidateCount + 106}`,
       actual:
         patched === undefined
           ? "未取得"
           : `${patched.approved} / ${patched.total}`,
       ok:
-        patched?.approved === candidateCount + 1 &&
+        patched?.approved === candidateCount + deptPatched &&
         patched?.total === candidateCount + 106,
     },
     {
-      claim: `④ 平水105部：${candidateCount}条候选证据，不批准所属整部`,
-      expected: `${candidateCount} / ${candidateCount + 105}`,
+      claim: `④ 平水105部：${candidateCount}条候选级 + ${deptPlain}条部级（无三讲部）`,
+      expected: `${candidateCount + deptPlain} / ${candidateCount + 105}`,
       actual:
         plain === undefined ? "未取得" : `${plain.approved} / ${plain.total}`,
       ok:
-        plain?.approved === candidateCount &&
+        plain?.approved === candidateCount + deptPlain &&
         plain?.total === candidateCount + 105,
     },
     {
