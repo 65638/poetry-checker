@@ -137,3 +137,29 @@ D4处理有限修复与定稿，D5至少半天留联调和彩排。若D3九组�
 E 第三批原回报的内层 Tab 实际为 0；剪贴板读取失败跳过、复用旧下载文件和部分字段比较的问题均已在本批修复。首次复验因 Codex 的 Windows 换行/初始焦点假设失败，已修正并复跑，详见 `docs/handoffs/d3-e-third-review-codex.md`。
 
 第七节“上批原始产物已归档”仅能证明其列出的第三批 fdfac79 产物，不证明第二批 f6b52ef 原件已补交。原文件保留其实际 SHA；Codex 的新运行独立归档，不冒充 E 的历史执行。D3 仍未收口。
+
+
+## 七、本批增量（D3-E05-E07-01，2026-10-19）
+
+| 项 | 结果 |
+| --- | --- |
+| 分支 / 基线 | `feat/e-d3-e05-e07`，自 `origin/codex/d3-b-integration@2662ba5`（含 Codex 防误报修复） |
+| **实际运行 SHA** | `c887a4c801de`（dirty=false，mode=real，Node v24.21.0） |
+| **归档提交 SHA** | `d4a94c8b1ee5`（证据目录由该提交引入，与运行 SHA 不同，符合“分开记录”要求） |
+| `pnpm verify` | exit 0：50 文件 / **703 项** |
+| `pnpm test:acceptance` | exit 2：3 通过 / 6 阻断 / 0 判错（未新增覆盖） |
+| `pnpm test:e2e` | exit 2：**13 通过 / 1 阻断 / 0 失败**（上批 11，本批 +2） |
+| **新增 E07 可控网络故障** | CDP `Network.setBlockedURLs` **只阻断 `/api/v1/analyze`**（受控替身，非停服务/改端口）：错误横幅出现、提交按钮恢复可用、解除阻断后重新得到 200 |
+| **新增 E05 失败态导出闸门** | 请求失败后点“下载报告”：被阻止、**导出目录无文件**；若将来允许导出旧结论，该场景会以 `blocked + defect + repro` 记录，不改预期放行 |
+| 证据 | `tests/integration/e2e/evidence/d3-e-e05-e07-2026-10-19/`（api.json、browser.json、report-1440/768/375.png、summary.json） |
+| 仍未运行 | **已审候选选音→重查（UI 缺入口，见阻塞）**、编辑/切书后的旧覆盖清理（当前无覆盖可清）、请求进行中（busy）导出分支、全键盘矩阵、干净 clone |
+
+### 本批阻塞（需决策）
+
+`apps/web/src/presentation/components/EvidencePanel.tsx:118-135` 的候选读音是**只读 `<li>` 列表**；
+全前端搜索 `onSelect / setOverride` 无任何消费者，`pendingOverrides` 仅存在于 `store.ts` 内部。
+因此 **“已审候选选择 → 真实重查”无法用页面操作驱动**，E05 主体未运行。
+不用控制台直调 store 内部方法凑通过（那等于伪造验收）。
+`apps/web` 属 D 的目录，需明确由谁补该控件。
+
+另：D 的 PR #18 交接文档在 `origin/feat/d-d3-live-flow` 的 `docs/` 下**未找到**（只有 0001–0005 旧交接），需给路径或确认按 diff 读。
