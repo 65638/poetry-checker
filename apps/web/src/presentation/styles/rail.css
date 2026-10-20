@@ -225,6 +225,23 @@
   }
   .pc-rail__directory[data-expanded="false"] {
     display: none;
+    opacity: 0;
+    block-size: 0;
+  }
+  .pc-rail__directory {
+    block-size: auto;
+    interpolate-size: allow-keywords;
+    overflow: clip;
+    transition:
+      block-size var(--pc-dur-disclosure) var(--pc-ease-out),
+      opacity var(--pc-dur-disclosure) var(--pc-ease-out),
+      display var(--pc-dur-disclosure) allow-discrete;
+  }
+  @starting-style {
+    .pc-rail__directory[data-expanded="true"] {
+      opacity: 0;
+      block-size: 0;
+    }
   }
   .pc-rail {
     position: static;

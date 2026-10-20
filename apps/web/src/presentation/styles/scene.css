@@ -251,6 +251,11 @@
 .pc-scene[data-paused] *,
 .pc-scene[data-paused] *::before {
   animation-play-state: paused;
+  transition: none;
+}
+
+.pc-scene[data-paused] {
+  transition: none;
 }
 
 @keyframes pc-mist {
@@ -299,5 +304,26 @@
 @media (forced-colors: active) {
   .pc-rain {
     display: none;
+  }
+}
+/* Register the gain so haze and reflected light ease together with the rain. */
+@property --pc-ambient-gain {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+.pc-scene,
+.pc-scene__haze,
+.pc-scene__glint,
+.pc-scene__mist::before {
+  transition: --pc-ambient-gain calc(var(--pc-dur-panel) * 4) ease;
+}
+
+@media (forced-colors: active) {
+  .pc-scene,
+  .pc-scene *,
+  .pc-scene *::before {
+    animation: none;
+    transition: none;
   }
 }

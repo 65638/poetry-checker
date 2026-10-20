@@ -53,6 +53,10 @@ export function RainField({
     const rings: Ring[] = [];
     const pointer = { x: 0, y: 0, vx: 0, at: -Infinity, visible: false };
     let breeze = 0;
+    let rainGain = quietRef.current ? 0.24 : 1;
+    let lastHoverRipple = -Infinity;
+    let hoverX = 0,
+      hoverY = 0;
     const isWater = (x: number, y: number) => {
       const depth = (y / height - 0.74) / 0.26;
       return (
@@ -88,14 +92,19 @@ export function RainField({
       });
       rings.length = 0;
     };
-    const addRing = (x: number, y: number, deliberate: boolean) => {
+    const addRing = (
+      x: number,
+      y: number,
+      deliberate: boolean,
+      wake = false,
+    ) => {
       if (rings.length >= MAX_RINGS) rings.shift();
       rings.push({
         x,
         y,
         age: 0,
-        life: deliberate ? 1.7 : 1.15,
-        size: deliberate ? 70 : 11 + Math.random() * 13,
+        life: deliberate ? 1.7 : wake ? 1.5 : 1.15,
+        size: deliberate ? 70 : wake ? 38 : 11 + Math.random() * 13,
         deliberate,
       });
     };
@@ -120,7 +129,10 @@ export function RainField({
       last = now;
       time += dt;
       ctx.clearRect(0, 0, width, height);
-      const gain = quietRef.current ? 0.24 : 1;
+      // Ease both directions without resetting drops or rings on state changes.
+      rainGain +=
+        ((quietRef.current ? 0.24 : 1) - rainGain) * (1 - Math.exp(-dt * 2.8));
+      const gain = rainGain;
       const wind =
         -25 + Math.sin(time * 0.35) * 14 + Math.sin(time * 0.11) * 12;
       const wake = pointer.visible
@@ -145,7 +157,7 @@ export function RainField({
         if (drop.y > drop.floor || drop.x < -80 || drop.x > width + 80) {
           if (
             isWater(drop.x, drop.y) &&
-            time - lastImpact > (quietRef.current ? 0.3 : 0.13)
+            time - lastImpact > 0.35 - gain * 0.22
           ) {
             addRing(drop.x, drop.y, false);
             lastImpact = time;
@@ -248,6 +260,16 @@ export function RainField({
         return;
       }
       const now = performance.now();
+      if (
+        isWater(event.clientX, event.clientY) &&
+        now - lastHoverRipple > 180 &&
+        Math.hypot(event.clientX - hoverX, event.clientY - hoverY) > 22
+      ) {
+        addRing(event.clientX, event.clientY, false, true);
+        lastHoverRipple = now;
+        hoverX = event.clientX;
+        hoverY = event.clientY;
+      }
       pointer.vx = pointer.visible
         ? Math.max(
             -1500,

@@ -267,21 +267,23 @@ export function CheckerView(props: CheckerViewProps) {
                   data-collapsed={collapsed ? "true" : "false"}
                   inert={collapsed}
                 >
-                  <span
-                    key={exampleGlow}
-                    className="pc-plinth__glow"
-                    data-on={exampleGlow > 0 ? "true" : "false"}
-                    aria-hidden="true"
-                  />
-                  <InputPanel
-                    compact={hasReport}
-                    draft={draft}
-                    busy={busy}
-                    examples={props.examples}
-                    onDraftChange={handleDraftChange}
-                    onAnalyze={handleAnalyze}
-                    onLoadExample={handleLoadExample}
-                  />
+                  <div className="pc-editor-body__inner">
+                    <span
+                      key={exampleGlow}
+                      className="pc-plinth__glow"
+                      data-on={exampleGlow > 0 ? "true" : "false"}
+                      aria-hidden="true"
+                    />
+                    <InputPanel
+                      compact={hasReport}
+                      draft={draft}
+                      busy={busy}
+                      examples={props.examples}
+                      onDraftChange={handleDraftChange}
+                      onAnalyze={handleAnalyze}
+                      onLoadExample={handleLoadExample}
+                    />
+                  </div>
                 </div>
               </section>
               {hasReport ? (

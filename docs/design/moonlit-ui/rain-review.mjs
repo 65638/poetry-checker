@@ -56,8 +56,8 @@ try {
       return { scene: cursor('.pc-root'), paper: cursor('.pc-plinth'), button: cursor('.pc-examples__item'), text: cursor('textarea'), halo: !!document.querySelector('.pc-scene__halo') };
     })()`);
     assert(d.scene.includes("cursor-rain-light.svg"));
-    assert(d.paper.includes("cursor-rain-ink.svg"));
-    assert(d.button.includes("cursor-rain-action-ink.svg"));
+    assert(d.paper.includes("cursor-rain-light.svg"));
+    assert(d.button.includes("cursor-rain-action-light.svg"));
     assert.equal(d.text, "text");
     assert(!d.halo);
     for (const name of ["light", "ink", "action-light", "action-ink"])

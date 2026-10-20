@@ -235,7 +235,7 @@
 }
 
 .pc-plinth__no {
-  font-size: var(--pc-text-sm);
+  font-size: 32px;
   color: var(--pc-seal);
   letter-spacing: 0;
 }
@@ -243,17 +243,31 @@
 /* Editor disclosure animates the wrapper only; the textarea is never animated or remounted. */
 .pc-editor-body {
   position: relative;
+  display: grid;
+  grid-template-rows: 1fr;
   contain: layout;
   transition:
     opacity var(--pc-dur-disclosure) var(--pc-ease-out),
     transform var(--pc-dur-disclosure) var(--pc-ease-out),
-    display var(--pc-dur-disclosure) allow-discrete;
+    grid-template-rows var(--pc-dur-disclosure) var(--pc-ease-out);
+}
+
+.pc-editor-body__inner {
+  min-height: 0;
+  overflow: hidden;
+  padding: 4px;
+  margin: -4px;
 }
 
 .pc-editor-body[data-collapsed="true"] {
-  display: none;
+  grid-template-rows: 0fr;
   opacity: 0;
   transform: translateY(-8px);
+}
+
+.pc-editor-body[data-collapsed="true"] .pc-editor-body__inner {
+  padding-block: 0;
+  margin-block: 0;
 }
 
 @starting-style {
@@ -380,7 +394,7 @@
 .pc-step__no {
   flex: none;
   font-family: var(--pc-font-display);
-  font-size: var(--pc-text-xl);
+  font-size: 38px;
   line-height: 1.2;
   color: #cfb99a;
 }
@@ -733,4 +747,127 @@
   animation-duration: 0ms !important;
   animation-delay: 0ms !important;
   animation-iteration-count: 1 !important;
+}
+/* The editor shares the lake's ink palette; report paper remains a reading surface. */
+.pc-plinth {
+  --pc-text: #e4e9df;
+  --pc-text-muted: #b2c5c3;
+  --pc-surface: #203a40;
+  --pc-surface-sheet: #172e35;
+  --pc-surface-sunken: #243e43;
+  --pc-surface-hover: #304e53;
+  --pc-divider: #496165;
+  --pc-ruling: #314c52;
+  --pc-border-control: #708783;
+  --pc-focus: #b5d1c1;
+  --pc-accent-soft: #2c4b4c;
+  color: var(--pc-text);
+  background-color: #20373e;
+  background-image: linear-gradient(
+    145deg,
+    rgb(137 168 160 / 7%),
+    transparent 60%
+  );
+  border: 1px solid #4b6261;
+  border-top: 2px solid #839489;
+}
+.pc-plinth__no {
+  color: #d5b999;
+}
+.pc-plinth .pc-input__text {
+  border-left-color: #80978b;
+  scrollbar-color: #80978b #20373e;
+}
+.pc-plinth .pc-examples__item:hover:not(:disabled) {
+  color: #ead3b3;
+  border-color: #aebca7;
+}
+.pc-plinth__glow {
+  box-shadow: inset 0 0 0 1px #a6b7a8;
+}
+.pc-manuscript {
+  transition:
+    background-color var(--pc-dur-panel) var(--pc-ease-out),
+    border-color var(--pc-dur-panel) var(--pc-ease-out),
+    padding var(--pc-dur-panel) var(--pc-ease-out);
+}
+.pc-plinth {
+  transition: padding var(--pc-dur-disclosure) var(--pc-ease-out);
+}
+.pc-hall__rail,
+.pc-intro__busy {
+  animation: pc-fade-in var(--pc-dur-panel) var(--pc-ease-out) both;
+}
+/* Decorative text and blank canvas cannot start a blue drag selection. */
+.pc-root {
+  user-select: none;
+  -webkit-user-select: none;
+}
+.pc-root
+  :is(
+    textarea,
+    input,
+    [contenteditable],
+    .pc-policy,
+    .pc-status__body,
+    .pc-finding__msg,
+    .pc-finding__compare,
+    .pc-evidence__body,
+    .pc-banner__body,
+    .pc-reading__note
+  ) {
+  user-select: text;
+  -webkit-user-select: text;
+}
+.pc-root ::selection {
+  background: #b5c9bf;
+  color: #162d33;
+}
+.pc-root :is(button, summary, label) {
+  user-select: none;
+}
+.pc-input :is(.pc-examples, .pc-input__hint, .pc-input__settings) {
+  transition:
+    opacity var(--pc-dur-disclosure) var(--pc-ease-out),
+    display var(--pc-dur-disclosure) allow-discrete;
+}
+.pc-input .pc-examples {
+  block-size: auto;
+  interpolate-size: allow-keywords;
+  overflow: clip;
+  transition:
+    opacity var(--pc-dur-disclosure) var(--pc-ease-out),
+    block-size var(--pc-dur-disclosure) var(--pc-ease-out),
+    display var(--pc-dur-disclosure) allow-discrete;
+}
+.pc-input .pc-examples[hidden] {
+  block-size: 0;
+}
+.pc-input [hidden] {
+  opacity: 0;
+}
+@starting-style {
+  .pc-input
+    :is(.pc-examples, .pc-input__hint, .pc-input__settings):not([hidden]) {
+    opacity: 0;
+  }
+}
+/* Native disclosures keep keyboard semantics while gaining open/close motion. */
+.pc-root details::details-content {
+  opacity: 0;
+  block-size: 0;
+  overflow: clip;
+  transition:
+    opacity var(--pc-dur-disclosure) var(--pc-ease-out),
+    block-size var(--pc-dur-disclosure) var(--pc-ease-out),
+    content-visibility var(--pc-dur-disclosure) allow-discrete;
+  interpolate-size: allow-keywords;
+}
+.pc-root details[open]::details-content {
+  opacity: 1;
+  block-size: auto;
+}
+.pc-reading,
+.pc-notes {
+  transition: opacity var(--pc-dur-control) ease;
 }

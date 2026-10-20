@@ -1,0 +1,332 @@
+{
+  "revision": {
+    "commit": "9c8156193d063d5cc99102fb9b00ba5eb483eb8f",
+    "dirty": true
+  },
+  "at": "2026-10-20T05:27:42.797Z",
+  "mode": "production build / real local API",
+  "shots": [
+    {
+      "name": "1440-initial.png",
+      "at": "2026-10-20T05:27:45.518Z",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "name": "1440-pointer-wind.png",
+      "at": "2026-10-20T05:27:48.650Z",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "name": "1440-water-click.png",
+      "at": "2026-10-20T05:27:52.058Z",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "name": "1440-effects-off.png",
+      "at": "2026-10-20T05:27:56.768Z",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "name": "1440-reduced-motion.png",
+      "at": "2026-10-20T05:27:57.457Z",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "name": "1440-initial.png",
+      "at": "2026-10-20T05:27:58.992Z",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "name": "1440-report.png",
+      "at": "2026-10-20T05:27:59.793Z",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "name": "1366-initial.png",
+      "at": "2026-10-20T05:28:01.331Z",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      }
+    },
+    {
+      "name": "1366-report.png",
+      "at": "2026-10-20T05:28:02.099Z",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      }
+    },
+    {
+      "name": "900-initial.png",
+      "at": "2026-10-20T05:28:03.615Z",
+      "viewport": {
+        "width": 900,
+        "height": 900
+      }
+    },
+    {
+      "name": "900-report.png",
+      "at": "2026-10-20T05:28:04.376Z",
+      "viewport": {
+        "width": 900,
+        "height": 900
+      }
+    },
+    {
+      "name": "899-initial.png",
+      "at": "2026-10-20T05:28:05.832Z",
+      "viewport": {
+        "width": 899,
+        "height": 900
+      }
+    },
+    {
+      "name": "899-report.png",
+      "at": "2026-10-20T05:28:06.573Z",
+      "viewport": {
+        "width": 899,
+        "height": 900
+      }
+    },
+    {
+      "name": "375-initial.png",
+      "at": "2026-10-20T05:28:08.027Z",
+      "viewport": {
+        "width": 375,
+        "height": 812
+      }
+    },
+    {
+      "name": "375-report.png",
+      "at": "2026-10-20T05:28:08.767Z",
+      "viewport": {
+        "width": 375,
+        "height": 812
+      }
+    },
+    {
+      "name": "1440-long-middle.png",
+      "at": "2026-10-20T05:28:11.348Z",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "name": "1440-long-bottom.png",
+      "at": "2026-10-20T05:28:11.859Z",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "name": "idle-0s.png",
+      "at": "2026-10-20T05:28:13.425Z",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "name": "idle-10s.png",
+      "at": "2026-10-20T05:28:23.639Z",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "name": "idle-20s.png",
+      "at": "2026-10-20T05:28:33.835Z",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "name": "idle-30s.png",
+      "at": "2026-10-20T05:28:44.015Z",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    }
+  ],
+  "scenarios": [
+    {
+      "name": "native-cursors-and-no-luminous-follower",
+      "status": "pass",
+      "detail": {
+        "scene": "url(\"http://127.0.0.1:57387/design/cursor-rain-light.svg\") 12 12, crosshair",
+        "paper": "url(\"http://127.0.0.1:57387/design/cursor-rain-light.svg\") 12 12, crosshair",
+        "button": "url(\"http://127.0.0.1:57387/design/cursor-rain-action-light.svg\") 12 12, pointer",
+        "text": "text",
+        "halo": false
+      }
+    },
+    {
+      "name": "idle-rain-paints-and-creates-small-water-impacts",
+      "status": "pass",
+      "detail": {
+        "frames": 71,
+        "drops": 245,
+        "rings": 8
+      }
+    },
+    {
+      "name": "pointer-bends-nearby-rain-and-then-settles",
+      "status": "pass",
+      "detail": {
+        "baselineHorizontalStroke": 0.32145045755703283,
+        "pointerHorizontalStroke": 0.7890724188467257,
+        "ambientContinues": true
+      }
+    },
+    {
+      "name": "water-click-large-ring-and-control-click-no-large-ring",
+      "status": "pass",
+      "detail": {
+        "clickedWaterRadius": 39.961556851211064,
+        "controlRadius": 24.043191283598848
+      }
+    },
+    {
+      "name": "paper-and-touch-do-not-drive-rain",
+      "status": "pass",
+      "detail": {
+        "paperSheltered": true,
+        "touchClearsPointer": true
+      }
+    },
+    {
+      "name": "blur-pauses-and-resumes-all-motion",
+      "status": "pass",
+      "detail": {
+        "paused": true,
+        "resumed": true
+      }
+    },
+    {
+      "name": "hidden-pauses-and-resumes-all-motion",
+      "status": "pass",
+      "detail": {
+        "paused": true,
+        "resumed": true
+      }
+    },
+    {
+      "name": "forced-colors-pauses-and-resumes-all-motion",
+      "status": "pass",
+      "detail": {
+        "paused": true,
+        "resumed": true
+      }
+    },
+    {
+      "name": "effects-off-and-live-reduced-motion-stop-loop",
+      "status": "pass",
+      "detail": {
+        "offStops": true,
+        "reducedStops": true
+      }
+    },
+    {
+      "name": "reading-layout-and-cursors-1440",
+      "status": "pass",
+      "detail": {
+        "overflow": false,
+        "cursor": "url(\"http://127.0.0.1:57387/design/cursor-rain-action-ink.svg\") 12 12, pointer",
+        "paper": "url(\"http://127.0.0.1:57387/design/cursor-rain-ink.svg\") 12 12, crosshair"
+      }
+    },
+    {
+      "name": "reading-layout-and-cursors-1366",
+      "status": "pass",
+      "detail": {
+        "overflow": false,
+        "cursor": "url(\"http://127.0.0.1:57387/design/cursor-rain-action-ink.svg\") 12 12, pointer",
+        "paper": "url(\"http://127.0.0.1:57387/design/cursor-rain-ink.svg\") 12 12, crosshair"
+      }
+    },
+    {
+      "name": "reading-layout-and-cursors-900",
+      "status": "pass",
+      "detail": {
+        "overflow": false,
+        "cursor": "url(\"http://127.0.0.1:57387/design/cursor-rain-action-ink.svg\") 12 12, pointer",
+        "paper": "url(\"http://127.0.0.1:57387/design/cursor-rain-ink.svg\") 12 12, crosshair"
+      }
+    },
+    {
+      "name": "reading-layout-and-cursors-899",
+      "status": "pass",
+      "detail": {
+        "overflow": false,
+        "cursor": "url(\"http://127.0.0.1:57387/design/cursor-rain-action-ink.svg\") 12 12, pointer",
+        "paper": "url(\"http://127.0.0.1:57387/design/cursor-rain-ink.svg\") 12 12, crosshair"
+      }
+    },
+    {
+      "name": "reading-layout-and-cursors-375",
+      "status": "pass",
+      "detail": {
+        "overflow": false,
+        "cursor": "url(\"http://127.0.0.1:57387/design/cursor-rain-action-ink.svg\") 12 12, pointer",
+        "paper": "url(\"http://127.0.0.1:57387/design/cursor-rain-ink.svg\") 12 12, crosshair"
+      }
+    }
+  ],
+  "url": "http://127.0.0.1:57387/",
+  "browser": {
+    "protocolVersion": "1.3",
+    "product": "Edg/155.0.4283.45",
+    "revision": "@50f24ef2aa5369a074b8888b7db82d9c0652d642",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+    "jsVersion": "15.5.9.4"
+  },
+  "idle": [
+    {
+      "t": 0,
+      "canvas": "true",
+      "animations": 5
+    },
+    {
+      "t": 10,
+      "canvas": "true",
+      "animations": 5
+    },
+    {
+      "t": 20,
+      "canvas": "true",
+      "animations": 5
+    },
+    {
+      "t": 30,
+      "canvas": "true",
+      "animations": 5
+    }
+  ]
+}

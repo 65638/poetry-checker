@@ -1,0 +1,143 @@
+{
+  "suite": "reveal",
+  "revision": {
+    "commit": "9c8156193d063d5cc99102fb9b00ba5eb483eb8f",
+    "dirty": true
+  },
+  "at": "2026-10-20T04:53:51.304Z",
+  "scenarios": [
+    {
+      "name": "reveal-375-pointer-click",
+      "status": "pass",
+      "detail": {
+        "reveals": 1
+      }
+    },
+    {
+      "name": "reveal-375-same-text-replays",
+      "status": "pass",
+      "detail": {
+        "reveals": 1,
+        "anims": 0
+      }
+    },
+    {
+      "name": "reveal-375-ctrl-enter",
+      "status": "pass",
+      "detail": {
+        "reveals": 1
+      }
+    },
+    {
+      "name": "no-reveal-after-wheel",
+      "status": "pass",
+      "detail": {
+        "reveals": 0
+      }
+    },
+    {
+      "name": "no-reveal-on-failure",
+      "status": "pass",
+      "detail": {
+        "reveals": 0,
+        "alert": true
+      }
+    },
+    {
+      "name": "no-reveal-at-1440",
+      "status": "pass",
+      "detail": {
+        "reveals": 0
+      }
+    },
+    {
+      "name": "evidence-open-close-reopen-escape",
+      "status": "pass",
+      "detail": {
+        "open1": true,
+        "closed": true,
+        "open2": true,
+        "restored": true
+      }
+    },
+    {
+      "name": "evidence-exit-animates-then-unmounts",
+      "status": "pass",
+      "detail": {
+        "mid": {
+          "dialog": false,
+          "leaving": true,
+          "inert": true,
+          "focusCell": true
+        },
+        "unmounted": true
+      }
+    },
+    {
+      "name": "candidate-override-still-works",
+      "status": "pass",
+      "detail": {
+        "token": "l3c4",
+        "tokens": 20
+      }
+    },
+    {
+      "name": "settled-finding-auto-opens",
+      "status": "pass",
+      "detail": {
+        "open": true
+      }
+    },
+    {
+      "name": "stale-disables-rail",
+      "status": "pass",
+      "detail": {
+        "stale": true,
+        "disabled": true
+      }
+    },
+    {
+      "name": "verdict-not-squeezed-900",
+      "status": "pass",
+      "detail": {
+        "verdictWidth": 399,
+        "lineHeights": [
+          106,
+          109,
+          106,
+          109
+        ],
+        "cell": 75
+      }
+    },
+    {
+      "name": "verdict-not-squeezed-1024",
+      "status": "pass",
+      "detail": {
+        "verdictWidth": 523,
+        "lineHeights": [
+          109,
+          112,
+          109,
+          112
+        ],
+        "cell": 78
+      }
+    },
+    {
+      "name": "verdict-not-squeezed-1100",
+      "status": "pass",
+      "detail": {
+        "verdictWidth": 471,
+        "lineHeights": [
+          116,
+          119,
+          116,
+          119
+        ],
+        "cell": 85
+      }
+    }
+  ],
+  "url": "http://127.0.0.1:49696/"
+}
