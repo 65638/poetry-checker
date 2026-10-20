@@ -56,8 +56,13 @@
 | `pnpm verify`（基线 `898b1a0`，dirty=false） | 0 | lint / 双 tsconfig / 测试 / 构建 / 8 个生成物全部通过；**53 文件 / 733 项** |
 | `pnpm exec vitest run apps/web/tests`（改动后） | 0 | 业务测试全绿 |
 | `pnpm verify`（改动后，dirty=false） | 0 | 同上；**54 文件 / 748 项**（+15） |
+| `pnpm test:acceptance`（改动后，独立实跑） | 2 | **九格：通过 3 / 阻断 6 / 判错 0 / 未运行 0**；产物 `artifacts/acceptance/d3-api.json` |
 
 计数口径：748 = 基线 733 + 本批 15，不重复计算既有用例。
+
+验收 runner 的 exit 2 表示「有阻断项」，不是判错。6 个阻断全部是词林/新韵的
+`LOOKUP_EVIDENCE_UNVERIFIED`（这两个库的候选尚未通过人工审核），与前端无关；
+平水三首均 200（pass / not_applicable / fail）。本轮未把浏览器 18 通过说成九格全通过。
 
 ### 请求体断言（供 E 的浏览器用例对齐）
 
