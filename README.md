@@ -4,7 +4,7 @@
 
 ## 立即开始
 
-**D4 当前执行入口（2026-10-20）**：[D4总控与历史迁移](docs/team/D4_执行任务书_2026-10-20/00_组长先看_总控与历史迁移.md)。D1–D3遗留统一在D4记账，已完成项保持回归；新UI暂停。D4统一开发分支为 `integrate/d4`，实测实现 `fca70d6`：733项测试、18个浏览器场景通过，真实HTTP仍3通过/6阻断/0判错。[基线发布记录](docs/handoffs/d4-baseline.md) 包含拉取方式与证据；不代表D4或全库发布完成。下列早期批次是历史记录，成员新开工以D4任务书和Codex后续公布的实际基线为准。
+**D4 当前执行入口（2026-10-20）**：[D4总控与历史迁移](docs/team/D4_执行任务书_2026-10-20/00_组长先看_总控与历史迁移.md)。D1–D3遗留统一在D4记账，数据、规则和业务收口按任务书推进；月下江山展示层已随 `origin/main` 合入，本轮不追加新的视觉范围。D4统一开发分支为 `integrate/d4`，当前集成实现为 `ed84397`：763项测试、浏览器19个场景通过，真实HTTP仍3通过/6阻断/0判错。[Codex接管记录](docs/handoffs/d4-codex.md)和[候选交付状态](docs/delivery/d4/release-status.md)记录实际命令与限制；不代表D4或全库发布完成。下列早期批次是历史记录，成员新开工以D4任务书和Codex公布的实际基线为准。
 
 D3 D/E 接管复验（2026-10-19）：D 的三首示例和30秒超时已接入；修复失败后复制/导出旧报告，以及 E runner 把缺陷返回值误算通过的问题；补全实际选音重查、覆盖清理与历史体裁标签。最新全仓 **53 文件 / 733 项通过**，浏览器 **18 通过 / 0 阻断 / 0 失败**，真实 HTTP 九格仍 **3 通过 / 6 数据阻断 / 0 判错**。详见 [D/E 接管复核](docs/handoffs/d3-de-takeover-codex.md)。下列为此前各批记录。
 
@@ -21,7 +21,7 @@ pnpm verify
 
 未安装 pnpm 时，使用包含 npm 的标准 Node.js 24 安装后执行 `npm install -g pnpm@11.25.0`，或按 pnpm 官方说明安装同一版本。本地依赖已安装；重新克隆或解压需安装依赖。
 
-`verify` 执行 lint、类型检查、单元测试、两包构建和生成物一致性检查。`pnpm dev` 一条命令同时启动前后端（scripts/dev.mjs，Ctrl+C 统一清理子进程）；也可分开：`pnpm dev:api` 启动 API（**默认真实模式**：按 apps/api 清单装载韵书快照并走六步编排；设 `POETRY_DEV_MOCK=1` 才回退开发 mock；127.0.0.1:3000，`PORT` 可改）；`pnpm dev:web` 启动 Vite 前端（5173，代理 /api、/healthz、/readyz → 3000；用 `localhost` 访问，Vite 绑 IPv6）。当前全量证据尚未人工审核：`/readyz` 返回 503、`/api/v1/analyze` 对证据未审核输入返回 503 DATA_NOT_READY 都是如实门槛，不是故障。
+`verify` 执行 lint、类型检查、单元测试、两包构建和生成物一致性检查。`pnpm test:acceptance` 运行真实 API 九格，`pnpm test:e2e` 运行 CDP 浏览器回归；两者的阻断码必须按原始结果解释。`pnpm dev` 一条命令同时启动前后端（scripts/dev.mjs，Ctrl+C 统一清理子进程）；也可分开：`pnpm dev:api` 启动 API（**默认真实模式**：按 apps/api 清单装载韵书快照并走六步编排；设 `POETRY_DEV_MOCK=1` 才回退开发 mock；127.0.0.1:3000，`PORT` 可改）；`pnpm dev:web` 启动 Vite 前端（默认 5173，端口被占用时以终端打印的 Local 地址为准；代理 /api、/healthz、/readyz → 3000；用 `localhost` 访问，Vite 绑 IPv6）。当前全量证据尚未人工审核：`/readyz` 返回 503、`/api/v1/analyze` 对证据未审核输入返回 503 DATA_NOT_READY 都是如实门槛，不是故障。
 
 ## 已有内容与待开发内容
 
@@ -37,11 +37,10 @@ pnpm verify
 历史状态（D3 初期 integrate/d3；当前结果以顶部复核记录为准）分项标注：
 - **代码检查**：pnpm verify 全绿（45 文件 / 591 测试，基线复验于 f42172f）。
 - **真实 API**：平水三首 200 + Schema pass + 金标准 3/3（GLM 实跑 `scripts/probe-d3-matrix.ts`，九组合表见 data/reviews/d3-g02-nine-combos.json）；词林/新韵六组合如实 503（LOOKUP_EVIDENCE_UNVERIFIED，等 D3 批次三 A/B 供数）。
-- **浏览器**：`pnpm dev` 双服务可用（healthz ok / web 200 / 代理真数据）；GLM 沙箱内 dev.mjs 的 node→cmd.exe spawn 受阻，用 dev:api/dev:web 分启绕行（真人环境不受影响，免 shell 加固列入 D3 待办）。
+- **浏览器**：现役验收是 Node CDP runner（`tests/e2e/d3-browser.mjs`），不是 Playwright；`pnpm test:e2e` 通过独立 Vite/API 临时端口运行。
 - **数据批准**：平水=三讲 1 部 + 83 条候选（J03 两批 + 有限批，登记于 data/reviews/approved-evidence.json，非全量审核）；三库快照级仍 unverified（整库审核为 D3 主线）。
-- **已审特例**：黄鹤楼 l4c5-7"空悠悠"三平尾按 13_ 第 8 条转 not_applicable/info（rules/exceptions/reviewed-works-v1.json，其余偏离保持原判、整诗仍如实 fail）。
+- **已审特例**：黄鹤楼 l4c5-7"空悠悠"三平尾按 13_ 第 8 条转 not_applicable/info（rules/exceptions/reviewed-works-v1.json）；l4c5 的其它 METER.POSITION 偏离保持原判，整诗仍如实 fail。
 - **全库发布**：未发布；readyz 如实 503，唯一剩余门槛=三库快照级 approved。
-已知问题：黄鹤楼 l4c5”空悠悠”三平尾现报 fail/error，与 13_ 第二批第 8 条裁定（作特征保留不作 error）不一致——D3 批次一（Codex 特例适用层）待接入后修正。
 
 ## 发给每位成员
 
@@ -68,7 +67,7 @@ packages/prosody/src/core/ Codex 的基础核心
 packages/prosody/src/      C 的公共入口与后续封装
 apps/api/、apps/web/       真实 API 服务与 React Web 应用
 packages/lexicon/、readings/、genre/ 三模块均已并入
-tests/integration/        跨模块集成测试（*.test.ts 由根 Vitest 收集；Playwright spec 用独立 runner，勿混入 Vitest）
+tests/integration/        跨模块集成测试（*.test.ts 由根 Vitest 收集；浏览器回归由 Node CDP runner 独立执行）
 artifacts/openapi.json    生成的接口说明，不代表 HTTP 服务已上线
 fixtures/contracts/      合成响应与输入示例
 rules/templates/         生成的基础模板
@@ -84,6 +83,8 @@ pnpm generate:contracts
 pnpm check:generated
 pnpm --filter @poetry/contracts test
 pnpm --filter @poetry/prosody test
+pnpm test:acceptance
+pnpm test:e2e
 ```
 
 修改 Schema/模板后运行 generate:contracts 并提交生成物；CI 使用 check:generated 防止漂移。格式化源代码用 `pnpm format`，任务书由源文档生成，不手工改各份公共附录。Claude 英文任务书的公共类型与视图类型也从同一源生成。
