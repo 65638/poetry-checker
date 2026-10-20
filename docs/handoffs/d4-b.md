@@ -2,7 +2,8 @@
 
 - 分支：`feat/b-d4-closeout`
 - base：`origin/integrate/d4 @ 898b1a0a26a5f6e8e79a0b2cb31848b24537a185`（该 ref 由 Codex 发布；本轮未收到广播 SHA，按 `ls-remote` 实际值记录）
-- head：本分支首次提交（见 PR）
+- head：`c097a2d832beb772a69e0cc7abca00bf24f8b1c0`
+- PR：#23（目标 `integrate/d4`，待转草稿/待审）
 - 工作树：开始与结束时均干净；未 reset / clean / 重写他人提交
 
 ## 1. 命令与结果（本轮实际输出）
