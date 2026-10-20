@@ -1,12 +1,12 @@
 # D4 候选交付状态
 
-更新时间：2026-10-20（Asia/Shanghai）。候选集成 SHA：`08f797e680be944ba734a14cfd2a11aa4fbcf669`。这是可演示候选的状态记录，不是正式发布批准。
+更新时间：2026-10-20（Asia/Shanghai）。候选集成 SHA：`ed84397fa702118d001371302984ace9690339db`。这是可演示候选的状态记录，不是正式发布批准。
 
 ## 已验证
 
 - 工程检查：`pnpm verify` exit 0，56 个测试文件、763 项测试通过，包含 lint、类型检查、构建和 8 个生成物一致性检查。
 - 真实 API：`pnpm test:acceptance` 九格为 3 通过、6 阻断、0 判错、0 未运行；阻断来自词林/新韵未审核证据，runner 原始退出码 2。
-- 浏览器：同一 SHA 的独立复跑 18/0/0 通过；首次运行有 1 个 20 秒超时，保留在 `artifacts/acceptance/d4-final-browser`，通过复跑在 `artifacts/acceptance/d4-final-browser-rerun`。
+- 浏览器：同一 SHA 19/0/0 通过，新增 `E05-concurrent-submit-keeps-latest`；E 的证据在 `tests/integration/e2e/evidence/d4-e-01/`，受控延迟下最终导出与请求快照均归 B。
 - UI：当前分支已包含 `origin/main` 的月下江山展示层合入；本状态不把截图或视觉检查扩大成数据发布证明。
 
 ## 仍未完成
@@ -19,6 +19,8 @@
 | 干净 clone / 跨端启动 | 未运行 | E/D 按锁定 SHA 新目录安装、启动、点击和退出验证 |
 | 性能 P50/P95 | 未运行 | Codex 在已批准且 HTTP 200 的样本上测量，503 不计入成功样本 |
 | 原数量目标 | 未达 | 以 B/C/E 的独立语义盘点补齐 12 首、36 规则组、60 多音位置、12 系统场景差距 |
+
+E 批次 01 明确未运行：迟到失败、30 秒真实超时恢复与禁导出、`needs_review`/`unsupported` 浏览器态、完整键盘主任务、折叠/定位去重回归、干净 clone、G09 扩编和词林/新韵独立期望。30 秒超时的前端表现与按钮口径等待 D/组长拍板。
 
 ## 可演示边界
 

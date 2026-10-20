@@ -58,3 +58,5 @@ pnpm verify
 上面的 `fca70d6` 是 D4 开发基线起点，不是当前可拉取提交。Codex 已在保留 C/B/D 收口批的 `integrate/d4` 上合入 `origin/main@c409d205d52efa9b359f39a81337d19fc12373b6`，代码集成提交为 `08f797e680be944ba734a14cfd2a11aa4fbcf669`；随后仅增加本记录、[Codex 接管记录](d4-codex.md)、[候选交付状态](../delivery/d4/release-status.md)和 README 更正，当前远端分支为 `origin/integrate/d4@f9b0c6981c05a975fd40019bc60839b8209fd60a`。
 
 在代码集成 SHA 上重新执行：`pnpm verify` exit 0（56 文件 / 763 项）；`pnpm test:acceptance` 为 3 通过 / 6 阻断 / 0 判错 / 0 未运行，runner 原始 exit 2；`pnpm test:e2e` 首次有 1 个单场景 20 秒超时，独立复跑为 18 通过 / 0 阻断 / 0 失败。词林/新韵的 6 个阻断仍是 `LOOKUP_EVIDENCE_UNVERIFIED`，`/readyz` 仍为 503；没有改变审批状态或全库发布门槛。
+
+E 批次 01 已基于远端 `4146371` 合入：新增受控并发提交归属场景，合入后的代码 SHA 为 `ed84397fa702118d001371302984ace9690339db`。当前浏览器复跑为 19/0/0，新增场景确认 B 的请求快照和导出不被迟到 A 覆盖；迟到失败、真实超时恢复、完整键盘和干净 clone 等仍未运行，详见 [E 交接](d4-e.md)。
