@@ -1,0 +1,50 @@
+{
+  "revision": {
+    "commit": "74760a18dad8cc231a4058c41455090841d0d15e",
+    "dirty": true
+  },
+  "scenarios": [
+    {
+      "name": "short-poem-click-four-stays-four",
+      "status": "pass",
+      "detail": {
+        "active": "4更上一层楼",
+        "scroll": 623,
+        "jumps": [
+          "pc-line-4"
+        ],
+        "line4": 377.9375
+      }
+    },
+    {
+      "name": "repeated-pointer-selections-follow-chosen-line",
+      "status": "pass",
+      "detail": [
+        "2",
+        "3",
+        "1",
+        "4"
+      ]
+    },
+    {
+      "name": "blank-click-does-not-reset-directory",
+      "status": "pass"
+    },
+    {
+      "name": "keyboard-selection-stays-four",
+      "status": "pass"
+    },
+    {
+      "name": "manual-scroll-resumes-tracking",
+      "status": "pass"
+    },
+    {
+      "name": "long-poem-selection-and-scroll-tracking",
+      "status": "pass"
+    },
+    {
+      "name": "reduced-motion-selection",
+      "status": "pass"
+    }
+  ]
+}

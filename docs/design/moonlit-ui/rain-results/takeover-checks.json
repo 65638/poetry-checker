@@ -1,0 +1,160 @@
+{
+  "suite": "codex-takeover",
+  "revision": {
+    "commit": "96de4c7196242c0469f5054818c63bf3b8892366",
+    "dirty": true
+  },
+  "at": "2026-10-20T04:03:17.141Z",
+  "scenarios": [
+    {
+      "name": "working-layout-1440x900",
+      "status": "pass",
+      "detail": {
+        "overflow": false,
+        "firstLineBottom": 634.953125,
+        "railBottom": 876.2583618164062,
+        "sameEditor": true,
+        "bookVisible": true
+      }
+    },
+    {
+      "name": "working-layout-1366x768",
+      "status": "pass",
+      "detail": {
+        "overflow": false,
+        "firstLineBottom": 607.53125,
+        "railBottom": 716.60791015625,
+        "sameEditor": true,
+        "bookVisible": true
+      }
+    },
+    {
+      "name": "working-layout-1280x800",
+      "status": "pass",
+      "detail": {
+        "overflow": false,
+        "firstLineBottom": 607.53125,
+        "railBottom": 748.6121826171875,
+        "sameEditor": true,
+        "bookVisible": true
+      }
+    },
+    {
+      "name": "working-layout-1100x900",
+      "status": "pass",
+      "detail": {
+        "overflow": false,
+        "firstLineBottom": 770.015625,
+        "railBottom": 876.0430297851562,
+        "sameEditor": true,
+        "bookVisible": true
+      }
+    },
+    {
+      "name": "working-layout-1024x768",
+      "status": "pass",
+      "detail": {
+        "overflow": false,
+        "firstLineBottom": 704.953125,
+        "railBottom": 718.9049072265625,
+        "sameEditor": true,
+        "bookVisible": true
+      }
+    },
+    {
+      "name": "working-layout-900x900",
+      "status": "pass",
+      "detail": {
+        "overflow": false,
+        "firstLineBottom": 755.671875,
+        "railBottom": 876.0225830078125,
+        "sameEditor": true,
+        "bookVisible": true
+      }
+    },
+    {
+      "name": "working-layout-899x900",
+      "status": "pass",
+      "detail": {
+        "overflow": false,
+        "firstLineBottom": 1198.140625,
+        "railBottom": 671.225830078125,
+        "sameEditor": true,
+        "bookVisible": true
+      }
+    },
+    {
+      "name": "working-layout-768x1024",
+      "status": "pass",
+      "detail": {
+        "overflow": false,
+        "firstLineBottom": 1256.484375,
+        "railBottom": 671.2100219726562,
+        "sameEditor": true,
+        "bookVisible": true
+      }
+    },
+    {
+      "name": "working-layout-375x812",
+      "status": "pass",
+      "detail": {
+        "overflow": false,
+        "firstLineBottom": 1385.03125,
+        "railBottom": 659.2067260742188,
+        "sameEditor": true,
+        "bookVisible": true
+      }
+    },
+    {
+      "name": "working-layout-720x450",
+      "status": "pass",
+      "detail": {
+        "overflow": false,
+        "firstLineBottom": 1286.875,
+        "railBottom": 671.23046875,
+        "sameEditor": true,
+        "bookVisible": true
+      }
+    },
+    {
+      "name": "mobile-directory-disclosure-and-keyboard-jump",
+      "status": "pass",
+      "detail": {
+        "collapsedInitially": true,
+        "keyboardDestination": "pc-line-1"
+      }
+    },
+    {
+      "name": "compact-settings-and-textarea-identity",
+      "status": "pass",
+      "detail": {
+        "examplesAccessible": true,
+        "editorPreserved": true
+      }
+    },
+    {
+      "name": "pointer-cancel-and-forced-colors-stop-frame-loop",
+      "status": "pass",
+      "detail": {
+        "cancelled": true,
+        "forcedColorsHasNoFollowerLoop": true
+      }
+    },
+    {
+      "name": "blur-pauses-ambient-and-focus-resumes",
+      "status": "pass",
+      "detail": {
+        "pausedOnBlur": true,
+        "resumed": true
+      }
+    },
+    {
+      "name": "sky-and-text-clicks-do-not-spawn-water-ripples",
+      "status": "pass",
+      "detail": {
+        "nonWaterRipples": 0
+      }
+    }
+  ],
+  "url": "http://127.0.0.1:50368/"
+}

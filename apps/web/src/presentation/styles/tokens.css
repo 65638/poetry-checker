@@ -1,47 +1,75 @@
-/* Only page-global rule here: clears the UA 8px body margin so the paper background reaches the edges. */
+/* Only page-global rule here: clears the UA 8px body margin so the scene reaches the window edges. */
 html,
 body {
   margin: 0;
 }
 
 .pc-root {
-  /* Stage: the dark ink exhibition wall. Decorative glyph tones are aria-hidden art, not text. */
-  --pc-ink-900: #14181a;
-  --pc-ink-800: #1d2427;
-  --pc-ink-700: #283135;
-  --pc-ink-600: #36413f;
-  --pc-ink-500: #4a5653;
-  --pc-ink-glyph: #232b2e;
-  --pc-on-ink: #efe6d2;
-  --pc-on-ink-muted: #a39c8a;
-  --pc-on-ink-accent: #e0583f;
-  --pc-on-ink-gold: #d9a441;
+  /* Night scene. One continuous sky-to-water field; decorative tones are aria-hidden art, not text. */
+  --pc-night: #101f25;
+  --pc-night-deep: #0b171c;
+  --pc-teal: #203c43;
+  --pc-teal-soft: #2c4d54;
+  --pc-mist: #7e9b9d;
+  --pc-mist-pale: #b9c9c6;
+  --pc-shore: #d9dccf;
+  --pc-moon: #f3ecd8;
+  --pc-moon-haze: #c9d3c6;
+  --pc-ridge-far: #2a4a51;
+  --pc-ridge-mid: #1d3a41;
+  --pc-ridge-near: #142c32;
+  --pc-water: #18323a;
+  --pc-water-glint: #e8e2cc;
+  --pc-scene-sky: linear-gradient(
+    180deg,
+    #101f29 0%,
+    #18333c 35%,
+    #3b5e62 62%,
+    #527575 80%,
+    #19353d 100%
+  );
 
-  /* Paper: working surfaces. Body text 14.3:1, muted 6.0:1 on --pc-bg. */
-  --pc-bg: #f4efe4;
-  --pc-surface: #fffdf8;
-  --pc-surface-sheet: #faf7f0;
-  --pc-surface-sunken: #efe9db;
-  --pc-surface-hover: #e6dfcd;
+  /* Legacy ink names remapped onto the night palette so existing rules keep resolving. */
+  --pc-ink-900: #101f25;
+  --pc-ink-800: #172a30;
+  --pc-ink-700: #203c43;
+  --pc-ink-600: #2c4d54;
+  --pc-ink-500: #4a6a6e;
+  --pc-ink-glyph: #1a3036;
+  /* On-night text: 13.0:1 and 8.1:1 on --pc-night. */
+  --pc-on-ink: #ece6d6;
+  --pc-on-ink-muted: #a9b8b4;
+  --pc-scene-label: #fffdf2;
+  --pc-on-ink-accent: #e07a68;
+  --pc-on-ink-gold: #e2c27a;
+
+  /* Manuscript surfaces. Body text 11.6:1, muted 6.3:1 on --pc-surface. */
+  --pc-manuscript: #f5f0e5;
+  --pc-bg: #f5f0e5;
+  --pc-surface: #f5f0e5;
+  --pc-surface-sheet: #f8f4ea;
+  --pc-surface-sunken: #ece6d7;
+  --pc-surface-hover: #e3dccb;
+  --pc-surface-rail: #13252b;
   --pc-paper-texture: url("/design/paper-grain.svg");
   --pc-paper-tile: 240px;
-  --pc-divider: #ddd5c3;
-  --pc-ruling: #e3dccb;
-  --pc-border-control: #857f70;
-  --pc-rule: #857f70;
-  --pc-seal: #b8321f;
-  --pc-seal-hover: #9c2a1a;
-  --pc-seal-press: #82220f;
+  --pc-divider: #d8d0bf;
+  --pc-ruling: #e2dbca;
+  --pc-border-control: #7d8784;
+  --pc-rule: #7d8784;
+  --pc-seal: #a64135;
+  --pc-seal-hover: #8f362c;
+  --pc-seal-press: #762b23;
   --pc-seal-ink: #ffffff;
 
-  --pc-text: #1c2023;
-  --pc-text-muted: #5c5a52;
+  --pc-text: #233238;
+  --pc-text-muted: #4e5b5e;
   --pc-text-on-accent: #ffffff;
 
-  --pc-accent: #1f6b55;
-  --pc-accent-hover: #185743;
-  --pc-accent-press: #114233;
-  --pc-accent-soft: #e3efe9;
+  --pc-accent: #1f5f5a;
+  --pc-accent-hover: #184c48;
+  --pc-accent-press: #113936;
+  --pc-accent-soft: #e0ebe7;
 
   --pc-pass-fg: #1f6b55;
   --pc-pass-bg: #e3efe9;
@@ -59,18 +87,20 @@ body {
   --pc-review-border: #805500;
 
   --pc-neutral-fg: #45483f;
-  --pc-neutral-bg: #efe9db;
-  --pc-neutral-bg-strong: #e6dfcd;
-  --pc-neutral-border: #857f70;
+  --pc-neutral-bg: #ece6d7;
+  --pc-neutral-bg-strong: #e3dccb;
+  --pc-neutral-border: #7d8784;
 
   --pc-tone-ping: #1f6b55;
-  --pc-tone-ze: #1c2023;
+  --pc-tone-ze: #233238;
   --pc-tone-unknown: #805500;
 
-  --pc-focus: #1d4ed8;
-  --pc-focus-on-ink: #8fb4ff;
+  --pc-focus: #326e68;
+  --pc-focus-on-ink: #b5d1c1;
   --pc-focus-width: 3px;
   --pc-focus-offset: 2px;
+
+  --pc-cursor: auto;
 
   --pc-space-1: 4px;
   --pc-space-2: 8px;
@@ -86,20 +116,23 @@ body {
   --pc-radius-panel: 10px;
   --pc-radius-sheet: 3px;
 
-  --pc-font-sans: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Hiragino Sans GB",
+  --pc-font-sans:
+    system-ui, -apple-system, "Segoe UI", "PingFang SC", "Hiragino Sans GB",
     "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC", sans-serif;
-  --pc-font-serif: "Songti SC", "STSong", "SimSun", "NSimSun", "Noto Serif CJK SC",
+  --pc-font-serif:
+    "Songti SC", "STSong", "SimSun", "NSimSun", "Noto Serif CJK SC",
     "Source Han Serif SC", "SimSun-ExtB", "MingLiU-ExtB", serif;
-  --pc-font-display: "Kaiti SC", "STKaiti", "KaiTi", "Noto Serif CJK SC", "Songti SC",
-    "STSong", "SimSun", serif;
+  --pc-font-display:
+    "Kaiti SC", "STKaiti", "KaiTi", "Noto Serif CJK SC", "Songti SC", "STSong",
+    "SimSun", serif;
 
   --pc-text-xs: 12px;
   --pc-text-sm: 14px;
   --pc-text-md: 16px;
   --pc-text-lg: 20px;
   --pc-text-xl: 26px;
-  --pc-text-display: 64px;
-  --pc-text-giant: clamp(220px, 24vw, 360px);
+  --pc-text-display: 36px;
+  --pc-text-giant: clamp(160px, 16vw, 240px);
   --pc-text-poem: 40px;
   --pc-text-draft: 22px;
   --pc-leading-body: 1.6;
@@ -108,62 +141,86 @@ body {
 
   --pc-cell: 64px;
   --pc-cell-gap: 6px;
-  --pc-seal-size: 52px;
-  --pc-status-icon: 64px;
+  --pc-seal-size: 44px;
+  --pc-status-icon: 56px;
   --pc-band-pad: var(--pc-space-3);
-  --pc-stage-height: 332px;
-  --pc-stage-overlap: 112px;
+  --pc-masthead-height: 116px;
+  --pc-stage-height: 132px;
+  --pc-stage-overlap: 0px;
   --pc-page-max: 1320px;
   --pc-page-margin: 40px;
-  --pc-input-col: 400px;
-  --pc-col-gap: 40px;
+  --pc-input-col: 376px;
+  --pc-rail-col: 232px;
+  --pc-rail-top: 24px;
+  /* masthead clearance, so the rail fits the first viewport before it sticks */
+  --pc-rail-clear: 136px;
+  --pc-col-gap: 48px;
   --pc-panel-width: 480px;
 
-  --pc-shadow-sheet: 0 1px 2px rgb(20 24 26 / 8%), 0 18px 48px rgb(20 24 26 / 14%);
-  --pc-shadow-plinth: 0 2px 4px rgb(20 24 26 / 12%), 0 28px 64px rgb(20 24 26 / 28%);
-  --pc-shadow-panel: -24px 0 64px rgb(20 24 26 / 32%);
-  --pc-backdrop: rgb(20 24 26 / 55%);
+  --pc-shadow-sheet:
+    0 1px 2px rgb(11 23 28 / 10%), 0 18px 48px rgb(11 23 28 / 22%);
+  --pc-shadow-plinth:
+    0 2px 4px rgb(11 23 28 / 14%), 0 28px 64px rgb(11 23 28 / 32%);
+  --pc-shadow-panel: -24px 0 64px rgb(11 23 28 / 40%);
+  --pc-backdrop: rgb(11 23 28 / 58%);
 
-  /* Motion. Opening and report reveal are staged; controls never wait on them. */
+  /* Motion. Controls never wait on choreography; every value zeroes under reduced motion or effects-off. */
   --pc-ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --pc-ease-in-out: cubic-bezier(0.45, 0, 0.25, 1);
   --pc-ease-stamp: cubic-bezier(0.3, 1.4, 0.5, 1);
   --pc-dur-control: 160ms;
-  --pc-dur-panel: 300ms;
-  --pc-dur-panel-out: 200ms;
+  --pc-dur-press: 120ms;
+  --pc-dur-book: 200ms;
+  --pc-dur-example: 220ms;
+  --pc-dur-feedback: 160ms;
+  --pc-dur-panel: 320ms;
+  --pc-dur-panel-out: 220ms;
+  --pc-dur-disclosure: 320ms;
+  --pc-dur-finding: 260ms;
   --pc-dur-stage: 760ms;
-  --pc-delay-stage: 120ms;
+  --pc-delay-stage: 80ms;
   --pc-dur-report: 360ms;
-  --pc-stagger-line: 60ms;
+  --pc-stagger-line: 50ms;
   --pc-dur-busy: 1100ms;
-  --pc-dur-pulse: 700ms;
+  --pc-dur-pulse: 600ms;
+  --pc-dur-settle: 700ms;
   --pc-shift-panel: 64px;
-  --pc-shift-report: 18px;
-  --pc-shift-stage: 40px;
-  --pc-press-scale: 0.96;
+  --pc-shift-report: 16px;
+  --pc-shift-stage: 24px;
+  --pc-press-scale: 0.985;
 
-  background: var(--pc-bg) var(--pc-paper-texture) repeat;
-  background-size: var(--pc-paper-tile);
+  /* Ambient idle loops: offset periods so the scene never visibly repeats in sync. */
+  --pc-ambient-mist: 26s;
+  --pc-ambient-mist-2: 31s;
+  --pc-ambient-water: 9s;
+  --pc-ambient-haze: 16s;
+  --pc-ambient-state: running;
+  --pc-ambient-mist-shift: 64px;
+  --pc-ambient-gain: 1;
+
+  background: var(--pc-night);
   color: var(--pc-text);
   font-family: var(--pc-font-sans);
   font-size: var(--pc-text-md);
   line-height: var(--pc-leading-body);
   min-height: 100vh;
+  cursor: var(--pc-cursor);
 }
 
 @media (max-width: 1279px) {
   .pc-root {
     --pc-input-col: 360px;
+    --pc-rail-col: 208px;
   }
 }
 
 @media (max-width: 1099px) {
   .pc-root {
     --pc-input-col: 304px;
+    --pc-rail-col: 192px;
     --pc-page-margin: 24px;
     --pc-col-gap: 24px;
-    --pc-text-display: 52px;
-    --pc-stage-height: 292px;
-    --pc-stage-overlap: 88px;
+    --pc-text-display: 38px;
     --pc-cell: 56px;
     --pc-text-poem: 34px;
   }
@@ -172,36 +229,83 @@ body {
 @media (max-width: 599px) {
   .pc-root {
     --pc-page-margin: 16px;
-    --pc-text-display: 34px;
-    --pc-text-giant: 168px;
+    --pc-text-display: 30px;
+    --pc-text-giant: 120px;
     --pc-text-poem: 26px;
     --pc-text-draft: 20px;
     --pc-cell: 44px;
     --pc-cell-gap: 4px;
-    --pc-seal-size: 40px;
-    --pc-status-icon: 48px;
-    --pc-stage-height: 196px;
-    --pc-stage-overlap: 28px;
+    --pc-seal-size: 36px;
+    --pc-status-icon: 44px;
+    --pc-masthead-height: 104px;
+    --pc-stage-height: 104px;
     --pc-band-pad: var(--pc-space-2);
-    --pc-shift-stage: 20px;
+    --pc-shift-stage: 12px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .pc-root {
     --pc-dur-control: 0ms;
+    --pc-dur-press: 0ms;
+    --pc-dur-book: 0ms;
+    --pc-dur-example: 0ms;
+    --pc-dur-feedback: 0ms;
     --pc-dur-panel: 0ms;
     --pc-dur-panel-out: 0ms;
+    --pc-dur-disclosure: 0ms;
+    --pc-dur-finding: 0ms;
     --pc-dur-stage: 0ms;
     --pc-delay-stage: 0ms;
     --pc-dur-report: 0ms;
     --pc-stagger-line: 0ms;
     --pc-dur-busy: 0ms;
     --pc-dur-pulse: 0ms;
+    --pc-dur-settle: 0ms;
     --pc-shift-panel: 0px;
     --pc-shift-report: 0px;
     --pc-shift-stage: 0px;
     --pc-press-scale: 1;
+    --pc-ambient-state: paused;
+    --pc-ambient-gain: 0;
+  }
+}
+
+.pc-root[data-motion="off"] {
+  --pc-dur-control: 0ms;
+  --pc-dur-press: 0ms;
+  --pc-dur-book: 0ms;
+  --pc-dur-example: 0ms;
+  --pc-dur-feedback: 0ms;
+  --pc-dur-panel: 0ms;
+  --pc-dur-panel-out: 0ms;
+  --pc-dur-disclosure: 0ms;
+  --pc-dur-finding: 0ms;
+  --pc-dur-stage: 0ms;
+  --pc-delay-stage: 0ms;
+  --pc-dur-report: 0ms;
+  --pc-stagger-line: 0ms;
+  --pc-dur-pulse: 0ms;
+  --pc-dur-settle: 0ms;
+  --pc-shift-panel: 0px;
+  --pc-shift-report: 0px;
+  --pc-shift-stage: 0px;
+  --pc-press-scale: 1;
+  --pc-ambient-state: paused;
+  --pc-ambient-gain: 0;
+}
+
+.pc-root[data-ambient="paused"] {
+  --pc-ambient-state: paused;
+}
+
+.pc-root[data-ambient="quiet"] {
+  --pc-ambient-gain: 0.45;
+}
+
+@media (forced-colors: active) {
+  .pc-root {
+    cursor: auto;
   }
 }
 

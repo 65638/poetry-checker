@@ -253,3 +253,38 @@
 @keyframes pc-evidence-in-up {
   from { opacity: 0; transform: translateY(var(--pc-shift-panel)); }
 }
+
+/* Exit: kept mounted but inert and role-less until the slide-out ends. */
+.pc-evidence--leaving {
+  pointer-events: none;
+}
+
+.pc-evidence--leaving .pc-evidence__backdrop {
+  animation: pc-backdrop-out var(--pc-dur-panel-out) var(--pc-ease-in-out) forwards;
+}
+
+.pc-evidence--leaving .pc-evidence__dialog {
+  animation: pc-evidence-out var(--pc-dur-panel-out) var(--pc-ease-in-out) forwards;
+}
+
+.pc-evidence--leaving .pc-evidence__body > * {
+  animation: none;
+}
+
+@keyframes pc-backdrop-out {
+  to { opacity: 0; }
+}
+
+@keyframes pc-evidence-out {
+  to { opacity: 0; transform: translateX(var(--pc-shift-panel)); }
+}
+
+@media (max-width: 599px) {
+  .pc-evidence--leaving .pc-evidence__dialog {
+    animation-name: pc-evidence-out-down;
+  }
+}
+
+@keyframes pc-evidence-out-down {
+  to { opacity: 0; transform: translateY(var(--pc-shift-panel)); }
+}

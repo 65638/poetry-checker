@@ -1,0 +1,468 @@
+{
+  "round": "codex-round1",
+  "sha": "0b7f05ffedbcf8cd7d2f794df10be85370b99189",
+  "dirty": true,
+  "data": "real local API via isolated harness (not fixture)",
+  "route": "/",
+  "shots": [
+    {
+      "file": "1440x900-initial-effects-on.png",
+      "state": "initial",
+      "mode": "effects-on",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:11.779Z"
+    },
+    {
+      "file": "1440x900-report-effects-on.png",
+      "state": "report",
+      "mode": "effects-on",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:12.888Z"
+    },
+    {
+      "file": "1440x900-report-full-effects-on.png",
+      "state": "report-full",
+      "mode": "effects-on",
+      "viewport": "1440x900",
+      "fullPage": true,
+      "at": "2026-10-20T03:20:13.045Z"
+    },
+    {
+      "file": "1440x900-evidence-effects-on.png",
+      "state": "evidence",
+      "mode": "effects-on",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:13.795Z"
+    },
+    {
+      "file": "1440x900-long-top-effects-on.png",
+      "state": "long-top",
+      "mode": "effects-on",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:15.534Z"
+    },
+    {
+      "file": "1440x900-long-middle-effects-on.png",
+      "state": "long-middle",
+      "mode": "effects-on",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:16.125Z"
+    },
+    {
+      "file": "1440x900-long-bottom-effects-on.png",
+      "state": "long-bottom",
+      "mode": "effects-on",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:16.727Z"
+    },
+    {
+      "file": "1440x900-stale-effects-on.png",
+      "state": "stale",
+      "mode": "effects-on",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:17.263Z"
+    },
+    {
+      "file": "1440x900-error-effects-on.png",
+      "state": "error",
+      "mode": "effects-on",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:18.103Z"
+    },
+    {
+      "file": "1366x768-initial-effects-on.png",
+      "state": "initial",
+      "mode": "effects-on",
+      "viewport": "1366x768",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:20.082Z"
+    },
+    {
+      "file": "1366x768-report-effects-on.png",
+      "state": "report",
+      "mode": "effects-on",
+      "viewport": "1366x768",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:21.197Z"
+    },
+    {
+      "file": "1280x800-initial-effects-on.png",
+      "state": "initial",
+      "mode": "effects-on",
+      "viewport": "1280x800",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:23.204Z"
+    },
+    {
+      "file": "1280x800-report-effects-on.png",
+      "state": "report",
+      "mode": "effects-on",
+      "viewport": "1280x800",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:24.295Z"
+    },
+    {
+      "file": "1100x900-initial-effects-on.png",
+      "state": "initial",
+      "mode": "effects-on",
+      "viewport": "1100x900",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:26.293Z"
+    },
+    {
+      "file": "1100x900-report-effects-on.png",
+      "state": "report",
+      "mode": "effects-on",
+      "viewport": "1100x900",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:27.383Z"
+    },
+    {
+      "file": "1024x768-initial-effects-on.png",
+      "state": "initial",
+      "mode": "effects-on",
+      "viewport": "1024x768",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:29.376Z"
+    },
+    {
+      "file": "1024x768-report-effects-on.png",
+      "state": "report",
+      "mode": "effects-on",
+      "viewport": "1024x768",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:30.464Z"
+    },
+    {
+      "file": "900x900-initial-effects-on.png",
+      "state": "initial",
+      "mode": "effects-on",
+      "viewport": "900x900",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:32.444Z"
+    },
+    {
+      "file": "900x900-report-effects-on.png",
+      "state": "report",
+      "mode": "effects-on",
+      "viewport": "900x900",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:33.526Z"
+    },
+    {
+      "file": "900x900-report-full-effects-on.png",
+      "state": "report-full",
+      "mode": "effects-on",
+      "viewport": "900x900",
+      "fullPage": true,
+      "at": "2026-10-20T03:20:33.636Z"
+    },
+    {
+      "file": "900x900-evidence-effects-on.png",
+      "state": "evidence",
+      "mode": "effects-on",
+      "viewport": "900x900",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:34.334Z"
+    },
+    {
+      "file": "900x900-long-top-effects-on.png",
+      "state": "long-top",
+      "mode": "effects-on",
+      "viewport": "900x900",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:36.025Z"
+    },
+    {
+      "file": "900x900-long-middle-effects-on.png",
+      "state": "long-middle",
+      "mode": "effects-on",
+      "viewport": "900x900",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:36.614Z"
+    },
+    {
+      "file": "900x900-long-bottom-effects-on.png",
+      "state": "long-bottom",
+      "mode": "effects-on",
+      "viewport": "900x900",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:37.187Z"
+    },
+    {
+      "file": "900x900-stale-effects-on.png",
+      "state": "stale",
+      "mode": "effects-on",
+      "viewport": "900x900",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:37.698Z"
+    },
+    {
+      "file": "900x900-error-effects-on.png",
+      "state": "error",
+      "mode": "effects-on",
+      "viewport": "900x900",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:38.513Z"
+    },
+    {
+      "file": "899x900-initial-effects-on.png",
+      "state": "initial",
+      "mode": "effects-on",
+      "viewport": "899x900",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:40.430Z"
+    },
+    {
+      "file": "899x900-report-effects-on.png",
+      "state": "report",
+      "mode": "effects-on",
+      "viewport": "899x900",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:41.514Z"
+    },
+    {
+      "file": "768x1024-initial-effects-on.png",
+      "state": "initial",
+      "mode": "effects-on",
+      "viewport": "768x1024",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:43.434Z"
+    },
+    {
+      "file": "768x1024-report-effects-on.png",
+      "state": "report",
+      "mode": "effects-on",
+      "viewport": "768x1024",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:44.520Z"
+    },
+    {
+      "file": "375x812-initial-effects-on.png",
+      "state": "initial",
+      "mode": "effects-on",
+      "viewport": "375x812",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:46.407Z"
+    },
+    {
+      "file": "375x812-report-effects-on.png",
+      "state": "report",
+      "mode": "effects-on",
+      "viewport": "375x812",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:47.472Z"
+    },
+    {
+      "file": "375x812-report-full-effects-on.png",
+      "state": "report-full",
+      "mode": "effects-on",
+      "viewport": "375x812",
+      "fullPage": true,
+      "at": "2026-10-20T03:20:47.562Z"
+    },
+    {
+      "file": "375x812-evidence-effects-on.png",
+      "state": "evidence",
+      "mode": "effects-on",
+      "viewport": "375x812",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:48.239Z"
+    },
+    {
+      "file": "375x812-long-top-effects-on.png",
+      "state": "long-top",
+      "mode": "effects-on",
+      "viewport": "375x812",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:49.910Z"
+    },
+    {
+      "file": "375x812-long-middle-effects-on.png",
+      "state": "long-middle",
+      "mode": "effects-on",
+      "viewport": "375x812",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:50.456Z"
+    },
+    {
+      "file": "375x812-long-bottom-effects-on.png",
+      "state": "long-bottom",
+      "mode": "effects-on",
+      "viewport": "375x812",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:50.997Z"
+    },
+    {
+      "file": "375x812-stale-effects-on.png",
+      "state": "stale",
+      "mode": "effects-on",
+      "viewport": "375x812",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:51.484Z"
+    },
+    {
+      "file": "375x812-error-effects-on.png",
+      "state": "error",
+      "mode": "effects-on",
+      "viewport": "375x812",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:52.310Z"
+    },
+    {
+      "file": "1440x900-initial-reduced-motion.png",
+      "state": "initial",
+      "mode": "reduced-motion",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:53.410Z"
+    },
+    {
+      "file": "1440x900-report-reduced-motion.png",
+      "state": "report",
+      "mode": "reduced-motion",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:54.206Z"
+    },
+    {
+      "file": "375x812-initial-reduced-motion.png",
+      "state": "initial",
+      "mode": "reduced-motion",
+      "viewport": "375x812",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:55.222Z"
+    },
+    {
+      "file": "375x812-report-reduced-motion.png",
+      "state": "report",
+      "mode": "reduced-motion",
+      "viewport": "375x812",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:55.984Z"
+    },
+    {
+      "file": "1440x900-initial-effects-off.png",
+      "state": "initial",
+      "mode": "effects-off",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T03:20:58.436Z"
+    },
+    {
+      "file": "1440x900-idle-t0s-effects-on-idle.png",
+      "state": "idle-t0s",
+      "mode": "effects-on idle",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T03:21:00.412Z"
+    },
+    {
+      "file": "1440x900-idle-t10s-effects-on-idle.png",
+      "state": "idle-t10s",
+      "mode": "effects-on idle",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T03:21:10.640Z"
+    },
+    {
+      "file": "1440x900-idle-t20s-effects-on-idle.png",
+      "state": "idle-t20s",
+      "mode": "effects-on idle",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T03:21:20.797Z"
+    },
+    {
+      "file": "1440x900-idle-t30s-effects-on-idle.png",
+      "state": "idle-t30s",
+      "mode": "effects-on idle",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T03:21:30.993Z"
+    },
+    {
+      "file": "1440x900-pointer-50-effects-on-pointer.png",
+      "state": "pointer-50",
+      "mode": "effects-on pointer",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T03:21:32.736Z"
+    },
+    {
+      "file": "1440x900-pointer-150-effects-on-pointer.png",
+      "state": "pointer-150",
+      "mode": "effects-on pointer",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T03:21:36.037Z"
+    },
+    {
+      "file": "1440x900-pointer-250-effects-on-pointer.png",
+      "state": "pointer-250",
+      "mode": "effects-on pointer",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T03:21:39.340Z"
+    },
+    {
+      "file": "1440x900-pointer-settled-effects-on-settled.png",
+      "state": "pointer-settled",
+      "mode": "effects-on settled",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T03:21:42.410Z"
+    }
+  ],
+  "motion": {
+    "idle": [
+      {
+        "t": 0,
+        "mist": "matrix(1, 0, 0, 1, 52.3131, 0)",
+        "haze": "matrix(0.941394, 0, 0, 0.941394, 0, 0)",
+        "glint": "matrix(0.768539, 0, 0, 1, -9.77537, 0)",
+        "raf": 0
+      },
+      {
+        "t": 10,
+        "mist": "matrix(1, 0, 0, 1, -15.8824, 0)",
+        "haze": "matrix(1.05245, 0, 0, 1.05245, 0, 0)",
+        "glint": "matrix(0.939389, 0, 0, 1, 10.7267, 0)",
+        "raf": 0
+      },
+      {
+        "t": 20,
+        "mist": "matrix(1, 0, 0, 1, -63.969, 0)",
+        "haze": "matrix(1.04726, 0, 0, 1.04726, 0, 0)",
+        "glint": "matrix(0.991999, 0, 0, 1, 17.0399, 0)",
+        "raf": 0
+      },
+      {
+        "t": 30,
+        "mist": "matrix(1, 0, 0, 1, -23.2841, 0)",
+        "haze": "matrix(0.940023, 0, 0, 0.940023, 0, 0)",
+        "glint": "matrix(0.996988, 0, 0, 1, 17.6385, 0)",
+        "raf": 0
+      }
+    ],
+    "pointer": {
+      "moves": 304,
+      "frames": 2634,
+      "p50": 4.2,
+      "p95": 4.3,
+      "p99": 4.3,
+      "over50ms": 0,
+      "longTasks": []
+    },
+    "note": "Headless Chromium frame timings; indicative only, not a device benchmark."
+  },
+  "url": "http://127.0.0.1:65491/"
+}

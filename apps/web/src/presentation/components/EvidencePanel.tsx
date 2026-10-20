@@ -10,6 +10,8 @@ type EvidencePanelProps = {
   lockedReason: string | null;
   onChooseReading: CheckerViewProps['onChooseReading'];
   onClose: () => void;
+  leaving?: boolean;
+  onExited?: () => void;
 };
 
 const TONE_CLASS: Record<ReadingCandidate['toneClass'], string> = {
@@ -30,7 +32,7 @@ const toneText = (t: string) => (t === 'P' ? '平' : t === 'Z' ? '仄' : t);
 const safeUrl = (url: string | null) => (url !== null && /^https?:\/\//i.test(url) ? url : null);
 
 export function EvidencePanel(props: EvidencePanelProps) {
-  const { report, token, lockedReason, onChooseReading, onClose } = props;
+  const { report, token, lockedReason, onChooseReading, onClose, leaving = false, onExited } = props;
   const uid = useId();
   const dialogRef = useRef<HTMLElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -48,8 +50,8 @@ export function EvidencePanel(props: EvidencePanelProps) {
   ];
 
   useEffect(() => {
-    closeRef.current?.focus();
-  }, [token.tokenId]);
+    if (!leaving) closeRef.current?.focus();
+  }, [token.tokenId, leaving]);
 
   const onKeyDown = (e: KeyboardEvent) => {
     if (e.key === 'Escape') {
@@ -72,13 +74,20 @@ export function EvidencePanel(props: EvidencePanelProps) {
   };
 
   return (
-    <div className="pc-evidence">
+    <div
+      className={`pc-evidence${leaving ? ' pc-evidence--leaving' : ''}`}
+      aria-hidden={leaving || undefined}
+      inert={leaving}
+      onAnimationEnd={(e) => {
+        if (leaving && e.animationName.startsWith('pc-evidence-out')) onExited?.();
+      }}
+    >
       <div className="pc-evidence__backdrop" aria-hidden="true" onClick={onClose} />
       <section
         ref={dialogRef}
         className="pc-evidence__dialog"
-        role="dialog"
-        aria-modal="true"
+        role={leaving ? undefined : 'dialog'}
+        aria-modal={leaving ? undefined : true}
         aria-labelledby={`${uid}-title`}
         onKeyDown={onKeyDown}
       >

@@ -1,0 +1,100 @@
+{
+  "suite": "report",
+  "revision": {
+    "commit": "96de4c7196242c0469f5054818c63bf3b8892366",
+    "dirty": true
+  },
+  "at": "2026-10-20T03:58:33.105Z",
+  "scenarios": [
+    {
+      "name": "rail-lines-match-report",
+      "status": "pass",
+      "detail": {
+        "rail": 16,
+        "lines": 16
+      }
+    },
+    {
+      "name": "rail-in-viewport-top",
+      "status": "pass",
+      "detail": {
+        "top": 513,
+        "bottom": 876,
+        "vh": 900,
+        "footerTop": 2850
+      }
+    },
+    {
+      "name": "rail-in-viewport-middle",
+      "status": "pass",
+      "detail": {
+        "top": 421,
+        "bottom": 784,
+        "vh": 900,
+        "footerTop": 1847
+      }
+    },
+    {
+      "name": "rail-in-viewport-bottom",
+      "status": "pass",
+      "detail": {
+        "top": 418,
+        "bottom": 781,
+        "vh": 900,
+        "footerTop": 845
+      }
+    },
+    {
+      "name": "scroll-spy-never-scrolls",
+      "status": "pass",
+      "detail": {
+        "into": 0,
+        "scrollTo": 0,
+        "active": "11欲穷千里目"
+      }
+    },
+    {
+      "name": "rail-jump-pointer-flash",
+      "status": "pass",
+      "detail": {
+        "into": [
+          "pc-line-15"
+        ],
+        "flash": true
+      }
+    },
+    {
+      "name": "rail-jump-keyboard-focus",
+      "status": "pass",
+      "detail": {
+        "focused": "pc-line-4"
+      }
+    },
+    {
+      "name": "editor-collapse-expand-keeps-textarea",
+      "status": "pass",
+      "detail": {
+        "collapsed": {
+          "same": true,
+          "inert": true,
+          "focusOnToggle": true,
+          "expanded": "false"
+        },
+        "expanded": {
+          "same": true,
+          "inert": false
+        }
+      }
+    },
+    {
+      "name": "ime-composition-and-ctrl-enter",
+      "status": "pass",
+      "detail": {
+        "submittedDuringComposition": false,
+        "lines": 4,
+        "same": true
+      }
+    }
+  ],
+  "url": "http://127.0.0.1:62103/"
+}
