@@ -1,0 +1,43 @@
+{
+  "revision": {
+    "commit": "cd6bf09c46e9f6bc8f224ea83e588ef13cb29de5",
+    "dirty": true
+  },
+  "at": "2026-10-20T03:31:43.733Z",
+  "viewport": "1440x900",
+  "route": "/",
+  "mode": "production / real API",
+  "status": "pass",
+  "detail": {
+    "color": "rgb(35, 50, 56)",
+    "background": "rgb(248, 221, 215)",
+    "message": "正文必须包含汉字；标点、空格、字母不算有效内容。",
+    "noReport": true
+  },
+  "contrasts": [
+    {
+      "label": "body",
+      "fg": "233238",
+      "bg": "f5f0e5",
+      "ratio": 11.66
+    },
+    {
+      "label": "muted",
+      "fg": "4e5b5e",
+      "bg": "f5f0e5",
+      "ratio": 6.2
+    },
+    {
+      "label": "scene label / light sky token",
+      "fg": "eef0e5",
+      "bg": "527575",
+      "ratio": 4.38
+    },
+    {
+      "label": "error text",
+      "fg": "233238",
+      "bg": "f8ddd7",
+      "ratio": 10.29
+    }
+  ]
+}

@@ -1,0 +1,128 @@
+{
+  "revision": {
+    "commit": "9c8156193d063d5cc99102fb9b00ba5eb483eb8f",
+    "dirty": true
+  },
+  "at": "2026-10-20T05:03:41.229Z",
+  "scenarios": [
+    {
+      "name": "blank-drag-does-not-select-decorative-text",
+      "status": "pass",
+      "detail": {
+        "selected": ""
+      }
+    },
+    {
+      "name": "pointer-water-trail-without-clicking-and-no-control-trail",
+      "status": "pass",
+      "detail": {
+        "trailSamples": 86
+      }
+    },
+    {
+      "name": "rain-gain-interpolates-in-both-directions",
+      "status": "pass",
+      "detail": {
+        "fadeOutRange": [
+          0.96,
+          0.245
+        ],
+        "fadeInRange": [
+          0.285,
+          0.99
+        ]
+      }
+    },
+    {
+      "name": "violations-visible-before-selecting-a-finding",
+      "status": "pass",
+      "detail": {
+        "count": 10,
+        "badges": [
+          "1",
+          "2",
+          "6",
+          "7",
+          "3",
+          "5",
+          "5",
+          "5",
+          "9",
+          "4"
+        ],
+        "tone": 18,
+        "line": "3px"
+      }
+    },
+    {
+      "name": "cell-and-finding-highlight-both-ways-with-keyboard-navigation",
+      "status": "pass",
+      "detail": {
+        "number": "1",
+        "keyboardRoundTrip": true
+      }
+    },
+    {
+      "name": "report-text-remains-selectable-and-editor-keeps-identity",
+      "status": "pass",
+      "detail": {
+        "collapseMid": 54.5,
+        "collapseEnd": 0,
+        "identity": true
+      }
+    },
+    {
+      "name": "report-fit-375",
+      "status": "pass",
+      "detail": {
+        "overflow": false,
+        "cellOverflow": false,
+        "tone": 16
+      }
+    },
+    {
+      "name": "report-fit-768",
+      "status": "pass",
+      "detail": {
+        "overflow": false,
+        "cellOverflow": false,
+        "tone": 18
+      }
+    },
+    {
+      "name": "report-fit-1024",
+      "status": "pass",
+      "detail": {
+        "overflow": false,
+        "cellOverflow": false,
+        "tone": 18
+      }
+    },
+    {
+      "name": "report-fit-1440",
+      "status": "pass",
+      "detail": {
+        "overflow": false,
+        "cellOverflow": false,
+        "tone": 18
+      }
+    },
+    {
+      "name": "reduced-motion-stops-rain-and-disclosure-transitions",
+      "status": "pass",
+      "detail": {
+        "reduced": true
+      }
+    }
+  ],
+  "shots": [
+    "desktop-home.png",
+    "water-wake.png",
+    "desktop-poem.png",
+    "linked-finding.png",
+    "poem-375.png",
+    "poem-768.png",
+    "poem-1024.png",
+    "poem-1440.png"
+  ]
+}

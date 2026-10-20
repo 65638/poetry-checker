@@ -1,0 +1,38 @@
+/* Native bitmap hotspot: no hidden system cursor, JS follower or position lag. */
+@media (any-hover: hover) and (any-pointer: fine) {
+  .pc-root {
+    --pc-cursor: url("/design/cursor-rain-light.svg") 12 12, crosshair;
+    --pc-cursor-action:
+      url("/design/cursor-rain-action-light.svg") 12 12, pointer;
+    cursor: var(--pc-cursor);
+  }
+  .pc-root .pc-surface {
+    cursor: var(--pc-cursor);
+  }
+  .pc-root :is(.pc-hall--reading .pc-manuscript, .pc-evidence__body) {
+    --pc-cursor: url("/design/cursor-rain-ink.svg") 12 12, crosshair;
+    --pc-cursor-action:
+      url("/design/cursor-rain-action-ink.svg") 12 12, pointer;
+    cursor: var(--pc-cursor);
+  }
+  .pc-root :is(button, a, summary, label, [role="button"], input[type="radio"]),
+  .pc-root .pc-cell:not(:disabled) {
+    cursor: var(--pc-cursor-action);
+  }
+  .pc-root :is(textarea, input:not([type="radio"]), [contenteditable="true"]) {
+    cursor: text;
+  }
+  .pc-root :is(button, input):disabled {
+    cursor: not-allowed;
+  }
+}
+@media (forced-colors: active) {
+  .pc-root {
+    --pc-cursor: auto;
+    --pc-cursor-action: pointer;
+  }
+  .pc-root :is(.pc-hall--reading .pc-manuscript, .pc-evidence__body) {
+    --pc-cursor: auto;
+    --pc-cursor-action: pointer;
+  }
+}

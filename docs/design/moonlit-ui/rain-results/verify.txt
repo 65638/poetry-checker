@@ -1,0 +1,41 @@
+$ pnpm lint && pnpm typecheck && pnpm test && pnpm check:generated
+$ eslint .
+$ tsc --noEmit && tsc --noEmit -p apps/web/tsconfig.json
+$ vitest run
+
+ RUN  v5.0.5 C:/Users/21393/Documents/Codex/2026-10-16/6-vibe-coding-ai-ai-web/work/ui-moonlit
+
+
+ Test Files  53 passed (53)
+      Tests  733 passed (733)
+   Start at  12:03:57
+   Duration  8.18s (import 46%, tests 40%, transform 12%, worker 2%)
+
+    Isolate  53 workers spawned · ~99ms startup each (spawn + environment, per file)
+             at least ~2.52s faster with isolate: false — reuses workers across files instead of one per file
+
+$ pnpm build && tsx scripts/generate-contracts.ts --check
+$ pnpm -r --if-present build
+Scope: 7 of 8 workspace projects
+packages/contracts build$ tsc -p tsconfig.build.json
+packages/contracts build: Done
+apps/web build$ vite build
+packages/genre build$ tsc -p tsconfig.build.json
+packages/lexicon build$ tsc -p tsconfig.build.json
+packages/prosody build$ tsc -p tsconfig.build.json
+apps/web build: vite v8.3.4 building client environment for production...
+apps/web build: transforming...
+packages/genre build: Done
+packages/readings build$ tsc -p tsconfig.build.json
+apps/web build: ✓ 136 modules transformed.
+packages/lexicon build: Done
+packages/prosody build: Done
+apps/web build: rendering chunks...
+apps/web build: computing gzip size...
+apps/web build: dist/index.html                   0.40 kB │ gzip:   0.29 kB
+apps/web build: dist/assets/index-DCNEtXye.css   48.58 kB │ gzip:  10.10 kB
+apps/web build: dist/assets/index-jdghFWFt.js   373.43 kB │ gzip: 117.45 kB
+apps/web build: ✓ built in 723ms
+apps/web build: Done
+packages/readings build: Done
+已核对 8 个契约/模板文件；fixture 仅用于结构和界面测试。

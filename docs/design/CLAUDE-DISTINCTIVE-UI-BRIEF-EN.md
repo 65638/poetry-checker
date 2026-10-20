@@ -1,5 +1,7 @@
 # Claude — Distinctive Poetry UI, Expressive Edition
 
+> Historical assignment, completed in the preceding UI pass. For the new Moonlit Mountains implementation use [CLAUDE-MOONLIT-UI-BRIEF-EN.md](CLAUDE-MOONLIT-UI-BRIEF-EN.md). Its workspace, selected direction, pointer policy and iteration budget supersede this document. Do not execute this old brief again.
+
 ## Active assignment
 
 Implement a substantial visual redesign of the existing poetry checker. The user explicitly wants an exceptional, unmistakably poetry-related interface and permits an expressive, theatrical treatment. This is an implementation assignment: deliver functioning React/CSS, not only recommendations. Product copy stays in Simplified Chinese; this engineering brief is English.

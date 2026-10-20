@@ -1,6 +1,56 @@
 .pc-input {
-  display: grid;
-  gap: var(--pc-space-3);
+  display: flex;
+  flex-direction: column;
+}
+
+.pc-input [hidden] {
+  display: none;
+}
+
+.pc-input__settings {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 36px;
+  padding: 0;
+  color: var(--pc-text-muted);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--pc-divider);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.pc-input--compact {
+  --pc-input-spacing: 8px;
+}
+.pc-input--compact > .pc-input__label {
+  margin: 0;
+}
+.pc-input--compact .pc-input__text {
+  min-height: 112px;
+  height: 132px;
+}
+.pc-input--compact .pc-input__submit {
+  min-height: 44px;
+  font-size: 21px;
+}
+.pc-input--compact .pc-segmented__face {
+  min-height: 36px;
+  font-size: 13px;
+}
+.pc-hall--reading .pc-plinth {
+  padding: 14px var(--pc-editor-inset, 20px) 18px;
+}
+.pc-hall--reading .pc-plinth__heading {
+  margin-bottom: 0;
+}
+.pc-plinth__toggle {
+  min-height: 36px;
+  padding: 0 8px;
+  font-size: 12px;
 }
 
 .pc-input__label {
@@ -23,7 +73,8 @@
   display: block;
   width: 100%;
   box-sizing: border-box;
-  min-height: 168px;
+  min-height: 112px;
+  height: 178px;
   padding: 0 var(--pc-space-3);
   resize: vertical;
   font-family: var(--pc-font-serif);
@@ -39,15 +90,13 @@
     var(--pc-ruling) calc(var(--pc-text-draft) * var(--pc-leading-draft))
   );
   background-attachment: local;
-  border: 1px solid var(--pc-border-control);
-  border-left: 4px solid var(--pc-seal);
+  border: 1px solid var(--pc-divider);
+  border-left: 2px solid #b58e75;
   border-radius: var(--pc-radius-sheet);
-  transition: border-color var(--pc-dur-control) var(--pc-ease-out),
+  transition:
+    height var(--pc-dur-disclosure) var(--pc-ease-in-out),
+    border-color var(--pc-dur-control) var(--pc-ease-out),
     box-shadow var(--pc-dur-control) var(--pc-ease-out);
-}
-
-.pc-hall--reading .pc-input__text {
-  min-height: 150px;
 }
 
 .pc-input__text:hover {
@@ -115,7 +164,8 @@
   color: var(--pc-text);
   background: var(--pc-surface);
   pointer-events: none;
-  transition: background-color var(--pc-dur-control) var(--pc-ease-out),
+  transition:
+    background-color var(--pc-dur-control) var(--pc-ease-out),
     color var(--pc-dur-control) var(--pc-ease-out),
     transform var(--pc-dur-control) var(--pc-ease-out);
 }
@@ -165,7 +215,8 @@
   border-radius: var(--pc-radius);
   cursor: pointer;
   overflow: hidden;
-  transition: background-color var(--pc-dur-control) var(--pc-ease-out),
+  transition:
+    background-color var(--pc-dur-control) var(--pc-ease-out),
     border-color var(--pc-dur-control) var(--pc-ease-out),
     transform var(--pc-dur-control) var(--pc-ease-out);
 }
@@ -224,7 +275,13 @@
   width: 100%;
 }
 
-.pc-root--busy .pc-input__submit::after {
+.pc-root--busy .pc-input__submit:disabled {
+  color: var(--pc-text-on-accent);
+  background: var(--pc-seal);
+  border-color: var(--pc-seal);
+}
+
+.pc-root:has(.pc-busy) .pc-input__submit::after {
   content: "";
   position: absolute;
   inset: auto 0 0 0;
@@ -260,6 +317,8 @@
   font-family: var(--pc-font-serif);
   font-size: var(--pc-text-md);
   border-color: var(--pc-divider);
+  padding: 0 10px;
+  font-size: 14px;
 }
 
 .pc-examples__item:hover:not(:disabled) {
@@ -274,6 +333,12 @@
 }
 
 @keyframes pc-dot-in {
-  from { opacity: 0; transform: scale(0); }
-  to { opacity: 1; transform: none; }
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }

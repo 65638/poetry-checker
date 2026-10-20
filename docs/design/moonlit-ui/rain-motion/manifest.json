@@ -1,0 +1,382 @@
+{
+  "revision": {
+    "commit": "224071819351787055a17b03f8c7a22870f77b97",
+    "dirty": true
+  },
+  "at": "2026-10-20T04:04:41.682Z",
+  "frames": [
+    {
+      "file": "frame-000.png",
+      "at": 1792469094426,
+      "phase": "idle"
+    },
+    {
+      "file": "frame-001.png",
+      "at": 1792469094676,
+      "phase": "idle"
+    },
+    {
+      "file": "frame-002.png",
+      "at": 1792469094864,
+      "phase": "idle"
+    },
+    {
+      "file": "frame-003.png",
+      "at": 1792469095075,
+      "phase": "idle"
+    },
+    {
+      "file": "frame-004.png",
+      "at": 1792469095266,
+      "phase": "idle"
+    },
+    {
+      "file": "frame-005.png",
+      "at": 1792469095468,
+      "phase": "idle"
+    },
+    {
+      "file": "frame-006.png",
+      "at": 1792469095660,
+      "phase": "idle"
+    },
+    {
+      "file": "frame-007.png",
+      "at": 1792469095888,
+      "phase": "idle"
+    },
+    {
+      "file": "frame-008.png",
+      "at": 1792469096104,
+      "phase": "idle"
+    },
+    {
+      "file": "frame-009.png",
+      "at": 1792469096337,
+      "phase": "idle"
+    },
+    {
+      "file": "frame-010.png",
+      "at": 1792469096555,
+      "phase": "idle"
+    },
+    {
+      "file": "frame-011.png",
+      "at": 1792469096774,
+      "phase": "idle"
+    },
+    {
+      "file": "frame-012.png",
+      "at": 1792469096993,
+      "phase": "idle"
+    },
+    {
+      "file": "frame-013.png",
+      "at": 1792469097212,
+      "phase": "idle"
+    },
+    {
+      "file": "frame-014.png",
+      "at": 1792469097444,
+      "phase": "idle"
+    },
+    {
+      "file": "frame-015.png",
+      "at": 1792469097696,
+      "phase": "idle"
+    },
+    {
+      "file": "frame-016.png",
+      "at": 1792469097915,
+      "phase": "idle"
+    },
+    {
+      "file": "frame-017.png",
+      "at": 1792469098085,
+      "phase": "idle"
+    },
+    {
+      "file": "frame-018.png",
+      "at": 1792469098290,
+      "phase": "pointer-wind"
+    },
+    {
+      "file": "frame-019.png",
+      "at": 1792469098503,
+      "phase": "pointer-wind"
+    },
+    {
+      "file": "frame-020.png",
+      "at": 1792469098714,
+      "phase": "pointer-wind"
+    },
+    {
+      "file": "frame-021.png",
+      "at": 1792469098948,
+      "phase": "pointer-wind"
+    },
+    {
+      "file": "frame-022.png",
+      "at": 1792469099190,
+      "phase": "pointer-wind"
+    },
+    {
+      "file": "frame-023.png",
+      "at": 1792469099418,
+      "phase": "pointer-wind"
+    },
+    {
+      "file": "frame-024.png",
+      "at": 1792469099623,
+      "phase": "pointer-wind"
+    },
+    {
+      "file": "frame-025.png",
+      "at": 1792469099822,
+      "phase": "pointer-wind"
+    },
+    {
+      "file": "frame-026.png",
+      "at": 1792469100026,
+      "phase": "pointer-wind"
+    },
+    {
+      "file": "frame-027.png",
+      "at": 1792469100235,
+      "phase": "pointer-wind"
+    },
+    {
+      "file": "frame-028.png",
+      "at": 1792469100447,
+      "phase": "pointer-wind"
+    },
+    {
+      "file": "frame-029.png",
+      "at": 1792469100684,
+      "phase": "pointer-wind"
+    },
+    {
+      "file": "frame-030.png",
+      "at": 1792469100918,
+      "phase": "pointer-wind"
+    },
+    {
+      "file": "frame-031.png",
+      "at": 1792469101138,
+      "phase": "pointer-wind"
+    },
+    {
+      "file": "frame-032.png",
+      "at": 1792469101359,
+      "phase": "pointer-wind"
+    },
+    {
+      "file": "frame-033.png",
+      "at": 1792469101589,
+      "phase": "pointer-wind"
+    },
+    {
+      "file": "frame-034.png",
+      "at": 1792469101805,
+      "phase": "pointer-wind"
+    },
+    {
+      "file": "frame-035.png",
+      "at": 1792469102036,
+      "phase": "pointer-wind"
+    },
+    {
+      "file": "frame-036.png",
+      "at": 1792469102276,
+      "phase": "pointer-wind"
+    },
+    {
+      "file": "frame-037.png",
+      "at": 1792469102492,
+      "phase": "pointer-wind"
+    },
+    {
+      "file": "frame-038.png",
+      "at": 1792469102742,
+      "phase": "pointer-wind"
+    },
+    {
+      "file": "frame-039.png",
+      "at": 1792469102959,
+      "phase": "pointer-wind"
+    },
+    {
+      "file": "frame-040.png",
+      "at": 1792469103209,
+      "phase": "pointer-wind"
+    },
+    {
+      "file": "frame-041.png",
+      "at": 1792469103442,
+      "phase": "pointer-wind"
+    },
+    {
+      "file": "frame-042.png",
+      "at": 1792469103646,
+      "phase": "pointer-wind"
+    },
+    {
+      "file": "frame-043.png",
+      "at": 1792469103863,
+      "phase": "pointer-wind"
+    },
+    {
+      "file": "frame-044.png",
+      "at": 1792469104079,
+      "phase": "pointer-wind"
+    },
+    {
+      "file": "frame-045.png",
+      "at": 1792469104296,
+      "phase": "pointer-wind"
+    },
+    {
+      "file": "frame-046.png",
+      "at": 1792469104529,
+      "phase": "pointer-wind"
+    },
+    {
+      "file": "frame-047.png",
+      "at": 1792469104744,
+      "phase": "water-click"
+    },
+    {
+      "file": "frame-048.png",
+      "at": 1792469104961,
+      "phase": "water-click"
+    },
+    {
+      "file": "frame-049.png",
+      "at": 1792469105162,
+      "phase": "water-click"
+    },
+    {
+      "file": "frame-050.png",
+      "at": 1792469105380,
+      "phase": "water-click"
+    },
+    {
+      "file": "frame-051.png",
+      "at": 1792469105582,
+      "phase": "water-click"
+    },
+    {
+      "file": "frame-052.png",
+      "at": 1792469105816,
+      "phase": "water-click"
+    },
+    {
+      "file": "frame-053.png",
+      "at": 1792469106033,
+      "phase": "water-click"
+    },
+    {
+      "file": "frame-054.png",
+      "at": 1792469106268,
+      "phase": "water-click"
+    },
+    {
+      "file": "frame-055.png",
+      "at": 1792469106472,
+      "phase": "water-click"
+    },
+    {
+      "file": "frame-056.png",
+      "at": 1792469106703,
+      "phase": "water-click"
+    },
+    {
+      "file": "frame-057.png",
+      "at": 1792469106910,
+      "phase": "water-click"
+    },
+    {
+      "file": "frame-058.png",
+      "at": 1792469107140,
+      "phase": "water-click"
+    },
+    {
+      "file": "frame-059.png",
+      "at": 1792469107376,
+      "phase": "water-click"
+    },
+    {
+      "file": "frame-060.png",
+      "at": 1792469107549,
+      "phase": "water-click"
+    },
+    {
+      "file": "frame-061.png",
+      "at": 1792469107722,
+      "phase": "settled"
+    },
+    {
+      "file": "frame-062.png",
+      "at": 1792469107878,
+      "phase": "settled"
+    },
+    {
+      "file": "frame-063.png",
+      "at": 1792469108037,
+      "phase": "settled"
+    },
+    {
+      "file": "frame-064.png",
+      "at": 1792469108206,
+      "phase": "settled"
+    },
+    {
+      "file": "frame-065.png",
+      "at": 1792469108376,
+      "phase": "settled"
+    },
+    {
+      "file": "frame-066.png",
+      "at": 1792469108532,
+      "phase": "settled"
+    },
+    {
+      "file": "frame-067.png",
+      "at": 1792469108700,
+      "phase": "settled"
+    },
+    {
+      "file": "frame-068.png",
+      "at": 1792469108857,
+      "phase": "settled"
+    },
+    {
+      "file": "frame-069.png",
+      "at": 1792469109013,
+      "phase": "settled"
+    },
+    {
+      "file": "frame-070.png",
+      "at": 1792469109170,
+      "phase": "settled"
+    },
+    {
+      "file": "frame-071.png",
+      "at": 1792469109339,
+      "phase": "settled"
+    }
+  ],
+  "route": "/",
+  "viewport": "1440x900",
+  "mode": "real production app / canvas instrumented for timings only",
+  "performance": {
+    "paintCount": 596,
+    "p50": 16.7,
+    "p95": 17.2,
+    "p99": 17.6,
+    "over50ms": 0,
+    "longTasks": [],
+    "moves": 320
+  },
+  "note": "Actual browser screenshots at recorded timestamps. Browser capture omits native OS cursor; SVG assets and computed cursor styles are separately tested. Headless timing is not a display FPS certification."
+}
