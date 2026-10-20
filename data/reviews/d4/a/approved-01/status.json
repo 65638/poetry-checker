@@ -1,0 +1,221 @@
+{
+  "baseSha": "cea831befa70a8842943d240f91f9816c9c55a94",
+  "implementationSha": "44e48e448eee92c952d17870a1048090f80e1bf1",
+  "recordedAt": "2026-10-20T08:42:59.242Z",
+  "mode": "real",
+  "acceptanceRecord": "data/reviews/d4/a/acceptance-01.json",
+  "dataVersion": "cilin-cwr-ff0e9c1-d4-candidate-review1",
+  "approvedScope": {
+    "pingshuiExactCandidates": 83,
+    "pingshuiGroupEvidence": [
+      "ev:pingshui:上:三讲"
+    ],
+    "cilinExactCandidates": 16,
+    "cilinGroupEvidence": 0,
+    "xinyunExactCandidates": 0,
+    "allSnapshotsApproved": false
+  },
+  "batches": [
+    {
+      "batchId": "d4-a-dengguanquelou-cilin-2026-10-20",
+      "file": "data/reviews/d4/a/d4-a-dengguanquelou-cilin-2026-10-20.json",
+      "sha256": "a665a9d53ded2eb01741ff624684583d98427f8d5f59bd8fc1a3c721ef982399",
+      "work": "登鹳雀楼",
+      "book": "cilin",
+      "positions": 20,
+      "entries": 21,
+      "gaps": 0,
+      "needsReview": 5,
+      "sourceBatchSha256": "a665a9d53ded2eb01741ff624684583d98427f8d5f59bd8fc1a3c721ef982399",
+      "runtimeApprovedCandidates": 16,
+      "note": "按候选ID复用归部事实，不批准作品语境；批次原字节和原状态不改"
+    },
+    {
+      "batchId": "d4-a-jingyesi-cilin-2026-10-20",
+      "file": "data/reviews/d4/a/d4-a-jingyesi-cilin-2026-10-20.json",
+      "sha256": "397f0d7d6a8feb7b0d2cf18eb749331e1f91bfdcb875e7997913fdab5c622ffd",
+      "work": "静夜思",
+      "book": "cilin",
+      "positions": 20,
+      "entries": 19,
+      "gaps": 0,
+      "needsReview": 3,
+      "sourceBatchSha256": "397f0d7d6a8feb7b0d2cf18eb749331e1f91bfdcb875e7997913fdab5c622ffd",
+      "runtimeApprovedCandidates": 1,
+      "note": "按候选ID复用归部事实，不批准作品语境；批次原字节和原状态不改"
+    },
+    {
+      "batchId": "d4-a-huanghelou-cilin-2026-10-20",
+      "file": "data/reviews/d4/a/d4-a-huanghelou-cilin-2026-10-20.json",
+      "sha256": "dd015105ad45a62994344de5fcc3fb2248364fb7e58fccdc2bb791503cf732db",
+      "work": "黄鹤楼",
+      "book": "cilin",
+      "positions": 56,
+      "entries": 49,
+      "gaps": 1,
+      "needsReview": 17,
+      "sourceBatchSha256": "dd015105ad45a62994344de5fcc3fb2248364fb7e58fccdc2bb791503cf732db",
+      "runtimeApprovedCandidates": 5,
+      "note": "按候选ID复用归部事实，不批准作品语境；批次原字节和原状态不改"
+    },
+    {
+      "batchId": "d4-a-dengguanquelou-xinyun-2026-10-20",
+      "file": "data/reviews/d4/a/d4-a-dengguanquelou-xinyun-2026-10-20.json",
+      "sha256": "08aa50e173f42d502e85a56b3b68216af0ddafb1058a5950039f8845bac494bd",
+      "work": "登鹳雀楼",
+      "book": "xinyun",
+      "positions": 20,
+      "entries": 27,
+      "gaps": 0,
+      "needsReview": 27,
+      "sourceBatchSha256": "08aa50e173f42d502e85a56b3b68216af0ddafb1058a5950039f8845bac494bd",
+      "runtimeApprovedCandidates": 0,
+      "note": "按候选ID复用归部事实，不批准作品语境；批次原字节和原状态不改"
+    },
+    {
+      "batchId": "d4-a-jingyesi-xinyun-2026-10-20",
+      "file": "data/reviews/d4/a/d4-a-jingyesi-xinyun-2026-10-20.json",
+      "sha256": "17ef19d139c7bd4de9e860db833b67b0260a46ab5c129afe19c021088a278c32",
+      "work": "静夜思",
+      "book": "xinyun",
+      "positions": 20,
+      "entries": 25,
+      "gaps": 0,
+      "needsReview": 25,
+      "sourceBatchSha256": "17ef19d139c7bd4de9e860db833b67b0260a46ab5c129afe19c021088a278c32",
+      "runtimeApprovedCandidates": 0,
+      "note": "按候选ID复用归部事实，不批准作品语境；批次原字节和原状态不改"
+    },
+    {
+      "batchId": "d4-a-huanghelou-xinyun-2026-10-20",
+      "file": "data/reviews/d4/a/d4-a-huanghelou-xinyun-2026-10-20.json",
+      "sha256": "a57bbf45aa559a117cfb82d93e85f9ab4b51e70b29ca3029884ffd95dd975b1d",
+      "work": "黄鹤楼",
+      "book": "xinyun",
+      "positions": 56,
+      "entries": 72,
+      "gaps": 0,
+      "needsReview": 72,
+      "sourceBatchSha256": "a57bbf45aa559a117cfb82d93e85f9ab4b51e70b29ca3029884ffd95dd975b1d",
+      "runtimeApprovedCandidates": 0,
+      "note": "按候选ID复用归部事实，不批准作品语境；批次原字节和原状态不改"
+    }
+  ],
+  "matrix": {
+    "passed": 3,
+    "blocked": 6,
+    "failures": 0,
+    "unrun": 0,
+    "runnerExitCode": 2,
+    "toolShellExitCode": 1,
+    "firstDengCilinBlocker": {
+      "poem": "dengguanquelou",
+      "book": "cilin",
+      "ok": false,
+      "blocked": true,
+      "issues": [
+        "LOOKUP_EVIDENCE_UNVERIFIED：字位 l1c5（尽）参与读音/平仄推导的候选 cilin:尽:ze_unspecified:第六部·仄声 没有已审核证据（选择方式 unique）：未审核或缺失的证据不能支撑读音、平仄或归部结论，按数据未就绪处理"
+      ],
+      "facts": {
+        "http": 503,
+        "code": "DATA_NOT_READY"
+      }
+    }
+  },
+  "checks": [
+    {
+      "command": "pnpm --filter @poetry/lexicon test",
+      "exitCode": 0,
+      "files": 9,
+      "tests": 86
+    },
+    {
+      "command": "pnpm verify",
+      "exitCode": 0,
+      "runSha": "44e48e448eee92c952d17870a1048090f80e1bf1",
+      "dirty": true,
+      "dirtyScope": "approved-01 rebuild evidence only",
+      "files": 58,
+      "tests": 771
+    },
+    {
+      "command": "node scripts/data/verify-d4-rebuild.mjs --output-dir data/reviews/d4/a/approved-01",
+      "exitCode": 0,
+      "runSha": "44e48e448eee92c952d17870a1048090f80e1bf1",
+      "dirty": false,
+      "rounds": 2,
+      "subprocesses": 6,
+      "byteIdentical": true
+    },
+    {
+      "command": "pnpm exec tsx scripts/data/build-sample.ts",
+      "exitCode": 0,
+      "bytesUnchanged": true
+    },
+    {
+      "command": "pnpm exec tsx scripts/data/check-normalized.ts",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm exec tsx scripts/data/build-d4-review-batches.ts --base-sha cea831befa70a8842943d240f91f9816c9c55a94 --input-ref 2047f96 --check",
+      "exitCode": 0
+    }
+  ],
+  "versionChange": {
+    "recordId": "d4-a-cilin-approval-01-version-change",
+    "path": "data/normalized/cilin.full-d2.json",
+    "approvalRecord": "data/reviews/d4/a/acceptance-01.json",
+    "before": {
+      "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
+      "candidateCount": 5395,
+      "groupCount": 33,
+      "evidenceCount": 33,
+      "evidenceApproved": 0,
+      "businessSha256": "c2531e69eb42170762556a0c03b4debdc61e0ec2d044a5e2e7116f016399d37b",
+      "canonicalSha256": "611bf23bd5701c8e9cbfd8f84bcb4e093371fcae239b871e339e19106c436036",
+      "sha256": "ed7d80315b7cbaff6feef81d8927944b11ae90489bc1da909e251a2958887256"
+    },
+    "after": {
+      "dataVersion": "cilin-cwr-ff0e9c1-d4-candidate-review1",
+      "candidateCount": 5395,
+      "groupCount": 33,
+      "evidenceCount": 49,
+      "evidenceApproved": 16,
+      "businessSha256": "b8a94eeb98afba465cdbd6c92be16cff02b6df44b9836bd417b09d7a9fd28107",
+      "canonicalSha256": "2dde76350a646ae543d867b420bd4042b5094b5e0c06f599236dae9b599f8631",
+      "sha256": "1881cdc4d0d37dd42f14cf5649686bb59dde6db733a9bd34643cb4c77d8f2aa8"
+    },
+    "addedCandidateIds": [],
+    "removedCandidateIds": [],
+    "addedEvidenceIds": [
+      "ev:candidate:cilin:白:ru:第十七部·入声:d4-a-01",
+      "ev:candidate:cilin:日:ru:第十七部·入声:d4-a-01",
+      "ev:candidate:cilin:依:ping:第三部·平声:d4-a-01",
+      "ev:candidate:cilin:山:ping:第七部·平声:d4-a-01",
+      "ev:candidate:cilin:河:ping:第九部·平声:d4-a-01",
+      "ev:candidate:cilin:入:ru:第十七部·入声:d4-a-01",
+      "ev:candidate:cilin:海:ze_unspecified:第五部·仄声:d4-a-01",
+      "ev:candidate:cilin:流:ping:第十二部·平声:d4-a-01",
+      "ev:candidate:cilin:欲:ru:第十五部·入声:d4-a-01",
+      "ev:candidate:cilin:千:ping:第七部·平声:d4-a-01",
+      "ev:candidate:cilin:里:ze_unspecified:第三部·仄声:d4-a-01",
+      "ev:candidate:cilin:目:ru:第十五部·入声:d4-a-01",
+      "ev:candidate:cilin:更:ping:第十一部·平声:d4-a-01",
+      "ev:candidate:cilin:更:ze_unspecified:第十一部·仄声:d4-a-01",
+      "ev:candidate:cilin:上:ze_unspecified:第二部·仄声:d4-a-01",
+      "ev:candidate:cilin:一:ru:第十七部·入声:d4-a-01"
+    ],
+    "idMigration": [],
+    "candidateFactsUnchanged": true,
+    "groupsUnchanged": true,
+    "sourcesUnchanged": true,
+    "reason": "用户按请求01接受16个明确词林候选；只追加候选级批准证据；整部与整库仍unverified。原冻结批次不改，版本从clean1升d4-candidate-review1。"
+  },
+  "notRun": [
+    "browser e2e after new approval",
+    "clean clone",
+    "full-book factual review",
+    "full upstream licensing chain review",
+    "D5 final verification"
+  ]
+}
