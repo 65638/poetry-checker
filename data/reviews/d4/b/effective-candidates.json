@@ -1,0 +1,6986 @@
+{
+  "schemaVersion": "d4-b/effective-candidates-1",
+  "baseSha": "898b1a0a26a5f6e8e79a0b2cb31848b24537a185",
+  "mode": "real",
+  "generatedBy": "packages/readings/scripts/d3-effective-candidates.ts",
+  "command": "node node_modules/tsx/dist/cli.mjs packages/readings/scripts/d3-effective-candidates.ts --out data/reviews/d4/b --base-sha <base>",
+  "dataVersions": {
+    "pingshui": "pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4",
+    "cilin": "cilin-cwr-ff0e9c1-d3-full-clean1",
+    "xinyun": "xinyun-rebuild-d2-full"
+  },
+  "context": {
+    "rules": 11,
+    "evidence": 11,
+    "sources": 2
+  },
+  "counts": {
+    "rows": 288,
+    "byBook": {
+      "pingshui": 96,
+      "cilin": 96,
+      "xinyun": 96
+    }
+  },
+  "rows": [
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l1c1",
+      "character": "白",
+      "allCandidateIds": [
+        "pingshui:白:ru:入声十一陌"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:白:ru:入声十一陌"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l1c2",
+      "character": "日",
+      "allCandidateIds": [
+        "pingshui:日:ru:入声四质"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:日:ru:入声四质"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l1c3",
+      "character": "依",
+      "allCandidateIds": [
+        "pingshui:依:ping:五微"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:依:ping:五微"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l1c4",
+      "character": "山",
+      "allCandidateIds": [
+        "pingshui:山:ping:十五删"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:山:ping:十五删"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l1c5",
+      "character": "尽",
+      "allCandidateIds": [
+        "pingshui:尽:shang:十一轸"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:尽:shang:十一轸"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l2c1",
+      "character": "黄",
+      "allCandidateIds": [
+        "pingshui:黄:ping:七阳"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:黄:ping:七阳"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l2c2",
+      "character": "河",
+      "allCandidateIds": [
+        "pingshui:河:ping:五歌"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:河:ping:五歌"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l2c3",
+      "character": "入",
+      "allCandidateIds": [
+        "pingshui:入:ru:入声十四缉"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:入:ru:入声十四缉"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l2c4",
+      "character": "海",
+      "allCandidateIds": [
+        "pingshui:海:shang:十贿"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:海:shang:十贿"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l2c5",
+      "character": "流",
+      "allCandidateIds": [
+        "pingshui:流:ping:十一尤"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:流:ping:十一尤"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l3c1",
+      "character": "欲",
+      "allCandidateIds": [
+        "pingshui:欲:ru:入声二沃"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:欲:ru:入声二沃"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l3c2",
+      "character": "穷",
+      "allCandidateIds": [
+        "pingshui:穷:ping:一东"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:穷:ping:一东"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l3c3",
+      "character": "千",
+      "allCandidateIds": [
+        "pingshui:千:ping:一先"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:千:ping:一先"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l3c4",
+      "character": "里",
+      "allCandidateIds": [
+        "pingshui:里:shang:四纸",
+        "pingshui:里:qu:四寘"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:里:shang:四纸"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [
+        "ctx-d2-closeout-deng-qianli"
+      ],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l3c5",
+      "character": "目",
+      "allCandidateIds": [
+        "pingshui:目:ru:入声一屋"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:目:ru:入声一屋"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l4c1",
+      "character": "更",
+      "allCandidateIds": [
+        "pingshui:更:ping:八庚",
+        "pingshui:更:qu:二十四敬"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:更:qu:二十四敬"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [
+        "ctx-j03b2-01-deng-geng"
+      ],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l4c2",
+      "character": "上",
+      "allCandidateIds": [
+        "pingshui:上:shang:二十二养",
+        "pingshui:上:qu:二十三漾"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:上:shang:二十二养",
+        "pingshui:上:qu:二十三漾"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "ambiguous",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "多读同调无需强选"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l4c3",
+      "character": "一",
+      "allCandidateIds": [
+        "pingshui:一:ru:入声四质"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:一:ru:入声四质"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l4c4",
+      "character": "层",
+      "allCandidateIds": [
+        "pingshui:层:ping:十蒸"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:层:ping:十蒸"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l4c5",
+      "character": "楼",
+      "allCandidateIds": [
+        "pingshui:楼:ping:十一尤"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:楼:ping:十一尤"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l1c1",
+      "character": "床",
+      "allCandidateIds": [
+        "pingshui:床:ping:七阳"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:床:ping:七阳"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l1c2",
+      "character": "前",
+      "allCandidateIds": [
+        "pingshui:前:ping:一先"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:前:ping:一先"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l1c3",
+      "character": "明",
+      "allCandidateIds": [
+        "pingshui:明:ping:八庚"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:明:ping:八庚"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l1c4",
+      "character": "月",
+      "allCandidateIds": [
+        "pingshui:月:ru:入声六月"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:月:ru:入声六月"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l1c5",
+      "character": "光",
+      "allCandidateIds": [
+        "pingshui:光:ping:七阳"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:光:ping:七阳"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l2c1",
+      "character": "疑",
+      "allCandidateIds": [
+        "pingshui:疑:ping:四支"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:疑:ping:四支"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l2c2",
+      "character": "是",
+      "allCandidateIds": [
+        "pingshui:是:shang:四纸"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:是:shang:四纸"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l2c3",
+      "character": "地",
+      "allCandidateIds": [
+        "pingshui:地:qu:四寘"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:地:qu:四寘"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l2c4",
+      "character": "上",
+      "allCandidateIds": [
+        "pingshui:上:shang:二十二养",
+        "pingshui:上:qu:二十三漾"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:上:shang:二十二养",
+        "pingshui:上:qu:二十三漾"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "ambiguous",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "多读同调无需强选"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l2c5",
+      "character": "霜",
+      "allCandidateIds": [
+        "pingshui:霜:ping:七阳"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:霜:ping:七阳"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l3c1",
+      "character": "举",
+      "allCandidateIds": [
+        "pingshui:举:shang:六语"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:举:shang:六语"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l3c2",
+      "character": "头",
+      "allCandidateIds": [
+        "pingshui:头:ping:十一尤"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:头:ping:十一尤"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l3c3",
+      "character": "望",
+      "allCandidateIds": [
+        "pingshui:望:ping:七阳",
+        "pingshui:望:qu:二十三漾"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:望:qu:二十三漾"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [
+        "ctx-j03b2-02-jing-wang"
+      ],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l3c4",
+      "character": "明",
+      "allCandidateIds": [
+        "pingshui:明:ping:八庚"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:明:ping:八庚"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l3c5",
+      "character": "月",
+      "allCandidateIds": [
+        "pingshui:月:ru:入声六月"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:月:ru:入声六月"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l4c1",
+      "character": "低",
+      "allCandidateIds": [
+        "pingshui:低:ping:八齐"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:低:ping:八齐"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l4c2",
+      "character": "头",
+      "allCandidateIds": [
+        "pingshui:头:ping:十一尤"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:头:ping:十一尤"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l4c3",
+      "character": "思",
+      "allCandidateIds": [
+        "pingshui:思:ping:四支",
+        "pingshui:思:qu:四寘"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:思:ping:四支"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [
+        "ctx-j03b2-03-jing-si"
+      ],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l4c4",
+      "character": "故",
+      "allCandidateIds": [
+        "pingshui:故:qu:七遇"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:故:qu:七遇"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l4c5",
+      "character": "乡",
+      "allCandidateIds": [
+        "pingshui:乡:ping:七阳",
+        "pingshui:乡:qu:二十三漾"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:乡:ping:七阳"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [
+        "ctx-j03b2-04-jing-xiang"
+      ],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l1c1",
+      "character": "昔",
+      "allCandidateIds": [
+        "pingshui:昔:ru:入声十药",
+        "pingshui:昔:ru:入声十一陌"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:昔:ru:入声十药",
+        "pingshui:昔:ru:入声十一陌"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "ambiguous",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "多读同调无需强选"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l1c2",
+      "character": "人",
+      "allCandidateIds": [
+        "pingshui:人:ping:十一真"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:人:ping:十一真"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l1c3",
+      "character": "已",
+      "allCandidateIds": [
+        "pingshui:已:shang:四纸"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:已:shang:四纸"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l1c4",
+      "character": "乘",
+      "allCandidateIds": [
+        "pingshui:乘:ping:十蒸",
+        "pingshui:乘:qu:二十五径"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:乘:ping:十蒸"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [
+        "ctx-j03b2-05-huang-cheng"
+      ],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l1c5",
+      "character": "黄",
+      "allCandidateIds": [
+        "pingshui:黄:ping:七阳"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:黄:ping:七阳"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l1c6",
+      "character": "鹤",
+      "allCandidateIds": [
+        "pingshui:鹤:ru:入声十药"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:鹤:ru:入声十药"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l1c7",
+      "character": "去",
+      "allCandidateIds": [
+        "pingshui:去:shang:六语",
+        "pingshui:去:qu:六御"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:去:shang:六语",
+        "pingshui:去:qu:六御"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "ambiguous",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "多读同调无需强选"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l2c1",
+      "character": "此",
+      "allCandidateIds": [
+        "pingshui:此:shang:四纸"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:此:shang:四纸"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l2c2",
+      "character": "地",
+      "allCandidateIds": [
+        "pingshui:地:qu:四寘"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:地:qu:四寘"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l2c3",
+      "character": "空",
+      "allCandidateIds": [
+        "pingshui:空:ping:一东",
+        "pingshui:空:shang:一董",
+        "pingshui:空:qu:一送"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:空:ping:一东"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [
+        "ctx-j03b2-06-huang-kong-kongyu"
+      ],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l2c4",
+      "character": "余",
+      "allCandidateIds": [
+        "pingshui:余:ping:六鱼"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:余:ping:六鱼"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l2c5",
+      "character": "黄",
+      "allCandidateIds": [
+        "pingshui:黄:ping:七阳"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:黄:ping:七阳"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l2c6",
+      "character": "鹤",
+      "allCandidateIds": [
+        "pingshui:鹤:ru:入声十药"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:鹤:ru:入声十药"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l2c7",
+      "character": "楼",
+      "allCandidateIds": [
+        "pingshui:楼:ping:十一尤"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:楼:ping:十一尤"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l3c1",
+      "character": "黄",
+      "allCandidateIds": [
+        "pingshui:黄:ping:七阳"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:黄:ping:七阳"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l3c2",
+      "character": "鹤",
+      "allCandidateIds": [
+        "pingshui:鹤:ru:入声十药"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:鹤:ru:入声十药"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l3c3",
+      "character": "一",
+      "allCandidateIds": [
+        "pingshui:一:ru:入声四质"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:一:ru:入声四质"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l3c4",
+      "character": "去",
+      "allCandidateIds": [
+        "pingshui:去:shang:六语",
+        "pingshui:去:qu:六御"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:去:shang:六语",
+        "pingshui:去:qu:六御"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "ambiguous",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "多读同调无需强选"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l3c5",
+      "character": "不",
+      "allCandidateIds": [
+        "pingshui:不:ping:十一尤",
+        "pingshui:不:ru:入声五物"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:不:ru:入声五物"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [
+        "ctx-j03b2-07-huang-bu"
+      ],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l3c6",
+      "character": "复",
+      "allCandidateIds": [
+        "pingshui:复:qu:二十六宥",
+        "pingshui:复:ru:入声一屋"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:复:qu:二十六宥",
+        "pingshui:复:ru:入声一屋"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "ambiguous",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "多读同调无需强选"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l3c7",
+      "character": "返",
+      "allCandidateIds": [
+        "pingshui:返:shang:十三阮"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:返:shang:十三阮"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l4c1",
+      "character": "白",
+      "allCandidateIds": [
+        "pingshui:白:ru:入声十一陌"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:白:ru:入声十一陌"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l4c2",
+      "character": "云",
+      "allCandidateIds": [
+        "pingshui:云:ping:十二文"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:云:ping:十二文"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l4c3",
+      "character": "千",
+      "allCandidateIds": [
+        "pingshui:千:ping:一先"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:千:ping:一先"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l4c4",
+      "character": "载",
+      "allCandidateIds": [
+        "pingshui:载:shang:十贿",
+        "pingshui:载:qu:十一队"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:载:shang:十贿",
+        "pingshui:载:qu:十一队"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "ambiguous",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "多读同调无需强选"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l4c5",
+      "character": "空",
+      "allCandidateIds": [
+        "pingshui:空:ping:一东",
+        "pingshui:空:shang:一董",
+        "pingshui:空:qu:一送"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:空:ping:一东"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [
+        "ctx-j03b2-08-huang-kong-kongyou"
+      ],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l4c6",
+      "character": "悠",
+      "allCandidateIds": [
+        "pingshui:悠:ping:十一尤"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:悠:ping:十一尤"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l4c7",
+      "character": "悠",
+      "allCandidateIds": [
+        "pingshui:悠:ping:十一尤"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:悠:ping:十一尤"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l5c1",
+      "character": "晴",
+      "allCandidateIds": [
+        "pingshui:晴:ping:八庚"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:晴:ping:八庚"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l5c2",
+      "character": "川",
+      "allCandidateIds": [
+        "pingshui:川:ping:一先"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:川:ping:一先"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l5c3",
+      "character": "历",
+      "allCandidateIds": [
+        "pingshui:历:ru:入声十二锡"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:历:ru:入声十二锡"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l5c4",
+      "character": "历",
+      "allCandidateIds": [
+        "pingshui:历:ru:入声十二锡"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:历:ru:入声十二锡"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l5c5",
+      "character": "汉",
+      "allCandidateIds": [
+        "pingshui:汉:ping:十四寒",
+        "pingshui:汉:qu:十五翰"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:汉:qu:十五翰"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [
+        "ctx-j03b2-09-huang-han"
+      ],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l5c6",
+      "character": "阳",
+      "allCandidateIds": [
+        "pingshui:阳:ping:七阳"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:阳:ping:七阳"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l5c7",
+      "character": "树",
+      "allCandidateIds": [
+        "pingshui:树:shang:七麌",
+        "pingshui:树:qu:七遇"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:树:shang:七麌",
+        "pingshui:树:qu:七遇"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "ambiguous",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "多读同调无需强选"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l6c1",
+      "character": "芳",
+      "allCandidateIds": [
+        "pingshui:芳:ping:七阳"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:芳:ping:七阳"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l6c2",
+      "character": "草",
+      "allCandidateIds": [
+        "pingshui:草:shang:十九皓"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:草:shang:十九皓"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l6c3",
+      "character": "萋",
+      "allCandidateIds": [
+        "pingshui:萋:ping:八齐"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:萋:ping:八齐"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l6c4",
+      "character": "萋",
+      "allCandidateIds": [
+        "pingshui:萋:ping:八齐"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:萋:ping:八齐"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l6c5",
+      "character": "鹦",
+      "allCandidateIds": [
+        "pingshui:鹦:ping:八庚"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:鹦:ping:八庚"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l6c6",
+      "character": "鹉",
+      "allCandidateIds": [
+        "pingshui:鹉:shang:七麌"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:鹉:shang:七麌"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l6c7",
+      "character": "洲",
+      "allCandidateIds": [
+        "pingshui:洲:ping:十一尤"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:洲:ping:十一尤"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l7c1",
+      "character": "日",
+      "allCandidateIds": [
+        "pingshui:日:ru:入声四质"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:日:ru:入声四质"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l7c2",
+      "character": "暮",
+      "allCandidateIds": [
+        "pingshui:暮:qu:七遇"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:暮:qu:七遇"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l7c3",
+      "character": "乡",
+      "allCandidateIds": [
+        "pingshui:乡:ping:七阳",
+        "pingshui:乡:qu:二十三漾"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:乡:ping:七阳"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [
+        "ctx-j03b2-10-huang-xiang"
+      ],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l7c4",
+      "character": "关",
+      "allCandidateIds": [
+        "pingshui:关:ping:十五删"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:关:ping:十五删"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l7c5",
+      "character": "何",
+      "allCandidateIds": [
+        "pingshui:何:ping:五歌"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:何:ping:五歌"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l7c6",
+      "character": "处",
+      "allCandidateIds": [
+        "pingshui:处:shang:六语",
+        "pingshui:处:qu:六御"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:处:shang:六语",
+        "pingshui:处:qu:六御"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "ambiguous",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "多读同调无需强选"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l7c7",
+      "character": "是",
+      "allCandidateIds": [
+        "pingshui:是:shang:四纸"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:是:shang:四纸"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l8c1",
+      "character": "烟",
+      "allCandidateIds": [
+        "pingshui:烟:ping:一先"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:烟:ping:一先"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l8c2",
+      "character": "波",
+      "allCandidateIds": [
+        "pingshui:波:ping:五歌"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:波:ping:五歌"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l8c3",
+      "character": "江",
+      "allCandidateIds": [
+        "pingshui:江:ping:三江"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:江:ping:三江"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l8c4",
+      "character": "上",
+      "allCandidateIds": [
+        "pingshui:上:shang:二十二养",
+        "pingshui:上:qu:二十三漾"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:上:shang:二十二养",
+        "pingshui:上:qu:二十三漾"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "ambiguous",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "多读同调无需强选"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l8c5",
+      "character": "使",
+      "allCandidateIds": [
+        "pingshui:使:shang:四纸",
+        "pingshui:使:qu:四寘"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:使:shang:四纸",
+        "pingshui:使:qu:四寘"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "ambiguous",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": null,
+      "category": "多读同调无需强选"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l8c6",
+      "character": "人",
+      "allCandidateIds": [
+        "pingshui:人:ping:十一真"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:人:ping:十一真"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "pingshui",
+      "tokenId": "l8c7",
+      "character": "愁",
+      "allCandidateIds": [
+        "pingshui:愁:ping:十一尤"
+      ],
+      "effectiveCandidateIds": [
+        "pingshui:愁:ping:十一尤"
+      ],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "resolved",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": null,
+      "category": "可推导"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l1c1",
+      "character": "白",
+      "allCandidateIds": [
+        "cilin:白:ru:第十七部·入声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:白:ru:第十七部·入声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:白:ru:第十七部·入声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l1c2",
+      "character": "日",
+      "allCandidateIds": [
+        "cilin:日:ru:第十七部·入声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:日:ru:第十七部·入声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:日:ru:第十七部·入声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l1c3",
+      "character": "依",
+      "allCandidateIds": [
+        "cilin:依:ping:第三部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:依:ping:第三部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:依:ping:第三部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l1c4",
+      "character": "山",
+      "allCandidateIds": [
+        "cilin:山:ping:第七部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:山:ping:第七部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:山:ping:第七部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l1c5",
+      "character": "尽",
+      "allCandidateIds": [
+        "cilin:尽:ze_unspecified:第六部·仄声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:尽:ze_unspecified:第六部·仄声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:尽:ze_unspecified:第六部·仄声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l2c1",
+      "character": "黄",
+      "allCandidateIds": [
+        "cilin:黄:ping:第二部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:黄:ping:第二部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:黄:ping:第二部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l2c2",
+      "character": "河",
+      "allCandidateIds": [
+        "cilin:河:ping:第九部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:河:ping:第九部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:河:ping:第九部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l2c3",
+      "character": "入",
+      "allCandidateIds": [
+        "cilin:入:ru:第十七部·入声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:入:ru:第十七部·入声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:入:ru:第十七部·入声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l2c4",
+      "character": "海",
+      "allCandidateIds": [
+        "cilin:海:ze_unspecified:第五部·仄声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:海:ze_unspecified:第五部·仄声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:海:ze_unspecified:第五部·仄声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l2c5",
+      "character": "流",
+      "allCandidateIds": [
+        "cilin:流:ping:第十二部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:流:ping:第十二部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:流:ping:第十二部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l3c1",
+      "character": "欲",
+      "allCandidateIds": [
+        "cilin:欲:ru:第十五部·入声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:欲:ru:第十五部·入声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:欲:ru:第十五部·入声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l3c2",
+      "character": "穷",
+      "allCandidateIds": [
+        "cilin:穷:ping:第一部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:穷:ping:第一部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:穷:ping:第一部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l3c3",
+      "character": "千",
+      "allCandidateIds": [
+        "cilin:千:ping:第七部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:千:ping:第七部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:千:ping:第七部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l3c4",
+      "character": "里",
+      "allCandidateIds": [
+        "cilin:里:ze_unspecified:第三部·仄声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:里:ze_unspecified:第三部·仄声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:里:ze_unspecified:第三部·仄声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l3c5",
+      "character": "目",
+      "allCandidateIds": [
+        "cilin:目:ru:第十五部·入声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:目:ru:第十五部·入声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:目:ru:第十五部·入声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l4c1",
+      "character": "更",
+      "allCandidateIds": [
+        "cilin:更:ping:第十一部·平声",
+        "cilin:更:ze_unspecified:第十一部·仄声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:更:ping:第十一部·平声",
+        "cilin:更:ze_unspecified:第十一部·仄声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:更:ping:第十一部·平声",
+        "cilin:更:ze_unspecified:第十一部·仄声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "ambiguous",
+      "possibleTones": [
+        "P",
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l4c2",
+      "character": "上",
+      "allCandidateIds": [
+        "cilin:上:ze_unspecified:第二部·仄声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:上:ze_unspecified:第二部·仄声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:上:ze_unspecified:第二部·仄声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l4c3",
+      "character": "一",
+      "allCandidateIds": [
+        "cilin:一:ru:第十七部·入声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:一:ru:第十七部·入声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:一:ru:第十七部·入声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l4c4",
+      "character": "层",
+      "allCandidateIds": [
+        "cilin:层:ping:第十一部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:层:ping:第十一部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:层:ping:第十一部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l4c5",
+      "character": "楼",
+      "allCandidateIds": [
+        "cilin:楼:ping:第十二部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:楼:ping:第十二部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:楼:ping:第十二部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "cilin",
+      "tokenId": "l1c1",
+      "character": "床",
+      "allCandidateIds": [
+        "cilin:床:ping:第二部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:床:ping:第二部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:床:ping:第二部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "cilin",
+      "tokenId": "l1c2",
+      "character": "前",
+      "allCandidateIds": [
+        "cilin:前:ping:第七部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:前:ping:第七部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:前:ping:第七部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "cilin",
+      "tokenId": "l1c3",
+      "character": "明",
+      "allCandidateIds": [
+        "cilin:明:ping:第十一部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:明:ping:第十一部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:明:ping:第十一部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "cilin",
+      "tokenId": "l1c4",
+      "character": "月",
+      "allCandidateIds": [
+        "cilin:月:ru:第十八部·入声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:月:ru:第十八部·入声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:月:ru:第十八部·入声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "cilin",
+      "tokenId": "l1c5",
+      "character": "光",
+      "allCandidateIds": [
+        "cilin:光:ping:第二部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:光:ping:第二部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:光:ping:第二部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "cilin",
+      "tokenId": "l2c1",
+      "character": "疑",
+      "allCandidateIds": [
+        "cilin:疑:ping:第三部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:疑:ping:第三部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:疑:ping:第三部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "cilin",
+      "tokenId": "l2c2",
+      "character": "是",
+      "allCandidateIds": [
+        "cilin:是:ze_unspecified:第三部·仄声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:是:ze_unspecified:第三部·仄声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:是:ze_unspecified:第三部·仄声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "cilin",
+      "tokenId": "l2c3",
+      "character": "地",
+      "allCandidateIds": [
+        "cilin:地:ze_unspecified:第三部·仄声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:地:ze_unspecified:第三部·仄声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:地:ze_unspecified:第三部·仄声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "cilin",
+      "tokenId": "l2c4",
+      "character": "上",
+      "allCandidateIds": [
+        "cilin:上:ze_unspecified:第二部·仄声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:上:ze_unspecified:第二部·仄声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:上:ze_unspecified:第二部·仄声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "cilin",
+      "tokenId": "l2c5",
+      "character": "霜",
+      "allCandidateIds": [
+        "cilin:霜:ping:第二部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:霜:ping:第二部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:霜:ping:第二部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "cilin",
+      "tokenId": "l3c1",
+      "character": "举",
+      "allCandidateIds": [
+        "cilin:举:ze_unspecified:第四部·仄声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:举:ze_unspecified:第四部·仄声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:举:ze_unspecified:第四部·仄声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "cilin",
+      "tokenId": "l3c2",
+      "character": "头",
+      "allCandidateIds": [
+        "cilin:头:ping:第十二部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:头:ping:第十二部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:头:ping:第十二部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "cilin",
+      "tokenId": "l3c3",
+      "character": "望",
+      "allCandidateIds": [
+        "cilin:望:ping:第二部·平声",
+        "cilin:望:ze_unspecified:第二部·仄声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:望:ping:第二部·平声",
+        "cilin:望:ze_unspecified:第二部·仄声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:望:ping:第二部·平声",
+        "cilin:望:ze_unspecified:第二部·仄声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "ambiguous",
+      "possibleTones": [
+        "P",
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "cilin",
+      "tokenId": "l3c4",
+      "character": "明",
+      "allCandidateIds": [
+        "cilin:明:ping:第十一部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:明:ping:第十一部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:明:ping:第十一部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "cilin",
+      "tokenId": "l3c5",
+      "character": "月",
+      "allCandidateIds": [
+        "cilin:月:ru:第十八部·入声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:月:ru:第十八部·入声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:月:ru:第十八部·入声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "cilin",
+      "tokenId": "l4c1",
+      "character": "低",
+      "allCandidateIds": [
+        "cilin:低:ping:第三部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:低:ping:第三部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:低:ping:第三部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "cilin",
+      "tokenId": "l4c2",
+      "character": "头",
+      "allCandidateIds": [
+        "cilin:头:ping:第十二部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:头:ping:第十二部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:头:ping:第十二部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "cilin",
+      "tokenId": "l4c3",
+      "character": "思",
+      "allCandidateIds": [
+        "cilin:思:ping:第三部·平声",
+        "cilin:思:ze_unspecified:第三部·仄声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:思:ping:第三部·平声",
+        "cilin:思:ze_unspecified:第三部·仄声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:思:ping:第三部·平声",
+        "cilin:思:ze_unspecified:第三部·仄声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "ambiguous",
+      "possibleTones": [
+        "P",
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "cilin",
+      "tokenId": "l4c4",
+      "character": "故",
+      "allCandidateIds": [
+        "cilin:故:ze_unspecified:第四部·仄声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:故:ze_unspecified:第四部·仄声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:故:ze_unspecified:第四部·仄声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "cilin",
+      "tokenId": "l4c5",
+      "character": "乡",
+      "allCandidateIds": [
+        "cilin:乡:ping:第二部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:乡:ping:第二部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:乡:ping:第二部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l1c1",
+      "character": "昔",
+      "allCandidateIds": [
+        "cilin:昔:ru:第十七部·入声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:昔:ru:第十七部·入声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:昔:ru:第十七部·入声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l1c2",
+      "character": "人",
+      "allCandidateIds": [
+        "cilin:人:ping:第六部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:人:ping:第六部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:人:ping:第六部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l1c3",
+      "character": "已",
+      "allCandidateIds": [
+        "cilin:已:ze_unspecified:第三部·仄声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:已:ze_unspecified:第三部·仄声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:已:ze_unspecified:第三部·仄声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l1c4",
+      "character": "乘",
+      "allCandidateIds": [
+        "cilin:乘:ping:第十一部·平声",
+        "cilin:乘:ze_unspecified:第十一部·仄声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:乘:ping:第十一部·平声",
+        "cilin:乘:ze_unspecified:第十一部·仄声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:乘:ping:第十一部·平声",
+        "cilin:乘:ze_unspecified:第十一部·仄声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "ambiguous",
+      "possibleTones": [
+        "P",
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l1c5",
+      "character": "黄",
+      "allCandidateIds": [
+        "cilin:黄:ping:第二部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:黄:ping:第二部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:黄:ping:第二部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l1c6",
+      "character": "鹤",
+      "allCandidateIds": [
+        "cilin:鹤:ru:第十六部·入声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:鹤:ru:第十六部·入声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:鹤:ru:第十六部·入声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l1c7",
+      "character": "去",
+      "allCandidateIds": [
+        "cilin:去:ze_unspecified:第四部·仄声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:去:ze_unspecified:第四部·仄声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:去:ze_unspecified:第四部·仄声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l2c1",
+      "character": "此",
+      "allCandidateIds": [
+        "cilin:此:ze_unspecified:第三部·仄声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:此:ze_unspecified:第三部·仄声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:此:ze_unspecified:第三部·仄声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l2c2",
+      "character": "地",
+      "allCandidateIds": [
+        "cilin:地:ze_unspecified:第三部·仄声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:地:ze_unspecified:第三部·仄声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:地:ze_unspecified:第三部·仄声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l2c3",
+      "character": "空",
+      "allCandidateIds": [
+        "cilin:空:ping:第一部·平声",
+        "cilin:空:ze_unspecified:第一部·仄声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:空:ping:第一部·平声",
+        "cilin:空:ze_unspecified:第一部·仄声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:空:ping:第一部·平声",
+        "cilin:空:ze_unspecified:第一部·仄声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "ambiguous",
+      "possibleTones": [
+        "P",
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l2c4",
+      "character": "余",
+      "allCandidateIds": [],
+      "effectiveCandidateIds": [],
+      "unverifiedEffectiveIds": [],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "unknown",
+      "toneStatus": "unknown",
+      "possibleTones": [],
+      "blockingReason": null,
+      "category": "候选缺失"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l2c5",
+      "character": "黄",
+      "allCandidateIds": [
+        "cilin:黄:ping:第二部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:黄:ping:第二部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:黄:ping:第二部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l2c6",
+      "character": "鹤",
+      "allCandidateIds": [
+        "cilin:鹤:ru:第十六部·入声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:鹤:ru:第十六部·入声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:鹤:ru:第十六部·入声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l2c7",
+      "character": "楼",
+      "allCandidateIds": [
+        "cilin:楼:ping:第十二部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:楼:ping:第十二部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:楼:ping:第十二部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l3c1",
+      "character": "黄",
+      "allCandidateIds": [
+        "cilin:黄:ping:第二部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:黄:ping:第二部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:黄:ping:第二部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l3c2",
+      "character": "鹤",
+      "allCandidateIds": [
+        "cilin:鹤:ru:第十六部·入声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:鹤:ru:第十六部·入声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:鹤:ru:第十六部·入声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l3c3",
+      "character": "一",
+      "allCandidateIds": [
+        "cilin:一:ru:第十七部·入声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:一:ru:第十七部·入声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:一:ru:第十七部·入声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l3c4",
+      "character": "去",
+      "allCandidateIds": [
+        "cilin:去:ze_unspecified:第四部·仄声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:去:ze_unspecified:第四部·仄声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:去:ze_unspecified:第四部·仄声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l3c5",
+      "character": "不",
+      "allCandidateIds": [
+        "cilin:不:ping:第十二部·平声",
+        "cilin:不:ru:第十八部·入声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:不:ping:第十二部·平声",
+        "cilin:不:ru:第十八部·入声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:不:ping:第十二部·平声",
+        "cilin:不:ru:第十八部·入声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "ambiguous",
+      "possibleTones": [
+        "P",
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l3c6",
+      "character": "复",
+      "allCandidateIds": [
+        "cilin:复:ze_unspecified:第十二部·仄声",
+        "cilin:复:ru:第十五部·入声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:复:ze_unspecified:第十二部·仄声",
+        "cilin:复:ru:第十五部·入声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:复:ze_unspecified:第十二部·仄声",
+        "cilin:复:ru:第十五部·入声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l3c7",
+      "character": "返",
+      "allCandidateIds": [
+        "cilin:返:ze_unspecified:第七部·仄声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:返:ze_unspecified:第七部·仄声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:返:ze_unspecified:第七部·仄声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l4c1",
+      "character": "白",
+      "allCandidateIds": [
+        "cilin:白:ru:第十七部·入声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:白:ru:第十七部·入声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:白:ru:第十七部·入声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l4c2",
+      "character": "云",
+      "allCandidateIds": [
+        "cilin:云:ping:第六部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:云:ping:第六部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:云:ping:第六部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l4c3",
+      "character": "千",
+      "allCandidateIds": [
+        "cilin:千:ping:第七部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:千:ping:第七部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:千:ping:第七部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l4c4",
+      "character": "载",
+      "allCandidateIds": [
+        "cilin:载:ze_unspecified:第五部·仄声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:载:ze_unspecified:第五部·仄声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:载:ze_unspecified:第五部·仄声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l4c5",
+      "character": "空",
+      "allCandidateIds": [
+        "cilin:空:ping:第一部·平声",
+        "cilin:空:ze_unspecified:第一部·仄声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:空:ping:第一部·平声",
+        "cilin:空:ze_unspecified:第一部·仄声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:空:ping:第一部·平声",
+        "cilin:空:ze_unspecified:第一部·仄声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "ambiguous",
+      "possibleTones": [
+        "P",
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l4c6",
+      "character": "悠",
+      "allCandidateIds": [
+        "cilin:悠:ping:第十二部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:悠:ping:第十二部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:悠:ping:第十二部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l4c7",
+      "character": "悠",
+      "allCandidateIds": [
+        "cilin:悠:ping:第十二部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:悠:ping:第十二部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:悠:ping:第十二部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l5c1",
+      "character": "晴",
+      "allCandidateIds": [
+        "cilin:晴:ping:第十一部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:晴:ping:第十一部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:晴:ping:第十一部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l5c2",
+      "character": "川",
+      "allCandidateIds": [
+        "cilin:川:ping:第七部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:川:ping:第七部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:川:ping:第七部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l5c3",
+      "character": "历",
+      "allCandidateIds": [
+        "cilin:历:ru:第十七部·入声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:历:ru:第十七部·入声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:历:ru:第十七部·入声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l5c4",
+      "character": "历",
+      "allCandidateIds": [
+        "cilin:历:ru:第十七部·入声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:历:ru:第十七部·入声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:历:ru:第十七部·入声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l5c5",
+      "character": "汉",
+      "allCandidateIds": [
+        "cilin:汉:ze_unspecified:第七部·仄声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:汉:ze_unspecified:第七部·仄声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:汉:ze_unspecified:第七部·仄声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l5c6",
+      "character": "阳",
+      "allCandidateIds": [
+        "cilin:阳:ping:第二部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:阳:ping:第二部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:阳:ping:第二部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l5c7",
+      "character": "树",
+      "allCandidateIds": [
+        "cilin:树:ze_unspecified:第四部·仄声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:树:ze_unspecified:第四部·仄声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:树:ze_unspecified:第四部·仄声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l6c1",
+      "character": "芳",
+      "allCandidateIds": [
+        "cilin:芳:ping:第二部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:芳:ping:第二部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:芳:ping:第二部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l6c2",
+      "character": "草",
+      "allCandidateIds": [
+        "cilin:草:ze_unspecified:第八部·仄声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:草:ze_unspecified:第八部·仄声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:草:ze_unspecified:第八部·仄声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l6c3",
+      "character": "萋",
+      "allCandidateIds": [
+        "cilin:萋:ping:第三部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:萋:ping:第三部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:萋:ping:第三部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l6c4",
+      "character": "萋",
+      "allCandidateIds": [
+        "cilin:萋:ping:第三部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:萋:ping:第三部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:萋:ping:第三部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l6c5",
+      "character": "鹦",
+      "allCandidateIds": [
+        "cilin:鹦:ping:第十一部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:鹦:ping:第十一部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:鹦:ping:第十一部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l6c6",
+      "character": "鹉",
+      "allCandidateIds": [
+        "cilin:鹉:ze_unspecified:第四部·仄声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:鹉:ze_unspecified:第四部·仄声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:鹉:ze_unspecified:第四部·仄声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l6c7",
+      "character": "洲",
+      "allCandidateIds": [
+        "cilin:洲:ping:第十二部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:洲:ping:第十二部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:洲:ping:第十二部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l7c1",
+      "character": "日",
+      "allCandidateIds": [
+        "cilin:日:ru:第十七部·入声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:日:ru:第十七部·入声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:日:ru:第十七部·入声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l7c2",
+      "character": "暮",
+      "allCandidateIds": [
+        "cilin:暮:ze_unspecified:第四部·仄声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:暮:ze_unspecified:第四部·仄声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:暮:ze_unspecified:第四部·仄声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l7c3",
+      "character": "乡",
+      "allCandidateIds": [
+        "cilin:乡:ping:第二部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:乡:ping:第二部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:乡:ping:第二部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l7c4",
+      "character": "关",
+      "allCandidateIds": [
+        "cilin:关:ping:第七部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:关:ping:第七部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:关:ping:第七部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l7c5",
+      "character": "何",
+      "allCandidateIds": [
+        "cilin:何:ping:第九部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:何:ping:第九部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:何:ping:第九部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l7c6",
+      "character": "处",
+      "allCandidateIds": [
+        "cilin:处:ze_unspecified:第四部·仄声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:处:ze_unspecified:第四部·仄声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:处:ze_unspecified:第四部·仄声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l7c7",
+      "character": "是",
+      "allCandidateIds": [
+        "cilin:是:ze_unspecified:第三部·仄声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:是:ze_unspecified:第三部·仄声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:是:ze_unspecified:第三部·仄声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l8c1",
+      "character": "烟",
+      "allCandidateIds": [
+        "cilin:烟:ping:第七部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:烟:ping:第七部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:烟:ping:第七部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l8c2",
+      "character": "波",
+      "allCandidateIds": [
+        "cilin:波:ping:第九部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:波:ping:第九部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:波:ping:第九部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l8c3",
+      "character": "江",
+      "allCandidateIds": [
+        "cilin:江:ping:第二部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:江:ping:第二部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:江:ping:第二部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l8c4",
+      "character": "上",
+      "allCandidateIds": [
+        "cilin:上:ze_unspecified:第二部·仄声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:上:ze_unspecified:第二部·仄声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:上:ze_unspecified:第二部·仄声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l8c5",
+      "character": "使",
+      "allCandidateIds": [
+        "cilin:使:ze_unspecified:第三部·仄声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:使:ze_unspecified:第三部·仄声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:使:ze_unspecified:第三部·仄声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l8c6",
+      "character": "人",
+      "allCandidateIds": [
+        "cilin:人:ping:第六部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:人:ping:第六部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:人:ping:第六部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "cilin",
+      "tokenId": "l8c7",
+      "character": "愁",
+      "allCandidateIds": [
+        "cilin:愁:ping:第十二部·平声"
+      ],
+      "effectiveCandidateIds": [
+        "cilin:愁:ping:第十二部·平声"
+      ],
+      "unverifiedEffectiveIds": [
+        "cilin:愁:ping:第十二部·平声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l1c1",
+      "character": "白",
+      "allCandidateIds": [
+        "xinyun:白:yangping:二波·阳平",
+        "xinyun:白:yangping:四开·阳平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:白:yangping:二波·阳平",
+        "xinyun:白:yangping:四开·阳平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:白:yangping:二波·阳平",
+        "xinyun:白:yangping:四开·阳平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l1c2",
+      "character": "日",
+      "allCandidateIds": [
+        "xinyun:日:qu:十三支·去声"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:日:qu:十三支·去声"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:日:qu:十三支·去声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l1c3",
+      "character": "依",
+      "allCandidateIds": [
+        "xinyun:依:shang:十二齐·上声",
+        "xinyun:依:yinping:十二齐·阴平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:依:shang:十二齐·上声",
+        "xinyun:依:yinping:十二齐·阴平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:依:shang:十二齐·上声",
+        "xinyun:依:yinping:十二齐·阴平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "ambiguous",
+      "possibleTones": [
+        "P",
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l1c4",
+      "character": "山",
+      "allCandidateIds": [
+        "xinyun:山:yinping:八寒·阴平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:山:yinping:八寒·阴平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:山:yinping:八寒·阴平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l1c5",
+      "character": "尽",
+      "allCandidateIds": [
+        "xinyun:尽:shang:九文·上声",
+        "xinyun:尽:qu:九文·去声"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:尽:shang:九文·上声",
+        "xinyun:尽:qu:九文·去声"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:尽:shang:九文·上声",
+        "xinyun:尽:qu:九文·去声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l2c1",
+      "character": "黄",
+      "allCandidateIds": [
+        "xinyun:黄:yangping:十唐·阳平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:黄:yangping:十唐·阳平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:黄:yangping:十唐·阳平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l2c2",
+      "character": "河",
+      "allCandidateIds": [
+        "xinyun:河:yangping:二波·阳平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:河:yangping:二波·阳平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:河:yangping:二波·阳平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l2c3",
+      "character": "入",
+      "allCandidateIds": [
+        "xinyun:入:qu:十四姑·去声"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:入:qu:十四姑·去声"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:入:qu:十四姑·去声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l2c4",
+      "character": "海",
+      "allCandidateIds": [
+        "xinyun:海:shang:四开·上声"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:海:shang:四开·上声"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:海:shang:四开·上声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l2c5",
+      "character": "流",
+      "allCandidateIds": [
+        "xinyun:流:yangping:七尤·阳平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:流:yangping:七尤·阳平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:流:yangping:七尤·阳平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l3c1",
+      "character": "欲",
+      "allCandidateIds": [
+        "xinyun:欲:qu:十二齐·去声"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:欲:qu:十二齐·去声"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:欲:qu:十二齐·去声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l3c2",
+      "character": "穷",
+      "allCandidateIds": [
+        "xinyun:穷:yangping:十一庚·阳平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:穷:yangping:十一庚·阳平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:穷:yangping:十一庚·阳平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l3c3",
+      "character": "千",
+      "allCandidateIds": [
+        "xinyun:千:yinping:八寒·阴平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:千:yinping:八寒·阴平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:千:yinping:八寒·阴平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l3c4",
+      "character": "里",
+      "allCandidateIds": [
+        "xinyun:里:shang:十二齐·上声"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:里:shang:十二齐·上声"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:里:shang:十二齐·上声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l3c5",
+      "character": "目",
+      "allCandidateIds": [
+        "xinyun:目:qu:十四姑·去声"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:目:qu:十四姑·去声"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:目:qu:十四姑·去声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l4c1",
+      "character": "更",
+      "allCandidateIds": [
+        "xinyun:更:qu:十一庚·去声",
+        "xinyun:更:yinping:十一庚·阴平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:更:qu:十一庚·去声",
+        "xinyun:更:yinping:十一庚·阴平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:更:qu:十一庚·去声",
+        "xinyun:更:yinping:十一庚·阴平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "ambiguous",
+      "possibleTones": [
+        "P",
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l4c2",
+      "character": "上",
+      "allCandidateIds": [
+        "xinyun:上:shang:十唐·上声",
+        "xinyun:上:qu:十唐·去声"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:上:shang:十唐·上声",
+        "xinyun:上:qu:十唐·去声"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:上:shang:十唐·上声",
+        "xinyun:上:qu:十唐·去声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l4c3",
+      "character": "一",
+      "allCandidateIds": [
+        "xinyun:一:qu:十二齐·去声",
+        "xinyun:一:yangping:十二齐·阳平",
+        "xinyun:一:yinping:十二齐·阴平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:一:qu:十二齐·去声",
+        "xinyun:一:yangping:十二齐·阳平",
+        "xinyun:一:yinping:十二齐·阴平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:一:qu:十二齐·去声",
+        "xinyun:一:yangping:十二齐·阳平",
+        "xinyun:一:yinping:十二齐·阴平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "ambiguous",
+      "possibleTones": [
+        "P",
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l4c4",
+      "character": "层",
+      "allCandidateIds": [
+        "xinyun:层:yangping:十一庚·阳平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:层:yangping:十一庚·阳平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:层:yangping:十一庚·阳平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l4c5",
+      "character": "楼",
+      "allCandidateIds": [
+        "xinyun:楼:yangping:七尤·阳平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:楼:yangping:七尤·阳平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:楼:yangping:七尤·阳平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l1c1",
+      "character": "床",
+      "allCandidateIds": [
+        "xinyun:床:yangping:十唐·阳平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:床:yangping:十唐·阳平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:床:yangping:十唐·阳平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l1c2",
+      "character": "前",
+      "allCandidateIds": [
+        "xinyun:前:shang:八寒·上声",
+        "xinyun:前:yangping:八寒·阳平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:前:shang:八寒·上声",
+        "xinyun:前:yangping:八寒·阳平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:前:shang:八寒·上声",
+        "xinyun:前:yangping:八寒·阳平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "ambiguous",
+      "possibleTones": [
+        "P",
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l1c3",
+      "character": "明",
+      "allCandidateIds": [
+        "xinyun:明:qu:十一庚·去声",
+        "xinyun:明:yangping:十一庚·阳平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:明:qu:十一庚·去声",
+        "xinyun:明:yangping:十一庚·阳平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:明:qu:十一庚·去声",
+        "xinyun:明:yangping:十一庚·阳平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "ambiguous",
+      "possibleTones": [
+        "P",
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l1c4",
+      "character": "月",
+      "allCandidateIds": [
+        "xinyun:月:qu:三皆·去声",
+        "xinyun:月:qu:十四姑·去声"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:月:qu:三皆·去声",
+        "xinyun:月:qu:十四姑·去声"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:月:qu:三皆·去声",
+        "xinyun:月:qu:十四姑·去声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l1c5",
+      "character": "光",
+      "allCandidateIds": [
+        "xinyun:光:qu:十唐·去声",
+        "xinyun:光:yinping:十唐·阴平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:光:qu:十唐·去声",
+        "xinyun:光:yinping:十唐·阴平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:光:qu:十唐·去声",
+        "xinyun:光:yinping:十唐·阴平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "ambiguous",
+      "possibleTones": [
+        "P",
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l2c1",
+      "character": "疑",
+      "allCandidateIds": [
+        "xinyun:疑:yangping:十一庚·阳平",
+        "xinyun:疑:yangping:十二齐·阳平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:疑:yangping:十一庚·阳平",
+        "xinyun:疑:yangping:十二齐·阳平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:疑:yangping:十一庚·阳平",
+        "xinyun:疑:yangping:十二齐·阳平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l2c2",
+      "character": "是",
+      "allCandidateIds": [
+        "xinyun:是:qu:十三支·去声",
+        "xinyun:是:yangping:十二齐·阳平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:是:qu:十三支·去声",
+        "xinyun:是:yangping:十二齐·阳平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:是:qu:十三支·去声",
+        "xinyun:是:yangping:十二齐·阳平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "ambiguous",
+      "possibleTones": [
+        "P",
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l2c3",
+      "character": "地",
+      "allCandidateIds": [
+        "xinyun:地:qu:十二齐·去声"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:地:qu:十二齐·去声"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:地:qu:十二齐·去声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l2c4",
+      "character": "上",
+      "allCandidateIds": [
+        "xinyun:上:shang:十唐·上声",
+        "xinyun:上:qu:十唐·去声"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:上:shang:十唐·上声",
+        "xinyun:上:qu:十唐·去声"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:上:shang:十唐·上声",
+        "xinyun:上:qu:十唐·去声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l2c5",
+      "character": "霜",
+      "allCandidateIds": [
+        "xinyun:霜:yinping:十唐·阴平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:霜:yinping:十唐·阴平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:霜:yinping:十唐·阴平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l3c1",
+      "character": "举",
+      "allCandidateIds": [
+        "xinyun:举:shang:十二齐·上声"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:举:shang:十二齐·上声"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:举:shang:十二齐·上声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l3c2",
+      "character": "头",
+      "allCandidateIds": [
+        "xinyun:头:yangping:七尤·阳平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:头:yangping:七尤·阳平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:头:yangping:七尤·阳平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l3c3",
+      "character": "望",
+      "allCandidateIds": [
+        "xinyun:望:qu:十唐·去声"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:望:qu:十唐·去声"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:望:qu:十唐·去声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l3c4",
+      "character": "明",
+      "allCandidateIds": [
+        "xinyun:明:qu:十一庚·去声",
+        "xinyun:明:yangping:十一庚·阳平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:明:qu:十一庚·去声",
+        "xinyun:明:yangping:十一庚·阳平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:明:qu:十一庚·去声",
+        "xinyun:明:yangping:十一庚·阳平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "ambiguous",
+      "possibleTones": [
+        "P",
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l3c5",
+      "character": "月",
+      "allCandidateIds": [
+        "xinyun:月:qu:三皆·去声",
+        "xinyun:月:qu:十四姑·去声"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:月:qu:三皆·去声",
+        "xinyun:月:qu:十四姑·去声"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:月:qu:三皆·去声",
+        "xinyun:月:qu:十四姑·去声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l4c1",
+      "character": "低",
+      "allCandidateIds": [
+        "xinyun:低:yinping:十二齐·阴平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:低:yinping:十二齐·阴平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:低:yinping:十二齐·阴平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l4c2",
+      "character": "头",
+      "allCandidateIds": [
+        "xinyun:头:yangping:七尤·阳平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:头:yangping:七尤·阳平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:头:yangping:七尤·阳平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l4c3",
+      "character": "思",
+      "allCandidateIds": [
+        "xinyun:思:yinping:十三支·阴平",
+        "xinyun:思:yinping:四开·阴平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:思:yinping:十三支·阴平",
+        "xinyun:思:yinping:四开·阴平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:思:yinping:十三支·阴平",
+        "xinyun:思:yinping:四开·阴平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l4c4",
+      "character": "故",
+      "allCandidateIds": [
+        "xinyun:故:qu:十四姑·去声"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:故:qu:十四姑·去声"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:故:qu:十四姑·去声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-jingyesi-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l4c5",
+      "character": "乡",
+      "allCandidateIds": [
+        "xinyun:乡:yinping:十唐·阴平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:乡:yinping:十唐·阴平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:乡:yinping:十唐·阴平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l1c1",
+      "character": "昔",
+      "allCandidateIds": [
+        "xinyun:昔:qu:二波·去声",
+        "xinyun:昔:yinping:十二齐·阴平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:昔:qu:二波·去声",
+        "xinyun:昔:yinping:十二齐·阴平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:昔:qu:二波·去声",
+        "xinyun:昔:yinping:十二齐·阴平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "ambiguous",
+      "possibleTones": [
+        "P",
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l1c2",
+      "character": "人",
+      "allCandidateIds": [
+        "xinyun:人:yangping:九文·阳平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:人:yangping:九文·阳平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:人:yangping:九文·阳平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l1c3",
+      "character": "已",
+      "allCandidateIds": [
+        "xinyun:已:qu:十三支·去声",
+        "xinyun:已:shang:十二齐·上声"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:已:qu:十三支·去声",
+        "xinyun:已:shang:十二齐·上声"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:已:qu:十三支·去声",
+        "xinyun:已:shang:十二齐·上声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l1c4",
+      "character": "乘",
+      "allCandidateIds": [
+        "xinyun:乘:qu:十一庚·去声",
+        "xinyun:乘:yangping:十一庚·阳平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:乘:qu:十一庚·去声",
+        "xinyun:乘:yangping:十一庚·阳平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:乘:qu:十一庚·去声",
+        "xinyun:乘:yangping:十一庚·阳平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "ambiguous",
+      "possibleTones": [
+        "P",
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l1c5",
+      "character": "黄",
+      "allCandidateIds": [
+        "xinyun:黄:yangping:十唐·阳平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:黄:yangping:十唐·阳平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:黄:yangping:十唐·阳平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l1c6",
+      "character": "鹤",
+      "allCandidateIds": [
+        "xinyun:鹤:qu:二波·去声"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:鹤:qu:二波·去声"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:鹤:qu:二波·去声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l1c7",
+      "character": "去",
+      "allCandidateIds": [
+        "xinyun:去:qu:十二齐·去声",
+        "xinyun:去:yinping:十二齐·阴平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:去:qu:十二齐·去声",
+        "xinyun:去:yinping:十二齐·阴平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:去:qu:十二齐·去声",
+        "xinyun:去:yinping:十二齐·阴平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "ambiguous",
+      "possibleTones": [
+        "P",
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l2c1",
+      "character": "此",
+      "allCandidateIds": [
+        "xinyun:此:shang:十三支·上声"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:此:shang:十三支·上声"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:此:shang:十三支·上声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l2c2",
+      "character": "地",
+      "allCandidateIds": [
+        "xinyun:地:qu:十二齐·去声"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:地:qu:十二齐·去声"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:地:qu:十二齐·去声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l2c3",
+      "character": "空",
+      "allCandidateIds": [
+        "xinyun:空:shang:十一庚·上声",
+        "xinyun:空:qu:十一庚·去声",
+        "xinyun:空:yinping:十一庚·阴平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:空:shang:十一庚·上声",
+        "xinyun:空:qu:十一庚·去声",
+        "xinyun:空:yinping:十一庚·阴平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:空:shang:十一庚·上声",
+        "xinyun:空:qu:十一庚·去声",
+        "xinyun:空:yinping:十一庚·阴平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "ambiguous",
+      "possibleTones": [
+        "P",
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l2c4",
+      "character": "余",
+      "allCandidateIds": [
+        "xinyun:余:qu:十二齐·去声",
+        "xinyun:余:yangping:十二齐·阳平",
+        "xinyun:余:yangping:十四姑·阳平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:余:qu:十二齐·去声",
+        "xinyun:余:yangping:十二齐·阳平",
+        "xinyun:余:yangping:十四姑·阳平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:余:qu:十二齐·去声",
+        "xinyun:余:yangping:十二齐·阳平",
+        "xinyun:余:yangping:十四姑·阳平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "ambiguous",
+      "possibleTones": [
+        "P",
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l2c5",
+      "character": "黄",
+      "allCandidateIds": [
+        "xinyun:黄:yangping:十唐·阳平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:黄:yangping:十唐·阳平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:黄:yangping:十唐·阳平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l2c6",
+      "character": "鹤",
+      "allCandidateIds": [
+        "xinyun:鹤:qu:二波·去声"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:鹤:qu:二波·去声"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:鹤:qu:二波·去声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l2c7",
+      "character": "楼",
+      "allCandidateIds": [
+        "xinyun:楼:yangping:七尤·阳平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:楼:yangping:七尤·阳平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:楼:yangping:七尤·阳平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l3c1",
+      "character": "黄",
+      "allCandidateIds": [
+        "xinyun:黄:yangping:十唐·阳平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:黄:yangping:十唐·阳平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:黄:yangping:十唐·阳平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l3c2",
+      "character": "鹤",
+      "allCandidateIds": [
+        "xinyun:鹤:qu:二波·去声"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:鹤:qu:二波·去声"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:鹤:qu:二波·去声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l3c3",
+      "character": "一",
+      "allCandidateIds": [
+        "xinyun:一:qu:十二齐·去声",
+        "xinyun:一:yangping:十二齐·阳平",
+        "xinyun:一:yinping:十二齐·阴平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:一:qu:十二齐·去声",
+        "xinyun:一:yangping:十二齐·阳平",
+        "xinyun:一:yinping:十二齐·阴平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:一:qu:十二齐·去声",
+        "xinyun:一:yangping:十二齐·阳平",
+        "xinyun:一:yinping:十二齐·阴平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "ambiguous",
+      "possibleTones": [
+        "P",
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l3c4",
+      "character": "去",
+      "allCandidateIds": [
+        "xinyun:去:qu:十二齐·去声",
+        "xinyun:去:yinping:十二齐·阴平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:去:qu:十二齐·去声",
+        "xinyun:去:yinping:十二齐·阴平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:去:qu:十二齐·去声",
+        "xinyun:去:yinping:十二齐·阴平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "ambiguous",
+      "possibleTones": [
+        "P",
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l3c5",
+      "character": "不",
+      "allCandidateIds": [
+        "xinyun:不:shang:七尤·上声",
+        "xinyun:不:yinping:七尤·阴平",
+        "xinyun:不:qu:十四姑·去声",
+        "xinyun:不:yangping:十四姑·阳平",
+        "xinyun:不:yinping:十四姑·阴平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:不:shang:七尤·上声",
+        "xinyun:不:yinping:七尤·阴平",
+        "xinyun:不:qu:十四姑·去声",
+        "xinyun:不:yangping:十四姑·阳平",
+        "xinyun:不:yinping:十四姑·阴平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:不:shang:七尤·上声",
+        "xinyun:不:yinping:七尤·阴平",
+        "xinyun:不:qu:十四姑·去声",
+        "xinyun:不:yangping:十四姑·阳平",
+        "xinyun:不:yinping:十四姑·阴平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "ambiguous",
+      "possibleTones": [
+        "P",
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l3c6",
+      "character": "复",
+      "allCandidateIds": [
+        "xinyun:复:qu:十四姑·去声"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:复:qu:十四姑·去声"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:复:qu:十四姑·去声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l3c7",
+      "character": "返",
+      "allCandidateIds": [
+        "xinyun:返:shang:八寒·上声"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:返:shang:八寒·上声"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:返:shang:八寒·上声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l4c1",
+      "character": "白",
+      "allCandidateIds": [
+        "xinyun:白:yangping:二波·阳平",
+        "xinyun:白:yangping:四开·阳平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:白:yangping:二波·阳平",
+        "xinyun:白:yangping:四开·阳平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:白:yangping:二波·阳平",
+        "xinyun:白:yangping:四开·阳平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l4c2",
+      "character": "云",
+      "allCandidateIds": [
+        "xinyun:云:yangping:九文·阳平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:云:yangping:九文·阳平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:云:yangping:九文·阳平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l4c3",
+      "character": "千",
+      "allCandidateIds": [
+        "xinyun:千:yinping:八寒·阴平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:千:yinping:八寒·阴平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:千:yinping:八寒·阴平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l4c4",
+      "character": "载",
+      "allCandidateIds": [
+        "xinyun:载:shang:四开·上声",
+        "xinyun:载:qu:四开·去声"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:载:shang:四开·上声",
+        "xinyun:载:qu:四开·去声"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:载:shang:四开·上声",
+        "xinyun:载:qu:四开·去声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l4c5",
+      "character": "空",
+      "allCandidateIds": [
+        "xinyun:空:shang:十一庚·上声",
+        "xinyun:空:qu:十一庚·去声",
+        "xinyun:空:yinping:十一庚·阴平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:空:shang:十一庚·上声",
+        "xinyun:空:qu:十一庚·去声",
+        "xinyun:空:yinping:十一庚·阴平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:空:shang:十一庚·上声",
+        "xinyun:空:qu:十一庚·去声",
+        "xinyun:空:yinping:十一庚·阴平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "ambiguous",
+      "possibleTones": [
+        "P",
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l4c6",
+      "character": "悠",
+      "allCandidateIds": [
+        "xinyun:悠:yinping:七尤·阴平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:悠:yinping:七尤·阴平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:悠:yinping:七尤·阴平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l4c7",
+      "character": "悠",
+      "allCandidateIds": [
+        "xinyun:悠:yinping:七尤·阴平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:悠:yinping:七尤·阴平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:悠:yinping:七尤·阴平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l5c1",
+      "character": "晴",
+      "allCandidateIds": [
+        "xinyun:晴:yangping:十一庚·阳平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:晴:yangping:十一庚·阳平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:晴:yangping:十一庚·阳平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l5c2",
+      "character": "川",
+      "allCandidateIds": [
+        "xinyun:川:yinping:八寒·阴平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:川:yinping:八寒·阴平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:川:yinping:八寒·阴平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l5c3",
+      "character": "历",
+      "allCandidateIds": [
+        "xinyun:历:qu:十二齐·去声"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:历:qu:十二齐·去声"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:历:qu:十二齐·去声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l5c4",
+      "character": "历",
+      "allCandidateIds": [
+        "xinyun:历:qu:十二齐·去声"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:历:qu:十二齐·去声"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:历:qu:十二齐·去声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l5c5",
+      "character": "汉",
+      "allCandidateIds": [
+        "xinyun:汉:qu:八寒·去声"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:汉:qu:八寒·去声"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:汉:qu:八寒·去声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l5c6",
+      "character": "阳",
+      "allCandidateIds": [
+        "xinyun:阳:yangping:十唐·阳平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:阳:yangping:十唐·阳平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:阳:yangping:十唐·阳平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l5c7",
+      "character": "树",
+      "allCandidateIds": [
+        "xinyun:树:qu:十四姑·去声"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:树:qu:十四姑·去声"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:树:qu:十四姑·去声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l6c1",
+      "character": "芳",
+      "allCandidateIds": [
+        "xinyun:芳:yinping:十唐·阴平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:芳:yinping:十唐·阴平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:芳:yinping:十唐·阴平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l6c2",
+      "character": "草",
+      "allCandidateIds": [
+        "xinyun:草:shang:六豪·上声",
+        "xinyun:草:qu:六豪·去声"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:草:shang:六豪·上声",
+        "xinyun:草:qu:六豪·去声"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:草:shang:六豪·上声",
+        "xinyun:草:qu:六豪·去声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l6c3",
+      "character": "萋",
+      "allCandidateIds": [
+        "xinyun:萋:yinping:十二齐·阴平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:萋:yinping:十二齐·阴平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:萋:yinping:十二齐·阴平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l6c4",
+      "character": "萋",
+      "allCandidateIds": [
+        "xinyun:萋:yinping:十二齐·阴平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:萋:yinping:十二齐·阴平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:萋:yinping:十二齐·阴平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l6c5",
+      "character": "鹦",
+      "allCandidateIds": [
+        "xinyun:鹦:yinping:十一庚·阴平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:鹦:yinping:十一庚·阴平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:鹦:yinping:十一庚·阴平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l6c6",
+      "character": "鹉",
+      "allCandidateIds": [
+        "xinyun:鹉:shang:十四姑·上声"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:鹉:shang:十四姑·上声"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:鹉:shang:十四姑·上声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l6c7",
+      "character": "洲",
+      "allCandidateIds": [
+        "xinyun:洲:yinping:七尤·阴平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:洲:yinping:七尤·阴平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:洲:yinping:七尤·阴平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l7c1",
+      "character": "日",
+      "allCandidateIds": [
+        "xinyun:日:qu:十三支·去声"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:日:qu:十三支·去声"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:日:qu:十三支·去声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l7c2",
+      "character": "暮",
+      "allCandidateIds": [
+        "xinyun:暮:qu:十四姑·去声"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:暮:qu:十四姑·去声"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:暮:qu:十四姑·去声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l7c3",
+      "character": "乡",
+      "allCandidateIds": [
+        "xinyun:乡:yinping:十唐·阴平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:乡:yinping:十唐·阴平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:乡:yinping:十唐·阴平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l7c4",
+      "character": "关",
+      "allCandidateIds": [
+        "xinyun:关:yinping:八寒·阴平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:关:yinping:八寒·阴平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:关:yinping:八寒·阴平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l7c5",
+      "character": "何",
+      "allCandidateIds": [
+        "xinyun:何:qu:二波·去声",
+        "xinyun:何:yangping:二波·阳平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:何:qu:二波·去声",
+        "xinyun:何:yangping:二波·阳平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:何:qu:二波·去声",
+        "xinyun:何:yangping:二波·阳平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "ambiguous",
+      "possibleTones": [
+        "P",
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l7c6",
+      "character": "处",
+      "allCandidateIds": [
+        "xinyun:处:shang:十四姑·上声",
+        "xinyun:处:qu:十四姑·去声"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:处:shang:十四姑·上声",
+        "xinyun:处:qu:十四姑·去声"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:处:shang:十四姑·上声",
+        "xinyun:处:qu:十四姑·去声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l7c7",
+      "character": "是",
+      "allCandidateIds": [
+        "xinyun:是:qu:十三支·去声",
+        "xinyun:是:yangping:十二齐·阳平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:是:qu:十三支·去声",
+        "xinyun:是:yangping:十二齐·阳平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:是:qu:十三支·去声",
+        "xinyun:是:yangping:十二齐·阳平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "ambiguous",
+      "possibleTones": [
+        "P",
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l8c1",
+      "character": "烟",
+      "allCandidateIds": [
+        "xinyun:烟:yinping:九文·阴平",
+        "xinyun:烟:yinping:八寒·阴平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:烟:yinping:九文·阴平",
+        "xinyun:烟:yinping:八寒·阴平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:烟:yinping:九文·阴平",
+        "xinyun:烟:yinping:八寒·阴平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l8c2",
+      "character": "波",
+      "allCandidateIds": [
+        "xinyun:波:yinping:二波·阴平",
+        "xinyun:波:yinping:五微·阴平",
+        "xinyun:波:qu:十二齐·去声"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:波:yinping:二波·阴平",
+        "xinyun:波:yinping:五微·阴平",
+        "xinyun:波:qu:十二齐·去声"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:波:yinping:二波·阴平",
+        "xinyun:波:yinping:五微·阴平",
+        "xinyun:波:qu:十二齐·去声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "ambiguous",
+      "possibleTones": [
+        "P",
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l8c3",
+      "character": "江",
+      "allCandidateIds": [
+        "xinyun:江:yinping:十唐·阴平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:江:yinping:十唐·阴平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:江:yinping:十唐·阴平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l8c4",
+      "character": "上",
+      "allCandidateIds": [
+        "xinyun:上:shang:十唐·上声",
+        "xinyun:上:qu:十唐·去声"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:上:shang:十唐·上声",
+        "xinyun:上:qu:十唐·去声"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:上:shang:十唐·上声",
+        "xinyun:上:qu:十唐·去声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l8c5",
+      "character": "使",
+      "allCandidateIds": [
+        "xinyun:使:shang:十三支·上声"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:使:shang:十三支·上声"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:使:shang:十三支·上声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l8c6",
+      "character": "人",
+      "allCandidateIds": [
+        "xinyun:人:yangping:九文·阳平"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:人:yangping:九文·阳平"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:人:yangping:九文·阳平"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "resolved",
+      "possibleTones": [
+        "P"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    },
+    {
+      "caseId": "golden-huanghelou-ps-v1",
+      "book": "xinyun",
+      "tokenId": "l8c7",
+      "character": "愁",
+      "allCandidateIds": [
+        "xinyun:愁:yangping:七尤·阳平",
+        "xinyun:愁:yinping:七尤·阴平",
+        "xinyun:愁:shang:六豪·上声"
+      ],
+      "effectiveCandidateIds": [
+        "xinyun:愁:yangping:七尤·阳平",
+        "xinyun:愁:yinping:七尤·阴平",
+        "xinyun:愁:shang:六豪·上声"
+      ],
+      "unverifiedEffectiveIds": [
+        "xinyun:愁:yangping:七尤·阳平",
+        "xinyun:愁:yinping:七尤·阴平",
+        "xinyun:愁:shang:六豪·上声"
+      ],
+      "missingSourceIds": [],
+      "contextRuleIds": [],
+      "readingStatus": "blocked",
+      "toneStatus": "ambiguous",
+      "possibleTones": [
+        "P",
+        "Z"
+      ],
+      "blockingReason": "LOOKUP_EVIDENCE_UNVERIFIED",
+      "category": "未审核"
+    }
+  ]
+}
