@@ -1,0 +1,378 @@
+{
+  "generatedAt": "2026-10-20T14:36:27.619Z",
+  "revision": {
+    "commit": "dba8684c4c00f1542aea08a81fdccf15a762b76a",
+    "dirty": false
+  },
+  "scope": "D3 浏览器基础回归（部分系统验收）",
+  "results": [
+    {
+      "id": "E04-example-entry",
+      "status": "pass",
+      "detail": {
+        "examples": [
+          {
+            "text": "登鹳雀楼",
+            "disabled": false
+          },
+          {
+            "text": "静夜思",
+            "disabled": false
+          },
+          {
+            "text": "黄鹤楼",
+            "disabled": false
+          }
+        ],
+        "note": "入口检查；正文载入、配置保留与真实提交见 E04-example-flow 三个场景。"
+      }
+    },
+    {
+      "id": "E04-manual-input-dengguanquelou",
+      "status": "pass",
+      "detail": {
+        "http": 200,
+        "schema": "pass",
+        "formFamily": "regulated",
+        "formId": "wujue",
+        "summary": "pass",
+        "evidence": 302,
+        "rules": 10,
+        "versions": {
+          "data": "pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4",
+          "rules": "teaching-v1+reviewed-works-v1",
+          "context": "context-rules:11",
+          "works": "works:3"
+        },
+        "inputHash": "4dc6ac3926c849d14355b4240df877176062836d39788fc2947abb66339a124d",
+        "reviewedTail": [
+          {
+            "status": "pass",
+            "severity": "info",
+            "observed": [
+              "Z",
+              "P",
+              "P"
+            ],
+            "evidenceIds": [
+              "ev:candidate:pingshui:一:ru:入声四质:j03",
+              "ev:candidate:pingshui:层:ping:十蒸:d2-batch",
+              "ev:candidate:pingshui:楼:ping:十一尤:j03"
+            ]
+          }
+        ],
+        "entry": "手动输入→真实 HTTP→点字依据→Esc 焦点返回"
+      }
+    },
+    {
+      "id": "E04-manual-input-jingyesi",
+      "status": "pass",
+      "detail": {
+        "http": 200,
+        "schema": "pass",
+        "formFamily": "ancient",
+        "formId": null,
+        "summary": "not_applicable",
+        "evidence": 302,
+        "rules": 10,
+        "versions": {
+          "data": "pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4",
+          "rules": "teaching-v1+reviewed-works-v1",
+          "context": "context-rules:11",
+          "works": "works:3"
+        },
+        "inputHash": "307d2b4cf720cbfbf7f8b467cdf56bef3523abda3505e7b512fcd409929434fb",
+        "reviewedTail": [],
+        "entry": "手动输入→真实 HTTP→点字依据→Esc 焦点返回"
+      }
+    },
+    {
+      "id": "E04-manual-input-huanghelou",
+      "status": "pass",
+      "detail": {
+        "http": 200,
+        "schema": "pass",
+        "formFamily": "regulated",
+        "formId": "qilv",
+        "summary": "fail",
+        "evidence": 302,
+        "rules": 10,
+        "versions": {
+          "data": "pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4",
+          "rules": "teaching-v1+reviewed-works-v1",
+          "context": "context-rules:11",
+          "works": "works:3"
+        },
+        "inputHash": "b3031b9e603f3e14016b22adfd361eee631e1f7455743492e4c2a19481d42053",
+        "reviewedTail": [
+          {
+            "status": "not_applicable",
+            "severity": "info",
+            "observed": [
+              "P",
+              "P",
+              "P"
+            ],
+            "evidenceIds": [
+              "ctx:j03b2:08",
+              "ev:candidate:pingshui:悠:ping:十一尤:d2-batch",
+              "ev:candidate:pingshui:空:ping:一东:j03"
+            ]
+          }
+        ],
+        "entry": "手动输入→真实 HTTP→点字依据→Esc 焦点返回"
+      }
+    },
+    {
+      "id": "E08-layout-1440",
+      "status": "pass",
+      "detail": {
+        "width": 1440,
+        "scrollWidth": 1425,
+        "minCell": 64
+      }
+    },
+    {
+      "id": "E08-layout-768",
+      "status": "pass",
+      "detail": {
+        "width": 768,
+        "scrollWidth": 753,
+        "minCell": 56
+      }
+    },
+    {
+      "id": "E08-layout-375",
+      "status": "pass",
+      "detail": {
+        "width": 375,
+        "scrollWidth": 360,
+        "minCell": 44
+      }
+    },
+    {
+      "id": "E08-reduced-motion",
+      "status": "pass",
+      "detail": {
+        "reportDurationMs": 0
+      }
+    },
+    {
+      "id": "E05-stale",
+      "status": "pass",
+      "detail": "修改正文后旧报告标记过时"
+    },
+    {
+      "id": "E07-data-not-ready",
+      "status": "pass",
+      "detail": "真实 HTTP DATA_NOT_READY 在界面映射为 HTTP_503，原因与恢复提示可见"
+    },
+    {
+      "id": "E06-copy-download-consistency",
+      "status": "pass",
+      "detail": {
+        "permission": "granted",
+        "copied": {
+          "permission": "granted",
+          "feedback": "摘要已复制到剪贴板。",
+          "clipboardChecked": true,
+          "hasSummary": true,
+          "hasBook": true,
+          "hasGenre": true,
+          "hasDataVersion": true,
+          "hasRulesVersion": true,
+          "hasInputHash": true,
+          "hasText": true
+        },
+        "downloadedFile": "poetry-report-白日依山尽.json",
+        "downloadedReportMatchesEntireResponse": true,
+        "copiedAndDownloadedRequestMatchesNetworkRequest": true,
+        "downloadDirectory": "C:\\study\\w1\\poetry-checker\\artifacts\\acceptance\\d4-browser\\downloads-spYyKa",
+        "staleClipboardSentinelPreserved": true,
+        "blockedCopy": "当前报告已不对应当前输入，已阻止复制。",
+        "staleBlocksExport": true
+      }
+    },
+    {
+      "id": "E08-keyboard-token-dialog",
+      "status": "pass",
+      "detail": {
+        "tokenId": "l1c1",
+        "tokenText": "床平",
+        "startingFocus": {
+          "tag": "BODY",
+          "className": ""
+        },
+        "tabsToReachToken": 3,
+        "innerTabsToClose": 3,
+        "innerFocusPath": [
+          {
+            "inside": true,
+            "tag": "A",
+            "text": "查看来源（新窗口）",
+            "close": false
+          },
+          {
+            "inside": true,
+            "tag": "A",
+            "text": "查看来源（新窗口）",
+            "close": false
+          },
+          {
+            "inside": true,
+            "tag": "BUTTON",
+            "text": "✕ 关闭",
+            "close": true
+          }
+        ],
+        "closeLabel": "✕ 关闭",
+        "keysUsed": [
+          "Tab",
+          "Enter",
+          "Space",
+          "Escape"
+        ],
+        "focusReturn": {
+          "space": "l1c1",
+          "escape": "l1c1"
+        },
+        "dialogOpen": true,
+        "scope": "分析前置用鼠标；提交后的 Tab→字格→详情→关闭全程真实按键，无 DOM focus/click 代替"
+      }
+    },
+    {
+      "id": "E04-example-flow-dengguanquelou",
+      "status": "pass",
+      "detail": {
+        "preservedBookOnLoad": "xinyun",
+        "submittedBook": "pingshui",
+        "http": 200,
+        "summary": "pass",
+        "historicalTags": [
+          "五绝",
+          "近体"
+        ]
+      }
+    },
+    {
+      "id": "E04-example-flow-jingyesi",
+      "status": "pass",
+      "detail": {
+        "preservedBookOnLoad": "xinyun",
+        "submittedBook": "pingshui",
+        "http": 200,
+        "summary": "not_applicable",
+        "historicalTags": [
+          "古绝",
+          "五言古体"
+        ]
+      }
+    },
+    {
+      "id": "E04-example-flow-huanghelou",
+      "status": "pass",
+      "detail": {
+        "preservedBookOnLoad": "xinyun",
+        "submittedBook": "pingshui",
+        "http": 200,
+        "summary": "fail",
+        "historicalTags": [
+          "七律",
+          "特殊拗律",
+          "半古半律"
+        ]
+      }
+    },
+    {
+      "id": "E05-select-recheck-export-and-clear-overrides",
+      "status": "pass",
+      "detail": {
+        "selectedCandidate": {
+          "tokenId": "l4c1",
+          "readingId": "pingshui:更:ping:八庚"
+        },
+        "selectedExport": {
+          "dir": "C:\\study\\w1\\poetry-checker\\artifacts\\acceptance\\d4-browser\\selected-report-hhgFUM",
+          "file": "poetry-report-白日依山尽.json"
+        },
+        "textEditClearsOverrides": true,
+        "bookSwitchClearsOverrides": true,
+        "cilinRemains503": true,
+        "restoredContextSelection": true
+      }
+    },
+    {
+      "id": "E07-controlled-network-failure",
+      "status": "pass",
+      "detail": {
+        "faultInjection": "CDP Network.setBlockedURLs",
+        "inputPreserved": true,
+        "recoveredStatus": 200
+      }
+    },
+    {
+      "id": "E06-busy-and-failure-block-copy-export",
+      "status": "pass",
+      "detail": {
+        "faultInjection": "CDP Fetch hold then failRequest",
+        "busyBlocksCopyAndExport": true,
+        "failureBlocksCopyAndExport": true,
+        "recoveryExport": {
+          "dir": "C:\\study\\w1\\poetry-checker\\artifacts\\acceptance\\d4-browser\\selected-report-N4ALli",
+          "file": "poetry-report-白日依山尽.json"
+        }
+      }
+    },
+    {
+      "id": "E05-concurrent-submit-keeps-latest",
+      "status": "pass",
+      "detail": {
+        "mode": "受控延迟（CDP Fetch 暂停 A，B 先完成）",
+        "lateMode": "aborted-by-app-on-new-submit",
+        "alertAfterLate": null,
+        "aText": "白日依山尽，黄河",
+        "bText": "昔人已乘黄鹤去，",
+        "bInputHash": "b3031b9e603f",
+        "afterLateAInputHash": "b3031b9e603f",
+        "lateResponseIgnored": true
+      }
+    }
+  ],
+  "notRun": [
+    "E05 浏览器并发迟到全矩阵（单元测试已覆盖）",
+    "E06 浏览器超时后的复制导出（失败与进行中已覆盖；超时由业务测试覆盖）",
+    "E07 needs_review/unsupported 合成状态与浏览器30秒超时场景",
+    "E08 全键盘矩阵与真人审美反馈",
+    "E09 干净 clone"
+  ],
+  "readiness": {
+    "http": 503,
+    "mode": "real",
+    "versions": {
+      "data": "pingshui=pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4,cilin=cilin-cwr-ff0e9c1-d3-full-clean1,xinyun=xinyun-rebuild-d2-full",
+      "rules": "teaching-v1+reviewed-works-v1",
+      "context": "context-rules:11",
+      "works": "works:3"
+    },
+    "body": {
+      "error": {
+        "code": "DATA_NOT_READY",
+        "message": "快照未审核：pingshui、cilin、xinyun（开发联调可分析，发布门槛不放行）；资源或审核尚未就绪，详见 apps/api/README.md",
+        "fieldErrors": []
+      }
+    }
+  },
+  "url": "http://127.0.0.1:61902/",
+  "browser": {
+    "protocolVersion": "1.3",
+    "product": "Edg/155.0.4283.62",
+    "revision": "@aa3a7406ba8c53a83536df539f07124d73c899bd",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+    "jsVersion": "15.5.9.7"
+  },
+  "pageErrors": [],
+  "passed": 19,
+  "blocked": 0,
+  "failed": 0,
+  "exitCode": 0
+}

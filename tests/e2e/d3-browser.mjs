@@ -573,6 +573,140 @@ try {
     scenario,
   });
 
+  // ---------- 并发迟到：A 延迟、B 先完成、A 后返回 → 最终只归 B ----------
+  await scenario("E05-concurrent-submit-keeps-latest", async () => {
+    const poemA = POEMS[0]; // 登鹳雀楼，pass
+    const poemB = POEMS[2]; // 黄鹤楼，fail（便于区分归属）
+    await cdp.send("Page.navigate", { url: payload.url });
+    await waitFor(() =>
+      evaluate("Boolean(document.querySelector('.pc-input__text'))"),
+    );
+    await click(".pc-segmented__option:has(input[value=pingshui])");
+    await waitFor(() =>
+      evaluate("document.querySelector('input[value=pingshui]').checked"),
+    );
+
+    // 受控延迟：拦截 analyze 请求，由本场景决定放行顺序（明确标识为受控模式）
+    const paused = [];
+    const onPaused = (e) => paused.push(e);
+    cdp.on("Fetch.requestPaused", onPaused);
+    await cdp.send("Fetch.enable", {
+      patterns: [{ urlPattern: "*/api/v1/analyze", requestStage: "Request" }],
+    });
+
+    const typeText = async (text) => {
+      await click(".pc-input__text");
+      await key("a", "KeyA", 65, 2);
+      await cdp.send("Input.insertText", { text });
+    };
+    const submit = async () => {
+      await click(".pc-input__submit");
+      await new Promise((r) => setTimeout(r, 250));
+    };
+
+    // A：先提交，故意不放行
+    await typeText(poemA.text);
+    const before = responses.length;
+    await submit();
+    for (let i = 0; i < 40 && paused.length < 1; i++) {
+      await new Promise((r) => setTimeout(r, 100));
+    }
+    assert.equal(paused.length, 1, "A 请求未被拦截");
+
+    // B：后提交，立即放行并等待完成
+    await typeText(poemB.text);
+    await submit();
+    for (let i = 0; i < 40 && paused.length < 2; i++) {
+      await new Promise((r) => setTimeout(r, 100));
+    }
+    assert.equal(paused.length, 2, "B 请求未被拦截");
+    const bPaused = paused[1];
+    await cdp.send("Fetch.continueRequest", { requestId: bPaused.requestId });
+    await waitFor(
+      () => responses.length > before && complete.has(responses.at(-1).requestId),
+    );
+    const bResponse = responses.at(-1);
+    const bRaw = await cdp.send("Network.getResponseBody", {
+      requestId: bResponse.requestId,
+    });
+    const bBody = JSON.parse(
+      bRaw.base64Encoded ? Buffer.from(bRaw.body, "base64").toString() : bRaw.body,
+    );
+    assert.equal(bBody.summary.status, "fail", "B 应为黄鹤楼 fail");
+    await waitFor(() => evaluate("!document.querySelector('.pc-report--stale')"));
+
+    const exportNow = async (label) => {
+      const dir = join(options.out, `downloads-race-${label}-${Date.now()}`);
+      mkdirSync(dir, { recursive: true });
+      await cdp.send("Browser.setDownloadBehavior", {
+        behavior: "allow",
+        downloadPath: dir,
+        eventsEnabled: true,
+      });
+      const focusButton = (text) =>
+        evaluate(
+          `(() => { const b = [...document.querySelectorAll('button')].find(x => x.textContent.includes(${JSON.stringify(text)})); if (!b) return false; b.focus(); return true; })()`,
+        );
+      assert(await focusButton("下载报告"), "找不到下载按钮");
+      await key("Enter", "Enter", 13, 0, "\r");
+      let downloaded = null;
+      for (let i = 0; i < 40 && !downloaded; i += 1) {
+        await new Promise((r) => setTimeout(r, 250));
+        const entry = readdirSync(dir).find((n) => n.endsWith(".json"));
+        if (!entry) continue;
+        try {
+          downloaded = JSON.parse(readFileSync(join(dir, entry), "utf8"));
+        } catch {
+          downloaded = null;
+        }
+      }
+      assert(downloaded, `导出失败：${label}`);
+      return downloaded;
+    };
+
+    const afterB = await exportNow("after-b");
+    assert.equal(afterB.inputHash, bBody.inputHash, "B 完成后导出应归属 B");
+    assert.equal(afterB.request.text, poemB.text, "请求快照应为 B 的正文");
+
+    // 放行 A：应用在提交 B 时可能已 abort 旧请求（Fetch 句柄失效），
+    // 也可能仍有效（此时会真的迟到返回）。两种实现都要保证最终只归 B。
+    let lateMode;
+    try {
+      await cdp.send("Fetch.continueRequest", { requestId: paused[0].requestId });
+      lateMode = "released-late";
+    } catch {
+      lateMode = "aborted-by-app-on-new-submit";
+    }
+    await new Promise((r) => setTimeout(r, 2500));
+    const alertAfterLate = await evaluate(
+      "document.querySelector('[role=alert]')?.textContent?.trim() ?? null",
+    );
+
+    const afterLateA = await exportNow("after-late-a");
+    assert.equal(
+      afterLateA.inputHash,
+      bBody.inputHash,
+      "迟到的 A 不得覆盖 B 的报告（导出仍应为 B）",
+    );
+    assert.equal(
+      afterLateA.request.text,
+      poemB.text,
+      "迟到的 A 不得改写请求快照",
+    );
+    await cdp.send("Fetch.disable");
+    if (typeof cdp.off === "function") cdp.off("Fetch.requestPaused", onPaused);
+    return {
+      mode: "受控延迟（CDP Fetch 暂停 A，B 先完成）",
+      lateMode,
+      alertAfterLate,
+      aText: poemA.text.slice(0, 8),
+      bText: poemB.text.slice(0, 8),
+      bInputHash: bBody.inputHash.slice(0, 12),
+      afterLateAInputHash: afterLateA.inputHash.slice(0, 12),
+      lateResponseIgnored: true,
+    };
+  });
+
   payload.pageErrors = pageErrors;
   if (pageErrors.length) throw new Error("浏览器出现未捕获异常");
 } catch (err) {
