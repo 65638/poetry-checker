@@ -30,7 +30,7 @@ type InputPanelProps = Pick<
   | "onDraftChange"
   | "onAnalyze"
   | "onLoadExample"
-> & { compact?: boolean };
+> & { compact?: boolean; showBusy?: boolean };
 
 export function InputPanel(props: InputPanelProps) {
   const {
@@ -41,6 +41,7 @@ export function InputPanel(props: InputPanelProps) {
     onAnalyze,
     onLoadExample,
     compact = false,
+    showBusy = busy,
   } = props;
   const [settingsOpen, setSettingsOpen] = useState(false);
   const hideSettings = compact && !settingsOpen;
@@ -70,6 +71,8 @@ export function InputPanel(props: InputPanelProps) {
         type="button"
         className="pc-input__settings"
         hidden={!compact}
+        inert={!compact}
+        aria-hidden={!compact}
         aria-expanded={!hideSettings}
         aria-controls={`${uid}-examples-box ${uid}-books`}
         onClick={() => setSettingsOpen((open) => !open)}
@@ -82,6 +85,8 @@ export function InputPanel(props: InputPanelProps) {
           className="pc-examples"
           id={`${uid}-examples-box`}
           hidden={hideSettings}
+          inert={hideSettings}
+          aria-hidden={hideSettings}
         >
           <p id={`${uid}-examples`} className="pc-input__label">
             示例
@@ -146,6 +151,7 @@ export function InputPanel(props: InputPanelProps) {
       <p
         id={`${uid}-text-hint`}
         className="pc-input__hint pc-input__hint--keys"
+        hidden={compact}
       >
         Ctrl + Enter 也可开始分析。
       </p>
@@ -155,7 +161,9 @@ export function InputPanel(props: InputPanelProps) {
         id={`${uid}-books`}
         aria-describedby={`${uid}-book-hint`}
       >
-        <legend className="pc-input__label">韵书</legend>
+        <legend className="pc-input__label" hidden={hideSettings}>
+          韵书
+        </legend>
         <div className="pc-segmented">
           {BOOKS.map((book) => (
             <label key={book.id} className="pc-segmented__option">
@@ -171,7 +179,11 @@ export function InputPanel(props: InputPanelProps) {
             </label>
           ))}
         </div>
-        <p id={`${uid}-book-hint`} className="pc-input__hint">
+        <p
+          id={`${uid}-book-hint`}
+          className="pc-input__hint"
+          hidden={hideSettings}
+        >
           {activeBook?.hint}
         </p>
       </fieldset>
@@ -182,7 +194,7 @@ export function InputPanel(props: InputPanelProps) {
         disabled={!canAnalyze}
         aria-describedby={isEmpty ? `${uid}-empty-hint` : undefined}
       >
-        {busy ? "分析中…" : "分析"}
+        {showBusy ? "分析中…" : "分析"}
       </button>
       {isEmpty && (
         <p id={`${uid}-empty-hint`} className="pc-input__hint">

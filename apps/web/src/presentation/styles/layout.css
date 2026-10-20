@@ -167,8 +167,15 @@
 }
 
 .pc-desk__inner:has(.pc-input--settings) {
-  position: static;
-  max-height: none;
+  /* Expanded controls stay at the same sticky origin; scroll inside the form. */
+  max-height: calc(100dvh - 140px);
+}
+
+.pc-hall--reading .pc-input--settings {
+  max-height: calc(100dvh - 270px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #80978b #20373e;
 }
 
 .pc-desk__inner:has(.pc-input--settings) .pc-rail {
@@ -185,7 +192,8 @@
 }
 
 .pc-plinth {
-  padding: 26px;
+  --pc-editor-inset: 20px;
+  padding: 26px var(--pc-editor-inset);
   border-top: 2px solid #b7a687;
   background-image: var(--pc-paper-texture);
   box-shadow: var(--pc-shadow-plinth);
@@ -247,9 +255,9 @@
   grid-template-rows: 1fr;
   contain: layout;
   transition:
-    opacity var(--pc-dur-disclosure) var(--pc-ease-out),
-    transform var(--pc-dur-disclosure) var(--pc-ease-out),
-    grid-template-rows var(--pc-dur-disclosure) var(--pc-ease-out);
+    opacity var(--pc-dur-disclosure) var(--pc-ease-in-out),
+    transform var(--pc-dur-disclosure) var(--pc-ease-in-out),
+    grid-template-rows var(--pc-dur-disclosure) var(--pc-ease-in-out);
 }
 
 .pc-editor-body__inner {
@@ -637,6 +645,11 @@
     max-height: none;
   }
 
+  .pc-hall--reading .pc-input--settings {
+    max-height: none;
+    overflow: visible;
+  }
+
   .pc-hall__rail {
     min-height: 0;
   }
@@ -670,6 +683,9 @@
 }
 
 @media (max-width: 599px) {
+  .pc-plinth {
+    --pc-editor-inset: 16px;
+  }
   .pc-title {
     font-size: 25px;
     letter-spacing: 0.04em;
@@ -792,7 +808,7 @@
     padding var(--pc-dur-panel) var(--pc-ease-out);
 }
 .pc-plinth {
-  transition: padding var(--pc-dur-disclosure) var(--pc-ease-out);
+  transition: padding var(--pc-dur-disclosure) var(--pc-ease-in-out);
 }
 .pc-hall__rail,
 .pc-intro__busy {
@@ -826,31 +842,54 @@
 .pc-root :is(button, summary, label) {
   user-select: none;
 }
-.pc-input :is(.pc-examples, .pc-input__hint, .pc-input__settings) {
-  transition:
-    opacity var(--pc-dur-disclosure) var(--pc-ease-out),
-    display var(--pc-dur-disclosure) allow-discrete;
+/* Keep the disclosure boxes in flow at zero height, so removing a grid gap
+   cannot produce a second jump at the end of an otherwise smooth collapse. */
+.pc-input > * {
+  margin-block: 0;
+  flex-shrink: 0;
 }
-.pc-input .pc-examples {
-  block-size: auto;
+.pc-input > * + * {
+  margin-top: var(--pc-input-spacing, 10px);
+}
+.pc-input :is(.pc-examples, .pc-input__hint, .pc-input__settings, legend) {
   interpolate-size: allow-keywords;
+  block-size: auto;
   overflow: clip;
   transition:
-    opacity var(--pc-dur-disclosure) var(--pc-ease-out),
-    block-size var(--pc-dur-disclosure) var(--pc-ease-out),
-    display var(--pc-dur-disclosure) allow-discrete;
+    block-size var(--pc-dur-disclosure) var(--pc-ease-in-out),
+    min-height var(--pc-dur-disclosure) var(--pc-ease-in-out),
+    padding var(--pc-dur-disclosure) var(--pc-ease-in-out),
+    margin var(--pc-dur-disclosure) var(--pc-ease-in-out),
+    border-width var(--pc-dur-disclosure) var(--pc-ease-in-out),
+    opacity var(--pc-dur-disclosure) var(--pc-ease-in-out),
+    visibility var(--pc-dur-disclosure) allow-discrete;
 }
-.pc-input .pc-examples[hidden] {
-  block-size: 0;
+.pc-input :is(.pc-examples, .pc-input__settings)[hidden] {
+  display: flex;
+}
+.pc-input :is(.pc-input__hint, legend)[hidden] {
+  display: block;
 }
 .pc-input [hidden] {
+  block-size: 0;
+  min-height: 0;
+  padding-block: 0;
+  margin-block: 0;
+  border-block-width: 0;
   opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
-@starting-style {
-  .pc-input
-    :is(.pc-examples, .pc-input__hint, .pc-input__settings):not([hidden]) {
-    opacity: 0;
-  }
+.pc-input > .pc-input__label,
+.pc-plinth__heading,
+.pc-input .pc-input__submit,
+.pc-input .pc-segmented__face {
+  transition:
+    margin var(--pc-dur-disclosure) var(--pc-ease-in-out),
+    min-height var(--pc-dur-disclosure) var(--pc-ease-in-out),
+    font-size var(--pc-dur-disclosure) var(--pc-ease-in-out),
+    background-color var(--pc-dur-control) var(--pc-ease-out),
+    transform var(--pc-dur-press) var(--pc-ease-out);
 }
 /* Native disclosures keep keyboard semantics while gaining open/close motion. */
 .pc-root details::details-content {
@@ -858,8 +897,8 @@
   block-size: 0;
   overflow: clip;
   transition:
-    opacity var(--pc-dur-disclosure) var(--pc-ease-out),
-    block-size var(--pc-dur-disclosure) var(--pc-ease-out),
+    opacity var(--pc-dur-disclosure) var(--pc-ease-in-out),
+    block-size var(--pc-dur-disclosure) var(--pc-ease-in-out),
     content-visibility var(--pc-dur-disclosure) allow-discrete;
   interpolate-size: allow-keywords;
 }

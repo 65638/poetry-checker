@@ -192,7 +192,7 @@
   }
   100% {
     box-shadow: inset 4px 0 0 transparent;
-    background-color: transparent;
+    background-color: var(--pc-line-background);
   }
 }
 
@@ -233,8 +233,8 @@
     interpolate-size: allow-keywords;
     overflow: clip;
     transition:
-      block-size var(--pc-dur-disclosure) var(--pc-ease-out),
-      opacity var(--pc-dur-disclosure) var(--pc-ease-out),
+      block-size var(--pc-dur-disclosure) var(--pc-ease-in-out),
+      opacity var(--pc-dur-disclosure) var(--pc-ease-in-out),
       display var(--pc-dur-disclosure) allow-discrete;
   }
   @starting-style {

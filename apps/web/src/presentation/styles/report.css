@@ -200,6 +200,8 @@
 }
 
 .pc-line {
+  --pc-line-background: transparent;
+  background: var(--pc-line-background);
   display: grid;
   grid-template-columns: 3.2em minmax(0, 1fr);
   align-items: center;
@@ -209,7 +211,7 @@
 }
 
 .pc-line:nth-child(even) {
-  background: var(--pc-surface-sunken);
+  --pc-line-background: var(--pc-surface-sunken);
 }
 .pc-line:nth-child(odd):not(:first-child) {
   margin-top: var(--pc-space-3);

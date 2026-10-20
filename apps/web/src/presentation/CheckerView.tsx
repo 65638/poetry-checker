@@ -7,6 +7,7 @@ import { EvidencePanel } from "./components/EvidencePanel";
 import { MoonlitScene } from "./components/MoonlitScene";
 import { ReadingRail } from "./components/ReadingRail";
 import { useMotionPreference } from "./useMotionPreference";
+import { useBusyIndicator } from "./useBusyIndicator";
 import "./styles/tokens.css";
 import "./styles/scene.css";
 import "./styles/layout.css";
@@ -39,6 +40,7 @@ export function CheckerView(props: CheckerViewProps) {
     sawBusy: boolean;
   } | null>(null);
   const motion = useMotionPreference();
+  const showBusy = useBusyIndicator(busy);
   const effectsRef = useRef(motion.effects);
   effectsRef.current = motion.effects;
   const [editorCollapsed, setEditorCollapsed] = useState(false);
@@ -145,7 +147,6 @@ export function CheckerView(props: CheckerViewProps) {
       return;
     }
     if (!intent.sawBusy && report === intent.from && error === null) return;
-    revealIntentRef.current = null;
     const sheet = manuscriptRef.current;
     if (
       report === null ||
@@ -164,10 +165,28 @@ export function CheckerView(props: CheckerViewProps) {
     const reduce =
       !effectsRef.current ||
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    sheet.scrollIntoView({
-      block: "start",
-      behavior: reduce ? "auto" : "smooth",
-    });
+    const reveal = () => {
+      if (revealIntentRef.current !== intent) return;
+      revealIntentRef.current = null;
+      sheet.scrollIntoView({
+        block: "start",
+        behavior: reduce ? "auto" : "smooth",
+      });
+    };
+    // On the first result, finish the editor's contraction before measuring the
+    // scroll destination. Otherwise smooth scrolling chases a moving sheet.
+    const duration =
+      !reduce && intent.from === null
+        ? parseFloat(
+            getComputedStyle(sheet).getPropertyValue("--pc-dur-disclosure"),
+          ) || 0
+        : 0;
+    if (!duration) {
+      reveal();
+      return;
+    }
+    const timer = window.setTimeout(reveal, duration + 34);
+    return () => window.clearTimeout(timer);
   }, [busy, report, error, stale]);
 
   useEffect(() => {
@@ -278,6 +297,7 @@ export function CheckerView(props: CheckerViewProps) {
                       compact={hasReport}
                       draft={draft}
                       busy={busy}
+                      showBusy={showBusy}
                       examples={props.examples}
                       onDraftChange={handleDraftChange}
                       onAnalyze={handleAnalyze}
@@ -310,7 +330,7 @@ export function CheckerView(props: CheckerViewProps) {
               分析报告
             </h2>
 
-            {busy && (
+            {showBusy && (
               <div className="pc-busy" aria-hidden="true">
                 <span className="pc-busy__bar" />
               </div>
@@ -347,7 +367,7 @@ export function CheckerView(props: CheckerViewProps) {
               />
             ) : (
               <aside className="pc-intro" aria-label="使用说明">
-                {busy ? (
+                {showBusy ? (
                   <p className="pc-intro__busy">
                     <span className="pc-intro__busy-seal" aria-hidden="true">
                       律
