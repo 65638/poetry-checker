@@ -1,6 +1,8 @@
 import { useEffect, useId, useRef } from "react";
 import type { BookId, LookupResult, ReadingCandidate } from "@poetry/contracts";
 import { useMotionPreference } from "./useMotionPreference";
+import { useBusyIndicator } from "./useBusyIndicator";
+import { RainField } from "./components/RainField";
 import type { DictionaryShelf, ShelfEntry } from "../app/dictionaryShelf";
 import type { BookComparison } from "../app/dictionaryComparison";
 import { passageRowStatus, type PassageLookup } from "../app/passageLookup";
@@ -62,7 +64,7 @@ export interface DictionaryViewProps {
   onLookupPassage: () => void;
 }
 
-function GardenScene() {
+function GardenScene({ active }: { active: boolean }) {
   return (
     <div className="pc-garden" aria-hidden="true">
       <div className="pc-garden__mist" />
@@ -105,6 +107,7 @@ function GardenScene() {
           ))}
         </g>
       </svg>
+      <RainField active={active} quiet />
       <div className="pc-garden__frame" />
       <span className="pc-garden__inscription">
         穿廊寻字
@@ -124,14 +127,20 @@ export function DictionaryView(props: DictionaryViewProps) {
   const revealFrom = useRef<number | null>(null);
   const motion = useMotionPreference();
   const { result, character, book, busy, error } = props;
+  const showBusy = useBusyIndicator(busy);
+  const showComparing = useBusyIndicator(props.comparing);
+  const showPassageBusy = useBusyIndicator(props.passageBusy);
   const candidates = result?.entries.flatMap((entry) => entry.candidates) ?? [];
-  const selectedBook = BOOKS.find((item) => item.id === book)!;
+  const selectedBook = BOOKS.find(
+    (item) => item.id === (error ? book : (result?.book ?? book)),
+  )!;
   const revealAfter = (action: () => void) => {
     revealFrom.current = window.scrollY;
     action();
   };
   useEffect(() => {
-    if (busy || (!result && !error) || revealFrom.current === null) return;
+    if (busy || showBusy || (!result && !error) || revealFrom.current === null)
+      return;
     const startedAt = revealFrom.current;
     revealFrom.current = null;
     // A delayed request must not pull the reader back after they have moved on.
@@ -149,13 +158,13 @@ export function DictionaryView(props: DictionaryViewProps) {
         block: "start",
         behavior: motion.effects ? "smooth" : "instant",
       });
-  }, [busy, result, error, motion.effects]);
+  }, [busy, showBusy, result, error, motion.effects]);
   return (
     <div
       className="pc-root pc-dictionary"
       data-motion={motion.effects ? "on" : "off"}
     >
-      <GardenScene />
+      <GardenScene active={motion.effects} />
       <div className="pc-dictionary__page">
         <header className="pc-dictionary__masthead">
           <div className="pc-dictionary__title">
@@ -189,7 +198,7 @@ export function DictionaryView(props: DictionaryViewProps) {
             <form
               onSubmit={(event) => {
                 event.preventDefault();
-                if (!composing.current) revealAfter(props.onLookup);
+                if (!composing.current && !busy) revealAfter(props.onLookup);
               }}
             >
               <label
@@ -232,8 +241,10 @@ export function DictionaryView(props: DictionaryViewProps) {
                   className="pc-button pc-button--primary"
                   type="submit"
                   disabled={busy || !props.text.trim()}
+                  data-pending={busy}
+                  data-busy-visible={showBusy}
                 >
-                  {busy ? "查阅中…" : "查字"}
+                  {showBusy ? "查阅中…" : "查字"}
                 </button>
               </div>
               <p className="pc-dictionary__hint" id={`${uid}-hint`}>
@@ -315,9 +326,11 @@ export function DictionaryView(props: DictionaryViewProps) {
                   disabled={
                     props.passageBusy || !props.passageCharacters.length
                   }
+                  data-pending={props.passageBusy}
+                  data-busy-visible={showPassageBusy}
                   onClick={props.onLookupPassage}
                 >
-                  {props.passageBusy
+                  {showPassageBusy
                     ? `逐字查阅 ${props.passageProgress}/${props.passageCharacters.length}`
                     : "逐字收录速览"}
                 </button>
@@ -483,6 +496,7 @@ export function DictionaryView(props: DictionaryViewProps) {
             ref={folio}
             aria-label="查字结果"
             aria-busy={busy}
+            data-loading={showBusy}
           >
             <div className="pc-dictionary__folio-head">
               <span>韵 书 小 笺</span>
@@ -507,19 +521,16 @@ export function DictionaryView(props: DictionaryViewProps) {
               role="status"
               aria-live="polite"
             >
-              {busy
+              {showBusy
                 ? "正在查阅韵书…"
-                : result
-                  ? candidates.length
-                    ? `「${character}」在${selectedBook.name}中有${candidates.length}个候选。`
-                    : `当前韵书未收录「${character}」。`
-                  : ""}
+                : error
+                  ? "本次查阅未完成"
+                  : result
+                    ? candidates.length
+                      ? `「${character}」在${selectedBook.name}中有${candidates.length}个候选。`
+                      : `当前韵书未收录「${character}」。`
+                    : ""}
             </div>
-            {props.feedback && (
-              <p className="pc-dictionary__feedback" role="status">
-                {props.feedback}
-              </p>
-            )}
             {error ? (
               <div className="pc-dictionary__error" role="alert">
                 <h2>暂未查到结果</h2>
@@ -533,7 +544,10 @@ export function DictionaryView(props: DictionaryViewProps) {
                 </button>
               </div>
             ) : result ? (
-              <>
+              <div
+                className="pc-dictionary__result"
+                key={`${result.book}:${character}`}
+              >
                 <div className="pc-dictionary__entry">
                   <span className="pc-dictionary__glyph">{character}</span>
                   <div>
@@ -542,13 +556,13 @@ export function DictionaryView(props: DictionaryViewProps) {
                     </p>
                     <h2>{candidates.length ? "循音见韵" : "本书未收录"}</h2>
                     <p>
-                      {book === "xinyun"
+                      {result.book === "xinyun"
                         ? "按普通话读音归韵，项目重建表。"
                         : "依本书古音声类，保留全部竞争候选。"}
                     </p>
                   </div>
                 </div>
-                <div className="pc-dictionary__actions">
+                <div className="pc-dictionary__actions" inert={busy}>
                   <button
                     type="button"
                     className="pc-button pc-button--quiet"
@@ -575,71 +589,80 @@ export function DictionaryView(props: DictionaryViewProps) {
                     type="button"
                     className="pc-button pc-button--quiet pc-dictionary__compare-button"
                     disabled={props.comparing}
+                    data-pending={props.comparing}
+                    data-busy-visible={showComparing}
                     onClick={props.onCompare}
                   >
-                    {props.comparing ? "对照中…" : "三书对照"}
+                    {showComparing ? "对照中…" : "三书对照"}
                   </button>
                 </div>
-                {!!props.comparisons.length && (
-                  <section
-                    className="pc-dictionary__comparison"
-                    aria-label="三书对照"
-                  >
-                    <h3>同一字，三书对照</h3>
-                    <p>只对照各书收录，不把古音与普通话混作一套。</p>
-                    <div className="pc-dictionary__comparison-rows">
-                      {props.comparisons.map((row) => (
-                        <div
-                          className="pc-dictionary__comparison-row"
-                          key={row.book}
-                        >
-                          <button
-                            type="button"
-                            onClick={() => props.onBookChange(row.book)}
+                <div
+                  className="pc-dictionary__reveal"
+                  data-open={!!props.comparisons.length}
+                  inert={!props.comparisons.length || busy}
+                  aria-hidden={!props.comparisons.length}
+                >
+                  <div>
+                    <section
+                      className="pc-dictionary__comparison"
+                      aria-label="三书对照"
+                    >
+                      <h3>同一字，三书对照</h3>
+                      <p>只对照各书收录，不把古音与普通话混作一套。</p>
+                      <div className="pc-dictionary__comparison-rows">
+                        {props.comparisons.map((row) => (
+                          <div
+                            className="pc-dictionary__comparison-row"
+                            key={row.book}
                           >
-                            {BOOKS.find((item) => item.id === row.book)?.name}{" "}
-                            ↗
-                          </button>
-                          {row.result === null ? (
-                            <p role="status">{row.error}</p>
-                          ) : (
-                            <div>
-                              {row.result.entries
-                                .flatMap((entry) => entry.candidates)
-                                .map((candidate) => (
-                                  <span key={candidate.id}>
-                                    {TONES[candidate.toneClass]} ·{" "}
-                                    {candidate.groupIds
-                                      .map(
-                                        (id) =>
-                                          row.result.groups.find(
-                                            (group) => group.id === id,
-                                          )?.name ?? "未载韵部",
-                                      )
-                                      .join("、")}{" "}
-                                    <small>
-                                      {candidate.evidenceIds.some((id) =>
-                                        row.result.evidence.some(
-                                          (item) =>
-                                            item.id === id &&
-                                            item.reviewStatus === "approved",
-                                        ),
-                                      )
-                                        ? "已核"
-                                        : "待核"}
-                                    </small>
-                                  </span>
-                                ))}
-                              {!row.result.entries.some(
-                                (entry) => entry.candidates.length,
-                              ) && <span>本书未收录</span>}
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  </section>
-                )}
+                            <button
+                              type="button"
+                              onClick={() => props.onBookChange(row.book)}
+                            >
+                              {BOOKS.find((item) => item.id === row.book)?.name}{" "}
+                              ↗
+                            </button>
+                            {row.result === null ? (
+                              <p role="status">{row.error}</p>
+                            ) : (
+                              <div>
+                                {row.result.entries
+                                  .flatMap((entry) => entry.candidates)
+                                  .map((candidate) => (
+                                    <span key={candidate.id}>
+                                      {TONES[candidate.toneClass]} ·{" "}
+                                      {candidate.groupIds
+                                        .map(
+                                          (id) =>
+                                            row.result.groups.find(
+                                              (group) => group.id === id,
+                                            )?.name ?? "未载韵部",
+                                        )
+                                        .join("、")}{" "}
+                                      <small>
+                                        {candidate.evidenceIds.some((id) =>
+                                          row.result.evidence.some(
+                                            (item) =>
+                                              item.id === id &&
+                                              item.reviewStatus === "approved",
+                                          ),
+                                        )
+                                          ? "已核"
+                                          : "待核"}
+                                      </small>
+                                    </span>
+                                  ))}
+                                {!row.result.entries.some(
+                                  (entry) => entry.candidates.length,
+                                ) && <span>本书未收录</span>}
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </section>
+                  </div>
+                </div>
                 {candidates.length ? (
                   <>
                     <p className="pc-dictionary__notice">
@@ -673,7 +696,10 @@ export function DictionaryView(props: DictionaryViewProps) {
                             <dl className="pc-dictionary__facts">
                               <div>
                                 <dt>候选平仄</dt>
-                                <dd>
+                                <dd
+                                  className="pc-dictionary__tone"
+                                  data-tone={candidate.tone}
+                                >
                                   {candidate.tone === "P"
                                     ? "平 ○"
                                     : candidate.tone === "Z"
@@ -788,7 +814,7 @@ export function DictionaryView(props: DictionaryViewProps) {
                 <p className="pc-dictionary__version">
                   数据版本：{result.dataVersion}
                 </p>
-              </>
+              </div>
             ) : (
               <div className="pc-dictionary__empty">
                 <span className="pc-dictionary__empty-glyph" aria-hidden="true">
@@ -796,7 +822,7 @@ export function DictionaryView(props: DictionaryViewProps) {
                 </span>
                 <h2>字里有山河</h2>
                 <p>
-                  从左侧写下一个字，
+                  写下一个字，
                   <br />
                   看看它在韵书里的位置。
                 </p>
@@ -805,6 +831,9 @@ export function DictionaryView(props: DictionaryViewProps) {
                 </span>
               </div>
             )}
+            <p className="pc-dictionary__feedback" role="status">
+              {props.feedback}
+            </p>
             <div className="pc-dictionary__folio-foot" aria-hidden="true">
               <span>月色入卷</span>
               <span>声韵留痕</span>

@@ -51,11 +51,11 @@ export function DictionaryContainer({
   const [passageError, setPassageError] = useState<string | null>(null);
   const passageSerial = useRef(0);
   const passageController = useRef<AbortController | null>(null);
-  const resetPassageLookup = () => {
+  const resetPassageLookup = (keepResult = false) => {
     passageSerial.current++;
     passageController.current?.abort();
     setPassageBusy(false);
-    setPassageResult(null);
+    if (!keepResult) setPassageResult(null);
     setPassageError(null);
     setPassageProgress(0);
   };
@@ -98,21 +98,22 @@ export function DictionaryContainer({
     [],
   );
 
-  const invalidate = () => {
+  const invalidate = (keepResult = false) => {
+    // The committed page retains its own character/book while a new query runs.
     serial.current++;
     pending.current?.abort();
     pending.current = null;
     setBusy(false);
-    setResult(null);
+    if (!keepResult) setResult(null);
     setError(null);
     setFeedback(null);
     comparisonRequest.current++;
     comparisonController.current?.abort();
-    setComparisons([]);
+    if (!keepResult) setComparisons([]);
     setComparing(false);
   };
   const lookup = async (nextText = text, nextBook = book) => {
-    invalidate();
+    invalidate(true);
     const validation = characterInputError(nextText);
     if (validation) {
       setError(validation);
@@ -120,7 +121,6 @@ export function DictionaryContainer({
     }
     const query = nextText.trim();
     setText(query);
-    setCharacter(query);
     const id = serial.current;
     const controller = new AbortController();
     pending.current = controller;
@@ -140,6 +140,13 @@ export function DictionaryContainer({
         controller.signal,
       );
       if (id === serial.current) {
+        if (
+          query !== character ||
+          nextBook !== result?.book ||
+          response.dataVersion !== result?.dataVersion
+        )
+          setComparisons([]);
+        setCharacter(query);
         setResult(response);
         setShelf((current) =>
           remember(current, { character: query, book: nextBook }),
@@ -179,7 +186,8 @@ export function DictionaryContainer({
     return () => window.removeEventListener("hashchange", sync);
   }, []);
   const favorite = shelf.favorites.some(
-    (entry) => shelfId(entry) === shelfId({ character, book }),
+    (entry) =>
+      shelfId(entry) === shelfId({ character, book: result?.book ?? book }),
   );
   const compare = async () => {
     if (!result) return;
@@ -188,7 +196,6 @@ export function DictionaryContainer({
     const controller = new AbortController();
     comparisonController.current = controller;
     setComparing(true);
-    setComparisons([]);
     const timer = window.setTimeout(() => controller.abort(), 15000);
     try {
       const config = resolveApiConfig(readWebEnv());
@@ -214,7 +221,7 @@ export function DictionaryContainer({
     void lookup(entry.character, entry.book);
   };
   const runPassage = async () => {
-    resetPassageLookup();
+    resetPassageLookup(true);
     const id = passageSerial.current;
     const controller = new AbortController();
     passageController.current = controller;
@@ -251,7 +258,7 @@ export function DictionaryContainer({
     try {
       await navigator.clipboard.writeText(
         link
-          ? `${window.location.href.split("#")[0]}${dictionaryHash({ character, book })}`
+          ? `${window.location.href.split("#")[0]}${dictionaryHash({ character, book: result.book })}`
           : dictionaryText(character, result),
       );
       setFeedback(
@@ -305,12 +312,12 @@ export function DictionaryContainer({
       busy={busy}
       error={error}
       onTextChange={(next) => {
-        invalidate();
+        invalidate(true);
         setText(next);
       }}
       onBookChange={(next) => {
         resetPassageLookup();
-        invalidate();
+        invalidate(true);
         setBook(next);
         if (!characterInputError(text)) void lookup(text, next);
       }}
@@ -350,7 +357,9 @@ export function DictionaryContainer({
           );
           return;
         }
-        setShelf((current) => toggleFavorite(current, { character, book }));
+        setShelf((current) =>
+          toggleFavorite(current, { character, book: result?.book ?? book }),
+        );
         setFeedback(
           favorite
             ? "已移出收藏。"

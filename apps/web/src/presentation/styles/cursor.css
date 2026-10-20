@@ -9,7 +9,12 @@
   .pc-root .pc-surface {
     cursor: var(--pc-cursor);
   }
-  .pc-root :is(.pc-hall--reading .pc-manuscript, .pc-evidence__body) {
+  .pc-root
+    :is(
+      .pc-hall--reading .pc-manuscript,
+      .pc-evidence__body,
+      .pc-dictionary__folio
+    ) {
     --pc-cursor: url("/design/cursor-rain-ink.svg") 12 12, crosshair;
     --pc-cursor-action:
       url("/design/cursor-rain-action-ink.svg") 12 12, pointer;
@@ -31,7 +36,12 @@
     --pc-cursor: auto;
     --pc-cursor-action: pointer;
   }
-  .pc-root :is(.pc-hall--reading .pc-manuscript, .pc-evidence__body) {
+  .pc-root
+    :is(
+      .pc-hall--reading .pc-manuscript,
+      .pc-evidence__body,
+      .pc-dictionary__folio
+    ) {
     --pc-cursor: auto;
     --pc-cursor-action: pointer;
   }

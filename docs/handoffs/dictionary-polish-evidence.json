@@ -1,0 +1,197 @@
+{
+  "revision": {
+    "commit": "237ced687c52d4ce920fdb6b2fdc50a6fe1b92cf",
+    "dirty": true
+  },
+  "browser": "Edg/155.0.4283.45",
+  "verify": {
+    "passed": true,
+    "testFiles": 60,
+    "tests": 798
+  },
+  "dictionary": [
+    {
+      "name": "navigation-keeps-draft-and-reloads-locally",
+      "status": "pass"
+    },
+    {
+      "name": "real-single-character-all-three-books",
+      "status": "pass"
+    },
+    {
+      "name": "favorites-history-and-poem-character-picker",
+      "status": "pass"
+    },
+    {
+      "name": "invalid-and-missing-characters-stay-distinct",
+      "status": "pass"
+    },
+    {
+      "name": "deep-link-reloads-current-data",
+      "status": "pass"
+    },
+    {
+      "name": "responsive-layout-1440-768-375",
+      "status": "pass"
+    },
+    {
+      "name": "three-book-comparison-and-passage-overview",
+      "status": "pass"
+    },
+    {
+      "name": "latest-query-wins-when-old-request-is-delayed",
+      "status": "pass"
+    },
+    {
+      "name": "server-failure-clears-result-and-recovers",
+      "status": "pass"
+    },
+    {
+      "name": "real-15-second-client-timeout-and-retry",
+      "status": "pass"
+    },
+    {
+      "name": "hidden-checker-pauses-canvas-and-preserves-report",
+      "status": "pass"
+    },
+    {
+      "name": "keyboard-navigation-and-reduced-motion",
+      "status": "pass"
+    },
+    {
+      "name": "mobile-result-reveal-and-return-without-focus-theft",
+      "status": "pass"
+    },
+    {
+      "name": "ime-confirmation-does-not-submit-unfinished-character",
+      "status": "pass"
+    },
+    {
+      "name": "clipboard-keeps-review-status-version-and-current-link",
+      "status": "pass"
+    },
+    {
+      "name": "full-favorites-survive-reload-without-silent-eviction",
+      "status": "pass"
+    },
+    {
+      "name": "portable-shelf-file-export-import-and-invalid-file-protection",
+      "status": "pass"
+    },
+    {
+      "name": "analysis-real-30-second-timeout-blocks-copy-export-and-recovers",
+      "status": "pass"
+    }
+  ],
+  "polish": [
+    {
+      "name": "folio-text-selection-and-surface-cursor",
+      "status": "pass"
+    },
+    {
+      "name": "delayed-repeat-retains-result-and-button-geometry",
+      "status": "pass"
+    },
+    {
+      "name": "fast-repeat-has-no-loading-flash",
+      "status": "pass"
+    },
+    {
+      "name": "comparison-reveals-and-repeat-preserves-height",
+      "status": "pass"
+    },
+    {
+      "name": "mobile-320-375-768-no-overflow",
+      "status": "pass"
+    },
+    {
+      "name": "garden-rain-pauses-and-resumes-with-navigation",
+      "status": "pass"
+    },
+    {
+      "name": "effects-off-and-system-reduced-motion",
+      "status": "pass"
+    },
+    {
+      "name": "failed-refresh-does-not-announce-old-success",
+      "status": "pass"
+    }
+  ],
+  "checkerMotion": [
+    {
+      "name": "first-analysis-editor-geometry",
+      "status": "pass"
+    },
+    {
+      "name": "settings-open",
+      "status": "pass"
+    },
+    {
+      "name": "settings-close",
+      "status": "pass"
+    },
+    {
+      "name": "editor-collapse",
+      "status": "pass"
+    },
+    {
+      "name": "editor-expand",
+      "status": "pass"
+    },
+    {
+      "name": "reanalyze",
+      "status": "pass"
+    },
+    {
+      "name": "fast-reanalysis-has-no-loading-flash",
+      "status": "pass"
+    },
+    {
+      "name": "slow-analysis-shows-readable-feedback",
+      "status": "pass"
+    },
+    {
+      "name": "even-line-highlight-returns-to-original-color",
+      "status": "pass"
+    },
+    {
+      "name": "settings-while-sidebar-is-sticky",
+      "status": "pass"
+    },
+    {
+      "name": "evidence-open-close-keeps-page-position",
+      "status": "pass"
+    },
+    {
+      "name": "mobile-result-scroll-waits-for-layout",
+      "status": "pass"
+    },
+    {
+      "name": "reduced-motion-disclosures-still-work",
+      "status": "pass"
+    }
+  ],
+  "keyboard": [
+    {
+      "name": "keyboard text entry and analysis",
+      "passed": true
+    },
+    {
+      "name": "candidate choice reanalyzes and Escape returns focus",
+      "passed": true,
+      "override": {
+        "tokenId": "l4c1",
+        "readingId": "pingshui:更:ping:八庚"
+      }
+    },
+    {
+      "name": "keyboard settled checks and editor folding preserve input",
+      "passed": true
+    },
+    {
+      "name": "keyboard scene navigation, dictionary lookup and provenance",
+      "passed": true
+    }
+  ],
+  "pageErrors": []
+}

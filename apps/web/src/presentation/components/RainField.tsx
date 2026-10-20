@@ -18,7 +18,7 @@ interface Ring {
   deliberate: boolean;
 }
 const SHELTER =
-  'button, a, input, textarea, select, label, summary, [role="dialog"], [contenteditable], .pc-plinth, .pc-rail, .pc-hall--reading .pc-manuscript, .pc-masthead, .pc-colophon, .pc-evidence';
+  'button, a, input, textarea, select, label, summary, [role="dialog"], [contenteditable], .pc-plinth, .pc-rail, .pc-hall--reading .pc-manuscript, .pc-masthead, .pc-colophon, .pc-evidence, .pc-dictionary__desk, .pc-dictionary__folio, .pc-dictionary__masthead, .pc-places';
 const MAX_RINGS = 24;
 
 export function RainField({
@@ -36,7 +36,7 @@ export function RainField({
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext("2d", { alpha: true });
     if (!canvas || !ctx) return;
-    const scene = canvas.closest<HTMLElement>(".pc-scene");
+    const scene = canvas.closest<HTMLElement>(".pc-scene, .pc-garden");
     const fine = window.matchMedia(
       "(any-hover: hover) and (any-pointer: fine)",
     );

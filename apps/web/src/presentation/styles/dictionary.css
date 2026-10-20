@@ -2,7 +2,7 @@
 .pc-workspace {
   background: var(--pc-night);
 }
-.pc-workspace [hidden] {
+.pc-workspace .pc-place[hidden] {
   display: none !important;
 }
 .pc-places {
@@ -53,6 +53,7 @@
   margin-right: 9px;
   opacity: 0.65;
   font-family: var(--pc-font-serif);
+  font-size: 22px;
 }
 .pc-places button[aria-current] {
   color: var(--pc-moon);
@@ -113,7 +114,7 @@
 }
 .pc-garden {
   position: fixed;
-  inset: -68px 0 0;
+  inset: 0;
   pointer-events: none;
   z-index: -1;
   overflow: hidden;
@@ -212,8 +213,28 @@
   gap: 40px;
 }
 .pc-dictionary__desk {
+  --pc-text: #ece6d6;
+  --pc-text-muted: #b5c4bd;
+  --pc-manuscript: #1c333a;
+  --pc-surface-sheet: #142b32;
+  --pc-surface-sunken: #203940;
+  --pc-divider: #47605f;
+  --pc-border-control: #6a817b;
+  --pc-accent: #c5d7c3;
+  --pc-accent-soft: #2c494b;
+  --pc-focus: #c5d7c3;
+  --pc-pass-fg: #d4e4cb;
+  --pc-pass-bg: #2d4944;
+  --pc-pass-border: #8ba88c;
+  --pc-review-fg: #ead09c;
+  --pc-review-bg: #3d3e32;
+  --pc-fail-fg: #f2b7a9;
+  --pc-fail-bg: #493837;
+  color: var(--pc-text);
   padding: 32px;
-  border-top: 3px solid var(--pc-seal);
+  border: 1px solid #60736b80;
+  border-top: 2px solid #b7a687;
+  background-image: var(--pc-paper-texture);
   box-shadow: var(--pc-shadow-plinth);
 }
 .pc-dictionary__desk h2 {
@@ -260,6 +281,8 @@
 .pc-dictionary__searchline button {
   white-space: nowrap;
   padding: 10px 16px;
+  flex: 0 0 112px;
+  width: 112px;
 }
 .pc-dictionary__hint {
   font-size: 12px;
@@ -307,7 +330,7 @@
 }
 .pc-dictionary__book small {
   color: var(--pc-text-muted);
-  font-size: 11px;
+  font-size: 12px;
 }
 .pc-dictionary__book span:last-child {
   color: var(--pc-accent);
@@ -327,7 +350,8 @@
   margin-right: auto;
 }
 .pc-dictionary__examples button {
-  width: 36px;
+  width: 44px;
+  flex-shrink: 0;
   min-height: 44px;
   border: 1px solid var(--pc-divider);
   background: var(--pc-surface-sheet);
@@ -353,6 +377,7 @@
   min-height: 610px;
   border-radius: 3px 8px 8px 3px;
   border-right: 5px double var(--pc-divider);
+  background-image: var(--pc-paper-texture);
 }
 .pc-dictionary__folio::before {
   content: "";
@@ -457,7 +482,7 @@
   margin: 7px 0;
 }
 .pc-dictionary__entry p:last-child {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--pc-text-muted);
   margin: 0;
 }
@@ -489,7 +514,7 @@
 }
 .pc-dictionary__candidate-no {
   color: var(--pc-text-muted);
-  font-size: 12px;
+  font: 22px var(--pc-font-display);
   letter-spacing: 0.1em;
 }
 .pc-dictionary__candidate h3 {
@@ -499,7 +524,7 @@
 }
 .pc-dictionary__badge {
   flex-shrink: 0;
-  font-size: 11px;
+  font-size: 12px;
   border: 1px solid #80550077;
   color: var(--pc-review-fg);
   background: var(--pc-review-bg);
@@ -523,7 +548,7 @@
   margin-bottom: 4px;
 }
 .pc-dictionary__facts dd {
-  font-size: 15px;
+  font-size: 17px;
   margin: 0;
   overflow-wrap: anywhere;
 }
@@ -531,7 +556,7 @@
   font-family: var(--pc-font-serif);
 }
 .pc-dictionary__source {
-  font-size: 12px;
+  font-size: 14px;
 }
 .pc-dictionary__source summary {
   display: flex;
@@ -541,7 +566,8 @@
   cursor: pointer;
   padding: 12px 0;
   color: var(--pc-accent);
-  min-height: 20px;
+  min-height: 44px;
+  box-sizing: border-box;
 }
 .pc-dictionary__source summary::-webkit-details-marker {
   display: none;
@@ -623,8 +649,8 @@
   background: var(--pc-accent-soft);
 }
 .pc-dictionary__feedback {
-  background: var(--pc-accent-soft);
-  padding: 10px;
+  min-height: 24px;
+  margin: 16px 0 0;
   font-size: 12px;
   color: var(--pc-accent);
 }
@@ -650,7 +676,8 @@
 .pc-dictionary__comparison {
   border: 1px solid var(--pc-divider);
   padding: 18px;
-  margin: 24px 0;
+  margin: 4px 0 24px;
+  background: #e9e9dc80;
 }
 .pc-dictionary__comparison h3 {
   font: 400 21px var(--pc-font-display);
@@ -677,7 +704,7 @@
   border: 0;
   text-align: left;
   min-height: 44px;
-  font: 13px var(--pc-font-serif);
+  font: 16px var(--pc-font-serif);
   color: var(--pc-accent);
   cursor: pointer;
 }
@@ -685,12 +712,15 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  font-size: 12px;
+  font-size: 15px;
   padding-top: 10px;
 }
 .pc-dictionary__comparison-row small {
   color: var(--pc-text-muted);
   white-space: nowrap;
+  font-size: 12px;
+  border: 1px solid var(--pc-divider);
+  padding: 1px 5px;
 }
 .pc-dictionary__comparison-row > p {
   font-size: 12px;
@@ -700,10 +730,12 @@
 .pc-dictionary__shelf {
   border-top: 1px solid var(--pc-divider);
   margin-top: 22px;
-  font-size: 12px;
+  font-size: 13px;
 }
 .pc-dictionary__passage summary,
 .pc-dictionary__shelf summary {
+  font-size: 16px;
+  font-family: var(--pc-font-serif);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -805,7 +837,7 @@
   cursor: pointer;
 }
 .pc-dictionary__shelf-list small {
-  font: 10px var(--pc-font-sans);
+  font: 12px var(--pc-font-sans);
   color: var(--pc-text-muted);
 }
 .pc-dictionary__recent-head {
@@ -849,7 +881,7 @@
   font: 22px var(--pc-font-serif);
 }
 .pc-dictionary__overview-grid small {
-  font-size: 10px;
+  font-size: 12px;
 }
 .pc-dictionary__overview-grid [data-status="backed"] {
   color: var(--pc-pass-fg);
@@ -869,6 +901,107 @@
   border-top: 1px dashed var(--pc-divider);
   margin-top: 20px;
 }
+/* Keep the previous page of the book in place while the next query resolves. */
+.pc-dictionary__result {
+  animation: pc-dictionary-ink 260ms var(--pc-ease-out);
+}
+@keyframes pc-dictionary-ink {
+  from {
+    opacity: 0.45;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.pc-dictionary__reveal {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    grid-template-rows var(--pc-dur-disclosure) var(--pc-ease-in-out),
+    opacity var(--pc-dur-disclosure) ease,
+    visibility var(--pc-dur-disclosure) allow-discrete;
+}
+.pc-dictionary__reveal[data-open="true"] {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  visibility: visible;
+}
+.pc-dictionary__reveal > div {
+  min-height: 0;
+  overflow: hidden;
+}
+.pc-dictionary__facts .pc-dictionary__tone {
+  font: 26px/1.4 var(--pc-font-display);
+}
+.pc-dictionary__tone[data-tone="P"] {
+  color: var(--pc-tone-ping);
+}
+.pc-dictionary__facts > div:nth-child(-n + 2) {
+  padding: 12px 14px;
+  border-left: 2px solid var(--pc-divider);
+  background: #e8e6d957;
+}
+.pc-dictionary__facts > div:nth-child(2) dd {
+  font: 23px/1.6 var(--pc-font-display);
+}
+.pc-dictionary__compare-button {
+  min-width: 94px;
+}
+.pc-dictionary [data-pending="true"][data-busy-visible="false"] {
+  opacity: 1;
+}
+.pc-dictionary .pc-button--primary[data-pending="true"] {
+  color: var(--pc-seal-ink);
+  background: var(--pc-seal);
+  border-color: var(--pc-seal);
+}
+.pc-dictionary .pc-button--primary[data-busy-visible="true"] {
+  font-size: 14px;
+  letter-spacing: 0.06em;
+}
+.pc-dictionary .pc-button--quiet[data-pending="true"] {
+  color: var(--pc-text);
+  border: 1px solid var(--pc-border-control);
+}
+.pc-dictionary :is(button, .pc-dictionary__book, summary > span),
+.pc-places button {
+  transition:
+    color var(--pc-dur-control) ease,
+    background-color var(--pc-dur-control) ease,
+    border-color var(--pc-dur-control) ease,
+    transform var(--pc-dur-control) var(--pc-ease-out);
+}
+.pc-dictionary__desk
+  :is(button:not(.pc-button--primary), .pc-dictionary__book):hover:not(
+    :disabled
+  ),
+.pc-dictionary__folio .pc-button:hover:not(:disabled) {
+  border-color: var(--pc-accent);
+  background-color: var(--pc-accent-soft);
+}
+.pc-dictionary__passage[open] summary > span {
+  transform: rotate(45deg);
+}
+.pc-dictionary__folio
+  :is(
+    .pc-dictionary__glyph,
+    .pc-dictionary__facts,
+    .pc-dictionary__gloss,
+    .pc-dictionary__evidence,
+    .pc-dictionary__comparison-row > div
+  ) {
+  user-select: text;
+  -webkit-user-select: text;
+}
+.pc-garden .pc-rain {
+  z-index: 1;
+  animation: pc-dictionary-ink 800ms ease;
+}
+.pc-dictionary__desk .pc-button--quiet {
+  color: var(--pc-text);
+}
 @media (max-width: 1099px) {
   .pc-dictionary__layout {
     grid-template-columns: 290px minmax(0, 1fr);
@@ -876,6 +1009,12 @@
   }
   .pc-dictionary__desk {
     padding: 24px;
+  }
+  .pc-dictionary__examples {
+    flex-wrap: wrap;
+  }
+  .pc-dictionary__examples > span {
+    flex-basis: 100%;
   }
   .pc-dictionary__folio {
     padding: 0 28px;
@@ -913,7 +1052,7 @@
     display: none;
   }
   .pc-dictionary__book strong {
-    font-size: 13px;
+    font-size: 14px;
   }
   .pc-dictionary__hint {
     margin-bottom: 16px;
@@ -956,7 +1095,7 @@
   }
   .pc-dictionary__book strong {
     white-space: nowrap;
-    font-size: 12px;
+    font-size: 14px;
   }
   .pc-dictionary__book:focus-within {
     outline: 3px solid var(--pc-focus);
@@ -977,6 +1116,7 @@
     gap: 12px;
     padding: 26px 0;
     align-items: start;
+    flex-wrap: wrap;
   }
   .pc-dictionary__title {
     gap: 14px;
@@ -985,7 +1125,7 @@
     font-size: 32px;
   }
   .pc-dictionary__title p:last-child {
-    font-size: 11px;
+    font-size: 13px;
     letter-spacing: 0.04em;
   }
   .pc-dictionary__masthead .pc-motion-toggle {
@@ -1010,6 +1150,29 @@
   .pc-dictionary__entry {
     gap: 18px;
   }
+  .pc-dictionary__entry p:last-child {
+    font-size: 13px;
+  }
+  .pc-dictionary__comparison {
+    padding: 14px;
+  }
+  .pc-dictionary__comparison-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .pc-dictionary__comparison-row > div {
+    padding-top: 0;
+  }
+  .pc-dictionary__facts {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .pc-dictionary__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .pc-dictionary__books {
+    gap: 6px;
+  }
   .pc-dictionary__entry h2 {
     font-size: 24px;
   }
@@ -1032,13 +1195,17 @@
 }
 .pc-workspace[data-motion="off"] .pc-place .pc-page,
 .pc-workspace[data-motion="off"] .pc-dictionary__page,
-.pc-dictionary[data-motion="off"] .pc-garden__landscape {
+.pc-dictionary[data-motion="off"] .pc-garden__landscape,
+.pc-dictionary[data-motion="off"] .pc-dictionary__result,
+.pc-dictionary[data-motion="off"] .pc-rain {
   animation: none;
 }
 @media (prefers-reduced-motion: reduce) {
   .pc-place .pc-page,
   .pc-dictionary__page,
-  .pc-garden__landscape {
+  .pc-garden__landscape,
+  .pc-dictionary__result,
+  .pc-garden .pc-rain {
     animation: none !important;
   }
 }

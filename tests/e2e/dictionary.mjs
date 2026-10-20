@@ -554,6 +554,17 @@ try {
   await scenario(
     "ime-confirmation-does-not-submit-unfinished-character",
     async () => {
+      const previousGlyph = await evaluate(
+        "document.querySelector('.pc-dictionary__glyph')?.textContent ?? null",
+      );
+      await evaluate(`(() => {
+        window.__imeFetch = window.fetch;
+        window.__imeQueries = 0;
+        window.fetch = (...args) => {
+          if (String(args[0]).includes('/characters/')) window.__imeQueries++;
+          return window.__imeFetch(...args);
+        };
+      })()`);
       await input(".pc-dictionary__input", "山");
       const prevented = await evaluate(`(() => {
       const el = document.querySelector('.pc-dictionary__input');
@@ -567,11 +578,16 @@ try {
       assert.equal(prevented, true);
       await new Promise((resolve) => setTimeout(resolve, 250));
       assert.equal(
-        await evaluate("!!document.querySelector('.pc-dictionary__glyph')"),
-        false,
+        await evaluate(
+          "document.querySelector('.pc-dictionary__glyph')?.textContent ?? null",
+        ),
+        previousGlyph,
       );
+      assert.equal(await evaluate("window.__imeQueries"), 0);
       await key("Enter", "Enter", 13, 0, "\r");
       await glyph("山");
+      assert.equal(await evaluate("window.__imeQueries"), 1);
+      await evaluate("window.fetch = window.__imeFetch");
       return { compositionEnterPrevented: true, explicitEnterQueries: true };
     },
   );
