@@ -1,5 +1,5 @@
 // apps/web/src/presentation/CheckerView.tsx
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import type { CheckerViewProps } from "../view-contract";
 import { InputPanel } from "./components/InputPanel";
 import { ReportView } from "./components/ReportView";
@@ -21,7 +21,10 @@ const STEPS = [
 ];
 
 export function CheckerView(
-  props: CheckerViewProps & { sharedScene?: boolean },
+  props: CheckerViewProps & {
+    sharedScene?: boolean;
+    readingAssistant?: ReactNode;
+  },
 ) {
   const {
     draft,
@@ -426,6 +429,9 @@ export function CheckerView(
       {(report !== null && selectedToken !== null) ||
       (panelExiting && lastPanel !== null) ? (
         <EvidencePanel
+          readingAssistant={
+            selectedToken !== null ? props.readingAssistant : undefined
+          }
           report={
             report !== null && selectedToken !== null
               ? report

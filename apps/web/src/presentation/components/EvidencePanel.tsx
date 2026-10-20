@@ -1,5 +1,5 @@
 // apps/web/src/presentation/components/EvidencePanel.tsx
-import { useEffect, useId, useRef, type KeyboardEvent } from 'react';
+import { useEffect, useId, useRef, type KeyboardEvent, type ReactNode } from 'react';
 import type { AnalysisResponse, AnnotatedToken, Evidence, ReadingCandidate } from '@poetry/contracts';
 import type { CheckerViewProps } from '../../view-contract';
 import '../styles/evidence.css';
@@ -12,6 +12,7 @@ type EvidencePanelProps = {
   onClose: () => void;
   leaving?: boolean;
   onExited?: () => void;
+  readingAssistant?: ReactNode;
 };
 
 const TONE_CLASS: Record<ReadingCandidate['toneClass'], string> = {
@@ -115,6 +116,7 @@ export function EvidencePanel(props: EvidencePanelProps) {
             <p className="pc-evidence__note">当前读音来自你的手动选择，不是文献依据。</p>
           )}
 
+          {props.readingAssistant}
           <h3 className="pc-evidence__section">候选读音（{token.candidates.length}）</h3>
           {lockedReason !== null && (
             <p id={`${uid}-lock`} className="pc-evidence__lock">

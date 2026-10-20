@@ -3,6 +3,7 @@ import type { BookId, LookupResult } from "@poetry/contracts";
 import { characterInputError, createCharacterLookup } from "../api/characters";
 import { readWebEnv, resolveApiConfig } from "./config";
 import { DictionaryView } from "../presentation/DictionaryView";
+import { ReadingAssistantContainer } from "./ReadingAssistantContainer";
 import { compareBooks, type BookComparison } from "./dictionaryComparison";
 import { lookupPassage, type PassageLookup } from "./passageLookup";
 import {
@@ -305,6 +306,18 @@ export function DictionaryContainer({
   };
   return (
     <DictionaryView
+      readingAssistant={
+        passageOpen ? (
+          <ReadingAssistantContainer
+            text={passage}
+            book={book}
+            onInspect={(next) => {
+              setText(next);
+              void lookup(next);
+            }}
+          />
+        ) : undefined
+      }
       text={text}
       book={book}
       result={result}

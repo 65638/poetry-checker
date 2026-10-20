@@ -147,6 +147,54 @@ export const ReadingOverrideSchema = z.strictObject({
   tokenId: id,
   readingId: id,
 });
+export const ReadingSuggestionRequestSchema = z.strictObject({
+  text: z
+    .string()
+    .min(1)
+    .refine((text) => [...text].length <= 2000, "最多2000字"),
+  rhymeBook: BookIdSchema,
+  targetTokenIds: z.array(id).min(1).max(24).optional(),
+});
+export const ReadingAssistantStatusSchema = z.strictObject({
+  configured: z.boolean(),
+  provider: z.literal("zhipu"),
+  model: id,
+});
+export const ReadingSuggestionSchema = z.strictObject({
+  tokenId: id,
+  character: id,
+  line: positive,
+  column: positive,
+  candidateId: id.nullable(),
+  pronunciation: z.string().min(1).max(48).nullable(),
+  reason: z.string().min(1).max(800),
+  candidate: ReadingCandidateSchema.nullable(),
+  groupNames: z.array(z.string()),
+  evidenceApproved: z.boolean(),
+});
+export const ReadingModelOutputSchema = z.strictObject({
+  suggestions: z
+    .array(
+      ReadingSuggestionSchema.pick({
+        tokenId: true,
+        candidateId: true,
+        pronunciation: true,
+        reason: true,
+      }),
+    )
+    .max(24),
+});
+export const ReadingSuggestionResponseSchema = z.strictObject({
+  provider: z.literal("zhipu"),
+  model: id,
+  inputHash: sha256,
+  rhymeBook: BookIdSchema,
+  dataVersion: id,
+  suggestions: z.array(ReadingSuggestionSchema).max(24),
+  missingTokenIds: ids,
+  truncated: z.boolean(),
+  notice: z.string(),
+});
 export const ContextRuleSchema = z.strictObject({
   id,
   target: id,
@@ -444,6 +492,16 @@ export type ParsedToken = z.infer<typeof ParsedTokenSchema>;
 export type ParseNotice = z.infer<typeof ParseNoticeSchema>;
 export type ParsedPoem = z.infer<typeof ParsedPoemSchema>;
 export type ReadingOverride = z.infer<typeof ReadingOverrideSchema>;
+export type ReadingSuggestionRequest = z.infer<
+  typeof ReadingSuggestionRequestSchema
+>;
+export type ReadingAssistantStatus = z.infer<
+  typeof ReadingAssistantStatusSchema
+>;
+export type ReadingSuggestion = z.infer<typeof ReadingSuggestionSchema>;
+export type ReadingSuggestionResponse = z.infer<
+  typeof ReadingSuggestionResponseSchema
+>;
 export type ContextRule = z.infer<typeof ContextRuleSchema>;
 export type AnnotatedToken = z.infer<typeof AnnotatedTokenSchema>;
 export type AnnotatedPoem = z.infer<typeof AnnotatedPoemSchema>;
@@ -475,6 +533,9 @@ export interface EvaluateInput {
 }
 
 export const schemaRegistry = {
+  ReadingSuggestionRequest: ReadingSuggestionRequestSchema,
+  ReadingAssistantStatus: ReadingAssistantStatusSchema,
+  ReadingSuggestionResponse: ReadingSuggestionResponseSchema,
   AnalyzeRequest: AnalyzeRequestSchema,
   AnalysisResponse: AnalysisResponseSchema,
   ErrorResponse: ErrorResponseSchema,
@@ -516,6 +577,41 @@ export function createOpenApiDocument() {
         "契约基线。复杂跨字段校验以 Zod 实现为准；HTTP 服务尚待接入。",
     },
     paths: {
+      "/api/v1/reading-suggestions/status": {
+        get: {
+          operationId: "readingAssistantStatus",
+          responses: {
+            "200": {
+              description: "模型配置状态，不返回密钥",
+              content: content("ReadingAssistantStatus"),
+            },
+          },
+        },
+      },
+      "/api/v1/reading-suggestions": {
+        post: {
+          operationId: "suggestReadings",
+          requestBody: {
+            required: true,
+            content: content("ReadingSuggestionRequest"),
+          },
+          responses: {
+            "200": {
+              description: "候选范围内的AI建议，不是人审依据或格律结论",
+              content: content("ReadingSuggestionResponse"),
+            },
+            ...Object.fromEntries(
+              [422, 429, 502, 503, 504].map((status) => [
+                status,
+                {
+                  description: "建议不可用；原分析流程不受影响",
+                  content: content("ErrorResponse"),
+                },
+              ]),
+            ),
+          },
+        },
+      },
       "/api/v1/analyze": {
         post: {
           operationId: "analyze",

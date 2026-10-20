@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import type { BookId, LookupResult, ReadingCandidate } from "@poetry/contracts";
 import { useMotionPreference } from "./useMotionPreference";
 import { useBusyIndicator } from "./useBusyIndicator";
@@ -44,6 +44,7 @@ const LANDSCAPES = [
 ];
 
 export interface DictionaryViewProps {
+  readingAssistant?: ReactNode;
   text: string;
   book: BookId;
   character: string;
@@ -303,6 +304,7 @@ export function DictionaryView(props: DictionaryViewProps) {
                   逐字查阅，不作整诗判定
                 </p>
                 {props.passageError && <p role="alert">{props.passageError}</p>}
+                {props.readingAssistant}
                 {props.passageResult && (
                   <div
                     className="pc-dictionary__passage-result"

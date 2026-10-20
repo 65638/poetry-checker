@@ -4,6 +4,7 @@ import type { CheckerViewProps } from "../view-contract";
 import { CheckerView } from "../presentation/CheckerView";
 import { useMotionPreference } from "../presentation/useMotionPreference";
 import { DictionaryContainer } from "./DictionaryContainer";
+import { ReadingAssistantContainer } from "./ReadingAssistantContainer";
 import "../presentation/styles/dictionary.css";
 import { DRAFT_KEY } from "./draftPersistence";
 import { ContinuousGarden } from "../presentation/components/ContinuousGarden";
@@ -247,7 +248,21 @@ export function Workspace(props: CheckerViewProps) {
           <span className="pc-draft-save" role="status">
             {saved ? "草稿已存于此设备" : ""}
           </span>
-          <CheckerView {...props} sharedScene />
+          <CheckerView
+            {...props}
+            sharedScene
+            readingAssistant={
+              props.report && props.selectedTokenId ? (
+                <ReadingAssistantContainer
+                  text={props.report.poem.originalText}
+                  book={props.report.policy.rhymeBook}
+                  tokenId={props.selectedTokenId}
+                  disabled={props.stale || props.busy}
+                  onChooseReading={props.onChooseReading}
+                />
+              ) : undefined
+            }
+          />
         </div>
         <div
           id="dictionary-space"

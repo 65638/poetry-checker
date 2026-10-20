@@ -1,5 +1,7 @@
 # apps/api
 
+2026-10-21：新增可选[智谱GLM读音建议](../../docs/features/glm-reading-assistant.md)。API Key只在服务端配置，手动触发；模型建议不代替韵书证据或人工审核，不改变现有analyze门槛。
+
 负责人：组长 / 本地 GLM。本次 Codex 接管与归还记录见 `docs/handoffs/0012-codex-d2-closeout.md`。
 
 默认走真实编排：parseText → lookup → resolveReadings → matchTemplates → classifyGenre → evaluateProsody。仅显式设置 `POETRY_DEV_MOCK=1` 才加载合成 fixture。
