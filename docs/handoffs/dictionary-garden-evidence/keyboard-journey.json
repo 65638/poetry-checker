@@ -1,0 +1,799 @@
+{
+  "startedAt": "2026-10-20T10:01:33.178Z",
+  "revision": {
+    "commit": "52318c6554137756b20151599b3bc1b008ad6722",
+    "dirty": false
+  },
+  "mode": "production-preview + real API",
+  "steps": [
+    {
+      "name": "keyboard text entry and analysis",
+      "passed": true
+    },
+    {
+      "name": "candidate choice reanalyzes and Escape returns focus",
+      "passed": true,
+      "override": {
+        "tokenId": "l4c1",
+        "readingId": "pingshui:更:ping:八庚"
+      }
+    },
+    {
+      "name": "keyboard settled checks and editor folding preserve input",
+      "passed": true
+    },
+    {
+      "name": "keyboard scene navigation, dictionary lookup and provenance",
+      "passed": true
+    }
+  ],
+  "focusPath": [
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "壹 校诗台",
+      "className": ""
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "贰 藏韵阁",
+      "className": ""
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "登鹳雀楼",
+      "className": "pc-button pc-button--quiet pc-examples__item"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "静夜思",
+      "className": "pc-button pc-button--quiet pc-examples__item"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "黄鹤楼",
+      "className": "pc-button pc-button--quiet pc-examples__item"
+    },
+    {
+      "tag": "TEXTAREA",
+      "label": null,
+      "text": "",
+      "className": "pc-input__text"
+    },
+    {
+      "tag": "INPUT",
+      "label": null,
+      "text": "",
+      "className": "pc-segmented__radio"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "分析",
+      "className": "pc-button pc-button--primary pc-input__submit"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "1白日依山尽",
+      "className": "pc-rail__line"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "2黄河入海流",
+      "className": "pc-rail__line"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "3欲穷千里目",
+      "className": "pc-rail__line"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "4更上一层楼",
+      "className": "pc-rail__line"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "收起编辑",
+      "className": "pc-button pc-button--quiet pc-rail__edit"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "复制摘要",
+      "className": "pc-button pc-button--small"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "下载报告",
+      "className": "pc-button pc-button--small"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第1句第1字「白」，仄",
+      "text": "白仄",
+      "className": "pc-cell pc-cell--ze"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第1句第2字「日」，仄",
+      "text": "日仄",
+      "className": "pc-cell pc-cell--ze"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第1句第3字「依」，平",
+      "text": "依平",
+      "className": "pc-cell pc-cell--ping"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第1句第4字「山」，平",
+      "text": "山平",
+      "className": "pc-cell pc-cell--ping"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第1句第5字「尽」，仄",
+      "text": "尽仄",
+      "className": "pc-cell pc-cell--ze"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第2句第1字「黄」，平",
+      "text": "黄平",
+      "className": "pc-cell pc-cell--ping"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第2句第2字「河」，平",
+      "text": "河平",
+      "className": "pc-cell pc-cell--ping"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第2句第3字「入」，仄",
+      "text": "入仄",
+      "className": "pc-cell pc-cell--ze"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第2句第4字「海」，仄",
+      "text": "海仄",
+      "className": "pc-cell pc-cell--ze"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第2句第5字「流」，平，韵脚",
+      "text": "流平韵",
+      "className": "pc-cell pc-cell--ping pc-cell--rhyme"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第3句第1字「欲」，仄",
+      "text": "欲仄",
+      "className": "pc-cell pc-cell--ze"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第3句第2字「穷」，平",
+      "text": "穷平",
+      "className": "pc-cell pc-cell--ping"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第3句第3字「千」，平",
+      "text": "千平",
+      "className": "pc-cell pc-cell--ping"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第3句第4字「里」，仄",
+      "text": "里仄",
+      "className": "pc-cell pc-cell--ze"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第3句第5字「目」，仄",
+      "text": "目仄",
+      "className": "pc-cell pc-cell--ze"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第4句第1字「更」，仄",
+      "text": "更仄",
+      "className": "pc-cell pc-cell--ze"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "改用此读音",
+      "className": "pc-button"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第4句第2字「上」，仄，读音待定",
+      "text": "上仄?",
+      "className": "pc-cell pc-cell--ze"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第4句第3字「一」，仄",
+      "text": "一仄",
+      "className": "pc-cell pc-cell--ze"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第4句第4字「层」，平",
+      "text": "层平",
+      "className": "pc-cell pc-cell--ping"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第4句第5字「楼」，平，韵脚",
+      "text": "楼平韵",
+      "className": "pc-cell pc-cell--ping pc-cell--rhyme"
+    },
+    {
+      "tag": "SUMMARY",
+      "label": null,
+      "text": "已通过或不适用的检查（36 条）",
+      "className": "pc-settled__summary"
+    },
+    {
+      "tag": "BODY",
+      "label": null,
+      "text": "月下听韵  两处风景壹 校诗台···贰 藏韵阁带这首诗去藏韵阁 →草稿已存于此设备律诗格律检查器依韵书校平仄 · 循字音见出处动态效果：关系",
+      "className": ""
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "壹 校诗台",
+      "className": ""
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "贰 藏韵阁",
+      "className": ""
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "带这首诗去藏韵阁 →",
+      "className": ""
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "收起编辑",
+      "className": "pc-button pc-button--quiet pc-plinth__toggle"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "平水韵 · 示例与说明+",
+      "className": "pc-input__settings"
+    },
+    {
+      "tag": "TEXTAREA",
+      "label": null,
+      "text": "白日依山尽，黄河入海流。欲穷千里目，更上一层楼。",
+      "className": "pc-input__text"
+    },
+    {
+      "tag": "INPUT",
+      "label": null,
+      "text": "",
+      "className": "pc-segmented__radio"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "分析",
+      "className": "pc-button pc-button--primary pc-input__submit"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "1白日依山尽",
+      "className": "pc-rail__line pc-rail__line--active"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "2黄河入海流",
+      "className": "pc-rail__line"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "3欲穷千里目",
+      "className": "pc-rail__line"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "4更上一层楼",
+      "className": "pc-rail__line"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "收起编辑",
+      "className": "pc-button pc-button--quiet pc-rail__edit"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "复制摘要",
+      "className": "pc-button pc-button--small"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "下载报告",
+      "className": "pc-button pc-button--small"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第1句第1字「白」，仄",
+      "text": "白仄",
+      "className": "pc-cell pc-cell--ze"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第1句第2字「日」，仄",
+      "text": "日仄",
+      "className": "pc-cell pc-cell--ze"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第1句第3字「依」，平",
+      "text": "依平",
+      "className": "pc-cell pc-cell--ping"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第1句第4字「山」，平",
+      "text": "山平",
+      "className": "pc-cell pc-cell--ping"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第1句第5字「尽」，仄",
+      "text": "尽仄",
+      "className": "pc-cell pc-cell--ze"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第2句第1字「黄」，平",
+      "text": "黄平",
+      "className": "pc-cell pc-cell--ping"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第2句第2字「河」，平",
+      "text": "河平",
+      "className": "pc-cell pc-cell--ping"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第2句第3字「入」，仄",
+      "text": "入仄",
+      "className": "pc-cell pc-cell--ze"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第2句第4字「海」，仄",
+      "text": "海仄",
+      "className": "pc-cell pc-cell--ze"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第2句第5字「流」，平，韵脚",
+      "text": "流平韵",
+      "className": "pc-cell pc-cell--ping pc-cell--rhyme"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第3句第1字「欲」，仄",
+      "text": "欲仄",
+      "className": "pc-cell pc-cell--ze"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第3句第2字「穷」，平",
+      "text": "穷平",
+      "className": "pc-cell pc-cell--ping"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第3句第3字「千」，平",
+      "text": "千平",
+      "className": "pc-cell pc-cell--ping"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第3句第4字「里」，仄",
+      "text": "里仄",
+      "className": "pc-cell pc-cell--ze"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第3句第5字「目」，仄",
+      "text": "目仄",
+      "className": "pc-cell pc-cell--ze"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第4句第1字「更」，平",
+      "text": "更平",
+      "className": "pc-cell pc-cell--ping"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第4句第2字「上」，仄，读音待定",
+      "text": "上仄?",
+      "className": "pc-cell pc-cell--ze"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第4句第3字「一」，仄",
+      "text": "一仄",
+      "className": "pc-cell pc-cell--ze"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第4句第4字「层」，平",
+      "text": "层平",
+      "className": "pc-cell pc-cell--ping"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第4句第5字「楼」，平，韵脚",
+      "text": "楼平韵",
+      "className": "pc-cell pc-cell--ping pc-cell--rhyme"
+    },
+    {
+      "tag": "SUMMARY",
+      "label": null,
+      "text": "已通过或不适用的检查（36 条）",
+      "className": "pc-settled__summary"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第4句第5字「楼」，平，韵脚",
+      "text": "楼平韵",
+      "className": "pc-cell pc-cell--ping pc-cell--rhyme"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第4句第4字「层」，平",
+      "text": "层平",
+      "className": "pc-cell pc-cell--ping"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第4句第3字「一」，仄",
+      "text": "一仄",
+      "className": "pc-cell pc-cell--ze"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第4句第2字「上」，仄，读音待定",
+      "text": "上仄?",
+      "className": "pc-cell pc-cell--ze"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第4句第1字「更」，平",
+      "text": "更平",
+      "className": "pc-cell pc-cell--ping"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第3句第5字「目」，仄",
+      "text": "目仄",
+      "className": "pc-cell pc-cell--ze"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第3句第4字「里」，仄",
+      "text": "里仄",
+      "className": "pc-cell pc-cell--ze"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第3句第3字「千」，平",
+      "text": "千平",
+      "className": "pc-cell pc-cell--ping"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第3句第2字「穷」，平",
+      "text": "穷平",
+      "className": "pc-cell pc-cell--ping"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第3句第1字「欲」，仄",
+      "text": "欲仄",
+      "className": "pc-cell pc-cell--ze"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第2句第5字「流」，平，韵脚",
+      "text": "流平韵",
+      "className": "pc-cell pc-cell--ping pc-cell--rhyme"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第2句第4字「海」，仄",
+      "text": "海仄",
+      "className": "pc-cell pc-cell--ze"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第2句第3字「入」，仄",
+      "text": "入仄",
+      "className": "pc-cell pc-cell--ze"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第2句第2字「河」，平",
+      "text": "河平",
+      "className": "pc-cell pc-cell--ping"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第2句第1字「黄」，平",
+      "text": "黄平",
+      "className": "pc-cell pc-cell--ping"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第1句第5字「尽」，仄",
+      "text": "尽仄",
+      "className": "pc-cell pc-cell--ze"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第1句第4字「山」，平",
+      "text": "山平",
+      "className": "pc-cell pc-cell--ping"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第1句第3字「依」，平",
+      "text": "依平",
+      "className": "pc-cell pc-cell--ping"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第1句第2字「日」，仄",
+      "text": "日仄",
+      "className": "pc-cell pc-cell--ze"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "第1句第1字「白」，仄",
+      "text": "白仄",
+      "className": "pc-cell pc-cell--ze"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "下载报告",
+      "className": "pc-button pc-button--small"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "复制摘要",
+      "className": "pc-button pc-button--small"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "收起编辑",
+      "className": "pc-button pc-button--quiet pc-rail__edit"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "4更上一层楼",
+      "className": "pc-rail__line"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "3欲穷千里目",
+      "className": "pc-rail__line"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "2黄河入海流",
+      "className": "pc-rail__line"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "1白日依山尽",
+      "className": "pc-rail__line pc-rail__line--active"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "分析",
+      "className": "pc-button pc-button--primary pc-input__submit"
+    },
+    {
+      "tag": "INPUT",
+      "label": null,
+      "text": "",
+      "className": "pc-segmented__radio"
+    },
+    {
+      "tag": "TEXTAREA",
+      "label": null,
+      "text": "白日依山尽，黄河入海流。欲穷千里目，更上一层楼。",
+      "className": "pc-input__text"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "平水韵 · 示例与说明+",
+      "className": "pc-input__settings"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "收起编辑",
+      "className": "pc-button pc-button--quiet pc-plinth__toggle"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "平水韵 · 示例与说明+",
+      "className": "pc-input__settings"
+    },
+    {
+      "tag": "TEXTAREA",
+      "label": null,
+      "text": "白日依山尽，黄河入海流。欲穷千里目，更上一层楼。",
+      "className": "pc-input__text"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "平水韵 · 示例与说明+",
+      "className": "pc-input__settings"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "收起编辑",
+      "className": "pc-button pc-button--quiet pc-plinth__toggle"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "带这首诗去藏韵阁 →",
+      "className": ""
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "贰 藏韵阁",
+      "className": ""
+    },
+    {
+      "tag": "INPUT",
+      "label": null,
+      "text": "",
+      "className": "pc-dictionary__input"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "查字",
+      "className": "pc-button pc-button--primary"
+    },
+    {
+      "tag": "INPUT",
+      "label": null,
+      "text": "",
+      "className": ""
+    },
+    {
+      "tag": "BUTTON",
+      "label": "查「月」字",
+      "text": "月",
+      "className": ""
+    },
+    {
+      "tag": "BUTTON",
+      "label": "查「山」字",
+      "text": "山",
+      "className": ""
+    },
+    {
+      "tag": "BUTTON",
+      "label": "查「更」字",
+      "text": "更",
+      "className": ""
+    },
+    {
+      "tag": "BUTTON",
+      "label": "查「白」字",
+      "text": "白",
+      "className": ""
+    },
+    {
+      "tag": "SUMMARY",
+      "label": null,
+      "text": "带着诗句来查字 ＋",
+      "className": ""
+    },
+    {
+      "tag": "SUMMARY",
+      "label": null,
+      "text": "我的字笺 0 收藏",
+      "className": ""
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "＋ 收藏字笺",
+      "className": "pc-button pc-button--quiet"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "复制条目",
+      "className": "pc-button pc-button--quiet"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "复制链接",
+      "className": "pc-button pc-button--quiet"
+    },
+    {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "三书对照",
+      "className": "pc-button pc-button--quiet pc-dictionary__compare-button"
+    },
+    {
+      "tag": "SUMMARY",
+      "label": null,
+      "text": "查阅依据与出处 ＋",
+      "className": ""
+    }
+  ],
+  "scope": "Task interactions use actual Tab, Shift+Tab, Enter, Space, Escape and text input; DOM inspection does not move focus or click.",
+  "browser": {
+    "protocolVersion": "1.3",
+    "product": "Edg/155.0.4283.45",
+    "revision": "@50f24ef2aa5369a074b8888b7db82d9c0652d642",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+    "jsVersion": "15.5.9.4"
+  },
+  "pageErrors": [],
+  "passed": true,
+  "completedAt": "2026-10-20T10:01:35.741Z"
+}

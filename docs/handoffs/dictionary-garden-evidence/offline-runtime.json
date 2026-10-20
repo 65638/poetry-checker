@@ -1,0 +1,41 @@
+{
+  "generatedAt": "2026-10-20T09:55:36.804Z",
+  "revision": {
+    "commit": "9c464ac716730796da4758be655e03d6feb8a4ef",
+    "dirty": false
+  },
+  "node": "v24.19.0",
+  "runtime": "production-preview",
+  "checks": [
+    {
+      "name": "Windows path + isolated ports + real API proxy",
+      "passed": true
+    },
+    {
+      "name": "Parent coordinated shutdown releases both owned ports",
+      "passed": true,
+      "method": "IPC invokes same cleanup as SIGINT; Windows force-kill is not covered"
+    },
+    {
+      "name": "Occupied API port exits 1; unrelated owner survives",
+      "passed": true
+    }
+  ],
+  "offlineRuntime": {
+    "scope": "Dependencies already installed. Browser blocks all non-loopback requests; not an OS-wide firewall or offline installer.",
+    "passed": true,
+    "formalRoute": "/",
+    "realPoem": "dengguanquelou",
+    "summary": "pass",
+    "dictionary": {
+      "character": "月",
+      "threeBookComparison": true,
+      "dataVersion": "数据版本：pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4"
+    },
+    "blockedOrigins": [
+      "https://example.com"
+    ]
+  },
+  "readinessHttp": 503,
+  "passed": true
+}

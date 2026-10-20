@@ -1,0 +1,177 @@
+{
+  "archivedAt": "2026-10-20T10:03:33.315Z",
+  "baseMain": "cea831befa70a8842943d240f91f9816c9c55a94",
+  "branch": "codex/dictionary-garden",
+  "pr": "https://github.com/65638/poetry-checker/pull/29",
+  "implementationCommit": "2186977603d41af4d38d8a9dcdb551efa3670dad",
+  "startupProbeFixCommit": "9c464ac716730796da4758be655e03d6feb8a4ef",
+  "keyboardRunnerCommit": "52318c6554137756b20151599b3bc1b008ad6722",
+  "checks": [
+    {
+      "command": "pnpm verify",
+      "runSha": "2186977",
+      "dirty": false,
+      "exit": 0,
+      "testFiles": 60,
+      "testsPassed": 798
+    },
+    {
+      "command": "node tests/e2e/dictionary.mjs",
+      "runSha": "2186977603d41af4d38d8a9dcdb551efa3670dad",
+      "dirty": false,
+      "exit": 0,
+      "passed": 18,
+      "failed": 0
+    },
+    {
+      "command": "pnpm test:e2e",
+      "runSha": "2186977603d41af4d38d8a9dcdb551efa3670dad",
+      "dirty": false,
+      "exit": 0,
+      "passed": 19,
+      "blocked": 0,
+      "failed": 0
+    },
+    {
+      "command": "pnpm test:acceptance",
+      "runSha": "9c464ac",
+      "dirty": false,
+      "runnerExit": 2,
+      "passed": 3,
+      "blocked": 6,
+      "failed": 0
+    },
+    {
+      "command": "node tests/e2e/keyboard-journey.mjs",
+      "runSha": "52318c6",
+      "dirty": false,
+      "exit": 0,
+      "journeys": 1,
+      "stepsPassed": 4
+    },
+    {
+      "command": "node scripts/g07-startup-check.mjs ... --preview",
+      "runSha": "9c464ac",
+      "dirty": false,
+      "exit": 0,
+      "scope": "Windows, custom ports, real analysis/dictionary/comparison, non-loopback browser HTTP denied, coordinated cleanup"
+    }
+  ],
+  "httpPerformance": {
+    "runSha": "9c464ac716730796da4758be655e03d6feb8a4ef",
+    "dirty": false,
+    "successSamples": 600,
+    "blockedProbes": 6,
+    "targetP95Ms": 500,
+    "scope": "loopback HTTP; full response body; client-observed API latency; schema checks after timer",
+    "aggregate": [
+      {
+        "concurrency": 1,
+        "successful": 300,
+        "p50Ms": 14.678300000000036,
+        "p95Ms": 16.579100000000153
+      },
+      {
+        "concurrency": 4,
+        "successful": 300,
+        "p50Ms": 8.286199999999553,
+        "p95Ms": 15.930699999999888
+      }
+    ]
+  },
+  "offlineInstallation": {
+    "source": "independent local Git clone, --no-hardlinks; not a remote-network clone",
+    "runSha": "2186977",
+    "command": "pnpm install --offline --frozen-lockfile",
+    "exit": 0,
+    "reused": 196,
+    "downloaded": 0,
+    "existingLocalCacheRequired": true,
+    "offlineVerify": {
+      "exit": 0,
+      "files": 60,
+      "tests": 798
+    },
+    "runtimeUpdatedTo": "9c464ac",
+    "runtimeExit": 0
+  },
+  "backup": {
+    "file": "藏韵阁_本机离线备份_9c464ac.zip",
+    "sourceCommit": "9c464ac716730796da4758be655e03d6feb8a4ef",
+    "bytes": 158783776,
+    "sha256": "1dcc07669f9ebfe9001475e001dc87accb7945e9165ca9bc81205ad58dc02c25",
+    "files": 1012,
+    "hashesVerified": 1011,
+    "actualUnpack": true,
+    "unpackedOfflineInstallExit": 0,
+    "unpackedBuildExit": 0,
+    "nodeModulesIncluded": false,
+    "dependencyCacheIncluded": false,
+    "scope": "private local workspace backup, retains tracked data and original review statuses; not a full-library release"
+  },
+  "boundaries": [
+    "A approved16 batch remains separate PR #28; not included in this feature branch",
+    "HTTP503 data gates remain; arbitrary unreviewed poetry is not guaranteed analyzable",
+    "all-library readyz stays503",
+    "browser network denial is not OS-wide network isolation",
+    "systematic multi-browser/screen-reader coverage and remaining humanities review are not claimed",
+    "original-browser.json notRun describes that original run; separately proven timeout and keyboard scopes appear in their own files",
+    "rehearsal cancelled; D5 morning final verification remains planned"
+  ],
+  "provenance": [
+    {
+      "file": "dictionary-browser.json",
+      "originalSha256": "97bfea0bbe7ea7ed733f913b983e60f9c7061790bfecca0a1f1fe4c7c6a77870",
+      "archivedSha256": "97bfea0bbe7ea7ed733f913b983e60f9c7061790bfecca0a1f1fe4c7c6a77870",
+      "pathRedacted": false
+    },
+    {
+      "file": "original-browser.json",
+      "originalSha256": "aa02c8564b87a492515d85d48d579f953a8fa38997aa2745dac5be794106b5aa",
+      "archivedSha256": "8cdf2bf7ce84a3a479ec706390f340b83a4d67976f09c38b3855272f604ec005",
+      "pathRedacted": true
+    },
+    {
+      "file": "api.json",
+      "originalSha256": "fbc37e77fcd27eae2ea030ff506d7a9f5a6f8f2d015efab7065d42a5db8d6418",
+      "archivedSha256": "fbc37e77fcd27eae2ea030ff506d7a9f5a6f8f2d015efab7065d42a5db8d6418",
+      "pathRedacted": false
+    },
+    {
+      "file": "http-performance.json",
+      "originalSha256": "eb09a02f83ac00e48e87871bc83edd936895339a1ef02d935efb66b8725597db",
+      "archivedSha256": "eb09a02f83ac00e48e87871bc83edd936895339a1ef02d935efb66b8725597db",
+      "pathRedacted": false
+    },
+    {
+      "file": "lookup-performance.json",
+      "originalSha256": "c52393c308fe4874e71f8372d9bfa3e436db7d8856e6f8e467e2febebe96618e",
+      "archivedSha256": "c52393c308fe4874e71f8372d9bfa3e436db7d8856e6f8e467e2febebe96618e",
+      "pathRedacted": false
+    },
+    {
+      "file": "offline-runtime.json",
+      "originalSha256": "6cdf5d458d371cb982a9aafd3f3908786830094ddea6d75efb0a50f7f7f1a3e1",
+      "archivedSha256": "6cdf5d458d371cb982a9aafd3f3908786830094ddea6d75efb0a50f7f7f1a3e1",
+      "pathRedacted": false
+    },
+    {
+      "file": "independent-copy-runtime.json",
+      "originalSha256": "7cb6f685ce6c43c8d9777a0267063e0f3fa1870c9f3b6b813a05102457f87442",
+      "archivedSha256": "7cb6f685ce6c43c8d9777a0267063e0f3fa1870c9f3b6b813a05102457f87442",
+      "pathRedacted": false
+    },
+    {
+      "file": "keyboard-journey.json",
+      "originalSha256": "d3069d2f1f052eb9334ddca8fd74bba77b2f97b3c0458a4f1ceb1ebf1ea41ab7",
+      "archivedSha256": "d3069d2f1f052eb9334ddca8fd74bba77b2f97b3c0458a4f1ceb1ebf1ea41ab7",
+      "pathRedacted": false
+    },
+    {
+      "file": "feature-ci.json",
+      "originalSha256": "1a0cc5e1270a08b75852dc31844e2844683c44d7ca40da82b48e92448925ae2a",
+      "archivedSha256": "1a0cc5e1270a08b75852dc31844e2844683c44d7ca40da82b48e92448925ae2a",
+      "pathRedacted": false
+    }
+  ]
+}
