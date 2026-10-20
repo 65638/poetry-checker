@@ -1,8 +1,32 @@
-# 视觉规格（独特化重设计：「山·墨·诗」墨色展厅）
+# 视觉规格（当前：「月下江山」Moonlit Mountains 第一版）
 
-> 下一轮：[月下江山 V2 方案](MOONLIT-LANDSCAPE-PLAN.md)，包含长诗工具栏、连续山水背景、月光指针、静置环境动效与操作动画。[Claude 实施任务书](CLAUDE-MOONLIT-UI-BRIEF-EN.md) 已准备。**页面尚未实施；本文件下述内容仍描述现有页面，不是新效果的验收。**
+> 当前实施依据：[CLAUDE-MOONLIT-UI-BRIEF-EN.md](CLAUDE-MOONLIT-UI-BRIEF-EN.md)。完整交接（提交、命令、动效表、性能、限制）见 **[HANDOFF-MOONLIT-UI.md](HANDOFF-MOONLIT-UI.md)**。视觉评审：**待 Codex 审阅**（本会话为纯文本通道，截图仅写入磁盘，未以像素形式查看）。
 
-范围：`apps/web/src/presentation/`。颜色、尺寸、时长只在 `styles/tokens.css` 定义。完整交接（文件、命令、截图、限制）见 `HANDOFF-DISTINCTIVE-UI.md`；方向比较见 `DISTINCTIVE-UI-DIRECTION.md`。旧「校对台 / 写作台」规格已被本方向取代。
+## 已交付（第一版）
+- 连续月夜山水背景 `MoonlitScene`：天空、月晕、月、三层山脊、两条雾带、水面与波光，固定层、`aria-hidden`、纯 SVG/CSS，不含生成位图。
+- 静置环境动效：雾 26s / 31s 交替漂移、水光 9s、外圈月晕 16s；纯 CSS，静置时 rAF 次数为 0（实测 30s）。
+- 指针响应：光晕 τ=80ms、视差 τ=260ms，约 900ms 内回落到环境动效并停止循环；涟漪最多 2 个、间隔 ≥250ms，不出现在可交互元素或阅读面上。月牙光标 `cursor-moon.svg`（热点 4,4），强制颜色模式下取消。
+- 阅读面保持静止：手稿、输入台、栏均为不透明面；证据面板打开、编辑中、忙碌时场景进入 quiet。
+- 粘性阅读栏 `ReadingRail`（≥900px）：韵书、统计、逐句跳转；滚动侦测只标 `aria-current`，不主动滚动；高度上限 `100vh − --pc-rail-top − --pc-rail-clear`，首屏不越出视口，也不压页脚。≤899px 为文内静态块。
+- 输入台可收起 / 展开，收起时 textarea 保留挂载并 `inert`；IME 组合期间 Ctrl+Enter 不提交。
+- 动效偏好：标题区「动效」开关，仅本地显示状态；系统减少动效时禁用并说明。减少动效 / 关闭动效 / 页面隐藏时环境动效暂停。
+
+## 色彩与对比（tokens.css 唯一来源，WCAG 比值实测计算）
+- 正文 `#233238` / 手稿 `#f5f0e5`：11.66:1；次要文字 `#4e5b5e`：手稿 6.20:1，凹面 `#ece6d7` 5.66:1。
+- 夜色面文字 `#ece6d6`：栏 `#13252b` 12.70:1，夜 `#101f25` 13.54:1；夜色次要 `#a9b8b4`：栏 7.69:1，夜 8.20:1。
+- 印章 `#a64135` 上白字 6.12:1；栏上强调 `#e07a68` 5.39:1、金 `#e2c27a` 9.22:1。
+
+## 证据
+- 截图与清单：`docs/design/moonlit-ui/round1/`（52 张，含 SHA、视口、状态、模式、时间戳；真实本地 API，非 fixture）。
+- 回归脚本：`docs/design/moonlit-ui/moonlit-{scene,report,reveal}-checks.mjs`，结果在 `docs/design/moonlit-ui/results/`。
+
+## 已知限制
+- 证据面板退出动画未实现（保持即时关闭）；场景无 offscreen 暂停（固定层始终可见，依赖 visibilitychange）。
+- 规线与衬线字体对齐依赖现有字体栈（沿用旧结论）。
+
+---
+
+## 历史：上一方向「山·墨·诗」墨色展厅（已被月下江山取代，仅供对照）
 
 ## 构图
 - 顶部墨色展台（332px，<1100px 292px，桌面高度 ≤800px 时 288px，≤599px 约 196px）：巨字「诗」、印章红日、三层 SVG 山峦与雾，全部 aria-hidden；「律」印（组长已确认）+ 楷体标题 64 / 52 / 34px + 竖排小字。

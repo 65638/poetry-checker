@@ -1,0 +1,468 @@
+{
+  "round": "round1",
+  "sha": "13c5efd05bd4a1af7207b8b8977a62d806e12235",
+  "dirty": false,
+  "data": "real local API via isolated harness (not fixture)",
+  "route": "/",
+  "shots": [
+    {
+      "file": "1440x900-initial.png",
+      "state": "initial",
+      "mode": "effects-on",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T01:12:54.925Z"
+    },
+    {
+      "file": "1440x900-report.png",
+      "state": "report",
+      "mode": "effects-on",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T01:12:56.032Z"
+    },
+    {
+      "file": "1440x900-report-full.png",
+      "state": "report-full",
+      "mode": "effects-on",
+      "viewport": "1440x900",
+      "fullPage": true,
+      "at": "2026-10-20T01:12:56.182Z"
+    },
+    {
+      "file": "1440x900-evidence.png",
+      "state": "evidence",
+      "mode": "effects-on",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T01:12:56.885Z"
+    },
+    {
+      "file": "1440x900-long-top.png",
+      "state": "long-top",
+      "mode": "effects-on",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T01:12:58.555Z"
+    },
+    {
+      "file": "1440x900-long-middle.png",
+      "state": "long-middle",
+      "mode": "effects-on",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T01:12:59.119Z"
+    },
+    {
+      "file": "1440x900-long-bottom.png",
+      "state": "long-bottom",
+      "mode": "effects-on",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T01:12:59.677Z"
+    },
+    {
+      "file": "1440x900-stale.png",
+      "state": "stale",
+      "mode": "effects-on",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T01:13:00.172Z"
+    },
+    {
+      "file": "1440x900-error.png",
+      "state": "error",
+      "mode": "effects-on",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T01:13:00.958Z"
+    },
+    {
+      "file": "1366x768-initial.png",
+      "state": "initial",
+      "mode": "effects-on",
+      "viewport": "1366x768",
+      "fullPage": false,
+      "at": "2026-10-20T01:13:02.835Z"
+    },
+    {
+      "file": "1366x768-report.png",
+      "state": "report",
+      "mode": "effects-on",
+      "viewport": "1366x768",
+      "fullPage": false,
+      "at": "2026-10-20T01:13:03.890Z"
+    },
+    {
+      "file": "1280x800-initial.png",
+      "state": "initial",
+      "mode": "effects-on",
+      "viewport": "1280x800",
+      "fullPage": false,
+      "at": "2026-10-20T01:13:05.757Z"
+    },
+    {
+      "file": "1280x800-report.png",
+      "state": "report",
+      "mode": "effects-on",
+      "viewport": "1280x800",
+      "fullPage": false,
+      "at": "2026-10-20T01:13:06.817Z"
+    },
+    {
+      "file": "1100x900-initial.png",
+      "state": "initial",
+      "mode": "effects-on",
+      "viewport": "1100x900",
+      "fullPage": false,
+      "at": "2026-10-20T01:13:08.695Z"
+    },
+    {
+      "file": "1100x900-report.png",
+      "state": "report",
+      "mode": "effects-on",
+      "viewport": "1100x900",
+      "fullPage": false,
+      "at": "2026-10-20T01:13:09.753Z"
+    },
+    {
+      "file": "1024x768-initial.png",
+      "state": "initial",
+      "mode": "effects-on",
+      "viewport": "1024x768",
+      "fullPage": false,
+      "at": "2026-10-20T01:13:11.619Z"
+    },
+    {
+      "file": "1024x768-report.png",
+      "state": "report",
+      "mode": "effects-on",
+      "viewport": "1024x768",
+      "fullPage": false,
+      "at": "2026-10-20T01:13:12.666Z"
+    },
+    {
+      "file": "900x900-initial.png",
+      "state": "initial",
+      "mode": "effects-on",
+      "viewport": "900x900",
+      "fullPage": false,
+      "at": "2026-10-20T01:13:14.544Z"
+    },
+    {
+      "file": "900x900-report.png",
+      "state": "report",
+      "mode": "effects-on",
+      "viewport": "900x900",
+      "fullPage": false,
+      "at": "2026-10-20T01:13:15.590Z"
+    },
+    {
+      "file": "900x900-report-full.png",
+      "state": "report-full",
+      "mode": "effects-on",
+      "viewport": "900x900",
+      "fullPage": true,
+      "at": "2026-10-20T01:13:15.675Z"
+    },
+    {
+      "file": "900x900-evidence.png",
+      "state": "evidence",
+      "mode": "effects-on",
+      "viewport": "900x900",
+      "fullPage": false,
+      "at": "2026-10-20T01:13:16.353Z"
+    },
+    {
+      "file": "900x900-long-top.png",
+      "state": "long-top",
+      "mode": "effects-on",
+      "viewport": "900x900",
+      "fullPage": false,
+      "at": "2026-10-20T01:13:17.975Z"
+    },
+    {
+      "file": "900x900-long-middle.png",
+      "state": "long-middle",
+      "mode": "effects-on",
+      "viewport": "900x900",
+      "fullPage": false,
+      "at": "2026-10-20T01:13:18.535Z"
+    },
+    {
+      "file": "900x900-long-bottom.png",
+      "state": "long-bottom",
+      "mode": "effects-on",
+      "viewport": "900x900",
+      "fullPage": false,
+      "at": "2026-10-20T01:13:19.098Z"
+    },
+    {
+      "file": "900x900-stale.png",
+      "state": "stale",
+      "mode": "effects-on",
+      "viewport": "900x900",
+      "fullPage": false,
+      "at": "2026-10-20T01:13:19.575Z"
+    },
+    {
+      "file": "900x900-error.png",
+      "state": "error",
+      "mode": "effects-on",
+      "viewport": "900x900",
+      "fullPage": false,
+      "at": "2026-10-20T01:13:20.345Z"
+    },
+    {
+      "file": "899x900-initial.png",
+      "state": "initial",
+      "mode": "effects-on",
+      "viewport": "899x900",
+      "fullPage": false,
+      "at": "2026-10-20T01:13:22.198Z"
+    },
+    {
+      "file": "899x900-report.png",
+      "state": "report",
+      "mode": "effects-on",
+      "viewport": "899x900",
+      "fullPage": false,
+      "at": "2026-10-20T01:13:23.235Z"
+    },
+    {
+      "file": "768x1024-initial.png",
+      "state": "initial",
+      "mode": "effects-on",
+      "viewport": "768x1024",
+      "fullPage": false,
+      "at": "2026-10-20T01:13:25.068Z"
+    },
+    {
+      "file": "768x1024-report.png",
+      "state": "report",
+      "mode": "effects-on",
+      "viewport": "768x1024",
+      "fullPage": false,
+      "at": "2026-10-20T01:13:26.117Z"
+    },
+    {
+      "file": "375x812-initial.png",
+      "state": "initial",
+      "mode": "effects-on",
+      "viewport": "375x812",
+      "fullPage": false,
+      "at": "2026-10-20T01:13:27.961Z"
+    },
+    {
+      "file": "375x812-report.png",
+      "state": "report",
+      "mode": "effects-on",
+      "viewport": "375x812",
+      "fullPage": false,
+      "at": "2026-10-20T01:13:29.008Z"
+    },
+    {
+      "file": "375x812-report-full.png",
+      "state": "report-full",
+      "mode": "effects-on",
+      "viewport": "375x812",
+      "fullPage": true,
+      "at": "2026-10-20T01:13:29.067Z"
+    },
+    {
+      "file": "375x812-evidence.png",
+      "state": "evidence",
+      "mode": "effects-on",
+      "viewport": "375x812",
+      "fullPage": false,
+      "at": "2026-10-20T01:13:29.727Z"
+    },
+    {
+      "file": "375x812-long-top.png",
+      "state": "long-top",
+      "mode": "effects-on",
+      "viewport": "375x812",
+      "fullPage": false,
+      "at": "2026-10-20T01:13:31.344Z"
+    },
+    {
+      "file": "375x812-long-middle.png",
+      "state": "long-middle",
+      "mode": "effects-on",
+      "viewport": "375x812",
+      "fullPage": false,
+      "at": "2026-10-20T01:13:31.888Z"
+    },
+    {
+      "file": "375x812-long-bottom.png",
+      "state": "long-bottom",
+      "mode": "effects-on",
+      "viewport": "375x812",
+      "fullPage": false,
+      "at": "2026-10-20T01:13:32.430Z"
+    },
+    {
+      "file": "375x812-stale.png",
+      "state": "stale",
+      "mode": "effects-on",
+      "viewport": "375x812",
+      "fullPage": false,
+      "at": "2026-10-20T01:13:32.903Z"
+    },
+    {
+      "file": "375x812-error.png",
+      "state": "error",
+      "mode": "effects-on",
+      "viewport": "375x812",
+      "fullPage": false,
+      "at": "2026-10-20T01:13:33.661Z"
+    },
+    {
+      "file": "1440x900-initial.png",
+      "state": "initial",
+      "mode": "reduced-motion",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T01:13:34.648Z"
+    },
+    {
+      "file": "1440x900-report.png",
+      "state": "report",
+      "mode": "reduced-motion",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T01:13:35.409Z"
+    },
+    {
+      "file": "375x812-initial.png",
+      "state": "initial",
+      "mode": "reduced-motion",
+      "viewport": "375x812",
+      "fullPage": false,
+      "at": "2026-10-20T01:13:36.363Z"
+    },
+    {
+      "file": "375x812-report.png",
+      "state": "report",
+      "mode": "reduced-motion",
+      "viewport": "375x812",
+      "fullPage": false,
+      "at": "2026-10-20T01:13:37.076Z"
+    },
+    {
+      "file": "1440x900-initial.png",
+      "state": "initial",
+      "mode": "effects-off",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T01:13:39.378Z"
+    },
+    {
+      "file": "1440x900-idle-t0s.png",
+      "state": "idle-t0s",
+      "mode": "effects-on idle",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T01:13:41.274Z"
+    },
+    {
+      "file": "1440x900-idle-t10s.png",
+      "state": "idle-t10s",
+      "mode": "effects-on idle",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T01:13:51.361Z"
+    },
+    {
+      "file": "1440x900-idle-t20s.png",
+      "state": "idle-t20s",
+      "mode": "effects-on idle",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T01:14:01.458Z"
+    },
+    {
+      "file": "1440x900-idle-t30s.png",
+      "state": "idle-t30s",
+      "mode": "effects-on idle",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T01:14:11.555Z"
+    },
+    {
+      "file": "1440x900-pointer-50.png",
+      "state": "pointer-50",
+      "mode": "effects-on pointer",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T01:14:13.208Z"
+    },
+    {
+      "file": "1440x900-pointer-150.png",
+      "state": "pointer-150",
+      "mode": "effects-on pointer",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T01:14:16.393Z"
+    },
+    {
+      "file": "1440x900-pointer-250.png",
+      "state": "pointer-250",
+      "mode": "effects-on pointer",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T01:14:19.596Z"
+    },
+    {
+      "file": "1440x900-pointer-settled.png",
+      "state": "pointer-settled",
+      "mode": "effects-on settled",
+      "viewport": "1440x900",
+      "fullPage": false,
+      "at": "2026-10-20T01:14:22.869Z"
+    }
+  ],
+  "motion": {
+    "idle": [
+      {
+        "t": 0,
+        "mist": "matrix(1, 0, 0, 1, 52.4858, 0)",
+        "haze": "matrix(0.941249, 0, 0, 0.941249, 0, 0)",
+        "glint": "matrix(0.760004, 0, 0, 1, -10.7995, 0)",
+        "raf": 0
+      },
+      {
+        "t": 10,
+        "mist": "matrix(1, 0, 0, 1, -13.7661, 0)",
+        "haze": "matrix(1.05166, 0, 0, 1.05166, 0, 0)",
+        "glint": "matrix(0.921519, 0, 0, 1, 8.58231, 0)",
+        "raf": 0
+      },
+      {
+        "t": 20,
+        "mist": "matrix(1, 0, 0, 1, -63.9111, 0)",
+        "haze": "matrix(1.04863, 0, 0, 1.04863, 0, 0)",
+        "glint": "matrix(0.985796, 0, 0, 1, 16.2955, 0)",
+        "raf": 0
+      },
+      {
+        "t": 30,
+        "mist": "matrix(1, 0, 0, 1, -26.9223, 0)",
+        "haze": "matrix(0.940228, 0, 0, 0.940228, 0, 0)",
+        "glint": "matrix(0.999993, 0, 0, 1, 17.9991, 0)",
+        "raf": 0
+      }
+    ],
+    "pointer": {
+      "moves": 314,
+      "frames": 1995,
+      "p50": 4.2,
+      "p95": 4.3,
+      "p99": 4.3,
+      "over50ms": 0,
+      "longTasks": []
+    },
+    "note": "Headless Chromium frame timings; indicative only, not a device benchmark."
+  },
+  "url": "http://127.0.0.1:64140/"
+}
