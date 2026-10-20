@@ -52,7 +52,24 @@ Internal component props and local presentation state may change. Suggested resp
 - `useMotionPreference`: system preference, local toggle, visibility and cleanup.
 - `PointerHalo`: decorative follower, separate from the actual cursor.
 
-Do not create a second model of the report or duplicate the input form. Separate decorative animation state from analysis state. Prefer CSS/SVG and small WAAPI transitions; no WebGL, video, remote font or new animation library is required. Use original code-native assets and existing licensed assets. Record any new asset provenance. The first implementation should work without downloading anything at runtime.
+Do not create a second model of the report or duplicate the input form. Separate decorative animation state from analysis state. Prefer CSS/SVG and small WAAPI transitions; no WebGL, video, remote font or new animation library is required. New shipping scene illustrations, textures and cursor artwork must stay code-native SVG/CSS. Generated rasters are internal references only, as specified below. Record any new asset provenance. The first implementation should work without downloading anything at runtime.
+
+### Optional t2i concept reference — text-path output only
+
+The user supplied this local MCP integration contract: `t2i` exposes `generate_image(prompt, filename, model, size)`; the default model is `gpt-image-2.5`, and the result is a file path returned as text. Availability was reported by the user, not verified during this documentation preparation. Inspect the actual tool schema in your session for its callable name and accepted sizes. If unavailable, continue SVG/CSS implementation and report the limitation.
+
+Use it only when a concept reference helps resolve composition, landscape depth or light. Start with one reference; this optional tool must not block the working interface.
+
+- Call `generate_image(prompt, filename, model, size)` with an **ABSOLUTE** filename under this worktree's `docs/design/` or a temporary directory. Create the parent directory if required. Suggested file: `C:/Users/21393/Documents/Codex/2026-10-16/6-vibe-coding-ai-ai-web/work/ui-moonlit/docs/design/moonlit-ui/concepts/moonlit-reference-01.png`. Use a new filename for another attempt.
+- Set `model` to `gpt-image-2.5` or use its documented default. Select a landscape `size` supported by the actual schema; do not invent supported resolutions. Keep credentials in the configured integration, never in prompts, source or logs.
+- The integration must return a **text file path**. Never read generated image bytes into conversation context, embed base64, display the image inline, or invoke an image-returning inspection tool in this Claude session. If the integration unexpectedly returns image blocks, stop using that path and continue without generation; do not forward or reconstruct those blocks.
+- For each generation, report **only the absolute returned path plus one line describing the intended concept**. Do not claim inspection, visual quality or a working UI screenshot based on a path alone. The user or Codex can inspect the reference later through a compatible session.
+- Generated raster images are **internal concept/mockup/reference ONLY**. Do not place them in `apps/web/public`, import them into TSX/CSS, or embed raster bytes in an SVG wrapper. Shipping scenery, textures, cursor artwork and effects remain editable code-native SVG/CSS.
+- Record the prompt, requested model/size, returned path, time, `purpose: internal-concept-only` and `visualReview: pending` in a local reference manifest under `docs/design/moonlit-ui/concepts/`. Separate references from actual browser captures: generated pictures cannot establish implementation or acceptance.
+
+Suggested concept prompt, adaptable to the selected layout:
+
+> Internal art-direction reference for a Chinese poetry analysis web application, Moonlit Mountains. A composed nocturnal riverside scene with layered blue-green mountains, a low silver moon, sparse mist and restrained reflected light on water. A compact writing desk area on the left and a broad warm ivory manuscript reading surface on the right, with generous quiet areas for real text and controls. Atmosphere continues from the top through the working area, no abrupt black-to-white boundary. Deliberate depth and asymmetry, refined literary exhibition character, a tiny vermilion seal accent. Landscape details stay at the edges; reading surfaces are opaque and calm. No readable text, invented calligraphy, neon, glass dashboard or dense particles. This is a concept reference only; the actual interface and animated layers will be implemented separately in SVG/CSS.
 
 ## 4. Art direction and layout
 
@@ -153,7 +170,7 @@ Capture initial/report, long report middle/bottom, evidence, error/stale and red
 
 ## 9. Text-only channel and final handoff
 
-This Claude channel is TEXT ONLY. Do not invoke image-returning tools, display screenshots inline, or print base64. Browser code may save PNG/video to disk and return paths and numeric measurements only. Use new folders under `docs/design/moonlit-ui/<commit-or-round>/`, with a manifest of SHA, dirty state, route, mode, viewport, timestamp and fixture/real distinction. Never overwrite the previous redesign's evidence.
+This Claude channel is TEXT ONLY. Do not invoke image-returning tools, display screenshots inline, or print base64. The optional t2i call above is permitted specifically because its integration returns a text path, not an image block; report that path plus one descriptive line only. Browser code may save PNG/video to disk and return paths and numeric measurements only. Use new folders under `docs/design/moonlit-ui/<commit-or-round>/`, with a manifest of SHA, dirty state, route, mode, viewport, timestamp and fixture/real distinction. Never overwrite the previous redesign's evidence.
 
 Codex will inspect screenshots after the user switches back. Until someone actually inspects them, label visual review pending; geometry, passing tests and an unviewed screenshot are not aesthetic approval. If review is unavailable, finish the functional first pass and its evidence; do not fabricate reviewer comments or spend both refinement rounds blindly. No need for another direction approval before starting implementation.
 
