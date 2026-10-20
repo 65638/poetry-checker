@@ -41,7 +41,8 @@ function toneOf(t: AnnotatedToken) {
   return { label: '未定', mod: 'unknown' };
 }
 
-function prefersReducedMotion() {
+function prefersReducedMotion(el?: Element | null) {
+  if (el?.closest<HTMLElement>('.pc-root')?.dataset.motion === 'off') return true;
   return typeof window.matchMedia === 'function'
     && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
@@ -61,7 +62,6 @@ export function ReportView(props: ReportViewProps) {
   );
   const summary = SUMMARY[report.summary.status];
   const firstRelated = selectedFinding?.locations[0]?.tokenId ?? null;
-  const reportId = report.inputHash;
   const renderFinding = ({ f, n }: { f: Finding; n: number }) => {
     const st = CHECK[f.status];
     const rule = report.provenance.rules.find((r) => r.id === f.ruleId);
@@ -101,7 +101,7 @@ export function ReportView(props: ReportViewProps) {
 
   useEffect(() => {
     const el = rootRef.current;
-    if (!el || typeof el.animate !== 'function' || prefersReducedMotion()) return;
+    if (!el || typeof el.animate !== 'function' || prefersReducedMotion(el)) return;
     const ms = parseFloat(getComputedStyle(el).getPropertyValue('--pc-dur-report'));
     if (!(ms > 0)) return;
     const style = getComputedStyle(el);
@@ -128,7 +128,7 @@ export function ReportView(props: ReportViewProps) {
         { duration: ms, delay: i * step, easing, fill: 'backwards' },
       );
     });
-  }, [reportId]);
+  }, [report]);
 
   useEffect(() => {
     if (selectedFinding && SETTLED.has(selectedFinding.status) && settledRef.current) {
@@ -140,7 +140,7 @@ export function ReportView(props: ReportViewProps) {
     if (firstRelated === null) return;
     const el = Array.from(gridRef.current?.querySelectorAll<HTMLElement>('[data-token-id]') ?? [])
       .find((n) => n.dataset.tokenId === firstRelated);
-    el?.scrollIntoView({ block: 'nearest', behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
+    el?.scrollIntoView({ block: 'nearest', behavior: prefersReducedMotion(el) ? 'auto' : 'smooth' });
   }, [selectedFindingId, firstRelated]);
 
   return (
@@ -191,7 +191,7 @@ export function ReportView(props: ReportViewProps) {
         </div>
         <ol ref={gridRef} className="pc-grid">
           {report.poem.lines.map((line, lineIndex) => (
-            <li key={line.line} className="pc-line">
+            <li key={line.line} id={`pc-line-${line.line}`} data-line={line.line} className="pc-line">
               <span className="pc-line__no">第{line.line}句</span>
               <div className="pc-line__cells">
                 {line.tokenIds.map((id, i) => {

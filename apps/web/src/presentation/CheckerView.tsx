@@ -1,12 +1,16 @@
 // apps/web/src/presentation/CheckerView.tsx
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { CheckerViewProps } from '../view-contract';
 import { InputPanel } from './components/InputPanel';
 import { ReportView } from './components/ReportView';
 import { EvidencePanel } from './components/EvidencePanel';
-import { InkStage } from './components/InkStage';
+import { MoonlitScene } from './components/MoonlitScene';
+import { ReadingRail } from './components/ReadingRail';
+import { useMotionPreference } from './useMotionPreference';
 import './styles/tokens.css';
+import './styles/scene.css';
 import './styles/layout.css';
+import './styles/rail.css';
 
 const STEPS = [
   { no: '壹', title: '录入诗文', text: '每行一句，标点可留可去，原文与位置都会保留。' },
@@ -21,6 +25,12 @@ export function CheckerView(props: CheckerViewProps) {
   const prevTokenIdRef = useRef<string | null>(selectedTokenId);
   const manuscriptRef = useRef<HTMLElement>(null);
   const revealIntentRef = useRef<{ from: CheckerViewProps['report']; sawBusy: boolean } | null>(null);
+  const motion = useMotionPreference();
+  const effectsRef = useRef(motion.effects);
+  effectsRef.current = motion.effects;
+  const [editorCollapsed, setEditorCollapsed] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const [exampleGlow, setExampleGlow] = useState(0);
 
   const selectedToken =
     report !== null && selectedTokenId !== null
@@ -28,6 +38,7 @@ export function CheckerView(props: CheckerViewProps) {
       : null;
   const panelOpen = selectedToken !== null;
   const hasReport = report !== null;
+  const collapsed = hasReport && editorCollapsed;
 
   const lockedReason = stale
     ? '报告与当前输入不一致，请重新分析后再选音。'
@@ -51,6 +62,13 @@ export function CheckerView(props: CheckerViewProps) {
     revealIntentRef.current = null;
     props.onDraftChange(next);
   };
+
+  const handleLoadExample = (exampleId: string) => {
+    setExampleGlow((n) => n + 1);
+    props.onLoadExample(exampleId);
+  };
+
+  const toggleEditor = () => setEditorCollapsed((c) => !c);
 
   // Intent is dropped as soon as the user scrolls on their own while the request is pending.
   useEffect(() => {
@@ -83,7 +101,7 @@ export function CheckerView(props: CheckerViewProps) {
     if (report === null || report === intent.from || error !== null || stale || !sheet) return;
     if (typeof sheet.scrollIntoView !== 'function' || typeof window.matchMedia !== 'function') return;
     if (!window.matchMedia('(max-width: 899px)').matches) return;
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const reduce = !effectsRef.current || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     sheet.scrollIntoView({ block: 'start', behavior: reduce ? 'auto' : 'smooth' });
   }, [busy, report, error, stale]);
 
@@ -101,44 +119,100 @@ export function CheckerView(props: CheckerViewProps) {
     target?.focus();
   }, [selectedTokenId]);
 
+  const quiet = panelOpen || editing || busy;
+
   return (
     <div
       ref={rootRef}
       className={`pc-root${hasReport ? ' pc-root--reading' : ' pc-root--writing'}${busy ? ' pc-root--busy' : ''}`}
+      data-motion={motion.effects ? 'on' : 'off'}
+      data-ambient={quiet ? 'quiet' : 'live'}
     >
+      <MoonlitScene active={motion.effects} quiet={quiet} />
+
       <div className="pc-page" inert={panelOpen}>
-        <header className="pc-stage">
-          <InkStage />
-          <div className="pc-stage__inner">
-            <span className="pc-seal" aria-hidden="true">律</span>
-            <div className="pc-stage__titles">
-              <p className="pc-stage__kicker" aria-hidden="true">山 · 墨 · 诗</p>
-              <h1 className="pc-title">诗格律检查器</h1>
-              <p className="pc-stage__sub">近体诗平仄 · 用韵 · 读音依据，逐字展陈</p>
-            </div>
-            <p className="pc-stage__vertical" aria-hidden="true">一字一音皆有据</p>
+        <header className="pc-masthead">
+          <span className="pc-seal" aria-hidden="true">律</span>
+          <div className="pc-masthead__titles">
+            <h1 className="pc-title">诗格律检查器</h1>
+            <p className="pc-masthead__sub">月下山水间，逐字核对平仄、用韵与读音依据</p>
+          </div>
+          <div className="pc-masthead__tools">
+            <button
+              type="button"
+              className="pc-motion-toggle"
+              aria-pressed={motion.effects}
+              disabled={motion.systemReduced}
+              onClick={motion.toggle}
+            >
+              <span className="pc-motion-toggle__dot" aria-hidden="true" />
+              动态效果：{motion.effects ? '开' : '关'}
+            </button>
+            {motion.systemReduced && (
+              <span className="pc-motion-toggle__note">系统已设置减少动态</span>
+            )}
           </div>
         </header>
 
         <main className={`pc-hall${hasReport ? ' pc-hall--reading' : ' pc-hall--writing'}`}>
-          <section className="pc-plinth" aria-labelledby="pc-input-heading">
-            <h2 id="pc-input-heading" className="pc-plinth__heading">
-              <span className="pc-plinth__no" aria-hidden="true">壹</span>
-              录诗
-            </h2>
-            <InputPanel
-              draft={draft}
-              busy={busy}
-              examples={props.examples}
-              onDraftChange={handleDraftChange}
-              onAnalyze={handleAnalyze}
-              onLoadExample={props.onLoadExample}
-            />
+          {hasReport ? (
+            <div className="pc-hall__rail">
+              <ReadingRail
+                report={report}
+                stale={stale}
+                effects={motion.effects}
+                editorCollapsed={collapsed}
+                onToggleEditor={toggleEditor}
+              />
+            </div>
+          ) : null}
+
+          <section
+            className={`pc-plinth pc-surface${collapsed ? ' pc-plinth--collapsed' : ''}`}
+            aria-labelledby="pc-input-heading"
+            onFocus={() => setEditing(true)}
+            onBlur={(e) => {
+              if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setEditing(false);
+            }}
+          >
+            <div className="pc-plinth__head">
+              <h2 id="pc-input-heading" className="pc-plinth__heading">
+                <span className="pc-plinth__no" aria-hidden="true">壹</span>
+                录诗
+              </h2>
+              {hasReport ? (
+                <button
+                  type="button"
+                  className="pc-button pc-button--quiet pc-plinth__toggle"
+                  aria-expanded={!collapsed}
+                  aria-controls="pc-editor-body"
+                  onClick={toggleEditor}
+                >
+                  {collapsed ? '展开编辑' : '收起编辑'}
+                </button>
+              ) : null}
+            </div>
+            <div
+              id="pc-editor-body"
+              className="pc-editor-body"
+              data-collapsed={collapsed ? 'true' : 'false'}
+              inert={collapsed}
+            >
+              <span key={exampleGlow} className="pc-plinth__glow" data-on={exampleGlow > 0 ? 'true' : 'false'} aria-hidden="true" />
+              <InputPanel
+                draft={draft}
+                busy={busy}
+                examples={props.examples}
+                onDraftChange={handleDraftChange}
+                onAnalyze={handleAnalyze}
+                onLoadExample={handleLoadExample}
+              />
+            </div>
           </section>
 
           <section
             ref={manuscriptRef}
-            className="pc-manuscript"
+            className="pc-manuscript pc-surface"
             aria-labelledby="pc-report-heading"
             aria-busy={busy}
           >

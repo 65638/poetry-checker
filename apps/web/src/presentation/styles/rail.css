@@ -1,0 +1,205 @@
+/* Sticky reading rail: lives inside the hall grid, so it can never cross the footer. */
+.pc-rail {
+  position: sticky;
+  top: var(--pc-rail-top);
+  display: flex;
+  flex-direction: column;
+  gap: var(--pc-space-3);
+  max-height: calc(100vh - var(--pc-rail-top) * 2);
+  box-sizing: border-box;
+  padding: var(--pc-space-4);
+  background: var(--pc-surface-rail);
+  color: var(--pc-on-ink);
+  border: 1px solid var(--pc-ink-600);
+  border-radius: var(--pc-radius-panel);
+  box-shadow: var(--pc-shadow-sheet);
+  animation: pc-rise var(--pc-dur-stage) var(--pc-ease-out) var(--pc-delay-stage) both;
+}
+
+.pc-rail :focus-visible {
+  outline-color: var(--pc-focus-on-ink);
+}
+
+.pc-rail__book {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--pc-space-2);
+  font-family: var(--pc-font-serif);
+  font-size: var(--pc-text-lg);
+}
+
+.pc-rail__kicker {
+  margin: 0;
+  font-size: var(--pc-text-xs);
+  letter-spacing: 0.2em;
+  color: var(--pc-on-ink-muted);
+}
+
+.pc-rail__counts {
+  list-style: none;
+  margin: 0;
+  padding: var(--pc-space-2) 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--pc-space-1) var(--pc-space-3);
+  border-top: 1px solid var(--pc-ink-600);
+  border-bottom: 1px solid var(--pc-ink-600);
+  font-size: var(--pc-text-sm);
+}
+
+.pc-rail__count {
+  display: flex;
+  align-items: baseline;
+  gap: var(--pc-space-1);
+  color: var(--pc-on-ink);
+  background: none;
+}
+
+.pc-rail__count strong {
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+}
+
+.pc-rail__count.pc-finding--fail span {
+  color: var(--pc-on-ink-accent);
+}
+
+.pc-rail__count.pc-finding--uncertain span {
+  color: var(--pc-on-ink-gold);
+}
+
+.pc-rail__lines {
+  list-style: none;
+  margin: 0;
+  padding: 0 var(--pc-space-1) 0 0;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--pc-ink-500) transparent;
+}
+
+.pc-rail__line {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--pc-space-2);
+  width: 100%;
+  min-height: 44px;
+  padding: 0 var(--pc-space-2) 0 var(--pc-space-3);
+  border: 0;
+  border-radius: var(--pc-radius);
+  background: transparent;
+  color: var(--pc-on-ink-muted);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background-color var(--pc-dur-control) var(--pc-ease-out),
+    color var(--pc-dur-control) var(--pc-ease-out);
+}
+
+.pc-rail__line::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 10px;
+  bottom: 10px;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--pc-moon);
+  transform: scaleY(0);
+  transition: transform var(--pc-dur-book) var(--pc-ease-out);
+}
+
+.pc-rail__line:hover:not(:disabled) {
+  background: var(--pc-ink-700);
+  color: var(--pc-on-ink);
+}
+
+.pc-rail__line--active {
+  color: var(--pc-on-ink);
+}
+
+.pc-rail__line--active::before {
+  transform: scaleY(1);
+}
+
+.pc-rail__line:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.pc-rail__no {
+  flex: none;
+  width: 1.6em;
+  font-size: var(--pc-text-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+.pc-rail__text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--pc-font-serif);
+  letter-spacing: 0.08em;
+}
+
+.pc-rail__edit {
+  flex: none;
+  color: var(--pc-on-ink);
+  border-color: var(--pc-on-ink-muted);
+  background: transparent;
+}
+
+.pc-rail--stale .pc-rail__lines {
+  opacity: 0.7;
+}
+
+/* One-shot highlight on the destination line after an explicit jump. */
+.pc-line--flash {
+  animation: pc-line-flash 1100ms var(--pc-ease-out);
+}
+
+.pc-line:focus {
+  outline: none;
+}
+
+.pc-line:focus-visible {
+  outline: var(--pc-focus-width) solid var(--pc-focus);
+  outline-offset: var(--pc-focus-offset);
+}
+
+@keyframes pc-line-flash {
+  0% { box-shadow: inset 4px 0 0 var(--pc-seal); background-color: var(--pc-review-bg); }
+  100% { box-shadow: inset 4px 0 0 transparent; background-color: transparent; }
+}
+
+.pc-root[data-motion="off"] .pc-line--flash {
+  animation: none;
+  box-shadow: inset 4px 0 0 var(--pc-seal);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pc-line--flash {
+    animation: none;
+    box-shadow: inset 4px 0 0 var(--pc-seal);
+  }
+}
+
+/* Single column: rail becomes an in-flow directory disclosure; nothing fixed. */
+@media (max-width: 899px) {
+  .pc-rail {
+    position: static;
+    max-height: none;
+  }
+
+  .pc-rail__lines {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    max-height: 40vh;
+  }
+}
