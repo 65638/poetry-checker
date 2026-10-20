@@ -151,35 +151,25 @@
 
 .pc-hall--reading .pc-desk__inner {
   position: sticky;
-  top: 24px;
-  max-height: calc(100dvh - 140px);
+  top: 16px;
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  /* Keep the wooden edge and focus outlines inside the scrollable viewport. */
+  padding: 8px;
+  margin: -8px;
+  scrollbar-width: thin;
+  scrollbar-color: #80978b transparent;
 }
 
 .pc-hall__rail {
   display: flex;
   flex-direction: column;
-  min-height: 168px;
+  min-height: min-content;
   flex: 1;
 }
 
 .pc-hall--reading .pc-plinth {
   flex: none;
-}
-
-.pc-desk__inner:has(.pc-input--settings) {
-  /* Expanded controls stay at the same sticky origin; scroll inside the form. */
-  max-height: calc(100dvh - 140px);
-}
-
-.pc-hall--reading .pc-input--settings {
-  max-height: calc(100dvh - 270px);
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: #80978b #20373e;
-}
-
-.pc-desk__inner:has(.pc-input--settings) .pc-rail {
-  max-height: 360px;
 }
 
 .pc-surface {
@@ -643,6 +633,9 @@
   .pc-hall--reading .pc-desk__inner {
     position: static;
     max-height: none;
+    overflow: visible;
+    padding: 0;
+    margin: 0;
   }
 
   .pc-hall--reading .pc-input--settings {
