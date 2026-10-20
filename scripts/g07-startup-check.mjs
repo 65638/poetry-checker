@@ -83,6 +83,11 @@ try {
   result.readinessHttp = ready.status;
   browser = await launchBrowser();
   const { cdp, evaluate, click, key } = browser;
+  // Startup/connection checks need stable hit targets, independent of the
+  // scene-transition animation. Normal motion is covered by dictionary.mjs.
+  await cdp.send("Emulation.setEmulatedMedia", {
+    features: [{ name: "prefers-reduced-motion", value: "reduce" }],
+  });
   let allow = true;
   const blocked = [];
   cdp.on("Fetch.requestPaused", (e) => {
