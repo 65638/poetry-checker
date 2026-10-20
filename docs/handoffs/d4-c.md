@@ -1,6 +1,7 @@
 # D4 · C 交接：独立规则回归与发布口径（2026-10-20）
 
-> PR：**#22** https://github.com/65638/poetry-checker/pull/22 （`feat/c-d4-closeout` → `integrate/d4`，草稿；创建时 head `5998c54`，已用 `git ls-remote refs/pull/22/head` 核对）
+> PR（D4 主批）：**#22** https://github.com/65638/poetry-checker/pull/22 （`feat/c-d4-closeout` → `integrate/d4`，已并入 main）
+> PR（D4 收口批）：**#26** https://github.com/65638/poetry-checker/pull/26 （`feat/c-d4b-confirm` → `main`；创建时 head `832889d`，已用 `git ls-remote refs/pull/26/head` 核对）
 
 ## 基线与分支
 
@@ -73,3 +74,38 @@
 - 工程教学口径（`engineering-scope` 证据）与有固定文献定位的规则在证据标题/limitations 中仍分开；本批未新增文献页码，也未把工程等级写成文献规定。
 - `validateRuleCards` 只校验引用闭合与冻结约定，不判断 statement 的语文学正确性。
 - 未向其他成员发消息；PR 由组长转发。
+
+---
+
+# D4 收口（2026-10-20 晚，基线 main @ f3ef270）
+
+> 任务卡：`docs/team/D4_收口任务书_2026-10-20/03_给C_终验复跑与数量盘点.md`
+> 卡内写的 main 为 `c409d20`；实际执行时 main 已前进到 **`f3ef270`**（含 PR #22 合并、B/D 批与月下 UI 文档），本记录以实际 SHA 为准。
+
+## 一、新基线复跑（G03 收口动作）
+
+分支：`feat/c-d4b-confirm`（`git switch -c ... origin/main`）。工作树干净。
+
+| 命令 | 退出码 | 结果 |
+|---|---|---|
+| `vitest run packages/prosody/tests/acceptance/d4-regression.test.ts` | 0 | **1 文件 / 10 项**通过 |
+| `vitest run packages/prosody/tests/acceptance`（C2 全量 + D3/D4） | 0 | **7 文件 / 114 项**通过 |
+| `pnpm verify`（lint + typecheck + 全仓 test + check:generated） | 0 | **56 文件 / 763 项**通过，与任务卡 763 基线一致 |
+
+结论：**main=f3ef270 上复跑通过**；D4 批与最新 main（B/D 批、月下 UI 文档）无冲突，prosody 未回归。
+
+## 二、G09 规则组盘点
+
+见 `docs/rules/g09-rule-groups.md`：36 组按“10 ruleId × 正/反/边界（30）+ 特例层 命中/不命中/隔离（3）+ 语境规则 命中/缺失/冲突（3）”展开；**33/36 有 C 侧测试证据，G34–G36 语境规则属 B/API**。结论与缺口在该文档“四、口径差异与缺口”一节，未虚开规则组。
+
+## 三、黄鹤楼演示口径（给 E，可直接放进提纲第 4 段）
+
+**一句话结论**：黄鹤楼的体裁是**七律**；第四联「白云千载空悠悠」的**三平尾属已审特例**，按例外层记为“不适用/提示”，不是拗救、也不是整首免检；**同诗其余常格差异仍逐项列出**，所以报告整体可以是 `fail`——这是“特例保留 + 其余照报”，不是“全合律”，也不是“全出律”。
+
+**出处指向（演示时念这一句即可）**：`docs/reviews/13_J03三首核心诗逐字人审_第二批.md §五 第 8 条`；王力《诗词格律》把《黄鹤楼》举为“古风式的律诗”（页 343 起，C 已签字定位）。
+
+**建议话术**（约 20 秒）：
+> “这首我们按七律核。‘空悠悠’确实是三平尾，专家已裁定它是这首诗的古风本色，所以系统把它标成‘受限特例、不判出律’，依据记在 13 号人审记录第 8 条；但同一首里的失粘、失对和其他字位偏离仍照常报，所以整首结论仍是‘有出律项’。它既不是全合律，也不是全出律。”
+
+**不要说的话**：“黄鹤楼全部合律”“特殊拗律所以全部免检”“三平尾被系统忽略了”。
+
