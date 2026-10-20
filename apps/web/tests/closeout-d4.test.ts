@@ -8,6 +8,7 @@
 import { describe, expect, it } from "vitest";
 import { CheckerStore } from "../src/app/store";
 import type { Transport } from "../src/api/analyze";
+import { sha256Hex } from "../src/utils/sha256";
 import type { InputDraft } from "../src/view-contract";
 import type { AnalysisResponse } from "@poetry/contracts";
 import {
@@ -278,5 +279,121 @@ describe("D4 收口：主动取消后迟到成功", () => {
     expect(state.error).toBeNull();
     // 取消后不应把这次结果落地
     expect(state.report).toBeNull();
+  });
+});
+
+/**
+ * 请求体断言：供浏览器验收对齐。
+ *
+ * 浏览器验收不能用「页面看起来对」代替请求体检查；这里把三个固定场景的
+ * 实际 POST 形状钉在状态层，E 的浏览器用例应观察到同样的字段。
+ */
+describe("D4 收口：请求体形状（与 E 的浏览器断言对齐）", () => {
+  const pass = loadMockScenario("pass");
+  const path = "/api/v1/analyze";
+
+  it("慢 A 后快 B：两次 POST 的 inputHash 分别对应旧/新正文", async () => {
+    // 两套各自匹配的 fixture：改正文后响应必须与请求同源，否则会被客户端拒绝
+    // （RESPONSE_INPUT_MISMATCH），那是另一条正确行为，不能混进本用例。
+    const draftA = scenarioDraft("pass");
+    const draftB = scenarioDraft("needs_review");
+    const reportA = loadMockScenario("pass");
+    const reportB = loadMockScenario("needs_review");
+
+    const slow = deferred<Response>();
+    const fast = deferred<Response>();
+    const transport = unabortableTransport([slow.promise, fast.promise]);
+    const store = new CheckerStore(draftA, { transport });
+
+    const runA = store.analyze();
+    store.setDraft(draftB);
+    const runB = store.analyze();
+
+    fast.resolve(okResponse(reportB));
+    await runB;
+    slow.resolve(okResponse(reportA));
+    await runA;
+
+    expect(transport.calls).toHaveLength(2);
+    const [callA, callB] = transport.calls;
+    expect(callA?.path).toBe(path);
+    expect(callB?.path).toBe(path);
+    const bodyA = callA?.body as { inputHash: string; text: string };
+    const bodyB = callB?.body as { inputHash: string; text: string };
+    expect(bodyA.text).toBe(draftA.text);
+    expect(bodyB.text).toBe(draftB.text);
+    expect(bodyA.inputHash).toBe(sha256Hex(draftA.text));
+    expect(bodyB.inputHash).toBe(sha256Hex(draftB.text));
+    // 正文变了必然产生不同摘要
+    expect(bodyA.inputHash).not.toBe(bodyB.inputHash);
+    // 最终报告属于 B，且与当前输入同源
+    expect(store.getState().report?.summary.status).toBe("needs_review");
+    expect(store.getState().stale).toBe(false);
+  });
+
+  it("客户端超时只发一次请求，不自动重试", async () => {
+    const transport = unabortableTransport([
+      new Promise<Response>((_resolve, reject) => {
+        setTimeout(() => reject(new DOMException("aborted", "AbortError")), 30);
+      }),
+    ]);
+    const store = new CheckerStore(draft, {
+      transport,
+      requestTimeoutMs: 25,
+    });
+
+    await store.analyze();
+
+    expect(transport.calls).toHaveLength(1);
+    const body = transport.calls[0]?.body as { inputHash: string; text: string };
+    expect(body.text).toBe(draft.text);
+    expect(body.inputHash).toBe(sha256Hex(draft.text));
+    expect(store.getState().error?.code).toBe("TIMEOUT");
+  });
+
+  it("选音请求携带 tokenId/readingId 与当时正文摘要；换书后覆盖为空且书已切换", async () => {
+    const token = pass.poem.tokens[0]!;
+    const candidate = token.candidates[0]!;
+    const transport = unabortableTransport([
+      okResponse(pass),
+      okResponse(pass),
+      okResponse(pass),
+    ]);
+    const store = new CheckerStore(draft, { transport });
+
+    // 1) 首次分析
+    await store.analyze();
+
+    // 2) 选音重查
+    await store.chooseReading({
+      tokenId: token.tokenId,
+      readingId: candidate.id,
+    });
+
+    const chooseBody = transport.calls[1]?.body as {
+      inputHash: string;
+      readingOverrides: Array<{ tokenId: string; readingId: string }>;
+      rhymeBook: string;
+    };
+    expect(transport.calls[1]?.path).toBe(path);
+    expect(chooseBody.readingOverrides).toEqual([
+      { tokenId: token.tokenId, readingId: candidate.id },
+    ]);
+    expect(chooseBody.inputHash).toBe(sha256Hex(draft.text));
+
+    // 3) 换韵书 → 覆盖被清空，再提交时不带旧覆盖
+    store.setDraft({ ...draft, rhymeBook: "cilin" });
+    expect(store.getState().overrides).toEqual([]);
+    await store.analyze();
+
+    const afterBookBody = transport.calls[2]?.body as {
+      rhymeBook: string;
+      readingOverrides: unknown[];
+      inputHash: string;
+    };
+    expect(afterBookBody.rhymeBook).toBe("cilin");
+    expect(afterBookBody.readingOverrides).toEqual([]);
+    // 正文没变，摘要保持不变
+    expect(afterBookBody.inputHash).toBe(sha256Hex(draft.text));
   });
 });

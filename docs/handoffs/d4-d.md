@@ -19,7 +19,7 @@
 | 路径 | 类型 | 说明 |
 | --- | --- | --- |
 | `apps/web/src/app/store.ts` | 修改 | `abort()` 改为复用 `invalidateInFlight()`：递增请求身份再中止 |
-| `apps/web/tests/closeout-d4.test.ts` | 新增 | 12 项：并发导出归属、编辑/换书、超时后导出资格、五类状态透传、取消后迟到成功 |
+| `apps/web/tests/closeout-d4.test.ts` | 新增 | 15 项：并发导出归属、编辑/换书、超时后导出资格、五类状态透传、取消后迟到成功、**请求体形状**（3 项） |
 | `apps/web/README.md` | 重写 | 用户可执行的安装/启动/使用说明（环境、端口识别、`/` 与合成预览的区别、健康与就绪、选音重查导出、503 处置） |
 | `docs/ui.md` | 增补 | D4-1 状态表、D4-2 对 D1 表述的更正、D4-3 验收事实与覆盖位置、D4-4 未运行项 |
 
@@ -55,9 +55,20 @@
 | `pnpm install --frozen-lockfile --config.node-linker=hoisted` | 0 | 8 个 workspace 工程 |
 | `pnpm verify`（基线 `898b1a0`，dirty=false） | 0 | lint / 双 tsconfig / 测试 / 构建 / 8 个生成物全部通过；**53 文件 / 733 项** |
 | `pnpm exec vitest run apps/web/tests`（改动后） | 0 | 业务测试全绿 |
-| `pnpm verify`（改动后，dirty=false） | 0 | 同上；**54 文件 / 745 项**（+12） |
+| `pnpm verify`（改动后，dirty=false） | 0 | 同上；**54 文件 / 748 项**（+15） |
 
-计数口径：745 = 基线 733 + 本批 12，不重复计算既有用例。
+计数口径：748 = 基线 733 + 本批 15，不重复计算既有用例。
+
+### 请求体断言（供 E 的浏览器用例对齐）
+
+浏览器验收不能用「页面看起来对」代替请求体检查。状态层已钉住三个固定场景的
+实际 POST 形状（`closeout-d4.test.ts` 末段）：
+
+| 场景 | 钉住的请求事实 |
+| --- | --- |
+| 慢 A 后快 B | 两次 POST 的 `text`/`inputHash` 分别对应旧/新正文，且两 hash 不同；最终报告属于 B、`stale=false` |
+| 30s 超时 | **只发 1 次** POST，无自动重试；`inputHash` 对应当时正文；错误码 `TIMEOUT` |
+| 选音后换书 | 选音 POST 的 `readingOverrides=[{tokenId, readingId}]`、`inputHash=sha256(正文)`；换书后 `overrides=[]`，再提交时 `rhymeBook=cilin`、`readingOverrides=[]`、hash 不变 |
 
 ## 给 E 的三个确定场景（可直接做成浏览器用例）
 
@@ -97,7 +108,22 @@
 
 ## 发现但不属于本批范围（交 Codex）
 
-1. 根 `README.md` 与根 `scripts/dev.mjs` 若有端口/命令表述与本批 `apps/web/README.md`
-   不一致，以实际输出为准，请集成方核对（本批未改根文件）。
-2. `/readyz` 503 与「可分析」的区分目前只在文档层面成立；若要在 UI 显示就绪状态，
-   需要契约新增字段，属公共契约变更，本批不做。
+### 根 `README.md` 与当前实际的三处具体差异（附证据）
+
+本批未改根文件，按任务卡「以具体差异交 Codex」。
+
+| 位置 | 现文 | 实际 | 建议 |
+| --- | --- | --- | --- |
+| `README.md:44` | 「已知问题：黄鹤楼 l4c5"空悠悠"三平尾**现报 fail/error**……D3 批次一（Codex 特例适用层）待接入后修正」 | 已修正。真实 API 实测：`TAIL.SANPING` = **not_applicable / info**，命中特例 `exception:j03b2:huanghelou:l4:sanping:pingshui@1`；仍存的 `fail` 是 **`METER.POSITION` l4c5**（同文件第 42 行已归类为「其余偏离保持原判、整诗仍如实 fail」）。该行与第 42 行自相矛盾 | 删除该「已知问题」，或改写为「三平尾已转 not_applicable/info；l4c5 的 METER.POSITION 属其余偏离，保持原判」 |
+| `README.md:71` | 「`tests/integration/` ……**Playwright spec 用独立 runner**」 | 仓库**没有** Playwright：`package.json` devDependencies 无该依赖，无 `playwright.config.*`。现役浏览器 runner 是 Node 内置 WebSocket + Chrome/Edge 的 CDP 脚本（`tests/e2e/d3-browser.mjs`，`pnpm test:e2e`） | 改成 CDP runner 表述，避免新人去找不存在的 Playwright 配置 |
+| `README.md:78-87` 命令清单 | 列出 `test` / `typecheck` / `lint` / `build` / `generate:contracts` / `check:generated` / 两个 `--filter` | 根 `package.json` 还提供 **`test:e2e`**（浏览器验收）与 **`test:acceptance`**（九格真实 API 验收），清单未列 | 补两行，否则按 README 无法发现验收入口 |
+
+补充（非错误，建议）：
+- `README.md:24` 写 dev:web 是 5173「用 localhost 访问」。Vite 未设 `strictPort`，
+  5173 被占用时会**自动换端口**；建议补一句「以终端打印的 Local 地址为准」，
+  否则按固定端口打不开会被误判成服务没起来。
+
+### 其它
+
+- `/readyz` 503 与「可分析」的区分目前只在文档层面成立；若要在 UI 显示就绪状态，
+  需要契约新增字段，属公共契约变更，本批不做。
