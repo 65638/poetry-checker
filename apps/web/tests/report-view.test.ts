@@ -16,6 +16,7 @@ import {
   rhymeCommonGroups,
   toneLabel,
 } from "../src/app/reportView";
+import { trailingPunctuation } from "../src/presentation/punctuation";
 import { loadMockScenario, type MockScenario } from "./fixtures";
 
 const scenarios: MockScenario[] = [
@@ -31,6 +32,33 @@ describe("toneLabel", () => {
     expect(toneLabel("P")).toBe("平");
     expect(toneLabel("Z")).toBe("仄");
     expect(toneLabel(null)).toBe("未定");
+  });
+});
+
+describe("trailingPunctuation", () => {
+  const token = (startUtf16: number, endUtf16: number, text = "尽") => ({
+    tokenId: "l1c5",
+    text,
+    line: 1,
+    column: 5,
+    startUtf16,
+    endUtf16,
+  } as Parameters<typeof trailingPunctuation>[1]);
+
+  it("句末标点不吞掉后续无换行的汉字", () => {
+    const original = "白日依山尽，黄河入海流。";
+    expect(trailingPunctuation(original, token(4, 5), undefined, 11)).toBe("，");
+  });
+
+  it("支持换行前的标点与闭引号", () => {
+    const original = "白日依山尽。\n黄河入海流。";
+    expect(trailingPunctuation(original, token(4, 5), undefined, 6)).toBe("。");
+    expect(trailingPunctuation("白日依山尽。”\n黄河", token(4, 5), undefined, 7)).toBe("。”");
+  });
+
+  it("无句末标点时不把空白或后续文本渲染到右侧", () => {
+    const original = "白日依山尽 黄河入海流";
+    expect(trailingPunctuation(original, token(4, 5), undefined, 10)).toBe("");
   });
 });
 

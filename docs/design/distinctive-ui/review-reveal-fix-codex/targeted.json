@@ -1,0 +1,157 @@
+{
+  "revision": {
+    "commit": "ee805cd0f8bafa6e73eb165c5c89cbfcf5b38a36",
+    "dirty": false
+  },
+  "at": "2026-10-19T20:22:59.428Z",
+  "scenarios": [
+    {
+      "name": "findings-preserved-tally-default-collapse",
+      "status": "pass",
+      "detail": {
+        "expected": 36,
+        "actual": 36,
+        "tally": 36,
+        "collapsed": true,
+        "messages": true,
+        "settled": 36,
+        "expectedSettled": 36
+      }
+    },
+    {
+      "name": "keyboard-open-close-native-details",
+      "status": "pass",
+      "detail": {
+        "spaceOpens": true,
+        "enterCloses": true,
+        "hiddenItemsSkipped": true
+      }
+    },
+    {
+      "name": "settled-selection-retained-and-open",
+      "status": "pass",
+      "detail": {
+        "selectedAndOpen": true
+      }
+    },
+    {
+      "name": "huanghelou-attention-not-collapsed",
+      "status": "pass",
+      "detail": {
+        "expected": 96,
+        "total": 96,
+        "attention": 9,
+        "expectedAttention": 9,
+        "hiddenErrors": 0,
+        "summary": "fail"
+      }
+    },
+    {
+      "name": "mobile-scroll-mouse-reduced",
+      "status": "pass",
+      "detail": {
+        "calls": [
+          {
+            "options": {
+              "block": "start",
+              "behavior": "auto"
+            },
+            "active": ""
+          }
+        ],
+        "active": "",
+        "reportTop": 15.546875,
+        "scrollY": 803
+      }
+    },
+    {
+      "name": "mobile-scroll-keyboard-reduced",
+      "status": "pass",
+      "detail": {
+        "calls": [
+          {
+            "options": {
+              "block": "start",
+              "behavior": "auto"
+            },
+            "active": "pc-input__text"
+          }
+        ],
+        "active": "pc-input__text",
+        "reportTop": 15.546875,
+        "scrollY": 803
+      }
+    },
+    {
+      "name": "mobile-same-text-keyboard-reduced",
+      "status": "pass",
+      "detail": {
+        "calls": [
+          {
+            "options": {
+              "block": "start",
+              "behavior": "auto"
+            },
+            "active": "pc-input__text"
+          }
+        ],
+        "active": "pc-input__text",
+        "reportTop": 15.546875
+      }
+    },
+    {
+      "name": "mobile-scroll-mouse-normal",
+      "status": "pass",
+      "detail": {
+        "calls": [
+          {
+            "options": {
+              "block": "start",
+              "behavior": "smooth"
+            },
+            "active": ""
+          }
+        ],
+        "active": "",
+        "reportTop": 15.546875,
+        "scrollY": 803
+      }
+    },
+    {
+      "name": "mobile-scroll-keyboard-normal",
+      "status": "pass",
+      "detail": {
+        "calls": [
+          {
+            "options": {
+              "block": "start",
+              "behavior": "smooth"
+            },
+            "active": "pc-input__text"
+          }
+        ],
+        "active": "pc-input__text",
+        "reportTop": 15.546875,
+        "scrollY": 803
+      }
+    },
+    {
+      "name": "mobile-same-text-keyboard-normal",
+      "status": "pass",
+      "detail": {
+        "calls": [
+          {
+            "options": {
+              "block": "start",
+              "behavior": "smooth"
+            },
+            "active": "pc-input__text"
+          }
+        ],
+        "active": "pc-input__text",
+        "reportTop": 15.546875
+      }
+    }
+  ],
+  "url": "http://127.0.0.1:59977/"
+}

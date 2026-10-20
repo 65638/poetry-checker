@@ -4,13 +4,14 @@ import type { CheckerViewProps } from '../view-contract';
 import { InputPanel } from './components/InputPanel';
 import { ReportView } from './components/ReportView';
 import { EvidencePanel } from './components/EvidencePanel';
+import { InkStage } from './components/InkStage';
 import './styles/tokens.css';
 import './styles/layout.css';
 
 const STEPS = [
-  { title: '录入诗文', text: '每行一句，标点可留可去，原文与位置都会保留。' },
-  { title: '选择韵书', text: '平水韵、词林正韵或中华新韵，口径不同，结论也可能不同。' },
-  { title: '逐字查看', text: '平仄与韵脚标在字旁；点任意一字，可看读音候选与依据。' },
+  { no: '壹', title: '录入诗文', text: '每行一句，标点可留可去，原文与位置都会保留。' },
+  { no: '贰', title: '选择韵书', text: '平水韵、词林正韵或中华新韵，口径不同，结论也可能不同。' },
+  { no: '叁', title: '逐字查看', text: '平仄与韵脚标在字旁；点任意一字，可看读音候选与依据。' },
 ];
 
 export function CheckerView(props: CheckerViewProps) {
@@ -18,6 +19,8 @@ export function CheckerView(props: CheckerViewProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const returnFocusRef = useRef<HTMLElement | null>(null);
   const prevTokenIdRef = useRef<string | null>(selectedTokenId);
+  const manuscriptRef = useRef<HTMLElement>(null);
+  const revealIntentRef = useRef<{ from: CheckerViewProps['report']; sawBusy: boolean } | null>(null);
 
   const selectedToken =
     report !== null && selectedTokenId !== null
@@ -39,6 +42,51 @@ export function CheckerView(props: CheckerViewProps) {
     props.onSelectToken(tokenId);
   };
 
+  const handleAnalyze = () => {
+    revealIntentRef.current = { from: report, sawBusy: false };
+    props.onAnalyze();
+  };
+
+  const handleDraftChange: CheckerViewProps['onDraftChange'] = (next) => {
+    revealIntentRef.current = null;
+    props.onDraftChange(next);
+  };
+
+  // Intent is dropped as soon as the user scrolls on their own while the request is pending.
+  useEffect(() => {
+    const drop = () => { revealIntentRef.current = null; };
+    const onKey = (e: KeyboardEvent) => {
+      if (['PageDown', 'PageUp', 'Home', 'End', 'ArrowDown', 'ArrowUp', ' '].includes(e.key)
+        && !(e.target instanceof HTMLElement && e.target.closest('textarea, input, button, [role=dialog]'))) drop();
+    };
+    window.addEventListener('wheel', drop, { passive: true });
+    window.addEventListener('touchmove', drop, { passive: true });
+    window.addEventListener('keydown', onKey);
+    return () => {
+      window.removeEventListener('wheel', drop);
+      window.removeEventListener('touchmove', drop);
+      window.removeEventListener('keydown', onKey);
+    };
+  }, []);
+
+  // Single column only: reveal the result of an Analyze the user just submitted.
+  useEffect(() => {
+    const intent = revealIntentRef.current;
+    if (intent === null) return;
+    if (busy) {
+      intent.sawBusy = true;
+      return;
+    }
+    if (!intent.sawBusy && report === intent.from && error === null) return;
+    revealIntentRef.current = null;
+    const sheet = manuscriptRef.current;
+    if (report === null || report === intent.from || error !== null || stale || !sheet) return;
+    if (typeof sheet.scrollIntoView !== 'function' || typeof window.matchMedia !== 'function') return;
+    if (!window.matchMedia('(max-width: 899px)').matches) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    sheet.scrollIntoView({ block: 'start', behavior: reduce ? 'auto' : 'smooth' });
+  }, [busy, report, error, stale]);
+
   useEffect(() => {
     const prev = prevTokenIdRef.current;
     prevTokenIdRef.current = selectedTokenId;
@@ -54,35 +102,53 @@ export function CheckerView(props: CheckerViewProps) {
   }, [selectedTokenId]);
 
   return (
-    <div ref={rootRef} className="pc-root">
+    <div
+      ref={rootRef}
+      className={`pc-root${hasReport ? ' pc-root--reading' : ' pc-root--writing'}${busy ? ' pc-root--busy' : ''}`}
+    >
       <div className="pc-page" inert={panelOpen}>
-        <header className="pc-masthead">
-          <span className="pc-seal" aria-hidden="true">律</span>
-          <div className="pc-masthead__text">
-            <h1 className="pc-title">诗格律检查器</h1>
-            <p className="pc-masthead__sub">近体诗平仄 · 用韵 · 读音依据</p>
+        <header className="pc-stage">
+          <InkStage />
+          <div className="pc-stage__inner">
+            <span className="pc-seal" aria-hidden="true">律</span>
+            <div className="pc-stage__titles">
+              <p className="pc-stage__kicker" aria-hidden="true">山 · 墨 · 诗</p>
+              <h1 className="pc-title">诗格律检查器</h1>
+              <p className="pc-stage__sub">近体诗平仄 · 用韵 · 读音依据，逐字展陈</p>
+            </div>
+            <p className="pc-stage__vertical" aria-hidden="true">一字一音皆有据</p>
           </div>
         </header>
 
-        <main className={`pc-desk${hasReport ? ' pc-desk--reading' : ' pc-desk--writing'}`}>
-          <section className="pc-desk__sheet" aria-labelledby="pc-input-heading">
-            <h2 id="pc-input-heading" className="pc-visually-hidden">输入</h2>
+        <main className={`pc-hall${hasReport ? ' pc-hall--reading' : ' pc-hall--writing'}`}>
+          <section className="pc-plinth" aria-labelledby="pc-input-heading">
+            <h2 id="pc-input-heading" className="pc-plinth__heading">
+              <span className="pc-plinth__no" aria-hidden="true">壹</span>
+              录诗
+            </h2>
             <InputPanel
               draft={draft}
               busy={busy}
               examples={props.examples}
-              onDraftChange={props.onDraftChange}
-              onAnalyze={props.onAnalyze}
+              onDraftChange={handleDraftChange}
+              onAnalyze={handleAnalyze}
               onLoadExample={props.onLoadExample}
             />
           </section>
 
           <section
-            className="pc-desk__page"
+            ref={manuscriptRef}
+            className="pc-manuscript"
             aria-labelledby="pc-report-heading"
             aria-busy={busy}
           >
             <h2 id="pc-report-heading" className="pc-visually-hidden">分析报告</h2>
+
+            {busy && (
+              <div className="pc-busy" aria-hidden="true">
+                <span className="pc-busy__bar" />
+              </div>
+            )}
 
             {error !== null && (
               <div className="pc-banner pc-banner--error" role="alert">
@@ -113,29 +179,39 @@ export function CheckerView(props: CheckerViewProps) {
               />
             ) : (
               <aside className="pc-intro" aria-label="使用说明">
-                <div className="pc-intro__motif" aria-hidden="true" />
                 {busy ? (
                   <p className="pc-intro__busy">
-                    <span className="pc-busy-dot" aria-hidden="true" />
-                    正在分析，结果出来后会显示在这里。
+                    <span className="pc-intro__busy-seal" aria-hidden="true">律</span>
+                    正在逐字核对，结果出来后会展陈在这里。
                   </p>
                 ) : (
-                  <ol className="pc-steps">
-                    {STEPS.map((s, i) => (
-                      <li key={s.title} className="pc-step">
-                        <span className="pc-step__no" aria-hidden="true">{['一', '二', '三'][i]}</span>
-                        <div>
-                          <h3 className="pc-step__title">{s.title}</h3>
-                          <p className="pc-step__text">{s.text}</p>
-                        </div>
-                      </li>
-                    ))}
-                  </ol>
+                  <>
+                    <p className="pc-intro__lead">
+                      <span className="pc-intro__quote">一首诗，</span>
+                      <span className="pc-intro__quote">一字一字地看。</span>
+                    </p>
+                    <ol className="pc-steps">
+                      {STEPS.map((s) => (
+                        <li key={s.title} className="pc-step">
+                          <span className="pc-step__no" aria-hidden="true">{s.no}</span>
+                          <div>
+                            <h3 className="pc-step__title">{s.title}</h3>
+                            <p className="pc-step__text">{s.text}</p>
+                          </div>
+                        </li>
+                      ))}
+                    </ol>
+                  </>
                 )}
               </aside>
             )}
           </section>
         </main>
+
+        <footer className="pc-colophon">
+          <span className="pc-colophon__seal" aria-hidden="true">律</span>
+          结论只依据所选韵书与已实现规则，不评价文学水平。
+        </footer>
       </div>
 
       {report !== null && selectedToken !== null && (

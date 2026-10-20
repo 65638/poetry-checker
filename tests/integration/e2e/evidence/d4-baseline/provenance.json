@@ -1,0 +1,41 @@
+{
+  "implementationSha": "fca70d642b28927debaf2248fcfe05e4588eb36e",
+  "records": [
+    {
+      "file": "api.json",
+      "sourceSha256": "50d7715ae1d12655bb93014bde895ca5e356c93834987055646354edb7673ea7",
+      "archivedSha256": "50d7715ae1d12655bb93014bde895ca5e356c93834987055646354edb7673ea7",
+      "transformation": "none"
+    },
+    {
+      "file": "browser.json",
+      "sourceSha256": "0d871ef32bcbd3e83a2f97c6500148a8d266bfc4c021207d8d5a873db97dc4bf",
+      "archivedSha256": "340b0556e1894484c53422e55aa296524563298078c2eeb4f4cbbff9f2c97c02",
+      "transformation": "Local checkout/user paths replaced with placeholders; all other bytes retained"
+    },
+    {
+      "file": "verify.txt",
+      "sourceSha256": "dcef3c120563a390ed00bc18b7a818200e5aabdbbd218fffaceed5956958a6a4",
+      "archivedSha256": "942f0a35cfca883faaef7917c9d6b4ea72f3f994c5faf9d4a697b1967405f39d",
+      "transformation": "Local checkout/user paths replaced with placeholders; all other bytes retained"
+    },
+    {
+      "file": "report-1440.png",
+      "sourceSha256": "deed24fbd87cfeb934f92c235d178c965322ff4389d9d3a1abed0248b1b834ba",
+      "archivedSha256": "deed24fbd87cfeb934f92c235d178c965322ff4389d9d3a1abed0248b1b834ba",
+      "transformation": "none"
+    },
+    {
+      "file": "report-768.png",
+      "sourceSha256": "b453f06cd5eebee8a626230f62515ebb5004818df0ebed4ffcaeb8934d4ede0e",
+      "archivedSha256": "b453f06cd5eebee8a626230f62515ebb5004818df0ebed4ffcaeb8934d4ede0e",
+      "transformation": "none"
+    },
+    {
+      "file": "report-375.png",
+      "sourceSha256": "dc24612f466bbf00297f7b442016f497c7794a906f48d3cc998300be37d40148",
+      "archivedSha256": "dc24612f466bbf00297f7b442016f497c7794a906f48d3cc998300be37d40148",
+      "transformation": "none"
+    }
+  ]
+}

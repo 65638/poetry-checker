@@ -1,0 +1,2815 @@
+{
+  "batchId": "d3-a-candidate-batch-2026-10-18",
+  "generatedAt": "2026-10-18",
+  "generatedBy": "scripts/data/build-d3-batch.ts（队员 A 的 DeepSeek）",
+  "task": "D3 · Gate 1：《登鹳雀楼》×（词林、新韵）最小切片候选批次",
+  "nature": "机器初审批次（machine_checked）。不含任何人工批准：approvalRecord 一律 null；不写入 Evidence.reviewStatus；快照级 reviewStatus 仍为 unverified。",
+  "work": {
+    "caseId": "golden-dengguanquelou-ps-v1",
+    "title": "登鹳雀楼",
+    "author": "王之涣",
+    "text": "白日依山尽，黄河入海流。欲穷千里目，更上一层楼。",
+    "textReviewStatus": "approved",
+    "textSource": "data/works/review-queue.json"
+  },
+  "positionScheme": "键名为复数数组 positions: [\"dengguanquelou/l{行}c{列}\"]（D3 交付接口草案口径；不再输出单数 position）。行列由 @poetry/readings 的 parseText 产出，与 golden-token-review 同口径；tokenId / line / column 作为附加字段保留",
+  "sliceBooks": [
+    "cilin",
+    "xinyun"
+  ],
+  "baseDataVersions": {
+    "pingshui": "pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4",
+    "cilin": "cilin-cwr-ff0e9c1-d3-full-clean1",
+    "xinyun": "xinyun-rebuild-d2-full"
+  },
+  "baseDataVersionRoles": {
+    "pingshui": "字位/行列基准 + 「入声不得机械映射现代声调」的判据来源；本切片不重复列平水候选（见 golden-token-review）",
+    "cilin": "本切片候选来源之一",
+    "xinyun": "本切片候选来源之一（十四韵规则 + pinyin-data 重建表，非官方原表）"
+  },
+  "exceptionIdScheme": "exceptionIds 复用 ai-lexicon-precheck-2026-10-18 的异常 ID；Gate 2 的 d3-a-anomalies.md 将沿用同一套 ID，不另起编号",
+  "constraints": {
+    "candidateIdsFromSnapshotOnly": true,
+    "competitorsKept": true,
+    "legacyRuNotMappedToModernTone": true,
+    "xinyunModernReadingFromPinyinDataOnly": true,
+    "noVariantCandidatesFabricated": true,
+    "approvalRecordNull": true
+  },
+  "counts": {
+    "tokens": 20,
+    "entries": 40,
+    "candidateTotal": 48,
+    "multiCandidateTokens": 7,
+    "ruCautionTokens": 12
+  },
+  "entries": [
+    {
+      "batchEntryId": "d3a-cilin-l1c1",
+      "positions": [
+        "dengguanquelou/l1c1"
+      ],
+      "tokenId": "l1c1",
+      "line": 1,
+      "column": 1,
+      "character": "白",
+      "book": "cilin",
+      "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 1,
+      "candidates": [
+        {
+          "candidateId": "cilin:白:ru:第十七部·入声",
+          "positions": [
+            "dengguanquelou/l1c1"
+          ],
+          "toneClass": "ru",
+          "tone": "Z",
+          "groupIds": [
+            "group:cilin:第十七部:第十七部·入声"
+          ],
+          "evidenceIds": [
+            "ev:cilin:第十七部:第十七部·入声"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:cilin:第十七部:第十七部·入声",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十七部/入声",
+              "sourceId": "src:chinese_word_rhyme:cilin"
+            }
+          ],
+          "modernReading": null,
+          "modernReadingAbsent": "本快照该候选无 modernReading（源表不含则如实为 null，不推断）",
+          "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+          "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+          "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十七部/入声"
+        }
+      ],
+      "candidateIds": [
+        "cilin:白:ru:第十七部·入声"
+      ],
+      "competingCandidatesKept": false,
+      "exceptionIds": [
+        "B-cilin-001",
+        "D-cross-002",
+        "F-cilin-002"
+      ],
+      "notes": {
+        "xinyunProvenance": null,
+        "pingshuiToneClasses": [
+          "ru"
+        ],
+        "ruCaution": "该字在平水属**入声**：新韵候选的现代声调**不是**入声的机械映射，只按 pinyin-data 本调记录，不得据此断言古今对应",
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-xinyun-l1c1",
+      "positions": [
+        "dengguanquelou/l1c1"
+      ],
+      "tokenId": "l1c1",
+      "line": 1,
+      "column": 1,
+      "character": "白",
+      "book": "xinyun",
+      "dataVersion": "xinyun-rebuild-d2-full",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 2,
+      "candidates": [
+        {
+          "candidateId": "xinyun:白:yangping:二波·阳平",
+          "positions": [
+            "dengguanquelou/l1c1"
+          ],
+          "toneClass": "yangping",
+          "tone": "P",
+          "groupIds": [
+            "group:xinyun:二波:二波·阳平"
+          ],
+          "evidenceIds": [
+            "ev:xinyun:二波:二波·阳平"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:xinyun:二波:二波·阳平",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 二波·阳平",
+              "sourceId": "src:pinyin-data"
+            }
+          ],
+          "modernReading": {
+            "pinyin": "bo",
+            "toneNumber": 2
+          },
+          "modernReadingAbsent": null,
+          "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+          "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+          "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 二波·阳平"
+        },
+        {
+          "candidateId": "xinyun:白:yangping:四开·阳平",
+          "positions": [
+            "dengguanquelou/l1c1"
+          ],
+          "toneClass": "yangping",
+          "tone": "P",
+          "groupIds": [
+            "group:xinyun:四开:四开·阳平"
+          ],
+          "evidenceIds": [
+            "ev:xinyun:四开:四开·阳平"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:xinyun:四开:四开·阳平",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 四开·阳平",
+              "sourceId": "src:pinyin-data"
+            }
+          ],
+          "modernReading": {
+            "pinyin": "bai",
+            "toneNumber": 2
+          },
+          "modernReadingAbsent": null,
+          "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+          "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+          "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 四开·阳平"
+        }
+      ],
+      "candidateIds": [
+        "xinyun:白:yangping:二波·阳平",
+        "xinyun:白:yangping:四开·阳平"
+      ],
+      "competingCandidatesKept": true,
+      "exceptionIds": [
+        "E-cross-010",
+        "F-cross-005",
+        "G-cross-009"
+      ],
+      "notes": {
+        "xinyunProvenance": "十四韵规则 + pinyin-data 重建表，非官方原表；MIT 许可只覆盖 pinyin-data 整理成果，不构成韵部正确性证据",
+        "pingshuiToneClasses": [
+          "ru"
+        ],
+        "ruCaution": "该字在平水属**入声**：新韵候选的现代声调**不是**入声的机械映射，只按 pinyin-data 本调记录，不得据此断言古今对应",
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-cilin-l1c2",
+      "positions": [
+        "dengguanquelou/l1c2"
+      ],
+      "tokenId": "l1c2",
+      "line": 1,
+      "column": 2,
+      "character": "日",
+      "book": "cilin",
+      "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 1,
+      "candidates": [
+        {
+          "candidateId": "cilin:日:ru:第十七部·入声",
+          "positions": [
+            "dengguanquelou/l1c2"
+          ],
+          "toneClass": "ru",
+          "tone": "Z",
+          "groupIds": [
+            "group:cilin:第十七部:第十七部·入声"
+          ],
+          "evidenceIds": [
+            "ev:cilin:第十七部:第十七部·入声"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:cilin:第十七部:第十七部·入声",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十七部/入声",
+              "sourceId": "src:chinese_word_rhyme:cilin"
+            }
+          ],
+          "modernReading": null,
+          "modernReadingAbsent": "本快照该候选无 modernReading（源表不含则如实为 null，不推断）",
+          "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+          "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+          "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十七部/入声"
+        }
+      ],
+      "candidateIds": [
+        "cilin:日:ru:第十七部·入声"
+      ],
+      "competingCandidatesKept": false,
+      "exceptionIds": [
+        "B-cilin-001",
+        "D-cross-002",
+        "F-cilin-002"
+      ],
+      "notes": {
+        "xinyunProvenance": null,
+        "pingshuiToneClasses": [
+          "ru"
+        ],
+        "ruCaution": "该字在平水属**入声**：新韵候选的现代声调**不是**入声的机械映射，只按 pinyin-data 本调记录，不得据此断言古今对应",
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-xinyun-l1c2",
+      "positions": [
+        "dengguanquelou/l1c2"
+      ],
+      "tokenId": "l1c2",
+      "line": 1,
+      "column": 2,
+      "character": "日",
+      "book": "xinyun",
+      "dataVersion": "xinyun-rebuild-d2-full",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 1,
+      "candidates": [
+        {
+          "candidateId": "xinyun:日:qu:十三支·去声",
+          "positions": [
+            "dengguanquelou/l1c2"
+          ],
+          "toneClass": "qu",
+          "tone": "Z",
+          "groupIds": [
+            "group:xinyun:十三支:十三支·去声"
+          ],
+          "evidenceIds": [
+            "ev:xinyun:十三支:十三支·去声"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:xinyun:十三支:十三支·去声",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十三支·去声",
+              "sourceId": "src:pinyin-data"
+            }
+          ],
+          "modernReading": {
+            "pinyin": "ri",
+            "toneNumber": 4
+          },
+          "modernReadingAbsent": null,
+          "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+          "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+          "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十三支·去声"
+        }
+      ],
+      "candidateIds": [
+        "xinyun:日:qu:十三支·去声"
+      ],
+      "competingCandidatesKept": false,
+      "exceptionIds": [
+        "E-cross-010",
+        "F-cross-005",
+        "G-cross-009"
+      ],
+      "notes": {
+        "xinyunProvenance": "十四韵规则 + pinyin-data 重建表，非官方原表；MIT 许可只覆盖 pinyin-data 整理成果，不构成韵部正确性证据",
+        "pingshuiToneClasses": [
+          "ru"
+        ],
+        "ruCaution": "该字在平水属**入声**：新韵候选的现代声调**不是**入声的机械映射，只按 pinyin-data 本调记录，不得据此断言古今对应",
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-cilin-l1c3",
+      "positions": [
+        "dengguanquelou/l1c3"
+      ],
+      "tokenId": "l1c3",
+      "line": 1,
+      "column": 3,
+      "character": "依",
+      "book": "cilin",
+      "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 1,
+      "candidates": [
+        {
+          "candidateId": "cilin:依:ping:第三部·平声",
+          "positions": [
+            "dengguanquelou/l1c3"
+          ],
+          "toneClass": "ping",
+          "tone": "P",
+          "groupIds": [
+            "group:cilin:第三部:第三部·平声"
+          ],
+          "evidenceIds": [
+            "ev:cilin:第三部:第三部·平声"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:cilin:第三部:第三部·平声",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第三部/平声",
+              "sourceId": "src:chinese_word_rhyme:cilin"
+            }
+          ],
+          "modernReading": null,
+          "modernReadingAbsent": "本快照该候选无 modernReading（源表不含则如实为 null，不推断）",
+          "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+          "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+          "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第三部/平声"
+        }
+      ],
+      "candidateIds": [
+        "cilin:依:ping:第三部·平声"
+      ],
+      "competingCandidatesKept": false,
+      "exceptionIds": [
+        "B-cilin-001",
+        "D-cross-002",
+        "F-cilin-002"
+      ],
+      "notes": {
+        "xinyunProvenance": null,
+        "pingshuiToneClasses": [
+          "ping"
+        ],
+        "ruCaution": null,
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-xinyun-l1c3",
+      "positions": [
+        "dengguanquelou/l1c3"
+      ],
+      "tokenId": "l1c3",
+      "line": 1,
+      "column": 3,
+      "character": "依",
+      "book": "xinyun",
+      "dataVersion": "xinyun-rebuild-d2-full",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 2,
+      "candidates": [
+        {
+          "candidateId": "xinyun:依:shang:十二齐·上声",
+          "positions": [
+            "dengguanquelou/l1c3"
+          ],
+          "toneClass": "shang",
+          "tone": "Z",
+          "groupIds": [
+            "group:xinyun:十二齐:十二齐·上声"
+          ],
+          "evidenceIds": [
+            "ev:xinyun:十二齐:十二齐·上声"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:xinyun:十二齐:十二齐·上声",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十二齐·上声",
+              "sourceId": "src:pinyin-data"
+            }
+          ],
+          "modernReading": {
+            "pinyin": "yi",
+            "toneNumber": 3
+          },
+          "modernReadingAbsent": null,
+          "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+          "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+          "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十二齐·上声"
+        },
+        {
+          "candidateId": "xinyun:依:yinping:十二齐·阴平",
+          "positions": [
+            "dengguanquelou/l1c3"
+          ],
+          "toneClass": "yinping",
+          "tone": "P",
+          "groupIds": [
+            "group:xinyun:十二齐:十二齐·阴平"
+          ],
+          "evidenceIds": [
+            "ev:xinyun:十二齐:十二齐·阴平"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:xinyun:十二齐:十二齐·阴平",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十二齐·阴平",
+              "sourceId": "src:pinyin-data"
+            }
+          ],
+          "modernReading": {
+            "pinyin": "yi",
+            "toneNumber": 1
+          },
+          "modernReadingAbsent": null,
+          "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+          "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+          "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十二齐·阴平"
+        }
+      ],
+      "candidateIds": [
+        "xinyun:依:shang:十二齐·上声",
+        "xinyun:依:yinping:十二齐·阴平"
+      ],
+      "competingCandidatesKept": true,
+      "exceptionIds": [
+        "E-cross-010",
+        "F-cross-005",
+        "G-cross-009"
+      ],
+      "notes": {
+        "xinyunProvenance": "十四韵规则 + pinyin-data 重建表，非官方原表；MIT 许可只覆盖 pinyin-data 整理成果，不构成韵部正确性证据",
+        "pingshuiToneClasses": [
+          "ping"
+        ],
+        "ruCaution": null,
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-cilin-l1c4",
+      "positions": [
+        "dengguanquelou/l1c4"
+      ],
+      "tokenId": "l1c4",
+      "line": 1,
+      "column": 4,
+      "character": "山",
+      "book": "cilin",
+      "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 1,
+      "candidates": [
+        {
+          "candidateId": "cilin:山:ping:第七部·平声",
+          "positions": [
+            "dengguanquelou/l1c4"
+          ],
+          "toneClass": "ping",
+          "tone": "P",
+          "groupIds": [
+            "group:cilin:第七部:第七部·平声"
+          ],
+          "evidenceIds": [
+            "ev:cilin:第七部:第七部·平声"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:cilin:第七部:第七部·平声",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第七部/平声",
+              "sourceId": "src:chinese_word_rhyme:cilin"
+            }
+          ],
+          "modernReading": null,
+          "modernReadingAbsent": "本快照该候选无 modernReading（源表不含则如实为 null，不推断）",
+          "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+          "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+          "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第七部/平声"
+        }
+      ],
+      "candidateIds": [
+        "cilin:山:ping:第七部·平声"
+      ],
+      "competingCandidatesKept": false,
+      "exceptionIds": [
+        "B-cilin-001",
+        "D-cross-002",
+        "F-cilin-002"
+      ],
+      "notes": {
+        "xinyunProvenance": null,
+        "pingshuiToneClasses": [
+          "ping"
+        ],
+        "ruCaution": null,
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-xinyun-l1c4",
+      "positions": [
+        "dengguanquelou/l1c4"
+      ],
+      "tokenId": "l1c4",
+      "line": 1,
+      "column": 4,
+      "character": "山",
+      "book": "xinyun",
+      "dataVersion": "xinyun-rebuild-d2-full",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 1,
+      "candidates": [
+        {
+          "candidateId": "xinyun:山:yinping:八寒·阴平",
+          "positions": [
+            "dengguanquelou/l1c4"
+          ],
+          "toneClass": "yinping",
+          "tone": "P",
+          "groupIds": [
+            "group:xinyun:八寒:八寒·阴平"
+          ],
+          "evidenceIds": [
+            "ev:xinyun:八寒:八寒·阴平"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:xinyun:八寒:八寒·阴平",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 八寒·阴平",
+              "sourceId": "src:pinyin-data"
+            }
+          ],
+          "modernReading": {
+            "pinyin": "shan",
+            "toneNumber": 1
+          },
+          "modernReadingAbsent": null,
+          "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+          "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+          "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 八寒·阴平"
+        }
+      ],
+      "candidateIds": [
+        "xinyun:山:yinping:八寒·阴平"
+      ],
+      "competingCandidatesKept": false,
+      "exceptionIds": [
+        "E-cross-010",
+        "F-cross-005",
+        "G-cross-009"
+      ],
+      "notes": {
+        "xinyunProvenance": "十四韵规则 + pinyin-data 重建表，非官方原表；MIT 许可只覆盖 pinyin-data 整理成果，不构成韵部正确性证据",
+        "pingshuiToneClasses": [
+          "ping"
+        ],
+        "ruCaution": null,
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-cilin-l1c5",
+      "positions": [
+        "dengguanquelou/l1c5"
+      ],
+      "tokenId": "l1c5",
+      "line": 1,
+      "column": 5,
+      "character": "尽",
+      "book": "cilin",
+      "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 1,
+      "candidates": [
+        {
+          "candidateId": "cilin:尽:ze_unspecified:第六部·仄声",
+          "positions": [
+            "dengguanquelou/l1c5"
+          ],
+          "toneClass": "ze_unspecified",
+          "tone": "Z",
+          "groupIds": [
+            "group:cilin:第六部:第六部·仄声"
+          ],
+          "evidenceIds": [
+            "ev:cilin:第六部:第六部·仄声"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:cilin:第六部:第六部·仄声",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第六部/仄声",
+              "sourceId": "src:chinese_word_rhyme:cilin"
+            }
+          ],
+          "modernReading": null,
+          "modernReadingAbsent": "本快照该候选无 modernReading（源表不含则如实为 null，不推断）",
+          "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+          "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+          "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第六部/仄声"
+        }
+      ],
+      "candidateIds": [
+        "cilin:尽:ze_unspecified:第六部·仄声"
+      ],
+      "competingCandidatesKept": false,
+      "exceptionIds": [
+        "B-cilin-001",
+        "D-cross-002",
+        "F-cilin-002"
+      ],
+      "notes": {
+        "xinyunProvenance": null,
+        "pingshuiToneClasses": [
+          "shang"
+        ],
+        "ruCaution": null,
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-xinyun-l1c5",
+      "positions": [
+        "dengguanquelou/l1c5"
+      ],
+      "tokenId": "l1c5",
+      "line": 1,
+      "column": 5,
+      "character": "尽",
+      "book": "xinyun",
+      "dataVersion": "xinyun-rebuild-d2-full",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 2,
+      "candidates": [
+        {
+          "candidateId": "xinyun:尽:shang:九文·上声",
+          "positions": [
+            "dengguanquelou/l1c5"
+          ],
+          "toneClass": "shang",
+          "tone": "Z",
+          "groupIds": [
+            "group:xinyun:九文:九文·上声"
+          ],
+          "evidenceIds": [
+            "ev:xinyun:九文:九文·上声"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:xinyun:九文:九文·上声",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 九文·上声",
+              "sourceId": "src:pinyin-data"
+            }
+          ],
+          "modernReading": {
+            "pinyin": "jin",
+            "toneNumber": 3
+          },
+          "modernReadingAbsent": null,
+          "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+          "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+          "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 九文·上声"
+        },
+        {
+          "candidateId": "xinyun:尽:qu:九文·去声",
+          "positions": [
+            "dengguanquelou/l1c5"
+          ],
+          "toneClass": "qu",
+          "tone": "Z",
+          "groupIds": [
+            "group:xinyun:九文:九文·去声"
+          ],
+          "evidenceIds": [
+            "ev:xinyun:九文:九文·去声"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:xinyun:九文:九文·去声",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 九文·去声",
+              "sourceId": "src:pinyin-data"
+            }
+          ],
+          "modernReading": {
+            "pinyin": "jin",
+            "toneNumber": 4
+          },
+          "modernReadingAbsent": null,
+          "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+          "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+          "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 九文·去声"
+        }
+      ],
+      "candidateIds": [
+        "xinyun:尽:shang:九文·上声",
+        "xinyun:尽:qu:九文·去声"
+      ],
+      "competingCandidatesKept": true,
+      "exceptionIds": [
+        "E-cross-010",
+        "F-cross-005",
+        "G-cross-009"
+      ],
+      "notes": {
+        "xinyunProvenance": "十四韵规则 + pinyin-data 重建表，非官方原表；MIT 许可只覆盖 pinyin-data 整理成果，不构成韵部正确性证据",
+        "pingshuiToneClasses": [
+          "shang"
+        ],
+        "ruCaution": null,
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-cilin-l2c1",
+      "positions": [
+        "dengguanquelou/l2c1"
+      ],
+      "tokenId": "l2c1",
+      "line": 2,
+      "column": 1,
+      "character": "黄",
+      "book": "cilin",
+      "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 1,
+      "candidates": [
+        {
+          "candidateId": "cilin:黄:ping:第二部·平声",
+          "positions": [
+            "dengguanquelou/l2c1"
+          ],
+          "toneClass": "ping",
+          "tone": "P",
+          "groupIds": [
+            "group:cilin:第二部:第二部·平声"
+          ],
+          "evidenceIds": [
+            "ev:cilin:第二部:第二部·平声"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:cilin:第二部:第二部·平声",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第二部/平声",
+              "sourceId": "src:chinese_word_rhyme:cilin"
+            }
+          ],
+          "modernReading": null,
+          "modernReadingAbsent": "本快照该候选无 modernReading（源表不含则如实为 null，不推断）",
+          "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+          "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+          "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第二部/平声"
+        }
+      ],
+      "candidateIds": [
+        "cilin:黄:ping:第二部·平声"
+      ],
+      "competingCandidatesKept": false,
+      "exceptionIds": [
+        "B-cilin-001",
+        "D-cross-002",
+        "F-cilin-002"
+      ],
+      "notes": {
+        "xinyunProvenance": null,
+        "pingshuiToneClasses": [
+          "ping"
+        ],
+        "ruCaution": null,
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-xinyun-l2c1",
+      "positions": [
+        "dengguanquelou/l2c1"
+      ],
+      "tokenId": "l2c1",
+      "line": 2,
+      "column": 1,
+      "character": "黄",
+      "book": "xinyun",
+      "dataVersion": "xinyun-rebuild-d2-full",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 1,
+      "candidates": [
+        {
+          "candidateId": "xinyun:黄:yangping:十唐·阳平",
+          "positions": [
+            "dengguanquelou/l2c1"
+          ],
+          "toneClass": "yangping",
+          "tone": "P",
+          "groupIds": [
+            "group:xinyun:十唐:十唐·阳平"
+          ],
+          "evidenceIds": [
+            "ev:xinyun:十唐:十唐·阳平"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:xinyun:十唐:十唐·阳平",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十唐·阳平",
+              "sourceId": "src:pinyin-data"
+            }
+          ],
+          "modernReading": {
+            "pinyin": "huang",
+            "toneNumber": 2
+          },
+          "modernReadingAbsent": null,
+          "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+          "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+          "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十唐·阳平"
+        }
+      ],
+      "candidateIds": [
+        "xinyun:黄:yangping:十唐·阳平"
+      ],
+      "competingCandidatesKept": false,
+      "exceptionIds": [
+        "E-cross-010",
+        "F-cross-005",
+        "G-cross-009"
+      ],
+      "notes": {
+        "xinyunProvenance": "十四韵规则 + pinyin-data 重建表，非官方原表；MIT 许可只覆盖 pinyin-data 整理成果，不构成韵部正确性证据",
+        "pingshuiToneClasses": [
+          "ping"
+        ],
+        "ruCaution": null,
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-cilin-l2c2",
+      "positions": [
+        "dengguanquelou/l2c2"
+      ],
+      "tokenId": "l2c2",
+      "line": 2,
+      "column": 2,
+      "character": "河",
+      "book": "cilin",
+      "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 1,
+      "candidates": [
+        {
+          "candidateId": "cilin:河:ping:第九部·平声",
+          "positions": [
+            "dengguanquelou/l2c2"
+          ],
+          "toneClass": "ping",
+          "tone": "P",
+          "groupIds": [
+            "group:cilin:第九部:第九部·平声"
+          ],
+          "evidenceIds": [
+            "ev:cilin:第九部:第九部·平声"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:cilin:第九部:第九部·平声",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第九部/平声",
+              "sourceId": "src:chinese_word_rhyme:cilin"
+            }
+          ],
+          "modernReading": null,
+          "modernReadingAbsent": "本快照该候选无 modernReading（源表不含则如实为 null，不推断）",
+          "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+          "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+          "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第九部/平声"
+        }
+      ],
+      "candidateIds": [
+        "cilin:河:ping:第九部·平声"
+      ],
+      "competingCandidatesKept": false,
+      "exceptionIds": [
+        "B-cilin-001",
+        "D-cross-002",
+        "F-cilin-002"
+      ],
+      "notes": {
+        "xinyunProvenance": null,
+        "pingshuiToneClasses": [
+          "ping"
+        ],
+        "ruCaution": null,
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-xinyun-l2c2",
+      "positions": [
+        "dengguanquelou/l2c2"
+      ],
+      "tokenId": "l2c2",
+      "line": 2,
+      "column": 2,
+      "character": "河",
+      "book": "xinyun",
+      "dataVersion": "xinyun-rebuild-d2-full",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 1,
+      "candidates": [
+        {
+          "candidateId": "xinyun:河:yangping:二波·阳平",
+          "positions": [
+            "dengguanquelou/l2c2"
+          ],
+          "toneClass": "yangping",
+          "tone": "P",
+          "groupIds": [
+            "group:xinyun:二波:二波·阳平"
+          ],
+          "evidenceIds": [
+            "ev:xinyun:二波:二波·阳平"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:xinyun:二波:二波·阳平",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 二波·阳平",
+              "sourceId": "src:pinyin-data"
+            }
+          ],
+          "modernReading": {
+            "pinyin": "he",
+            "toneNumber": 2
+          },
+          "modernReadingAbsent": null,
+          "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+          "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+          "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 二波·阳平"
+        }
+      ],
+      "candidateIds": [
+        "xinyun:河:yangping:二波·阳平"
+      ],
+      "competingCandidatesKept": false,
+      "exceptionIds": [
+        "E-cross-010",
+        "F-cross-005",
+        "G-cross-009"
+      ],
+      "notes": {
+        "xinyunProvenance": "十四韵规则 + pinyin-data 重建表，非官方原表；MIT 许可只覆盖 pinyin-data 整理成果，不构成韵部正确性证据",
+        "pingshuiToneClasses": [
+          "ping"
+        ],
+        "ruCaution": null,
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-cilin-l2c3",
+      "positions": [
+        "dengguanquelou/l2c3"
+      ],
+      "tokenId": "l2c3",
+      "line": 2,
+      "column": 3,
+      "character": "入",
+      "book": "cilin",
+      "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 1,
+      "candidates": [
+        {
+          "candidateId": "cilin:入:ru:第十七部·入声",
+          "positions": [
+            "dengguanquelou/l2c3"
+          ],
+          "toneClass": "ru",
+          "tone": "Z",
+          "groupIds": [
+            "group:cilin:第十七部:第十七部·入声"
+          ],
+          "evidenceIds": [
+            "ev:cilin:第十七部:第十七部·入声"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:cilin:第十七部:第十七部·入声",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十七部/入声",
+              "sourceId": "src:chinese_word_rhyme:cilin"
+            }
+          ],
+          "modernReading": null,
+          "modernReadingAbsent": "本快照该候选无 modernReading（源表不含则如实为 null，不推断）",
+          "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+          "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+          "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十七部/入声"
+        }
+      ],
+      "candidateIds": [
+        "cilin:入:ru:第十七部·入声"
+      ],
+      "competingCandidatesKept": false,
+      "exceptionIds": [
+        "B-cilin-001",
+        "D-cross-002",
+        "F-cilin-002"
+      ],
+      "notes": {
+        "xinyunProvenance": null,
+        "pingshuiToneClasses": [
+          "ru"
+        ],
+        "ruCaution": "该字在平水属**入声**：新韵候选的现代声调**不是**入声的机械映射，只按 pinyin-data 本调记录，不得据此断言古今对应",
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-xinyun-l2c3",
+      "positions": [
+        "dengguanquelou/l2c3"
+      ],
+      "tokenId": "l2c3",
+      "line": 2,
+      "column": 3,
+      "character": "入",
+      "book": "xinyun",
+      "dataVersion": "xinyun-rebuild-d2-full",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 1,
+      "candidates": [
+        {
+          "candidateId": "xinyun:入:qu:十四姑·去声",
+          "positions": [
+            "dengguanquelou/l2c3"
+          ],
+          "toneClass": "qu",
+          "tone": "Z",
+          "groupIds": [
+            "group:xinyun:十四姑:十四姑·去声"
+          ],
+          "evidenceIds": [
+            "ev:xinyun:十四姑:十四姑·去声"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:xinyun:十四姑:十四姑·去声",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十四姑·去声",
+              "sourceId": "src:pinyin-data"
+            }
+          ],
+          "modernReading": {
+            "pinyin": "ru",
+            "toneNumber": 4
+          },
+          "modernReadingAbsent": null,
+          "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+          "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+          "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十四姑·去声"
+        }
+      ],
+      "candidateIds": [
+        "xinyun:入:qu:十四姑·去声"
+      ],
+      "competingCandidatesKept": false,
+      "exceptionIds": [
+        "E-cross-010",
+        "F-cross-005",
+        "G-cross-009"
+      ],
+      "notes": {
+        "xinyunProvenance": "十四韵规则 + pinyin-data 重建表，非官方原表；MIT 许可只覆盖 pinyin-data 整理成果，不构成韵部正确性证据",
+        "pingshuiToneClasses": [
+          "ru"
+        ],
+        "ruCaution": "该字在平水属**入声**：新韵候选的现代声调**不是**入声的机械映射，只按 pinyin-data 本调记录，不得据此断言古今对应",
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-cilin-l2c4",
+      "positions": [
+        "dengguanquelou/l2c4"
+      ],
+      "tokenId": "l2c4",
+      "line": 2,
+      "column": 4,
+      "character": "海",
+      "book": "cilin",
+      "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 1,
+      "candidates": [
+        {
+          "candidateId": "cilin:海:ze_unspecified:第五部·仄声",
+          "positions": [
+            "dengguanquelou/l2c4"
+          ],
+          "toneClass": "ze_unspecified",
+          "tone": "Z",
+          "groupIds": [
+            "group:cilin:第五部:第五部·仄声"
+          ],
+          "evidenceIds": [
+            "ev:cilin:第五部:第五部·仄声"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:cilin:第五部:第五部·仄声",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第五部/仄声",
+              "sourceId": "src:chinese_word_rhyme:cilin"
+            }
+          ],
+          "modernReading": null,
+          "modernReadingAbsent": "本快照该候选无 modernReading（源表不含则如实为 null，不推断）",
+          "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+          "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+          "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第五部/仄声"
+        }
+      ],
+      "candidateIds": [
+        "cilin:海:ze_unspecified:第五部·仄声"
+      ],
+      "competingCandidatesKept": false,
+      "exceptionIds": [
+        "B-cilin-001",
+        "D-cross-002",
+        "F-cilin-002"
+      ],
+      "notes": {
+        "xinyunProvenance": null,
+        "pingshuiToneClasses": [
+          "shang"
+        ],
+        "ruCaution": null,
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-xinyun-l2c4",
+      "positions": [
+        "dengguanquelou/l2c4"
+      ],
+      "tokenId": "l2c4",
+      "line": 2,
+      "column": 4,
+      "character": "海",
+      "book": "xinyun",
+      "dataVersion": "xinyun-rebuild-d2-full",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 1,
+      "candidates": [
+        {
+          "candidateId": "xinyun:海:shang:四开·上声",
+          "positions": [
+            "dengguanquelou/l2c4"
+          ],
+          "toneClass": "shang",
+          "tone": "Z",
+          "groupIds": [
+            "group:xinyun:四开:四开·上声"
+          ],
+          "evidenceIds": [
+            "ev:xinyun:四开:四开·上声"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:xinyun:四开:四开·上声",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 四开·上声",
+              "sourceId": "src:pinyin-data"
+            }
+          ],
+          "modernReading": {
+            "pinyin": "hai",
+            "toneNumber": 3
+          },
+          "modernReadingAbsent": null,
+          "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+          "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+          "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 四开·上声"
+        }
+      ],
+      "candidateIds": [
+        "xinyun:海:shang:四开·上声"
+      ],
+      "competingCandidatesKept": false,
+      "exceptionIds": [
+        "E-cross-010",
+        "F-cross-005",
+        "G-cross-009"
+      ],
+      "notes": {
+        "xinyunProvenance": "十四韵规则 + pinyin-data 重建表，非官方原表；MIT 许可只覆盖 pinyin-data 整理成果，不构成韵部正确性证据",
+        "pingshuiToneClasses": [
+          "shang"
+        ],
+        "ruCaution": null,
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-cilin-l2c5",
+      "positions": [
+        "dengguanquelou/l2c5"
+      ],
+      "tokenId": "l2c5",
+      "line": 2,
+      "column": 5,
+      "character": "流",
+      "book": "cilin",
+      "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 1,
+      "candidates": [
+        {
+          "candidateId": "cilin:流:ping:第十二部·平声",
+          "positions": [
+            "dengguanquelou/l2c5"
+          ],
+          "toneClass": "ping",
+          "tone": "P",
+          "groupIds": [
+            "group:cilin:第十二部:第十二部·平声"
+          ],
+          "evidenceIds": [
+            "ev:cilin:第十二部:第十二部·平声"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:cilin:第十二部:第十二部·平声",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十二部/平声",
+              "sourceId": "src:chinese_word_rhyme:cilin"
+            }
+          ],
+          "modernReading": null,
+          "modernReadingAbsent": "本快照该候选无 modernReading（源表不含则如实为 null，不推断）",
+          "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+          "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+          "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十二部/平声"
+        }
+      ],
+      "candidateIds": [
+        "cilin:流:ping:第十二部·平声"
+      ],
+      "competingCandidatesKept": false,
+      "exceptionIds": [
+        "B-cilin-001",
+        "D-cross-002",
+        "F-cilin-002"
+      ],
+      "notes": {
+        "xinyunProvenance": null,
+        "pingshuiToneClasses": [
+          "ping"
+        ],
+        "ruCaution": null,
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-xinyun-l2c5",
+      "positions": [
+        "dengguanquelou/l2c5"
+      ],
+      "tokenId": "l2c5",
+      "line": 2,
+      "column": 5,
+      "character": "流",
+      "book": "xinyun",
+      "dataVersion": "xinyun-rebuild-d2-full",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 1,
+      "candidates": [
+        {
+          "candidateId": "xinyun:流:yangping:七尤·阳平",
+          "positions": [
+            "dengguanquelou/l2c5"
+          ],
+          "toneClass": "yangping",
+          "tone": "P",
+          "groupIds": [
+            "group:xinyun:七尤:七尤·阳平"
+          ],
+          "evidenceIds": [
+            "ev:xinyun:七尤:七尤·阳平"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:xinyun:七尤:七尤·阳平",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 七尤·阳平",
+              "sourceId": "src:pinyin-data"
+            }
+          ],
+          "modernReading": {
+            "pinyin": "liu",
+            "toneNumber": 2
+          },
+          "modernReadingAbsent": null,
+          "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+          "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+          "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 七尤·阳平"
+        }
+      ],
+      "candidateIds": [
+        "xinyun:流:yangping:七尤·阳平"
+      ],
+      "competingCandidatesKept": false,
+      "exceptionIds": [
+        "E-cross-010",
+        "F-cross-005",
+        "G-cross-009"
+      ],
+      "notes": {
+        "xinyunProvenance": "十四韵规则 + pinyin-data 重建表，非官方原表；MIT 许可只覆盖 pinyin-data 整理成果，不构成韵部正确性证据",
+        "pingshuiToneClasses": [
+          "ping"
+        ],
+        "ruCaution": null,
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-cilin-l3c1",
+      "positions": [
+        "dengguanquelou/l3c1"
+      ],
+      "tokenId": "l3c1",
+      "line": 3,
+      "column": 1,
+      "character": "欲",
+      "book": "cilin",
+      "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 1,
+      "candidates": [
+        {
+          "candidateId": "cilin:欲:ru:第十五部·入声",
+          "positions": [
+            "dengguanquelou/l3c1"
+          ],
+          "toneClass": "ru",
+          "tone": "Z",
+          "groupIds": [
+            "group:cilin:第十五部:第十五部·入声"
+          ],
+          "evidenceIds": [
+            "ev:cilin:第十五部:第十五部·入声"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:cilin:第十五部:第十五部·入声",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十五部/入声",
+              "sourceId": "src:chinese_word_rhyme:cilin"
+            }
+          ],
+          "modernReading": null,
+          "modernReadingAbsent": "本快照该候选无 modernReading（源表不含则如实为 null，不推断）",
+          "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+          "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+          "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十五部/入声"
+        }
+      ],
+      "candidateIds": [
+        "cilin:欲:ru:第十五部·入声"
+      ],
+      "competingCandidatesKept": false,
+      "exceptionIds": [
+        "B-cilin-001",
+        "D-cross-002",
+        "F-cilin-002"
+      ],
+      "notes": {
+        "xinyunProvenance": null,
+        "pingshuiToneClasses": [
+          "ru"
+        ],
+        "ruCaution": "该字在平水属**入声**：新韵候选的现代声调**不是**入声的机械映射，只按 pinyin-data 本调记录，不得据此断言古今对应",
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-xinyun-l3c1",
+      "positions": [
+        "dengguanquelou/l3c1"
+      ],
+      "tokenId": "l3c1",
+      "line": 3,
+      "column": 1,
+      "character": "欲",
+      "book": "xinyun",
+      "dataVersion": "xinyun-rebuild-d2-full",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 1,
+      "candidates": [
+        {
+          "candidateId": "xinyun:欲:qu:十二齐·去声",
+          "positions": [
+            "dengguanquelou/l3c1"
+          ],
+          "toneClass": "qu",
+          "tone": "Z",
+          "groupIds": [
+            "group:xinyun:十二齐:十二齐·去声"
+          ],
+          "evidenceIds": [
+            "ev:xinyun:十二齐:十二齐·去声"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:xinyun:十二齐:十二齐·去声",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十二齐·去声",
+              "sourceId": "src:pinyin-data"
+            }
+          ],
+          "modernReading": {
+            "pinyin": "yu",
+            "toneNumber": 4
+          },
+          "modernReadingAbsent": null,
+          "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+          "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+          "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十二齐·去声"
+        }
+      ],
+      "candidateIds": [
+        "xinyun:欲:qu:十二齐·去声"
+      ],
+      "competingCandidatesKept": false,
+      "exceptionIds": [
+        "E-cross-010",
+        "F-cross-005",
+        "G-cross-009"
+      ],
+      "notes": {
+        "xinyunProvenance": "十四韵规则 + pinyin-data 重建表，非官方原表；MIT 许可只覆盖 pinyin-data 整理成果，不构成韵部正确性证据",
+        "pingshuiToneClasses": [
+          "ru"
+        ],
+        "ruCaution": "该字在平水属**入声**：新韵候选的现代声调**不是**入声的机械映射，只按 pinyin-data 本调记录，不得据此断言古今对应",
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-cilin-l3c2",
+      "positions": [
+        "dengguanquelou/l3c2"
+      ],
+      "tokenId": "l3c2",
+      "line": 3,
+      "column": 2,
+      "character": "穷",
+      "book": "cilin",
+      "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 1,
+      "candidates": [
+        {
+          "candidateId": "cilin:穷:ping:第一部·平声",
+          "positions": [
+            "dengguanquelou/l3c2"
+          ],
+          "toneClass": "ping",
+          "tone": "P",
+          "groupIds": [
+            "group:cilin:第一部:第一部·平声"
+          ],
+          "evidenceIds": [
+            "ev:cilin:第一部:第一部·平声"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:cilin:第一部:第一部·平声",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第一部/平声",
+              "sourceId": "src:chinese_word_rhyme:cilin"
+            }
+          ],
+          "modernReading": null,
+          "modernReadingAbsent": "本快照该候选无 modernReading（源表不含则如实为 null，不推断）",
+          "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+          "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+          "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第一部/平声"
+        }
+      ],
+      "candidateIds": [
+        "cilin:穷:ping:第一部·平声"
+      ],
+      "competingCandidatesKept": false,
+      "exceptionIds": [
+        "B-cilin-001",
+        "D-cross-002",
+        "F-cilin-002"
+      ],
+      "notes": {
+        "xinyunProvenance": null,
+        "pingshuiToneClasses": [
+          "ping"
+        ],
+        "ruCaution": null,
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-xinyun-l3c2",
+      "positions": [
+        "dengguanquelou/l3c2"
+      ],
+      "tokenId": "l3c2",
+      "line": 3,
+      "column": 2,
+      "character": "穷",
+      "book": "xinyun",
+      "dataVersion": "xinyun-rebuild-d2-full",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 1,
+      "candidates": [
+        {
+          "candidateId": "xinyun:穷:yangping:十一庚·阳平",
+          "positions": [
+            "dengguanquelou/l3c2"
+          ],
+          "toneClass": "yangping",
+          "tone": "P",
+          "groupIds": [
+            "group:xinyun:十一庚:十一庚·阳平"
+          ],
+          "evidenceIds": [
+            "ev:xinyun:十一庚:十一庚·阳平"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:xinyun:十一庚:十一庚·阳平",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十一庚·阳平",
+              "sourceId": "src:pinyin-data"
+            }
+          ],
+          "modernReading": {
+            "pinyin": "qiong",
+            "toneNumber": 2
+          },
+          "modernReadingAbsent": null,
+          "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+          "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+          "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十一庚·阳平"
+        }
+      ],
+      "candidateIds": [
+        "xinyun:穷:yangping:十一庚·阳平"
+      ],
+      "competingCandidatesKept": false,
+      "exceptionIds": [
+        "E-cross-010",
+        "F-cross-005",
+        "G-cross-009"
+      ],
+      "notes": {
+        "xinyunProvenance": "十四韵规则 + pinyin-data 重建表，非官方原表；MIT 许可只覆盖 pinyin-data 整理成果，不构成韵部正确性证据",
+        "pingshuiToneClasses": [
+          "ping"
+        ],
+        "ruCaution": null,
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-cilin-l3c3",
+      "positions": [
+        "dengguanquelou/l3c3"
+      ],
+      "tokenId": "l3c3",
+      "line": 3,
+      "column": 3,
+      "character": "千",
+      "book": "cilin",
+      "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 1,
+      "candidates": [
+        {
+          "candidateId": "cilin:千:ping:第七部·平声",
+          "positions": [
+            "dengguanquelou/l3c3"
+          ],
+          "toneClass": "ping",
+          "tone": "P",
+          "groupIds": [
+            "group:cilin:第七部:第七部·平声"
+          ],
+          "evidenceIds": [
+            "ev:cilin:第七部:第七部·平声"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:cilin:第七部:第七部·平声",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第七部/平声",
+              "sourceId": "src:chinese_word_rhyme:cilin"
+            }
+          ],
+          "modernReading": null,
+          "modernReadingAbsent": "本快照该候选无 modernReading（源表不含则如实为 null，不推断）",
+          "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+          "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+          "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第七部/平声"
+        }
+      ],
+      "candidateIds": [
+        "cilin:千:ping:第七部·平声"
+      ],
+      "competingCandidatesKept": false,
+      "exceptionIds": [
+        "B-cilin-001",
+        "D-cross-002",
+        "F-cilin-002"
+      ],
+      "notes": {
+        "xinyunProvenance": null,
+        "pingshuiToneClasses": [
+          "ping"
+        ],
+        "ruCaution": null,
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-xinyun-l3c3",
+      "positions": [
+        "dengguanquelou/l3c3"
+      ],
+      "tokenId": "l3c3",
+      "line": 3,
+      "column": 3,
+      "character": "千",
+      "book": "xinyun",
+      "dataVersion": "xinyun-rebuild-d2-full",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 1,
+      "candidates": [
+        {
+          "candidateId": "xinyun:千:yinping:八寒·阴平",
+          "positions": [
+            "dengguanquelou/l3c3"
+          ],
+          "toneClass": "yinping",
+          "tone": "P",
+          "groupIds": [
+            "group:xinyun:八寒:八寒·阴平"
+          ],
+          "evidenceIds": [
+            "ev:xinyun:八寒:八寒·阴平"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:xinyun:八寒:八寒·阴平",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 八寒·阴平",
+              "sourceId": "src:pinyin-data"
+            }
+          ],
+          "modernReading": {
+            "pinyin": "qian",
+            "toneNumber": 1
+          },
+          "modernReadingAbsent": null,
+          "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+          "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+          "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 八寒·阴平"
+        }
+      ],
+      "candidateIds": [
+        "xinyun:千:yinping:八寒·阴平"
+      ],
+      "competingCandidatesKept": false,
+      "exceptionIds": [
+        "E-cross-010",
+        "F-cross-005",
+        "G-cross-009"
+      ],
+      "notes": {
+        "xinyunProvenance": "十四韵规则 + pinyin-data 重建表，非官方原表；MIT 许可只覆盖 pinyin-data 整理成果，不构成韵部正确性证据",
+        "pingshuiToneClasses": [
+          "ping"
+        ],
+        "ruCaution": null,
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-cilin-l3c4",
+      "positions": [
+        "dengguanquelou/l3c4"
+      ],
+      "tokenId": "l3c4",
+      "line": 3,
+      "column": 4,
+      "character": "里",
+      "book": "cilin",
+      "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 1,
+      "candidates": [
+        {
+          "candidateId": "cilin:里:ze_unspecified:第三部·仄声",
+          "positions": [
+            "dengguanquelou/l3c4"
+          ],
+          "toneClass": "ze_unspecified",
+          "tone": "Z",
+          "groupIds": [
+            "group:cilin:第三部:第三部·仄声"
+          ],
+          "evidenceIds": [
+            "ev:cilin:第三部:第三部·仄声"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:cilin:第三部:第三部·仄声",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第三部/仄声",
+              "sourceId": "src:chinese_word_rhyme:cilin"
+            }
+          ],
+          "modernReading": null,
+          "modernReadingAbsent": "本快照该候选无 modernReading（源表不含则如实为 null，不推断）",
+          "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+          "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+          "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第三部/仄声"
+        }
+      ],
+      "candidateIds": [
+        "cilin:里:ze_unspecified:第三部·仄声"
+      ],
+      "competingCandidatesKept": false,
+      "exceptionIds": [
+        "B-cilin-001",
+        "D-cross-002",
+        "F-cilin-002"
+      ],
+      "notes": {
+        "xinyunProvenance": null,
+        "pingshuiToneClasses": [
+          "qu",
+          "shang"
+        ],
+        "ruCaution": null,
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-xinyun-l3c4",
+      "positions": [
+        "dengguanquelou/l3c4"
+      ],
+      "tokenId": "l3c4",
+      "line": 3,
+      "column": 4,
+      "character": "里",
+      "book": "xinyun",
+      "dataVersion": "xinyun-rebuild-d2-full",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 1,
+      "candidates": [
+        {
+          "candidateId": "xinyun:里:shang:十二齐·上声",
+          "positions": [
+            "dengguanquelou/l3c4"
+          ],
+          "toneClass": "shang",
+          "tone": "Z",
+          "groupIds": [
+            "group:xinyun:十二齐:十二齐·上声"
+          ],
+          "evidenceIds": [
+            "ev:xinyun:十二齐:十二齐·上声"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:xinyun:十二齐:十二齐·上声",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十二齐·上声",
+              "sourceId": "src:pinyin-data"
+            }
+          ],
+          "modernReading": {
+            "pinyin": "li",
+            "toneNumber": 3
+          },
+          "modernReadingAbsent": null,
+          "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+          "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+          "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十二齐·上声"
+        }
+      ],
+      "candidateIds": [
+        "xinyun:里:shang:十二齐·上声"
+      ],
+      "competingCandidatesKept": false,
+      "exceptionIds": [
+        "E-cross-010",
+        "F-cross-005",
+        "G-cross-009"
+      ],
+      "notes": {
+        "xinyunProvenance": "十四韵规则 + pinyin-data 重建表，非官方原表；MIT 许可只覆盖 pinyin-data 整理成果，不构成韵部正确性证据",
+        "pingshuiToneClasses": [
+          "qu",
+          "shang"
+        ],
+        "ruCaution": null,
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-cilin-l3c5",
+      "positions": [
+        "dengguanquelou/l3c5"
+      ],
+      "tokenId": "l3c5",
+      "line": 3,
+      "column": 5,
+      "character": "目",
+      "book": "cilin",
+      "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 1,
+      "candidates": [
+        {
+          "candidateId": "cilin:目:ru:第十五部·入声",
+          "positions": [
+            "dengguanquelou/l3c5"
+          ],
+          "toneClass": "ru",
+          "tone": "Z",
+          "groupIds": [
+            "group:cilin:第十五部:第十五部·入声"
+          ],
+          "evidenceIds": [
+            "ev:cilin:第十五部:第十五部·入声"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:cilin:第十五部:第十五部·入声",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十五部/入声",
+              "sourceId": "src:chinese_word_rhyme:cilin"
+            }
+          ],
+          "modernReading": null,
+          "modernReadingAbsent": "本快照该候选无 modernReading（源表不含则如实为 null，不推断）",
+          "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+          "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+          "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十五部/入声"
+        }
+      ],
+      "candidateIds": [
+        "cilin:目:ru:第十五部·入声"
+      ],
+      "competingCandidatesKept": false,
+      "exceptionIds": [
+        "B-cilin-001",
+        "D-cross-002",
+        "F-cilin-002"
+      ],
+      "notes": {
+        "xinyunProvenance": null,
+        "pingshuiToneClasses": [
+          "ru"
+        ],
+        "ruCaution": "该字在平水属**入声**：新韵候选的现代声调**不是**入声的机械映射，只按 pinyin-data 本调记录，不得据此断言古今对应",
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-xinyun-l3c5",
+      "positions": [
+        "dengguanquelou/l3c5"
+      ],
+      "tokenId": "l3c5",
+      "line": 3,
+      "column": 5,
+      "character": "目",
+      "book": "xinyun",
+      "dataVersion": "xinyun-rebuild-d2-full",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 1,
+      "candidates": [
+        {
+          "candidateId": "xinyun:目:qu:十四姑·去声",
+          "positions": [
+            "dengguanquelou/l3c5"
+          ],
+          "toneClass": "qu",
+          "tone": "Z",
+          "groupIds": [
+            "group:xinyun:十四姑:十四姑·去声"
+          ],
+          "evidenceIds": [
+            "ev:xinyun:十四姑:十四姑·去声"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:xinyun:十四姑:十四姑·去声",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十四姑·去声",
+              "sourceId": "src:pinyin-data"
+            }
+          ],
+          "modernReading": {
+            "pinyin": "mu",
+            "toneNumber": 4
+          },
+          "modernReadingAbsent": null,
+          "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+          "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+          "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十四姑·去声"
+        }
+      ],
+      "candidateIds": [
+        "xinyun:目:qu:十四姑·去声"
+      ],
+      "competingCandidatesKept": false,
+      "exceptionIds": [
+        "E-cross-010",
+        "F-cross-005",
+        "G-cross-009"
+      ],
+      "notes": {
+        "xinyunProvenance": "十四韵规则 + pinyin-data 重建表，非官方原表；MIT 许可只覆盖 pinyin-data 整理成果，不构成韵部正确性证据",
+        "pingshuiToneClasses": [
+          "ru"
+        ],
+        "ruCaution": "该字在平水属**入声**：新韵候选的现代声调**不是**入声的机械映射，只按 pinyin-data 本调记录，不得据此断言古今对应",
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-cilin-l4c1",
+      "positions": [
+        "dengguanquelou/l4c1"
+      ],
+      "tokenId": "l4c1",
+      "line": 4,
+      "column": 1,
+      "character": "更",
+      "book": "cilin",
+      "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 2,
+      "candidates": [
+        {
+          "candidateId": "cilin:更:ping:第十一部·平声",
+          "positions": [
+            "dengguanquelou/l4c1"
+          ],
+          "toneClass": "ping",
+          "tone": "P",
+          "groupIds": [
+            "group:cilin:第十一部:第十一部·平声"
+          ],
+          "evidenceIds": [
+            "ev:cilin:第十一部:第十一部·平声"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:cilin:第十一部:第十一部·平声",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十一部/平声",
+              "sourceId": "src:chinese_word_rhyme:cilin"
+            }
+          ],
+          "modernReading": null,
+          "modernReadingAbsent": "本快照该候选无 modernReading（源表不含则如实为 null，不推断）",
+          "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+          "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+          "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十一部/平声"
+        },
+        {
+          "candidateId": "cilin:更:ze_unspecified:第十一部·仄声",
+          "positions": [
+            "dengguanquelou/l4c1"
+          ],
+          "toneClass": "ze_unspecified",
+          "tone": "Z",
+          "groupIds": [
+            "group:cilin:第十一部:第十一部·仄声"
+          ],
+          "evidenceIds": [
+            "ev:cilin:第十一部:第十一部·仄声"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:cilin:第十一部:第十一部·仄声",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十一部/仄声",
+              "sourceId": "src:chinese_word_rhyme:cilin"
+            }
+          ],
+          "modernReading": null,
+          "modernReadingAbsent": "本快照该候选无 modernReading（源表不含则如实为 null，不推断）",
+          "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+          "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+          "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十一部/仄声"
+        }
+      ],
+      "candidateIds": [
+        "cilin:更:ping:第十一部·平声",
+        "cilin:更:ze_unspecified:第十一部·仄声"
+      ],
+      "competingCandidatesKept": true,
+      "exceptionIds": [
+        "B-cilin-001",
+        "D-cross-002",
+        "F-cilin-002"
+      ],
+      "notes": {
+        "xinyunProvenance": null,
+        "pingshuiToneClasses": [
+          "ping",
+          "qu"
+        ],
+        "ruCaution": null,
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-xinyun-l4c1",
+      "positions": [
+        "dengguanquelou/l4c1"
+      ],
+      "tokenId": "l4c1",
+      "line": 4,
+      "column": 1,
+      "character": "更",
+      "book": "xinyun",
+      "dataVersion": "xinyun-rebuild-d2-full",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 2,
+      "candidates": [
+        {
+          "candidateId": "xinyun:更:qu:十一庚·去声",
+          "positions": [
+            "dengguanquelou/l4c1"
+          ],
+          "toneClass": "qu",
+          "tone": "Z",
+          "groupIds": [
+            "group:xinyun:十一庚:十一庚·去声"
+          ],
+          "evidenceIds": [
+            "ev:xinyun:十一庚:十一庚·去声"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:xinyun:十一庚:十一庚·去声",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十一庚·去声",
+              "sourceId": "src:pinyin-data"
+            }
+          ],
+          "modernReading": {
+            "pinyin": "geng",
+            "toneNumber": 4
+          },
+          "modernReadingAbsent": null,
+          "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+          "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+          "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十一庚·去声"
+        },
+        {
+          "candidateId": "xinyun:更:yinping:十一庚·阴平",
+          "positions": [
+            "dengguanquelou/l4c1"
+          ],
+          "toneClass": "yinping",
+          "tone": "P",
+          "groupIds": [
+            "group:xinyun:十一庚:十一庚·阴平"
+          ],
+          "evidenceIds": [
+            "ev:xinyun:十一庚:十一庚·阴平"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:xinyun:十一庚:十一庚·阴平",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十一庚·阴平",
+              "sourceId": "src:pinyin-data"
+            }
+          ],
+          "modernReading": {
+            "pinyin": "geng",
+            "toneNumber": 1
+          },
+          "modernReadingAbsent": null,
+          "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+          "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+          "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十一庚·阴平"
+        }
+      ],
+      "candidateIds": [
+        "xinyun:更:qu:十一庚·去声",
+        "xinyun:更:yinping:十一庚·阴平"
+      ],
+      "competingCandidatesKept": true,
+      "exceptionIds": [
+        "E-cross-010",
+        "F-cross-005",
+        "G-cross-009"
+      ],
+      "notes": {
+        "xinyunProvenance": "十四韵规则 + pinyin-data 重建表，非官方原表；MIT 许可只覆盖 pinyin-data 整理成果，不构成韵部正确性证据",
+        "pingshuiToneClasses": [
+          "ping",
+          "qu"
+        ],
+        "ruCaution": null,
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-cilin-l4c2",
+      "positions": [
+        "dengguanquelou/l4c2"
+      ],
+      "tokenId": "l4c2",
+      "line": 4,
+      "column": 2,
+      "character": "上",
+      "book": "cilin",
+      "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 1,
+      "candidates": [
+        {
+          "candidateId": "cilin:上:ze_unspecified:第二部·仄声",
+          "positions": [
+            "dengguanquelou/l4c2"
+          ],
+          "toneClass": "ze_unspecified",
+          "tone": "Z",
+          "groupIds": [
+            "group:cilin:第二部:第二部·仄声"
+          ],
+          "evidenceIds": [
+            "ev:cilin:第二部:第二部·仄声"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:cilin:第二部:第二部·仄声",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第二部/仄声",
+              "sourceId": "src:chinese_word_rhyme:cilin"
+            }
+          ],
+          "modernReading": null,
+          "modernReadingAbsent": "本快照该候选无 modernReading（源表不含则如实为 null，不推断）",
+          "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+          "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+          "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第二部/仄声"
+        }
+      ],
+      "candidateIds": [
+        "cilin:上:ze_unspecified:第二部·仄声"
+      ],
+      "competingCandidatesKept": false,
+      "exceptionIds": [
+        "B-cilin-001",
+        "D-cross-002",
+        "F-cilin-002"
+      ],
+      "notes": {
+        "xinyunProvenance": null,
+        "pingshuiToneClasses": [
+          "qu",
+          "shang"
+        ],
+        "ruCaution": null,
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-xinyun-l4c2",
+      "positions": [
+        "dengguanquelou/l4c2"
+      ],
+      "tokenId": "l4c2",
+      "line": 4,
+      "column": 2,
+      "character": "上",
+      "book": "xinyun",
+      "dataVersion": "xinyun-rebuild-d2-full",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 2,
+      "candidates": [
+        {
+          "candidateId": "xinyun:上:shang:十唐·上声",
+          "positions": [
+            "dengguanquelou/l4c2"
+          ],
+          "toneClass": "shang",
+          "tone": "Z",
+          "groupIds": [
+            "group:xinyun:十唐:十唐·上声"
+          ],
+          "evidenceIds": [
+            "ev:xinyun:十唐:十唐·上声"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:xinyun:十唐:十唐·上声",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十唐·上声",
+              "sourceId": "src:pinyin-data"
+            }
+          ],
+          "modernReading": {
+            "pinyin": "shang",
+            "toneNumber": 3
+          },
+          "modernReadingAbsent": null,
+          "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+          "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+          "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十唐·上声"
+        },
+        {
+          "candidateId": "xinyun:上:qu:十唐·去声",
+          "positions": [
+            "dengguanquelou/l4c2"
+          ],
+          "toneClass": "qu",
+          "tone": "Z",
+          "groupIds": [
+            "group:xinyun:十唐:十唐·去声"
+          ],
+          "evidenceIds": [
+            "ev:xinyun:十唐:十唐·去声"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:xinyun:十唐:十唐·去声",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十唐·去声",
+              "sourceId": "src:pinyin-data"
+            }
+          ],
+          "modernReading": {
+            "pinyin": "shang",
+            "toneNumber": 4
+          },
+          "modernReadingAbsent": null,
+          "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+          "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+          "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十唐·去声"
+        }
+      ],
+      "candidateIds": [
+        "xinyun:上:shang:十唐·上声",
+        "xinyun:上:qu:十唐·去声"
+      ],
+      "competingCandidatesKept": true,
+      "exceptionIds": [
+        "E-cross-010",
+        "F-cross-005",
+        "G-cross-009"
+      ],
+      "notes": {
+        "xinyunProvenance": "十四韵规则 + pinyin-data 重建表，非官方原表；MIT 许可只覆盖 pinyin-data 整理成果，不构成韵部正确性证据",
+        "pingshuiToneClasses": [
+          "qu",
+          "shang"
+        ],
+        "ruCaution": null,
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-cilin-l4c3",
+      "positions": [
+        "dengguanquelou/l4c3"
+      ],
+      "tokenId": "l4c3",
+      "line": 4,
+      "column": 3,
+      "character": "一",
+      "book": "cilin",
+      "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 1,
+      "candidates": [
+        {
+          "candidateId": "cilin:一:ru:第十七部·入声",
+          "positions": [
+            "dengguanquelou/l4c3"
+          ],
+          "toneClass": "ru",
+          "tone": "Z",
+          "groupIds": [
+            "group:cilin:第十七部:第十七部·入声"
+          ],
+          "evidenceIds": [
+            "ev:cilin:第十七部:第十七部·入声"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:cilin:第十七部:第十七部·入声",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十七部/入声",
+              "sourceId": "src:chinese_word_rhyme:cilin"
+            }
+          ],
+          "modernReading": null,
+          "modernReadingAbsent": "本快照该候选无 modernReading（源表不含则如实为 null，不推断）",
+          "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+          "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+          "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十七部/入声"
+        }
+      ],
+      "candidateIds": [
+        "cilin:一:ru:第十七部·入声"
+      ],
+      "competingCandidatesKept": false,
+      "exceptionIds": [
+        "B-cilin-001",
+        "D-cross-002",
+        "F-cilin-002"
+      ],
+      "notes": {
+        "xinyunProvenance": null,
+        "pingshuiToneClasses": [
+          "ru"
+        ],
+        "ruCaution": "该字在平水属**入声**：新韵候选的现代声调**不是**入声的机械映射，只按 pinyin-data 本调记录，不得据此断言古今对应",
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-xinyun-l4c3",
+      "positions": [
+        "dengguanquelou/l4c3"
+      ],
+      "tokenId": "l4c3",
+      "line": 4,
+      "column": 3,
+      "character": "一",
+      "book": "xinyun",
+      "dataVersion": "xinyun-rebuild-d2-full",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 3,
+      "candidates": [
+        {
+          "candidateId": "xinyun:一:qu:十二齐·去声",
+          "positions": [
+            "dengguanquelou/l4c3"
+          ],
+          "toneClass": "qu",
+          "tone": "Z",
+          "groupIds": [
+            "group:xinyun:十二齐:十二齐·去声"
+          ],
+          "evidenceIds": [
+            "ev:xinyun:十二齐:十二齐·去声"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:xinyun:十二齐:十二齐·去声",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十二齐·去声",
+              "sourceId": "src:pinyin-data"
+            }
+          ],
+          "modernReading": {
+            "pinyin": "yi",
+            "toneNumber": 4
+          },
+          "modernReadingAbsent": null,
+          "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+          "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+          "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十二齐·去声"
+        },
+        {
+          "candidateId": "xinyun:一:yangping:十二齐·阳平",
+          "positions": [
+            "dengguanquelou/l4c3"
+          ],
+          "toneClass": "yangping",
+          "tone": "P",
+          "groupIds": [
+            "group:xinyun:十二齐:十二齐·阳平"
+          ],
+          "evidenceIds": [
+            "ev:xinyun:十二齐:十二齐·阳平"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:xinyun:十二齐:十二齐·阳平",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十二齐·阳平",
+              "sourceId": "src:pinyin-data"
+            }
+          ],
+          "modernReading": {
+            "pinyin": "yi",
+            "toneNumber": 2
+          },
+          "modernReadingAbsent": null,
+          "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+          "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+          "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十二齐·阳平"
+        },
+        {
+          "candidateId": "xinyun:一:yinping:十二齐·阴平",
+          "positions": [
+            "dengguanquelou/l4c3"
+          ],
+          "toneClass": "yinping",
+          "tone": "P",
+          "groupIds": [
+            "group:xinyun:十二齐:十二齐·阴平"
+          ],
+          "evidenceIds": [
+            "ev:xinyun:十二齐:十二齐·阴平"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:xinyun:十二齐:十二齐·阴平",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十二齐·阴平",
+              "sourceId": "src:pinyin-data"
+            }
+          ],
+          "modernReading": {
+            "pinyin": "yi",
+            "toneNumber": 1
+          },
+          "modernReadingAbsent": null,
+          "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+          "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+          "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十二齐·阴平"
+        }
+      ],
+      "candidateIds": [
+        "xinyun:一:qu:十二齐·去声",
+        "xinyun:一:yangping:十二齐·阳平",
+        "xinyun:一:yinping:十二齐·阴平"
+      ],
+      "competingCandidatesKept": true,
+      "exceptionIds": [
+        "E-cross-010",
+        "F-cross-005",
+        "G-cross-009"
+      ],
+      "notes": {
+        "xinyunProvenance": "十四韵规则 + pinyin-data 重建表，非官方原表；MIT 许可只覆盖 pinyin-data 整理成果，不构成韵部正确性证据",
+        "pingshuiToneClasses": [
+          "ru"
+        ],
+        "ruCaution": "该字在平水属**入声**：新韵候选的现代声调**不是**入声的机械映射，只按 pinyin-data 本调记录，不得据此断言古今对应",
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-cilin-l4c4",
+      "positions": [
+        "dengguanquelou/l4c4"
+      ],
+      "tokenId": "l4c4",
+      "line": 4,
+      "column": 4,
+      "character": "层",
+      "book": "cilin",
+      "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 1,
+      "candidates": [
+        {
+          "candidateId": "cilin:层:ping:第十一部·平声",
+          "positions": [
+            "dengguanquelou/l4c4"
+          ],
+          "toneClass": "ping",
+          "tone": "P",
+          "groupIds": [
+            "group:cilin:第十一部:第十一部·平声"
+          ],
+          "evidenceIds": [
+            "ev:cilin:第十一部:第十一部·平声"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:cilin:第十一部:第十一部·平声",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十一部/平声",
+              "sourceId": "src:chinese_word_rhyme:cilin"
+            }
+          ],
+          "modernReading": null,
+          "modernReadingAbsent": "本快照该候选无 modernReading（源表不含则如实为 null，不推断）",
+          "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+          "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+          "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十一部/平声"
+        }
+      ],
+      "candidateIds": [
+        "cilin:层:ping:第十一部·平声"
+      ],
+      "competingCandidatesKept": false,
+      "exceptionIds": [
+        "B-cilin-001",
+        "D-cross-002",
+        "F-cilin-002"
+      ],
+      "notes": {
+        "xinyunProvenance": null,
+        "pingshuiToneClasses": [
+          "ping"
+        ],
+        "ruCaution": null,
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-xinyun-l4c4",
+      "positions": [
+        "dengguanquelou/l4c4"
+      ],
+      "tokenId": "l4c4",
+      "line": 4,
+      "column": 4,
+      "character": "层",
+      "book": "xinyun",
+      "dataVersion": "xinyun-rebuild-d2-full",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 1,
+      "candidates": [
+        {
+          "candidateId": "xinyun:层:yangping:十一庚·阳平",
+          "positions": [
+            "dengguanquelou/l4c4"
+          ],
+          "toneClass": "yangping",
+          "tone": "P",
+          "groupIds": [
+            "group:xinyun:十一庚:十一庚·阳平"
+          ],
+          "evidenceIds": [
+            "ev:xinyun:十一庚:十一庚·阳平"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:xinyun:十一庚:十一庚·阳平",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十一庚·阳平",
+              "sourceId": "src:pinyin-data"
+            }
+          ],
+          "modernReading": {
+            "pinyin": "ceng",
+            "toneNumber": 2
+          },
+          "modernReadingAbsent": null,
+          "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+          "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+          "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十一庚·阳平"
+        }
+      ],
+      "candidateIds": [
+        "xinyun:层:yangping:十一庚·阳平"
+      ],
+      "competingCandidatesKept": false,
+      "exceptionIds": [
+        "E-cross-010",
+        "F-cross-005",
+        "G-cross-009"
+      ],
+      "notes": {
+        "xinyunProvenance": "十四韵规则 + pinyin-data 重建表，非官方原表；MIT 许可只覆盖 pinyin-data 整理成果，不构成韵部正确性证据",
+        "pingshuiToneClasses": [
+          "ping"
+        ],
+        "ruCaution": null,
+        "variantEdgesTouched": []
+      }
+    },
+    {
+      "batchEntryId": "d3a-cilin-l4c5",
+      "positions": [
+        "dengguanquelou/l4c5"
+      ],
+      "tokenId": "l4c5",
+      "line": 4,
+      "column": 5,
+      "character": "楼",
+      "book": "cilin",
+      "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 1,
+      "candidates": [
+        {
+          "candidateId": "cilin:楼:ping:第十二部·平声",
+          "positions": [
+            "dengguanquelou/l4c5"
+          ],
+          "toneClass": "ping",
+          "tone": "P",
+          "groupIds": [
+            "group:cilin:第十二部:第十二部·平声"
+          ],
+          "evidenceIds": [
+            "ev:cilin:第十二部:第十二部·平声"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:cilin:第十二部:第十二部·平声",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十二部/平声",
+              "sourceId": "src:chinese_word_rhyme:cilin"
+            }
+          ],
+          "modernReading": null,
+          "modernReadingAbsent": "本快照该候选无 modernReading（源表不含则如实为 null，不推断）",
+          "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+          "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+          "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十二部/平声"
+        }
+      ],
+      "candidateIds": [
+        "cilin:楼:ping:第十二部·平声"
+      ],
+      "competingCandidatesKept": false,
+      "exceptionIds": [
+        "B-cilin-001",
+        "D-cross-002",
+        "F-cilin-002"
+      ],
+      "notes": {
+        "xinyunProvenance": null,
+        "pingshuiToneClasses": [
+          "ping"
+        ],
+        "ruCaution": null,
+        "variantEdgesTouched": [
+          {
+            "id": "edge-樓-楼",
+            "from": "樓",
+            "to": "楼",
+            "status": "approved",
+            "note": "异体只以边表达为候选关联；本批次**不据此新增候选**，也不覆盖原表收录事实"
+          }
+        ]
+      }
+    },
+    {
+      "batchEntryId": "d3a-xinyun-l4c5",
+      "positions": [
+        "dengguanquelou/l4c5"
+      ],
+      "tokenId": "l4c5",
+      "line": 4,
+      "column": 5,
+      "character": "楼",
+      "book": "xinyun",
+      "dataVersion": "xinyun-rebuild-d2-full",
+      "machineStatus": "machine_checked",
+      "approvalRecord": null,
+      "candidateCount": 1,
+      "candidates": [
+        {
+          "candidateId": "xinyun:楼:yangping:七尤·阳平",
+          "positions": [
+            "dengguanquelou/l4c5"
+          ],
+          "toneClass": "yangping",
+          "tone": "P",
+          "groupIds": [
+            "group:xinyun:七尤:七尤·阳平"
+          ],
+          "evidenceIds": [
+            "ev:xinyun:七尤:七尤·阳平"
+          ],
+          "evidence": [
+            {
+              "evidenceId": "ev:xinyun:七尤:七尤·阳平",
+              "evidenceReviewStatus": "unverified",
+              "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 七尤·阳平",
+              "sourceId": "src:pinyin-data"
+            }
+          ],
+          "modernReading": {
+            "pinyin": "lou",
+            "toneNumber": 2
+          },
+          "modernReadingAbsent": null,
+          "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+          "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+          "locator": "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 七尤·阳平"
+        }
+      ],
+      "candidateIds": [
+        "xinyun:楼:yangping:七尤·阳平"
+      ],
+      "competingCandidatesKept": false,
+      "exceptionIds": [
+        "E-cross-010",
+        "F-cross-005",
+        "G-cross-009"
+      ],
+      "notes": {
+        "xinyunProvenance": "十四韵规则 + pinyin-data 重建表，非官方原表；MIT 许可只覆盖 pinyin-data 整理成果，不构成韵部正确性证据",
+        "pingshuiToneClasses": [
+          "ping"
+        ],
+        "ruCaution": null,
+        "variantEdgesTouched": [
+          {
+            "id": "edge-樓-楼",
+            "from": "樓",
+            "to": "楼",
+            "status": "approved",
+            "note": "异体只以边表达为候选关联；本批次**不据此新增候选**，也不覆盖原表收录事实"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -4,6 +4,7 @@ import type {
   AnalysisResponse, AnnotatedToken, BookId, CheckStatus, Finding, SummaryStatus,
 } from '@poetry/contracts';
 import type { CheckerViewProps } from '../../view-contract';
+import { trailingPunctuation } from '../punctuation';
 import '../styles/report.css';
 
 type ReportViewProps = Pick<
@@ -27,6 +28,8 @@ const CHECK: Record<CheckStatus, { label: string; icon: string }> = {
   uncertain: { label: '待复核', icon: '?' }, not_applicable: { label: '不适用', icon: '–' },
   unsupported: { label: '未支持', icon: '∅' },
 };
+const TALLY_ORDER: CheckStatus[] = ['fail', 'uncertain', 'unsupported', 'pass', 'not_applicable'];
+const SETTLED = new Set<CheckStatus>(['pass', 'not_applicable']);
 const SEVERITY: Record<Finding['severity'], string> = { error: '错误', warning: '警示', info: '提示' };
 const BOOK: Record<BookId, string> = { pingshui: '平水韵', cilin: '词林正韵', xinyun: '中华新韵' };
 const toneText = (t: string) => (t === 'P' ? '平' : t === 'Z' ? '仄' : t);
@@ -38,12 +41,6 @@ function toneOf(t: AnnotatedToken) {
   return { label: '未定', mod: 'unknown' };
 }
 
-function trailing(original: string, token: AnnotatedToken, next: AnnotatedToken | undefined) {
-  const nl = original.indexOf('\n', token.endUtf16);
-  const end = next ? next.startUtf16 : nl === -1 ? original.length : nl;
-  return original.slice(token.endUtf16, end).trim();
-}
-
 function prefersReducedMotion() {
   return typeof window.matchMedia === 'function'
     && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -53,6 +50,7 @@ export function ReportView(props: ReportViewProps) {
   const { report, stale, selectedTokenId, selectedFindingId } = props;
   const rootRef = useRef<HTMLElement>(null);
   const gridRef = useRef<HTMLOListElement>(null);
+  const settledRef = useRef<HTMLDetailsElement>(null);
   const tokens = new Map(report.poem.tokens.map((t) => [t.tokenId, t]));
   const rhymeIds = new Set(report.prosody.rhyme.tokenIds);
   const checks = report.prosody.checks;
@@ -64,21 +62,79 @@ export function ReportView(props: ReportViewProps) {
   const summary = SUMMARY[report.summary.status];
   const firstRelated = selectedFinding?.locations[0]?.tokenId ?? null;
   const reportId = report.inputHash;
+  const renderFinding = ({ f, n }: { f: Finding; n: number }) => {
+    const st = CHECK[f.status];
+    const rule = report.provenance.rules.find((r) => r.id === f.ruleId);
+    const where = f.locations.map((l) => `第${l.line}句第${l.column}字`).join('、') || '整首';
+    return (
+      <li key={f.id} className={`pc-finding pc-finding--${f.status}${f.id === selectedFindingId ? ' pc-finding--selected' : ''}`}>
+        <span className="pc-finding__no" aria-hidden="true">{n}</span>
+        <div className="pc-finding__body">
+          <div className="pc-finding__head">
+            <span className="pc-tag"><span aria-hidden="true">{st.icon}</span> {st.label}</span>
+            <span className="pc-tag pc-tag--quiet">{SEVERITY[f.severity]}</span>
+            <span className="pc-finding__rule">{rule ? rule.name : f.ruleId}</span>
+          </div>
+          <p className="pc-finding__msg">{f.message}</p>
+          <dl className="pc-finding__compare">
+            <div><dt>应为</dt><dd>{f.expected.map(toneText).join(' / ') || '无记录'}</dd></div>
+            <div><dt>实际</dt><dd>{f.observed.map(toneText).join(' / ') || '无记录'}</dd></div>
+          </dl>
+          <button
+            type="button"
+            className="pc-button pc-button--quiet pc-finding__locate"
+            aria-pressed={f.id === selectedFindingId}
+            onClick={() => props.onSelectFinding(f.id)}
+          >
+            ◆ 在诗中定位：{where}
+          </button>
+        </div>
+      </li>
+    );
+  };
+  const numbered = checks.map((f, i) => ({ f, n: i + 1 }));
+  const attention = numbered.filter(({ f }) => !SETTLED.has(f.status));
+  const settled = numbered.filter(({ f }) => SETTLED.has(f.status));
+  const tally = Object.fromEntries(
+    TALLY_ORDER.map((s) => [s, checks.filter((f) => f.status === s).length]),
+  ) as Record<CheckStatus, number>;
 
   useEffect(() => {
     const el = rootRef.current;
     if (!el || typeof el.animate !== 'function' || prefersReducedMotion()) return;
     const ms = parseFloat(getComputedStyle(el).getPropertyValue('--pc-dur-report'));
     if (!(ms > 0)) return;
-    const shift = getComputedStyle(el).getPropertyValue('--pc-shift-report').trim() || '0px';
-    el.animate(
+    const style = getComputedStyle(el);
+    const shift = style.getPropertyValue('--pc-shift-report').trim() || '0px';
+    const stagger = parseFloat(style.getPropertyValue('--pc-stagger-line')) || 0;
+    const easing = 'cubic-bezier(0.2, 0.7, 0.2, 1)';
+    el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: ms * 0.6, easing });
+    el.querySelector('.pc-status')?.animate(
       [
-        { opacity: 0, transform: `translateY(${shift})` },
+        { opacity: 0, transform: 'scale(1.04)' },
         { opacity: 1, transform: 'none' },
       ],
-      { duration: ms, easing: 'cubic-bezier(0.2, 0.7, 0.2, 1)' },
+      { duration: ms, easing: 'cubic-bezier(0.3, 1.4, 0.5, 1)' },
     );
+    const lines = Array.from(el.querySelectorAll<HTMLElement>('.pc-line'));
+    // Total reveal stays near 650ms regardless of poem length.
+    const step = lines.length > 1 ? Math.min(stagger, 290 / (lines.length - 1)) : 0;
+    lines.forEach((line, i) => {
+      line.animate(
+        [
+          { opacity: 0, transform: `translateY(${shift})` },
+          { opacity: 1, transform: 'none' },
+        ],
+        { duration: ms, delay: i * step, easing, fill: 'backwards' },
+      );
+    });
   }, [reportId]);
+
+  useEffect(() => {
+    if (selectedFinding && SETTLED.has(selectedFinding.status) && settledRef.current) {
+      settledRef.current.open = true;
+    }
+  }, [selectedFinding]);
 
   useEffect(() => {
     if (firstRelated === null) return;
@@ -99,7 +155,9 @@ export function ReportView(props: ReportViewProps) {
       )}
 
       <header className={`pc-status pc-status--${report.summary.status}`}>
-        <span className="pc-status__icon" aria-hidden="true">{summary.icon}</span>
+        <span className="pc-status__icon" aria-hidden="true">
+          <span className="pc-status__glyph">{summary.icon}</span>
+        </span>
         <div className="pc-status__body">
           <h3 className="pc-status__label">结论：{summary.label}</h3>
           <p className="pc-status__text">{summary.desc}</p>
@@ -118,15 +176,21 @@ export function ReportView(props: ReportViewProps) {
           声调依据：{report.policy.toneBasis === 'historical' ? '传统四声（入声归仄）' : '普通话声调（可能与传统韵书结果不同）'}
         </span>
         <span>{report.policy.notice}</span>
+        {report.genre.historicalTags.length > 0 && (
+          <span className="pc-historical-tags">作品体裁说明：{report.genre.historicalTags.join('、')}（不改变逐项检查结论）</span>
+        )}
       </p>
 
       <section className="pc-reading" aria-labelledby="pc-grid-heading">
         <div className="pc-reading__head">
-          <h3 id="pc-grid-heading" className="pc-section-title">批注诗文</h3>
+          <h3 id="pc-grid-heading" className="pc-section-title">
+            <span className="pc-section-title__no" aria-hidden="true">贰</span>
+            批注诗文
+          </h3>
           <p className="pc-legend">「韵」= 韵脚 · 「?」= 读音待定 · 虚线框 = 声调未定 · ◆ = 批注关联位置</p>
         </div>
         <ol ref={gridRef} className="pc-grid">
-          {report.poem.lines.map((line) => (
+          {report.poem.lines.map((line, lineIndex) => (
             <li key={line.line} className="pc-line">
               <span className="pc-line__no">第{line.line}句</span>
               <div className="pc-line__cells">
@@ -137,7 +201,17 @@ export function ReportView(props: ReportViewProps) {
                   const isRhyme = rhymeIds.has(id);
                   const pending = t.readingStatus !== 'resolved';
                   const isRelated = related.has(id);
-                  const punct = trailing(report.poem.originalText, t, tokens.get(line.tokenIds[i + 1] ?? ''));
+                  const nextToken = tokens.get(line.tokenIds[i + 1] ?? '');
+                  const nextLineToken = report.poem.lines[lineIndex + 1]?.tokenIds[0];
+                  const lineEndUtf16 = nextLineToken
+                    ? tokens.get(nextLineToken)?.startUtf16
+                    : undefined;
+                  const punct = trailingPunctuation(
+                    report.poem.originalText,
+                    t,
+                    nextToken,
+                    lineEndUtf16,
+                  );
                   const label = `第${t.line}句第${t.column}字「${t.text}」，${tone.label}${isRhyme ? '，韵脚' : ''}${pending ? '，读音待定' : ''}${isRelated ? '，批注关联位置' : ''}`;
                   return (
                     <span key={id} className="pc-cell-wrap">
@@ -167,42 +241,36 @@ export function ReportView(props: ReportViewProps) {
       </section>
 
       <section className="pc-notes" aria-labelledby="pc-findings-heading">
-        <h3 id="pc-findings-heading" className="pc-section-title">批注</h3>
+        <h3 id="pc-findings-heading" className="pc-section-title">
+          <span className="pc-section-title__no" aria-hidden="true">叁</span>
+          批注
+        </h3>
         {checks.length === 0 ? (
           <p className="pc-legend">本报告未列出批注条目；结论以上方状态为准。</p>
         ) : (
-          <ol className="pc-findings">
-            {checks.map((f, i) => {
-              const st = CHECK[f.status];
-              const rule = report.provenance.rules.find((r) => r.id === f.ruleId);
-              const where = f.locations.map((l) => `第${l.line}句第${l.column}字`).join('、') || '整首';
-              return (
-                <li key={f.id} className={`pc-finding pc-finding--${f.status}${f.id === selectedFindingId ? ' pc-finding--selected' : ''}`}>
-                  <span className="pc-finding__no" aria-hidden="true">{i + 1}</span>
-                  <div className="pc-finding__body">
-                    <div className="pc-finding__head">
-                      <span className="pc-tag"><span aria-hidden="true">{st.icon}</span> {st.label}</span>
-                      <span className="pc-tag pc-tag--quiet">{SEVERITY[f.severity]}</span>
-                      <span className="pc-finding__rule">{rule ? rule.name : f.ruleId}</span>
-                    </div>
-                    <p className="pc-finding__msg">{f.message}</p>
-                    <dl className="pc-finding__compare">
-                      <div><dt>应为</dt><dd>{f.expected.map(toneText).join(' / ') || '无记录'}</dd></div>
-                      <div><dt>实际</dt><dd>{f.observed.map(toneText).join(' / ') || '无记录'}</dd></div>
-                    </dl>
-                    <button
-                      type="button"
-                      className="pc-button pc-button--quiet pc-finding__locate"
-                      aria-pressed={f.id === selectedFindingId}
-                      onClick={() => props.onSelectFinding(f.id)}
-                    >
-                      ◆ 在诗中定位：{where}
-                    </button>
-                  </div>
+          <>
+            <ul className="pc-tally" aria-label="批注统计">
+              {TALLY_ORDER.filter((s) => tally[s] > 0).map((s) => (
+                <li key={s} className={`pc-tally__item pc-finding--${s}`}>
+                  <span aria-hidden="true">{CHECK[s].icon}</span> {CHECK[s].label}
+                  <strong className="pc-tally__count">{tally[s]}</strong>
                 </li>
-              );
-            })}
-          </ol>
+              ))}
+            </ul>
+            {attention.length > 0 ? (
+              <ol className="pc-findings">{attention.map(renderFinding)}</ol>
+            ) : (
+              <p className="pc-legend">没有违规、待复核或未支持的条目。</p>
+            )}
+            {settled.length > 0 && (
+              <details ref={settledRef} className="pc-settled">
+                <summary className="pc-settled__summary">
+                  已通过或不适用的检查（{settled.length} 条）
+                </summary>
+                <ol className="pc-findings pc-findings--settled">{settled.map(renderFinding)}</ol>
+              </details>
+            )}
+          </>
         )}
       </section>
     </article>

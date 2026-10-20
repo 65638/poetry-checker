@@ -1,0 +1,133 @@
+{
+  "generatedAt": "2026-10-19T06:16:03.670Z",
+  "apiUrl": "http://127.0.0.1:62262",
+  "apiUrlSha256": "afb13db734a4",
+  "mode": "未声明（readyz 无 versions）",
+  "dataVersions": [],
+  "repoRoot": "C:\\study\\w1\\poetry-checker",
+  "node": "v24.21.0",
+  "failures": 1,
+  "total": 9,
+  "results": [
+    {
+      "poem": "dengguanquelou",
+      "book": "pingshui",
+      "status": 200,
+      "ok": true,
+      "issues": [],
+      "facts": {
+        "http": 200,
+        "ms": 21,
+        "formFamily": "regulated",
+        "formId": "wujue",
+        "summary": "pass",
+        "evidence": 302,
+        "rules": 10,
+        "checks": 36,
+        "inputHash": "4dc6ac3926c8"
+      }
+    },
+    {
+      "poem": "dengguanquelou",
+      "book": "cilin",
+      "status": 503,
+      "ok": false,
+      "blocked": true,
+      "issues": ["BLOCKED：该韵书数据未就绪（DATA_NOT_READY），不是判定错误"],
+      "facts": {
+        "http": 503
+      }
+    },
+    {
+      "poem": "dengguanquelou",
+      "book": "xinyun",
+      "status": 503,
+      "ok": false,
+      "blocked": true,
+      "issues": ["BLOCKED：该韵书数据未就绪（DATA_NOT_READY），不是判定错误"],
+      "facts": {
+        "http": 503
+      }
+    },
+    {
+      "poem": "jingyesi",
+      "book": "pingshui",
+      "status": 200,
+      "ok": true,
+      "issues": [],
+      "facts": {
+        "http": 200,
+        "ms": 35,
+        "formFamily": "ancient",
+        "formId": null,
+        "summary": "not_applicable",
+        "evidence": 302,
+        "rules": 10,
+        "checks": 0,
+        "inputHash": "307d2b4cf720"
+      }
+    },
+    {
+      "poem": "jingyesi",
+      "book": "cilin",
+      "status": 503,
+      "ok": false,
+      "blocked": true,
+      "issues": ["BLOCKED：该韵书数据未就绪（DATA_NOT_READY），不是判定错误"],
+      "facts": {
+        "http": 503
+      }
+    },
+    {
+      "poem": "jingyesi",
+      "book": "xinyun",
+      "status": 503,
+      "ok": false,
+      "blocked": true,
+      "issues": ["BLOCKED：该韵书数据未就绪（DATA_NOT_READY），不是判定错误"],
+      "facts": {
+        "http": 503
+      }
+    },
+    {
+      "poem": "huanghelou",
+      "book": "pingshui",
+      "status": 200,
+      "ok": false,
+      "issues": ["三平尾被判 fail，但 13 号第 8 条要求不判出律"],
+      "facts": {
+        "http": 200,
+        "ms": 11,
+        "formFamily": "regulated",
+        "formId": "qilv",
+        "summary": "fail",
+        "evidence": 302,
+        "rules": 10,
+        "checks": 96,
+        "inputHash": "b3031b9e603f"
+      }
+    },
+    {
+      "poem": "huanghelou",
+      "book": "cilin",
+      "status": 503,
+      "ok": false,
+      "blocked": true,
+      "issues": ["BLOCKED：该韵书数据未就绪（DATA_NOT_READY），不是判定错误"],
+      "facts": {
+        "http": 503
+      }
+    },
+    {
+      "poem": "huanghelou",
+      "book": "xinyun",
+      "status": 503,
+      "ok": false,
+      "blocked": true,
+      "issues": ["BLOCKED：该韵书数据未就绪（DATA_NOT_READY），不是判定错误"],
+      "facts": {
+        "http": 503
+      }
+    }
+  ]
+}

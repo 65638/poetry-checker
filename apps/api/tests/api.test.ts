@@ -38,6 +38,10 @@ describe("apps/api D1 mock", () => {
     const res = await app.inject({ method: "GET", url: "/readyz" });
     expect(res.statusCode).toBe(200);
     expect(ReadyResponseSchema.parse(res.json()).status).toBe("ready");
+    expect(res.headers["x-poetry-mode"]).toBe("mock");
+    expect(
+      JSON.parse(decodeURIComponent(String(res.headers["x-poetry-versions"]))),
+    ).toEqual(res.json().versions);
     await app.close();
   });
 
@@ -46,7 +50,11 @@ describe("apps/api D1 mock", () => {
     const res = await app.inject({ method: "GET", url: "/api/v1/rhyme-books" });
     expect(res.statusCode).toBe(200);
     const parsed = RhymeBooksResponseSchema.parse(res.json());
-    expect(parsed.books.map((b) => b.id)).toEqual(["pingshui", "cilin", "xinyun"]);
+    expect(parsed.books.map((b) => b.id)).toEqual([
+      "pingshui",
+      "cilin",
+      "xinyun",
+    ]);
     await app.close();
   });
 
@@ -111,7 +119,9 @@ describe("apps/api D1 mock", () => {
     ]) {
       const res = await app.inject({ method: "GET", url });
       expect(res.statusCode).toBe(503);
-      expect(ErrorResponseSchema.parse(res.json()).error.code).toBe("DATA_NOT_READY");
+      expect(ErrorResponseSchema.parse(res.json()).error.code).toBe(
+        "DATA_NOT_READY",
+      );
     }
     await app.close();
   });

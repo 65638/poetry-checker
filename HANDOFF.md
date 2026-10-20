@@ -1,5 +1,19 @@
 # 首批工程底座交付记录
 
+> **D4 基线执行记录（2026-10-20）**：统一分支 `integrate/d4` 已完成本地集成与复验；733项测试、18个浏览器场景通过，HTTP 3通过/6阻断/0判错。见 [D4基线发布记录](docs/handoffs/d4-baseline.md)。以下“未执行基线发布”为任务包编制时历史状态；当前发布ref以远端PR为准。
+
+> **当前排期已转D4（2026-10-20）**：[D4总控](docs/team/D4_执行任务书_2026-10-20/00_组长先看_总控与历史迁移.md)。组长要求D3及以前全部遗留统一进入D4，暂停新UI；Codex接GLM总集成。此轮只生成任务包并复跑API起点，没有执行代码合并、基线发布或新数据批准。远端本次fetch为main@05e1acb、codex/d3-b-integration@7918281；本地完整工作基线4d39037；以下旧main与进度描述保留为历史。
+
+> **D3 D/E 最新接管复验**：733项通过；浏览器18/0/0，三首示例、选音重查、失败/进行中导出限制已完成；HTTP仍3/6/0，D3未收口。见 [交接](docs/handoffs/d3-de-takeover-codex.md)。以下为此前各批记录。
+
+> **D3 A 修复（2026-10-19）**：六部误批已撤回，保留83候选+三讲；平水 review4、词林 clean1。全仓711项通过，真实九格3/6/0，48条新候选仍待批准。详见 [A 修复交接](docs/handoffs/d3-a-repair-codex.md)。
+
+> **当前状态（2026-10-19，Codex 集成复核）**：本文按交付批次追加，以下 D1 段落为历史。
+> `main@f42172f` 包含 D1/D2 交付，PR #11 已合并。D3 工作位于 `integrate/d3` 及其上游待合批次 `codex/d3-b-integration`（PR #16），尚不等于已进入 main。
+> D3 特例已接入 orchestrator，真实 HTTP 已验证平水《黄鹤楼》限定尾式为 `not_applicable/info`，其他偏离保留。C 的 PR #14 新增收尾提交 `8dcec2c`、`803e52a` 已纳入本集成分支。
+> 三首 golden 的 approved 仅覆盖已有正文/体裁等断言；词林、新韵六格仍有数据阻断，不能宣告 D3 全部完成。
+> 当前 C 复核见 [`docs/handoffs/d3-c-closeout-review-codex.md`](docs/handoffs/d3-c-closeout-review-codex.md)；E 第三批已新增复制/导出与键盘验收，最新实跑 703 项 / 浏览器 11 通过、1 阻断，详见 [`docs/handoffs/d3-e-third-review-codex.md`](docs/handoffs/d3-e-third-review-codex.md)。
+
 日期：2026-10-16。执行者：Codex。文档包已更新至 v1.3，公共契约仍为 v1.0 候选。当前交付工程底座与成员任务书；完整应用尚未实现，D1 人工冻结尚待组长完成。
 
 ## 已实现
@@ -57,11 +71,14 @@ Claude 接入后负责视觉/展示组件，D 与 DeepSeek 负责业务工程；
 - 根配置：新增 `dev` / `dev:api` 脚本；tsconfig include 与 vitest include 纳入 `apps/**`；新增依赖 fastify 5.1.0 并更新 lockfile。
 - 验证：`pnpm verify` 36 项测试通过（原 27 + api 9）；真实启动冒烟：healthz 200 / analyze 200+出站校验 / 非法枚举 422 / 坏 JSON 400 / 未知路由 404 / 数据未就绪 503。
 
-## 待办（按任务书）
+## 待办（按任务书；以下为 D1 期记录，2026-10-19 全部标为历史）
 
-- API 真实编排：A/B/C/E 模块就绪后按契约第 4 节顺序接入，替换 mock 选 fixture 逻辑；`readyz` 改为反映真实数据装载。
-- D 接入 web 后把 `pnpm dev` 扩展为同时启动 API 与 Web。
-- 组长 D1 决策项：中华新韵底本（建议直接采用十四韵规则 + pinyin-data 重建并标注重建表）。
+- **【历史】** API 真实编排：A/B/C/E 模块就绪后按契约第 4 节顺序接入，替换 mock 选 fixture 逻辑；`readyz` 改为反映真实数据装载。
+  → 已由 D2 的 GLM 批次落地（真实六步编排，`analyze` 不再是 fixture mock）。
+- **【历史】** D 接入 web 后把 `pnpm dev` 扩展为同时启动 API 与 Web。
+  → 已由 `scripts/dev.mjs` 提供一条命令双边启动。
+- **【历史】** 组长 D1 决策项：中华新韵底本（建议直接采用十四韵规则 + pinyin-data 重建并标注重建表）。
+  → 已按该口径重建并在数据文档标注，归 A 的 D1/D2 数据侧结论。
 
 ---
 

@@ -76,8 +76,30 @@ export function buildApp(options?: { resources?: Resources }): FastifyInstance {
   app.get("/healthz", async () => ({ status: "ok" }));
 
   app.get("/readyz", async (_req, reply) => {
+    // Diagnostics live in headers so contract-v1's strict 503 ErrorResponse stays valid.
+    const versions = devMock
+      ? fixtureVersions
+      : {
+          data: Object.values(resources.snapshots)
+            .map((x) => `${x.book}=${x.dataVersion}`)
+            .join(","),
+          rules: "teaching-v1+reviewed-works-v1",
+          context:
+            resources.contextRules.length > 0
+              ? `context-rules:${resources.contextRules.length}`
+              : "none-loaded",
+          works:
+            resources.works.length > 0
+              ? `works:${resources.works.length}`
+              : "none-loaded",
+        };
+    reply.header("X-Poetry-Mode", devMock ? "mock" : "real");
+    reply.header(
+      "X-Poetry-Versions",
+      encodeURIComponent(JSON.stringify(versions)),
+    );
     if (devMock) {
-      return { status: "ready", versions: fixtureVersions };
+      return { status: "ready", versions };
     }
     if (!realReady) {
       return reply
@@ -86,14 +108,7 @@ export function buildApp(options?: { resources?: Resources }): FastifyInstance {
     }
     return {
       status: "ready",
-      versions: {
-        data: Object.values(resources.snapshots)
-          .map((x) => `${x.book}=${x.dataVersion}`)
-          .join(","),
-        rules: "teaching-v1",
-        context: `context-rules:${resources.contextRules.length}`,
-        works: `works:${resources.works.length}`,
-      },
+      versions,
     };
   });
 

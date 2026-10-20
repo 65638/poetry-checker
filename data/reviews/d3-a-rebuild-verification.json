@@ -1,0 +1,41 @@
+{
+  "generatedAt": "2026-10-19T07:09:49.873Z",
+  "scope": "两次实际执行构建脚本，不以两次JSON.parse代替重建；无新增审批",
+  "initialAttempt": "此前重建尝试在Windows写入cilin.full-d2.json时报UNKNOWN；中止后串行重试，两轮完整通过。",
+  "scripts": [
+    {
+      "path": "scripts/data/build-pingshui.ts",
+      "sha256": "fad742f7641b2a0d47ae927a630c025ad75ba30c19414924fa15544d511831d0"
+    },
+    {
+      "path": "scripts/data/build-cilin.ts",
+      "sha256": "c64a3f958c68f49ff5d1ebd2a8228b5926b1af114bfa28805d3116c17147cf70"
+    }
+  ],
+  "originalHashes": {
+    "data/normalized/pingshui.full-d2.json": "199151ab01f876b7be39504e8ea67a6d1fcadc5ead423644448c635286424215",
+    "data/normalized/pingshui.full-d2-patched.json": "4b6fc33ea23a4b49cfb70ecc68a31a90ba1e061be1c40219ca3ba35a4ace293f",
+    "data/normalized/cilin.full-d2.json": "ed7d80315b7cbaff6feef81d8927944b11ae90489bc1da909e251a2958887256"
+  },
+  "runs": [
+    {
+      "run": 1,
+      "exitCode": 0,
+      "hashes": {
+        "data/normalized/pingshui.full-d2.json": "199151ab01f876b7be39504e8ea67a6d1fcadc5ead423644448c635286424215",
+        "data/normalized/pingshui.full-d2-patched.json": "4b6fc33ea23a4b49cfb70ecc68a31a90ba1e061be1c40219ca3ba35a4ace293f",
+        "data/normalized/cilin.full-d2.json": "ed7d80315b7cbaff6feef81d8927944b11ae90489bc1da909e251a2958887256"
+      }
+    },
+    {
+      "run": 2,
+      "exitCode": 0,
+      "hashes": {
+        "data/normalized/pingshui.full-d2.json": "199151ab01f876b7be39504e8ea67a6d1fcadc5ead423644448c635286424215",
+        "data/normalized/pingshui.full-d2-patched.json": "4b6fc33ea23a4b49cfb70ecc68a31a90ba1e061be1c40219ca3ba35a4ace293f",
+        "data/normalized/cilin.full-d2.json": "ed7d80315b7cbaff6feef81d8927944b11ae90489bc1da909e251a2958887256"
+      }
+    }
+  ],
+  "identical": true
+}

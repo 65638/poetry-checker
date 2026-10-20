@@ -6,3 +6,6 @@
 # Raw snapshots must stay byte-exact: never normalize line endings,
 # otherwise the registered sha256 stops matching after a fresh clone.
 data/raw/** -text
+
+# D4 baseline evidence hashes refer to the archived bytes, including logs.
+tests/integration/e2e/evidence/d4-baseline/** -text

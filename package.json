@@ -12,6 +12,8 @@
     "typecheck": "tsc --noEmit && tsc --noEmit -p apps/web/tsconfig.json",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:acceptance": "node tests/integration/e2e/d3-acceptance-api.mjs --spawn",
+    "test:e2e": "node tests/e2e/d3-browser.mjs",
     "lint": "eslint .",
     "format": "prettier --write .",
     "generate:contracts": "pnpm build && tsx scripts/generate-contracts.ts",

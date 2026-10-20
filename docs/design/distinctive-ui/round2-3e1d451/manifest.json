@@ -1,0 +1,173 @@
+{
+  "label": "round2",
+  "sha": "3e1d451",
+  "dirty": false,
+  "route": "/",
+  "dataMode": "real API (isolated)",
+  "shots": [
+    {
+      "file": "motion-opening-120ms-1440x1000.png",
+      "viewport": "1440x1000",
+      "mode": "motion",
+      "note": "opening frame ~120ms after input ready",
+      "at": "2026-10-19T19:47:02.757Z"
+    },
+    {
+      "file": "initial-1440x1000.png",
+      "viewport": "1440x1000",
+      "mode": "motion settled",
+      "note": "empty state, first viewport",
+      "at": "2026-10-19T19:47:04.042Z"
+    },
+    {
+      "file": "motion-report-140ms-1440x1000.png",
+      "viewport": "1440x1000",
+      "mode": "motion",
+      "note": "report reveal frame ~140ms",
+      "at": "2026-10-19T19:47:04.557Z"
+    },
+    {
+      "file": "report-1440x1000.png",
+      "viewport": "1440x1000",
+      "mode": "motion settled",
+      "note": "real pingshui report, first example, top",
+      "at": "2026-10-19T19:47:05.640Z"
+    },
+    {
+      "file": "report-poem-1440x1000.png",
+      "viewport": "1440x1000",
+      "mode": "motion settled",
+      "note": "poem grid scrolled into view",
+      "at": "2026-10-19T19:47:06.054Z"
+    },
+    {
+      "file": "evidence-1440x1000.png",
+      "viewport": "1440x1000",
+      "mode": "motion settled",
+      "note": "evidence drawer open on l1c1",
+      "at": "2026-10-19T19:47:06.694Z"
+    },
+    {
+      "file": "motion-opening-120ms-375x812.png",
+      "viewport": "375x812",
+      "mode": "motion",
+      "note": "opening frame ~120ms after input ready",
+      "at": "2026-10-19T19:47:07.570Z"
+    },
+    {
+      "file": "initial-375x812.png",
+      "viewport": "375x812",
+      "mode": "motion settled",
+      "note": "empty state, first viewport",
+      "at": "2026-10-19T19:47:08.793Z"
+    },
+    {
+      "file": "motion-report-140ms-375x812.png",
+      "viewport": "375x812",
+      "mode": "motion",
+      "note": "report reveal frame ~140ms",
+      "at": "2026-10-19T19:47:09.256Z"
+    },
+    {
+      "file": "report-375x812.png",
+      "viewport": "375x812",
+      "mode": "motion settled",
+      "note": "real pingshui report, first example, top",
+      "at": "2026-10-19T19:47:10.285Z"
+    },
+    {
+      "file": "report-poem-375x812.png",
+      "viewport": "375x812",
+      "mode": "motion settled",
+      "note": "poem grid scrolled into view",
+      "at": "2026-10-19T19:47:10.612Z"
+    },
+    {
+      "file": "evidence-375x812.png",
+      "viewport": "375x812",
+      "mode": "motion settled",
+      "note": "evidence drawer open on l1c1",
+      "at": "2026-10-19T19:47:11.153Z"
+    },
+    {
+      "file": "initial-1440x900.png",
+      "viewport": "1440x900",
+      "mode": "motion settled",
+      "note": "first viewport: examples, input, book, Analyze",
+      "at": "2026-10-19T19:47:13.112Z"
+    },
+    {
+      "file": "initial-1366x768.png",
+      "viewport": "1366x768",
+      "mode": "motion settled",
+      "note": "first viewport: examples, input, book, Analyze",
+      "at": "2026-10-19T19:47:14.734Z"
+    },
+    {
+      "file": "report-900x900.png",
+      "viewport": "900x900",
+      "mode": "motion settled",
+      "note": "intermediate width report",
+      "at": "2026-10-19T19:47:17.622Z"
+    },
+    {
+      "file": "findings-900x900.png",
+      "viewport": "900x900",
+      "mode": "motion settled",
+      "note": "findings tally + disclosure closed",
+      "at": "2026-10-19T19:47:18.008Z"
+    },
+    {
+      "file": "findings-open-1440x900.png",
+      "viewport": "1440x900",
+      "mode": "motion settled",
+      "note": "settled checks disclosure open",
+      "at": "2026-10-19T19:47:21.257Z"
+    },
+    {
+      "file": "initial-768x1000.png",
+      "viewport": "768x1000",
+      "mode": "motion settled",
+      "note": "tablet layout",
+      "at": "2026-10-19T19:47:22.857Z"
+    },
+    {
+      "file": "report-huanghelou-768x1000.png",
+      "viewport": "768x1000",
+      "mode": "motion settled",
+      "note": "third example, historical tags",
+      "at": "2026-10-19T19:47:24.188Z"
+    },
+    {
+      "file": "reduced-initial-60ms-1440x1000.png",
+      "viewport": "1440x1000",
+      "mode": "reduced-motion",
+      "note": "should already be final",
+      "at": "2026-10-19T19:47:24.725Z"
+    },
+    {
+      "file": "reduced-report-60ms-1440x1000.png",
+      "viewport": "1440x1000",
+      "mode": "reduced-motion",
+      "note": "should already be final",
+      "at": "2026-10-19T19:47:25.131Z"
+    },
+    {
+      "file": "stale-1440x1000.png",
+      "viewport": "1440x1000",
+      "mode": "reduced-motion",
+      "note": "edited after report",
+      "at": "2026-10-19T19:47:25.425Z"
+    },
+    {
+      "file": "error-cilin-1440x1000.png",
+      "viewport": "1440x1000",
+      "mode": "reduced-motion",
+      "note": "cilin not ready alert expected",
+      "at": "2026-10-19T19:47:26.177Z"
+    }
+  ],
+  "readiness": "real",
+  "url": "http://127.0.0.1:65388/",
+  "alert": "!分析未完成分析数据尚未就绪，请稍后重试。输入内容已保留。\n原因：LOOKUP_EVIDENCE_UNVERIFIED：字位 l1c1（白）参与读音/平仄推导的"
+}

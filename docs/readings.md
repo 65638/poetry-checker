@@ -326,10 +326,10 @@ pnpm verify
 ### 9.2 三首固定正文的实测（分母=字位）
 
 | 作品     | 字位 | 有候选字位 | 缺字位 | 多候选字位 | 候选预检阻断字位（语境筛选前） | `resolveReadings` 结果                              |
-| -------- | ---- | ---------- | ------ | ---------- | ---------------- | --------------------------------------------------- |
-| 登鹳雀楼 | 20   | 20         | 0      | 3          | 14               | 抛 `LOOKUP_EVIDENCE_UNVERIFIED`（首个拦截 l1c3 依） |
-| 静夜思   | 20   | 20         | 0      | 4          | 16               | 抛 `LOOKUP_EVIDENCE_UNVERIFIED`（首个拦截 l1c1 床） |
-| 黄鹤楼   | 56   | 56         | 0      | 15         | 45               | 抛 `LOOKUP_EVIDENCE_UNVERIFIED`（首个拦截 l1c1 昔） |
+| -------- | ---- | ---------- | ------ | ---------- | ------------------------------ | --------------------------------------------------- |
+| 登鹳雀楼 | 20   | 20         | 0      | 3          | 14                             | 抛 `LOOKUP_EVIDENCE_UNVERIFIED`（首个拦截 l1c3 依） |
+| 静夜思   | 20   | 20         | 0      | 4          | 16                             | 抛 `LOOKUP_EVIDENCE_UNVERIFIED`（首个拦截 l1c1 床） |
+| 黄鹤楼   | 56   | 56         | 0      | 15         | 45                             | 抛 `LOOKUP_EVIDENCE_UNVERIFIED`（首个拦截 l1c1 昔） |
 
 当前逐字报告由 `pnpm exec tsx packages/readings/scripts/golden-token-review.ts` 生成，见 `data/reviews/golden-token-review-2026-10-18.json/.md`；旧 `d2-coverage` 脚本仍读取七字样本，不作为本轮全量证据统计入口。整诗选音结果用 `context-smoke.ts` 复验。
 
@@ -381,3 +381,20 @@ pnpm verify
 - 一条规则要生效，需同时满足：规则 `approved`、证据齐备且用途正确、**被选候选自身也有已审核证据**。
   前两条不满足 → notice；第三条不满足 → 抛 `LOOKUP_EVIDENCE_UNVERIFIED`。
 - `targetOffset` 按码点计，不用 UTF-16 长度；跨行短语不命中（只匹配同句）。
+
+## D4：三库有效候选与覆盖（2026-10-20）
+
+产物在 `data/reviews/d4/b/`：`effective-candidates.json`（288 行逐字位接口，含 baseSha 与 dataVersions）、
+`a-diff.md`（给 A 的六类差集）、`context-drafts.json/md`（词林/新韵 13 条未批准草稿）、
+`coverage-60.md`（44 个去重多音位置的已测/来源已定/需待核/缺样本分列）。
+
+生成命令（默认行为不变，D3 报告仍写原路径）：
+
+```text
+node node_modules/tsx/dist/cli.mjs packages/readings/scripts/d3-effective-candidates.ts \
+  --out data/reviews/d4/b --base-sha <base>
+```
+
+结论：平水 96/96 有效候选有已审证据（85 resolved + 11 ambiguous + 0 blocked）；
+词林/新韵各 96 字位全部 blocked（两库 evidence approved = 0），属数据未就绪。
+多读同调仍写作 reading=ambiguous、tone=resolved，不伪称读音确定。

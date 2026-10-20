@@ -1,0 +1,138 @@
+{
+  "label": "round0",
+  "sha": "857906d",
+  "dirty": false,
+  "route": "/",
+  "dataMode": "real API (isolated)",
+  "shots": [
+    {
+      "file": "motion-opening-120ms-1440.png",
+      "viewport": "1440x1000",
+      "mode": "motion",
+      "note": "opening frame ~120ms after input ready",
+      "at": "2026-10-19T18:16:27.527Z"
+    },
+    {
+      "file": "initial-1440.png",
+      "viewport": "1440x1000",
+      "mode": "motion settled",
+      "note": "empty state, first viewport",
+      "at": "2026-10-19T18:16:28.815Z"
+    },
+    {
+      "file": "motion-report-140ms-1440.png",
+      "viewport": "1440x1000",
+      "mode": "motion",
+      "note": "report reveal frame ~140ms",
+      "at": "2026-10-19T18:16:29.312Z"
+    },
+    {
+      "file": "report-1440.png",
+      "viewport": "1440x1000",
+      "mode": "motion settled",
+      "note": "real pingshui report, first example, top",
+      "at": "2026-10-19T18:16:30.375Z"
+    },
+    {
+      "file": "report-poem-1440.png",
+      "viewport": "1440x1000",
+      "mode": "motion settled",
+      "note": "poem grid scrolled into view",
+      "at": "2026-10-19T18:16:30.784Z"
+    },
+    {
+      "file": "evidence-1440.png",
+      "viewport": "1440x1000",
+      "mode": "motion settled",
+      "note": "evidence drawer open on l1c1",
+      "at": "2026-10-19T18:16:31.423Z"
+    },
+    {
+      "file": "motion-opening-120ms-375.png",
+      "viewport": "375x812",
+      "mode": "motion",
+      "note": "opening frame ~120ms after input ready",
+      "at": "2026-10-19T18:16:32.310Z"
+    },
+    {
+      "file": "initial-375.png",
+      "viewport": "375x812",
+      "mode": "motion settled",
+      "note": "empty state, first viewport",
+      "at": "2026-10-19T18:16:33.546Z"
+    },
+    {
+      "file": "motion-report-140ms-375.png",
+      "viewport": "375x812",
+      "mode": "motion",
+      "note": "report reveal frame ~140ms",
+      "at": "2026-10-19T18:16:34.019Z"
+    },
+    {
+      "file": "report-375.png",
+      "viewport": "375x812",
+      "mode": "motion settled",
+      "note": "real pingshui report, first example, top",
+      "at": "2026-10-19T18:16:35.058Z"
+    },
+    {
+      "file": "report-poem-375.png",
+      "viewport": "375x812",
+      "mode": "motion settled",
+      "note": "poem grid scrolled into view",
+      "at": "2026-10-19T18:16:35.397Z"
+    },
+    {
+      "file": "evidence-375.png",
+      "viewport": "375x812",
+      "mode": "motion settled",
+      "note": "evidence drawer open on l1c1",
+      "at": "2026-10-19T18:16:35.957Z"
+    },
+    {
+      "file": "initial-768.png",
+      "viewport": "768x1000",
+      "mode": "motion settled",
+      "note": "tablet layout",
+      "at": "2026-10-19T18:16:37.895Z"
+    },
+    {
+      "file": "report-huanghelou-768.png",
+      "viewport": "768x1000",
+      "mode": "motion settled",
+      "note": "third example, historical tags",
+      "at": "2026-10-19T18:16:39.217Z"
+    },
+    {
+      "file": "reduced-initial-60ms-1440.png",
+      "viewport": "1440x1000",
+      "mode": "reduced-motion",
+      "note": "should already be final",
+      "at": "2026-10-19T18:16:39.736Z"
+    },
+    {
+      "file": "reduced-report-60ms-1440.png",
+      "viewport": "1440x1000",
+      "mode": "reduced-motion",
+      "note": "should already be final",
+      "at": "2026-10-19T18:16:40.130Z"
+    },
+    {
+      "file": "stale-1440.png",
+      "viewport": "1440x1000",
+      "mode": "reduced-motion",
+      "note": "edited after report",
+      "at": "2026-10-19T18:16:40.427Z"
+    },
+    {
+      "file": "error-cilin-1440.png",
+      "viewport": "1440x1000",
+      "mode": "reduced-motion",
+      "note": "cilin not ready alert expected",
+      "at": "2026-10-19T18:16:41.145Z"
+    }
+  ],
+  "readiness": "real",
+  "url": "http://127.0.0.1:60165/",
+  "alert": "!分析未完成分析数据尚未就绪，请稍后重试。输入内容已保留。\n原因：LOOKUP_EVIDENCE_UNVERIFIED：字位 l1c1（白）参与读音/平仄推导的"
+}

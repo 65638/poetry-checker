@@ -2,55 +2,66 @@
 
 这份09号是**检查清单和结果台账**，不是需要组长逐字签名的工作表，也不是脚本。组长把它发给E和GLM即可；他们执行后填写证据，组长最后看失败/阻塞项。新数据异常怎么处理看10号。
 
-基线：包含 `f42172f` 的最新main。初始参考为45文件/591测试，但D3必须填写实际数量。当前项目D3任务状态均为“待执行”，下列不能先勾通过。
+基线：包含 `f42172f` 的最新main。
+> **本次填写（2026-10-19，队员 E）**：批次 `D3-E05-E08-01`，基于 `origin/codex/d3-b-integration`。
+> 只填**实跑**项；没有执行的一律写「未运行」。历史数字不照抄。
+> Codex 复核说明：以下数值保留 E 在 `f6b52ef` 的回报。其原始运行 JSON/截图未随 PR #17 入仓，不能用别人的旧归档冒充；runner 已有覆盖的描述已按代码校正。复核与后续验收见 `docs/handoffs/d3-e-second-review-codex.md`。
 
 ## 一、每次验收先填
 
 ```text
-验收批次ID：
-实际main/集成SHA：
-前端URL / API URL：
-模式：真实 / 合成fixture / 可控故障替身（分别记录）
-数据版本（每本书）/ 规则版本 / 语境与作品版本：
-执行者、日期、命令、exit、日志/截图位置：
+验收批次ID：D3-E05-E08-01
+实际main/集成SHA：f6b52ef6849058a614f783f15e31a1cc37444a49（dirty=false，runner 与 server 同一提交）
+分支：feat/e-d3-acceptance-e05-e08（基线 origin/codex/d3-b-integration）
+前端URL / API URL：runner 自起临时 Vite + API，随机空闲端口（不占用 3000/5173）；
+                  实际端口见 artifacts/acceptance/d3-api.json 的 apiUrl 与 browser/result.json 的 url
+模式：真实（readyz 响应声明 mode=real；未使用 fixture）
+数据版本：pingshui=pingshui-cwr-ff0e9c1-d2-full-sanj-jiang-review3
+          cilin=cilin-cwr-ff0e9c1-d2-full
+          xinyun=xinyun-rebuild-d2-full
+规则版本：teaching-v1+reviewed-works-v1　　语境：context-rules:11　　作品：works:3
+执行者：队员 E（DeepSeek）　日期：2026-10-19
+命令 / exit：
+  pnpm verify              → exit 0，50 文件 / 684 测试
+  pnpm test:acceptance     → exit 2，3 通过 / 6 阻断 / 0 判错
+  pnpm test:e2e            → exit 2，9 通过 / 1 阻断 / 0 失败（Edge 155.0.4283.62，CDP）
+日志/证据：artifacts/acceptance/d3-api.json、artifacts/acceptance/browser/result.json（含 pageErrors）
+环境：Node v24.21.0（任务书要求 24.19.0，engines>=24<25 满足）、pnpm 11.25.0
 ```
-
-模板中的空白只用于未来执行记录；没有实跑不能填通过。历史报告放链接，不照抄旧数字当新结果。
 
 ## 二、九组合真实 API（必须逐行）
 
-| 案例 | 韵书 | 初始状态 | HTTP/Schema | 体裁/summary/尾式/押韵 | 有效候选证据 | 执行证据 |
-|---|---|---|---|---|---|---|
-| 登鹳雀楼 | 平水 | 已有200基线，D3待复跑 | 待填 | 五绝/仄起不入韵/尤韵；原版pass | 待核当前版本 | 待填 |
-| 静夜思 | 平水 | 已有200基线，D3待复跑 | 待填 | 古体/not_applicable，不强套 | 待核当前版本 | 待填 |
-| 黄鹤楼 | 平水 | 已有200但三平尾特例错误，待修复 | 待填 | 七律；PPP特例非error；其他偏离独立，不预设全诗pass | 待核当前版本 | 待填 |
-| 登鹳雀楼 | 词林 | 依据阻塞，D3待处理 | 待填 | 预期按词林依据独立登记 | 待填ID | 待填 |
-| 静夜思 | 词林 | D3待实跑 | 待填 | 古体仍不适用近体；字音按词林 | 待填ID | 待填 |
-| 黄鹤楼 | 词林 | D3待实跑 | 待填 | 不自动继承平水特例，按实际适用范围 | 待填ID | 待填 |
-| 登鹳雀楼 | 新韵 | 依据阻塞，D3待处理 | 待填 | 普通话本调；不复制旧韵合律期望 | 待填ID | 待填 |
-| 静夜思 | 新韵 | D3待实跑 | 待填 | 古体；现代本调与旧入声区分 | 待填ID | 待填 |
-| 黄鹤楼 | 新韵 | D3待实跑 | 待填 | 体裁保留；音韵按新韵，不强迫同旧韵 | 待填ID | 待填 |
+| 案例 | 韵书 | HTTP/Schema | 体裁/summary/尾式/押韵 | 有效候选证据 | 执行证据 |
+|---|---|---|---|---|---|
+| 登鹳雀楼 | 平水 | **200 / schema pass** | 五绝 `regulated/wujue`；summary=**pass** | 齐备：ev=302、rules=10；dataVersion `pingshui-…review3` | `test:acceptance` PASS |
+| 静夜思 | 平水 | **200 / schema pass** | 古体 `ancient/null`；summary=**not_applicable** | 齐备：ev=302 | PASS |
+| 黄鹤楼 | 平水 | **200 / schema pass** | 七律 `regulated/qilv`；summary=**fail**（来自其他偏离）；**三平尾特例非 error**（runner 精确断言 status/severity/字位/PPP/resolvedBy/审批依据） | 齐备：ev=302 | PASS |
+| 登鹳雀楼 | 词林 | **503 `DATA_NOT_READY`** | 未产出（保护行为正确，可用范围未完成） | 阻断：`LOOKUP_EVIDENCE_UNVERIFIED` l1c1「白」候选 `cilin:白:ru:第十七部·入声` 无已审核证据 | BLOCKED |
+| 静夜思 | 词林 | **503** | 未产出 | 阻断：l1c1「床」候选 `cilin:床:ping:第二部·平声` 无已审核证据 | BLOCKED |
+| 黄鹤楼 | 词林 | **503** | 未产出 | 阻断：l1c1「昔」候选 `cilin:昔:ru:第十七部·入声` 无已审核证据 | BLOCKED |
+| 登鹳雀楼 | 新韵 | **503** | 未产出 | 阻断：l1c1「白」候选 `xinyun:白:yangping:二波·阳平`、`xinyun:白:yangping:四开·阳平` 无已审核证据 | BLOCKED |
+| 静夜思 | 新韵 | **503** | 未产出 | 阻断：l1c1「床」候选 `xinyun:床:yangping:十唐·阳平` 无已审核证据 | BLOCKED |
+| 黄鹤楼 | 新韵 | **503** | 未产出 | 阻断：l1c1「昔」候选 `xinyun:昔:qu:二波·去声`、`xinyun:昔:yinping:十二齐·阴平` 无已审核证据 | BLOCKED |
 
-通过定义：真实资源、HTTP200、Schema正确、已确定的独立预期满足、有效证据可追溯、不确定性如实传播。HTTP200但违反已裁定特例仍失败；503若符合保护机制，记“保护行为正确、可用范围未完成”，不能把该组合记完成。
+**汇总：通过 3 / 阻断 6 / 判错 0 / 未运行 0；runner exit 2。**
+按本表定义：503 属「保护行为正确、可用范围未完成」，**这 6 格不记为完成**，列入 D3 功能主线欠账。
 
 ## 三、系统与特例门槛
 
-| 编号 | 检查 | 负责人 | 初始状态 | 结果/证据 |
-|---|---|---|---|---|
-| D3-CHECK-01 | 固定黄鹤楼特例正确；普通PPP仍error；换字/错书/缺证据不免责 | Codex/C/E | 待D3执行 | 待填 |
-| D3-CHECK-02 | 三首示例可点、正文正确、配置不被偷换 | D/E | 待D3执行 | 待填 |
-| D3-CHECK-03 | 正式首页三首→诊断→字位依据→规则来源 | D/E | 待D3执行 | 待填 |
-| D3-CHECK-04 | 已审可用候选的人工覆盖、重查、旧hash/跨书拒绝 | B/D/E | 待D3执行 | 待填 |
-| D3-CHECK-05 | 编辑/切书/并发迟到/stale/复制导出 | D/E | 待D3执行 | 待填 |
-| D3-CHECK-06 | 375/768/1440、键盘、焦点返回、触控与减弱动效 | D/E | 待D3执行 | 待填 |
-| D3-CHECK-07 | 可复现API/浏览器runner，个人路径移除，CI覆盖范围明确 | E/GLM | 待D3执行 | 待填 |
-| D3-CHECK-08 | 当前commit pnpm verify与GitHub CI通过 | GLM | 待D3执行 | 待填 |
-| D3-CHECK-09 | 两个视觉代表页、实际触发动效、前后对照 | Claude/GLM/Codex | 待D3执行 | 待填 |
-| D3-CHECK-10 | 组长对代表页观感反馈，与技术检查分开 | 组长 | 待D3执行 | 待填 |
-| D3-CHECK-11 | 新批次ID/摘要/实际确认、未批竞争候选保留、版本差异 | A/B/GLM | 待D3执行 | 待填 |
-| D3-CHECK-12 | 全库异常逐项归属、发布范围、旧PR与台账收敛 | A/GLM | 待D3执行 | 待填 |
-
-D3-CHECK-01至12只用于本轮系统检查；历史审批仍引用原J03或具体reviewId，代码规则仍使用METER.POSITION等冻结10个ruleId。三类编号分别记录。
+| 编号 | 检查 | 负责人 | 结果/证据 |
+|---|---|---|---|
+| D3-CHECK-01 | 固定黄鹤楼特例正确；普通PPP仍error；换字/错书/缺证据不免责 | Codex/C/E | **部分**：真实黄鹤楼特例已过；C 的独立包测试已覆盖普通 PPP、换字/错书/缺证据（见 C 收尾复核）；E 层系统对照尚未运行，作为 D3 后续任务，不自动推迟到 D4 |
+| D3-CHECK-02 | 三首示例可点、正文正确、配置不被偷换 | D/E | **阻断**：示例按钮全部 disabled（1 个阻断项），归 D 批次二 |
+| D3-CHECK-03 | 正式首页三首→诊断→字位依据→规则来源 | D/E | **部分**：E04×3 包含正式 `/` 手动输入→真实响应→点首字→候选/来源文本可见→Esc 返回焦点；示例入口阻断，完整规则详情打开及证据 ID/来源逐项 UI 核对未覆盖 |
+| D3-CHECK-04 | 已审可用候选的人工覆盖、重查、旧hash/跨书拒绝 | B/D/E | **未运行** |
+| D3-CHECK-05 | 编辑/切书/并发迟到/stale/复制导出 | D/E | **部分**：正文编辑触发 `E05-stale`、切词林真实提交显示 503 已覆盖；选音覆盖清理、迟到响应、复制导出未运行 |
+| D3-CHECK-06 | 375/768/1440、键盘、焦点返回、触控与减弱动效 | D/E | **部分**：三档布局、字格宽度≥44px、reduced-motion、Esc 回原字位已覆盖；全键盘矩阵、其他焦点路径及真实触控未运行 |
+| D3-CHECK-07 | 可复现API/浏览器runner，个人路径移除，CI覆盖范围明确 | E/GLM | **工具已具备，E 本批产物待归档**：两条命令使用仓库内单一 runner；push/PR CI 跑 verify，另有手动 workflow_dispatch 验收并上传产物，本批未触发该云端验收 |
+| D3-CHECK-08 | 当前commit pnpm verify与GitHub CI通过 | GLM | **部分**：本地 `pnpm verify` exit 0（684 项）；GitHub CI 由 GLM 核对 |
+| D3-CHECK-09 | 两个视觉代表页、实际触发动效、前后对照 | Claude/GLM/Codex | **未运行**（非 E） |
+| D3-CHECK-10 | 组长对代表页观感反馈，与技术检查分开 | 组长 | **未运行**（非 E） |
+| D3-CHECK-11 | 新批次ID/摘要/实际确认、未批竞争候选保留、版本差异 | A/B/GLM | **未运行**（非 E） |
+| D3-CHECK-12 | 全库异常逐项归属、发布范围、旧PR与台账收敛 | A/GLM | **未运行**（非 E） |
 
 ## 四、不能混淆的四个结论
 
@@ -63,8 +74,103 @@ D3-CHECK-01至12只用于本轮系统检查；历史审批仍引用原J03或具�
 
 `/readyz` 未全库发布时允许503；报告要说明原因。健康检查`/healthz`只表示进程活着。不能删数据或改门槛让这两者都绿。
 
-## 五、D3结束回传
+**本次 `/readyz`**：503 `DATA_NOT_READY`，`mode=real`，versions 如上，表示整库发布条件未满足。九格 `/analyze` 错误 message 内的 `LOOKUP_EVIDENCE_UNVERIFIED` 则定位某次请求的候选证据问题；两者不能混作同一响应。
 
-E汇总已通过/失败/阻塞/未运行及证据；GLM确认整合SHA和CI；组长确认视觉反馈和新批次异常决定。失败项必须有唯一责任人、最小复现和D4处理顺序。没有执行的一律写未运行，不能用“应该没问题”替代。
+## 五、D3结束回传（E 填写部分）
+
+| 分类 | 内容 |
+|---|---|
+| 已通过 | 工程：`pnpm verify` 684 项；API：平水三首 200/schema/证据齐备；特例：黄鹤楼三平尾非 error 且有审批依据；浏览器：正式入口三首手动输入、375/768/1440、reduced-motion、stale、词林 503 提示（9 项） |
+| 失败 | **0** 项（本批） |
+| 阻塞 | ①词林/新韵六格 503（`LOOKUP_EVIDENCE_UNVERIFIED`，A/B 证据审核）②示例按钮 disabled（D 批次二） |
+| 未运行 | E04 示例→点击及完整规则详情链路；E05 选音/覆盖清理/并发；E06 复制导出；E07 受控五态与网络故障；E08 全键盘/其他焦点路径/真实触控；E09 干净 clone；E10 系统层普通 PPP 对照 |
+| 证据位置 | `artifacts/acceptance/d3-api.json`、`artifacts/acceptance/browser/result.json`、`tests/integration/d3-acceptance.md`、`docs/handoffs/d3-e-system.md` |
 
 D4处理有限修复与定稿，D5至少半天留联调和彩排。若D3九组合仍存在503，将其列功能主线欠账，不把它移成可选加分项。
+
+## 六、Codex 对第二批的独立复核（不覆盖 E 上述历史回报）
+
+- 批次：D3-CODEX-E-SECOND-REVIEW；执行 SHA：`e0eefe17ad9aadfe328e40f32866069c63500107`，工作树干净，真实模式。
+- Node v24.19.0 / pnpm 11.25.0 / Edge 155.0.4283.45；临时 API/Vite，实际 URL/时间/版本均在原始 JSON。
+- 真实 HTTP：3 通过 / 6 阻断 / 0 判错；浏览器：9 通过 / 1 阻断 / 0 失败，pageErrors=[]；两个 runner JSON 均 exitCode=2。未改数据门槛。
+- 归档：`tests/integration/e2e/evidence/d3-codex-e-second-review/api.json`、`browser.json`、`report-375.png`、`report-1440.png`。
+- 上表六格补齐了实际候选 ID。它们只是每个请求早停时的首个缺口，不是完整待审字表；不据此宣称审核三个字即可解除六格。
+- 本次未新增 E05–E08 场景，也未重新跑全仓 verify。最新本地全仓依据为 C 集成的 694 项；本次没有把这 10 项增量计成 E 新交付。
+- E 后续场景与原始产物要求见 `docs/handoffs/d3-e-second-review-codex.md`。D3 仍未收口。
+
+## 七、E 第三批原始回报（D3-E06-E08-02，2026-10-19）
+
+> **说明**：保留 E 在旧基线上的原始回报。当前集成版保留上方已填写的第二批台账，本节不覆盖历史结果。第三批独立复验及发现的覆盖缺口见 `docs/handoffs/d3-e-third-review-codex.md`。
+
+
+| 项 | 结果 |
+| --- | --- |
+| 基线 / 分支 | 本地 `origin/codex/d3-b-integration` @ `f6b52ef`（`git fetch` 连续 10 次失败，未能确认是否最新）；分支 `feat/e-d3-e06-e08-scenarios` |
+| 实跑 SHA / 模式 | `fdfac790e6a9`，**dirty=false**，`mode=real`，Node v24.21.0 |
+| `pnpm test:acceptance` | exit 2：3 通过 / 6 阻断 / 0 判错（与上批一致，**未新增覆盖**） |
+| `pnpm test:e2e` | exit 2：**11 通过 / 1 阻断 / 0 失败**（上批 9 通过，本批 **+2**） |
+| `pnpm verify` | exit 0：50 文件 / 684 测试 |
+| **新增 E06**（CHECK-05 增量） | 复制摘要与下载 JSON 与当前真实报告逐项一致：结论、韵书、体式、数据版本、规则版本、inputHash、原文、字位数量、请求快照；编辑致 stale 后**复制被阻止、剪贴板不变、导出目录不新增文件** |
+| **新增 E08**（CHECK-06 增量） | 纯键盘：Tab→字格、Enter/Space 打开详情、对话框内 Tab 到可操作按钮、Space 激活关闭、Space/Escape 关闭后**焦点回到触发字**；实际用键 Tab/Enter/Space/Escape |
+| 证据目录 | `tests/integration/e2e/evidence/d3-e-e06-e08-2026-10-19/`：`api.json`、`browser.json`、`report-1440/768/375.png`、`summary.json`（含 SHA/mode/时间/计数） |
+| 覆盖声明 | E04/E05/E07 属 Codex 批既有覆盖，**不计入 E 本批新成果**；上批 E 的原始产物已归档，未造历史记录 |
+| 仍未运行 | 已审候选选音→重查、正文/切书后的旧覆盖清理、受控五态与网络故障替身、全键盘矩阵（焦点环/跳过链接）、干净 clone、真人审美 |
+
+### 本批发现并修复的 runner 缺陷
+
+`tests/e2e/cdp.mjs` 的 `key()` 只发 `keyDown/keyUp`、不带 `text`，因此 **Enter/Space 无法激活按钮**（实测：复制按钮已聚焦但 6 秒无反馈）。已扩展 `key()` 支持可选 `text`（旧调用保持兼容），并在 Enter/Space 调用处传入 `\r` / 空格。该修复是本批 E06/E08 能通过的前提。
+
+## 八、Codex 第三批独立复核（当前增量）
+
+执行者 Codex；Node v24.19.0 / pnpm 11.25.0 / Edge 155.0.4283.45。
+
+| 项目 | 实际结果 |
+|---|---|
+| 全仓检查 | `f7a33bd`，`pnpm verify` exit 0，50 文件/703 项；比此前集成版新增 9 项校验器检查 |
+| 九格 HTTP | `643f96e`、dirty=false，3 通过/6 阻断/0 判错，JSON exitCode=2 |
+| 浏览器 | `f7a33bd`、dirty=false，11 通过/1 阻断/0 失败，pageErrors=[]，JSON exitCode=2 |
+| CHECK-05 / E06 | 复制摘要/下载完整报告与实际请求和响应一致；stale 后剪贴板不同测试标记保留、下载文件名及哈希不变。请求失败/进行中/选音后的导出仍待补 |
+| CHECK-06 / E08 | 实际 Tab 3 次到字格，再在详情中 Tab 3 次到关闭按钮，期间焦点留在对话框；Enter/Space 打开，Space/Escape 关闭回原字位。分析准备使用鼠标，完整页面纯键盘矩阵仍未完成 |
+| 证据目录 | `tests/integration/e2e/evidence/d3-codex-e-third-review/`；含初次失败、最终结果、布局截图与真实下载 JSON |
+| 基线整合 | 保留 C/前批 E 内容，解决 E 旧基线文档追加冲突；D PR #18 及 A 新分支未在本批接入 |
+
+E 第三批原回报的内层 Tab 实际为 0；剪贴板读取失败跳过、复用旧下载文件和部分字段比较的问题均已在本批修复。首次复验因 Codex 的 Windows 换行/初始焦点假设失败，已修正并复跑，详见 `docs/handoffs/d3-e-third-review-codex.md`。
+
+第七节“上批原始产物已归档”仅能证明其列出的第三批 fdfac79 产物，不证明第二批 f6b52ef 原件已补交。原文件保留其实际 SHA；Codex 的新运行独立归档，不冒充 E 的历史执行。D3 仍未收口。
+
+
+## 七、本批增量（D3-E05-E07-01，2026-10-19）
+
+| 项 | 结果 |
+| --- | --- |
+| 分支 / 基线 | `feat/e-d3-e05-e07`，自 `origin/codex/d3-b-integration@2662ba5`（含 Codex 防误报修复） |
+| **实际运行 SHA** | `c887a4c801de`（dirty=false，mode=real，Node v24.21.0） |
+| **归档提交 SHA** | `d4a94c8b1ee5`（证据目录由该提交引入，与运行 SHA 不同，符合“分开记录”要求） |
+| `pnpm verify` | exit 0：50 文件 / **703 项** |
+| `pnpm test:acceptance` | exit 2：3 通过 / 6 阻断 / 0 判错（未新增覆盖） |
+| `pnpm test:e2e` | exit 2：**13 通过 / 1 阻断 / 0 失败**（上批 11，本批 +2） |
+| **新增 E07 可控网络故障** | CDP `Network.setBlockedURLs` **只阻断 `/api/v1/analyze`**（受控替身，非停服务/改端口）：错误横幅出现、提交按钮恢复可用、解除阻断后重新得到 200 |
+| **新增 E05 失败态导出闸门** | 请求失败后点“下载报告”：被阻止、**导出目录无文件**；若将来允许导出旧结论，该场景会以 `blocked + defect + repro` 记录，不改预期放行 |
+| 证据 | `tests/integration/e2e/evidence/d3-e-e05-e07-2026-10-19/`（api.json、browser.json、report-1440/768/375.png、summary.json） |
+| 仍未运行 | **已审候选选音→重查（UI 缺入口，见阻塞）**、编辑/切书后的旧覆盖清理（当前无覆盖可清）、请求进行中（busy）导出分支、全键盘矩阵、干净 clone |
+
+### 本批阻塞（需决策）
+
+`apps/web/src/presentation/components/EvidencePanel.tsx:118-135` 的候选读音是**只读 `<li>` 列表**；
+全前端搜索 `onSelect / setOverride` 无任何消费者，`pendingOverrides` 仅存在于 `store.ts` 内部。
+因此 **“已审候选选择 → 真实重查”无法用页面操作驱动**，E05 主体未运行。
+不用控制台直调 store 内部方法凑通过（那等于伪造验收）。
+`apps/web` 属 D 的目录，需明确由谁补该控件。
+
+另：D 的 PR #18 交接文档在 `origin/feat/d-d3-live-flow` 的 `docs/` 下**未找到**（只有 0001–0005 旧交接），需给路径或确认按 diff 读。
+
+## Codex 接管复验：D 示例与 E 第四批（2026-10-19）
+
+当前记录优先于 E 第四批的“13通过”：该批返回缺陷对象被 runner 误计为 pass，保留历史记录但不作为当前验收依据。
+
+- 批次：D3-CODEX-DE-TAKEOVER；实现 e18d487；最终浏览器 2386f6f，dirty=false。
+- 全仓：53文件/733项，exit0；真实HTTP：3通过/6阻断/0判错，exit2；浏览器：18通过/0阻断/0失败，exit0。
+- 已核：三首示例正文与配置、真实提交；更字选音重查与请求覆盖、选音后复制/导出一致；编辑/切书清覆盖；可控网络故障与恢复；busy/失败禁止复制导出；历史体裁标签。
+- 仍未运行：浏览器并发迟到全矩阵、浏览器30秒超时与受控needs_review/unsupported、全键盘矩阵、干净clone、真人审美。
+- 六格词林/新韵仍被依据门槛阻断；不扩大数据审批，不宣告D3完成。
+- 证据：tests/integration/e2e/evidence/d3-codex-de-takeover/；详情 docs/handoffs/d3-de-takeover-codex.md。

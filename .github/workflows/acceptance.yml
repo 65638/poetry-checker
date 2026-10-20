@@ -1,0 +1,27 @@
+name: D3 独立验收
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  acceptance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - name: 九格真实 HTTP（未审核组合仍会阻断）
+        run: pnpm test:acceptance
+      - name: 浏览器基础回归
+        if: always()
+        run: pnpm test:e2e
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: d3-acceptance
+          path: artifacts/acceptance/

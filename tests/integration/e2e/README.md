@@ -1,5 +1,17 @@
 # tests/integration/e2e
 
+## D3 当前入口
+
+- `pnpm test:acceptance`：三首 × 三库真实 HTTP，独立随机端口；源码在 `d3-acceptance-api.mjs`。需要先安装依赖并 `pnpm build`。
+- `pnpm test:e2e`：正式首页的 Chrome/Edge CDP 基础回归，见 [浏览器说明](../../e2e/README.md)。
+- 新结果默认存 `artifacts/acceptance/`，该目录忽略提交；需归档时单独复制指定报告。旧 `d3-acceptance-last.json` 是 E 的历史证据，不会被新命令覆盖。
+- runner 退出码：0=本次全部通过，1=判错/执行错误，2=有阻断未完成。某些 pnpm 包装环境会将非零归为 1；以输出 JSON 的 exitCode 为细分依据。
+- 外部服务用 `node tests/integration/e2e/d3-acceptance-api.mjs --api-url URL --out FILE`。外部服务的 SHA 无法证明时记 null，不用本地 SHA 冒充。
+
+## D1 历史说明
+
+下方的旧 Python 文件现名为 `d1-mock-api.py`，不用于 D3 真实验收。
+
 负责人：队员 E / DeepSeek。状态：D1 收口期，**未接入任何浏览器自动化**。
 
 ## 现有内容

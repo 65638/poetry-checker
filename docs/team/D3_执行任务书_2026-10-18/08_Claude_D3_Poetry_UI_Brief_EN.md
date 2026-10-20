@@ -1,5 +1,7 @@
 # Claude Code — D3 Poetry Interface Refinement
 
+> Superseded for the current visual redesign: read [Claude — Distinctive Poetry UI, Expressive Edition](../../design/CLAUDE-DISTINCTIVE-UI-BRIEF-EN.md). The user now permits a substantial, expressive redesign. The older restrictions below are historical, not the active visual brief.
+
 Implement this assignment in the existing repository: https://github.com/65638/poetry-checker. Start from the latest main containing `f42172f10399449093b750b3d03d66b0a9d08be8`, preserve subsequent work, and record the actual base SHA. Use a separate checkout and a branch named `feat/claude-d3-poetry-ui`. Inspect existing branches before creating or switching anything; preserve uncommitted work.
 
 This is a bounded refinement of the existing React/Vite interface. The first redesign and basic motion are already implemented. The user still wants a stronger connection to Chinese poetry, clearer page composition, and more visible interaction feedback. Improve the existing components and deliver working TSX/CSS, rather than a proposal alone.

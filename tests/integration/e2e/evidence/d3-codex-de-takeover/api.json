@@ -1,0 +1,221 @@
+{
+  "generatedAt": "2026-10-19T08:42:47.810Z",
+  "runnerRevision": {
+    "commit": "e18d487817ecdd5a19c78bb63a8596d9c1d214f8",
+    "dirty": false
+  },
+  "serverRevision": {
+    "commit": "e18d487817ecdd5a19c78bb63a8596d9c1d214f8",
+    "dirty": false
+  },
+  "node": "v24.19.0",
+  "results": [
+    {
+      "poem": "dengguanquelou",
+      "book": "pingshui",
+      "ok": true,
+      "blocked": false,
+      "issues": [],
+      "facts": {
+        "http": 200,
+        "schema": "pass",
+        "ms": 22,
+        "formFamily": "regulated",
+        "formId": "wujue",
+        "summary": "pass",
+        "evidence": 302,
+        "rules": 10,
+        "versions": {
+          "data": "pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4",
+          "rules": "teaching-v1+reviewed-works-v1",
+          "context": "context-rules:11",
+          "works": "works:3"
+        },
+        "inputHash": "4dc6ac3926c849d14355b4240df877176062836d39788fc2947abb66339a124d",
+        "reviewedTail": [
+          {
+            "status": "pass",
+            "severity": "info",
+            "observed": [
+              "Z",
+              "P",
+              "P"
+            ],
+            "evidenceIds": [
+              "ev:candidate:pingshui:一:ru:入声四质:j03",
+              "ev:candidate:pingshui:层:ping:十蒸:d2-batch",
+              "ev:candidate:pingshui:楼:ping:十一尤:j03"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "poem": "dengguanquelou",
+      "book": "cilin",
+      "ok": false,
+      "blocked": true,
+      "issues": [
+        "LOOKUP_EVIDENCE_UNVERIFIED：字位 l1c1（白）参与读音/平仄推导的候选 cilin:白:ru:第十七部·入声 没有已审核证据（选择方式 unique）：未审核或缺失的证据不能支撑读音、平仄或归部结论，按数据未就绪处理"
+      ],
+      "facts": {
+        "http": 503,
+        "code": "DATA_NOT_READY"
+      }
+    },
+    {
+      "poem": "dengguanquelou",
+      "book": "xinyun",
+      "ok": false,
+      "blocked": true,
+      "issues": [
+        "LOOKUP_EVIDENCE_UNVERIFIED：字位 l1c1（白）参与读音/平仄推导的候选 xinyun:白:yangping:二波·阳平、xinyun:白:yangping:四开·阳平 没有已审核证据（选择方式 unresolved）：未审核或缺失的证据不能支撑读音、平仄或归部结论，按数据未就绪处理"
+      ],
+      "facts": {
+        "http": 503,
+        "code": "DATA_NOT_READY"
+      }
+    },
+    {
+      "poem": "jingyesi",
+      "book": "pingshui",
+      "ok": true,
+      "blocked": false,
+      "issues": [],
+      "facts": {
+        "http": 200,
+        "schema": "pass",
+        "ms": 14,
+        "formFamily": "ancient",
+        "formId": null,
+        "summary": "not_applicable",
+        "evidence": 302,
+        "rules": 10,
+        "versions": {
+          "data": "pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4",
+          "rules": "teaching-v1+reviewed-works-v1",
+          "context": "context-rules:11",
+          "works": "works:3"
+        },
+        "inputHash": "307d2b4cf720cbfbf7f8b467cdf56bef3523abda3505e7b512fcd409929434fb",
+        "reviewedTail": []
+      }
+    },
+    {
+      "poem": "jingyesi",
+      "book": "cilin",
+      "ok": false,
+      "blocked": true,
+      "issues": [
+        "LOOKUP_EVIDENCE_UNVERIFIED：字位 l1c1（床）参与读音/平仄推导的候选 cilin:床:ping:第二部·平声 没有已审核证据（选择方式 unique）：未审核或缺失的证据不能支撑读音、平仄或归部结论，按数据未就绪处理"
+      ],
+      "facts": {
+        "http": 503,
+        "code": "DATA_NOT_READY"
+      }
+    },
+    {
+      "poem": "jingyesi",
+      "book": "xinyun",
+      "ok": false,
+      "blocked": true,
+      "issues": [
+        "LOOKUP_EVIDENCE_UNVERIFIED：字位 l1c1（床）参与读音/平仄推导的候选 xinyun:床:yangping:十唐·阳平 没有已审核证据（选择方式 unique）：未审核或缺失的证据不能支撑读音、平仄或归部结论，按数据未就绪处理"
+      ],
+      "facts": {
+        "http": 503,
+        "code": "DATA_NOT_READY"
+      }
+    },
+    {
+      "poem": "huanghelou",
+      "book": "pingshui",
+      "ok": true,
+      "blocked": false,
+      "issues": [],
+      "facts": {
+        "http": 200,
+        "schema": "pass",
+        "ms": 11,
+        "formFamily": "regulated",
+        "formId": "qilv",
+        "summary": "fail",
+        "evidence": 302,
+        "rules": 10,
+        "versions": {
+          "data": "pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4",
+          "rules": "teaching-v1+reviewed-works-v1",
+          "context": "context-rules:11",
+          "works": "works:3"
+        },
+        "inputHash": "b3031b9e603f3e14016b22adfd361eee631e1f7455743492e4c2a19481d42053",
+        "reviewedTail": [
+          {
+            "status": "not_applicable",
+            "severity": "info",
+            "observed": [
+              "P",
+              "P",
+              "P"
+            ],
+            "evidenceIds": [
+              "ctx:j03b2:08",
+              "ev:candidate:pingshui:悠:ping:十一尤:d2-batch",
+              "ev:candidate:pingshui:空:ping:一东:j03"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "poem": "huanghelou",
+      "book": "cilin",
+      "ok": false,
+      "blocked": true,
+      "issues": [
+        "LOOKUP_EVIDENCE_UNVERIFIED：字位 l1c1（昔）参与读音/平仄推导的候选 cilin:昔:ru:第十七部·入声 没有已审核证据（选择方式 unique）：未审核或缺失的证据不能支撑读音、平仄或归部结论，按数据未就绪处理"
+      ],
+      "facts": {
+        "http": 503,
+        "code": "DATA_NOT_READY"
+      }
+    },
+    {
+      "poem": "huanghelou",
+      "book": "xinyun",
+      "ok": false,
+      "blocked": true,
+      "issues": [
+        "LOOKUP_EVIDENCE_UNVERIFIED：字位 l1c1（昔）参与读音/平仄推导的候选 xinyun:昔:qu:二波·去声、xinyun:昔:yinping:十二齐·阴平 没有已审核证据（选择方式 unresolved）：未审核或缺失的证据不能支撑读音、平仄或归部结论，按数据未就绪处理"
+      ],
+      "facts": {
+        "http": 503,
+        "code": "DATA_NOT_READY"
+      }
+    }
+  ],
+  "total": 9,
+  "apiUrl": "http://127.0.0.1:54449",
+  "readiness": {
+    "http": 503,
+    "mode": "real",
+    "versions": {
+      "data": "pingshui=pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4,cilin=cilin-cwr-ff0e9c1-d3-full-clean1,xinyun=xinyun-rebuild-d2-full",
+      "rules": "teaching-v1+reviewed-works-v1",
+      "context": "context-rules:11",
+      "works": "works:3"
+    },
+    "body": {
+      "error": {
+        "code": "DATA_NOT_READY",
+        "message": "快照未审核：pingshui、cilin、xinyun（开发联调可分析，发布门槛不放行）；资源或审核尚未就绪，详见 apps/api/README.md",
+        "fieldErrors": []
+      }
+    }
+  },
+  "passed": 3,
+  "blocked": 6,
+  "failures": 0,
+  "unrun": 0,
+  "exitCode": 2
+}

@@ -58,7 +58,18 @@ export interface StoreOptions {
   /** 下载实现可注入，便于在无 DOM 环境测试。 */
   download?: (filename: string, json: string) => void;
   createAbortController?: () => AbortController;
+  /**
+   * 单次分析的客户端超时（毫秒），默认 {@link DEFAULT_REQUEST_TIMEOUT_MS}。
+   *
+   * 服务端偶发不返回时，没有超时会让 `busy` 永久为真、按钮一直「分析中…」，
+   * 用户既不能重试也拿不到解释。超时按可重试的失败处理，与用户主动取消区分。
+   * 传 0 或负数表示不设超时（仅供需要挂起语义的测试使用）。
+   */
+  requestTimeoutMs?: number;
 }
+
+/** 默认 30 秒：足够慢网络下的真实编排，又不至于让用户干等。 */
+export const DEFAULT_REQUEST_TIMEOUT_MS = 30_000;
 
 function initialState(draft: InputDraft): CheckerState {
   return {
@@ -221,6 +232,18 @@ export class CheckerStore {
       pendingOverrides: requestOverrides,
     });
 
+    // 客户端超时：到点主动 abort，并把「因超时中止」与「用户取消」区分开。
+    const timeoutMs =
+      this.options.requestTimeoutMs ?? DEFAULT_REQUEST_TIMEOUT_MS;
+    let timedOut = false;
+    const timer =
+      timeoutMs > 0
+        ? setTimeout(() => {
+            timedOut = true;
+            controller.abort();
+          }, timeoutMs)
+        : null;
+
     let outcome: AnalyzeOutcome;
     try {
       outcome = await runAnalyze(
@@ -234,6 +257,8 @@ export class CheckerStore {
         ok: false,
         error: new ApiError("CONTRACT_ERROR", "请求执行异常", { cause }),
       };
+    } finally {
+      if (timer !== null) clearTimeout(timer);
     }
 
     // 身份守卫：被新请求或编辑失效后，旧响应的任何结果都不得写状态。
@@ -258,6 +283,19 @@ export class CheckerStore {
 
     const error = outcome.error;
     if (error.code === "ABORTED") {
+      // 超时与主动取消都走 ABORTED，但对用户的意义不同：
+      // 超时要说明"没等到结果、可以重试"，取消则不需要报错。
+      if (timedOut) {
+        this.commit({
+          busy: false,
+          error: {
+            code: "TIMEOUT",
+            message: `分析超时：服务在 ${Math.round(timeoutMs / 1000)} 秒内没有返回结果，请重试。输入内容已保留，未展示任何旧报告结论。`,
+          },
+          pendingOverrides: this.state.overrides,
+        });
+        return;
+      }
       this.commit({ busy: false, pendingOverrides: this.state.overrides });
       return;
     }
@@ -272,7 +310,7 @@ export class CheckerStore {
   /**
    * 选择当前候选读音。只接受当前报告中存在、且候选 ID 有效的覆盖；
    * 携带该报告的 inputHash 重新请求，不直接改写原报告候选/证据。
-   * 失败或迟到时，导出仍只用上一次成功计算的覆盖。
+   * 失败时保留旧快照供查看，复制/导出须等重试成功后恢复。
    */
   async chooseReading(override: ReadingOverride): Promise<void> {
     const { report, busy, stale } = this.state;
@@ -281,7 +319,9 @@ export class CheckerStore {
       return;
     }
     if (stale) {
-      this.commit({ feedback: "当前报告已不对应当前输入，请重新分析后再选音。" });
+      this.commit({
+        feedback: "当前报告已不对应当前输入，请重新分析后再选音。",
+      });
       return;
     }
     if (busy) {
@@ -320,7 +360,9 @@ export class CheckerStore {
   selectToken(tokenId: string | null): void {
     const { report } = this.state;
     if (tokenId !== null && report !== null) {
-      const exists = report.poem.tokens.some((token) => token.tokenId === tokenId);
+      const exists = report.poem.tokens.some(
+        (token) => token.tokenId === tokenId,
+      );
       if (!exists) {
         this.commit({ feedback: `字位 ${tokenId} 不在当前报告中。` });
         return;
@@ -352,7 +394,7 @@ export class CheckerStore {
    * 请求进行中说明存在待提交覆盖，此时拒绝导出，避免拼出新旧混合的结果。
    */
   private exportState() {
-    const { report, requestSnapshot, overrides, busy } = this.state;
+    const { report, requestSnapshot, overrides, busy, error } = this.state;
     if (report === null || requestSnapshot === null) {
       return { ok: false as const, reason: "尚无报告可导出。" };
     }
@@ -360,6 +402,12 @@ export class CheckerStore {
       return {
         ok: false as const,
         reason: "正在重新分析，请等待本次请求完成后再导出，避免新旧结果混用。",
+      };
+    }
+    if (error !== null) {
+      return {
+        ok: false as const,
+        reason: "本次分析未完成，已阻止复制和导出旧报告；请重试成功后再操作。",
       };
     }
     return {
@@ -423,9 +471,16 @@ export class CheckerStore {
     }
   }
 
-  /** 中止进行中的请求（卸载或新建请求时）。 */
+  /**
+   * 中止进行中的请求（调用方取消、卸载或切换场景时）。
+   *
+   * 必须同时**递增请求身份**：只 abort 信号是不够的——底层传输可能已经收到
+   * 响应（缓冲/代理场景）而忽略 abort，此时迟到的成功仍会通过身份守卫落地，
+   * 等于用户取消无效。这里复用 `invalidateInFlight`，与编辑失效同一套语义：
+   * 旧响应无论成功或失败都不得写状态，busy 立即结束且不产生错误。
+   */
   abort(): void {
-    this.activeController?.abort();
+    this.invalidateInFlight();
   }
 
   /**

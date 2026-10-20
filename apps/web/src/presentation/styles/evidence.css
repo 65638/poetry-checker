@@ -18,16 +18,16 @@
 
 .pc-evidence__dialog {
   position: absolute;
-  top: var(--pc-space-4);
-  right: var(--pc-space-4);
-  bottom: var(--pc-space-4);
+  top: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  width: min(var(--pc-panel-width), calc(100vw - 2 * var(--pc-space-4)));
+  width: min(var(--pc-panel-width), 100vw);
   background: var(--pc-surface-sheet);
-  border: 1px solid var(--pc-divider);
-  border-radius: var(--pc-radius-panel);
+  border-left: 6px solid var(--pc-seal);
+  border-radius: 0;
   box-shadow: var(--pc-shadow-panel);
   overflow: hidden;
   animation: pc-evidence-in var(--pc-dur-panel) var(--pc-ease-out);
@@ -37,21 +37,56 @@
   from { opacity: 0; transform: translateX(var(--pc-shift-panel)); }
 }
 
+.pc-evidence__body > * {
+  animation: pc-evidence-item var(--pc-dur-panel) var(--pc-ease-out) both;
+}
+
+.pc-evidence__body > :nth-child(n+3) {
+  animation-delay: calc(var(--pc-dur-panel) * 0.25);
+}
+
+@keyframes pc-evidence-item {
+  from { opacity: 0; transform: translateY(calc(var(--pc-shift-panel) * 0.2)); }
+}
+
 .pc-evidence__header {
   display: flex;
   flex: none;
   justify-content: space-between;
   align-items: flex-start;
   gap: var(--pc-space-3);
-  padding: var(--pc-space-4) var(--pc-space-5);
-  border-bottom: 1px solid var(--pc-divider);
+  padding: var(--pc-space-5);
+  background: var(--pc-ink-900);
+  color: var(--pc-on-ink);
+}
+
+.pc-evidence__header .pc-evidence__sub {
+  color: var(--pc-on-ink-muted);
+}
+
+.pc-evidence__header .pc-button {
+  flex: none;
+  color: var(--pc-on-ink);
+  background: transparent;
+  border-color: var(--pc-ink-500);
+}
+
+.pc-evidence__header .pc-button:hover {
+  background: var(--pc-ink-700);
+  border-color: var(--pc-on-ink-muted);
+}
+
+.pc-evidence__header .pc-button:focus-visible {
+  outline-color: var(--pc-focus-on-ink);
 }
 
 .pc-evidence__title {
   margin: 0;
-  font-family: var(--pc-font-serif);
-  font-size: var(--pc-text-lg);
-  line-height: 1.4;
+  font-family: var(--pc-font-display);
+  font-size: var(--pc-text-xl);
+  font-weight: 400;
+  line-height: 1.3;
+  letter-spacing: 0.06em;
   overflow-wrap: anywhere;
 }
 
@@ -205,6 +240,7 @@
     inset: 0;
     width: 100%;
     border: 0;
+    border-top: 6px solid var(--pc-seal);
     border-radius: 0;
     animation-name: pc-evidence-in-up;
   }

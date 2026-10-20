@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import {
   LookupResultSchema,
+  ErrorResponseSchema,
+  VersionsSchema,
   RhymeBooksResponseSchema,
 } from "@poetry/contracts";
 import { buildApp } from "../src/server.js";
@@ -92,7 +94,16 @@ describe("HTTP 层·真实模式（A 全量数据，manifest 装载）", () => {
   it("readyz：全库未审核与规则部分依据 → 503 列明缺口", async () => {
     const res = await app.inject({ method: "GET", url: "/readyz" });
     expect(res.statusCode).toBe(503);
-    expect(res.json().error.code).toBe("DATA_NOT_READY");
+    expect(ErrorResponseSchema.parse(res.json()).error.code).toBe(
+      "DATA_NOT_READY",
+    );
+    expect(res.headers["x-poetry-mode"]).toBe("real");
+    const versions = VersionsSchema.parse(
+      JSON.parse(decodeURIComponent(String(res.headers["x-poetry-versions"]))),
+    );
+    for (const book of ["pingshui", "cilin", "xinyun"])
+      expect(versions.data).toContain(`${book}=`);
+    expect(versions.rules).toBe("teaching-v1+reviewed-works-v1");
   });
 
   it("analyze：平水已审范围返回 200，词林与新韵仍受证据门槛约束", async () => {
