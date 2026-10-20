@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import type { CheckerViewProps } from "../view-contract";
 import { CheckerView } from "../presentation/CheckerView";
 import { useMotionPreference } from "../presentation/useMotionPreference";
@@ -16,6 +17,9 @@ export function Workspace(props: CheckerViewProps) {
   const motion = useMotionPreference();
   const scrollPositions = useRef({ checker: 0, dictionary: 0 });
   const current = useRef(place);
+  const rendered = useRef(place);
+  const transition = useRef<ViewTransition | null>(null);
+  const journey = useRef(0);
   const panels = useRef<HTMLDivElement>(null);
   const [saved, setSaved] = useState(false);
   const [passageRequest, setPassageRequest] = useState(0);
@@ -46,11 +50,43 @@ export function Workspace(props: CheckerViewProps) {
   }, []);
   const switchPlace = (next: Place) => {
     if (current.current === next) return;
-    scrollPositions.current[current.current] = window.scrollY;
+    scrollPositions.current[rendered.current] = window.scrollY;
     current.current = next;
-    setDirection(next === "dictionary" ? "forward" : "backward");
-    props.onCloseEvidence();
-    setPlace(next);
+    const id = ++journey.current;
+    transition.current?.skipTransition();
+    const heading = next === "dictionary" ? "forward" : "backward";
+    const update = () => {
+      if (id !== journey.current) return;
+      flushSync(() => {
+        setDirection(heading);
+        props.onCloseEvidence();
+        setPlace(next);
+      });
+    };
+    if (!motion.effects || !document.startViewTransition) {
+      transition.current = null;
+      delete document.documentElement.dataset.journey;
+      document.documentElement.style.removeProperty("--pc-journey-span");
+      update();
+      return;
+    }
+    document.documentElement.dataset.journey = heading;
+    document.documentElement.style.setProperty(
+      "--pc-journey-span",
+      `${document.documentElement.clientWidth}px`,
+    );
+    const nextTransition = document.startViewTransition(update);
+    transition.current = nextTransition;
+    // Rapid reversals can skip a snapshot. Its rejection must not escape.
+    void nextTransition.ready.catch(() => {});
+    void nextTransition.finished
+      .finally(() => {
+        if (id !== journey.current) return;
+        transition.current = null;
+        delete document.documentElement.dataset.journey;
+        document.documentElement.style.removeProperty("--pc-journey-span");
+      })
+      .catch(() => {});
   };
   useEffect(() => {
     const sync = () => switchPlace(initialPlace());
@@ -58,7 +94,8 @@ export function Workspace(props: CheckerViewProps) {
     return () => window.removeEventListener("hashchange", sync);
   });
   const first = useRef(true);
-  useEffect(() => {
+  useLayoutEffect(() => {
+    rendered.current = place;
     if (first.current) {
       first.current = false;
       return;
@@ -71,10 +108,59 @@ export function Workspace(props: CheckerViewProps) {
       ?.querySelector<HTMLElement>(`#${place}-space`)
       ?.focus({ preventScroll: true });
   }, [place]);
+  useEffect(() => {
+    if (!motion.effects) transition.current?.skipTransition();
+  }, [motion.effects]);
+  useEffect(
+    () => () => {
+      journey.current++;
+      transition.current?.skipTransition();
+      delete document.documentElement.dataset.journey;
+      document.documentElement.style.removeProperty("--pc-journey-span");
+    },
+    [],
+  );
   const navigate = (next: Place) => {
     window.location.hash = next === "dictionary" ? "dictionary" : "checker";
     switchPlace(next);
   };
+  useEffect(() => {
+    // During a snapshot transition Chromium hit-tests captured navigation as
+    // the document root. Keep its stationary buttons usable for a reversal.
+    const navigateSnapshot = (event: MouseEvent) => {
+      if (
+        !transition.current ||
+        event.target !== document.documentElement ||
+        event.button !== 0 ||
+        event.ctrlKey ||
+        event.metaKey ||
+        event.altKey
+      )
+        return;
+      const buttons =
+        panels.current?.parentElement?.querySelectorAll<HTMLButtonElement>(
+          ".pc-places button[aria-controls]",
+        );
+      for (const button of buttons ?? []) {
+        const rect = button.getBoundingClientRect();
+        if (
+          event.clientX >= rect.left &&
+          event.clientX <= rect.right &&
+          event.clientY >= rect.top &&
+          event.clientY <= rect.bottom
+        ) {
+          navigate(
+            button.getAttribute("aria-controls") === "dictionary-space"
+              ? "dictionary"
+              : "checker",
+          );
+          break;
+        }
+      }
+    };
+    window.addEventListener("click", navigateSnapshot);
+    return () => window.removeEventListener("click", navigateSnapshot);
+  });
   return (
     <div
       className="pc-root pc-workspace"

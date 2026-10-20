@@ -2,10 +2,14 @@
 .pc-workspace {
   background: var(--pc-night);
 }
+html:has(.pc-workspace) {
+  background: #101f25;
+}
 .pc-workspace .pc-place[hidden] {
   display: none !important;
 }
 .pc-places {
+  view-transition-name: garden-navigation;
   position: relative;
   z-index: 3;
   display: flex;
@@ -75,35 +79,67 @@
   position: relative;
   outline: none;
 }
-.pc-place:not([hidden]) .pc-page,
-.pc-place:not([hidden]) .pc-dictionary__page {
-  animation: pc-arrive 620ms var(--pc-ease-out) both;
+/* Snapshot the whole viewport, including fixed scenery and restored scroll.
+   No transformed live ancestor is left behind to break fixed/sticky surfaces. */
+html[data-journey]::view-transition-group(root) {
+  animation-duration: 760ms;
 }
-@keyframes pc-arrive {
-  from {
-    opacity: 0.25;
-    transform: translateX(24px);
-  }
+html[data-journey]::view-transition-old(root),
+html[data-journey]::view-transition-new(root) {
+  animation-duration: 760ms;
+  animation-timing-function: cubic-bezier(0.65, 0, 0.25, 1);
+  animation-fill-mode: both;
+  mix-blend-mode: normal;
+}
+html[data-journey="forward"]::view-transition-old(root) {
+  animation-name: pc-walk-out-left;
+}
+html[data-journey="forward"]::view-transition-new(root) {
+  animation-name: pc-walk-in-right;
+}
+html[data-journey="backward"]::view-transition-old(root) {
+  animation-name: pc-walk-out-right;
+}
+html[data-journey="backward"]::view-transition-new(root) {
+  animation-name: pc-walk-in-left;
+}
+html[data-journey]::view-transition-group(garden-navigation) {
+  animation-duration: 760ms;
+}
+html[data-journey]::view-transition-old(garden-navigation),
+html[data-journey]::view-transition-new(garden-navigation) {
+  animation-duration: 180ms;
+}
+html[data-journey]::view-transition,
+html[data-journey]::view-transition-group(*),
+html[data-journey]::view-transition-image-pair(*),
+html[data-journey]::view-transition-old(*),
+html[data-journey]::view-transition-new(*) {
+  pointer-events: none;
+}
+@keyframes pc-walk-out-left {
   to {
-    opacity: 1;
-    transform: translateX(0);
+    transform: translateX(calc(-1 * var(--pc-journey-span, 100vw)));
   }
 }
-.pc-workspace[data-direction="backward"] .pc-place:not([hidden]) .pc-page,
-.pc-workspace[data-direction="backward"]
-  .pc-place:not([hidden])
-  .pc-dictionary__page {
-  animation-name: pc-return;
-}
-@keyframes pc-return {
+@keyframes pc-walk-in-right {
   from {
-    opacity: 0.25;
-    transform: translateX(-24px);
+    transform: translateX(var(--pc-journey-span, 100vw));
   }
+}
+@keyframes pc-walk-out-right {
   to {
-    opacity: 1;
-    transform: translateX(0);
+    transform: translateX(var(--pc-journey-span, 100vw));
   }
+}
+@keyframes pc-walk-in-left {
+  from {
+    transform: translateX(calc(-1 * var(--pc-journey-span, 100vw)));
+  }
+}
+.pc-workspace
+  :is(.pc-masthead, .pc-seal, .pc-plinth, .pc-intro, .pc-garden__landscape) {
+  animation: none;
 }
 
 .pc-dictionary {
@@ -264,6 +300,7 @@
   gap: 10px;
 }
 .pc-dictionary__input {
+  text-align: center;
   min-width: 0;
   width: 100%;
   box-sizing: border-box;
@@ -283,6 +320,9 @@
   padding: 10px 16px;
   flex: 0 0 112px;
   width: 112px;
+  letter-spacing: 0.18em;
+  text-indent: 0.18em;
+  text-align: center;
 }
 .pc-dictionary__hint {
   font-size: 12px;
@@ -337,12 +377,11 @@
   font-size: 10px;
 }
 .pc-dictionary__examples {
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 8px;
-  padding-top: 22px;
-  border-top: 1px solid var(--pc-divider);
-  margin-top: 24px;
+  padding-top: 0;
+  margin-top: 14px;
 }
 .pc-dictionary__examples > span {
   font-size: 12px;
@@ -350,15 +389,93 @@
   margin-right: auto;
 }
 .pc-dictionary__examples button {
-  width: 44px;
+  width: 100%;
   flex-shrink: 0;
-  min-height: 44px;
+  min-height: 64px;
   border: 1px solid var(--pc-divider);
   background: var(--pc-surface-sheet);
   color: var(--pc-text);
   border-radius: 2px;
   font: 20px var(--pc-font-serif);
   cursor: pointer;
+  position: relative;
+  padding: 10px 0 4px;
+  border-radius: 2px 2px 10px 2px;
+}
+.pc-dictionary__examples button::before {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 1px;
+  background: #b7a687;
+  top: 8px;
+  left: calc(50% - 4px);
+}
+.pc-dictionary__examples button[aria-pressed="true"] {
+  background: var(--pc-accent-soft);
+  border-color: var(--pc-accent);
+}
+.pc-dictionary__wordslips {
+  border-top: 1px solid var(--pc-divider);
+  margin-top: 24px;
+  padding-top: 20px;
+}
+.pc-dictionary__wordslips-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.pc-dictionary__wordslips-head h3 {
+  margin: 0;
+  font: 19px var(--pc-font-display);
+}
+.pc-dictionary__wordslips-head > span {
+  font: 12px var(--pc-font-serif);
+  color: var(--pc-text-muted);
+}
+.pc-dictionary__landscapes {
+  display: flex;
+  margin-top: 12px;
+  gap: 8px;
+}
+.pc-dictionary__landscapes button {
+  flex: 1;
+  min-height: 44px;
+  border: 0;
+  border-bottom: 1px solid var(--pc-divider);
+  background: transparent;
+  color: var(--pc-text-muted);
+  font: 15px var(--pc-font-serif);
+}
+.pc-dictionary__landscapes button[aria-pressed="true"] {
+  color: var(--pc-text);
+  border-color: #b7a687;
+  background: #b7a6870c;
+}
+.pc-dictionary__slip-caption {
+  font: 13px/1.8 var(--pc-font-serif);
+  color: var(--pc-text-muted);
+  margin: 14px 0 0;
+}
+.pc-dictionary__examples button > span {
+  display: inline-block;
+  animation: pc-dictionary-ink var(--pc-dur-panel) ease;
+}
+.pc-dictionary__bookmark {
+  position: absolute;
+  top: -6px;
+  right: 32px;
+  padding: 10px 8px 18px;
+  writing-mode: vertical-rl;
+  font: 13px var(--pc-font-serif);
+  letter-spacing: 0.18em;
+  color: #f3ecd8;
+  background: #49605c;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 7px), 0 100%);
+  transition: background-color var(--pc-dur-control) ease;
+}
+.pc-dictionary__bookmark[data-collected="true"] {
+  background: var(--pc-seal);
 }
 .pc-dictionary__examples button:hover {
   border-color: var(--pc-accent);
@@ -400,6 +517,7 @@
 }
 .pc-dictionary__folio-head {
   border-bottom: 1px solid var(--pc-divider);
+  padding-right: 44px;
 }
 .pc-dictionary__return {
   display: none;
@@ -1201,6 +1319,11 @@
   animation: none;
 }
 @media (prefers-reduced-motion: reduce) {
+  html[data-journey]::view-transition-group(*),
+  html[data-journey]::view-transition-old(*),
+  html[data-journey]::view-transition-new(*) {
+    animation-duration: 0s !important;
+  }
   .pc-place .pc-page,
   .pc-dictionary__page,
   .pc-garden__landscape,

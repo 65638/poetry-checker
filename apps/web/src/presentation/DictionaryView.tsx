@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import type { BookId, LookupResult, ReadingCandidate } from "@poetry/contracts";
 import { useMotionPreference } from "./useMotionPreference";
 import { useBusyIndicator } from "./useBusyIndicator";
@@ -24,6 +24,24 @@ const TONES: Record<ReadingCandidate["toneClass"], string> = {
 };
 const safeUrl = (url: string | null) =>
   url !== null && /^https?:\/\//iu.test(url) ? url : null;
+
+const LANDSCAPES = [
+  {
+    name: "水月",
+    caption: "一川月色，几处清音。",
+    characters: ["月", "江", "水", "清", "流", "舟"],
+  },
+  {
+    name: "山林",
+    caption: "山色入笺，松声入韵。",
+    characters: ["山", "松", "竹", "林", "深", "白"],
+  },
+  {
+    name: "风雨",
+    caption: "风过檐角，雨落诗间。",
+    characters: ["风", "雨", "云", "夜", "更", "秋"],
+  },
+];
 
 export interface DictionaryViewProps {
   text: string;
@@ -120,6 +138,7 @@ function GardenScene({ active }: { active: boolean }) {
 
 export function DictionaryView(props: DictionaryViewProps) {
   const uid = useId();
+  const [landscape, setLandscape] = useState(0);
   const composing = useRef(false);
   const searchInput = useRef<HTMLInputElement>(null);
   const shelfInput = useRef<HTMLInputElement>(null);
@@ -272,19 +291,44 @@ export function DictionaryView(props: DictionaryViewProps) {
                 ))}
               </fieldset>
             </form>
-            <div className="pc-dictionary__examples">
-              <span>随手翻阅</span>
-              {["月", "山", "更", "白"].map((text) => (
-                <button
-                  key={text}
-                  type="button"
-                  onClick={() => revealAfter(() => props.onExample(text))}
-                  aria-label={`查「${text}」字`}
-                >
-                  {text}
-                </button>
-              ))}
-            </div>
+            <section className="pc-dictionary__wordslips" aria-label="风物字签">
+              <div className="pc-dictionary__wordslips-head">
+                <h3>风物字签</h3>
+                <span>循景拾字</span>
+              </div>
+              <div
+                className="pc-dictionary__landscapes"
+                role="group"
+                aria-label="选择字签风景"
+              >
+                {LANDSCAPES.map((item, index) => (
+                  <button
+                    type="button"
+                    key={item.name}
+                    aria-pressed={landscape === index}
+                    onClick={() => setLandscape(index)}
+                  >
+                    {item.name}
+                  </button>
+                ))}
+              </div>
+              <p className="pc-dictionary__slip-caption">
+                {LANDSCAPES[landscape]!.caption}
+              </p>
+              <div className="pc-dictionary__examples" key={landscape}>
+                {LANDSCAPES[landscape]!.characters.map((text) => (
+                  <button
+                    key={text}
+                    type="button"
+                    onClick={() => revealAfter(() => props.onExample(text))}
+                    aria-label={`查「${text}」字`}
+                    aria-pressed={text === character && !!result}
+                  >
+                    <span>{text}</span>
+                  </button>
+                ))}
+              </div>
+            </section>
             <p className="pc-dictionary__aside">
               传统韵书看古音，新韵依普通话。
               <br />
@@ -516,6 +560,13 @@ export function DictionaryView(props: DictionaryViewProps) {
                 返回查字 ↑
               </button>
             </div>
+            <span
+              className="pc-dictionary__bookmark"
+              data-collected={props.favorite && !!result}
+              aria-hidden="true"
+            >
+              {props.favorite && result ? "已藏" : "韵笺"}
+            </span>
             <div
               className="pc-dictionary__status"
               role="status"

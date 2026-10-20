@@ -56,7 +56,15 @@ try {
   await web.listen();
   report.url = `http://127.0.0.1:${web.httpServer.address().port}/`;
   browser = await launchBrowser();
-  const { cdp, evaluate, click, key } = browser;
+  const { cdp, evaluate, click: browserClick, key } = browser;
+  const click = async (selector) => {
+    await waitFor(() => evaluate("!document.documentElement.dataset.journey"));
+    await browserClick(selector);
+    if (selector.includes("aria-controls"))
+      await waitFor(() =>
+        evaluate("!document.documentElement.dataset.journey"),
+      );
+  };
   report.browser = await cdp.send("Browser.getVersion");
   const errors = [];
   cdp.on("Runtime.exceptionThrown", ({ exceptionDetails }) =>
@@ -113,7 +121,13 @@ try {
         "localStorage.getItem('pc-poem-draft-v1')?.includes('明月松间照')",
       ),
     );
+    const previousDocument = await evaluate("performance.timeOrigin");
     await cdp.send("Page.reload");
+    await waitFor(() =>
+      evaluate(
+        `performance.timeOrigin !== ${previousDocument} && !!document.querySelector('.pc-places')`,
+      ),
+    );
     await waitFor(() =>
       evaluate(
         "document.querySelector('.pc-input__text')?.value === '明月松间照，清泉石上流。'",
