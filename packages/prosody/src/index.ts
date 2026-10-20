@@ -35,3 +35,10 @@ export type {
   ApplyReviewedWorkExceptionsInput,
   ReviewedWorkException,
 } from "./reviewed-exceptions/index.js";
+// C 维护的发布卡完整性校验（只读；D4 回归与装载前自检用）。
+export { validateRuleCards } from "./report/rule-cards.js";
+export type {
+  RuleCardProblem,
+  RuleCardProblemCode,
+  RuleCardValidationResult,
+} from "./report/rule-cards.js";
