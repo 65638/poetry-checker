@@ -2,7 +2,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import type { BookId, LookupResult, ReadingCandidate } from "@poetry/contracts";
 import { useMotionPreference } from "./useMotionPreference";
 import { useBusyIndicator } from "./useBusyIndicator";
-import { RainField } from "./components/RainField";
+
 import type { DictionaryShelf, ShelfEntry } from "../app/dictionaryShelf";
 import type { BookComparison } from "../app/dictionaryComparison";
 import { passageRowStatus, type PassageLookup } from "../app/passageLookup";
@@ -82,60 +82,6 @@ export interface DictionaryViewProps {
   onLookupPassage: () => void;
 }
 
-function GardenScene({ active }: { active: boolean }) {
-  return (
-    <div className="pc-garden" aria-hidden="true">
-      <div className="pc-garden__mist" />
-      <svg
-        className="pc-garden__landscape"
-        viewBox="0 0 1440 1000"
-        preserveAspectRatio="xMidYMid slice"
-      >
-        <circle cx="1060" cy="230" r="46" fill="#ede9cf" opacity=".9" />
-        <path
-          d="M0 530 80 440 140 465 220 320 270 350 330 305 425 450 490 420 560 475 640 430 730 485 825 380 900 430 980 325 1050 400 1100 355 1210 480 1300 420 1440 490V1000H0Z"
-          fill="#31545a"
-        />
-        <path
-          d="M0 645 120 550 175 575 240 510 340 600 430 540 550 625 670 550 740 585 860 500 950 570 1060 515 1130 580 1260 480 1380 570 1440 545V1000H0Z"
-          fill="#203e45"
-        />
-        <path
-          d="M0 790Q200 660 440 760T900 745T1440 720V1000H0Z"
-          fill="#132d35"
-        />
-        <g fill="none" stroke="#9bafa0" opacity=".35">
-          <path d="M700 865h240m-200 13h330m-220 14h160" />
-        </g>
-        <g fill="#10252b" stroke="#10252b">
-          <path
-            d="M1280 1000V90m0 150 100-65m-100 160-130-70m130 200 140-70m-140 200-130-60"
-            strokeWidth="8"
-            fill="none"
-          />
-          {[
-            "translate(1380 175) rotate(-18)",
-            "translate(1150 265) rotate(156)",
-            "translate(1420 395) rotate(-12)",
-            "translate(1150 525) rotate(165)",
-          ].map((transform) => (
-            <g key={transform} transform={transform} stroke="none">
-              <path d="M0 0Q-27-26-73-24Q-42-2 0 0ZM0 0Q-30 2-59 34Q-17 24 0 0ZM0 0Q-7-27 11-57Q19-20 0 0ZM0 0Q24-26 63-24Q35-4 0 0ZM0 0Q25 8 43 40Q9 27 0 0ZM0 0Q-3 25-24 53Q-31 20 0 0Z" />
-            </g>
-          ))}
-        </g>
-      </svg>
-      <RainField active={active} quiet />
-      <div className="pc-garden__frame" />
-      <span className="pc-garden__inscription">
-        穿廊寻字
-        <br />
-        隔水听音
-      </span>
-    </div>
-  );
-}
-
 export function DictionaryView(props: DictionaryViewProps) {
   const uid = useId();
   const [landscape, setLandscape] = useState(0);
@@ -183,7 +129,6 @@ export function DictionaryView(props: DictionaryViewProps) {
       className="pc-root pc-dictionary"
       data-motion={motion.effects ? "on" : "off"}
     >
-      <GardenScene active={motion.effects} />
       <div className="pc-dictionary__page">
         <header className="pc-dictionary__masthead">
           <div className="pc-dictionary__title">
@@ -541,6 +486,7 @@ export function DictionaryView(props: DictionaryViewProps) {
             aria-label="查字结果"
             aria-busy={busy}
             data-loading={showBusy}
+            data-empty={!result && !error}
           >
             <div className="pc-dictionary__folio-head">
               <span>韵 书 小 笺</span>

@@ -48,7 +48,7 @@ try {
     assert.ok(frames.every((f) => f.duration === 760));
     await sleep(100);
     const transforms = await evaluate(`['old','new'].map(kind => {
-      const style = getComputedStyle(document.documentElement, '::view-transition-' + kind + '(root)');
+      const style = getComputedStyle(document.documentElement, '::view-transition-' + kind + '(garden-content)');
       return new DOMMatrixReadOnly(style.transform).m41;
     })`);
     assert.ok(

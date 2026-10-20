@@ -6,6 +6,8 @@ import { useMotionPreference } from "../presentation/useMotionPreference";
 import { DictionaryContainer } from "./DictionaryContainer";
 import "../presentation/styles/dictionary.css";
 import { DRAFT_KEY } from "./draftPersistence";
+import { ContinuousGarden } from "../presentation/components/ContinuousGarden";
+import "../presentation/styles/continuous-garden.css";
 
 type Place = "checker" | "dictionary";
 const initialPlace = (): Place =>
@@ -13,6 +15,7 @@ const initialPlace = (): Place =>
 
 export function Workspace(props: CheckerViewProps) {
   const [place, setPlace] = useState<Place>(initialPlace);
+  const [sceneryPlace, setSceneryPlace] = useState<Place>(initialPlace);
   const [direction, setDirection] = useState("forward");
   const motion = useMotionPreference();
   const scrollPositions = useRef({ checker: 0, dictionary: 0 });
@@ -55,6 +58,7 @@ export function Workspace(props: CheckerViewProps) {
     const id = ++journey.current;
     transition.current?.skipTransition();
     const heading = next === "dictionary" ? "forward" : "backward";
+    const previousScroll = window.scrollY;
     const update = () => {
       if (id !== journey.current) return;
       flushSync(() => {
@@ -62,12 +66,17 @@ export function Workspace(props: CheckerViewProps) {
         props.onCloseEvidence();
         setPlace(next);
       });
+      document.documentElement.style.setProperty(
+        "--pc-journey-scroll-shift",
+        `${window.scrollY - previousScroll}px`,
+      );
     };
     if (!motion.effects || !document.startViewTransition) {
       transition.current = null;
       delete document.documentElement.dataset.journey;
       document.documentElement.style.removeProperty("--pc-journey-span");
       update();
+      setSceneryPlace(next);
       return;
     }
     document.documentElement.dataset.journey = heading;
@@ -78,7 +87,10 @@ export function Workspace(props: CheckerViewProps) {
     const nextTransition = document.startViewTransition(update);
     transition.current = nextTransition;
     // Rapid reversals can skip a snapshot. Its rejection must not escape.
-    void nextTransition.ready.catch(() => {});
+    const moveScenery = () => {
+      if (id === journey.current) setSceneryPlace(next);
+    };
+    void nextTransition.ready.then(moveScenery, moveScenery);
     void nextTransition.finished
       .finally(() => {
         if (id !== journey.current) return;
@@ -168,6 +180,16 @@ export function Workspace(props: CheckerViewProps) {
       data-direction={direction}
       data-motion={motion.effects ? "on" : "off"}
     >
+      <ContinuousGarden
+        place={sceneryPlace}
+        active={motion.effects}
+        quiet={
+          place === "dictionary" ||
+          !!props.report ||
+          props.busy ||
+          props.selectedTokenId !== null
+        }
+      />
       <nav
         className="pc-places"
         aria-label="游园导航"
@@ -225,7 +247,7 @@ export function Workspace(props: CheckerViewProps) {
           <span className="pc-draft-save" role="status">
             {saved ? "草稿已存于此设备" : ""}
           </span>
-          <CheckerView {...props} />
+          <CheckerView {...props} sharedScene />
         </div>
         <div
           id="dictionary-space"

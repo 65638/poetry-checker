@@ -471,12 +471,15 @@ try {
     };
   });
   await scenario(
-    "hidden-checker-pauses-canvas-and-preserves-report",
+    "shared-rain-survives-navigation-and-preserves-report",
     async () => {
       await waitFor(() =>
         evaluate(
-          "document.querySelector('#checker-space .pc-rain')?.dataset.running === 'false'",
+          "document.querySelector('.pc-continuous .pc-rain')?.dataset.running === 'true'",
         ),
+      );
+      await evaluate(
+        "window.__sharedRain = document.querySelector('.pc-rain');true",
       );
       await click('[aria-controls="checker-space"]');
       await click(".pc-examples__item");
@@ -490,8 +493,14 @@ try {
       await click('[aria-controls="dictionary-space"]');
       await waitFor(() =>
         evaluate(
-          "document.querySelector('#checker-space .pc-rain')?.dataset.running === 'false'",
+          "document.querySelector('.pc-continuous .pc-rain')?.dataset.running === 'true'",
         ),
+      );
+      assert.equal(
+        await evaluate(
+          "document.querySelectorAll('.pc-rain').length === 1 && document.querySelector('.pc-rain') === window.__sharedRain",
+        ),
+        true,
       );
       await click('[aria-controls="checker-space"]');
       assert.equal(
@@ -504,7 +513,11 @@ try {
           "document.querySelector('.pc-dictionary__passage').open && document.querySelector('.pc-dictionary__passage textarea').value.includes('白日依山尽')",
         ),
       );
-      return { canvasPaused: true, reportPreserved: true, poemImported: true };
+      return {
+        onePersistentCanvas: true,
+        reportPreserved: true,
+        poemImported: true,
+      };
     },
   );
   await scenario("keyboard-navigation-and-reduced-motion", async () => {

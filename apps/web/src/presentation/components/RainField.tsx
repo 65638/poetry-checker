@@ -18,7 +18,7 @@ interface Ring {
   deliberate: boolean;
 }
 const SHELTER =
-  'button, a, input, textarea, select, label, summary, [role="dialog"], [contenteditable], .pc-plinth, .pc-rail, .pc-hall--reading .pc-manuscript, .pc-masthead, .pc-colophon, .pc-evidence, .pc-dictionary__desk, .pc-dictionary__folio, .pc-dictionary__masthead, .pc-places';
+  'button, a, input, textarea, select, label, summary, [role="dialog"], [contenteditable], .pc-plinth, .pc-rail, .pc-hall--reading .pc-manuscript, .pc-masthead, .pc-colophon, .pc-evidence, .pc-dictionary__desk, .pc-dictionary__folio:not([data-empty="true"]), .pc-dictionary__masthead, .pc-places';
 const MAX_RINGS = 24;
 
 export function RainField({

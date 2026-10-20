@@ -79,28 +79,28 @@ html:has(.pc-workspace) {
   position: relative;
   outline: none;
 }
-/* Snapshot the whole viewport, including fixed scenery and restored scroll.
+/* Snapshot the content sheets separately from the persistent garden.
    No transformed live ancestor is left behind to break fixed/sticky surfaces. */
 html[data-journey]::view-transition-group(root) {
   animation-duration: 760ms;
 }
-html[data-journey]::view-transition-old(root),
-html[data-journey]::view-transition-new(root) {
+html[data-journey]::view-transition-old(garden-content),
+html[data-journey]::view-transition-new(garden-content) {
   animation-duration: 760ms;
   animation-timing-function: cubic-bezier(0.65, 0, 0.25, 1);
   animation-fill-mode: both;
   mix-blend-mode: normal;
 }
-html[data-journey="forward"]::view-transition-old(root) {
+html[data-journey="forward"]::view-transition-old(garden-content) {
   animation-name: pc-walk-out-left;
 }
-html[data-journey="forward"]::view-transition-new(root) {
+html[data-journey="forward"]::view-transition-new(garden-content) {
   animation-name: pc-walk-in-right;
 }
-html[data-journey="backward"]::view-transition-old(root) {
+html[data-journey="backward"]::view-transition-old(garden-content) {
   animation-name: pc-walk-out-right;
 }
-html[data-journey="backward"]::view-transition-new(root) {
+html[data-journey="backward"]::view-transition-new(garden-content) {
   animation-name: pc-walk-in-left;
 }
 html[data-journey]::view-transition-group(garden-navigation) {
@@ -118,8 +118,14 @@ html[data-journey]::view-transition-new(*) {
   pointer-events: none;
 }
 @keyframes pc-walk-out-left {
+  from {
+    transform: translateY(var(--pc-journey-scroll-shift, 0px));
+  }
   to {
-    transform: translateX(calc(-1 * var(--pc-journey-span, 100vw)));
+    transform: translate(
+      calc(-1 * var(--pc-journey-span, 100vw)),
+      var(--pc-journey-scroll-shift, 0px)
+    );
   }
 }
 @keyframes pc-walk-in-right {
@@ -128,8 +134,14 @@ html[data-journey]::view-transition-new(*) {
   }
 }
 @keyframes pc-walk-out-right {
+  from {
+    transform: translateY(var(--pc-journey-scroll-shift, 0px));
+  }
   to {
-    transform: translateX(var(--pc-journey-span, 100vw));
+    transform: translate(
+      var(--pc-journey-span, 100vw),
+      var(--pc-journey-scroll-shift, 0px)
+    );
   }
 }
 @keyframes pc-walk-in-left {
@@ -137,8 +149,7 @@ html[data-journey]::view-transition-new(*) {
     transform: translateX(calc(-1 * var(--pc-journey-span, 100vw)));
   }
 }
-.pc-workspace
-  :is(.pc-masthead, .pc-seal, .pc-plinth, .pc-intro, .pc-garden__landscape) {
+.pc-workspace :is(.pc-masthead, .pc-seal, .pc-plinth, .pc-intro) {
   animation: none;
 }
 
@@ -147,62 +158,6 @@ html[data-journey]::view-transition-new(*) {
   isolation: isolate;
   background: transparent;
   min-height: calc(100vh - 68px);
-}
-.pc-garden {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1;
-  overflow: hidden;
-  background: linear-gradient(180deg, #13272f, #2b4e56 54%, #18333b);
-}
-.pc-garden__landscape {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  animation: pc-garden-pan 1s var(--pc-ease-out) both;
-}
-@keyframes pc-garden-pan {
-  from {
-    transform: scale(1.06) translateX(18px);
-  }
-  to {
-    transform: scale(1) translateX(0);
-  }
-}
-.pc-garden__mist {
-  position: absolute;
-  width: 80%;
-  height: 35%;
-  right: -5%;
-  top: 45%;
-  background: radial-gradient(ellipse, #b4c9b514, transparent 70%);
-  z-index: 1;
-}
-.pc-garden__frame {
-  position: absolute;
-  height: min(80vw, 1000px);
-  width: min(80vw, 1000px);
-  top: 80px;
-  right: -180px;
-  border: 34px solid #0d2028b3;
-  border-radius: 50%;
-  box-shadow:
-    0 0 0 2px #71837433,
-    0 0 0 12px #0d202855,
-    inset 0 0 0 2px #71837433;
-}
-.pc-garden__inscription {
-  position: absolute;
-  right: 28px;
-  top: 35%;
-  writing-mode: vertical-rl;
-  color: #c7cfbb90;
-  font-family: var(--pc-font-serif);
-  font-size: 14px;
-  letter-spacing: 0.5em;
-  line-height: 2;
 }
 .pc-dictionary__page {
   position: relative;
@@ -1113,10 +1068,6 @@ html[data-journey]::view-transition-new(*) {
   user-select: text;
   -webkit-user-select: text;
 }
-.pc-garden .pc-rain {
-  z-index: 1;
-  animation: pc-dictionary-ink 800ms ease;
-}
 .pc-dictionary__desk .pc-button--quiet {
   color: var(--pc-text);
 }
@@ -1190,12 +1141,6 @@ html[data-journey]::view-transition-new(*) {
   }
   .pc-dictionary__empty-glyph {
     font-size: 70px;
-  }
-  .pc-garden__frame {
-    width: 90vw;
-    height: 90vw;
-    right: -30vw;
-    border-width: 20px;
   }
 }
 @media (max-width: 599px) {
@@ -1313,7 +1258,6 @@ html[data-journey]::view-transition-new(*) {
 }
 .pc-workspace[data-motion="off"] .pc-place .pc-page,
 .pc-workspace[data-motion="off"] .pc-dictionary__page,
-.pc-dictionary[data-motion="off"] .pc-garden__landscape,
 .pc-dictionary[data-motion="off"] .pc-dictionary__result,
 .pc-dictionary[data-motion="off"] .pc-rain {
   animation: none;
@@ -1326,16 +1270,12 @@ html[data-journey]::view-transition-new(*) {
   }
   .pc-place .pc-page,
   .pc-dictionary__page,
-  .pc-garden__landscape,
   .pc-dictionary__result,
-  .pc-garden .pc-rain {
+  .pc-dictionary__examples button > span {
     animation: none !important;
   }
 }
 @media (forced-colors: active) {
-  .pc-garden {
-    display: none;
-  }
   .pc-places button[aria-current],
   .pc-dictionary__book:has(input:checked) {
     border: 2px solid Highlight;

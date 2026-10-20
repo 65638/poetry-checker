@@ -161,29 +161,27 @@ try {
       }
     }
   });
-  await check("garden-rain-pauses-and-resumes-with-navigation", async () => {
+  await check("garden-rain-persists-across-navigation", async () => {
     await h.viewport(1440, 900);
     await click('[aria-controls="checker-space"]');
-    await sleep(700);
+    await waitFor(() => evaluate("!document.documentElement.dataset.journey"));
     assert.equal(
       await evaluate(
-        "document.querySelector('.pc-garden .pc-rain').dataset.running",
+        "document.querySelector('.pc-continuous .pc-rain').dataset.running",
       ),
-      "false",
+      "true",
     );
     await click('[aria-controls="dictionary-space"]');
-    await sleep(700);
+    await waitFor(() => evaluate("!document.documentElement.dataset.journey"));
     assert.equal(
       await evaluate(
-        "document.querySelector('.pc-garden .pc-rain').dataset.running",
+        "document.querySelector('.pc-continuous .pc-rain').dataset.running",
       ),
       "true",
     );
     assert.equal(
-      await evaluate(
-        "document.querySelector('.pc-scene .pc-rain').dataset.running",
-      ),
-      "false",
+      await evaluate("document.querySelectorAll('.pc-rain').length"),
+      1,
     );
   });
   await check("effects-off-and-system-reduced-motion", async () => {
@@ -191,7 +189,7 @@ try {
     await sleep(100);
     assert.equal(
       await evaluate(
-        "document.querySelector('.pc-garden .pc-rain').dataset.running",
+        "document.querySelector('.pc-continuous .pc-rain').dataset.running",
       ),
       "false",
     );
@@ -206,7 +204,7 @@ try {
     await sleep(200);
     assert.equal(
       await evaluate(
-        "document.querySelector('.pc-garden .pc-rain').dataset.running",
+        "document.querySelector('.pc-continuous .pc-rain').dataset.running",
       ),
       "false",
     );
