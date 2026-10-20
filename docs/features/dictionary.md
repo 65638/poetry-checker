@@ -32,6 +32,7 @@ node tests/e2e/dictionary.mjs artifacts/acceptance/dictionary
 pnpm test:e2e
 node scripts/g07-startup-check.mjs
 node scripts/g07-performance.mjs
+node tests/e2e/keyboard-journey.mjs
 ```
 
 独立浏览器脚本启动隔离端口和自己的浏览器profile，不停止现有预览服务。并发迟到、503和15秒等待使用CDP受控网络；正常查询和恢复均走真实API。未覆盖的完整人文审校、真人审美反馈和多浏览器兼容性不算通过。
@@ -39,3 +40,5 @@ node scripts/g07-performance.mjs
 `pnpm dev` 支持Windows中文/空格路径和自定义 `PORT` / `WEB_PORT`，默认3000/5173，统一绑定127.0.0.1；占用端口直接退出，Ctrl+C关闭本命令的服务。Web保留HMR，API源码变化后重启命令。启动脚本复用PR #27的修复，避免退回旧Windows路径错误；来源脚本和本批差异见交接记录。
 
 离线日常使用可先 `pnpm build`，再 `node scripts/dev.mjs --preview`，同时提供已构建页面和真实API；生产页面没有开发场景浮层。前提是本机已安装依赖并保有data目录。仅下载源码不等于具备离线依赖；`pnpm install --offline --frozen-lockfile`另行验收。
+
+`keyboard-journey.mjs` 在正式构建页面用真实按键完成录诗/分析、Tab进入“更”的候选并改用读音重查、Escape回焦、检查与编辑区折叠/展开、导航到藏韵阁、查字和展开来源；DOM只读取状态，不代替任务点击或焦点移动。这是单首作品的完整路径，不外推为所有辅助技术/浏览器验收。
