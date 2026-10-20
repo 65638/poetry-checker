@@ -21,7 +21,7 @@
 - 回归脚本：`docs/design/moonlit-ui/moonlit-{scene,report,reveal}-checks.mjs`，结果在 `docs/design/moonlit-ui/results/`。
 
 ## 已知限制
-- 证据面板退出动画未实现（保持即时关闭）；场景无 offscreen 暂停（固定层始终可见，依赖 visibilitychange）。
+- 证据面板退出：220ms 滑出，期间 inert、无 dialog 角色、焦点已回到字格；减少动效 / 关闭动效时即时卸载。场景无 offscreen 暂停（固定层始终可见，依赖 visibilitychange）。
 - 规线与衬线字体对齐依赖现有字体栈（沿用旧结论）。
 
 ---

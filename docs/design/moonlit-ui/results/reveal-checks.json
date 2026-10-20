@@ -1,10 +1,10 @@
 {
   "suite": "reveal",
   "revision": {
-    "commit": "bc41981e4fdf834c852037bf225dc218bfecca46",
+    "commit": "78c596a36f08625222b89566b35de53485a524b2",
     "dirty": true
   },
-  "at": "2026-10-20T01:00:03.196Z",
+  "at": "2026-10-20T01:31:18.271Z",
   "scenarios": [
     {
       "name": "reveal-375-pointer-click",
@@ -58,6 +58,19 @@
         "closed": true,
         "open2": true,
         "restored": true
+      }
+    },
+    {
+      "name": "evidence-exit-animates-then-unmounts",
+      "status": "pass",
+      "detail": {
+        "mid": {
+          "dialog": false,
+          "leaving": true,
+          "inert": true,
+          "focusCell": true
+        },
+        "unmounted": true
       }
     },
     {
@@ -126,5 +139,5 @@
       }
     }
   ],
-  "url": "http://127.0.0.1:52557/"
+  "url": "http://127.0.0.1:56195/"
 }

@@ -1,10 +1,10 @@
 {
   "suite": "report",
   "revision": {
-    "commit": "bc41981e4fdf834c852037bf225dc218bfecca46",
+    "commit": "78c596a36f08625222b89566b35de53485a524b2",
     "dirty": true
   },
-  "at": "2026-10-20T00:58:23.481Z",
+  "at": "2026-10-20T01:33:00.648Z",
   "scenarios": [
     {
       "name": "rail-lines-match-report",
@@ -96,5 +96,5 @@
       }
     }
   ],
-  "url": "http://127.0.0.1:50294/"
+  "url": "http://127.0.0.1:62917/"
 }

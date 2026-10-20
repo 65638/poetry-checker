@@ -25,7 +25,7 @@ Brief: `docs/design/CLAUDE-MOONLIT-UI-BRIEF-EN.md`. Branch `feat/claude-moonlit-
 - `pnpm test:e2e`: see section 9 for the final run on the docs commit.
 - `node docs/design/moonlit-ui/moonlit-scene-checks.mjs`: exit 0, 12/12.
 - `node docs/design/moonlit-ui/moonlit-report-checks.mjs`: exit 0, 9/9.
-- `node docs/design/moonlit-ui/moonlit-reveal-checks.mjs`: exit 0, 13/13.
+- `node docs/design/moonlit-ui/moonlit-reveal-checks.mjs`: exit 0, 14/14 (adds evidence exit check).
 - `node docs/design/moonlit-ui/capture.mjs round1`: exit 0, 52 screenshots plus `round1/manifest.json`.
 - Results JSON: `docs/design/moonlit-ui/results/*.json`.
 
@@ -63,7 +63,7 @@ Brief: `docs/design/CLAUDE-MOONLIT-UI-BRIEF-EN.md`. Branch `feat/claude-moonlit-
 
 ## 8. Limitations and open items
 - Visual review is **pending (Codex)**. Nothing here was inspected as pixels.
-- The evidence panel exit animation is not implemented; the close is immediate, as before.
+- Evidence panel exit (refinement 1): 220ms slide-out (`--pc-dur-panel-out`). While leaving, the panel is inert, `aria-hidden` and has no dialog role, and focus is already restored to the cell. Unmounts on `animationend` or a 600ms guard. Reduced motion or effects off: immediate unmount.
 - The scene has no offscreen pause beyond `visibilitychange`; it is a fixed layer that is always in view.
 - t2i was not used, so there are no concept rasters. All shipped art is SVG/CSS.
 - The long-poem fixture repeats two reviewed quatrains. Unreviewed characters (for example 国) correctly return HTTP 503 from the real API.

@@ -37,6 +37,19 @@ export function CheckerView(props: CheckerViewProps) {
       ? (report.poem.tokens.find((t) => t.tokenId === selectedTokenId) ?? null)
       : null;
   const panelOpen = selectedToken !== null;
+  const [lastPanel, setLastPanel] = useState<{ report: NonNullable<CheckerViewProps['report']>; token: NonNullable<typeof selectedToken> } | null>(null);
+  const [panelExiting, setPanelExiting] = useState(false);
+  if (report !== null && selectedToken !== null) {
+    if (lastPanel?.report !== report || lastPanel.token !== selectedToken) setLastPanel({ report, token: selectedToken });
+    if (panelExiting) setPanelExiting(false);
+  } else if (lastPanel !== null && !panelExiting) {
+    if (motion.effects) setPanelExiting(true);
+    else setLastPanel(null);
+  }
+  const finishPanelExit = () => {
+    setPanelExiting(false);
+    setLastPanel(null);
+  };
   const hasReport = report !== null;
   const collapsed = hasReport && editorCollapsed;
 
@@ -118,6 +131,13 @@ export function CheckerView(props: CheckerViewProps) {
     const target = stored?.isConnected ? stored : fallback;
     target?.focus();
   }, [selectedTokenId]);
+
+  // Guard for hidden tabs, where animationend may never arrive.
+  useEffect(() => {
+    if (!panelExiting) return;
+    const id = window.setTimeout(finishPanelExit, 600);
+    return () => window.clearTimeout(id);
+  }, [panelExiting]);
 
   const quiet = panelOpen || editing || busy;
 
@@ -288,15 +308,17 @@ export function CheckerView(props: CheckerViewProps) {
         </footer>
       </div>
 
-      {report !== null && selectedToken !== null && (
+      {(report !== null && selectedToken !== null) || (panelExiting && lastPanel !== null) ? (
         <EvidencePanel
-          report={report}
-          token={selectedToken}
+          report={report !== null && selectedToken !== null ? report : lastPanel!.report}
+          token={selectedToken ?? lastPanel!.token}
           lockedReason={lockedReason}
           onChooseReading={props.onChooseReading}
           onClose={props.onCloseEvidence}
+          leaving={selectedToken === null}
+          onExited={finishPanelExit}
         />
-      )}
+      ) : null}
     </div>
   );
 }

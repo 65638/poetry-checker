@@ -102,6 +102,18 @@ try {
     return { open1, closed, open2, restored };
   });
 
+  await scenario("evidence-exit-animates-then-unmounts", async () => {
+    await evaluate("document.querySelector('[data-token-id]').click(), 1");
+    await sleep(450);
+    await key("Escape", "Escape", 27);
+    await sleep(40);
+    const mid = await evaluate("({ dialog: Boolean(document.querySelector('[role=dialog]')), leaving: Boolean(document.querySelector('.pc-evidence--leaving')), inert: document.querySelector('.pc-evidence')?.inert ?? null, focusCell: Boolean(document.activeElement?.dataset?.tokenId) })");
+    await sleep(600);
+    const after = await evaluate("!document.querySelector('.pc-evidence')");
+    assert(!mid.dialog && mid.leaving && mid.inert && mid.focusCell && after, JSON.stringify({ mid, after }));
+    return { mid, unmounted: after };
+  });
+
   await scenario("candidate-override-still-works", async () => {
     const found = await evaluate(`(() => {
       const cells = [...document.querySelectorAll('[data-token-id]')];

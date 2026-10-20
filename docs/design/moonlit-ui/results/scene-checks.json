@@ -1,10 +1,10 @@
 {
   "suite": "scene",
   "revision": {
-    "commit": "bc41981e4fdf834c852037bf225dc218bfecca46",
+    "commit": "78c596a36f08625222b89566b35de53485a524b2",
     "dirty": true
   },
-  "at": "2026-10-20T01:00:46.356Z",
+  "at": "2026-10-20T01:32:40.493Z",
   "scenarios": [
     {
       "name": "analyze-above-fold-1440x900",
@@ -41,7 +41,7 @@
         "moving": {
           "halo": "true",
           "pointer": "true",
-          "px": -0.0907
+          "px": -0.0899
         },
         "settled": {
           "pointer": null,
@@ -62,7 +62,7 @@
       "status": "pass",
       "detail": {
         "textarea": "text",
-        "root": "url(\"http://127.0.0.1:59717/design/cursor-moon.svg\") 4 4, au"
+        "root": "url(\"http://127.0.0.1:54896/design/cursor-moon.svg\") 4 4, au"
       }
     },
     {
@@ -120,5 +120,5 @@
       }
     }
   ],
-  "url": "http://127.0.0.1:59717/"
+  "url": "http://127.0.0.1:54896/"
 }
