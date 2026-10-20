@@ -35,40 +35,99 @@ export function ReadingRail({
   const [directoryOpen, setDirectoryOpen] = useState(false);
   const flashTimer = useRef<number | null>(null);
   const flashedLine = useRef<HTMLElement | null>(null);
+  const navigationTarget = useRef<number | null>(null);
+  const navigationTimer = useRef<number | null>(null);
   const lines = report.poem.lines;
   const tokenText = new Map(report.poem.tokens.map((t) => [t.tokenId, t.text]));
   const checks = report.prosody.checks;
 
+  // Hold the explicit choice through smooth scrolling, including clamped destinations.
+  // The next page scroll after settling resumes normal reading-position tracking.
+  const settleNavigation = () => {
+    if (navigationTimer.current !== null)
+      window.clearTimeout(navigationTimer.current);
+    navigationTimer.current = window.setTimeout(() => {
+      navigationTarget.current = null;
+      navigationTimer.current = null;
+    }, 180);
+  };
+
   useEffect(() => {
-    if (typeof IntersectionObserver !== "function") return;
     const targets = lines
       .map((l) => document.getElementById(`pc-line-${l.line}`))
       .filter((el): el is HTMLElement => el !== null);
     if (targets.length === 0) return;
-    const visible = new Map<number, number>();
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          const n = Number((entry.target as HTMLElement).dataset.line);
-          if (entry.isIntersecting)
-            visible.set(n, entry.boundingClientRect.top);
-          else visible.delete(n);
+    let frame = 0;
+    const sync = () => {
+      frame = 0;
+      if (navigationTarget.current !== null) return;
+      let closest = targets[0]!;
+      let distance = Infinity;
+      for (const el of targets) {
+        const rect = el.getBoundingClientRect();
+        const next = Math.abs(
+          rect.top + rect.height / 2 - window.innerHeight / 2,
+        );
+        if (next < distance) {
+          closest = el;
+          distance = next;
         }
-        if (visible.size === 0) return;
-        let best = Infinity;
-        let bestTop = Infinity;
-        visible.forEach((top, n) => {
-          if (top < bestTop || (top === bestTop && n < best)) {
-            bestTop = top;
-            best = n;
-          }
-        });
-        setActive(best);
-      },
-      { rootMargin: "-20% 0px -45% 0px", threshold: [0, 1] },
-    );
-    targets.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
+      }
+      setActive(Number(closest.dataset.line));
+    };
+    const onScroll = () => {
+      if (navigationTarget.current !== null) {
+        settleNavigation();
+        return;
+      }
+      if (!frame) frame = requestAnimationFrame(sync);
+    };
+    const cancelNavigation = () => {
+      navigationTarget.current = null;
+      if (navigationTimer.current !== null)
+        window.clearTimeout(navigationTimer.current);
+      navigationTimer.current = null;
+    };
+    const onKey = (event: KeyboardEvent) => {
+      if (
+        event.target instanceof Element &&
+        event.target.closest(
+          "input, textarea, button, select, [contenteditable]",
+        )
+      )
+        return;
+      if (
+        [
+          "ArrowDown",
+          "ArrowUp",
+          "PageDown",
+          "PageUp",
+          "Home",
+          "End",
+          " ",
+        ].includes(event.key)
+      )
+        cancelNavigation();
+    };
+    const onResize = () => {
+      cancelNavigation();
+      onScroll();
+    };
+    frame = requestAnimationFrame(sync);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onResize);
+    window.addEventListener("wheel", cancelNavigation, { passive: true });
+    window.addEventListener("touchmove", cancelNavigation, { passive: true });
+    window.addEventListener("keydown", onKey);
+    return () => {
+      if (frame) cancelAnimationFrame(frame);
+      cancelNavigation();
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onResize);
+      window.removeEventListener("wheel", cancelNavigation);
+      window.removeEventListener("touchmove", cancelNavigation);
+      window.removeEventListener("keydown", onKey);
+    };
   }, [report, lines]);
 
   useEffect(
@@ -82,6 +141,9 @@ export function ReadingRail({
   const jump = (line: number, event: MouseEvent<HTMLButtonElement>) => {
     const el = document.getElementById(`pc-line-${line}`);
     if (!el) return;
+    navigationTarget.current = line;
+    setActive(line);
+    settleNavigation();
     el.scrollIntoView({
       block: "center",
       behavior: effects ? "smooth" : "auto",
