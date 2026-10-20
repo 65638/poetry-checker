@@ -357,13 +357,437 @@ async function buildCell(
   };
 }
 
+/**
+ * D4 输出：把同一批 cells 转成 D4 约定的逐行接口，并生成 A 差集、
+ * 60 目标位置盘点与语境草稿统计。默认（无 --out）行为不变，仍写 D3 报告。
+ */
+function writeD4Artifacts(input: {
+  outDir: string;
+  baseSha: string;
+  cells: Cell[];
+}): void {
+  const { outDir, baseSha, cells } = input;
+
+  const dataVersions: Record<string, string> = {};
+  const evidenceToSource = new Map<string, string>();
+  const sourceIds = new Set<string>();
+  const toneById = new Map<string, Tone | null>();
+  const candidateEvidence = new Map<string, string[]>();
+  for (const { book, snapshot: snapshotPath } of BOOKS) {
+    const snapshot = readJson<Record<string, unknown>>(snapshotPath);
+    dataVersions[book] = String(snapshot.dataVersion);
+    for (const evidence of snapshot.evidence as Array<{
+      id: string;
+      sourceId: string;
+    }>) {
+      evidenceToSource.set(`${book}|${evidence.id}`, evidence.sourceId);
+    }
+    for (const source of snapshot.sources as Array<{ id: string }>) {
+      sourceIds.add(`${book}|${source.id}`);
+    }
+    for (const candidate of snapshot.candidates as Array<{
+      id: string;
+      tone: Tone | null;
+      evidenceIds: string[];
+    }>) {
+      toneById.set(`${book}|${candidate.id}`, candidate.tone);
+      candidateEvidence.set(`${book}|${candidate.id}`, candidate.evidenceIds);
+    }
+  }
+
+  type Row = {
+    caseId: string;
+    book: BookId;
+    tokenId: string;
+    character: string;
+    allCandidateIds: string[];
+    effectiveCandidateIds: string[];
+    unverifiedEffectiveIds: string[];
+    missingSourceIds: string[];
+    contextRuleIds: string[];
+    readingStatus: string;
+    toneStatus: string;
+    possibleTones: Tone[];
+    blockingReason: string | null;
+    category: string;
+  };
+
+  const rows: Row[] = [];
+  for (const cell of cells) {
+    for (const token of cell.tokenCells) {
+      const missingSourceIds: string[] = [];
+      for (const candidateId of token.effectiveCandidateIds) {
+        for (const evidenceId of candidateEvidence.get(
+          `${cell.book}|${candidateId}`,
+        ) ?? []) {
+          const sourceId = evidenceToSource.get(`${cell.book}|${evidenceId}`);
+          if (
+            sourceId === undefined ||
+            !sourceIds.has(`${cell.book}|${sourceId}`)
+          ) {
+            missingSourceIds.push(evidenceId);
+          }
+        }
+      }
+
+      const possibleTones = [
+        ...new Set(
+          token.effectiveCandidateIds
+            .map((id) => toneById.get(`${cell.book}|${id}`))
+            .filter((tone): tone is Tone => tone === "P" || tone === "Z"),
+        ),
+      ].sort();
+
+      let category = "可推导";
+      if (token.candidateIds.length === 0) category = "候选缺失";
+      else if (
+        token.blockReason !== null &&
+        token.blockReason.startsWith("CONTEXT_RULE_STALE")
+      )
+        category = "ID漂移";
+      else if (missingSourceIds.length > 0) category = "来源缺失";
+      else if (token.unbackedEffectiveCandidateIds.length > 0)
+        category = "未审核";
+      else if (token.readingStatus === "ambiguous" && possibleTones.length > 1)
+        category = "语境不足";
+      else if (token.readingStatus === "ambiguous")
+        category = "多读同调无需强选";
+
+      rows.push({
+        caseId: cell.caseId,
+        book: cell.book,
+        tokenId: token.tokenId,
+        character: token.character,
+        allCandidateIds: token.candidateIds,
+        effectiveCandidateIds: token.effectiveCandidateIds,
+        unverifiedEffectiveIds: token.unbackedEffectiveCandidateIds,
+        missingSourceIds,
+        contextRuleIds: token.contextRuleIds,
+        readingStatus: token.readingStatus,
+        toneStatus: token.toneStatus,
+        possibleTones,
+        blockingReason:
+          token.blockReason ??
+          (token.unbackedEffectiveCandidateIds.length > 0
+            ? "LOOKUP_EVIDENCE_UNVERIFIED"
+            : null),
+        category,
+      });
+    }
+  }
+
+  mkdirSync(path.join(outDir), { recursive: true });
+  writeFileSync(
+    path.join(outDir, "effective-candidates.json"),
+    `${JSON.stringify(
+      {
+        schemaVersion: "d4-b/effective-candidates-1",
+        baseSha,
+        mode: "real",
+        generatedBy: "packages/readings/scripts/d3-effective-candidates.ts",
+        command:
+          "node node_modules/tsx/dist/cli.mjs packages/readings/scripts/d3-effective-candidates.ts --out data/reviews/d4/b --base-sha <base>",
+        dataVersions,
+        context: {
+          rules: rules.length,
+          evidence: contextEvidence.length,
+          sources: contextSources.length,
+        },
+        counts: {
+          rows: rows.length,
+          byBook: rows.reduce<Record<string, number>>((acc, row) => {
+            acc[row.book] = (acc[row.book] ?? 0) + 1;
+            return acc;
+          }, {}),
+        },
+        rows,
+      },
+      null,
+      2,
+    )}\n`,
+    "utf8",
+  );
+
+  const categories = [
+    "候选缺失",
+    "ID漂移",
+    "来源缺失",
+    "未审核",
+    "语境不足",
+    "多读同调无需强选",
+    "可推导",
+  ];
+  const diffLines: string[] = [];
+  diffLines.push("# 给 A：D4 逐字位差集");
+  diffLines.push("");
+  diffLines.push(`baseSha：\`${baseSha}\``);
+  diffLines.push("");
+  diffLines.push(
+    "分类：候选缺失 / ID漂移 / 来源缺失 / 未审核 / 语境不足 / 多读同调无需强选 / 可推导。",
+  );
+  diffLines.push("");
+  diffLines.push("| 韵书 | " + categories.join(" | ") + " |");
+  diffLines.push("| --- | " + categories.map(() => "---").join(" | ") + " |");
+  for (const book of ["pingshui", "cilin", "xinyun"] as BookId[]) {
+    const counts = categories.map(
+      (category) =>
+        rows.filter((row) => row.book === book && row.category === category)
+          .length,
+    );
+    diffLines.push(`| ${book} | ${counts.join(" | ")} |`);
+  }
+  diffLines.push("");
+  for (const book of ["pingshui", "cilin", "xinyun"] as BookId[]) {
+    const blockers = rows.filter(
+      (row) => row.book === book && row.category !== "可推导",
+    );
+    if (blockers.length === 0) continue;
+    diffLines.push(`## ${book}`);
+    diffLines.push("");
+    diffLines.push(
+      "| 位置 | 字 | 全集 | 有效候选 | 未审有效 | 缺来源 | 分类 |",
+    );
+    diffLines.push("| --- | --- | --- | --- | --- | --- | --- |");
+    for (const row of blockers.slice(0, 60)) {
+      diffLines.push(
+        `| ${row.tokenId} | ${row.character} | ${row.allCandidateIds.join("、") || "—"} | ${row.effectiveCandidateIds.join("、") || "—"} | ${row.unverifiedEffectiveIds.join("、") || "—"} | ${row.missingSourceIds.join("、") || "—"} | ${row.category} |`,
+      );
+    }
+    if (blockers.length > 60)
+      diffLines.push(`\n（其余 ${blockers.length - 60} 行见 JSON）`);
+    diffLines.push("");
+  }
+  writeFileSync(
+    path.join(outDir, "a-diff.md"),
+    `${diffLines.join("\n").trimEnd()}\n`,
+    "utf8",
+  );
+
+  // 60 目标位置盘点：按 (作品, 字位) 去重，同一位置不因跨书重复计数。
+  const positionKeys = new Map<
+    string,
+    { caseId: string; tokenId: string; character: string; books: string[] }
+  >();
+  for (const row of rows) {
+    if (row.allCandidateIds.length < 2) continue;
+    const key = `${row.caseId}|${row.tokenId}`;
+    const existing = positionKeys.get(key);
+    if (existing === undefined) {
+      positionKeys.set(key, {
+        caseId: row.caseId,
+        tokenId: row.tokenId,
+        character: row.character,
+        books: [row.book],
+      });
+    } else {
+      existing.books.push(row.book);
+    }
+  }
+  const resolvedKeys = new Set(
+    rows
+      .filter(
+        (row) =>
+          row.readingStatus === "resolved" && row.contextRuleIds.length > 0,
+      )
+      .map((row) => `${row.caseId}|${row.tokenId}`),
+  );
+  const ambiguKeys = new Set(
+    rows
+      .filter((row) => row.readingStatus === "ambiguous")
+      .map((row) => `${row.caseId}|${row.tokenId}`),
+  );
+  const blockedKeys = new Set(
+    rows
+      .filter((row) => row.readingStatus === "blocked")
+      .map((row) => `${row.caseId}|${row.tokenId}`),
+  );
+  const coverageLines: string[] = [];
+  coverageLines.push("# D4 多音位置盘点（60 目标）");
+  coverageLines.push("");
+  coverageLines.push(`baseSha：\`${baseSha}\``);
+  coverageLines.push("");
+  coverageLines.push(
+    `三首×三书范围内，候选数 ≥2 的**去重位置**：${positionKeys.size} 个。同一位置跨书只计一次。`,
+  );
+  coverageLines.push("");
+  const tested = [...positionKeys.keys()].filter((key) =>
+    resolvedKeys.has(key),
+  );
+  const determined = [...positionKeys.keys()].filter(
+    (key) => !resolvedKeys.has(key) && ambiguKeys.has(key),
+  );
+  const pending = [...positionKeys.keys()].filter(
+    (key) =>
+      !resolvedKeys.has(key) && !ambiguKeys.has(key) && blockedKeys.has(key),
+  );
+  const missingSample = [...positionKeys.keys()].filter(
+    (key) =>
+      !resolvedKeys.has(key) && !ambiguKeys.has(key) && !blockedKeys.has(key),
+  );
+  coverageLines.push("| 分类 | 数量 | 说明 |");
+  coverageLines.push("| --- | --- | --- |");
+  coverageLines.push(
+    `| 已测（已由上下文裁定） | ${tested.length} | 有规则选中且 resolved |`,
+  );
+  coverageLines.push(
+    `| 来源已定（多读、无裁定） | ${determined.length} | 证据已审，保持 reading=ambiguous，不伪称读音确定 |`,
+  );
+  coverageLines.push(
+    `| 需待核（证据阻断） | ${pending.length} | 有效候选含未审证据，blocked |`,
+  );
+  coverageLines.push(
+    `| 缺样本（无候选） | ${missingSample.length} | 该位置在相应韵书无候选 |`,
+  );
+  coverageLines.push("");
+  coverageLines.push(
+    `G09 缺口：目标 60，本日三首范围内可盘点 ${positionKeys.size} 个，距 60 仍差 ${Math.max(0, 60 - positionKeys.size)}；` +
+      "不把同一位置重复跑多次充数，未达目标如实记录。",
+  );
+  coverageLines.push("");
+  coverageLines.push("| 位置 | 字 | 出现韵书 | 状态 |");
+  coverageLines.push("| --- | --- | --- | --- |");
+  for (const [key, value] of positionKeys) {
+    const status = resolvedKeys.has(key)
+      ? "已测"
+      : ambiguKeys.has(key)
+        ? "来源已定"
+        : blockedKeys.has(key)
+          ? "需待核"
+          : "缺样本";
+    coverageLines.push(
+      `| ${value.tokenId} | ${value.character} | ${value.books.join("/")} | ${status} |`,
+    );
+  }
+  writeFileSync(
+    path.join(outDir, "coverage-60.md"),
+    `${coverageLines.join("\n").trimEnd()}\n`,
+    "utf8",
+  );
+
+  // 词林/新韵语境草稿：语义可迁移，但候选 ID 与韵书必须换，且不得平移平水裁定。
+  const drafts: Array<{
+    id: string;
+    book: BookId;
+    caseId: string;
+    tokenId: string;
+    target: string;
+    exactPhrases: string[];
+    targetOffset: number;
+    candidateIds: string[];
+    selectCandidateIds: string[];
+    semanticBasis: string;
+    transferCondition: string;
+    evidenceNeeded: string[];
+    negativeExamples: string[];
+    reviewStatus: string;
+    sourceRuleRef: string;
+  }> = [];
+  for (const book of ["cilin", "xinyun"] as BookId[]) {
+    for (const row of rows.filter(
+      (item) => item.book === "pingshui" && item.contextRuleIds.length > 0,
+    )) {
+      const counterpart = rows.find(
+        (item) =>
+          item.book === book &&
+          item.caseId === row.caseId &&
+          item.tokenId === row.tokenId,
+      );
+      if (counterpart === undefined) continue;
+      if (counterpart.allCandidateIds.length < 2) continue;
+      const sourceRule = rules.find(
+        (rule) => rule.id === row.contextRuleIds[0],
+      );
+      if (sourceRule === undefined) continue;
+      drafts.push({
+        id: `draft-${book}-${row.caseId}-${row.tokenId}`,
+        book,
+        caseId: row.caseId,
+        tokenId: row.tokenId,
+        target: row.character,
+        exactPhrases: sourceRule.exactPhrases,
+        targetOffset: sourceRule.targetOffset,
+        candidateIds: counterpart.allCandidateIds,
+        selectCandidateIds: [],
+        semanticBasis: sourceRule.sense,
+        transferCondition:
+          "须先证明该义项在本书可迁移（韵书归部与字形一致），并给出本书候选的可定位依据；不得把平水 candidateId 或平水裁定直接搬到本书",
+        evidenceNeeded: [
+          `本书（${book}）该候选的归部证据并完成审核`,
+          "该语境义项在本书的可定位来源",
+        ],
+        negativeExamples: sourceRule.negativeExamples,
+        reviewStatus: "unverified",
+        sourceRuleRef: sourceRule.id,
+      });
+    }
+  }
+  writeFileSync(
+    path.join(outDir, "context-drafts.json"),
+    `${JSON.stringify(
+      {
+        note: "词林/新韵语境草稿：不进入 approved 选择器；candidateIds 取自本书真实快照，selectCandidateIds 留空待裁定。",
+        baseSha,
+        count: drafts.length,
+        drafts,
+      },
+      null,
+      2,
+    )}\n`,
+    "utf8",
+  );
+
+  const draftLines: string[] = [];
+  draftLines.push("# 给组长的语境草稿（词林/新韵，未批准）");
+  draftLines.push("");
+  draftLines.push(
+    `baseSha：\`${baseSha}\`；草稿 ${drafts.length} 条，全部 \`reviewStatus=unverified\`，不进入运行选择器。`,
+  );
+  draftLines.push("");
+  draftLines.push("| # | 韵书 | 位置 | 字 | 短语（偏移） | 本书候选 | 反例 |");
+  draftLines.push("| --- | --- | --- | --- | --- | --- | --- |");
+  drafts.forEach((draft, index) => {
+    draftLines.push(
+      `| ${index + 1} | ${draft.book} | ${draft.tokenId} | ${draft.target} | ${draft.exactPhrases.join("、")}（${draft.targetOffset}） | ${draft.candidateIds.join("、")} | ${draft.negativeExamples.join("、")} |`,
+    );
+  });
+  draftLines.push("");
+  draftLines.push(
+    "语义依据沿用平水已批裁定的**义项描述**，但候选必须换成本书候选、证据必须按本书来源重新审核；跨书迁移条件写在 JSON 的 `transferCondition`。",
+  );
+  draftLines.push("");
+  writeFileSync(
+    path.join(outDir, "context-drafts.md"),
+    `${draftLines.join("\n").trimEnd()}\n`,
+    "utf8",
+  );
+
+  console.log(
+    `d4 rows=${rows.length} positions=${positionKeys.size} tested=${tested.length} pending=${pending.length} drafts=${drafts.length}`,
+  );
+}
+
 async function main(): Promise<void> {
+  const argv = process.argv.slice(2);
+  const outFlagIndex = argv.indexOf("--out");
+  const baseShaFlagIndex = argv.indexOf("--base-sha");
+  const outArg = outFlagIndex >= 0 ? argv[outFlagIndex + 1] : undefined;
+  const baseArg =
+    baseShaFlagIndex >= 0 ? argv[baseShaFlagIndex + 1] : undefined;
+  const outDir = outArg !== undefined ? path.resolve(ROOT, outArg) : OUT_DIR;
+  const baseSha = baseArg ?? "unknown";
+  const d4Mode = outDir !== OUT_DIR;
+
   const cells: Cell[] = [];
   for (const { book, snapshot: snapshotPath } of BOOKS) {
     const snapshot = readJson<Record<string, unknown>>(snapshotPath);
     for (const goldenCase of cases) {
       cells.push(await buildCell(goldenCase, book, snapshot));
     }
+  }
+
+  if (d4Mode) {
+    writeD4Artifacts({ outDir, baseSha, cells });
+    return;
   }
 
   const report = {
