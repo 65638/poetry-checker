@@ -10,6 +10,7 @@ import type {
 } from "@poetry/contracts";
 import type { CheckerViewProps } from "../../view-contract";
 import { trailingPunctuation } from "../punctuation";
+import { FindingReference } from "./FindingReference";
 import "../styles/report.css";
 
 type ReportViewProps = Pick<
@@ -36,7 +37,7 @@ const SUMMARY: Record<
   fail: {
     label: "不合律",
     icon: "✕",
-    desc: "存在明确违规，具体位置、应为与实际见下方批注。",
+    desc: "存在明确违规。悬停红色编号可查看原因，完整说明见诗旁批注。",
   },
   needs_review: {
     label: "待复核",
@@ -109,6 +110,7 @@ export function ReportView(props: ReportViewProps) {
   const [hoverFinding, setHoverFinding] = useState<string | null>(null);
   const [focusToken, setFocusToken] = useState<string | null>(null);
   const [focusFinding, setFocusFinding] = useState<string | null>(null);
+  const [openReference, setOpenReference] = useState<string | null>(null);
   const destinationRef = useRef<"poem" | "note">("poem");
   const tokens = new Map(report.poem.tokens.map((t) => [t.tokenId, t]));
   const rhymeIds = new Set(report.prosody.rhyme.tokenIds);
@@ -137,9 +139,6 @@ export function ReportView(props: ReportViewProps) {
       ...checks.filter((f) => activeFinding?.relatedFindingIds.includes(f.id)),
     ].flatMap((f) => f?.locations.map((l) => l.tokenId) ?? []),
   );
-  const linkedNotes = activeToken
-    ? (tokenLinks.get(activeToken) ?? [])
-    : numbered.filter(({ f }) => f.id === activeFindingId);
   const noteIsActive = (f: Finding) =>
     f.id === activeFindingId ||
     f.locations.some((l) => l.tokenId === activeToken);
@@ -157,7 +156,7 @@ export function ReportView(props: ReportViewProps) {
           ).find((el) => el.dataset.tokenId === finding.locations[0]?.tokenId);
     element?.focus({ preventScroll: true });
     element?.scrollIntoView({
-      block: "center",
+      block: destination === "note" ? "nearest" : "center",
       behavior: prefersReducedMotion(element) ? "auto" : "smooth",
     });
   };
@@ -342,173 +341,175 @@ export function ReportView(props: ReportViewProps) {
         )}
       </p>
 
-      <section className="pc-reading" aria-labelledby="pc-grid-heading">
-        <div className="pc-reading__head">
-          <h3 id="pc-grid-heading" className="pc-section-title">
-            <span className="pc-section-title__no" aria-hidden="true">
-              贰
-            </span>
-            批注诗文
-          </h3>
-          <p className="pc-legend">
-            红线 = 违规 · 数字对应批注，点击可直达 ·「韵」= 韵脚 ·「?」=
-            读音待定
-          </p>
-        </div>
-        <ol ref={gridRef} className="pc-grid">
-          {report.poem.lines.map((line, lineIndex) => (
-            <li
-              key={line.line}
-              id={`pc-line-${line.line}`}
-              data-line={line.line}
-              className="pc-line"
-            >
-              <span className="pc-line__no">第{line.line}句</span>
-              <div className="pc-line__cells">
-                {line.tokenIds.map((id, i) => {
-                  const t = tokens.get(id);
-                  if (!t) return null;
-                  const tone = toneOf(t);
-                  const isRhyme = rhymeIds.has(id);
-                  const pending = t.readingStatus !== "resolved";
-                  const isRelated = related.has(id);
-                  const links = tokenLinks.get(id) ?? [];
-                  const violation = links.some(({ f }) => f.status === "fail");
-                  const nextToken = tokens.get(line.tokenIds[i + 1] ?? "");
-                  const nextLineToken =
-                    report.poem.lines[lineIndex + 1]?.tokenIds[0];
-                  const lineEndUtf16 = nextLineToken
-                    ? tokens.get(nextLineToken)?.startUtf16
-                    : undefined;
-                  const punct = trailingPunctuation(
-                    report.poem.originalText,
-                    t,
-                    nextToken,
-                    lineEndUtf16,
-                  );
-                  const label = `第${t.line}句第${t.column}字「${t.text}」，${tone.label}${isRhyme ? "，韵脚" : ""}${pending ? "，读音待定" : ""}${isRelated ? "，批注关联位置" : ""}${links.length ? "，关联批注 " + links.map(({ n }) => n).join("、") : ""}`;
-                  return (
-                    <span
-                      key={id}
-                      className="pc-cell-wrap"
-                      onMouseEnter={() => setHoverToken(id)}
-                      onMouseLeave={() => setHoverToken(null)}
-                      onFocus={() => setFocusToken(id)}
-                      onBlur={(event) => {
-                        if (!event.currentTarget.contains(event.relatedTarget))
-                          setFocusToken(null);
-                      }}
-                    >
-                      <button
-                        type="button"
-                        data-token-id={id}
-                        className={`pc-cell pc-cell--${tone.mod}${isRhyme ? " pc-cell--rhyme" : ""}${violation ? " pc-cell--violation" : ""}${isRelated ? " pc-cell--related" : ""}${selectedTokenId === id ? " pc-cell--selected" : ""}`}
-                        aria-label={label}
-                        aria-haspopup="dialog"
-                        aria-expanded={selectedTokenId === id}
-                        onClick={() => props.onSelectToken(id)}
-                      >
-                        <span className="pc-cell__char">{t.text}</span>
-                        <span className="pc-cell__tone">{tone.label}</span>
-                        {isRhyme && (
-                          <span
-                            className="pc-cell__badge pc-cell__badge--rhyme"
-                            aria-hidden="true"
-                          >
-                            韵
-                          </span>
-                        )}
-                        {pending && (
-                          <span
-                            className="pc-cell__badge pc-cell__badge--pending"
-                            aria-hidden="true"
-                          >
-                            ?
-                          </span>
-                        )}
-                      </button>
-                      <span className="pc-cell__references">
-                        {links.map(({ f, n }) => (
-                          <button
-                            key={f.id}
-                            type="button"
-                            className={`pc-cell__reference pc-finding--${f.status}`}
-                            aria-label={`查看批注 ${n}：${f.message}`}
-                            onClick={() => selectFinding(f, "note")}
-                          >
-                            {n}
-                          </button>
-                        ))}
-                      </span>
-                      {punct && <span className="pc-punct">{punct}</span>}
-                    </span>
-                  );
-                })}
-              </div>
-            </li>
-          ))}
-        </ol>
-        <div className="pc-reading__annotation">
-          {linkedNotes.length ? (
-            linkedNotes.map(({ f, n }) => (
-              <p
-                key={f.id}
-                className={`pc-reading__note pc-finding--${f.status}`}
-              >
-                <strong>
-                  {n} · {CHECK[f.status].label}
-                </strong>{" "}
-                {f.message}
-              </p>
-            ))
-          ) : (
+      <div className="pc-report-workbench">
+        <section className="pc-reading" aria-labelledby="pc-grid-heading">
+          <div className="pc-reading__head">
+            <h3 id="pc-grid-heading" className="pc-section-title">
+              <span className="pc-section-title__no" aria-hidden="true">
+                贰
+              </span>
+              批注诗文
+            </h3>
             <p className="pc-legend">
-              移到字上查看关联批注；点字查看读音依据，点编号查看完整说明。
+              红线 = 违规 · 悬停或点编号看原因 ·「韵」= 韵脚 ·「?」= 读音待定
             </p>
-          )}
-        </div>
-      </section>
+          </div>
+          <ol ref={gridRef} className="pc-grid">
+            {report.poem.lines.map((line, lineIndex) => (
+              <li
+                key={line.line}
+                id={`pc-line-${line.line}`}
+                data-line={line.line}
+                className="pc-line"
+              >
+                <span className="pc-line__no">第{line.line}句</span>
+                <div className="pc-line__cells">
+                  {line.tokenIds.map((id, i) => {
+                    const t = tokens.get(id);
+                    if (!t) return null;
+                    const tone = toneOf(t);
+                    const isRhyme = rhymeIds.has(id);
+                    const pending = t.readingStatus !== "resolved";
+                    const isRelated = related.has(id);
+                    const links = tokenLinks.get(id) ?? [];
+                    const violation = links.some(
+                      ({ f }) => f.status === "fail",
+                    );
+                    const nextToken = tokens.get(line.tokenIds[i + 1] ?? "");
+                    const nextLineToken =
+                      report.poem.lines[lineIndex + 1]?.tokenIds[0];
+                    const lineEndUtf16 = nextLineToken
+                      ? tokens.get(nextLineToken)?.startUtf16
+                      : undefined;
+                    const punct = trailingPunctuation(
+                      report.poem.originalText,
+                      t,
+                      nextToken,
+                      lineEndUtf16,
+                    );
+                    const label = `第${t.line}句第${t.column}字「${t.text}」，${tone.label}${isRhyme ? "，韵脚" : ""}${pending ? "，读音待定" : ""}${isRelated ? "，批注关联位置" : ""}${links.length ? "，关联批注 " + links.map(({ n }) => n).join("、") : ""}`;
+                    return (
+                      <span
+                        key={id}
+                        className="pc-cell-wrap"
+                        onMouseEnter={() => setHoverToken(id)}
+                        onMouseLeave={() => setHoverToken(null)}
+                        onFocus={() => setFocusToken(id)}
+                        onBlur={(event) => {
+                          if (
+                            !event.currentTarget.contains(event.relatedTarget)
+                          )
+                            setFocusToken(null);
+                        }}
+                      >
+                        <button
+                          type="button"
+                          data-token-id={id}
+                          className={`pc-cell pc-cell--${tone.mod}${isRhyme ? " pc-cell--rhyme" : ""}${violation ? " pc-cell--violation" : ""}${isRelated ? " pc-cell--related" : ""}${selectedTokenId === id ? " pc-cell--selected" : ""}`}
+                          aria-label={label}
+                          aria-haspopup="dialog"
+                          aria-expanded={selectedTokenId === id}
+                          onClick={() => props.onSelectToken(id)}
+                        >
+                          <span className="pc-cell__char">{t.text}</span>
+                          <span className="pc-cell__tone">{tone.label}</span>
+                          {isRhyme && (
+                            <span
+                              className="pc-cell__badge pc-cell__badge--rhyme"
+                              aria-hidden="true"
+                            >
+                              韵
+                            </span>
+                          )}
+                          {pending && (
+                            <span
+                              className="pc-cell__badge pc-cell__badge--pending"
+                              aria-hidden="true"
+                            >
+                              ?
+                            </span>
+                          )}
+                        </button>
+                        <span className="pc-cell__references">
+                          {links.map(({ f, n }) => (
+                            <FindingReference
+                              key={f.id}
+                              finding={f}
+                              number={n}
+                              open={openReference === `${id}:${f.id}`}
+                              onOpenChange={(open) =>
+                                setOpenReference((current) =>
+                                  open
+                                    ? `${id}:${f.id}`
+                                    : current === `${id}:${f.id}`
+                                      ? null
+                                      : current,
+                                )
+                              }
+                              rule={
+                                report.provenance.rules.find(
+                                  (rule) => rule.id === f.ruleId,
+                                )?.name ?? f.ruleId
+                              }
+                              onLocate={() => selectFinding(f, "note")}
+                            />
+                          ))}
+                        </span>
+                        {punct && <span className="pc-punct">{punct}</span>}
+                      </span>
+                    );
+                  })}
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
 
-      <section className="pc-notes" aria-labelledby="pc-findings-heading">
-        <h3 id="pc-findings-heading" className="pc-section-title">
-          <span className="pc-section-title__no" aria-hidden="true">
-            叁
-          </span>
-          批注
-        </h3>
-        {checks.length === 0 ? (
-          <p className="pc-legend">
-            本报告未列出批注条目；结论以上方状态为准。
-          </p>
-        ) : (
-          <>
-            <ul className="pc-tally" aria-label="批注统计">
-              {TALLY_ORDER.filter((s) => tally[s] > 0).map((s) => (
-                <li key={s} className={`pc-tally__item pc-finding--${s}`}>
-                  <span aria-hidden="true">{CHECK[s].icon}</span>{" "}
-                  {CHECK[s].label}
-                  <strong className="pc-tally__count">{tally[s]}</strong>
-                </li>
-              ))}
-            </ul>
-            {attention.length > 0 ? (
-              <ol className="pc-findings">{attention.map(renderFinding)}</ol>
+        <section className="pc-notes" aria-labelledby="pc-findings-heading">
+          <h3 id="pc-findings-heading" className="pc-section-title">
+            <span className="pc-section-title__no" aria-hidden="true">
+              叁
+            </span>
+            批注
+          </h3>
+          <div className="pc-notes__body" tabIndex={0} aria-label="批注列表">
+            {checks.length === 0 ? (
+              <p className="pc-legend">
+                本报告未列出批注条目；结论以上方状态为准。
+              </p>
             ) : (
-              <p className="pc-legend">没有违规、待复核或未支持的条目。</p>
+              <>
+                <ul className="pc-tally" aria-label="批注统计">
+                  {TALLY_ORDER.filter((s) => tally[s] > 0).map((s) => (
+                    <li key={s} className={`pc-tally__item pc-finding--${s}`}>
+                      <span aria-hidden="true">{CHECK[s].icon}</span>{" "}
+                      {CHECK[s].label}
+                      <strong className="pc-tally__count">{tally[s]}</strong>
+                    </li>
+                  ))}
+                </ul>
+                {attention.length > 0 ? (
+                  <ol className="pc-findings">
+                    {attention.map(renderFinding)}
+                  </ol>
+                ) : (
+                  <p className="pc-legend">没有违规、待复核或未支持的条目。</p>
+                )}
+                {settled.length > 0 && (
+                  <details ref={settledRef} className="pc-settled">
+                    <summary className="pc-settled__summary">
+                      已通过或不适用的检查（{settled.length} 条）
+                    </summary>
+                    <ol className="pc-findings pc-findings--settled">
+                      {settled.map(renderFinding)}
+                    </ol>
+                  </details>
+                )}
+              </>
             )}
-            {settled.length > 0 && (
-              <details ref={settledRef} className="pc-settled">
-                <summary className="pc-settled__summary">
-                  已通过或不适用的检查（{settled.length} 条）
-                </summary>
-                <ol className="pc-findings pc-findings--settled">
-                  {settled.map(renderFinding)}
-                </ol>
-              </details>
-            )}
-          </>
-        )}
-      </section>
+          </div>
+        </section>
+      </div>
     </article>
   );
 }

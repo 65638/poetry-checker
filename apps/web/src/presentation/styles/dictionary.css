@@ -203,7 +203,8 @@ html[data-journey]::view-transition-new(*) {
   align-items: start;
   gap: 40px;
 }
-.pc-dictionary__desk {
+.pc-dictionary__desk,
+.pc-dictionary__picker {
   --pc-text: #ece6d6;
   --pc-text-muted: #b5c4bd;
   --pc-manuscript: #1c333a;
@@ -1068,7 +1069,8 @@ html[data-journey]::view-transition-new(*) {
   user-select: text;
   -webkit-user-select: text;
 }
-.pc-dictionary__desk .pc-button--quiet {
+.pc-dictionary__desk .pc-button--quiet,
+.pc-dictionary__picker .pc-button--quiet {
   color: var(--pc-text);
 }
 @media (max-width: 1099px) {
@@ -1279,5 +1281,156 @@ html[data-journey]::view-transition-new(*) {
   .pc-places button[aria-current],
   .pc-dictionary__book:has(input:checked) {
     border: 2px solid Highlight;
+  }
+}
+
+/* The search sits above the book; the character picker stays beside its entry. */
+.pc-dictionary__masthead {
+  min-height: 150px;
+  padding: 24px 0;
+  align-items: center;
+}
+.pc-dictionary__title {
+  align-items: center;
+  min-width: 0;
+}
+.pc-dictionary__title h1 {
+  text-indent: 0;
+  transform: none;
+  white-space: nowrap;
+}
+.pc-dictionary__layout {
+  grid-template-columns: 320px minmax(0, 1fr);
+  gap: 24px;
+}
+.pc-dictionary__desk {
+  grid-column: 1 / -1;
+  padding: 20px 28px;
+}
+.pc-dictionary__desk::after {
+  display: none;
+}
+.pc-dictionary__desk h2 {
+  font-size: 18px;
+  margin: 0 0 12px;
+  letter-spacing: 0.12em;
+}
+.pc-dictionary__desk form {
+  display: grid;
+  grid-template-columns: minmax(240px, 1fr) minmax(0, 1.6fr);
+  align-items: start;
+  gap: 32px;
+}
+.pc-dictionary__hint {
+  margin: 8px 0 0;
+}
+.pc-dictionary__books {
+  display: flex;
+  gap: 8px;
+}
+.pc-dictionary__book {
+  flex: 1;
+  padding: 12px 10px;
+  margin: 0;
+  min-height: 64px;
+  box-sizing: border-box;
+}
+.pc-dictionary__book span:last-child {
+  display: none;
+}
+.pc-dictionary__book strong {
+  white-space: nowrap;
+}
+.pc-dictionary__picker {
+  padding: 20px;
+  position: sticky;
+  top: 24px;
+  max-height: calc(100dvh - 48px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #80978b #20373e;
+}
+.pc-dictionary__picker .pc-dictionary__passage {
+  margin-top: 0;
+  border-top: 0;
+  border-bottom: 1px solid var(--pc-divider);
+  padding-bottom: 12px;
+}
+.pc-dictionary__picker .pc-dictionary__wordslips {
+  border-top: 0;
+  margin-top: 20px;
+  padding-top: 0;
+}
+.pc-dictionary__wordslips[hidden] {
+  display: none;
+}
+.pc-dictionary__picker .pc-dictionary__examples {
+  padding-top: 0;
+  margin-top: 12px;
+}
+.pc-dictionary__character-list {
+  margin-top: 12px;
+}
+.pc-dictionary__picker .pc-dictionary__shelf {
+  margin-top: 20px;
+}
+@media (max-width: 1099px) {
+  .pc-dictionary__layout {
+    grid-template-columns: 280px minmax(0, 1fr);
+  }
+  .pc-dictionary__desk form {
+    gap: 20px;
+  }
+  .pc-dictionary__book small {
+    display: none;
+  }
+}
+@media (max-width: 799px) {
+  .pc-dictionary__layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+  .pc-dictionary__masthead {
+    min-height: 0;
+    padding: 20px 0;
+  }
+  .pc-dictionary__desk {
+    padding: 20px;
+  }
+  .pc-dictionary__desk form {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+  .pc-dictionary__book {
+    min-height: 44px;
+  }
+  .pc-dictionary__picker {
+    position: static;
+    max-height: none;
+    padding: 16px 20px;
+  }
+  .pc-dictionary__picker .pc-dictionary__wordslips {
+    margin-top: 12px;
+  }
+  .pc-dictionary__landscapes {
+    margin-top: 8px;
+  }
+  .pc-dictionary__slip-caption {
+    display: none;
+  }
+  .pc-dictionary__picker .pc-dictionary__examples {
+    margin-top: 8px;
+  }
+  .pc-dictionary__examples button {
+    min-height: 48px;
+  }
+  .pc-dictionary__picker .pc-dictionary__shelf {
+    margin-top: 12px;
+  }
+  .pc-dictionary__title {
+    gap: 16px;
+  }
+  .pc-dictionary__masthead .pc-motion-toggle {
+    margin-left: auto;
   }
 }

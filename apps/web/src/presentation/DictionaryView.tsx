@@ -156,64 +156,64 @@ export function DictionaryView(props: DictionaryViewProps) {
             className="pc-dictionary__desk pc-surface"
             aria-labelledby={`${uid}-search-title`}
           >
-            <p className="pc-dictionary__kicker">依书寻字</p>
-            <h2 id={`${uid}-search-title`}>一字，几重声韵。</h2>
-            <p className="pc-dictionary__guide">查平仄，辨韵部，循出处。</p>
+            <h2 id={`${uid}-search-title`}>依书寻字</h2>
             <form
               onSubmit={(event) => {
                 event.preventDefault();
                 if (!composing.current && !busy) revealAfter(props.onLookup);
               }}
             >
-              <label
-                className="pc-dictionary__label"
-                htmlFor={`${uid}-character`}
-              >
-                要查的字
-              </label>
-              <div className="pc-dictionary__searchline">
-                <input
-                  ref={searchInput}
-                  id={`${uid}-character`}
-                  className="pc-dictionary__input"
-                  value={props.text}
-                  onChange={(event) => {
-                    revealFrom.current = null;
-                    props.onTextChange(event.target.value);
-                  }}
-                  onKeyDown={(event) => {
-                    if (
-                      event.key === "Enter" &&
-                      (composing.current ||
-                        event.nativeEvent.isComposing ||
-                        event.nativeEvent.keyCode === 229)
-                    )
-                      event.preventDefault();
-                  }}
-                  placeholder="月"
-                  autoComplete="off"
-                  spellCheck={false}
-                  aria-describedby={`${uid}-hint`}
-                  onCompositionStart={() => {
-                    composing.current = true;
-                  }}
-                  onCompositionEnd={() => {
-                    composing.current = false;
-                  }}
-                />
-                <button
-                  className="pc-button pc-button--primary"
-                  type="submit"
-                  disabled={busy || !props.text.trim()}
-                  data-pending={busy}
-                  data-busy-visible={showBusy}
+              <div className="pc-dictionary__query">
+                <label
+                  className="pc-dictionary__label"
+                  htmlFor={`${uid}-character`}
                 >
-                  {showBusy ? "查阅中…" : "查字"}
-                </button>
+                  要查的字
+                </label>
+                <div className="pc-dictionary__searchline">
+                  <input
+                    ref={searchInput}
+                    id={`${uid}-character`}
+                    className="pc-dictionary__input"
+                    value={props.text}
+                    onChange={(event) => {
+                      revealFrom.current = null;
+                      props.onTextChange(event.target.value);
+                    }}
+                    onKeyDown={(event) => {
+                      if (
+                        event.key === "Enter" &&
+                        (composing.current ||
+                          event.nativeEvent.isComposing ||
+                          event.nativeEvent.keyCode === 229)
+                      )
+                        event.preventDefault();
+                    }}
+                    placeholder="月"
+                    autoComplete="off"
+                    spellCheck={false}
+                    aria-describedby={`${uid}-hint`}
+                    onCompositionStart={() => {
+                      composing.current = true;
+                    }}
+                    onCompositionEnd={() => {
+                      composing.current = false;
+                    }}
+                  />
+                  <button
+                    className="pc-button pc-button--primary"
+                    type="submit"
+                    disabled={busy || !props.text.trim()}
+                    data-pending={busy}
+                    data-busy-visible={showBusy}
+                  >
+                    {showBusy ? "查阅中…" : "查字"}
+                  </button>
+                </div>
+                <p className="pc-dictionary__hint" id={`${uid}-hint`}>
+                  每次查一个汉字，简繁、异体分别查。
+                </p>
               </div>
-              <p className="pc-dictionary__hint" id={`${uid}-hint`}>
-                每次查一个汉字，简繁、异体分别查。
-              </p>
               <fieldset className="pc-dictionary__books">
                 <legend>选择韵书</legend>
                 {BOOKS.map((item) => (
@@ -236,49 +236,11 @@ export function DictionaryView(props: DictionaryViewProps) {
                 ))}
               </fieldset>
             </form>
-            <section className="pc-dictionary__wordslips" aria-label="风物字签">
-              <div className="pc-dictionary__wordslips-head">
-                <h3>风物字签</h3>
-                <span>循景拾字</span>
-              </div>
-              <div
-                className="pc-dictionary__landscapes"
-                role="group"
-                aria-label="选择字签风景"
-              >
-                {LANDSCAPES.map((item, index) => (
-                  <button
-                    type="button"
-                    key={item.name}
-                    aria-pressed={landscape === index}
-                    onClick={() => setLandscape(index)}
-                  >
-                    {item.name}
-                  </button>
-                ))}
-              </div>
-              <p className="pc-dictionary__slip-caption">
-                {LANDSCAPES[landscape]!.caption}
-              </p>
-              <div className="pc-dictionary__examples" key={landscape}>
-                {LANDSCAPES[landscape]!.characters.map((text) => (
-                  <button
-                    key={text}
-                    type="button"
-                    onClick={() => revealAfter(() => props.onExample(text))}
-                    aria-label={`查「${text}」字`}
-                    aria-pressed={text === character && !!result}
-                  >
-                    <span>{text}</span>
-                  </button>
-                ))}
-              </div>
-            </section>
-            <p className="pc-dictionary__aside">
-              传统韵书看古音，新韵依普通话。
-              <br />
-              同一个字，也可能有不同的归处。
-            </p>
+          </section>
+          <section
+            className="pc-dictionary__picker pc-surface"
+            aria-label="选字书签"
+          >
             <details
               className="pc-dictionary__passage"
               open={props.passageOpen}
@@ -301,6 +263,19 @@ export function DictionaryView(props: DictionaryViewProps) {
                   }
                   placeholder="明月松间照，清泉石上流。"
                 />
+                <div className="pc-dictionary__character-list">
+                  {props.passageCharacters.map((text) => (
+                    <button
+                      type="button"
+                      key={text}
+                      onClick={() => revealAfter(() => props.onExample(text))}
+                      aria-label={`查「${text}」字`}
+                      aria-pressed={text === character && !!result}
+                    >
+                      {text}
+                    </button>
+                  ))}
+                </div>
                 <button
                   className="pc-button pc-button--quiet"
                   type="button"
@@ -327,19 +302,6 @@ export function DictionaryView(props: DictionaryViewProps) {
                   {props.passageCharacters.length} 个不同的汉字 ·
                   逐字查阅，不作整诗判定
                 </p>
-                <div className="pc-dictionary__character-list">
-                  {props.passageCharacters.map((text) => (
-                    <button
-                      type="button"
-                      key={text}
-                      onClick={() => revealAfter(() => props.onExample(text))}
-                      aria-label={`查「${text}」字`}
-                      aria-pressed={text === character && !!result}
-                    >
-                      {text}
-                    </button>
-                  ))}
-                </div>
                 {props.passageError && <p role="alert">{props.passageError}</p>}
                 {props.passageResult && (
                   <div
@@ -389,6 +351,48 @@ export function DictionaryView(props: DictionaryViewProps) {
                 )}
               </div>
             </details>
+            <section
+              className="pc-dictionary__wordslips"
+              aria-label="风物字签"
+              hidden={props.passageOpen}
+            >
+              <div className="pc-dictionary__wordslips-head">
+                <h3>风物字签</h3>
+                <span>循景拾字</span>
+              </div>
+              <div
+                className="pc-dictionary__landscapes"
+                role="group"
+                aria-label="选择字签风景"
+              >
+                {LANDSCAPES.map((item, index) => (
+                  <button
+                    type="button"
+                    key={item.name}
+                    aria-pressed={landscape === index}
+                    onClick={() => setLandscape(index)}
+                  >
+                    {item.name}
+                  </button>
+                ))}
+              </div>
+              <p className="pc-dictionary__slip-caption">
+                {LANDSCAPES[landscape]!.caption}
+              </p>
+              <div className="pc-dictionary__examples" key={landscape}>
+                {LANDSCAPES[landscape]!.characters.map((text) => (
+                  <button
+                    key={text}
+                    type="button"
+                    onClick={() => revealAfter(() => props.onExample(text))}
+                    aria-label={`查「${text}」字`}
+                    aria-pressed={text === character && !!result}
+                  >
+                    <span>{text}</span>
+                  </button>
+                ))}
+              </div>
+            </section>
             <details className="pc-dictionary__shelf">
               <summary>
                 我的字笺 <span>{props.shelf.favorites.length} 收藏</span>

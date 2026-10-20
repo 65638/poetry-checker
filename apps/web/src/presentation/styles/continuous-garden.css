@@ -35,10 +35,7 @@ html[data-journey]::view-transition-group(garden-navigation) {
   background: var(--pc-scene-sky);
 }
 .pc-dictionary__masthead {
-  min-height: 232px;
   box-sizing: border-box;
-  align-items: flex-start;
-  padding-top: 32px;
 }
 .pc-dictionary__folio {
   transition:
@@ -100,9 +97,6 @@ html[data-journey]::view-transition-group(garden-navigation) {
   box-shadow: 0 10px 18px #05131940;
 }
 @media (max-width: 799px) {
-  .pc-dictionary__masthead {
-    min-height: 200px;
-  }
   .pc-dictionary__folio[data-empty="true"] .pc-dictionary__empty {
     padding-left: 0;
     min-height: 320px;
