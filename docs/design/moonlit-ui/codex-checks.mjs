@@ -124,17 +124,23 @@ try {
       );
       assert.equal(
         await h.evaluate(
-          "document.querySelector('.pc-scene__halo').dataset.visible || null",
+          "document.querySelector('.pc-rain').dataset.reacting || null",
         ),
         null,
       );
-      const before = await h.evaluate("window.__raf");
       await sleep(150);
-      assert.equal(await h.evaluate("window.__raf"), before);
+      assert.equal(
+        await h.evaluate(
+          "document.querySelector('.pc-rain').dataset.reacting || null",
+        ),
+        null,
+      );
       await h.cdp.send("Emulation.setEmulatedMedia", {
         features: [{ name: "forced-colors", value: "active" }],
       });
       await h.mouse("mouseMoved", 900, 500);
+      await sleep(100);
+      const before = await h.evaluate("window.__raf");
       await sleep(100);
       assert.equal(await h.evaluate("window.__raf"), before);
       await h.cdp.send("Emulation.setEmulatedMedia", { features: [] });
@@ -155,6 +161,15 @@ try {
 
   await scenario("sky-and-text-clicks-do-not-spawn-water-ripples", async () => {
     await h.load();
+    await h.evaluate(`(() => {
+      window.__largestRing = 0;
+      const original = CanvasRenderingContext2D.prototype.ellipse;
+      window.__restoreEllipse = () => { CanvasRenderingContext2D.prototype.ellipse = original; };
+      CanvasRenderingContext2D.prototype.ellipse = function(...a) {
+        if(this.canvas.classList.contains('pc-rain')) window.__largestRing = Math.max(window.__largestRing, a[2]);
+        return original.apply(this,a);
+      };
+    })()`);
     for (const [x, y] of [
       [1400, 180],
       [650, 290],
@@ -164,10 +179,10 @@ try {
       await h.mouse("mouseReleased", x, y, { button: "left", clickCount: 1 });
       await sleep(280);
     }
-    assert.equal(
-      await h.evaluate("document.querySelectorAll('.pc-scene__ripple').length"),
-      0,
-    );
+    await sleep(500);
+    const radius = await h.evaluate("window.__largestRing");
+    await h.evaluate("window.__restoreEllipse()");
+    assert(radius <= 26, `non-water click spawned a large ring ${radius}`);
     return { nonWaterRipples: 0 };
   });
 } finally {

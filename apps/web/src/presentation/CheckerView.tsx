@@ -11,6 +11,7 @@ import "./styles/tokens.css";
 import "./styles/scene.css";
 import "./styles/layout.css";
 import "./styles/rail.css";
+import "./styles/cursor.css";
 
 const STEPS = [
   { no: "壹", title: "录入诗文", text: "写下诗句，或从一首熟悉的诗开始。" },
@@ -190,7 +191,7 @@ export function CheckerView(props: CheckerViewProps) {
     return () => window.clearTimeout(id);
   }, [panelExiting]);
 
-  const quiet = panelOpen || editing || busy;
+  const quiet = panelOpen || editing || busy || hasReport;
 
   return (
     <div
@@ -354,10 +355,10 @@ export function CheckerView(props: CheckerViewProps) {
                 ) : (
                   <>
                     <p className="pc-intro__eyebrow">
-                      <span /> 月 下 江 山
+                      <span /> 山 亭 听 雨
                     </p>
                     <p className="pc-intro__lead">
-                      <span className="pc-intro__quote">山水有清音，</span>
+                      <span className="pc-intro__quote">檐下听微雨，</span>
                       <span className="pc-intro__quote">诗中见平仄。</span>
                     </p>
                     <p className="pc-intro__caption">
@@ -366,7 +367,7 @@ export function CheckerView(props: CheckerViewProps) {
                       在古人的声律里，读懂一首诗。
                     </p>
                     <div className="pc-intro__inscription" aria-hidden="true">
-                      月白 · 风清 <span>听韵</span>
+                      微雨 · 远山 <span>听韵</span>
                     </div>
                     <ol className="pc-steps">
                       {STEPS.map((s) => (

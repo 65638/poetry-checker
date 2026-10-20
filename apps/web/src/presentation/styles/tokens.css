@@ -39,7 +39,7 @@ body {
   /* On-night text: 13.0:1 and 8.1:1 on --pc-night. */
   --pc-on-ink: #ece6d6;
   --pc-on-ink-muted: #a9b8b4;
-  --pc-scene-label: #eef0e5;
+  --pc-scene-label: #fffdf2;
   --pc-on-ink-accent: #e07a68;
   --pc-on-ink-gold: #e2c27a;
 
@@ -100,9 +100,7 @@ body {
   --pc-focus-width: 3px;
   --pc-focus-offset: 2px;
 
-  --pc-halo: rgb(243 236 216 / 22%);
-  --pc-halo-core: rgb(243 236 216 / 55%);
-  --pc-cursor: url("/design/cursor-moon.svg") 4 4, auto;
+  --pc-cursor: auto;
 
   --pc-space-1: 4px;
   --pc-space-2: 8px;

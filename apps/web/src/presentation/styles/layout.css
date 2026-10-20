@@ -114,7 +114,6 @@
 
 .pc-motion-toggle[aria-pressed="true"] .pc-motion-toggle__dot {
   background: var(--pc-moon);
-  box-shadow: 0 0 8px var(--pc-moon);
 }
 
 .pc-motion-toggle__note {
@@ -192,6 +191,21 @@
   box-shadow: var(--pc-shadow-plinth);
   animation: pc-rise var(--pc-dur-stage) var(--pc-ease-out)
     var(--pc-delay-stage) both;
+}
+
+/* The paper rests on a narrow wooden ledge, outside the reading surface. */
+.pc-plinth::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: -7px;
+  right: -7px;
+  height: 9px;
+  border-top: 1px solid #92836a;
+  border-radius: 0 0 3px 3px;
+  background: linear-gradient(#554c3e, #2d302b);
+  box-shadow: 0 10px 18px rgb(5 19 25 / 25%);
+  pointer-events: none;
 }
 
 .pc-plinth__head {

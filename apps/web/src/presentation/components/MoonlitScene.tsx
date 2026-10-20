@@ -1,237 +1,14 @@
-import { useEffect, useRef } from "react";
+import { RainField } from "./RainField";
 
-interface MoonlitSceneProps {
-  /** Effective motion: user/system preference resolved by the caller. */
+export function MoonlitScene({
+  active,
+  quiet,
+}: {
   active: boolean;
-  /** Lower emphasis while typing, composing, or with the dialog open. */
   quiet: boolean;
-}
-
-const HALO_TAU_MS = 80;
-const SCENE_TAU_MS = 260;
-const SETTLE_AFTER_MS = 180;
-const RIPPLE_GAP_MS = 250;
-const RIPPLE_MAX = 2;
-const RIPPLE_LIFE_MS = 1400;
-const EPSILON = 0.002;
-const INTERACTIVE =
-  'button, a, input, textarea, select, label, summary, [role="dialog"], [contenteditable], .pc-surface';
-
-export function MoonlitScene({ active, quiet }: MoonlitSceneProps) {
-  const rootRef = useRef<HTMLDivElement>(null);
-  const haloRef = useRef<HTMLDivElement>(null);
-  const ripplesRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const root = rootRef.current;
-    const halo = haloRef.current;
-    const ripples = ripplesRef.current;
-    if (!root || !halo || !ripples) return;
-
-    let blurred = false;
-    const syncHidden = () => {
-      if (document.hidden || blurred) root.setAttribute("data-paused", "true");
-      else root.removeAttribute("data-paused");
-    };
-    syncHidden();
-    document.addEventListener("visibilitychange", syncHidden);
-
-    if (!active) {
-      root.style.setProperty("--pc-px", "0");
-      root.style.setProperty("--pc-py", "0");
-      halo.removeAttribute("data-visible");
-      return () => document.removeEventListener("visibilitychange", syncHidden);
-    }
-
-    let width = window.innerWidth;
-    let height = window.innerHeight;
-    let frame = 0;
-    let last = 0;
-    let lastMove = 0;
-    let lastRipple = -Infinity;
-    let pointerX = width / 2;
-    let pointerY = height / 2;
-    let haloX = pointerX;
-    let haloY = pointerY;
-    let targetPx = 0;
-    let targetPy = 0;
-    let px = 0;
-    let py = 0;
-    const timers = new Set<number>();
-    const finePointer = window.matchMedia(
-      "(any-hover: hover) and (any-pointer: fine)",
-    );
-    const forcedColors = window.matchMedia("(forced-colors: active)");
-
-    const write = () => {
-      root.style.setProperty("--pc-px", px.toFixed(4));
-      root.style.setProperty("--pc-py", py.toFixed(4));
-      halo.style.transform = `translate3d(${haloX.toFixed(1)}px, ${haloY.toFixed(1)}px, 0)`;
-    };
-
-    const tick = (now: number) => {
-      const dt = last ? Math.min(now - last, 64) : 16;
-      last = now;
-      if (now - lastMove > SETTLE_AFTER_MS) {
-        targetPx = 0;
-        targetPy = 0;
-      }
-      const kHalo = 1 - Math.exp(-dt / HALO_TAU_MS);
-      const kScene = 1 - Math.exp(-dt / SCENE_TAU_MS);
-      haloX += (pointerX - haloX) * kHalo;
-      haloY += (pointerY - haloY) * kHalo;
-      px += (targetPx - px) * kScene;
-      py += (targetPy - py) * kScene;
-      write();
-      const settled =
-        Math.abs(pointerX - haloX) < 0.3 &&
-        Math.abs(pointerY - haloY) < 0.3 &&
-        Math.abs(targetPx - px) < EPSILON &&
-        Math.abs(targetPy - py) < EPSILON &&
-        now - lastMove > SETTLE_AFTER_MS;
-      if (settled) {
-        frame = 0;
-        last = 0;
-        root.removeAttribute("data-pointer");
-        return;
-      }
-      frame = requestAnimationFrame(tick);
-    };
-
-    const wake = () => {
-      if (!frame && !document.hidden && !blurred)
-        frame = requestAnimationFrame(tick);
-    };
-
-    const hideHalo = () => {
-      halo.removeAttribute("data-visible");
-      if (frame) cancelAnimationFrame(frame);
-      frame = 0;
-      last = 0;
-      px = py = targetPx = targetPy = 0;
-      write();
-      root.removeAttribute("data-pointer");
-    };
-
-    const onMove = (event: PointerEvent) => {
-      if (
-        event.pointerType !== "mouse" ||
-        !finePointer.matches ||
-        forcedColors.matches ||
-        document.hidden ||
-        blurred
-      ) {
-        hideHalo();
-        return;
-      }
-      pointerX = event.clientX;
-      pointerY = event.clientY;
-      if (!halo.hasAttribute("data-visible")) {
-        haloX = pointerX;
-        haloY = pointerY;
-        halo.setAttribute("data-visible", "true");
-      }
-      targetPx = (pointerX / width) * 2 - 1;
-      targetPy = (pointerY / height) * 2 - 1;
-      lastMove = performance.now();
-      root.setAttribute("data-pointer", "true");
-      wake();
-    };
-
-    const onDown = (event: PointerEvent) => {
-      if (
-        event.pointerType !== "mouse" ||
-        event.button !== 0 ||
-        !finePointer.matches ||
-        forcedColors.matches ||
-        blurred
-      )
-        return;
-      if (
-        event.clientY < height * 0.74 ||
-        event.clientX >= document.documentElement.clientWidth
-      )
-        return;
-      if (window.getSelection()?.toString()) return;
-      const target = event.target as Element | null;
-      if (target && target.closest(INTERACTIVE)) return;
-      const now = performance.now();
-      if (now - lastRipple < RIPPLE_GAP_MS) return;
-      lastRipple = now;
-      while (
-        ripples.childElementCount >= RIPPLE_MAX &&
-        ripples.firstElementChild
-      ) {
-        ripples.firstElementChild.remove();
-      }
-      const ripple = document.createElement("span");
-      ripple.className = "pc-scene__ripple";
-      ripple.style.left = `${event.clientX}px`;
-      ripple.style.top = `${event.clientY}px`;
-      ripples.appendChild(ripple);
-      const timer = window.setTimeout(() => {
-        ripple.remove();
-        timers.delete(timer);
-      }, RIPPLE_LIFE_MS);
-      timers.add(timer);
-    };
-
-    const onOut = (event: PointerEvent) => {
-      if (!event.relatedTarget) hideHalo();
-    };
-
-    const onResize = () => {
-      width = window.innerWidth;
-      height = window.innerHeight;
-    };
-
-    const onVisibility = () => {
-      if (document.hidden) hideHalo();
-    };
-    const onBlur = () => {
-      blurred = true;
-      hideHalo();
-      syncHidden();
-    };
-    const onFocus = () => {
-      blurred = false;
-      syncHidden();
-    };
-
-    window.addEventListener("pointermove", onMove, { passive: true });
-    window.addEventListener("pointerdown", onDown, { passive: true });
-    document.addEventListener("pointerout", onOut);
-    window.addEventListener("blur", onBlur);
-    window.addEventListener("focus", onFocus);
-    window.addEventListener("pointercancel", hideHalo);
-    finePointer.addEventListener("change", hideHalo);
-    forcedColors.addEventListener("change", hideHalo);
-    window.addEventListener("resize", onResize);
-    document.addEventListener("visibilitychange", onVisibility);
-
-    return () => {
-      window.removeEventListener("pointermove", onMove);
-      window.removeEventListener("pointerdown", onDown);
-      document.removeEventListener("pointerout", onOut);
-      window.removeEventListener("blur", onBlur);
-      window.removeEventListener("focus", onFocus);
-      window.removeEventListener("pointercancel", hideHalo);
-      finePointer.removeEventListener("change", hideHalo);
-      forcedColors.removeEventListener("change", hideHalo);
-      window.removeEventListener("resize", onResize);
-      document.removeEventListener("visibilitychange", onVisibility);
-      document.removeEventListener("visibilitychange", syncHidden);
-      if (frame) cancelAnimationFrame(frame);
-      timers.forEach((timer) => window.clearTimeout(timer));
-      ripples.replaceChildren();
-      halo.removeAttribute("data-visible");
-      root.removeAttribute("data-pointer");
-    };
-  }, [active]);
-
+}) {
   return (
     <div
-      ref={rootRef}
       className="pc-scene"
       aria-hidden="true"
       data-active={active ? "true" : "false"}
@@ -340,8 +117,43 @@ export function MoonlitScene({ active, quiet }: MoonlitSceneProps) {
           />
         </g>
       </svg>
-      <div ref={ripplesRef} className="pc-scene__ripples" />
-      <div ref={haloRef} className="pc-scene__halo" />
+      <RainField active={active} quiet={quiet} />
+      <svg
+        className="pc-scene__eaves"
+        viewBox="0 0 1440 90"
+        preserveAspectRatio="none"
+      >
+        <defs>
+          <pattern
+            id="pc-roof-tiles"
+            width="38"
+            height="22"
+            patternUnits="userSpaceOnUse"
+          >
+            <path
+              d="M0 0v10q19 8 38 0V0"
+              fill="#12252b"
+              stroke="#385052"
+              strokeWidth=".7"
+            />
+          </pattern>
+        </defs>
+        <path d="M0 0H1440V17Q1380 36 1330 22H110Q54 36 0 17Z" fill="#0a1c24" />
+        <path
+          d="M0 0H1440V9Q1380 27 1330 14H110Q54 27 0 9Z"
+          fill="url(#pc-roof-tiles)"
+        />
+        <path
+          d="M0 19Q54 37 110 24H1330Q1380 38 1440 20"
+          fill="none"
+          stroke="#7c8676"
+          strokeWidth="1"
+          opacity=".55"
+        />
+        <path d="M26 26v40m1388-39v39" stroke="#7c8676" opacity=".45" />
+      </svg>
+      <div className="pc-scene__post pc-scene__post--left" />
+      <div className="pc-scene__post pc-scene__post--right" />
     </div>
   );
 }
