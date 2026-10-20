@@ -1,5 +1,7 @@
 # Handoff: Moonlit Mountains UI (first pass)
 
+> Superseded by the Codex takeover at `fe5832a` / `cd6bf09`. Actual screenshot review, current preview, new layout, checks and limitations: [HANDOFF-CODEX-MOONLIT.md](HANDOFF-CODEX-MOONLIT.md). The first-pass record below is retained as history.
+
 Brief: `docs/design/CLAUDE-MOONLIT-UI-BRIEF-EN.md`. Branch `feat/claude-moonlit-poetry-ui`, not merged and not pushed.
 
 ## 1. Revisions
