@@ -1,0 +1,35 @@
+{
+  "generatedAt": "2026-10-20T07:50:38.360Z",
+  "revision": {
+    "commit": "6257e1a3c412eec3f0932b96c9497245cc329b40",
+    "dirty": false
+  },
+  "node": "v24.19.0",
+  "checks": [
+    {
+      "name": "Windows path + isolated ports + real API proxy",
+      "passed": true
+    },
+    {
+      "name": "Parent coordinated shutdown releases both owned ports",
+      "passed": true,
+      "method": "IPC invokes same cleanup as SIGINT; Windows force-kill is not covered"
+    },
+    {
+      "name": "Occupied API port exits 1; unrelated owner survives",
+      "passed": true
+    }
+  ],
+  "offlineRuntime": {
+    "scope": "Dependencies already installed. Browser blocks all non-loopback requests; not an OS-wide firewall or offline installer.",
+    "passed": true,
+    "formalRoute": "/",
+    "realPoem": "dengguanquelou",
+    "summary": "pass",
+    "blockedOrigins": [
+      "https://example.com"
+    ]
+  },
+  "readinessHttp": 503,
+  "passed": true
+}
