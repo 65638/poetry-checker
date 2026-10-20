@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { CheckerView } from "../presentation/CheckerView";
+import { Workspace } from "./Workspace";
 import { DevScenarioSelector } from "./DevScenarioSelector";
 import { useCheckerStore } from "../hooks/useCheckerStore";
 import { EXAMPLES } from "./examples";
@@ -7,6 +7,7 @@ import { createRuntimeTransport, readWebEnv } from "./config";
 import { CheckerStore } from "./store";
 import type { CheckerViewProps } from "../view-contract";
 import type { DevScenarioId } from "./devScenarios";
+import { loadSavedDraft } from "./draftPersistence";
 
 /**
  * 开发壳（DEV only）。
@@ -23,7 +24,7 @@ export function DevShell() {
   const store = useMemo(() => {
     const { transport } = createRuntimeTransport(readWebEnv());
     return new CheckerStore(
-      { text: "", rhymeBook: "pingshui", genreHint: "auto", formHint: "auto" },
+      loadSavedDraft(),
       { transport },
     );
   }, []);
@@ -83,7 +84,7 @@ export function DevShell() {
 
   return (
     <>
-      <CheckerView {...props} />
+      <Workspace {...props} />
       {/*
         开发场景面板：默认收起，避免在 375px 下遮挡正式输入区。
         只在 DEV 构建渲染（DevShell 本身由 main.tsx 的 DEV 分支引入）。

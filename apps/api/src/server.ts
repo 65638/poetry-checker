@@ -7,6 +7,7 @@ import {
   AnalysisResponseSchema,
   type AnalysisResponse,
   RhymeBooksResponseSchema,
+  SourceResponseSchema,
 } from "@poetry/contracts";
 import {
   loadResources,
@@ -228,17 +229,24 @@ export function buildApp(options?: { resources?: Resources }): FastifyInstance {
   app.get("/api/v1/sources/:sourceId", async (request, reply) => {
     if (devMock) return reply.status(503).send(dataNotReady("来源查询"));
     const { sourceId } = request.params as { sourceId: string };
-    const known = resources.sourceRegistry.some((x) => x.id === sourceId);
-    if (!known) {
+    if (resources.loadErrors.length > 0)
+      return reply
+        .status(503)
+        .send(dataNotReady(resources.loadErrors.join("；")));
+    const source = resources.sourceRegistry.find((x) => x.id === sourceId);
+    if (source === undefined) {
       return reply
         .status(404)
         .send(errorBody("NOT_FOUND", `已加载资源中不存在来源 ${sourceId}`));
     }
-    return reply
-      .status(503)
-      .send(
-        dataNotReady(`来源 ${sourceId} 的装载明细待 A 发布含证据快照后提供`),
-      );
+    return reply.send(
+      SourceResponseSchema.parse({
+        source,
+        evidence: resources.evidenceRegistry.filter(
+          (item) => item.sourceId === sourceId,
+        ),
+      }),
+    );
   });
 
   app.post("/api/v1/analyze", async (request, reply) => {
@@ -359,8 +367,13 @@ if (isDirectRun) {
   const port = Number(process.env.PORT ?? 3000);
   const app = buildApp();
   await app.listen({ port, host: "127.0.0.1" });
-  console.log(`[poetry-api] D1 开发 mock 已启动: http://127.0.0.1:${port}`);
+  const mock = process.env.POETRY_DEV_MOCK === "1";
   console.log(
-    "[poetry-api] analyze 返回契约 fixture；characters/rules/sources 返回 503（数据未就绪）",
+    `[poetry-api] ${mock ? "开发 mock" : "真实数据模式"}已启动: http://127.0.0.1:${port}`,
+  );
+  console.log(
+    mock
+      ? "[poetry-api] analyze 返回契约 fixture；查询接口在 mock 模式下不可用。"
+      : "[poetry-api] 已接入真实韵书、查字和来源；审核门槛见 /readyz。",
   );
 }

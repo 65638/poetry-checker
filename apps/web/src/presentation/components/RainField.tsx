@@ -115,7 +115,11 @@ export function RainField({
       canvas.removeAttribute("data-reacting");
     };
     const allowed = () =>
-      active && !document.hidden && !blurred && !forced.matches;
+      active &&
+      !document.hidden &&
+      !blurred &&
+      !forced.matches &&
+      !canvas.closest("[hidden]");
 
     const draw = (now: number) => {
       frame = 0;
@@ -321,6 +325,15 @@ export function RainField({
       blurred = false;
       sync();
     };
+    // A mounted checker retains its draft/report while the user visits the
+    // dictionary. Pause its canvas while that region is hidden, then resume.
+    const region = canvas.closest(".pc-place");
+    const regionObserver = region ? new MutationObserver(sync) : null;
+    if (region)
+      regionObserver?.observe(region, {
+        attributes: true,
+        attributeFilter: ["hidden"],
+      });
     resize();
     sync();
     window.addEventListener("resize", resize);
@@ -338,6 +351,7 @@ export function RainField({
     forced.addEventListener("change", sync);
     fine.addEventListener("change", clearPointer);
     return () => {
+      regionObserver?.disconnect();
       if (frame) cancelAnimationFrame(frame);
       window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", onMove);
