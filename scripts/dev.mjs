@@ -21,6 +21,7 @@ async function stop(code = 0) {
       });
     }
     process.exitCode = code;
+    if (process.connected) process.disconnect();
   })();
   return closing;
 }
@@ -28,7 +29,7 @@ for (const signal of ["SIGINT", "SIGTERM"])
   process.on(signal, () => void stop());
 if (process.send)
   process.on("message", (message) => {
-    if (message === "shutdown") void stop().then(() => process.disconnect());
+    if (message === "shutdown") void stop();
   });
 
 try {

@@ -71,6 +71,7 @@ try {
     name: "Windows path + isolated ports + real API proxy",
     passed: true,
   });
+  console.log("[PASS] isolated startup and real proxy");
   const ready = await fetch(`http://127.0.0.1:${webPort}/readyz`);
   assert.equal(ready.status, 503);
   result.readinessHttp = ready.status;
@@ -117,6 +118,7 @@ try {
     blockedOrigins: blocked,
   };
   allow = false;
+  console.log("[PASS] real analysis with browser non-loopback requests blocked");
   await cdp.send("Fetch.disable");
   await browser.stop();
   browser = null;
@@ -136,6 +138,7 @@ try {
     method:
       "IPC invokes same cleanup as SIGINT; Windows force-kill is not covered",
   });
+  console.log("[PASS] coordinated shutdown releases both ports");
   occupied = createServer();
   await new Promise((resolve) => occupied.listen(0, "127.0.0.1", resolve));
   const busyPort = occupied.address().port;
