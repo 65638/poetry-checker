@@ -3,30 +3,77 @@
 import { join } from "node:path";
 import { execSync } from "node:child_process";
 import { mkdirSync, writeFileSync } from "node:fs";
+import { cpus, platform, arch } from "node:os";
 import { REPO_ROOT, LONG, revision, sleep, startHarness } from "./harness.mjs";
 
 const round = process.argv[2] || "round1";
 const dir = join(REPO_ROOT, "docs/design/moonlit-ui", round);
 mkdirSync(dir, { recursive: true });
 const sha = revision().commit;
-const dirty = execSync("git status --porcelain", { cwd: REPO_ROOT }).toString().trim().length > 0;
+const dirty =
+  execSync("git status --porcelain", { cwd: REPO_ROOT }).toString().trim()
+    .length > 0;
 const POEM = "白日依山尽，黄河入海流。欲穷千里目，更上一层楼。";
-const manifest = { round, sha, dirty, data: "real local API via isolated harness (not fixture)", route: "/", shots: [], motion: {} };
+const manifest = {
+  round,
+  sha,
+  dirty,
+  data: "real local API via isolated harness (not fixture)",
+  route: "/",
+  shots: [],
+  motion: {},
+};
 
-const h = await startHarness();
+const h = await startHarness({ production: true });
+manifest.runtime =
+  "Production Vite build, real local API. Build before capturing.";
 manifest.url = h.url;
+manifest.hardware = {
+  platform: platform(),
+  arch: arch(),
+  cpu: cpus()[0]?.model,
+  logicalCores: cpus().length,
+};
+manifest.browser = await h.cdp.send("Browser.getVersion");
 const { cdp, evaluate, load, setText, analyze, idle, mouse } = h;
 
 async function shot(name, mode, vp, full = false) {
-  const { data } = await cdp.send("Page.captureScreenshot", { format: "png", captureBeyondViewport: full });
-  const file = `${vp.width}x${vp.height}-${name}.png`;
+  const clip = full
+    ? { ...(await cdp.send("Page.getLayoutMetrics")).cssContentSize, scale: 1 }
+    : undefined;
+  const { data } = await cdp.send("Page.captureScreenshot", {
+    format: "png",
+    captureBeyondViewport: full,
+    ...(clip ? { clip } : {}),
+  });
+  const file = `${vp.width}x${vp.height}-${name}-${mode.replaceAll(" ", "-")}.png`;
   writeFileSync(join(dir, file), Buffer.from(data, "base64"));
-  manifest.shots.push({ file, state: name, mode, viewport: `${vp.width}x${vp.height}`, fullPage: full, at: new Date().toISOString() });
+  manifest.shots.push({
+    file,
+    state: name,
+    mode,
+    viewport: `${vp.width}x${vp.height}`,
+    fullPage: full,
+    at: new Date().toISOString(),
+  });
 }
-const scrollTo = (frac) => evaluate(`window.scrollTo({ top: (document.documentElement.scrollHeight - innerHeight) * ${frac}, behavior: 'instant' }), 1`);
+const scrollTo = (frac) =>
+  evaluate(
+    `window.scrollTo({ top: (document.documentElement.scrollHeight - innerHeight) * ${frac}, behavior: 'instant' }), 1`,
+  );
 
 try {
-  const VIEWPORTS = [[1440, 900], [1366, 768], [1280, 800], [1100, 900], [1024, 768], [900, 900], [899, 900], [768, 1024], [375, 812]];
+  const VIEWPORTS = [
+    [1440, 900],
+    [1366, 768],
+    [1280, 800],
+    [1100, 900],
+    [1024, 768],
+    [900, 900],
+    [899, 900],
+    [768, 1024],
+    [375, 812],
+  ];
   for (const [width, height] of VIEWPORTS) {
     const vp = { width, height };
     const mobile = width < 500;
@@ -39,15 +86,25 @@ try {
     await shot("report", "effects-on", vp);
     if ([1440, 900, 375].includes(width)) {
       await shot("report-full", "effects-on", vp, true);
-      const id = await evaluate("document.querySelector('[data-token-id]').dataset.tokenId");
-      await evaluate(`document.querySelector('[data-token-id="${id}"]').click(), 1`);
+      const id = await evaluate(
+        "document.querySelector('[data-token-id]').dataset.tokenId",
+      );
+      await evaluate(
+        `document.querySelector('[data-token-id="${id}"]').click(), 1`,
+      );
       await sleep(600);
       await shot("evidence", "effects-on", vp);
-      await evaluate("document.querySelector('.pc-evidence__header button').click(), 1");
+      await evaluate(
+        "document.querySelector('.pc-evidence__header button').click(), 1",
+      );
       await sleep(300);
       await setText(LONG);
       await analyze();
-      for (const [label, frac] of [["long-top", 0], ["long-middle", 0.5], ["long-bottom", 1]]) {
+      for (const [label, frac] of [
+        ["long-top", 0],
+        ["long-middle", 0.5],
+        ["long-bottom", 1],
+      ]) {
         await scrollTo(frac);
         await sleep(500);
         await shot(label, "effects-on", vp);
@@ -66,7 +123,10 @@ try {
     }
   }
 
-  for (const [width, height, mobile] of [[1440, 900, false], [375, 812, true]]) {
+  for (const [width, height, mobile] of [
+    [1440, 900, false],
+    [375, 812, true],
+  ]) {
     const vp = { width, height };
     await load({ width, height, mobile, reduce: true });
     await shot("initial", "reduced-motion", vp);
@@ -88,10 +148,12 @@ try {
   for (const t of [0, 10, 20, 30]) {
     if (t) await sleep(10000);
     await shot(`idle-t${t}s`, "effects-on idle", vp);
-    idleFrames.push(await evaluate(`(() => {
+    idleFrames.push(
+      await evaluate(`(() => {
       const pick = (s, pseudo) => { const e = document.querySelector(s); return e ? getComputedStyle(e, pseudo).transform : null; };
       return { t: ${t}, mist: pick('.pc-scene__mist--low', '::before'), haze: pick('.pc-scene__haze'), glint: pick('.pc-scene__glint--a'), raf: window.__raf };
-    })()`));
+    })()`),
+    );
   }
   manifest.motion.idle = idleFrames;
 
@@ -99,7 +161,8 @@ try {
     window.__frames = []; window.__long = [];
     try { new PerformanceObserver((l) => l.getEntries().forEach((e) => window.__long.push(Math.round(e.duration)))).observe({ type: 'longtask', buffered: false }); } catch { window.__long = null; }
     let last = performance.now();
-    const tick = (now) => { window.__frames.push(now - last); last = now; if (window.__frames.length < 2000) requestAnimationFrame(tick); };
+    const end = last + 11000;
+    const tick = (now) => { window.__frames.push(now - last); last = now; if (now < end) requestAnimationFrame(tick); };
     requestAnimationFrame(tick);
     return 1;
   })()`);
@@ -120,12 +183,18 @@ try {
     const q = (p) => Math.round(f[Math.min(f.length - 1, Math.floor(f.length * p))] * 10) / 10;
     return { moves: ${i}, frames: f.length, p50: q(0.5), p95: q(0.95), p99: q(0.99), over50ms: f.filter((x) => x > 50).length, longTasks: window.__long };
   })()`);
-  manifest.motion.note = "Headless Chromium frame timings; indicative only, not a device benchmark.";
+  manifest.motion.note =
+    "Headless Chromium frame timings; indicative only, not a device benchmark.";
 } catch (e) {
   manifest.fatal = e.message;
 } finally {
   await h.stop();
 }
-writeFileSync(join(dir, "manifest.json"), JSON.stringify(manifest, null, 2) + String.fromCharCode(10));
-console.log(`capture ${round}: ${manifest.shots.length} shots, pointer=${JSON.stringify(manifest.motion.pointer || null)}${manifest.fatal ? " fatal=" + manifest.fatal : ""}`);
+writeFileSync(
+  join(dir, "manifest.json"),
+  JSON.stringify(manifest, null, 2) + String.fromCharCode(10),
+);
+console.log(
+  `capture ${round}: ${manifest.shots.length} shots, pointer=${JSON.stringify(manifest.motion.pointer || null)}${manifest.fatal ? " fatal=" + manifest.fatal : ""}`,
+);
 process.exit(manifest.fatal ? 1 : 0);

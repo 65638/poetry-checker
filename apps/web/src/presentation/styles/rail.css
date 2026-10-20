@@ -1,23 +1,33 @@
 /* Sticky reading rail: lives inside the hall grid, so it can never cross the footer. */
 .pc-rail {
-  position: sticky;
-  top: var(--pc-rail-top);
   display: flex;
   flex-direction: column;
-  gap: var(--pc-space-3);
-  max-height: calc(100vh - var(--pc-rail-top) - var(--pc-rail-clear));
+  gap: 8px;
+  min-height: 0;
+  flex: 1;
   box-sizing: border-box;
   padding: var(--pc-space-4);
-  background: var(--pc-surface-rail);
+  background: #13252bf5;
   color: var(--pc-on-ink);
   border: 1px solid var(--pc-ink-600);
-  border-radius: var(--pc-radius-panel);
-  box-shadow: var(--pc-shadow-sheet);
-  animation: pc-rise var(--pc-dur-stage) var(--pc-ease-out) var(--pc-delay-stage) both;
+  border-radius: 2px;
+  animation: pc-rise var(--pc-dur-stage) var(--pc-ease-out)
+    var(--pc-delay-stage) both;
 }
 
 .pc-rail :focus-visible {
   outline-color: var(--pc-focus-on-ink);
+}
+
+.pc-rail__directory-toggle {
+  display: none;
+}
+.pc-rail__directory {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-height: 0;
 }
 
 .pc-rail__book {
@@ -41,11 +51,11 @@
   margin: 0;
   padding: var(--pc-space-2) 0;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--pc-space-1) var(--pc-space-3);
   border-top: 1px solid var(--pc-ink-600);
   border-bottom: 1px solid var(--pc-ink-600);
-  font-size: var(--pc-text-sm);
+  font-size: 12px;
 }
 
 .pc-rail__count {
@@ -74,7 +84,7 @@
   margin: 0;
   padding: 0 var(--pc-space-1) 0 0;
   flex: 1 1 auto;
-  min-height: 0;
+  min-height: 44px;
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-width: thin;
@@ -153,6 +163,8 @@
   color: var(--pc-on-ink);
   border-color: var(--pc-on-ink-muted);
   background: transparent;
+  min-height: 32px;
+  font-size: 12px;
 }
 
 .pc-rail--stale .pc-rail__lines {
@@ -174,8 +186,14 @@
 }
 
 @keyframes pc-line-flash {
-  0% { box-shadow: inset 4px 0 0 var(--pc-seal); background-color: var(--pc-review-bg); }
-  100% { box-shadow: inset 4px 0 0 transparent; background-color: transparent; }
+  0% {
+    box-shadow: inset 4px 0 0 var(--pc-seal);
+    background-color: var(--pc-review-bg);
+  }
+  100% {
+    box-shadow: inset 4px 0 0 transparent;
+    background-color: transparent;
+  }
 }
 
 .pc-root[data-motion="off"] .pc-line--flash {
@@ -192,6 +210,22 @@
 
 /* Single column: rail becomes an in-flow directory disclosure; nothing fixed. */
 @media (max-width: 899px) {
+  .pc-rail__directory-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 44px;
+    padding: 0;
+    font: inherit;
+    color: var(--pc-on-ink);
+    background: transparent;
+    border: 0;
+    border-top: 1px solid var(--pc-ink-600);
+    cursor: pointer;
+  }
+  .pc-rail__directory[data-expanded="false"] {
+    display: none;
+  }
   .pc-rail {
     position: static;
     max-height: none;

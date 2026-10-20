@@ -22,12 +22,11 @@ body {
   --pc-water-glint: #e8e2cc;
   --pc-scene-sky: linear-gradient(
     180deg,
-    #0b171c 0%,
-    #101f25 22%,
-    #203c43 48%,
-    #4f6f72 70%,
-    #9fb3b0 86%,
-    #d9dccf 100%
+    #101f29 0%,
+    #18333c 35%,
+    #3b5e62 62%,
+    #527575 80%,
+    #19353d 100%
   );
 
   /* Legacy ink names remapped onto the night palette so existing rules keep resolving. */
@@ -40,6 +39,7 @@ body {
   /* On-night text: 13.0:1 and 8.1:1 on --pc-night. */
   --pc-on-ink: #ece6d6;
   --pc-on-ink-muted: #a9b8b4;
+  --pc-scene-label: #eef0e5;
   --pc-on-ink-accent: #e07a68;
   --pc-on-ink-gold: #e2c27a;
 
@@ -118,19 +118,22 @@ body {
   --pc-radius-panel: 10px;
   --pc-radius-sheet: 3px;
 
-  --pc-font-sans: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Hiragino Sans GB",
+  --pc-font-sans:
+    system-ui, -apple-system, "Segoe UI", "PingFang SC", "Hiragino Sans GB",
     "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC", sans-serif;
-  --pc-font-serif: "Songti SC", "STSong", "SimSun", "NSimSun", "Noto Serif CJK SC",
+  --pc-font-serif:
+    "Songti SC", "STSong", "SimSun", "NSimSun", "Noto Serif CJK SC",
     "Source Han Serif SC", "SimSun-ExtB", "MingLiU-ExtB", serif;
-  --pc-font-display: "Kaiti SC", "STKaiti", "KaiTi", "Noto Serif CJK SC", "Songti SC",
-    "STSong", "SimSun", serif;
+  --pc-font-display:
+    "Kaiti SC", "STKaiti", "KaiTi", "Noto Serif CJK SC", "Songti SC", "STSong",
+    "SimSun", serif;
 
   --pc-text-xs: 12px;
   --pc-text-sm: 14px;
   --pc-text-md: 16px;
   --pc-text-lg: 20px;
   --pc-text-xl: 26px;
-  --pc-text-display: 44px;
+  --pc-text-display: 36px;
   --pc-text-giant: clamp(160px, 16vw, 240px);
   --pc-text-poem: 40px;
   --pc-text-draft: 22px;
@@ -143,21 +146,23 @@ body {
   --pc-seal-size: 44px;
   --pc-status-icon: 56px;
   --pc-band-pad: var(--pc-space-3);
-  --pc-masthead-height: 132px;
+  --pc-masthead-height: 116px;
   --pc-stage-height: 132px;
   --pc-stage-overlap: 0px;
   --pc-page-max: 1320px;
   --pc-page-margin: 40px;
-  --pc-input-col: 400px;
+  --pc-input-col: 376px;
   --pc-rail-col: 232px;
   --pc-rail-top: 24px;
   /* masthead clearance, so the rail fits the first viewport before it sticks */
   --pc-rail-clear: 136px;
-  --pc-col-gap: 40px;
+  --pc-col-gap: 48px;
   --pc-panel-width: 480px;
 
-  --pc-shadow-sheet: 0 1px 2px rgb(11 23 28 / 10%), 0 18px 48px rgb(11 23 28 / 22%);
-  --pc-shadow-plinth: 0 2px 4px rgb(11 23 28 / 14%), 0 28px 64px rgb(11 23 28 / 32%);
+  --pc-shadow-sheet:
+    0 1px 2px rgb(11 23 28 / 10%), 0 18px 48px rgb(11 23 28 / 22%);
+  --pc-shadow-plinth:
+    0 2px 4px rgb(11 23 28 / 14%), 0 28px 64px rgb(11 23 28 / 32%);
   --pc-shadow-panel: -24px 0 64px rgb(11 23 28 / 40%);
   --pc-backdrop: rgb(11 23 28 / 58%);
 
@@ -184,7 +189,7 @@ body {
   --pc-shift-panel: 64px;
   --pc-shift-report: 16px;
   --pc-shift-stage: 24px;
-  --pc-press-scale: 0.96;
+  --pc-press-scale: 0.985;
 
   /* Ambient idle loops: offset periods so the scene never visibly repeats in sync. */
   --pc-ambient-mist: 26s;

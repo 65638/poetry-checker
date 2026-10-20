@@ -19,7 +19,7 @@
   position: absolute;
   inset: 0;
   background: radial-gradient(
-    ellipse 38% 30% at 75% 21%,
+    ellipse 38% 35% at 82% 27%,
     rgb(243 236 216 / 16%) 0%,
     rgb(243 236 216 / 0%) 70%
   );
@@ -35,42 +35,67 @@
 
 .pc-scene__moon {
   fill: var(--pc-moon);
-  transform: translate3d(calc(var(--pc-px) * -2px), calc(var(--pc-py) * -2px), 0);
+  transform: translate3d(
+    calc(var(--pc-px) * -2px),
+    calc(var(--pc-py) * -2px),
+    0
+  );
 }
 
 .pc-scene__moon-shade {
   fill: var(--pc-moon-haze);
-  opacity: 0.55;
+  opacity: 0.12;
 }
 
 /* Outer moon haze: the only moon-related idle motion. The disc itself stays still. */
 .pc-scene__haze {
   position: absolute;
-  left: 75%;
-  top: 21%;
+  left: 82%;
+  top: 27%;
   width: 360px;
   height: 360px;
   margin: -180px 0 0 -180px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgb(243 236 216 / 20%) 0%, rgb(243 236 216 / 0%) 68%);
+  background: radial-gradient(
+    circle,
+    rgb(243 236 216 / 20%) 0%,
+    rgb(243 236 216 / 0%) 68%
+  );
   opacity: calc(0.75 * var(--pc-ambient-gain) + 0.25);
-  animation: pc-haze var(--pc-ambient-haze) var(--pc-ease-in-out) infinite alternate;
+  animation: pc-haze var(--pc-ambient-haze) var(--pc-ease-in-out) infinite
+    alternate;
   animation-play-state: var(--pc-ambient-state);
 }
 
 .pc-scene__ridge--far {
   fill: var(--pc-ridge-far);
-  transform: translate3d(calc(var(--pc-px) * -3px), calc(var(--pc-py) * -2px), 0);
+  transform: translate3d(
+    calc(var(--pc-px) * -3px),
+    calc(var(--pc-py) * -2px),
+    0
+  );
 }
 
 .pc-scene__ridge--mid {
   fill: var(--pc-ridge-mid);
-  transform: translate3d(calc(var(--pc-px) * -4px), calc(var(--pc-py) * -3px), 0);
+  transform: translate3d(
+    calc(var(--pc-px) * -4px),
+    calc(var(--pc-py) * -3px),
+    0
+  );
 }
 
 .pc-scene__ridge--near {
   fill: var(--pc-ridge-near);
-  transform: translate3d(calc(var(--pc-px) * -4px), calc(var(--pc-py) * -4px), 0);
+  transform: translate3d(
+    calc(var(--pc-px) * -4px),
+    calc(var(--pc-py) * -4px),
+    0
+  );
+}
+
+.pc-scene__boat {
+  opacity: 0.85;
 }
 
 /* Mist: the wrapper takes the pointer offset, the pseudo-element carries the idle drift. */
@@ -79,15 +104,19 @@
   left: -10%;
   width: 120%;
   height: 22%;
-  transform: translate3d(calc(var(--pc-px) * -10px), calc(var(--pc-py) * -6px), 0);
+  transform: translate3d(
+    calc(var(--pc-px) * -10px),
+    calc(var(--pc-py) * -6px),
+    0
+  );
 }
 
 .pc-scene__mist--high {
-  top: 50%;
+  top: 48%;
 }
 
 .pc-scene__mist--low {
-  top: 63%;
+  top: 61%;
 }
 
 .pc-scene__mist::before {
@@ -95,11 +124,24 @@
   position: absolute;
   inset: 0 -8%;
   background:
-    radial-gradient(ellipse 30% 46% at 22% 55%, rgb(185 201 198 / 22%) 0%, rgb(185 201 198 / 0%) 72%),
-    radial-gradient(ellipse 26% 40% at 64% 45%, rgb(185 201 198 / 16%) 0%, rgb(185 201 198 / 0%) 72%),
-    radial-gradient(ellipse 22% 36% at 92% 60%, rgb(185 201 198 / 18%) 0%, rgb(185 201 198 / 0%) 72%);
+    radial-gradient(
+      ellipse 30% 46% at 22% 55%,
+      rgb(185 201 198 / 14%) 0%,
+      rgb(185 201 198 / 0%) 72%
+    ),
+    radial-gradient(
+      ellipse 26% 40% at 64% 45%,
+      rgb(185 201 198 / 10%) 0%,
+      rgb(185 201 198 / 0%) 72%
+    ),
+    radial-gradient(
+      ellipse 22% 36% at 92% 60%,
+      rgb(185 201 198 / 12%) 0%,
+      rgb(185 201 198 / 0%) 72%
+    );
   opacity: calc(0.6 * var(--pc-ambient-gain) + 0.4);
-  animation: pc-mist var(--pc-ambient-mist) var(--pc-ease-in-out) infinite alternate;
+  animation: pc-mist var(--pc-ambient-mist) var(--pc-ease-in-out) infinite
+    alternate;
   animation-play-state: var(--pc-ambient-state);
 }
 
@@ -115,17 +157,28 @@
   right: 0;
   bottom: 0;
   height: 26%;
-  background: linear-gradient(180deg, rgb(24 50 58 / 0%) 0%, rgb(24 50 58 / 55%) 40%, var(--pc-water) 100%);
+  background: linear-gradient(
+    180deg,
+    rgb(24 50 58 / 0%) 0%,
+    rgb(24 50 58 / 12%) 40%,
+    var(--pc-water) 100%
+  );
   overflow: hidden;
 }
 
 .pc-scene__glint {
   position: absolute;
-  left: 66%;
-  width: 18%;
-  height: 2px;
+  left: 73%;
+  width: 17%;
+  height: 68px;
   border-radius: 2px;
-  background: linear-gradient(90deg, rgb(232 226 204 / 0%), rgb(232 226 204 / 55%), rgb(232 226 204 / 0%));
+  background: repeating-linear-gradient(
+    180deg,
+    transparent 0 9px,
+    rgb(232 226 204 / 40%) 10px,
+    transparent 11px 16px
+  );
+  mask-image: radial-gradient(ellipse, #000, transparent 68%);
   opacity: 0.35;
   transform: translate3d(calc(var(--pc-px) * 8px), 0, 0);
   animation: pc-glint var(--pc-ambient-water) var(--pc-ease-in-out) infinite;
@@ -133,13 +186,13 @@
 }
 
 .pc-scene__glint--a {
-  top: 30%;
+  top: 8%;
 }
 
 .pc-scene__glint--b {
-  top: 52%;
-  left: 70%;
-  width: 11%;
+  top: 45%;
+  left: 69%;
+  width: 25%;
   animation-delay: -4.5s;
   animation-duration: calc(var(--pc-ambient-water) * 1.3);
 }
@@ -167,7 +220,12 @@
   width: 96px;
   height: 96px;
   border-radius: 50%;
-  background: radial-gradient(circle, var(--pc-halo-core) 0%, var(--pc-halo) 30%, rgb(243 236 216 / 0%) 70%);
+  background: radial-gradient(
+    circle,
+    var(--pc-halo-core) 0%,
+    var(--pc-halo) 30%,
+    rgb(243 236 216 / 0%) 70%
+  );
   opacity: 0;
   transition: opacity var(--pc-dur-control) var(--pc-ease-out);
   will-change: transform;
@@ -184,7 +242,7 @@
 .pc-scene[data-quiet="true"] .pc-scene__mist::before,
 .pc-scene[data-quiet="true"] .pc-scene__haze,
 .pc-scene[data-quiet="true"] .pc-scene__glint {
-  opacity: 0.2;
+  --pc-ambient-gain: 0.3;
 }
 
 .pc-scene[data-paused="true"] *,
@@ -209,11 +267,11 @@
 @keyframes pc-glint {
   0%,
   100% {
-    opacity: 0.12;
+    opacity: calc(0.12 * var(--pc-ambient-gain));
     transform: translate3d(calc(var(--pc-px) * 8px - 18px), 0, 0) scaleX(0.7);
   }
   50% {
-    opacity: 0.5;
+    opacity: calc(0.5 * var(--pc-ambient-gain));
     transform: translate3d(calc(var(--pc-px) * 8px + 18px), 0, 0) scaleX(1);
   }
 }
@@ -221,11 +279,11 @@
 @keyframes pc-haze {
   from {
     transform: scale(0.94);
-    opacity: 0.55;
+    opacity: calc(0.55 * var(--pc-ambient-gain));
   }
   to {
     transform: scale(1.06);
-    opacity: 0.9;
+    opacity: calc(0.9 * var(--pc-ambient-gain));
   }
 }
 
