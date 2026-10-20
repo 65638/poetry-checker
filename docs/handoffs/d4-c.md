@@ -1,5 +1,7 @@
 # D4 · C 交接：独立规则回归与发布口径（2026-10-20）
 
+> PR：**#22** https://github.com/65638/poetry-checker/pull/22 （`feat/c-d4-closeout` → `integrate/d4`，草稿；创建时 head `5998c54`，已用 `git ls-remote refs/pull/22/head` 核对）
+
 ## 基线与分支
 
 | 项 | 值 |
