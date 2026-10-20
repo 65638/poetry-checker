@@ -1,0 +1,100 @@
+{
+  "suite": "report",
+  "revision": {
+    "commit": "bc41981e4fdf834c852037bf225dc218bfecca46",
+    "dirty": true
+  },
+  "at": "2026-10-20T00:58:23.481Z",
+  "scenarios": [
+    {
+      "name": "rail-lines-match-report",
+      "status": "pass",
+      "detail": {
+        "rail": 16,
+        "lines": 16
+      }
+    },
+    {
+      "name": "rail-in-viewport-top",
+      "status": "pass",
+      "detail": {
+        "top": 132,
+        "bottom": 872,
+        "vh": 900,
+        "footerTop": 3521
+      }
+    },
+    {
+      "name": "rail-in-viewport-middle",
+      "status": "pass",
+      "detail": {
+        "top": 24,
+        "bottom": 764,
+        "vh": 900,
+        "footerTop": 2183
+      }
+    },
+    {
+      "name": "rail-in-viewport-bottom",
+      "status": "pass",
+      "detail": {
+        "top": 24,
+        "bottom": 764,
+        "vh": 900,
+        "footerTop": 845
+      }
+    },
+    {
+      "name": "scroll-spy-never-scrolls",
+      "status": "pass",
+      "detail": {
+        "into": 0,
+        "scrollTo": 0,
+        "active": "11欲穷千里目"
+      }
+    },
+    {
+      "name": "rail-jump-pointer-flash",
+      "status": "pass",
+      "detail": {
+        "into": [
+          "pc-line-15"
+        ],
+        "flash": true
+      }
+    },
+    {
+      "name": "rail-jump-keyboard-focus",
+      "status": "pass",
+      "detail": {
+        "focused": "pc-line-4"
+      }
+    },
+    {
+      "name": "editor-collapse-expand-keeps-textarea",
+      "status": "pass",
+      "detail": {
+        "collapsed": {
+          "same": true,
+          "inert": true,
+          "focusOnToggle": true,
+          "expanded": "false"
+        },
+        "expanded": {
+          "same": true,
+          "inert": false
+        }
+      }
+    },
+    {
+      "name": "ime-composition-and-ctrl-enter",
+      "status": "pass",
+      "detail": {
+        "submittedDuringComposition": false,
+        "lines": 4,
+        "same": true
+      }
+    }
+  ],
+  "url": "http://127.0.0.1:50294/"
+}

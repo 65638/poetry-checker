@@ -1,0 +1,124 @@
+{
+  "suite": "scene",
+  "revision": {
+    "commit": "bc41981e4fdf834c852037bf225dc218bfecca46",
+    "dirty": true
+  },
+  "at": "2026-10-20T01:00:46.356Z",
+  "scenarios": [
+    {
+      "name": "analyze-above-fold-1440x900",
+      "status": "pass",
+      "detail": {
+        "bottom": 736,
+        "vh": 900,
+        "rows": 4,
+        "exampleBeforeEditor": true
+      }
+    },
+    {
+      "name": "analyze-above-fold-1366x768",
+      "status": "pass",
+      "detail": {
+        "bottom": 700,
+        "vh": 768,
+        "rows": 4,
+        "exampleBeforeEditor": true
+      }
+    },
+    {
+      "name": "idle-ambient-running-no-raf",
+      "status": "pass",
+      "detail": {
+        "running": 5,
+        "rafWhileIdle": 0
+      }
+    },
+    {
+      "name": "pointer-move-then-settle",
+      "status": "pass",
+      "detail": {
+        "moving": {
+          "halo": "true",
+          "pointer": "true",
+          "px": -0.0907
+        },
+        "settled": {
+          "pointer": null,
+          "px": 0.0005
+        },
+        "ambient": 5
+      }
+    },
+    {
+      "name": "touch-pointer-hides-halo",
+      "status": "pass",
+      "detail": {
+        "halo": "hidden"
+      }
+    },
+    {
+      "name": "decor-inert-and-cursors",
+      "status": "pass",
+      "detail": {
+        "textarea": "text",
+        "root": "url(\"http://127.0.0.1:59717/design/cursor-moon.svg\") 4 4, au"
+      }
+    },
+    {
+      "name": "ripple-cap-and-spacing",
+      "status": "pass",
+      "detail": {
+        "alive": 2
+      }
+    },
+    {
+      "name": "hidden-page-pauses-scene",
+      "status": "pass",
+      "detail": {
+        "running": 0,
+        "resumed": 7
+      }
+    },
+    {
+      "name": "effects-toggle-off-persists",
+      "status": "pass",
+      "detail": {
+        "off": {
+          "motion": "off",
+          "dur": 0,
+          "running": 0,
+          "saved": "off",
+          "pressed": "false"
+        },
+        "reloaded": "off"
+      }
+    },
+    {
+      "name": "keyboard-toggle",
+      "status": "pass",
+      "detail": {
+        "motion": "off"
+      }
+    },
+    {
+      "name": "live-reduced-motion-overrides-saved-on",
+      "status": "pass",
+      "detail": {
+        "motion": "off",
+        "dur": 0,
+        "anims": 0,
+        "disabled": true
+      }
+    },
+    {
+      "name": "blocked-storage-still-toggles",
+      "status": "pass",
+      "detail": {
+        "before": "on",
+        "after": "off"
+      }
+    }
+  ],
+  "url": "http://127.0.0.1:59717/"
+}

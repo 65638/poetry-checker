@@ -151,6 +151,8 @@ body {
   --pc-input-col: 400px;
   --pc-rail-col: 232px;
   --pc-rail-top: 24px;
+  /* masthead clearance, so the rail fits the first viewport before it sticks */
+  --pc-rail-clear: 136px;
   --pc-col-gap: 40px;
   --pc-panel-width: 480px;
 

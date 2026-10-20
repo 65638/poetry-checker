@@ -1,0 +1,130 @@
+{
+  "suite": "reveal",
+  "revision": {
+    "commit": "bc41981e4fdf834c852037bf225dc218bfecca46",
+    "dirty": true
+  },
+  "at": "2026-10-20T01:00:03.196Z",
+  "scenarios": [
+    {
+      "name": "reveal-375-pointer-click",
+      "status": "pass",
+      "detail": {
+        "reveals": 1
+      }
+    },
+    {
+      "name": "reveal-375-same-text-replays",
+      "status": "pass",
+      "detail": {
+        "reveals": 1,
+        "anims": 0
+      }
+    },
+    {
+      "name": "reveal-375-ctrl-enter",
+      "status": "pass",
+      "detail": {
+        "reveals": 1
+      }
+    },
+    {
+      "name": "no-reveal-after-wheel",
+      "status": "pass",
+      "detail": {
+        "reveals": 0
+      }
+    },
+    {
+      "name": "no-reveal-on-failure",
+      "status": "pass",
+      "detail": {
+        "reveals": 0,
+        "alert": true
+      }
+    },
+    {
+      "name": "no-reveal-at-1440",
+      "status": "pass",
+      "detail": {
+        "reveals": 0
+      }
+    },
+    {
+      "name": "evidence-open-close-reopen-escape",
+      "status": "pass",
+      "detail": {
+        "open1": true,
+        "closed": true,
+        "open2": true,
+        "restored": true
+      }
+    },
+    {
+      "name": "candidate-override-still-works",
+      "status": "pass",
+      "detail": {
+        "token": "l3c4",
+        "tokens": 20
+      }
+    },
+    {
+      "name": "settled-finding-auto-opens",
+      "status": "pass",
+      "detail": {
+        "open": true
+      }
+    },
+    {
+      "name": "stale-disables-rail",
+      "status": "pass",
+      "detail": {
+        "stale": true,
+        "disabled": true
+      }
+    },
+    {
+      "name": "verdict-not-squeezed-900",
+      "status": "pass",
+      "detail": {
+        "verdictWidth": 442,
+        "lineHeights": [
+          72,
+          72,
+          72,
+          72
+        ],
+        "cell": 72
+      }
+    },
+    {
+      "name": "verdict-not-squeezed-1024",
+      "status": "pass",
+      "detail": {
+        "verdictWidth": 444,
+        "lineHeights": [
+          72,
+          72,
+          72,
+          72
+        ],
+        "cell": 72
+      }
+    },
+    {
+      "name": "verdict-not-squeezed-1100",
+      "status": "pass",
+      "detail": {
+        "verdictWidth": 440,
+        "lineHeights": [
+          80,
+          80,
+          80,
+          80
+        ],
+        "cell": 80
+      }
+    }
+  ],
+  "url": "http://127.0.0.1:52557/"
+}
