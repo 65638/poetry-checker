@@ -1,5 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { join } from "node:path";
+import type { BookId } from "@poetry/contracts";
 import type { SnapshotInput } from "../../packages/lexicon/src/snapshot.js";
 
 export interface CandidateApproval {
@@ -11,7 +13,10 @@ export interface CandidateApproval {
   recordFiles: string[];
 }
 
-export function readCandidateApprovals(root: string): CandidateApproval[] {
+export function readCandidateApprovals(
+  root: string,
+  book?: BookId,
+): CandidateApproval[] {
   const parsed = JSON.parse(
     readFileSync(join(root, "data/reviews/approved-evidence.json"), "utf8"),
   ) as { candidateApprovals?: CandidateApproval[] };
@@ -27,8 +32,48 @@ export function readCandidateApprovals(root: string): CandidateApproval[] {
     for (const record of item.recordFiles)
       if (!existsSync(join(root, record)))
         throw new Error(`审批原件未归档：${record}`);
+    if (item.evidenceId.endsWith(":d4-a-01")) {
+      const acceptancePath = "data/reviews/d4/a/acceptance-01.json";
+      if (!item.recordFiles.includes(acceptancePath))
+        throw new Error("D4审批缺少接受记录");
+      const acceptance = JSON.parse(
+        readFileSync(join(root, acceptancePath), "utf8"),
+      ) as {
+        actualReply: string;
+        requestFile: string;
+        requestSha256: string;
+        sourceBatch: string;
+        sourceBatchSha256: string;
+        acceptedCandidateIds: string[];
+      };
+      const requestBytes = readFileSync(join(root, acceptance.requestFile));
+      const batchBytes = readFileSync(join(root, acceptance.sourceBatch));
+      const sha = (value: Buffer): string =>
+        createHash("sha256").update(value).digest("hex");
+      const request = JSON.parse(requestBytes.toString("utf8")) as {
+        candidateIds: string[];
+        sourceBatchSha256: string;
+      };
+      if (
+        !acceptance.actualReply ||
+        sha(requestBytes) !== acceptance.requestSha256 ||
+        sha(batchBytes) !== acceptance.sourceBatchSha256 ||
+        request.sourceBatchSha256 !== acceptance.sourceBatchSha256
+      ) {
+        throw new Error("D4审批请求或来源批次摘要不匹配");
+      }
+      if (
+        !acceptance.acceptedCandidateIds.includes(item.candidateId) ||
+        JSON.stringify([...request.candidateIds].sort()) !==
+          JSON.stringify([...acceptance.acceptedCandidateIds].sort())
+      ) {
+        throw new Error(`D4审批候选超出接受范围：${item.candidateId}`);
+      }
+    }
   }
-  return approvals;
+  return book
+    ? approvals.filter((item) => item.candidateId.startsWith(`${book}:`))
+    : approvals;
 }
 
 /** 为具体候选追加独立证据，不改变原部级断言、声类、候选集合或整库审核状态。 */

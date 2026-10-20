@@ -7,7 +7,16 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("../../", import.meta.url));
-const out = path.join(root, "data/reviews/d4/a");
+const outputIndex = process.argv.indexOf("--output-dir");
+const outputRelative =
+  outputIndex < 0 ? "data/reviews/d4/a" : process.argv[outputIndex + 1];
+assert(outputRelative, "--output-dir requires a value");
+const out = path.resolve(root, outputRelative);
+const allowed = path.resolve(root, "data/reviews/d4/a");
+assert(
+  out === allowed || out.startsWith(`${allowed}${path.sep}`),
+  "output must stay in A's evidence directory",
+);
 const sha = (relative) =>
   createHash("sha256")
     .update(readFileSync(path.join(root, relative)))
@@ -47,7 +56,7 @@ for (let round = 1; round <= 2; round += 1) {
       encoding: "utf8",
       maxBuffer: 8 * 1024 * 1024,
     });
-    const log = `data/reviews/d4/a/rebuild-logs/round-${round}-${book}.txt`;
+    const log = `${outputRelative}/rebuild-logs/round-${round}-${book}.txt`;
     writeFileSync(
       path.join(root, log),
       `${result.stdout ?? ""}${result.stderr ?? ""}`,

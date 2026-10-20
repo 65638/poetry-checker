@@ -1149,8 +1149,11 @@ function computeReconciliation(audits: SnapshotAudit[]): Reconciliation {
   const plain = findApproved("pingshui-cwr-ff0e9c1-d3-full-review4");
   const sampleRow = findApproved("sample-pingshui-cwr-ff0e9c1-d1-review2");
   const candidateCount =
-    readJson<{ candidateApprovals: unknown[] }>(APPROVED_FILE)
-      ?.candidateApprovals.length ?? 0;
+    readJson<{ candidateApprovals: { candidateId: string }[] }>(
+      APPROVED_FILE,
+    )?.candidateApprovals.filter((item) =>
+      item.candidateId.startsWith("pingshui:"),
+    ).length ?? 0;
 
   const matches: Reconciliation["matches"] = [
     {
@@ -1333,6 +1336,33 @@ const REGISTERED_DIGESTS: Readonly<Record<string, RegisteredDigest>> = {
     source: "docs/handoffs/0009-a-fix-source-id-and-modern-reading.md",
   },
 };
+
+// Keep the historical registration above intact; an approved successor replaces
+// its active file expectation through the archived version chain.
+const ACTIVE_REGISTERED_DIGESTS: Record<string, RegisteredDigest> = {
+  ...REGISTERED_DIGESTS,
+};
+const d4CilinChange = readJson<{
+  before: { dataVersion: string; businessSha256: string };
+  after: { dataVersion: string; businessSha256: string };
+}>("data/reviews/d4/a/approved-01/version-change.json");
+if (d4CilinChange) {
+  delete ACTIVE_REGISTERED_DIGESTS[d4CilinChange.before.dataVersion];
+  ACTIVE_REGISTERED_DIGESTS[d4CilinChange.after.dataVersion] = {
+    fileName: "cilin.full-d2.json",
+    dataVersion: d4CilinChange.after.dataVersion,
+    digest: d4CilinChange.after.businessSha256,
+    source: "data/reviews/d4/a/approved-01/version-change.json",
+    changelog: [
+      {
+        from: d4CilinChange.before.businessSha256,
+        to: d4CilinChange.after.businessSha256,
+        reason: "用户接受请求01的16个精确候选，追加候选级证据，整部未批准",
+        registeredAt: "2026-10-20",
+      },
+    ],
+  };
+}
 
 /**
  * A1 唯一允许的声类分层口径（三分层）。
@@ -1875,7 +1905,7 @@ function computeSupplement(): SupplementResult {
     }
     const digestFirst = businessContentDigest(parsed);
     const digestSecond = businessContentDigest(JSON.parse(text) as RawSnapshot);
-    const registered = REGISTERED_DIGESTS[parsed.dataVersion] ?? null;
+    const registered = ACTIVE_REGISTERED_DIGESTS[parsed.dataVersion] ?? null;
     b1Results.push({
       file: `data/normalized/${name}`,
       dataVersion: parsed.dataVersion,
@@ -1893,7 +1923,7 @@ function computeSupplement(): SupplementResult {
     });
   }
   // 登记了但磁盘上没有对应文件（改名后遗留的悬空登记）
-  const registeredWithoutFile = Object.values(REGISTERED_DIGESTS)
+  const registeredWithoutFile = Object.values(ACTIVE_REGISTERED_DIGESTS)
     .filter(
       (entry) =>
         !b1Results.some((result) => result.dataVersion === entry.dataVersion),
@@ -2023,13 +2053,13 @@ function computeSupplement(): SupplementResult {
       skippedNonSnapshots,
       sourceGroups: [
         ...new Set(
-          Object.values(REGISTERED_DIGESTS).map((entry) => entry.source),
+          Object.values(ACTIVE_REGISTERED_DIGESTS).map((entry) => entry.source),
         ),
       ]
         .sort()
         .map((source) => ({
           source,
-          dataVersions: Object.values(REGISTERED_DIGESTS)
+          dataVersions: Object.values(ACTIVE_REGISTERED_DIGESTS)
             .filter((entry) => entry.source === source)
             .map((entry) => entry.dataVersion)
             .sort(),

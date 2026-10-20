@@ -29,6 +29,17 @@ import { ROOT } from "./snapshot-report.js";
 const OUT = "data/reviews/d4/a";
 const checkOnly = process.argv.includes("--check");
 const pendingOutputs = new Map<string, string>();
+// Accepted exchanges retain their original bytes and can be reproduced using
+// inputs from the archived commit after runtime evidence has advanced.
+const inputRefIndex = process.argv.indexOf("--input-ref");
+const inputRef =
+  inputRefIndex < 0 ? undefined : process.argv[inputRefIndex + 1];
+if (inputRefIndex >= 0)
+  assert(
+    inputRef && /^[a-f0-9]{7,40}$/u.test(inputRef),
+    "--input-ref requires archived commit SHA",
+  );
+const inputBytes = new Map<string, Buffer>();
 const baseIndex = process.argv.indexOf("--base-sha");
 const baseSha = baseIndex < 0 ? undefined : process.argv[baseIndex + 1];
 assert(
@@ -40,7 +51,15 @@ execFileSync("git", ["merge-base", "--is-ancestor", baseSha, "HEAD"], {
 });
 
 function bytes(relative: string): Buffer {
-  return readFileSync(path.join(ROOT, relative));
+  if (!inputRef) return readFileSync(path.join(ROOT, relative));
+  const cached = inputBytes.get(relative);
+  if (cached) return cached;
+  const value = execFileSync("git", ["show", `${inputRef}:${relative}`], {
+    cwd: ROOT,
+    maxBuffer: 64 * 1024 * 1024,
+  });
+  inputBytes.set(relative, value);
+  return value;
 }
 function json<T>(relative: string): T {
   return JSON.parse(bytes(relative).toString("utf8")) as T;
@@ -875,7 +894,7 @@ publishJson(`${OUT}/build-descriptor.json`, {
 for (const [relative, content] of pendingOutputs) {
   if (checkOnly)
     assert.equal(
-      bytes(relative).toString("utf8"),
+      readFileSync(path.join(ROOT, relative), "utf8"),
       content,
       `stale ${relative}`,
     );

@@ -91,7 +91,9 @@ describe("D4 exact review batches: preserve data and audit scope", () => {
           (c) => c.id === entry.candidateId,
         );
         expect(candidate?.character).toBe(entry.character);
-        expect(candidate?.evidenceIds).toEqual(entry.evidenceIds);
+        expect(candidate?.evidenceIds).toEqual(
+          expect.arrayContaining(entry.evidenceIds),
+        );
         expect(sha(entry.sourcePath)).toBe(entry.sourceSha256);
       }
     }
@@ -141,13 +143,22 @@ describe("D4 exact review batches: preserve data and audit scope", () => {
 
   it("keeps new review drafts out of approved runtime evidence and preserves old exact scope", () => {
     const approvals = read<{
-      candidateApprovals: unknown[];
+      candidateApprovals: { candidateId: string }[];
       approvedEvidenceIds: string[];
     }>("data/reviews/approved-evidence.json");
-    expect(approvals.candidateApprovals).toHaveLength(83);
+    expect(
+      approvals.candidateApprovals.filter((a) =>
+        a.candidateId.startsWith("pingshui:"),
+      ),
+    ).toHaveLength(83);
+    expect(
+      approvals.candidateApprovals.filter((a) =>
+        a.candidateId.startsWith("cilin:"),
+      ),
+    ).toHaveLength(16);
     expect(approvals.approvedEvidenceIds).toEqual(["ev:pingshui:上:三讲"]);
     for (const batch of batches) expect(batch.approvalRecord).toBeNull();
-    for (const book of ["cilin", "xinyun"])
+    for (const book of ["xinyun"])
       expect(
         snapshots[book]?.evidence.every((e) => e.reviewStatus === "unverified"),
       ).toBe(true);
