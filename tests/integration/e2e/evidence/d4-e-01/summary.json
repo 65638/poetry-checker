@@ -1,0 +1,54 @@
+{
+  "batch": "d4-e-01",
+  "generatedAt": "2026-10-20T22:36:57",
+  "base": "origin/integrate/d4 @ 4146371",
+  "runSha": "dba8684c4c00f1542aea08a81fdccf15a762b76a",
+  "runDirty": false,
+  "mode": "real",
+  "node": "v24.21.0",
+  "api": {
+    "total": 9,
+    "passed": 3,
+    "blocked": 6,
+    "failures": 0,
+    "unrun": 0,
+    "exitCode": 2
+  },
+  "browser": {
+    "passed": 19,
+    "blocked": 0,
+    "failed": 0,
+    "exitCode": 0
+  },
+  "browserRevision": "Edg/155.0.4283.62",
+  "versions": {
+    "data": "pingshui=pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4,cilin=cilin-cwr-ff0e9c1-d3-full-clean1,xinyun=xinyun-rebuild-d2-full",
+    "rules": "teaching-v1+reviewed-works-v1",
+    "context": "context-rules:11",
+    "works": "works:3"
+  },
+  "newScenario": [
+    {
+      "id": "E05-concurrent-submit-keeps-latest",
+      "status": "pass",
+      "detail": {
+        "mode": "受控延迟（CDP Fetch 暂停 A，B 先完成）",
+        "lateMode": "aborted-by-app-on-new-submit",
+        "alertAfterLate": null,
+        "aText": "白日依山尽，黄河",
+        "bText": "昔人已乘黄鹤去，",
+        "bInputHash": "b3031b9e603f",
+        "afterLateAInputHash": "b3031b9e603f",
+        "lateResponseIgnored": true
+      }
+    }
+  ],
+  "notRun": [
+    "E05 浏览器并发迟到全矩阵（单元测试已覆盖）",
+    "E06 浏览器超时后的复制导出（失败与进行中已覆盖；超时由业务测试覆盖）",
+    "E07 needs_review/unsupported 合成状态与浏览器30秒超时场景",
+    "E08 全键盘矩阵与真人审美反馈",
+    "E09 干净 clone"
+  ],
+  "note": "通过项为继承 D3 已验收覆盖，不计本批新成果；本批新增仅 E05-concurrent-submit-keeps-latest。"
+}
