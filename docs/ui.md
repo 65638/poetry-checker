@@ -142,3 +142,67 @@ pnpm verify
 - DOM 组件测试依赖（jsdom/React Testing Library）按需向 GLM 申请；
 - 真实 API 接入后复验选音与韵书切换；
 - 示例入口的审核正文待 E 提供来源与版本。
+
+---
+
+# D4 增量：状态表与收口
+
+本节是 D4 批次增补。上文 D1 部分保留原样作为历史；**与本轮实际行为冲突处以本节为准**。
+
+基线与结果见 `docs/handoffs/d4-d.md`。
+
+## D4-1 状态表（唯一权威口径）
+
+行=触发事件；列=该事件后各字段的取值。**`stale` 只由 `deriveStale` 派生**
+（当前草稿 vs 报告快照），任何路径都不手写。
+
+| 触发 | runId | 在途信号 | busy | error | report | stale | overrides | pendingOverrides | 复制/导出 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 初始 | 0 | — | false | null | null | false | `[]` | `[]` | 阻止（尚无报告） |
+| 开始分析 | **+1** | 新建 | true | null | 不变 | 派生 | 不变 | = 本次请求覆盖 | **阻止**（忙） |
+| 成功返回（身份匹配） | 不变 | 结束 | false | null | **更新** | 派生（应为 false） | = 本次请求覆盖 | = 本次请求覆盖 | 允许 |
+| 失败返回（503/网络/超时，身份匹配） | 不变 | 结束 | false | **设置** | **保留旧报告** | 派生（**不变**） | 不变 | 回退为 `overrides` | **阻止**（error） |
+| 超时（客户端 30s） | 不变 | aborted | false | `TIMEOUT` | 保留 | 派生 | 不变 | 回退 | **阻止**（error） |
+| 用户取消 `abort()` | **+1** | aborted | false | 不变（不报错） | 保留 | 派生 | 不变 | 不变 | 按时段判定 |
+| 迟到响应（成功或失败） | — | — | **不写** | **不写** | **不写** | **不写** | **不写** | **不写** | 不受影响 |
+| 改正文 | **+1** | aborted | false | 清空 | 保留→stale | **true** | **清空** | **清空** | **阻止**（stale） |
+| 换韵书 | **+1** | aborted | false | 清空 | 保留→stale | **true** | **清空** | **清空** | **阻止**（stale） |
+| 改体裁/体式 | **+1** | aborted | false | 清空 | 保留→stale | **true** | 保留 | 保留 | **阻止**（stale） |
+| 正文改回原样 | 不变 | — | 不变 | 不变 | 不变 | **false**（自动解除） | 已清空（**不复活**） | 已清空 | 恢复允许 |
+| 选音被接受 | **+1** | 新建 | true | null | 成功前不变 | 派生 | 成功后更新 | 新覆盖 | 成功后允许 |
+| 选音被拒绝（stale / busy / 非法 token 或 candidate） | 不变 | — | 不变 | 不变 | 不变 | 不变 | 不变 | 不变 | 不变（仅 feedback） |
+| 注入已完成结果 `applySnapshot` | **+1** | aborted | false | null | **替换** | 派生（false） | **清空** | **清空** | 允许 |
+
+要点：
+
+1. `runId` 是**唯一**的迟到判定依据；成功、失败、收尾三条路径都先比对身份。
+2. `abort()` 也递增 `runId`（D4 修复）——只 abort 信号不够，底层可能已收到响应而忽略信号。
+3. 失败**不会**把 `stale` 打开：`stale` 只表达「输入变了」，不是「请求失败了」。
+4. 失败后旧报告可查看，但导出由 `error` 拦下，不是由 `stale` 拦下。
+
+## D4-2 对 D1 表述的更正
+
+| 上文位置 | D1 原文 | D4 实际行为 |
+| --- | --- | --- |
+| §3 第 4 条 | 「错误时……旧报告保留但标 `stale`」 | 失败**不**置 `stale`；旧报告保留且 `stale` 由输入比对决定；复制/导出由 `error` 阻止 |
+| §4 表「修改体裁/形式」 | 「清空 `selectedFindingId`；报告过期」 | 正确，且同时**递增请求身份**让在途响应失效 |
+| §6（复制与导出） | 未区分「忙」「失败」「stale」 | 三种阻止原因分别给不同文案，见 D4-1 表 |
+
+## D4-3 验收事实与覆盖位置
+
+| 验收事实 | 覆盖 |
+| --- | --- |
+| A 慢 B 快：页面/复制/下载只对应 B | `concurrency.test.ts`（乱序只保留最后一次）、`closeout-d4.test.ts`（导出载荷只含 B） |
+| A 迟到成功不覆盖、迟到失败不污染 | `store.test.ts`、`concurrency.test.ts`、`closeout-d4.test.ts` |
+| 请求期间编辑/换书：取消或忽略、draft 不丢、覆盖不串 | `store.test.ts`「编辑使在途请求失效」、`closeout-d4.test.ts` |
+| 选音 POST 含正确 tokenId/candidateId/hash | `store.test.ts` 选音请求构造 |
+| 超时/网络/503：busy 退出、可恢复、保留输入、旧报告不可冒充导出 | `timeout.test.ts`、`api-errors-d2.test.ts`、`closeout-d4.test.ts` |
+| 错误后恢复：允许导出且内容一致 | `store.test.ts` 503 恢复、`closeout-d4.test.ts` 超时恢复 |
+| 五类语义状态如实展示、不被降级 | `closeout-d4.test.ts`（状态层不改写）、`report-view.test.ts` |
+| 主动取消后迟到成功不落地 | `closeout-d4.test.ts`（D4 新增，修复 `abort()` 不递增身份） |
+
+## D4-4 未运行项
+
+浏览器并发/键盘/移动端验收由 E 用 `pnpm test:e2e` 单写，本批不代跑、不声称通过。
+真实触屏未验证；移动视口仿真不等于真机。
+

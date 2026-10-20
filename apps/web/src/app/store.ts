@@ -471,9 +471,16 @@ export class CheckerStore {
     }
   }
 
-  /** 中止进行中的请求（卸载或新建请求时）。 */
+  /**
+   * 中止进行中的请求（调用方取消、卸载或切换场景时）。
+   *
+   * 必须同时**递增请求身份**：只 abort 信号是不够的——底层传输可能已经收到
+   * 响应（缓冲/代理场景）而忽略 abort，此时迟到的成功仍会通过身份守卫落地，
+   * 等于用户取消无效。这里复用 `invalidateInFlight`，与编辑失效同一套语义：
+   * 旧响应无论成功或失败都不得写状态，busy 立即结束且不产生错误。
+   */
   abort(): void {
-    this.activeController?.abort();
+    this.invalidateInFlight();
   }
 
   /**
