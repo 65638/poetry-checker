@@ -28,6 +28,7 @@ export function ReadingAssistantContainer(props: {
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const pending = useRef<AbortController | null>(null);
+  const automaticTimer = useRef<number | null>(null);
   const serial = useRef(0);
   const signature = JSON.stringify([
     props.text,
@@ -72,6 +73,9 @@ export function ReadingAssistantContainer(props: {
   const run = async () => {
     if (props.disabled || busy || !status?.configured || !props.text.trim())
       return;
+    if (automaticTimer.current !== null)
+      window.clearTimeout(automaticTimer.current);
+    automaticTimer.current = null;
     const id = ++serial.current;
     const requestSignature = signature;
     pending.current?.abort();
@@ -110,6 +114,22 @@ export function ReadingAssistantContainer(props: {
       }
     }
   };
+  const runRef = useRef(run);
+  runRef.current = run;
+  useEffect(() => {
+    if (
+      !status?.configured ||
+      props.disabled ||
+      !/\p{Script=Han}/u.test(props.text) ||
+      [...props.text].length > 2000
+    )
+      return;
+    const timer = window.setTimeout(() => {
+      void runRef.current();
+    }, 900);
+    automaticTimer.current = timer;
+    return () => window.clearTimeout(timer);
+  }, [signature, status?.configured]);
   return (
     <ReadingAssistantView
       model={status?.model ?? "GLM"}
@@ -119,7 +139,7 @@ export function ReadingAssistantContainer(props: {
         (status === null
           ? "正在确认GLM连接配置…"
           : !status.configured
-            ? "GLM尚未配置。"
+            ? "GLM尚未配置，查字仍可正常使用。"
             : null)
       }
       result={resultSignature.current === signature ? result : null}
@@ -133,6 +153,9 @@ export function ReadingAssistantContainer(props: {
       }}
       onRefreshStatus={() => setStatusAttempt((attempt) => attempt + 1)}
       onCancel={() => {
+        if (automaticTimer.current !== null)
+          window.clearTimeout(automaticTimer.current);
+        automaticTimer.current = null;
         serial.current++;
         pending.current?.abort();
         setBusy(false);

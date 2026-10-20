@@ -20,7 +20,7 @@ const TONE_CLASS: Record<ReadingCandidate['toneClass'], string> = {
   yinping: '阴平', yangping: '阳平', neutral: '轻声', ze_unspecified: '仄声（未细分）',
 };
 const METHOD: Record<AnnotatedToken['selectionMethod'], string> = {
-  unique: '唯一候选', context_rule: '语境规则选定', user: '用户手动选择', unresolved: '尚未确定',
+  unique: '唯一候选', context_rule: '语境规则选定', model: 'GLM 自动辨音', user: '用户手动选择', unresolved: '尚未确定',
 };
 const READING: Record<AnnotatedToken['readingStatus'], string> = {
   resolved: '已确定', ambiguous: '多音待定', unknown: '无读音数据',

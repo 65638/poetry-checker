@@ -844,7 +844,7 @@ export function DictionaryView(props: DictionaryViewProps) {
           </section>
         </main>
         <footer className="pc-dictionary__footer">
-          查字与校诗共用韵书。收录记录、审核状态与诗中读音分别呈现。
+          参考分析：韵书数据与 AI 读音可能有误，未经全面人工核验，不作为权威结论。
         </footer>
       </div>
     </div>

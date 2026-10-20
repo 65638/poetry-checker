@@ -1224,6 +1224,7 @@
                       "enum": [
                         "unique",
                         "context_rule",
+                        "model",
                         "user",
                         "unresolved"
                       ]
@@ -2095,6 +2096,48 @@
             },
             "required": [
               "status",
+              "message"
+            ],
+            "additionalProperties": false
+          },
+          "readingAssistant": {
+            "type": "object",
+            "properties": {
+              "provider": {
+                "type": "string",
+                "const": "zhipu"
+              },
+              "model": {
+                "type": "string",
+                "minLength": 1
+              },
+              "state": {
+                "type": "string",
+                "enum": [
+                  "applied",
+                  "partial",
+                  "unavailable",
+                  "not_needed"
+                ]
+              },
+              "appliedTokenIds": {
+                "maxItems": 2000,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "message": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "provider",
+              "model",
+              "state",
+              "appliedTokenIds",
               "message"
             ],
             "additionalProperties": false
@@ -3301,6 +3344,7 @@
                   "enum": [
                     "unique",
                     "context_rule",
+                    "model",
                     "user",
                     "unresolved"
                   ]

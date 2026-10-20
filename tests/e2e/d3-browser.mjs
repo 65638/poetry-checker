@@ -235,7 +235,7 @@ try {
     );
     return "修改正文后旧报告标记过时";
   });
-  await scenario("E07-data-not-ready", async () => {
+  await scenario("E07-reference-analysis-remains-usable", async () => {
     await click(".pc-segmented__option:has(input[value=cilin])");
     assert(
       await evaluate("document.querySelector('input[value=cilin]').checked"),
@@ -247,22 +247,24 @@ try {
         responses.length > count && complete.has(responses.at(-1).requestId),
     );
     const response = responses.at(-1);
-    assert.equal(response.response.status, 503);
+    assert.equal(response.response.status, 200);
     const raw = await cdp.send("Network.getResponseBody", {
       requestId: response.requestId,
     });
-    assert.equal(JSON.parse(raw.body).error.code, "DATA_NOT_READY");
+    const report = JSON.parse(raw.body);
+    assert.equal(report.policy.rhymeBook, "cilin");
+    assert(report.provenance.evidence.some((item) => item.reviewStatus === "unverified"));
     await waitFor(() =>
       evaluate(
-        "document.querySelector('[role=alert]')?.textContent.includes('HTTP_503')",
+        "!!document.querySelector('.pc-report:not(.pc-report--stale)')",
       ),
     );
     assert(
       await evaluate(
-        "document.querySelector('[role=alert]').textContent.includes('未就绪')",
+        "document.querySelector('.pc-colophon').textContent.includes('参考分析')",
       ),
     );
-    return "真实 HTTP DATA_NOT_READY 在界面映射为 HTTP_503，原因与恢复提示可见";
+    return "真实词林参考分析200；未审来源保持原状，底部提示可见";
   });
   // ---------- E06：复制/下载内容与当前真实报告一致；stale 后不得导出旧结论 ----------
   await scenario("E06-copy-download-consistency", async () => {

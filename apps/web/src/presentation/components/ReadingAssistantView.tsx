@@ -33,7 +33,7 @@ export function ReadingAssistantView(props: {
           disabled={!props.configured || props.disabled || props.busy}
           onClick={props.onRequest}
         >
-          {props.busy ? "GLM 正在斟酌…" : "请 GLM 辨音"}
+          {props.busy ? "GLM 正在辨音…" : "重新辨音"}
         </button>
         {props.busy && (
           <button
@@ -57,7 +57,7 @@ export function ReadingAssistantView(props: {
       {props.statusText && <p role="status">{props.statusText}</p>}
       {props.configured && !props.result && (
         <p className="pc-reading-assistant__notice">
-          诗句与候选将发送至智谱。AI建议供参考，按账户额度计费。
+          GLM 自动辨析当前诗句的多音字。
         </p>
       )}
       {props.error && <p role="alert">{props.error}</p>}
@@ -89,11 +89,7 @@ export function ReadingAssistantView(props: {
                 )}
                 <p>{item.reason}</p>
                 {item.candidate && (
-                  <p className="pc-reading-assistant__notice">
-                    {item.evidenceApproved
-                      ? "候选依据已审；语境建议未经人审。"
-                      : "候选依据待审；本建议不改变审核状态。"}
-                  </p>
+                  <p className="pc-reading-assistant__notice">语境读音参考</p>
                 )}
                 <div className="pc-reading-assistant__actions">
                   {item.candidateId && props.onChooseReading && (

@@ -7,6 +7,7 @@ import type {
   ParsedToken,
   ReadingCandidate,
   ReadingOverride,
+  ReadingSuggestion,
   Tone,
 } from "@poetry/contracts";
 import { ReadingsError } from "./errors.js";
@@ -26,6 +27,9 @@ export interface ResolveReadingsInput {
   lookup: LookupResult;
   overrides: ReadingOverride[];
   contextRules: ContextRule[];
+  /** Reference analysis accepts traceable, unreviewed evidence without changing its status. */
+  evidencePolicy?: "strict" | "advisory";
+  modelReadings?: ReadingSuggestion[];
 }
 
 /** 一条命中某字位的语境规则。 */
@@ -59,7 +63,7 @@ interface Selection {
 /**
  * 把 A 提供的候选传播成逐字标注。
  *
- * 优先级固定：用户覆盖 → 已审核语境规则 → 唯一候选 → 保留歧义。
+ * 优先级：用户覆盖 → 已校验模型选择 → 有效语境规则 → 唯一候选 → 保留歧义。
  * 本模块不读格律模板、不看押韵位置、不按“哪个读音更合律”挑读音。
  */
 export function resolveReadings(input: ResolveReadingsInput): AnnotatedPoem {
@@ -70,18 +74,24 @@ export function resolveReadings(input: ResolveReadingsInput): AnnotatedPoem {
   const candidatesByCharacter = buildCandidateIndex(lookup);
   const approvedEvidenceIds = new Set(
     lookup.evidence
-      .filter((evidence) => evidence.reviewStatus === "approved")
+      .filter(
+        (evidence) =>
+          input.evidencePolicy === "advisory" ||
+          evidence.reviewStatus === "approved",
+      )
       .map((evidence) => evidence.id),
   );
   /**
-   * 语境规则只认 `kind = "context"` 的已审核证据。
+   * 语境规则只认 `kind = "context"` 的证据；strict额外要求已审核。
    * 候选自身的韵书归部证据（`rhyme_entry`）不能替代语境证据。
    */
   const approvedContextEvidenceIds = new Set(
     lookup.evidence
       .filter(
         (evidence) =>
-          evidence.reviewStatus === "approved" && evidence.kind === "context",
+          (input.evidencePolicy === "advisory" ||
+            evidence.reviewStatus === "approved") &&
+          evidence.kind === "context",
       )
       .map((evidence) => evidence.id),
   );
@@ -95,6 +105,7 @@ export function resolveReadings(input: ResolveReadingsInput): AnnotatedPoem {
     contextRules,
     lookup.book,
     approvedContextEvidenceIds,
+    input.evidencePolicy === "advisory",
   );
 
   const notices = poem.notices.map((notice) => ({ ...notice }));
@@ -110,14 +121,15 @@ export function resolveReadings(input: ResolveReadingsInput): AnnotatedPoem {
       lookup,
       overrideReadingId: overrideByTokenId.get(token.tokenId),
       approvedHits: ruleHits.approved.get(token.tokenId) ?? [],
+      modelReading: input.modelReadings?.find(
+        (reading) => reading.tokenId === token.tokenId,
+      ),
     });
 
     const effectiveCandidates = candidates.filter((candidate) =>
       selection.effectiveCandidateIds.includes(candidate.id),
     );
-    // 统一证据门槛：凡是会参与读音/平仄/归部推导的候选（即 effectiveCandidateIds 里的每一个），
-    // 都必须有已审核证据。覆盖、语境规则、规则冲突、唯一候选、保留歧义全部走这一处检查，
-    // 不做分支级特判，避免再出现"某条路径提前返回确定状态"的漏洞。
+    // Both policies require traceable evidence; strict additionally requires approval.
     assertEffectiveCandidatesBacked({
       token,
       selection,
@@ -195,6 +207,7 @@ function selectReading(input: {
   lookup: LookupResult;
   overrideReadingId: string | undefined;
   approvedHits: readonly RuleHit[];
+  modelReading?: ReadingSuggestion;
 }): Selection {
   const { token, candidates, lookup, overrideReadingId, approvedHits } = input;
   const candidateIds = new Set(candidates.map((candidate) => candidate.id));
@@ -218,6 +231,18 @@ function selectReading(input: {
       selectedReadingId: overrideReadingId,
       selectionMethod: "user",
       reason: `用户指定读音 ${overrideReadingId}（人工覆盖，非系统推断）`,
+      ruleEvidenceIds: [],
+    };
+  }
+
+  const modelReading = input.modelReading;
+  if (modelReading?.candidateId && candidateIds.has(modelReading.candidateId)) {
+    return {
+      effectiveCandidateIds: [modelReading.candidateId],
+      readingStatus: "resolved",
+      selectedReadingId: modelReading.candidateId,
+      selectionMethod: "model",
+      reason: `GLM自动辨音${modelReading.pronunciation ? `（普通话参考 ${modelReading.pronunciation}）` : ""}：${modelReading.reason}`,
       ruleEvidenceIds: [],
     };
   }
@@ -260,7 +285,7 @@ function selectReading(input: {
           readingStatus: "resolved",
           selectedReadingId: only,
           selectionMethod: "context_rule",
-          reason: `命中已审核语境规则 ${ruleIds.join("、")}「${phrases.join("、")}」（${senses.join("；")}），选定候选 ${only}`,
+          reason: `命中语境规则 ${ruleIds.join("、")}「${phrases.join("、")}」（${senses.join("；")}），选定候选 ${only}`,
           ruleEvidenceIds,
         };
       }
@@ -522,6 +547,7 @@ function collectRuleHits(
   contextRules: readonly ContextRule[],
   book: LookupResult["book"],
   approvedContextEvidenceIds: ReadonlySet<string>,
+  advisory = false,
 ): RuleHits {
   const approved = new Map<string, RuleHit[]>();
   const unverified = new Map<string, RuleHit[]>();
@@ -543,7 +569,7 @@ function collectRuleHits(
     const characters = lineTokens.map((token) => token.text);
     for (const rule of applicableRules) {
       // 规则要生效，必须同时满足：自身已审核 + 引用的证据全部已审核且可解析。
-      const verdict = classifyRule(rule, approvedContextEvidenceIds);
+      const verdict = classifyRule(rule, approvedContextEvidenceIds, advisory);
       const bucket =
         verdict === "approved"
           ? approved
@@ -601,8 +627,9 @@ function collectRuleHits(
 function classifyRule(
   rule: ContextRule,
   approvedContextEvidenceIds: ReadonlySet<string>,
+  advisory = false,
 ): "approved" | "unverified" | "insufficient_evidence" {
-  if (rule.reviewStatus !== "approved") return "unverified";
+  if (!advisory && rule.reviewStatus !== "approved") return "unverified";
   const hasUsableEvidence =
     rule.evidenceIds.length > 0 &&
     rule.evidenceIds.every((evidenceId) =>

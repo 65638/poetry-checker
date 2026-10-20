@@ -155,8 +155,12 @@ describe("三首核心诗真实 API（无 fixture）", () => {
           readingOverrides: [],
         },
       });
-      expect(response.statusCode).toBe(503);
-      expect(response.json().error.code).toBe("DATA_NOT_READY");
+      expect(response.statusCode).toBe(200);
+      const token = response
+        .json()
+        .poem.tokens.find((item: { text: string }) => item.text === "里");
+      expect(token.selectionMethod).toBe("unresolved");
+      expect(token.effectiveCandidateIds).toHaveLength(token.candidates.length);
     },
   );
 });

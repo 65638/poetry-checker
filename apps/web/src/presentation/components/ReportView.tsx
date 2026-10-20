@@ -150,11 +150,15 @@ export function ReportView(props: ReportViewProps) {
     activeFindingId
       ? f.id === activeFindingId
       : f.locations.some((l) => l.tokenId === activeToken);
-  const followFinding = (findingId: string) => {
-    setFollowedFindingId(findingId);
+  const cancelFollow = () => {
     if (followTimer.current) clearTimeout(followTimer.current);
-    // Brief dwell avoids chasing every mark crossed on the way to another word.
+    followTimer.current = null;
+  };
+  const followFinding = (findingId: string, delay = 800) => {
+    cancelFollow();
     followTimer.current = setTimeout(() => {
+      followTimer.current = null;
+      setFollowedFindingId(findingId);
       const pane = notesRef.current;
       const item = Array.from(
         pane?.querySelectorAll<HTMLElement>("[data-finding-id]") ?? [],
@@ -169,13 +173,13 @@ export function ReportView(props: ReportViewProps) {
         top: Math.max(0, top - 8),
         behavior: prefersReducedMotion(pane) ? "instant" : "smooth",
       });
-    }, 100);
+    }, delay);
   };
   useEffect(
     () => () => {
       if (followTimer.current) clearTimeout(followTimer.current);
     },
-    [],
+    [report],
   );
   const scrollToFinding = (finding: Finding, destination: "poem" | "note") => {
     const element =
@@ -346,6 +350,11 @@ export function ReportView(props: ReportViewProps) {
           <h3 className="pc-status__label">结论：{summary.label}</h3>
           <p className="pc-status__text">{summary.desc}</p>
           <p className="pc-status__text">{report.summary.message}</p>
+          {report.readingAssistant && (
+            <p className="pc-status__text" role="status">
+              {report.readingAssistant.message}
+            </p>
+          )}
           {summary.next && <p className="pc-status__next">{summary.next}</p>}
         </div>
         <div className="pc-status__actions">
@@ -374,7 +383,6 @@ export function ReportView(props: ReportViewProps) {
             ? "传统四声（入声归仄）"
             : "普通话声调（可能与传统韵书结果不同）"}
         </span>
-        <span>{report.policy.notice}</span>
         {report.genre.historicalTags.length > 0 && (
           <span className="pc-historical-tags">
             作品体裁说明：{report.genre.historicalTags.join("、")}
@@ -435,13 +443,18 @@ export function ReportView(props: ReportViewProps) {
                         key={id}
                         className="pc-cell-wrap"
                         onMouseEnter={() => setHoverToken(id)}
-                        onMouseLeave={() => setHoverToken(null)}
+                        onMouseLeave={() => {
+                          setHoverToken(null);
+                          cancelFollow();
+                        }}
                         onFocus={() => setFocusToken(id)}
                         onBlur={(event) => {
                           if (
                             !event.currentTarget.contains(event.relatedTarget)
-                          )
+                          ) {
                             setFocusToken(null);
+                            cancelFollow();
+                          }
                         }}
                       >
                         <button
@@ -456,7 +469,7 @@ export function ReportView(props: ReportViewProps) {
                           }}
                           onFocus={() => {
                             if (links[0] && !locatingPoem.current)
-                              followFinding(links[0].f.id);
+                              followFinding(links[0].f.id, 0);
                           }}
                           onClick={() => props.onSelectToken(id)}
                         >
@@ -500,7 +513,7 @@ export function ReportView(props: ReportViewProps) {
                                   (rule) => rule.id === f.ruleId,
                                 )?.name ?? f.ruleId
                               }
-                              onFollow={() => followFinding(f.id)}
+                              onFollow={() => followFinding(f.id, 0)}
                             />
                           ))}
                         </span>

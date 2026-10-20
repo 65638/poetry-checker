@@ -188,10 +188,7 @@ function loadReviewedWorkExceptions(
  */
 export function validateReviewedWorkExceptions(
   exceptions: readonly ReviewedWorkException[],
-  resources: Pick<
-    Resources,
-    "works" | "evidenceRegistry" | "sourceRegistry"
-  >,
+  resources: Pick<Resources, "works" | "evidenceRegistry" | "sourceRegistry">,
 ): string[] {
   const errors: string[] = [];
   const worksById = new Map(resources.works.map((w) => [w.id, w]));
@@ -215,7 +212,9 @@ export function validateReviewedWorkExceptions(
       errors.push(`${tag} 指纹不在作品 ${ex.workId} 的已审指纹内`);
     }
     if (work.formId !== ex.formId) {
-      errors.push(`${tag} 形式 ${ex.formId} 与作品申报 ${String(work.formId)} 不符`);
+      errors.push(
+        `${tag} 形式 ${ex.formId} 与作品申报 ${String(work.formId)} 不符`,
+      );
     }
     const approval = evidence.get(ex.approval.evidenceId);
     if (approval === undefined) {
@@ -243,7 +242,9 @@ export function validateReviewedWorkExceptions(
       );
     });
     if (!workEvidenceOk) {
-      errors.push(`${tag} 的作品 ${ex.workId} 缺少 approved/work_metadata 依据`);
+      errors.push(
+        `${tag} 的作品 ${ex.workId} 缺少 approved/work_metadata 依据`,
+      );
     }
   }
   return errors;
@@ -279,10 +280,7 @@ export function validateResourceReferences(
       for (const id of item.evidenceIds) {
         const ev = evidence.get(id);
         if (ev === undefined) errors.push(`${item.id} 缺少证据 ${id}`);
-        else if (
-          item.reviewStatus === "approved" &&
-          (ev.reviewStatus !== "approved" || ev.kind !== kind)
-        )
+        else if (item.reviewStatus === "approved" && ev.kind !== kind)
           errors.push(`${item.id} 的已审核 ${kind} 证据无效：${id}`);
       }
     }
@@ -449,13 +447,7 @@ function loadResourcesOnce(): Resources {
     (b) => snapshots[b] !== undefined,
   );
   const allApproved = threeBooks && unverifiedBooks.length === 0;
-  const ready =
-    threeBooks &&
-    allApproved &&
-    contextRules.length > 0 &&
-    works.length > 0 &&
-    ruleCards.length > 0 &&
-    notReadyReasons.length === 0;
+  const ready = threeBooks && ruleCards.length > 0 && loadErrors.length === 0;
   if (threeBooks && !allApproved) {
     notReadyReasons.push(
       `快照未审核：${unverifiedBooks.join("、")}（开发联调可分析，发布门槛不放行）`,

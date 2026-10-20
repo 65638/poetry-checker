@@ -212,7 +212,13 @@ export const AnnotatedTokenSchema = ParsedTokenSchema.extend({
   effectiveCandidateIds: ids,
   readingStatus: z.enum(["resolved", "ambiguous", "unknown"]),
   selectedReadingId: id.nullable(),
-  selectionMethod: z.enum(["unique", "context_rule", "user", "unresolved"]),
+  selectionMethod: z.enum([
+    "unique",
+    "context_rule",
+    "model",
+    "user",
+    "unresolved",
+  ]),
   possibleTones: z.array(ToneSchema),
   toneStatus: z.enum(["resolved", "ambiguous", "unknown"]),
   tone: ToneSchema.nullable(),
@@ -416,6 +422,15 @@ export const AnalysisResponseSchema = z
       rules: z.array(RuleCardSchema),
     }),
     summary: z.strictObject({ status: SummaryStatusSchema, message: id }),
+    readingAssistant: z
+      .strictObject({
+        provider: z.literal("zhipu"),
+        model: id,
+        state: z.enum(["applied", "partial", "unavailable", "not_needed"]),
+        appliedTokenIds: z.array(id).max(2000),
+        message: id,
+      })
+      .optional(),
   })
   .superRefine((report, ctx) => {
     if (

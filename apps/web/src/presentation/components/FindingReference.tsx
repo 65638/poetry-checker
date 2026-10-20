@@ -21,6 +21,7 @@ export function FindingReference({
   const trigger = useRef<HTMLButtonElement>(null);
   const note = useRef<HTMLDivElement>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const dwell = useRef<ReturnType<typeof setTimeout> | null>(null);
   const setOpen = onOpenChange;
   const changeRef = useRef(onOpenChange);
   changeRef.current = onOpenChange;
@@ -28,11 +29,15 @@ export function FindingReference({
     if (timer.current) clearTimeout(timer.current);
   };
   const reveal = () => {
+    if (dwell.current) clearTimeout(dwell.current);
+    dwell.current = null;
     cancelClose();
     setOpen(true);
     onFollow();
   };
   const leave = () => {
+    if (dwell.current) clearTimeout(dwell.current);
+    dwell.current = null;
     cancelClose();
     timer.current = setTimeout(() => {
       if (
@@ -42,7 +47,13 @@ export function FindingReference({
         changeRef.current(false);
     }, 160);
   };
-  useEffect(() => () => cancelClose(), []);
+  useEffect(
+    () => () => {
+      cancelClose();
+      if (dwell.current) clearTimeout(dwell.current);
+    },
+    [finding],
+  );
   useLayoutEffect(() => {
     if (!open || !note.current || !trigger.current) return;
     const panel = note.current;
@@ -112,7 +123,11 @@ export function FindingReference({
   return (
     <span
       className="pc-reference"
-      onMouseEnter={reveal}
+      onMouseEnter={() => {
+        cancelClose();
+        if (dwell.current) clearTimeout(dwell.current);
+        dwell.current = setTimeout(reveal, 800);
+      }}
       onMouseLeave={leave}
       onBlur={(event) => {
         if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false);

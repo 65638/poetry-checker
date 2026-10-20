@@ -81,6 +81,7 @@ describe("GLM reading suggestions preserve candidate and approval boundaries", (
       const request = JSON.parse(init!.body as string);
       expect(request.model).toBe("glm-5.3-flash");
       expect(request.thinking).toEqual({ type: "enabled" });
+      expect(request.reasoning_effort).toBe("low");
       expect(
         JSON.parse(request.messages[1].content).targets[0].candidates.map(
           (candidate: { id: string }) => candidate.id,
@@ -88,7 +89,7 @@ describe("GLM reading suggestions preserve candidate and approval boundaries", (
       ).toContain(candidateId);
       expect(response.body).not.toContain("test-only-key");
       expect(JSON.stringify(resources.evidenceRegistry)).toBe(before);
-      expect((await app.inject("/readyz")).statusCode).toBe(503);
+      expect((await app.inject("/readyz")).statusCode).toBe(200);
     });
   });
   it.each([
@@ -214,15 +215,13 @@ describe("GLM reading suggestions preserve candidate and approval boundaries", (
       expect((await post(app)).statusCode).toBe(200);
     });
   });
-  it("limits paid model requests to ten per minute per API process", async () => {
+  it("does not impose the former ten-per-minute spend cap", async () => {
     const fetcher = vi.fn<typeof fetch>(async () => modelResponse());
     await withApp({ fetcher }, async (app) => {
       for (let i = 0; i < 10; i++)
         expect((await post(app)).statusCode).toBe(200);
-      const limited = await post(app);
-      expect(limited.statusCode).toBe(429);
-      expect(limited.headers["retry-after"]).toBe("60");
-      expect(fetcher).toHaveBeenCalledTimes(10);
+      expect((await post(app)).statusCode).toBe(200);
+      expect(fetcher).toHaveBeenCalledTimes(11);
     });
   });
 });

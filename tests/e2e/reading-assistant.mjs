@@ -157,7 +157,7 @@ try {
     },
   );
   await check(
-    "dictionary-suggestion-is-explicit-and-opens-real-character-lookup",
+    "dictionary-automatically-analyzes-and-opens-real-character-lookup",
     async () => {
       configured = true;
       await h.load({ path: "#dictionary", reduce: true });
@@ -168,8 +168,6 @@ try {
         "document.querySelector('.pc-reading-assistant__request')?.disabled === false",
         ),
       );
-      assert.equal(posts, 0);
-      await click(".pc-reading-assistant__request");
       await waitFor(() =>
         evaluate("!!document.querySelector('.pc-reading-assistant__result')"),
       );
@@ -181,7 +179,7 @@ try {
       );
       assert.equal(
         await evaluate(
-          "document.querySelector('.pc-reading-assistant').textContent.includes('候选依据待审')",
+          "document.querySelector('.pc-reading-assistant').textContent.includes('语境读音参考')",
         ),
         true,
       );
@@ -280,44 +278,20 @@ try {
     }
   });
   await check(
-    "explicit-acceptance-uses-real-reading-override-and-preserves-report-provenance",
+    "real-checker-remains-usable-without-model-configuration-or-confirmation",
     async () => {
       await h.load({ reduce: true });
       await h.setText(POEMS[0].text);
       await h.analyze();
       await click('[data-token-id="l4c1"]');
-      await waitFor(() =>
-        evaluate(
-          "document.querySelector('.pc-evidence .pc-reading-assistant__request')?.disabled === false",
-        ),
-      );
-      const seen = [];
-      cdp.on("Network.requestWillBeSent", (event) => {
-        if (
-          event.request.url.endsWith("/api/v1/analyze") &&
-          event.request.postData
-        )
-          seen.push(JSON.parse(event.request.postData));
-      });
-      await cdp.send("Network.enable");
-      await click(".pc-evidence .pc-reading-assistant__request");
-      await waitFor(() =>
-        evaluate(
-          "!!document.querySelector('.pc-evidence .pc-reading-assistant__result')",
-        ),
-      );
+      await waitFor(() => evaluate("!!document.querySelector('.pc-evidence')"));
       await shot("single-character");
-      await click(".pc-evidence .pc-reading-assistant__result button");
-      await waitFor(() => seen.length > 0);
-      assert.deepEqual(seen.at(-1).readingOverrides, [
-        { tokenId: "l4c1", readingId: candidate.id },
-      ]);
-      await h.idle();
       assert.equal(
         await evaluate("!!document.querySelector('.pc-report')"),
         true,
       );
-      assert.equal((await fetch(`${h.url}readyz`)).status, 503);
+      assert.equal(await evaluate("document.querySelector('.pc-evidence .pc-reading-assistant') === null"), true);
+      assert.equal((await fetch(`${h.url}readyz`)).status, 200);
     },
   );
   assert.deepEqual(results.errors, []);

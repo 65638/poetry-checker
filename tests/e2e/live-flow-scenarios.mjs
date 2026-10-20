@@ -202,8 +202,8 @@ export async function runLiveFlowScenarios({
     await choose();
     await click(".pc-segmented__option:has(input[value=cilin])");
     const otherBook = await submit();
-    assert.equal(otherBook.status, 503);
-    assert.equal(otherBook.body.error.code, "DATA_NOT_READY");
+    assert.equal(otherBook.status, 200);
+    assert.equal(otherBook.body.policy.rhymeBook, "cilin");
     assert.deepEqual(otherBook.request.readingOverrides, []);
     assert.equal(otherBook.request.inputHash, edited.request.inputHash);
     await click(".pc-segmented__option:has(input[value=pingshui])");
@@ -220,7 +220,7 @@ export async function runLiveFlowScenarios({
       selectedExport: exported,
       textEditClearsOverrides: true,
       bookSwitchClearsOverrides: true,
-      cilinRemains503: true,
+      cilinReferenceAnalysis200: true,
       restoredContextSelection: true,
     };
   });

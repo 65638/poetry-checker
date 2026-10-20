@@ -4,15 +4,21 @@ import {
   type AnalyzeRequest,
   type Evidence,
   type SourceRecord,
+  type ReadingSuggestion,
 } from "@poetry/contracts";
 import { lookupCharacters } from "@poetry/lexicon";
 import { parseText, resolveReadings } from "@poetry/readings";
-import { matchTemplates, evaluateProsody, applyReviewedWorkExceptions } from "@poetry/prosody";
+import {
+  matchTemplates,
+  evaluateProsody,
+  applyReviewedWorkExceptions,
+} from "@poetry/prosody";
 import { classifyGenre, fingerprintText } from "@poetry/genre";
 import { toReadingsErrorResponse } from "./readings-errors.js";
 import { toGenreErrorResponse } from "./genre-errors.js";
 import { toLexiconErrorResponse } from "./lexicon-errors.js";
 import type { Resources } from "./resources.js";
+import type { ReadingAssistantService } from "./reading-assistant.js";
 
 export type OrchestrationResult =
   | { kind: "ok"; response: AnalysisResponse }
@@ -56,6 +62,10 @@ function dataNotReady(reasons: string[]): OrchestrationResult {
 export async function analyze(
   request: AnalyzeRequest,
   resources: Resources,
+  options: {
+    readingAssistant?: ReadingAssistantService;
+    signal?: AbortSignal;
+  } = {},
 ): Promise<OrchestrationResult> {
   if (resources.loadErrors.length > 0)
     return dataNotReady(resources.loadErrors);
@@ -121,12 +131,81 @@ export async function analyze(
         },
       };
     }
-    const annotated = resolveReadings({
+    const readingInput = {
       poem: parsed,
       lookup: { ...lookup, evidence: mergedEvidence, sources: mergedSources },
       overrides: request.readingOverrides,
       contextRules: resources.contextRules,
-    });
+      evidencePolicy: "advisory" as const,
+    };
+    let annotated = resolveReadings(readingInput);
+    let assistant: AnalysisResponse["readingAssistant"];
+    const service = options.readingAssistant;
+    if (service) {
+      const targets = annotated.tokens.filter(
+        (token) =>
+          token.candidates.length > 1 && token.selectionMethod !== "user",
+      );
+      const suggestions: ReadingSuggestion[] = [];
+      let processed = 0;
+      let failure: string | undefined;
+      if (service.configured && targets.length) {
+        const deadline = AbortSignal.timeout(service.analysisTimeoutMs);
+        const signal = options.signal
+          ? AbortSignal.any([options.signal, deadline])
+          : deadline;
+        for (let offset = 0; offset < targets.length; offset += 24) {
+          try {
+            signal.throwIfAborted();
+            const result = await service.suggest(
+              {
+                text: request.text,
+                rhymeBook: request.rhymeBook,
+                targetTokenIds: targets
+                  .slice(offset, offset + 24)
+                  .map((token) => token.tokenId),
+              },
+              signal,
+            );
+            suggestions.push(...result.suggestions);
+            processed += result.suggestions.length;
+          } catch {
+            failure =
+              "GLM暂不可用或等候超时，其余字位已使用韵书与语境规则分析。";
+            break;
+          }
+        }
+      }
+      if (suggestions.length)
+        annotated = resolveReadings({
+          ...readingInput,
+          modelReadings: suggestions,
+        });
+      const appliedTokenIds = annotated.tokens
+        .filter((token) => token.selectionMethod === "model")
+        .map((token) => token.tokenId);
+      const state = !targets.length
+        ? "not_needed"
+        : !service.configured || processed === 0
+          ? "unavailable"
+          : appliedTokenIds.length === targets.length
+            ? "applied"
+            : "partial";
+      assistant = {
+        provider: "zhipu",
+        model: service.model,
+        state,
+        appliedTokenIds,
+        message: !targets.length
+          ? "当前读音无需进一步辨析。"
+          : !service.configured
+            ? "GLM尚未配置，已使用本地韵书与语境规则分析。"
+            : (failure ??
+              (state === "applied"
+                ? `GLM已自动辨析并应用${appliedTokenIds.length}个字位。`
+                : `GLM已自动应用${appliedTokenIds.length}个字位，其余保留原候选与语境判断。`)),
+      };
+    }
 
     // 4/5. 模板与体裁（API 调度，不建环依赖）
     const candidates = matchTemplates({
@@ -183,9 +262,7 @@ export async function analyze(
         toneBasis:
           request.rhymeBook === "xinyun" ? "mandarin_base" : "historical",
         notice:
-          resources.snapshots[request.rhymeBook]?.reviewStatus !== "approved"
-            ? "当前韵书全库审核尚未完成；本次分析仅采用具备已审核证据的有效候选，不代表全库发布通过。"
-            : "",
+          "参考分析：韵书数据与AI读音可能有误，未经全面人工核验；不作为权威结论。",
       },
       poem: annotated,
       genre,
@@ -197,6 +274,7 @@ export async function analyze(
         rules: resources.ruleCards,
       },
       summary: deriveSummary(prosody, genre, parsed.quality),
+      ...(assistant ? { readingAssistant: assistant } : {}),
     };
     const checked = AnalysisResponseSchema.safeParse(response);
     if (!checked.success) {

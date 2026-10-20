@@ -82,14 +82,14 @@ export async function waitFor(check, timeoutMs = 20000) {
   throw new Error(`等待超时（${timeoutMs}ms）`);
 }
 
-export async function startApi(timeoutMs = 20000) {
+export async function startApi(timeoutMs = 20000, { realModel = false } = {}) {
   const port = await freePort();
   // --import tsx runs the server in this process, not a CLI wrapper with orphan children.
   const proc = managedProcess(
     process.execPath,
     ["--import", "tsx", "apps/api/src/server.ts"],
     {
-      env: { ...process.env, PORT: String(port), POETRY_DEV_MOCK: "0" },
+      env: { ...process.env, ...(!realModel ? { ZHIPU_API_KEY: "" } : {}), PORT: String(port), POETRY_DEV_MOCK: "0" },
     },
   );
   const baseUrl = `http://127.0.0.1:${port}`;

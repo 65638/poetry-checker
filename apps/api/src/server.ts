@@ -80,7 +80,11 @@ export function buildApp(options?: {
   const devMock = process.env.POETRY_DEV_MOCK === "1";
   const resources: Resources = options?.resources ?? loadResources();
   const realReady = resources.ready;
-  registerReadingAssistant(app, resources, options?.readingAssistant);
+  const readingAssistant = registerReadingAssistant(
+    app,
+    resources,
+    options?.readingAssistant,
+  );
 
   app.get("/healthz", async () => ({ status: "ok" }));
 
@@ -272,10 +276,22 @@ export function buildApp(options?: {
           },
         });
       }
-      const result = await analyze(parsedReq.data, resources);
-      if (result.kind === "error")
-        return reply.status(result.status).send(result.body);
-      return reply.send(result.response);
+      const controller = new AbortController();
+      const onClose = () => {
+        if (!reply.raw.writableEnded) controller.abort();
+      };
+      reply.raw.on("close", onClose);
+      try {
+        const result = await analyze(parsedReq.data, resources, {
+          readingAssistant,
+          signal: controller.signal,
+        });
+        if (result.kind === "error")
+          return reply.status(result.status).send(result.body);
+        return reply.send(result.response);
+      } finally {
+        reply.raw.off("close", onClose);
+      }
     }
     const raw = request.body;
     if (typeof raw === "object" && raw !== null && "text" in raw) {

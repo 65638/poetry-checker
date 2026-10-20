@@ -22,7 +22,7 @@ export interface TokenCell {
   /** 读音是否未定（不影响 toneLabel 的语义）。 */
   tonePending: boolean;
   readingStatus: "resolved" | "ambiguous" | "unknown";
-  selectionMethod: "unique" | "context_rule" | "user" | "unresolved";
+  selectionMethod: AnalysisResponse["poem"]["tokens"][number]["selectionMethod"];
   /** 是否为韵脚字位。 */
   isRhyme: boolean;
   /** 属于哪些诊断（按报告顺序）。 */

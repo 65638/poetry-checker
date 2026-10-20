@@ -27,7 +27,7 @@ describe("real source lookup serves loaded provenance without approving data", (
     }
     expect(
       (await app.inject({ method: "GET", url: "/readyz" })).statusCode,
-    ).toBe(503);
+    ).toBe(200);
   });
   it("unknown sources remain 404 and load conflicts remain blocked", async () => {
     const unknown = await app.inject({

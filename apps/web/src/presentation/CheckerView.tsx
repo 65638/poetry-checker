@@ -422,7 +422,7 @@ export function CheckerView(
           <span className="pc-colophon__seal" aria-hidden="true">
             律
           </span>
-          结论只依据所选韵书与已实现规则，不评价文学水平。
+          参考分析：韵书数据与 AI 读音可能有误，未经全面人工核验，不作为权威结论。
         </footer>
       </div>
 

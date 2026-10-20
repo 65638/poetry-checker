@@ -1,6 +1,10 @@
-# 智谱 GLM 读音建议
+# 智谱 GLM 全局自动辨音
 
-入口：校诗台分析后点开字位，或藏韵阁展开“带着诗句来查字”。两处都有“AI辨音”。点击才向智谱发送诗句和服务端韵书候选；输入、查字、切页不会自动发起模型推理。
+2026-10-21用户更新：取消审核阻断，以网页可用为主；GLM自动应用，无需逐字确认；暂不考虑调用花费。校诗台每次分析自动辨析全诗多候选字位，24字位一批，后续批继续处理；藏韵阁展开诗句查询后停笔900ms自动辨音。用户仍可手动纠正，优先级高于模型。
+
+网页/API采用参考分析，未审状态不阻断，不改写reviewStatus或伪造批准；readyz只表示运行资源可用。底部统一提示“参考分析：韵书数据与AI读音可能有误，未经全面人工核验，不作为权威结论”。真正的资源缺失、损坏、冲突及未知字仍如实处理。
+
+批注与字位悬停800ms后跟随，移开、换报告、卸载取消；点击和键盘操作立即定位。
 
 ## 本机配置
 
@@ -18,16 +22,19 @@ pnpm dev
 
 官方依据（2026-10-21查阅）：[GLM-5.3-Flash](https://docs.bigmodel.cn/cn/guide/models/vlm/glm-5.3-flash)；[HTTP调用](https://docs.bigmodel.cn/cn/guide/develop/http/introduction)。该型号为计费模型；是否使用赠送额度由账户决定，不承诺免费。仅支持开启思考，客户端不发送 `thinking.type=disabled`。
 
+GLM-5.3系列使用官方支持的`reasoning_effort=low`，避免默认max推理占满网页等待预算；仍保持thinking开启。依据：[思考模式与推理程度](https://docs.bigmodel.cn/cn/guide/capabilities/thinking)。其他型号不自动附加此参数。
+
 ## API与约束
 
 - `GET /api/v1/reading-suggestions/status`：仅返回configured/provider/model；无密钥时配置态false。
 - `POST /api/v1/reading-suggestions`：`text`最多2000码点、`rhymeBook`、可选`targetTokenIds`最多24个。完整定义在公共Schema与生成OpenAPI。
-- 不传字位时只取前24个多候选字位，返回truncated与缺字字位；传字位时必须属于当前原文。缺字保留未定，不请求模型造候选。
+- 独立接口不传字位时取前24个多候选字位，返回truncated与缺字字位；整诗分析自动分批继续处理后续字位。传字位必须属于当前原文，缺字保留未定。
 - 服务端从所选快照取得候选，模型返回JSON，经Schema和字位/候选ID归属校验；外书、外字或臆造ID整个请求拒绝，不部分静默采用。
 - 普通话拼音是AI参考；若候选已有明确现代读音，回传该原值。古入声与韵部仍取韵书候选，不从普通话声调推导古声。
-- 不自动覆盖语境规则，不生成approved依据。校诗台“采用此读音并重查”由用户点击，通过原readingOverrides提交，原真实证据门槛继续执行。藏韵阁建议可打开原字条目查看依据。
+- GLM通过校验后直接应用，高于语境规则，低于用户手动纠正。逐字标注selectionMethod=model，理由保留AI解释和普通话参考；readingOverrides仅表达真实用户纠正。响应新增可选readingAssistant（provider/model/state/appliedTokenIds/message），状态applied/partial/unavailable/not_needed，导出保留来源。藏韵阁结果可打开原字条目。
 - 超时45秒、上游错误、格式错误、取消和迟到响应均独立处理；前端50秒兜底，改诗/换书/换字位会取消并清除旧建议。重试失败时可保留对应同一输入的上次建议供参考。
-- 单API进程最多2个推理并发、每分钟10个模型调用，每次最多4096输出token，无自动重试、自动付费升级或备用模型。取消发送AbortSignal，但已开始的云端计算是否计费由供应商决定。
+- 整诗模型阶段总预算20秒，已完成批保留，其余回退为本地分析，客户端仍30秒。无Key、格式异常、权限或上游故障也返回本地报告。独立字典辨音接口维持服务端45秒/客户端50秒。
+- 单API进程最多2个推理并发，已移除每分钟10次的花费限制；每次最多4096输出token，无自动重试、自动付费升级或备用模型。取消发送AbortSignal，云端计算计费由供应商决定。
 
 ## 验证入口
 
@@ -35,6 +42,10 @@ pnpm dev
 pnpm exec vitest run apps/api/tests/reading-assistant.test.ts apps/web/tests/reading-assistant.test.ts
 pnpm verify
 node tests/e2e/reading-assistant.mjs artifacts/acceptance/reading-assistant
+node --import tsx tests/e2e/automatic-reference.mjs artifacts/acceptance/automatic-reference
+pnpm test:acceptance --real-model
 ```
 
 浏览器测试的GLM响应为受控输入，真实韵书查询与采用后重查走本机API。测试通过不代表GLM真实准确率、古音事实审核或账户联通。没有Key时仍可完成工程/受控验收，真实模型测试明确列未运行。
+
+常规九格/浏览器回归显式禁用模型调用，避免本地Key导致确定性回归混入网络延迟；需要真实模型时使用九格`--real-model`。该参数不会修改应用的默认自动辨音行为。
