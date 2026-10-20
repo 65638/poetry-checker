@@ -113,11 +113,6 @@
 .pc-reference__title {
   color: var(--pc-f-fg);
 }
-.pc-reference__note .pc-button {
-  padding-inline: 0;
-  min-height: 44px;
-  color: var(--pc-f-fg);
-}
 .pc-root[data-motion="off"] .pc-reference__note {
   animation: none;
 }

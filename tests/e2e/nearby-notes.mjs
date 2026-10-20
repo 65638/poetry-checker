@@ -132,12 +132,17 @@ try {
     );
     await sleep(180);
     const note = await box(".pc-reference__note");
+    const marks = await box(
+      ".pc-cell-wrap:has(.pc-cell__reference) .pc-cell__references",
+    );
     assert.ok(
       note.x >= 0 && note.right <= 1440 && note.y >= 0 && note.bottom <= 900,
     );
     assert.ok(
-      Math.min(Math.abs(note.y - mark.bottom), Math.abs(mark.y - note.bottom)) <
-        12,
+      Math.min(
+        Math.abs(note.y - marks.bottom),
+        Math.abs(marks.y - note.bottom),
+      ) < 12,
       JSON.stringify({ note, mark }),
     );
     assert.ok(
@@ -152,7 +157,7 @@ try {
       false,
     );
   });
-  await check("keyboard-focus-and-full-note-link", async () => {
+  await check("keyboard-follows-exact-number-without-extra-link", async () => {
     await evaluate(
       "document.querySelector('.pc-cell__reference').focus();true",
     );
@@ -160,21 +165,106 @@ try {
       evaluate("!!document.querySelector('.pc-reference__note:popover-open')"),
     );
     await h.key("Tab", "Tab", 9);
+    await sleep(900);
     assert.ok(
       await evaluate(
-        "document.activeElement.closest('.pc-reference__note')!==null",
+        "document.activeElement.matches('.pc-cell__reference') && document.activeElement.textContent.trim()==='6'",
       ),
     );
     await h.key("Enter", "Enter", 13, 0, "\r");
-    await waitFor(() =>
-      evaluate("document.activeElement.matches('[data-finding-id]')"),
-    );
     assert.ok(
       await evaluate(
-        "document.activeElement.classList.contains('pc-finding--selected')",
+        "document.querySelector('.pc-finding--selected .pc-finding__no').textContent.trim()==='6' && !document.querySelector('.pc-reference__note button')",
       ),
     );
+    const note = await box(".pc-finding--selected");
+    const pane = await box(".pc-notes__body");
+    assert.ok(
+      Math.abs(note.y - pane.y - 8) < 3,
+      JSON.stringify({ note, pane }),
+    );
   });
+  await check(
+    "pointer-and-click-follow-1-6-without-page-scroll-or-obstruction",
+    async () => {
+      await h.key("Escape", "Escape", 27);
+      const pageY = await evaluate("scrollY");
+      await h.mouse("mouseMoved", 370, 20);
+      const first =
+        ".pc-cell-wrap:has(.pc-cell__reference) .pc-reference:first-child .pc-cell__reference";
+      const second =
+        ".pc-cell-wrap:has(.pc-cell__reference) .pc-reference:nth-child(2) .pc-cell__reference";
+      const point = async (selector) => {
+        const mark = await box(selector);
+        await h.mouse(
+          "mouseMoved",
+          mark.x + mark.width / 2,
+          mark.y + mark.height / 2,
+        );
+        await sleep(900);
+        return mark;
+      };
+      await point(first);
+      assert.equal(
+        await evaluate(
+          "document.querySelector('.pc-finding--selected .pc-finding__no').textContent.trim()",
+        ),
+        "1",
+      );
+      const mark = await point(second);
+      const x = mark.x + mark.width / 2,
+        y = mark.y + mark.height / 2;
+      assert.equal(
+        await evaluate(
+          `document.elementFromPoint(${x},${y}).closest('button')?.textContent.trim()`,
+        ),
+        "6",
+      );
+      await h.mouse("mousePressed", x, y, { button: "left", clickCount: 1 });
+      await h.mouse("mouseReleased", x, y, { button: "left", clickCount: 1 });
+      await sleep(900);
+      assert.equal(
+        await evaluate(
+          "document.querySelector('.pc-finding--selected .pc-finding__no').textContent.trim()",
+        ),
+        "6",
+      );
+      assert.equal(await evaluate("scrollY"), pageY);
+      const item = await box(".pc-finding--selected");
+      const pane = await box(".pc-notes__body");
+      assert.ok(Math.abs(item.y - pane.y - 8) < 3);
+      await shot("follow-six");
+      await h.key("Escape", "Escape", 27);
+      await click(".pc-finding--selected .pc-finding__locate");
+      await sleep(900);
+      assert.equal(
+        await evaluate(
+          "document.querySelector('.pc-finding--selected .pc-finding__no').textContent.trim()",
+        ),
+        "6",
+      );
+      assert.ok(
+        await evaluate("document.activeElement.matches('[data-token-id]')"),
+      );
+      await evaluate(
+        "document.querySelector('.pc-report-workbench').scrollIntoView({block:'start',behavior:'instant'});true",
+      );
+      await sleep(150);
+      await point(second);
+      // Hover the character itself: use its first issue, with no keyboard-focus theft.
+      await h.key("Escape", "Escape", 27);
+      const focus = await evaluate("document.activeElement.textContent");
+      await point(".pc-cell-wrap:has(.pc-cell__reference) .pc-cell");
+      assert.equal(
+        await evaluate(
+          "document.querySelector('.pc-finding--selected .pc-finding__no').textContent.trim()",
+        ),
+        "1",
+      );
+      assert.equal(await evaluate("document.activeElement.textContent"), focus);
+      assert.equal(await evaluate("scrollY"), pageY);
+    },
+  );
   await check("one-note-at-a-time-and-outside-click-dismissal", async () => {
     await click(".pc-cell__reference");
     const other = await box(".pc-reference:nth-child(2) .pc-cell__reference");

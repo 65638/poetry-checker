@@ -6,14 +6,14 @@ export function FindingReference({
   finding,
   number,
   rule,
-  onLocate,
+  onFollow,
   open,
   onOpenChange,
 }: {
   finding: Finding;
   number: number;
   rule: string;
-  onLocate: () => void;
+  onFollow: () => void;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
@@ -30,6 +30,7 @@ export function FindingReference({
   const reveal = () => {
     cancelClose();
     setOpen(true);
+    onFollow();
   };
   const leave = () => {
     cancelClose();
@@ -48,6 +49,10 @@ export function FindingReference({
     panel.showPopover?.();
     const position = () => {
       const anchor = trigger.current!.getBoundingClientRect();
+      const marks =
+        trigger
+          .current!.closest(".pc-cell__references")
+          ?.getBoundingClientRect() ?? anchor;
       const bounds = panel.getBoundingClientRect();
       if (anchor.bottom < 0 || anchor.top > window.innerHeight) {
         changeRef.current(false);
@@ -60,11 +65,11 @@ export function FindingReference({
           window.innerWidth - bounds.width - 12,
         ),
       );
-      const below = anchor.bottom + 8;
+      const below = marks.bottom + 8;
       const top =
         below + bounds.height <= window.innerHeight - 12
           ? below
-          : Math.max(12, anchor.top - bounds.height - 8);
+          : Math.max(12, marks.top - bounds.height - 8);
       panel.style.left = left + "px";
       panel.style.top = top + "px";
     };
@@ -119,8 +124,7 @@ export function FindingReference({
         className={`pc-cell__reference pc-finding--${finding.status}`}
         aria-label={`查看批注 ${number}：${finding.message}`}
         aria-expanded={open}
-        aria-controls={id}
-        aria-haspopup="dialog"
+        aria-describedby={open ? id : undefined}
         onFocus={reveal}
         onClick={reveal}
       >
@@ -131,7 +135,7 @@ export function FindingReference({
           ref={note}
           id={id}
           popover="manual"
-          role="dialog"
+          role="tooltip"
           aria-label={`批注 ${number}：${rule}`}
           className={`pc-reference__note pc-finding--${finding.status}`}
           onMouseEnter={cancelClose}
@@ -151,16 +155,6 @@ export function FindingReference({
               <dd>{tone(finding.observed)}</dd>
             </div>
           </dl>
-          <button
-            type="button"
-            className="pc-button pc-button--quiet"
-            onClick={() => {
-              setOpen(false);
-              onLocate();
-            }}
-          >
-            查看完整批注 →
-          </button>
         </div>
       )}
     </span>

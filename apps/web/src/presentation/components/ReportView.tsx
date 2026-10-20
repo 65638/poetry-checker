@@ -106,11 +106,17 @@ export function ReportView(props: ReportViewProps) {
   const rootRef = useRef<HTMLElement>(null);
   const gridRef = useRef<HTMLOListElement>(null);
   const settledRef = useRef<HTMLDetailsElement>(null);
+  const notesRef = useRef<HTMLDivElement>(null);
+  const followTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const locatingPoem = useRef(false);
   const [hoverToken, setHoverToken] = useState<string | null>(null);
   const [hoverFinding, setHoverFinding] = useState<string | null>(null);
   const [focusToken, setFocusToken] = useState<string | null>(null);
   const [focusFinding, setFocusFinding] = useState<string | null>(null);
   const [openReference, setOpenReference] = useState<string | null>(null);
+  const [followedFindingId, setFollowedFindingId] = useState<string | null>(
+    null,
+  );
   const destinationRef = useRef<"poem" | "note">("poem");
   const tokens = new Map(report.poem.tokens.map((t) => [t.tokenId, t]));
   const rhymeIds = new Set(report.prosody.rhyme.tokenIds);
@@ -129,7 +135,8 @@ export function ReportView(props: ReportViewProps) {
     }
   }
   const activeToken = hoverToken ?? focusToken ?? selectedTokenId;
-  const activeFindingId = hoverFinding ?? focusFinding ?? selectedFindingId;
+  const activeFindingId =
+    hoverFinding ?? followedFindingId ?? focusFinding ?? selectedFindingId;
   const selectedFinding =
     checks.find((f) => f.id === selectedFindingId) ?? null;
   const activeFinding = checks.find((f) => f.id === activeFindingId) ?? null;
@@ -140,8 +147,36 @@ export function ReportView(props: ReportViewProps) {
     ].flatMap((f) => f?.locations.map((l) => l.tokenId) ?? []),
   );
   const noteIsActive = (f: Finding) =>
-    f.id === activeFindingId ||
-    f.locations.some((l) => l.tokenId === activeToken);
+    activeFindingId
+      ? f.id === activeFindingId
+      : f.locations.some((l) => l.tokenId === activeToken);
+  const followFinding = (findingId: string) => {
+    setFollowedFindingId(findingId);
+    if (followTimer.current) clearTimeout(followTimer.current);
+    // Brief dwell avoids chasing every mark crossed on the way to another word.
+    followTimer.current = setTimeout(() => {
+      const pane = notesRef.current;
+      const item = Array.from(
+        pane?.querySelectorAll<HTMLElement>("[data-finding-id]") ?? [],
+      ).find((element) => element.dataset.findingId === findingId);
+      if (!pane || !item) return;
+      // Move only the note list: never move the poem, page or keyboard focus.
+      const top =
+        pane.scrollTop +
+        item.getBoundingClientRect().top -
+        pane.getBoundingClientRect().top;
+      pane.scrollTo({
+        top: Math.max(0, top - 8),
+        behavior: prefersReducedMotion(pane) ? "instant" : "smooth",
+      });
+    }, 100);
+  };
+  useEffect(
+    () => () => {
+      if (followTimer.current) clearTimeout(followTimer.current);
+    },
+    [],
+  );
   const scrollToFinding = (finding: Finding, destination: "poem" | "note") => {
     const element =
       destination === "note"
@@ -154,13 +189,17 @@ export function ReportView(props: ReportViewProps) {
             gridRef.current?.querySelectorAll<HTMLElement>("[data-token-id]") ??
               [],
           ).find((el) => el.dataset.tokenId === finding.locations[0]?.tokenId);
+    locatingPoem.current = true;
     element?.focus({ preventScroll: true });
+    locatingPoem.current = false;
     element?.scrollIntoView({
       block: destination === "note" ? "nearest" : "center",
       behavior: prefersReducedMotion(element) ? "auto" : "smooth",
     });
   };
   const selectFinding = (finding: Finding, destination: "poem" | "note") => {
+    if (followTimer.current) clearTimeout(followTimer.current);
+    setFollowedFindingId(finding.id);
     destinationRef.current = destination;
     props.onSelectFinding(finding.id);
     // Repeated activation must still navigate when selection has not changed.
@@ -181,7 +220,10 @@ export function ReportView(props: ReportViewProps) {
         tabIndex={-1}
         onMouseEnter={() => setHoverFinding(f.id)}
         onMouseLeave={() => setHoverFinding(null)}
-        onFocus={() => setFocusFinding(f.id)}
+        onFocus={() => {
+          setFocusFinding(f.id);
+          setFollowedFindingId(f.id);
+        }}
         onBlur={(event) => {
           if (!event.currentTarget.contains(event.relatedTarget))
             setFocusFinding(null);
@@ -409,6 +451,13 @@ export function ReportView(props: ReportViewProps) {
                           aria-label={label}
                           aria-haspopup="dialog"
                           aria-expanded={selectedTokenId === id}
+                          onMouseEnter={() => {
+                            if (links[0]) followFinding(links[0].f.id);
+                          }}
+                          onFocus={() => {
+                            if (links[0] && !locatingPoem.current)
+                              followFinding(links[0].f.id);
+                          }}
                           onClick={() => props.onSelectToken(id)}
                         >
                           <span className="pc-cell__char">{t.text}</span>
@@ -451,7 +500,7 @@ export function ReportView(props: ReportViewProps) {
                                   (rule) => rule.id === f.ruleId,
                                 )?.name ?? f.ruleId
                               }
-                              onLocate={() => selectFinding(f, "note")}
+                              onFollow={() => followFinding(f.id)}
                             />
                           ))}
                         </span>
@@ -472,7 +521,12 @@ export function ReportView(props: ReportViewProps) {
             </span>
             批注
           </h3>
-          <div className="pc-notes__body" tabIndex={0} aria-label="批注列表">
+          <div
+            ref={notesRef}
+            className="pc-notes__body"
+            tabIndex={0}
+            aria-label="批注列表"
+          >
             {checks.length === 0 ? (
               <p className="pc-legend">
                 本报告未列出批注条目；结论以上方状态为准。
