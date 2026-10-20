@@ -346,6 +346,7 @@
   margin: 24px 0 0;
 }
 .pc-dictionary__folio {
+  scroll-margin-top: 76px;
   position: relative;
   padding: 0 40px;
   box-shadow: var(--pc-shadow-sheet);
@@ -374,6 +375,16 @@
 }
 .pc-dictionary__folio-head {
   border-bottom: 1px solid var(--pc-divider);
+}
+.pc-dictionary__return {
+  display: none;
+  color: var(--pc-text-muted);
+  border: 0;
+  background: transparent;
+  font: inherit;
+  letter-spacing: 0;
+  cursor: pointer;
+  min-height: 44px;
 }
 .pc-dictionary__folio-foot {
   border-top: 1px solid var(--pc-divider);
@@ -709,6 +720,20 @@
   font-size: 11px;
   color: var(--pc-text-muted);
 }
+.pc-dictionary__shelf-tools {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.pc-dictionary__shelf-tools .pc-button {
+  min-height: 44px;
+  padding: 8px 12px;
+  font-size: 12px;
+}
+.pc-dictionary__shelf-feedback {
+  border-left: 2px solid var(--pc-accent);
+  padding-left: 10px;
+}
 .pc-dictionary__passage label {
   display: block;
   color: var(--pc-text-muted);
@@ -862,6 +887,13 @@
   }
 }
 @media (max-width: 799px) {
+  .pc-dictionary__return {
+    display: inline-block;
+  }
+  .pc-dictionary__folio-head {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
   .pc-dictionary__layout {
     grid-template-columns: 1fr;
   }

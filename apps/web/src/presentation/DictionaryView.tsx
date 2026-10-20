@@ -1,4 +1,4 @@
-import { useId, useRef } from "react";
+import { useEffect, useId, useRef } from "react";
 import type { BookId, LookupResult, ReadingCandidate } from "@poetry/contracts";
 import { useMotionPreference } from "./useMotionPreference";
 import type { DictionaryShelf, ShelfEntry } from "../app/dictionaryShelf";
@@ -40,6 +40,9 @@ export interface DictionaryViewProps {
   canImportPoem: boolean;
   onImportPoem: () => void;
   shelf: DictionaryShelf;
+  shelfFeedback: string | null;
+  onExportShelf: () => void;
+  onImportShelf: (file: File) => void;
   onOpenEntry: (entry: ShelfEntry) => void;
   onClearRecent: () => void;
   favorite: boolean;
@@ -90,10 +93,16 @@ function GardenScene() {
             strokeWidth="8"
             fill="none"
           />
-          <path
-            d="m1380 175-62-2 38-24-6-44 30 33 30-20-9 42 39 21Zm-230 90 55-12-32-19 7-37-34 27-35-15 14 33-42 18Zm270 130-65-7 31-23-5-44 39 36 27-22-8 47 37 17Zm-270 130 54-17-27-16 1-37-31 24-32-17 9 34-33 19Z"
-            stroke="none"
-          />
+          {[
+            "translate(1380 175) rotate(-18)",
+            "translate(1150 265) rotate(156)",
+            "translate(1420 395) rotate(-12)",
+            "translate(1150 525) rotate(165)",
+          ].map((transform) => (
+            <g key={transform} transform={transform} stroke="none">
+              <path d="M0 0Q-27-26-73-24Q-42-2 0 0ZM0 0Q-30 2-59 34Q-17 24 0 0ZM0 0Q-7-27 11-57Q19-20 0 0ZM0 0Q24-26 63-24Q35-4 0 0ZM0 0Q25 8 43 40Q9 27 0 0ZM0 0Q-3 25-24 53Q-31 20 0 0Z" />
+            </g>
+          ))}
         </g>
       </svg>
       <div className="pc-garden__frame" />
@@ -109,10 +118,38 @@ function GardenScene() {
 export function DictionaryView(props: DictionaryViewProps) {
   const uid = useId();
   const composing = useRef(false);
+  const searchInput = useRef<HTMLInputElement>(null);
+  const shelfInput = useRef<HTMLInputElement>(null);
+  const folio = useRef<HTMLElement>(null);
+  const revealFrom = useRef<number | null>(null);
   const motion = useMotionPreference();
   const { result, character, book, busy, error } = props;
   const candidates = result?.entries.flatMap((entry) => entry.candidates) ?? [];
   const selectedBook = BOOKS.find((item) => item.id === book)!;
+  const revealAfter = (action: () => void) => {
+    revealFrom.current = window.scrollY;
+    action();
+  };
+  useEffect(() => {
+    if (busy || (!result && !error) || revealFrom.current === null) return;
+    const startedAt = revealFrom.current;
+    revealFrom.current = null;
+    // A delayed request must not pull the reader back after they have moved on.
+    if (
+      !window.matchMedia("(max-width: 799px)").matches ||
+      Math.abs(window.scrollY - startedAt) > 72
+    )
+      return;
+    const target = folio.current;
+    if (
+      target &&
+      target.getBoundingClientRect().top > window.innerHeight * 0.45
+    )
+      target.scrollIntoView({
+        block: "start",
+        behavior: motion.effects ? "smooth" : "instant",
+      });
+  }, [busy, result, error, motion.effects]);
   return (
     <div
       className="pc-root pc-dictionary"
@@ -152,7 +189,7 @@ export function DictionaryView(props: DictionaryViewProps) {
             <form
               onSubmit={(event) => {
                 event.preventDefault();
-                if (!composing.current) props.onLookup();
+                if (!composing.current) revealAfter(props.onLookup);
               }}
             >
               <label
@@ -163,10 +200,23 @@ export function DictionaryView(props: DictionaryViewProps) {
               </label>
               <div className="pc-dictionary__searchline">
                 <input
+                  ref={searchInput}
                   id={`${uid}-character`}
                   className="pc-dictionary__input"
                   value={props.text}
-                  onChange={(event) => props.onTextChange(event.target.value)}
+                  onChange={(event) => {
+                    revealFrom.current = null;
+                    props.onTextChange(event.target.value);
+                  }}
+                  onKeyDown={(event) => {
+                    if (
+                      event.key === "Enter" &&
+                      (composing.current ||
+                        event.nativeEvent.isComposing ||
+                        event.nativeEvent.keyCode === 229)
+                    )
+                      event.preventDefault();
+                  }}
                   placeholder="月"
                   autoComplete="off"
                   spellCheck={false}
@@ -217,7 +267,7 @@ export function DictionaryView(props: DictionaryViewProps) {
                 <button
                   key={text}
                   type="button"
-                  onClick={() => props.onExample(text)}
+                  onClick={() => revealAfter(() => props.onExample(text))}
                   aria-label={`查「${text}」字`}
                 >
                   {text}
@@ -280,7 +330,7 @@ export function DictionaryView(props: DictionaryViewProps) {
                     <button
                       type="button"
                       key={text}
-                      onClick={() => props.onExample(text)}
+                      onClick={() => revealAfter(() => props.onExample(text))}
                       aria-label={`查「${text}」字`}
                       aria-pressed={text === character && !!result}
                     >
@@ -311,7 +361,9 @@ export function DictionaryView(props: DictionaryViewProps) {
                             type="button"
                             key={row.character}
                             data-status={status}
-                            onClick={() => props.onExample(row.character)}
+                            onClick={() =>
+                              revealAfter(() => props.onExample(row.character))
+                            }
                             aria-label={`${row.character}：${status === "backed" ? "候选依据已核" : status === "needs_review" ? "候选待核" : status === "missing" ? "未收录" : "查询失败"}，点击查字`}
                           >
                             <span>{row.character}</span>
@@ -341,13 +393,50 @@ export function DictionaryView(props: DictionaryViewProps) {
               </summary>
               <div>
                 <h3>收藏</h3>
+                <div className="pc-dictionary__shelf-tools">
+                  <button
+                    type="button"
+                    className="pc-button pc-button--quiet"
+                    disabled={!props.shelf.favorites.length}
+                    onClick={props.onExportShelf}
+                  >
+                    导出字笺
+                  </button>
+                  <button
+                    type="button"
+                    className="pc-button pc-button--quiet"
+                    onClick={() => shelfInput.current?.click()}
+                  >
+                    导入字笺
+                  </button>
+                  <input
+                    ref={shelfInput}
+                    type="file"
+                    hidden
+                    accept=".json,application/json"
+                    aria-label="选择字笺文件"
+                    onChange={(event) => {
+                      const file = event.currentTarget.files?.[0];
+                      if (file) props.onImportShelf(file);
+                      event.currentTarget.value = "";
+                    }}
+                  />
+                </div>
+                <p>收藏只存在此浏览器地址；换地址前可导出字笺。</p>
+                {props.shelfFeedback && (
+                  <p className="pc-dictionary__shelf-feedback" role="status">
+                    {props.shelfFeedback}
+                  </p>
+                )}
                 {props.shelf.favorites.length ? (
                   <div className="pc-dictionary__shelf-list">
                     {props.shelf.favorites.map((entry) => (
                       <button
                         type="button"
                         key={`${entry.book}:${entry.character}`}
-                        onClick={() => props.onOpenEntry(entry)}
+                        onClick={() =>
+                          revealAfter(() => props.onOpenEntry(entry))
+                        }
                       >
                         {entry.character}
                         <small>
@@ -374,7 +463,9 @@ export function DictionaryView(props: DictionaryViewProps) {
                     <button
                       type="button"
                       key={`${entry.book}:${entry.character}`}
-                      onClick={() => props.onOpenEntry(entry)}
+                      onClick={() =>
+                        revealAfter(() => props.onOpenEntry(entry))
+                      }
                     >
                       {entry.character}
                       <small>
@@ -389,12 +480,27 @@ export function DictionaryView(props: DictionaryViewProps) {
           </section>
           <section
             className="pc-dictionary__folio pc-surface"
+            ref={folio}
             aria-label="查字结果"
             aria-busy={busy}
           >
             <div className="pc-dictionary__folio-head">
               <span>韵 书 小 笺</span>
               <span>{selectedBook.name}</span>
+              <button
+                type="button"
+                className="pc-dictionary__return"
+                onClick={() => {
+                  revealFrom.current = null;
+                  searchInput.current?.scrollIntoView({
+                    block: "center",
+                    behavior: motion.effects ? "smooth" : "instant",
+                  });
+                  searchInput.current?.focus({ preventScroll: true });
+                }}
+              >
+                返回查字 ↑
+              </button>
             </div>
             <div
               className="pc-dictionary__status"

@@ -8,9 +8,11 @@ import {
   dictionaryHash,
   dictionaryText,
   extractCharacters,
+  importShelfBackup,
   readDictionaryLink,
   readShelf,
   remember,
+  shelfBackup,
   toggleFavorite,
 } from "../src/app/dictionaryShelf";
 import { EMPTY_DRAFT, parseSavedDraft } from "../src/app/draftPersistence";
@@ -142,11 +144,100 @@ describe("dictionary shelf and links", () => {
     ).toBeNull();
     expect(readDictionaryLink("#dictionary?char=月&book=unknown")).toBeNull();
   });
+  it("normalizes shelf whitespace before deduplication without merging distinct glyphs", () => {
+    const shelf = readShelf(
+      JSON.stringify({
+        favorites: [
+          { character: " 月 ", book: "pingshui" },
+          { character: "月", book: "pingshui" },
+          { character: "月", book: "cilin" },
+          { character: "余", book: "cilin" },
+          { character: "餘", book: "cilin" },
+        ],
+      }),
+    );
+    expect(shelf.favorites).toHaveLength(4);
+    expect(shelf.favorites[0]).toEqual({ character: "月", book: "pingshui" });
+  });
+  it("keeps all existing favorites at capacity and still permits removal and replacement", () => {
+    let shelf = readShelf(null);
+    for (const character of "甲乙丙丁戊己庚辛壬癸子丑寅卯辰巳午未申酉戌亥乾坤")
+      shelf = toggleFavorite(shelf, { character, book: "pingshui" });
+    expect(shelf.favorites).toHaveLength(24);
+    const full = shelf;
+    shelf = toggleFavorite(shelf, { character: "月", book: "cilin" });
+    expect(shelf).toBe(full);
+    shelf = toggleFavorite(shelf, { character: "甲", book: "pingshui" });
+    expect(shelf.favorites).toHaveLength(23);
+    shelf = toggleFavorite(shelf, { character: "月", book: "cilin" });
+    expect(shelf.favorites).toHaveLength(24);
+    expect(shelf.favorites[0]).toEqual({ character: "月", book: "cilin" });
+  });
   it("copied lookup content carries evidence status and version", () => {
     const text = dictionaryText("𠀀", missing);
     expect(text).toContain("未收录");
     expect(text).toContain("数据版本：test-only");
     expect(text).toContain("不替代诗中读音选择");
+  });
+  it("exports portable bookmarks and merges exact entries while preserving current history", () => {
+    const current = {
+      recent: [{ character: "月", book: "xinyun" as const }],
+      favorites: [{ character: "月", book: "pingshui" as const }],
+    };
+    const raw = shelfBackup({
+      recent: [{ character: "私", book: "cilin" }],
+      favorites: [
+        { character: "月", book: "pingshui" },
+        { character: "月", book: "cilin" },
+        { character: "餘", book: "cilin" },
+        { character: "余", book: "cilin" },
+      ],
+    });
+    expect(JSON.parse(raw)).not.toHaveProperty("recent");
+    const imported = importShelfBackup(raw, current);
+    expect(imported.added).toBe(3);
+    expect(imported.shelf.favorites).toHaveLength(4);
+    expect(imported.shelf.recent).toEqual(current.recent);
+    expect(importShelfBackup(raw, imported.shelf).added).toBe(0);
+  });
+  it.each([
+    "broken",
+    "{}",
+    JSON.stringify({
+      kind: "poetry-dictionary-shelf",
+      version: 2,
+      favorites: [],
+    }),
+    JSON.stringify({
+      kind: "poetry-dictionary-shelf",
+      version: 1,
+      favorites: [{ character: "明月", book: "cilin" }],
+    }),
+    "x".repeat(20001),
+  ])("rejects invalid backups without mutating current shelf", (raw) => {
+    const current = readShelf(null);
+    expect(() => importShelfBackup(raw, current)).toThrow();
+    expect(current).toEqual({ recent: [], favorites: [] });
+  });
+  it("refuses an import exceeding capacity without dropping old or incoming bookmarks", () => {
+    const current = readShelf(
+      JSON.stringify({
+        favorites: [..."甲乙丙丁戊己庚辛壬癸子丑寅卯辰巳午未申酉戌亥乾坤"].map(
+          (character) => ({ character, book: "pingshui" }),
+        ),
+      }),
+    );
+    expect(() =>
+      importShelfBackup(
+        shelfBackup({
+          recent: [],
+          favorites: [{ character: "月", book: "cilin" }],
+        }),
+        current,
+      ),
+    ).toThrow("超过 24");
+    expect(current.favorites).toHaveLength(24);
+    expect(current.favorites[0]?.character).toBe("甲");
   });
 });
 

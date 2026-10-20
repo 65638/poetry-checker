@@ -57,4 +57,25 @@ describe("cached lookup preserves snapshot isolation", () => {
     );
     expect(lookupInSnapshot(snapshot, request).missing).toEqual(["更"]);
   });
+  it("does not trust shallow-frozen inputs whose record keys can still change", () => {
+    const input = pingshuiFixture();
+    const snapshot = Object.freeze({
+      ...input,
+      candidates: Object.freeze([...input.candidates]),
+      groups: Object.freeze([...input.groups]),
+      evidence: Object.freeze([...input.evidence]),
+      sources: Object.freeze([...input.sources]),
+    });
+    const request = {
+      characters: ["更"],
+      rhymeBook: snapshot.book,
+      dataVersion: snapshot.dataVersion,
+    };
+    expect(
+      lookupInSnapshot(snapshot, request).entries[0]?.candidates,
+    ).toHaveLength(2);
+    for (const candidate of snapshot.candidates)
+      if (candidate.character === "更") candidate.character = "错";
+    expect(lookupInSnapshot(snapshot, request).missing).toEqual(["更"]);
+  });
 });

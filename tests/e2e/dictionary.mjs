@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { createRequire } from "node:module";
 import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, writeFileSync, readFileSync, readdirSync } from "node:fs";
 import {
   REPO_ROOT,
   startApi,
@@ -519,6 +519,320 @@ try {
     assert.equal(active, "pc-dictionary__input");
     return { reducedMotion: true, keyboardSearch: true };
   });
+  await scenario(
+    "mobile-result-reveal-and-return-without-focus-theft",
+    async () => {
+      await viewport(375);
+      await input(".pc-dictionary__input", "月");
+      await click(".pc-dictionary__searchline button");
+      await glyph("月");
+      await waitFor(() =>
+        evaluate(
+          "document.querySelector('.pc-dictionary__folio').getBoundingClientRect().top < innerHeight / 2",
+        ),
+      );
+      await screenshot("dictionary-mobile-auto-result.png");
+      await click(".pc-dictionary__return");
+      await waitFor(() =>
+        evaluate(
+          "document.activeElement === document.querySelector('.pc-dictionary__input') && document.activeElement.getBoundingClientRect().top >= 0 && document.activeElement.getBoundingClientRect().top < innerHeight",
+        ),
+      );
+      const widths = [];
+      for (const width of [320, 375, 640]) {
+        await viewport(width);
+        const sizes = await evaluate(
+          "({width:innerWidth,scroll:document.documentElement.scrollWidth})",
+        );
+        assert.ok(sizes.scroll <= sizes.width + 1, JSON.stringify(sizes));
+        widths.push(sizes);
+      }
+      await viewport(1440);
+      return { automaticReveal: true, returnFocus: true, widths };
+    },
+  );
+  await scenario(
+    "ime-confirmation-does-not-submit-unfinished-character",
+    async () => {
+      await input(".pc-dictionary__input", "山");
+      const prevented = await evaluate(`(() => {
+      const el = document.querySelector('.pc-dictionary__input');
+      el.dispatchEvent(new CompositionEvent('compositionstart', {bubbles:true}));
+      const enter = new KeyboardEvent('keydown', {key:'Enter', code:'Enter', keyCode:229, isComposing:true, bubbles:true, cancelable:true});
+      el.dispatchEvent(enter);
+      el.form.dispatchEvent(new Event('submit', {bubbles:true,cancelable:true}));
+      el.dispatchEvent(new CompositionEvent('compositionend', {bubbles:true,data:'山'}));
+      return enter.defaultPrevented;
+    })()`);
+      assert.equal(prevented, true);
+      await new Promise((resolve) => setTimeout(resolve, 250));
+      assert.equal(
+        await evaluate("!!document.querySelector('.pc-dictionary__glyph')"),
+        false,
+      );
+      await key("Enter", "Enter", 13, 0, "\r");
+      await glyph("山");
+      return { compositionEnterPrevented: true, explicitEnterQueries: true };
+    },
+  );
+  await scenario(
+    "clipboard-keeps-review-status-version-and-current-link",
+    async () => {
+      await cdp.send("Browser.grantPermissions", {
+        origin: report.url.slice(0, -1),
+        permissions: ["clipboardReadWrite", "clipboardSanitizedWrite"],
+      });
+      await click(".pc-dictionary__actions button:nth-child(2)");
+      const text = await evaluate("navigator.clipboard.readText()");
+      assert.match(text, /山 · 平水韵/);
+      assert.match(text, /归部已核|待核/);
+      assert.match(text, /数据版本：/);
+      assert.match(text, /不替代诗中读音选择/);
+      await click(".pc-dictionary__actions button:nth-child(3)");
+      const link = new URL(await evaluate("navigator.clipboard.readText()"));
+      const params = new URLSearchParams(link.hash.split("?")[1]);
+      assert.equal(params.get("char"), "山");
+      assert.equal(params.get("book"), "pingshui");
+      return {
+        realClipboard: true,
+        reviewedStatusIncluded: true,
+        versionIncluded: true,
+        link: link.hash,
+      };
+    },
+  );
+  await scenario(
+    "full-favorites-survive-reload-without-silent-eviction",
+    async () => {
+      const favorites = [
+        ..."甲乙丙丁戊己庚辛壬癸子丑寅卯辰巳午未申酉戌亥乾坤",
+      ].map((character) => ({ character, book: "pingshui" }));
+      await evaluate(
+        `localStorage.setItem('pc-dictionary-shelf-v1', JSON.stringify({recent:[],favorites:${JSON.stringify(favorites)}}))`,
+      );
+      await cdp.send("Page.reload");
+      await waitFor(() =>
+        evaluate("!!document.querySelector('.pc-dictionary__input')"),
+      );
+      await input(".pc-dictionary__input", "月");
+      await click(".pc-dictionary__searchline button");
+      await glyph("月");
+      await click(".pc-dictionary__actions button");
+      await waitFor(() =>
+        evaluate(
+          "document.querySelector('.pc-dictionary__feedback')?.textContent.includes('已收满 24')",
+        ),
+      );
+      assert.deepEqual(
+        await evaluate(
+          "JSON.parse(localStorage.getItem('pc-dictionary-shelf-v1')).favorites",
+        ),
+        favorites,
+      );
+      assert.equal(
+        await evaluate(
+          "document.querySelector('.pc-dictionary__actions button').getAttribute('aria-pressed')",
+        ),
+        "false",
+      );
+      return {
+        existingFavorites: 24,
+        allPreserved: true,
+        capacityMessage: true,
+      };
+    },
+  );
+  await scenario(
+    "portable-shelf-file-export-import-and-invalid-file-protection",
+    async () => {
+      await click(".pc-dictionary__shelf summary");
+      await waitFor(() =>
+        evaluate(
+          "getComputedStyle(document.querySelector('.pc-dictionary__shelf'),'::details-content').opacity === '1'",
+        ),
+      );
+      const downloads = join(out, "shelf-downloads");
+      mkdirSync(downloads, { recursive: true });
+      await cdp.send("Browser.setDownloadBehavior", {
+        behavior: "allow",
+        downloadPath: downloads,
+        eventsEnabled: true,
+      });
+      await click(".pc-dictionary__shelf-tools button");
+      const file = join(downloads, "藏韵阁-我的字笺.json");
+      await waitFor(() => {
+        try {
+          return JSON.parse(readFileSync(file, "utf8")).favorites.length === 24;
+        } catch {
+          return false;
+        }
+      });
+      const exported = JSON.parse(readFileSync(file, "utf8"));
+      assert.deepEqual(Object.keys(exported).sort(), [
+        "favorites",
+        "kind",
+        "version",
+      ]);
+      await evaluate(
+        "localStorage.setItem('pc-dictionary-shelf-v1', JSON.stringify({recent:[{character:'月',book:'cilin'}],favorites:[]}))",
+      );
+      await cdp.send("Page.reload");
+      await waitFor(() =>
+        evaluate("!!document.querySelector('.pc-dictionary__shelf')"),
+      );
+      await click(".pc-dictionary__shelf summary");
+      const chooseFile = async (path) => {
+        const doc = await cdp.send("DOM.getDocument");
+        const inputNode = await cdp.send("DOM.querySelector", {
+          nodeId: doc.root.nodeId,
+          selector: ".pc-dictionary__shelf input[type=file]",
+        });
+        await cdp.send("DOM.setFileInputFiles", {
+          nodeId: inputNode.nodeId,
+          files: [path],
+        });
+      };
+      await chooseFile(file);
+      await waitFor(() =>
+        evaluate(
+          "document.querySelector('.pc-dictionary__shelf-feedback')?.textContent.includes('已导入 24')",
+        ),
+      );
+      const saved = await evaluate(
+        "JSON.parse(localStorage.getItem('pc-dictionary-shelf-v1'))",
+      );
+      assert.deepEqual(saved.favorites, exported.favorites);
+      assert.deepEqual(saved.recent, [{ character: "月", book: "cilin" }]);
+      const invalid = join(out, "invalid-shelf-test.json");
+      writeFileSync(
+        invalid,
+        JSON.stringify({
+          kind: "poetry-dictionary-shelf",
+          version: 2,
+          favorites: [],
+        }),
+      );
+      await chooseFile(invalid);
+      await waitFor(() =>
+        evaluate(
+          "document.querySelector('.pc-dictionary__shelf-feedback')?.textContent.includes('格式或版本不符')",
+        ),
+      );
+      assert.deepEqual(
+        await evaluate(
+          "JSON.parse(localStorage.getItem('pc-dictionary-shelf-v1'))",
+        ),
+        saved,
+      );
+      return {
+        realDownload: true,
+        realFileImport: true,
+        restoredFavorites: 24,
+        historyPreserved: true,
+        invalidFileRejected: true,
+      };
+    },
+  );
+  await scenario(
+    "analysis-real-30-second-timeout-blocks-copy-export-and-recovers",
+    async () => {
+      await click('[aria-controls="checker-space"]');
+      await click(".pc-examples__item");
+      const originalText = await evaluate(
+        "document.querySelector('.pc-input__text').value",
+      );
+      await click(".pc-input__submit");
+      await waitFor(() =>
+        evaluate("!!document.querySelector('.pc-status--pass')"),
+      );
+      if (
+        await evaluate(
+          "document.querySelector('.pc-plinth__toggle')?.getAttribute('aria-expanded') === 'false'",
+        )
+      )
+        await click(".pc-plinth__toggle");
+      await waitFor(() =>
+        evaluate("!document.querySelector('#pc-editor-body').inert"),
+      );
+      const sentinel = "analysis-timeout-must-not-copy-old-report";
+      await evaluate(
+        `navigator.clipboard.writeText(${JSON.stringify(sentinel)})`,
+      );
+      const downloads = join(out, "timeout-downloads");
+      mkdirSync(downloads, { recursive: true });
+      await cdp.send("Browser.setDownloadBehavior", {
+        behavior: "allow",
+        downloadPath: downloads,
+        eventsEnabled: true,
+      });
+      interception = "hold";
+      paused.length = 0;
+      await cdp.send("Fetch.enable", {
+        patterns: [{ urlPattern: "*/api/v1/analyze", requestStage: "Request" }],
+      });
+      const started = Date.now();
+      await click(".pc-input__submit");
+      await waitFor(
+        () =>
+          paused.length > 0 &&
+          evaluate(
+            "document.querySelector('.pc-input__submit').disabled && document.querySelector('.pc-input__submit').textContent.includes('分析中')",
+          ),
+      );
+      const action = async (text) => {
+        assert(
+          await evaluate(
+            `(() => {const b=[...document.querySelectorAll('#checker-space button')].find(el => el.textContent.includes(${JSON.stringify(text)})); if(!b)return false; b.focus();return true;})()`,
+          ),
+        );
+        await key("Enter", "Enter", 13, 0, "\r");
+      };
+      for (const text of ["复制摘要", "下载报告"]) await action(text);
+      assert.equal(await evaluate("navigator.clipboard.readText()"), sentinel);
+      assert.deepEqual(readdirSync(downloads), []);
+      await waitFor(
+        () =>
+          evaluate(
+            "document.querySelector('#checker-space [role=alert]')?.textContent.includes('30 秒')",
+          ),
+        33000,
+      );
+      const elapsedMs = Date.now() - started;
+      assert.ok(elapsedMs >= 29500 && elapsedMs < 34000, String(elapsedMs));
+      assert.equal(
+        await evaluate("document.querySelector('.pc-input__submit').disabled"),
+        false,
+      );
+      assert.equal(
+        await evaluate("document.querySelector('.pc-input__text').value"),
+        originalText,
+      );
+      for (const text of ["复制摘要", "下载报告"]) await action(text);
+      assert.equal(await evaluate("navigator.clipboard.readText()"), sentinel);
+      assert.deepEqual(readdirSync(downloads), []);
+      await cdp.send("Fetch.disable");
+      await click(".pc-input__submit");
+      await waitFor(() =>
+        evaluate(
+          "!document.querySelector('#checker-space [role=alert]') && !!document.querySelector('.pc-status--pass') && !document.querySelector('.pc-report--stale')",
+        ),
+      );
+      await action("复制摘要");
+      await waitFor(
+        async () =>
+          (await evaluate("navigator.clipboard.readText()")) !== sentinel,
+      );
+      return {
+        mode: "controlled-hang-real-clock",
+        elapsedMs,
+        busyButtonDisabled: true,
+        clipboardAndDownloadBlockedDuringBusyAndAfterTimeout: true,
+        inputRetained: true,
+        retry: "real-api",
+        copyRestored: true,
+      };
+    },
+  );
   assert.deepEqual(errors, []);
   report.pageErrors = errors;
 } catch (error) {

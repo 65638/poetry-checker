@@ -18,6 +18,7 @@ import type {
 import { LexiconError } from "./errors.js";
 import {
   defineSnapshot,
+  isDefinedSnapshot,
   type LexiconSnapshot,
   type SnapshotInput,
 } from "./snapshot.js";
@@ -117,16 +118,7 @@ function indexSnapshot(snapshot: LexiconSnapshot): SnapshotIndex {
     evidenceById: new Map(snapshot.evidence.map((item) => [item.id, item])),
     sourceById: new Map(snapshot.sources.map((item) => [item.id, item])),
   };
-  if (
-    Object.isFrozen(snapshot) &&
-    [
-      snapshot.candidates,
-      snapshot.groups,
-      snapshot.evidence,
-      snapshot.sources,
-    ].every(Object.isFrozen)
-  )
-    snapshotIndexes.set(snapshot, index);
+  if (isDefinedSnapshot(snapshot)) snapshotIndexes.set(snapshot, index);
   return index;
 }
 

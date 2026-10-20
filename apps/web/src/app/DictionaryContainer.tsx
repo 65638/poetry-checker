@@ -9,11 +9,14 @@ import {
   dictionaryHash,
   dictionaryText,
   extractCharacters,
+  FAVORITES_LIMIT,
+  importShelfBackup,
   readDictionaryLink,
   readShelf,
   remember,
   SHELF_KEY,
   shelfId,
+  shelfBackup,
   toggleFavorite,
   type DictionaryShelf,
   type ShelfEntry,
@@ -34,6 +37,7 @@ export function DictionaryContainer({
   const [error, setError] = useState<string | null>(null);
   const [passage, setPassage] = useState("");
   const [feedback, setFeedback] = useState<string | null>(null);
+  const [shelfFeedback, setShelfFeedback] = useState<string | null>(null);
   const [comparisons, setComparisons] = useState<BookComparison[]>([]);
   const [comparing, setComparing] = useState(false);
   const comparisonRequest = useRef(0);
@@ -71,6 +75,8 @@ export function DictionaryContainer({
       return readShelf(null);
     }
   });
+  const shelfRef = useRef(shelf);
+  shelfRef.current = shelf;
   useEffect(() => {
     try {
       window.localStorage.setItem(SHELF_KEY, JSON.stringify(shelf));
@@ -162,6 +168,7 @@ export function DictionaryContainer({
     const sync = () => {
       const entry = readDictionaryLink(window.location.hash);
       if (entry) {
+        resetPassageLookup();
         setText(entry.character);
         setBook(entry.book);
         void lookupRef.current(entry.character, entry.book);
@@ -256,6 +263,39 @@ export function DictionaryContainer({
       setFeedback("复制未成功，请允许剪贴板访问后重试。");
     }
   };
+  const exportShelf = () => {
+    const url = URL.createObjectURL(
+      new Blob([shelfBackup(shelf)], {
+        type: "application/json;charset=utf-8",
+      }),
+    );
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "藏韵阁-我的字笺.json";
+    link.click();
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+    setShelfFeedback(
+      "已导出收藏字笺。可在其他浏览器或本地地址导入；查阅结果会重新获取。",
+    );
+  };
+  const importShelf = async (file: File) => {
+    try {
+      if (file.size > 20000)
+        throw new Error("字笺文件过大，请选择本工具导出的 JSON 文件。");
+      const raw = await file.text();
+      const imported = importShelfBackup(raw, shelfRef.current);
+      setShelf(imported.shelf);
+      setShelfFeedback(
+        `已导入 ${imported.added} 条新收藏，原收藏与最近查询已保留。`,
+      );
+    } catch (cause) {
+      setShelfFeedback(
+        cause instanceof Error
+          ? cause.message
+          : "字笺导入失败，现有收藏已保留。",
+      );
+    }
+  };
   return (
     <DictionaryView
       text={text}
@@ -295,12 +335,28 @@ export function DictionaryContainer({
       passageOpen={passageOpen}
       onPassageToggle={setPassageOpen}
       shelf={shelf}
+      shelfFeedback={shelfFeedback}
+      onExportShelf={exportShelf}
+      onImportShelf={(file) => {
+        void importShelf(file);
+      }}
       onOpenEntry={openEntry}
       onClearRecent={() => setShelf((current) => ({ ...current, recent: [] }))}
       favorite={favorite}
-      onToggleFavorite={() =>
-        setShelf((current) => toggleFavorite(current, { character, book }))
-      }
+      onToggleFavorite={() => {
+        if (!favorite && shelf.favorites.length >= FAVORITES_LIMIT) {
+          setFeedback(
+            `字笺已收满 ${FAVORITES_LIMIT} 条，请先移出一条收藏再添加。原收藏已保留。`,
+          );
+          return;
+        }
+        setShelf((current) => toggleFavorite(current, { character, book }));
+        setFeedback(
+          favorite
+            ? "已移出收藏。"
+            : "已收进本机字笺。打开时会重新查询当前数据。",
+        );
+      }}
       feedback={feedback}
       onCopy={() => {
         void copy(false);

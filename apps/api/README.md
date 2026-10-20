@@ -15,6 +15,8 @@
 
 API 同时装载语境规则/证据/来源、作品元数据/证据/来源、运行规则卡。文件损坏、Schema 错误、引用缺失或同 ID 内容冲突记入 loadErrors，分析返回 503，不静默跳过。输入使用冻结 Schema 校验，模块错误码映射分别见 `src/readings-errors.ts`、`src/genre-errors.ts`、`src/lexicon-errors.ts`。
 
+2026-10-20 藏韵阁接入补充：来源接口按冻结的 `SourceResponseSchema` 返回 `{ source, evidence }`，保留原审核状态；已知来源不再固定返回503。未知来源404，资源装载冲突503，开发mock仍不提供真实来源。单字查询可返回未审核候选供查阅，不代表整诗分析或全库发布获准。
+
 ## 运行
 
 ```sh
