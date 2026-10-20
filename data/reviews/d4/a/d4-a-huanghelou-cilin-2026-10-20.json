@@ -1,0 +1,2623 @@
+{
+  "schemaVersion": "d4-review-batch-v1",
+  "batchId": "d4-a-huanghelou-cilin-2026-10-20",
+  "baseSha": "cea831befa70a8842943d240f91f9816c9c55a94",
+  "dataVersions": {
+    "pingshui": "pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4",
+    "cilin": "cilin-cwr-ff0e9c1-d3-full-clean1",
+    "xinyun": "xinyun-rebuild-d2-full"
+  },
+  "generatedBy": "scripts/data/build-d4-review-batches.ts",
+  "approvalRecord": null,
+  "work": {
+    "caseId": "golden-huanghelou-ps-v1",
+    "workId": "work:huanghelou",
+    "title": "黄鹤楼",
+    "author": "崔颢",
+    "text": "昔人已乘黄鹤去，此地空余黄鹤楼。黄鹤一去不复返，白云千载空悠悠。晴川历历汉阳树，芳草萋萋鹦鹉洲。日暮乡关何处是，烟波江上使人愁。",
+    "fingerprint": "7b65737ca79258301a2dd35cd880c41020415945c1ea006478eaf816edbf47a2",
+    "formFamily": "regulated",
+    "formId": "qilv",
+    "historicalTags": [
+      "七律",
+      "特殊拗律",
+      "半古半律"
+    ],
+    "variants": [
+      {
+        "label": "首句「昔人已乘白云去」系统",
+        "text": "昔人已乘白云去，此地空余黄鹤楼。黄鹤一去不复返，白云千载空悠悠。晴川历历汉阳树，芳草萋萋鹦鹉洲。日暮乡关何处是，烟波江上使人愁。",
+        "fingerprint": "737f6baae90975871af8241627898d4c43ce31fc8725500a597b88281f57a90a",
+        "differsAt": [
+          "首句第五、六字 黄鹤→白云"
+        ],
+        "registeredAsSeparateWork": false
+      }
+    ],
+    "sourceRef": {
+      "locator": "维基文库《黃鶴樓 (崔顥)》oldid=2492584",
+      "via": "C 的 docs/rule-sources.md §7.4（已核文本与异文）",
+      "bytesStored": true,
+      "evidenceIds": [
+        "ev:work:huanghelou:j03"
+      ],
+      "path": "data/raw/works/huanghelou-2492584.wikitext",
+      "snapshotSha256": "e6e66503c45822fa0cf56fa7547866a3c044c411bda16e71db2b8a31e868fe34"
+    },
+    "pendingItems": [
+      "逐字归部证据及未审竞争候选详见 data/reviews/golden-token-review-2026-10-18.md；不属于本文本/体裁审批"
+    ],
+    "reviewStatus": "approved",
+    "reviewers": [
+      "原件记载：组长 J03 / C；Codex 仅落库"
+    ],
+    "evidenceIds": [
+      "ev:work:huanghelou:j03"
+    ],
+    "slug": "huanghelou"
+  },
+  "book": "cilin",
+  "inputHashes": {
+    "snapshot": "ed7d80315b7cbaff6feef81d8927944b11ae90489bc1da909e251a2958887256",
+    "works": "dab656e06856cba7bcaf3a12ffd4b0479d8140451a9ab63a1349e30199d177c0",
+    "bEffective": "59e6947f0fd79d413e8f50a262fb343895fb06e7b1283ab7dd07a5acfad82adf",
+    "sourceManifest": "e72966b0b680ac62f4acaf2761c56b34b6b1eb28f992ac0c4a5a9f27d18e5201",
+    "approvalRegistry": "deec5863ba6d3a04c24ac7b4c0864847c341a21a80890b74a5a592d5c017b419",
+    "cilinIndependentReference": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a"
+  },
+  "verificationScope": "只证明本地固定来源字节、候选引用及重建一致性，不证明语文学正确性、语境取舍或许可完备；证据仍未审核。",
+  "rules": null,
+  "counts": {
+    "positions": 56,
+    "coveredPositions": 55,
+    "uniqueCandidates": 49,
+    "candidateOccurrences": 60,
+    "gaps": 1,
+    "needsReview": 17
+  },
+  "entries": [
+    {
+      "book": "cilin",
+      "candidateId": "cilin:昔:ru:第十七部·入声",
+      "character": "昔",
+      "positions": [
+        "huanghelou/l1c1"
+      ],
+      "groupIds": [
+        "group:cilin:第十七部:第十七部·入声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第十七部:第十七部·入声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第十七部/入声/134",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十七部/入声"
+      ],
+      "toneClass": "ru",
+      "tone": "Z",
+      "modernReading": null,
+      "machineStatus": "machine_checked",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录"
+      ],
+      "sourceCheck": {
+        "locator": "/第十七部/入声/134",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [
+          326
+        ],
+        "status": "exact_character_in_same_part_and_tone",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:人:ping:第六部·平声",
+      "character": "人",
+      "positions": [
+        "huanghelou/l1c2",
+        "huanghelou/l8c6"
+      ],
+      "groupIds": [
+        "group:cilin:第六部:第六部·平声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第六部:第六部·平声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第六部/平声/9",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第六部/平声"
+      ],
+      "toneClass": "ping",
+      "tone": "P",
+      "modernReading": null,
+      "machineStatus": "machine_checked",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录"
+      ],
+      "sourceCheck": {
+        "locator": "/第六部/平声/9",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [
+          124
+        ],
+        "status": "exact_character_in_same_part_and_tone",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:已:ze_unspecified:第三部·仄声",
+      "character": "已",
+      "positions": [
+        "huanghelou/l1c3"
+      ],
+      "groupIds": [
+        "group:cilin:第三部:第三部·仄声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第三部:第三部·仄声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第三部/仄声/41; /第三部/仄声/60",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第三部/仄声"
+      ],
+      "toneClass": "ze_unspecified",
+      "tone": "Z",
+      "modernReading": null,
+      "machineStatus": "machine_checked",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "B-cilin-001"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录"
+      ],
+      "sourceCheck": {
+        "locator": "/第三部/仄声/41; /第三部/仄声/60",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [
+          63
+        ],
+        "status": "exact_character_in_same_part_and_tone",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:乘:ping:第十一部·平声",
+      "character": "乘",
+      "positions": [
+        "huanghelou/l1c4"
+      ],
+      "groupIds": [
+        "group:cilin:第十一部:第十一部·平声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第十一部:第十一部·平声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第十一部/平声/204",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十一部/平声"
+      ],
+      "toneClass": "ping",
+      "tone": "P",
+      "modernReading": null,
+      "machineStatus": "machine_checked",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录"
+      ],
+      "sourceCheck": {
+        "locator": "/第十一部/平声/204",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [
+          238
+        ],
+        "status": "exact_character_in_same_part_and_tone",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:乘:ze_unspecified:第十一部·仄声",
+      "character": "乘",
+      "positions": [
+        "huanghelou/l1c4"
+      ],
+      "groupIds": [
+        "group:cilin:第十一部:第十一部·仄声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第十一部:第十一部·仄声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第十一部/仄声/115",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十一部/仄声"
+      ],
+      "toneClass": "ze_unspecified",
+      "tone": "Z",
+      "modernReading": null,
+      "machineStatus": "machine_checked",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "B-cilin-001"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录"
+      ],
+      "sourceCheck": {
+        "locator": "/第十一部/仄声/115",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [
+          248
+        ],
+        "status": "exact_character_in_same_part_and_tone",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:黄:ping:第二部·平声",
+      "character": "黄",
+      "positions": [
+        "huanghelou/l1c5",
+        "huanghelou/l2c5",
+        "huanghelou/l3c1"
+      ],
+      "groupIds": [
+        "group:cilin:第二部:第二部·平声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第二部:第二部·平声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第二部/平声/95",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第二部/平声"
+      ],
+      "toneClass": "ping",
+      "tone": "P",
+      "modernReading": null,
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-CILIN-REFERENCE-GLYPH"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "独立繁体底本同部同声未见本候选原字；须逐字取得异体或归部依据，不能自动换字"
+      ],
+      "sourceCheck": {
+        "locator": "/第二部/平声/95",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [],
+        "status": "needs_review",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:鹤:ru:第十六部·入声",
+      "character": "鹤",
+      "positions": [
+        "huanghelou/l1c6",
+        "huanghelou/l2c6",
+        "huanghelou/l3c2"
+      ],
+      "groupIds": [
+        "group:cilin:第十六部:第十六部·入声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第十六部:第十六部·入声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第十六部/入声/41",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十六部/入声"
+      ],
+      "toneClass": "ru",
+      "tone": "Z",
+      "modernReading": null,
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-CILIN-REFERENCE-GLYPH"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "独立繁体底本同部同声未见本候选原字；须逐字取得异体或归部依据，不能自动换字"
+      ],
+      "sourceCheck": {
+        "locator": "/第十六部/入声/41",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [],
+        "status": "needs_review",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:去:ze_unspecified:第四部·仄声",
+      "character": "去",
+      "positions": [
+        "huanghelou/l1c7",
+        "huanghelou/l3c4"
+      ],
+      "groupIds": [
+        "group:cilin:第四部:第四部·仄声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第四部:第四部·仄声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第四部/仄声/37; /第四部/仄声/155",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第四部/仄声"
+      ],
+      "toneClass": "ze_unspecified",
+      "tone": "Z",
+      "modernReading": null,
+      "machineStatus": "machine_checked",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "B-cilin-001"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录"
+      ],
+      "sourceCheck": {
+        "locator": "/第四部/仄声/37; /第四部/仄声/155",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [
+          91,
+          95
+        ],
+        "status": "exact_character_in_same_part_and_tone",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:此:ze_unspecified:第三部·仄声",
+      "character": "此",
+      "positions": [
+        "huanghelou/l2c1"
+      ],
+      "groupIds": [
+        "group:cilin:第三部:第三部·仄声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第三部:第三部·仄声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第三部/仄声/14",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第三部/仄声"
+      ],
+      "toneClass": "ze_unspecified",
+      "tone": "Z",
+      "modernReading": null,
+      "machineStatus": "machine_checked",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "B-cilin-001"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录"
+      ],
+      "sourceCheck": {
+        "locator": "/第三部/仄声/14",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [
+          63
+        ],
+        "status": "exact_character_in_same_part_and_tone",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:地:ze_unspecified:第三部·仄声",
+      "character": "地",
+      "positions": [
+        "huanghelou/l2c2"
+      ],
+      "groupIds": [
+        "group:cilin:第三部:第三部·仄声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第三部:第三部·仄声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第三部/仄声/175",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第三部/仄声"
+      ],
+      "toneClass": "ze_unspecified",
+      "tone": "Z",
+      "modernReading": null,
+      "machineStatus": "machine_checked",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "B-cilin-001"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录"
+      ],
+      "sourceCheck": {
+        "locator": "/第三部/仄声/175",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [
+          71
+        ],
+        "status": "exact_character_in_same_part_and_tone",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:空:ping:第一部·平声",
+      "character": "空",
+      "positions": [
+        "huanghelou/l2c3",
+        "huanghelou/l4c5"
+      ],
+      "groupIds": [
+        "group:cilin:第一部:第一部·平声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第一部:第一部·平声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第一部/平声/38",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第一部/平声"
+      ],
+      "toneClass": "ping",
+      "tone": "P",
+      "modernReading": null,
+      "machineStatus": "machine_checked",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录"
+      ],
+      "sourceCheck": {
+        "locator": "/第一部/平声/38",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [
+          14
+        ],
+        "status": "exact_character_in_same_part_and_tone",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:空:ze_unspecified:第一部·仄声",
+      "character": "空",
+      "positions": [
+        "huanghelou/l2c3",
+        "huanghelou/l4c5"
+      ],
+      "groupIds": [
+        "group:cilin:第一部:第一部·仄声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第一部:第一部·仄声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第一部/仄声/52",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第一部/仄声"
+      ],
+      "toneClass": "ze_unspecified",
+      "tone": "Z",
+      "modernReading": null,
+      "machineStatus": "machine_checked",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "B-cilin-001"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录"
+      ],
+      "sourceCheck": {
+        "locator": "/第一部/仄声/52",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [
+          24
+        ],
+        "status": "exact_character_in_same_part_and_tone",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:楼:ping:第十二部·平声",
+      "character": "楼",
+      "positions": [
+        "huanghelou/l2c7"
+      ],
+      "groupIds": [
+        "group:cilin:第十二部:第十二部·平声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第十二部:第十二部·平声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第十二部/平声/57",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十二部/平声"
+      ],
+      "toneClass": "ping",
+      "tone": "P",
+      "modernReading": null,
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-CILIN-REFERENCE-GLYPH"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "独立繁体底本同部同声未见本候选原字；须逐字取得异体或归部依据，不能自动换字"
+      ],
+      "sourceCheck": {
+        "locator": "/第十二部/平声/57",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [],
+        "status": "needs_review",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:一:ru:第十七部·入声",
+      "character": "一",
+      "positions": [
+        "huanghelou/l3c3"
+      ],
+      "groupIds": [
+        "group:cilin:第十七部:第十七部·入声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第十七部:第十七部·入声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第十七部/入声/8",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十七部/入声"
+      ],
+      "toneClass": "ru",
+      "tone": "Z",
+      "modernReading": null,
+      "machineStatus": "machine_checked",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录"
+      ],
+      "sourceCheck": {
+        "locator": "/第十七部/入声/8",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [
+          324
+        ],
+        "status": "exact_character_in_same_part_and_tone",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:不:ping:第十二部·平声",
+      "character": "不",
+      "positions": [
+        "huanghelou/l3c5"
+      ],
+      "groupIds": [
+        "group:cilin:第十二部:第十二部·平声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第十二部:第十二部·平声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第十二部/平声/116",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十二部/平声"
+      ],
+      "toneClass": "ping",
+      "tone": "P",
+      "modernReading": null,
+      "machineStatus": "machine_checked",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录"
+      ],
+      "sourceCheck": {
+        "locator": "/第十二部/平声/116",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [
+          255
+        ],
+        "status": "exact_character_in_same_part_and_tone",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:不:ru:第十八部·入声",
+      "character": "不",
+      "positions": [
+        "huanghelou/l3c5"
+      ],
+      "groupIds": [
+        "group:cilin:第十八部:第十八部·入声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第十八部:第十八部·入声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第十八部/入声/23",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十八部/入声"
+      ],
+      "toneClass": "ru",
+      "tone": "Z",
+      "modernReading": null,
+      "machineStatus": "machine_checked",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录"
+      ],
+      "sourceCheck": {
+        "locator": "/第十八部/入声/23",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [
+          339
+        ],
+        "status": "exact_character_in_same_part_and_tone",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:复:ze_unspecified:第十二部·仄声",
+      "character": "复",
+      "positions": [
+        "huanghelou/l3c6"
+      ],
+      "groupIds": [
+        "group:cilin:第十二部:第十二部·仄声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第十二部:第十二部·仄声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第十二部/仄声/102",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十二部/仄声"
+      ],
+      "toneClass": "ze_unspecified",
+      "tone": "Z",
+      "modernReading": null,
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "B-cilin-001",
+        "D4-A-CILIN-REFERENCE-GLYPH"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "独立繁体底本同部同声未见本候选原字；须逐字取得异体或归部依据，不能自动换字"
+      ],
+      "sourceCheck": {
+        "locator": "/第十二部/仄声/102",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [],
+        "status": "needs_review",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:复:ru:第十五部·入声",
+      "character": "复",
+      "positions": [
+        "huanghelou/l3c6"
+      ],
+      "groupIds": [
+        "group:cilin:第十五部:第十五部·入声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第十五部:第十五部·入声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第十五部/入声/31; /第十五部/入声/85",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十五部/入声"
+      ],
+      "toneClass": "ru",
+      "tone": "Z",
+      "modernReading": null,
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-CILIN-REFERENCE-GLYPH"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "独立繁体底本同部同声未见本候选原字；须逐字取得异体或归部依据，不能自动换字"
+      ],
+      "sourceCheck": {
+        "locator": "/第十五部/入声/31; /第十五部/入声/85",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [],
+        "status": "needs_review",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:返:ze_unspecified:第七部·仄声",
+      "character": "返",
+      "positions": [
+        "huanghelou/l3c7"
+      ],
+      "groupIds": [
+        "group:cilin:第七部:第七部·仄声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第七部:第七部·仄声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第七部/仄声/4",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第七部/仄声"
+      ],
+      "toneClass": "ze_unspecified",
+      "tone": "Z",
+      "modernReading": null,
+      "machineStatus": "machine_checked",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "B-cilin-001"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录"
+      ],
+      "sourceCheck": {
+        "locator": "/第七部/仄声/4",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [
+          159
+        ],
+        "status": "exact_character_in_same_part_and_tone",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:白:ru:第十七部·入声",
+      "character": "白",
+      "positions": [
+        "huanghelou/l4c1"
+      ],
+      "groupIds": [
+        "group:cilin:第十七部:第十七部·入声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第十七部:第十七部·入声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第十七部/入声/72",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十七部/入声"
+      ],
+      "toneClass": "ru",
+      "tone": "Z",
+      "modernReading": null,
+      "machineStatus": "machine_checked",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录"
+      ],
+      "sourceCheck": {
+        "locator": "/第十七部/入声/72",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [
+          326
+        ],
+        "status": "exact_character_in_same_part_and_tone",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:云:ping:第六部·平声",
+      "character": "云",
+      "positions": [
+        "huanghelou/l4c2"
+      ],
+      "groupIds": [
+        "group:cilin:第六部:第六部·平声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第六部:第六部·平声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第六部/平声/95",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第六部/平声"
+      ],
+      "toneClass": "ping",
+      "tone": "P",
+      "modernReading": null,
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-CILIN-REFERENCE-GLYPH"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "独立繁体底本同部同声未见本候选原字；须逐字取得异体或归部依据，不能自动换字"
+      ],
+      "sourceCheck": {
+        "locator": "/第六部/平声/95",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [],
+        "status": "needs_review",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:千:ping:第七部·平声",
+      "character": "千",
+      "positions": [
+        "huanghelou/l4c3"
+      ],
+      "groupIds": [
+        "group:cilin:第七部:第七部·平声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第七部:第七部·平声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第七部/平声/154",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第七部/平声"
+      ],
+      "toneClass": "ping",
+      "tone": "P",
+      "modernReading": null,
+      "machineStatus": "machine_checked",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录"
+      ],
+      "sourceCheck": {
+        "locator": "/第七部/平声/154",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [
+          155
+        ],
+        "status": "exact_character_in_same_part_and_tone",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:载:ze_unspecified:第五部·仄声",
+      "character": "载",
+      "positions": [
+        "huanghelou/l4c4"
+      ],
+      "groupIds": [
+        "group:cilin:第五部:第五部·仄声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第五部:第五部·仄声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第五部/仄声/27; /第五部/仄声/90",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第五部/仄声"
+      ],
+      "toneClass": "ze_unspecified",
+      "tone": "Z",
+      "modernReading": null,
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "B-cilin-001",
+        "D4-A-CILIN-REFERENCE-GLYPH"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "独立繁体底本同部同声未见本候选原字；须逐字取得异体或归部依据，不能自动换字"
+      ],
+      "sourceCheck": {
+        "locator": "/第五部/仄声/27; /第五部/仄声/90",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [],
+        "status": "needs_review",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:悠:ping:第十二部·平声",
+      "character": "悠",
+      "positions": [
+        "huanghelou/l4c6",
+        "huanghelou/l4c7"
+      ],
+      "groupIds": [
+        "group:cilin:第十二部:第十二部·平声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第十二部:第十二部·平声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第十二部/平声/14",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十二部/平声"
+      ],
+      "toneClass": "ping",
+      "tone": "P",
+      "modernReading": null,
+      "machineStatus": "machine_checked",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录"
+      ],
+      "sourceCheck": {
+        "locator": "/第十二部/平声/14",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [
+          255
+        ],
+        "status": "exact_character_in_same_part_and_tone",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:晴:ping:第十一部·平声",
+      "character": "晴",
+      "positions": [
+        "huanghelou/l5c1"
+      ],
+      "groupIds": [
+        "group:cilin:第十一部:第十一部·平声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第十一部:第十一部·平声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第十一部/平声/48",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十一部/平声"
+      ],
+      "toneClass": "ping",
+      "tone": "P",
+      "modernReading": null,
+      "machineStatus": "machine_checked",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录"
+      ],
+      "sourceCheck": {
+        "locator": "/第十一部/平声/48",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [
+          234
+        ],
+        "status": "exact_character_in_same_part_and_tone",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:川:ping:第七部·平声",
+      "character": "川",
+      "positions": [
+        "huanghelou/l5c2"
+      ],
+      "groupIds": [
+        "group:cilin:第七部:第七部·平声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第七部:第七部·平声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第七部/平声/206",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第七部/平声"
+      ],
+      "toneClass": "ping",
+      "tone": "P",
+      "modernReading": null,
+      "machineStatus": "machine_checked",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录"
+      ],
+      "sourceCheck": {
+        "locator": "/第七部/平声/206",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [
+          155
+        ],
+        "status": "exact_character_in_same_part_and_tone",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:历:ru:第十七部·入声",
+      "character": "历",
+      "positions": [
+        "huanghelou/l5c3",
+        "huanghelou/l5c4"
+      ],
+      "groupIds": [
+        "group:cilin:第十七部:第十七部·入声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第十七部:第十七部·入声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第十七部/入声/187",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十七部/入声"
+      ],
+      "toneClass": "ru",
+      "tone": "Z",
+      "modernReading": null,
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-CILIN-REFERENCE-GLYPH"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "独立繁体底本同部同声未见本候选原字；须逐字取得异体或归部依据，不能自动换字"
+      ],
+      "sourceCheck": {
+        "locator": "/第十七部/入声/187",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [],
+        "status": "needs_review",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:汉:ze_unspecified:第七部·仄声",
+      "character": "汉",
+      "positions": [
+        "huanghelou/l5c5"
+      ],
+      "groupIds": [
+        "group:cilin:第七部:第七部·仄声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第七部:第七部·仄声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第七部/仄声/158",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第七部/仄声"
+      ],
+      "toneClass": "ze_unspecified",
+      "tone": "Z",
+      "modernReading": null,
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "B-cilin-001",
+        "D4-A-CILIN-REFERENCE-GLYPH"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "独立繁体底本同部同声未见本候选原字；须逐字取得异体或归部依据，不能自动换字"
+      ],
+      "sourceCheck": {
+        "locator": "/第七部/仄声/158",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [],
+        "status": "needs_review",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:阳:ping:第二部·平声",
+      "character": "阳",
+      "positions": [
+        "huanghelou/l5c6"
+      ],
+      "groupIds": [
+        "group:cilin:第二部:第二部·平声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第二部:第二部·平声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第二部/平声/17",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第二部/平声"
+      ],
+      "toneClass": "ping",
+      "tone": "P",
+      "modernReading": null,
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-CILIN-REFERENCE-GLYPH"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "独立繁体底本同部同声未见本候选原字；须逐字取得异体或归部依据，不能自动换字"
+      ],
+      "sourceCheck": {
+        "locator": "/第二部/平声/17",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [],
+        "status": "needs_review",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:树:ze_unspecified:第四部·仄声",
+      "character": "树",
+      "positions": [
+        "huanghelou/l5c7"
+      ],
+      "groupIds": [
+        "group:cilin:第四部:第四部·仄声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第四部:第四部·仄声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第四部/仄声/66; /第四部/仄声/189",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第四部/仄声"
+      ],
+      "toneClass": "ze_unspecified",
+      "tone": "Z",
+      "modernReading": null,
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "B-cilin-001",
+        "D4-A-CILIN-REFERENCE-GLYPH"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "独立繁体底本同部同声未见本候选原字；须逐字取得异体或归部依据，不能自动换字"
+      ],
+      "sourceCheck": {
+        "locator": "/第四部/仄声/66; /第四部/仄声/189",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [],
+        "status": "needs_review",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:芳:ping:第二部·平声",
+      "character": "芳",
+      "positions": [
+        "huanghelou/l6c1"
+      ],
+      "groupIds": [
+        "group:cilin:第二部:第二部·平声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第二部:第二部·平声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第二部/平声/24",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第二部/平声"
+      ],
+      "toneClass": "ping",
+      "tone": "P",
+      "modernReading": null,
+      "machineStatus": "machine_checked",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录"
+      ],
+      "sourceCheck": {
+        "locator": "/第二部/平声/24",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [
+          35
+        ],
+        "status": "exact_character_in_same_part_and_tone",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:草:ze_unspecified:第八部·仄声",
+      "character": "草",
+      "positions": [
+        "huanghelou/l6c2"
+      ],
+      "groupIds": [
+        "group:cilin:第八部:第八部·仄声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第八部:第八部·仄声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第八部/仄声/87",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第八部/仄声"
+      ],
+      "toneClass": "ze_unspecified",
+      "tone": "Z",
+      "modernReading": null,
+      "machineStatus": "machine_checked",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "B-cilin-001"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录"
+      ],
+      "sourceCheck": {
+        "locator": "/第八部/仄声/87",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [
+          192
+        ],
+        "status": "exact_character_in_same_part_and_tone",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:萋:ping:第三部·平声",
+      "character": "萋",
+      "positions": [
+        "huanghelou/l6c3",
+        "huanghelou/l6c4"
+      ],
+      "groupIds": [
+        "group:cilin:第三部:第三部·平声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第三部:第三部·平声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第三部/平声/231",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第三部/平声"
+      ],
+      "toneClass": "ping",
+      "tone": "P",
+      "modernReading": null,
+      "machineStatus": "machine_checked",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录"
+      ],
+      "sourceCheck": {
+        "locator": "/第三部/平声/231",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [
+          57
+        ],
+        "status": "exact_character_in_same_part_and_tone",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:鹦:ping:第十一部·平声",
+      "character": "鹦",
+      "positions": [
+        "huanghelou/l6c5"
+      ],
+      "groupIds": [
+        "group:cilin:第十一部:第十一部·平声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第十一部:第十一部·平声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第十一部/平声/87",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十一部/平声"
+      ],
+      "toneClass": "ping",
+      "tone": "P",
+      "modernReading": null,
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-CILIN-REFERENCE-GLYPH"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "独立繁体底本同部同声未见本候选原字；须逐字取得异体或归部依据，不能自动换字"
+      ],
+      "sourceCheck": {
+        "locator": "/第十一部/平声/87",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [],
+        "status": "needs_review",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:鹉:ze_unspecified:第四部·仄声",
+      "character": "鹉",
+      "positions": [
+        "huanghelou/l6c6"
+      ],
+      "groupIds": [
+        "group:cilin:第四部:第四部·仄声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第四部:第四部·仄声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第四部/仄声/118",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第四部/仄声"
+      ],
+      "toneClass": "ze_unspecified",
+      "tone": "Z",
+      "modernReading": null,
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "B-cilin-001",
+        "D4-A-CILIN-REFERENCE-GLYPH"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "独立繁体底本同部同声未见本候选原字；须逐字取得异体或归部依据，不能自动换字"
+      ],
+      "sourceCheck": {
+        "locator": "/第四部/仄声/118",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [],
+        "status": "needs_review",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:洲:ping:第十二部·平声",
+      "character": "洲",
+      "positions": [
+        "huanghelou/l6c7"
+      ],
+      "groupIds": [
+        "group:cilin:第十二部:第十二部·平声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第十二部:第十二部·平声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第十二部/平声/22",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十二部/平声"
+      ],
+      "toneClass": "ping",
+      "tone": "P",
+      "modernReading": null,
+      "machineStatus": "machine_checked",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录"
+      ],
+      "sourceCheck": {
+        "locator": "/第十二部/平声/22",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [
+          255
+        ],
+        "status": "exact_character_in_same_part_and_tone",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:日:ru:第十七部·入声",
+      "character": "日",
+      "positions": [
+        "huanghelou/l7c1"
+      ],
+      "groupIds": [
+        "group:cilin:第十七部:第十七部·入声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第十七部:第十七部·入声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第十七部/入声/1",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十七部/入声"
+      ],
+      "toneClass": "ru",
+      "tone": "Z",
+      "modernReading": null,
+      "machineStatus": "machine_checked",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录"
+      ],
+      "sourceCheck": {
+        "locator": "/第十七部/入声/1",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [
+          324
+        ],
+        "status": "exact_character_in_same_part_and_tone",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:暮:ze_unspecified:第四部·仄声",
+      "character": "暮",
+      "positions": [
+        "huanghelou/l7c2"
+      ],
+      "groupIds": [
+        "group:cilin:第四部:第四部·仄声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第四部:第四部·仄声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第四部/仄声/210",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第四部/仄声"
+      ],
+      "toneClass": "ze_unspecified",
+      "tone": "Z",
+      "modernReading": null,
+      "machineStatus": "machine_checked",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "B-cilin-001"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录"
+      ],
+      "sourceCheck": {
+        "locator": "/第四部/仄声/210",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [
+          97
+        ],
+        "status": "exact_character_in_same_part_and_tone",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:乡:ping:第二部·平声",
+      "character": "乡",
+      "positions": [
+        "huanghelou/l7c3"
+      ],
+      "groupIds": [
+        "group:cilin:第二部:第二部·平声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第二部:第二部·平声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第二部/平声/42",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第二部/平声"
+      ],
+      "toneClass": "ping",
+      "tone": "P",
+      "modernReading": null,
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-CILIN-REFERENCE-GLYPH"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "独立繁体底本同部同声未见本候选原字；须逐字取得异体或归部依据，不能自动换字"
+      ],
+      "sourceCheck": {
+        "locator": "/第二部/平声/42",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [],
+        "status": "needs_review",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:关:ping:第七部·平声",
+      "character": "关",
+      "positions": [
+        "huanghelou/l7c4"
+      ],
+      "groupIds": [
+        "group:cilin:第七部:第七部·平声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第七部:第七部·平声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第七部/平声/116",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第七部/平声"
+      ],
+      "toneClass": "ping",
+      "tone": "P",
+      "modernReading": null,
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-CILIN-REFERENCE-GLYPH"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "独立繁体底本同部同声未见本候选原字；须逐字取得异体或归部依据，不能自动换字"
+      ],
+      "sourceCheck": {
+        "locator": "/第七部/平声/116",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [],
+        "status": "needs_review",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:何:ping:第九部·平声",
+      "character": "何",
+      "positions": [
+        "huanghelou/l7c5"
+      ],
+      "groupIds": [
+        "group:cilin:第九部:第九部·平声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第九部:第九部·平声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第九部/平声/16",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第九部/平声"
+      ],
+      "toneClass": "ping",
+      "tone": "P",
+      "modernReading": null,
+      "machineStatus": "machine_checked",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录"
+      ],
+      "sourceCheck": {
+        "locator": "/第九部/平声/16",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [
+          205
+        ],
+        "status": "exact_character_in_same_part_and_tone",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:处:ze_unspecified:第四部·仄声",
+      "character": "处",
+      "positions": [
+        "huanghelou/l7c6"
+      ],
+      "groupIds": [
+        "group:cilin:第四部:第四部·仄声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第四部:第四部·仄声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第四部/仄声/18; /第四部/仄声/154",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第四部/仄声"
+      ],
+      "toneClass": "ze_unspecified",
+      "tone": "Z",
+      "modernReading": null,
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "B-cilin-001",
+        "D4-A-CILIN-REFERENCE-GLYPH"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "独立繁体底本同部同声未见本候选原字；须逐字取得异体或归部依据，不能自动换字"
+      ],
+      "sourceCheck": {
+        "locator": "/第四部/仄声/18; /第四部/仄声/154",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [],
+        "status": "needs_review",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:是:ze_unspecified:第三部·仄声",
+      "character": "是",
+      "positions": [
+        "huanghelou/l7c7"
+      ],
+      "groupIds": [
+        "group:cilin:第三部:第三部·仄声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第三部:第三部·仄声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第三部/仄声/3",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第三部/仄声"
+      ],
+      "toneClass": "ze_unspecified",
+      "tone": "Z",
+      "modernReading": null,
+      "machineStatus": "machine_checked",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "B-cilin-001"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录"
+      ],
+      "sourceCheck": {
+        "locator": "/第三部/仄声/3",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [
+          63
+        ],
+        "status": "exact_character_in_same_part_and_tone",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:烟:ping:第七部·平声",
+      "character": "烟",
+      "positions": [
+        "huanghelou/l8c1"
+      ],
+      "groupIds": [
+        "group:cilin:第七部:第七部·平声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第七部:第七部·平声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第七部/平声/162",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第七部/平声"
+      ],
+      "toneClass": "ping",
+      "tone": "P",
+      "modernReading": null,
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-CILIN-REFERENCE-GLYPH"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "独立繁体底本同部同声未见本候选原字；须逐字取得异体或归部依据，不能自动换字"
+      ],
+      "sourceCheck": {
+        "locator": "/第七部/平声/162",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [],
+        "status": "needs_review",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:波:ping:第九部·平声",
+      "character": "波",
+      "positions": [
+        "huanghelou/l8c2"
+      ],
+      "groupIds": [
+        "group:cilin:第九部:第九部·平声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第九部:第九部·平声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第九部/平声/7",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第九部/平声"
+      ],
+      "toneClass": "ping",
+      "tone": "P",
+      "modernReading": null,
+      "machineStatus": "machine_checked",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录"
+      ],
+      "sourceCheck": {
+        "locator": "/第九部/平声/7",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [
+          205
+        ],
+        "status": "exact_character_in_same_part_and_tone",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:江:ping:第二部·平声",
+      "character": "江",
+      "positions": [
+        "huanghelou/l8c3"
+      ],
+      "groupIds": [
+        "group:cilin:第二部:第二部·平声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第二部:第二部·平声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第二部/平声/0",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第二部/平声"
+      ],
+      "toneClass": "ping",
+      "tone": "P",
+      "modernReading": null,
+      "machineStatus": "machine_checked",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录"
+      ],
+      "sourceCheck": {
+        "locator": "/第二部/平声/0",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [
+          33
+        ],
+        "status": "exact_character_in_same_part_and_tone",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:上:ze_unspecified:第二部·仄声",
+      "character": "上",
+      "positions": [
+        "huanghelou/l8c4"
+      ],
+      "groupIds": [
+        "group:cilin:第二部:第二部·仄声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第二部:第二部·仄声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第二部/仄声/46; /第二部/仄声/80",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第二部/仄声"
+      ],
+      "toneClass": "ze_unspecified",
+      "tone": "Z",
+      "modernReading": null,
+      "machineStatus": "machine_checked",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "B-cilin-001"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录"
+      ],
+      "sourceCheck": {
+        "locator": "/第二部/仄声/46; /第二部/仄声/80",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [
+          42,
+          46
+        ],
+        "status": "exact_character_in_same_part_and_tone",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:使:ze_unspecified:第三部·仄声",
+      "character": "使",
+      "positions": [
+        "huanghelou/l8c5"
+      ],
+      "groupIds": [
+        "group:cilin:第三部:第三部·仄声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第三部:第三部·仄声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第三部/仄声/67; /第三部/仄声/203",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第三部/仄声"
+      ],
+      "toneClass": "ze_unspecified",
+      "tone": "Z",
+      "modernReading": null,
+      "machineStatus": "machine_checked",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "B-cilin-001"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录"
+      ],
+      "sourceCheck": {
+        "locator": "/第三部/仄声/67; /第三部/仄声/203",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [
+          63,
+          71
+        ],
+        "status": "exact_character_in_same_part_and_tone",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "cilin",
+      "candidateId": "cilin:愁:ping:第十二部·平声",
+      "character": "愁",
+      "positions": [
+        "huanghelou/l8c7"
+      ],
+      "groupIds": [
+        "group:cilin:第十二部:第十二部·平声"
+      ],
+      "evidenceIds": [
+        "ev:cilin:第十二部:第十二部·平声"
+      ],
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "locator": "/第十二部/平声/40",
+      "snapshotLocator": [
+        "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十二部/平声"
+      ],
+      "toneClass": "ping",
+      "tone": "P",
+      "modernReading": null,
+      "machineStatus": "machine_checked",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录"
+      ],
+      "sourceCheck": {
+        "locator": "/第十二部/平声/40",
+        "rawReadings": [],
+        "sourceLine": null,
+        "reconstructionMatches": null
+      },
+      "independentSource": {
+        "sourceId": "src:wikisource:cilinzhengyun",
+        "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+        "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+        "revision": "2123337",
+        "lines": [
+          255
+        ],
+        "status": "exact_character_in_same_part_and_tone",
+        "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+      },
+      "otherReadingsInSameGroup": []
+    }
+  ],
+  "gaps": [
+    {
+      "id": "D4-A-CILIN-YU-MISSING",
+      "book": "cilin",
+      "positions": [
+        "huanghelou/l2c4"
+      ],
+      "character": "余",
+      "status": "needs_review",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "variantsAtSource": [
+        {
+          "character": "余",
+          "locations": [],
+          "candidateIds": []
+        },
+        {
+          "character": "餘",
+          "locations": [],
+          "candidateIds": []
+        },
+        {
+          "character": "馀",
+          "locations": [
+            "/第四部/平声/11"
+          ],
+          "candidateIds": [
+            "cilin:馀:ping:第四部·平声"
+          ]
+        }
+      ],
+      "variantEdges": [
+        {
+          "id": "edge-餘-余",
+          "from": "餘",
+          "fromCodePoint": "U+9918",
+          "to": "余",
+          "toCodePoint": "U+4F59",
+          "relation": "traditional_to_simplified",
+          "basis": "繁体底本区分「余」（第一人称）与「餘」（剩余）；cwr 简体词林表整表未收「余」，收「馀」(U+9980)。",
+          "locators": [
+            "data/raw/wikisource/PingshuiYun-8264804.wikitext（上平聲六魚含「余予譽輿餘…」）",
+            "data/raw/chinese_word_rhyme/Pingshui_Rhyme.json:848（余）、:852（馀）",
+            "data/raw/chinese_word_rhyme/Cilin_Rhyme.json:1344（馀）"
+          ],
+          "status": "pending_review",
+          "note": "「余」与「餘」在繁体底本中本非同一字，本边仅用于查询召回，**不得**据此认定二者义项相同。"
+        },
+        {
+          "id": "edge-馀-余",
+          "from": "馀",
+          "fromCodePoint": "U+9980",
+          "to": "余",
+          "toCodePoint": "U+4F59",
+          "relation": "variant_form",
+          "basis": "「馀」是 cwr 简体表对「餘」所用的写法；词林表只用此形，导致正文「余」查不到。",
+          "locators": [
+            "data/raw/chinese_word_rhyme/Cilin_Rhyme.json:1344"
+          ],
+          "status": "pending_review",
+          "note": "同上：仅召回用，不等价合并。"
+        }
+      ],
+      "independentReference": [
+        {
+          "character": "余",
+          "sourceId": "src:wikisource:cilinzhengyun",
+          "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+          "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+          "revision": "2123337",
+          "lines": [],
+          "status": "needs_review",
+          "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+        },
+        {
+          "character": "餘",
+          "sourceId": "src:wikisource:cilinzhengyun",
+          "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+          "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+          "revision": "2123337",
+          "lines": [
+            85
+          ],
+          "status": "exact_character_in_same_part_and_tone",
+          "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+        },
+        {
+          "character": "馀",
+          "sourceId": "src:wikisource:cilinzhengyun",
+          "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+          "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+          "revision": "2123337",
+          "lines": [],
+          "status": "needs_review",
+          "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+        }
+      ],
+      "conclusion": "cwr 原表不收余、餘；收馀于第四部/平声。馀→余边仍待审核；不能自动迁移候选或覆盖正文。固定词林底本原字核对见 independentReference。",
+      "nextAction": "按固定底本复核馀/余的本句字义及异体关系，提交精确异体边审批；若采用补丁，保留原文与原候选并另升版本。"
+    }
+  ],
+  "excludedScope": [
+    "未列举候选",
+    "所属整部",
+    "全库发布",
+    "语境选音",
+    "异体边自动生效",
+    "上游转载授权结论"
+  ]
+}

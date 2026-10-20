@@ -1,0 +1,33 @@
+{
+  "requestId": "d4-a-approval-request-01",
+  "status": "awaiting_exact_acceptance",
+  "approvalRecord": null,
+  "sourceBatch": "data/reviews/d4/a/d4-a-dengguanquelou-cilin-2026-10-20.json",
+  "sourceBatchSha256": "a665a9d53ded2eb01741ff624684583d98427f8d5f59bd8fc1a3c721ef982399",
+  "candidateIds": [
+    "cilin:白:ru:第十七部·入声",
+    "cilin:日:ru:第十七部·入声",
+    "cilin:依:ping:第三部·平声",
+    "cilin:山:ping:第七部·平声",
+    "cilin:河:ping:第九部·平声",
+    "cilin:入:ru:第十七部·入声",
+    "cilin:海:ze_unspecified:第五部·仄声",
+    "cilin:流:ping:第十二部·平声",
+    "cilin:欲:ru:第十五部·入声",
+    "cilin:千:ping:第七部·平声",
+    "cilin:里:ze_unspecified:第三部·仄声",
+    "cilin:目:ru:第十五部·入声",
+    "cilin:更:ping:第十一部·平声",
+    "cilin:更:ze_unspecified:第十一部·仄声",
+    "cilin:上:ze_unspecified:第二部·仄声",
+    "cilin:一:ru:第十七部·入声"
+  ],
+  "excludedCandidateIds": [
+    "cilin:尽:ze_unspecified:第六部·仄声",
+    "cilin:黄:ping:第二部·平声",
+    "cilin:穷:ping:第一部·平声",
+    "cilin:层:ping:第十一部·平声",
+    "cilin:楼:ping:第十二部·平声"
+  ],
+  "scope": "只请求接受明确列举的词林候选归部；更的平仄竞争候选均保留，不裁定语境，不批准整部/整库/许可。其余5候选、新韵及余的缺口不在本请求中。"
+}

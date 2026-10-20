@@ -60,9 +60,28 @@ import {
 
 // ---------------------------------------------------------------- 常量
 
-const REPORT_DATE = "2026-10-18";
-const OUT_JSON = `data/reviews/ai-lexicon-precheck-${REPORT_DATE}.json`;
-const OUT_MD = `data/reviews/ai-lexicon-precheck-${REPORT_DATE}.md`;
+// 新批次可独立归档，默认仍保留原入口；不覆盖历史报告才传以下参数。
+function option(name: string, fallback: string): string {
+  const index = process.argv.indexOf(name);
+  if (index < 0) return fallback;
+  const value = process.argv[index + 1];
+  if (!value || value.startsWith("--")) throw new Error(`${name} 缺少参数`);
+  return value;
+}
+const REPORT_DATE = option("--report-date", "2026-10-18");
+if (!/^\d{4}-\d{2}-\d{2}$/u.test(REPORT_DATE))
+  throw new Error("日期须为 YYYY-MM-DD");
+const REPORT_DIR = option("--output-dir", "data/reviews");
+const reportDirectory = path.resolve(ROOT, REPORT_DIR);
+const reviewsDirectory = path.resolve(ROOT, "data/reviews");
+if (
+  reportDirectory !== reviewsDirectory &&
+  !reportDirectory.startsWith(`${reviewsDirectory}${path.sep}`)
+) {
+  throw new Error("初审输出必须位于 data/reviews 内");
+}
+const OUT_JSON = `${REPORT_DIR}/ai-lexicon-precheck-${REPORT_DATE}.json`;
+const OUT_MD = `${REPORT_DIR}/ai-lexicon-precheck-${REPORT_DATE}.md`;
 
 const APPROVED_FILE = "data/reviews/approved-evidence.json";
 const REBUILD_REPORT = "data/patches/xinyun-rebuild-report.dev.json";
@@ -1213,7 +1232,7 @@ function computeReconciliation(audits: SnapshotAudit[]): Reconciliation {
 
 // ---------------------------------------------------------------- ① 交叉核对与方案 §2.1 补全
 
-const MAPPING_DRAFT_FILE = `data/reviews/cilin-pingshui-mapping-draft-${REPORT_DATE}.json`;
+const MAPPING_DRAFT_FILE = `${REPORT_DIR}/cilin-pingshui-mapping-draft-${REPORT_DATE}.json`;
 const PINGSHUI_MAIN = "pingshui.full-d2-patched.json";
 const CILIN_FILE = "cilin.full-d2.json";
 
@@ -1987,10 +2006,10 @@ function computeSupplement(): SupplementResult {
     },
     b1: {
       rule:
-        "同 dataVersion 重复构建一致性：扫 data/normalized/*.json → 按各自 dataVersion 查 REGISTERED_DIGESTS → " +
+        "同一已保存快照重复解析的摘要稳定性（不是重跑构建）：扫 data/normalized/*.json → 按各自 dataVersion 查 REGISTERED_DIGESTS → " +
         "两次独立 JSON.parse 各算一次 businessContentDigest → 互比 → 与登记值比对；" +
         "并断言「登记项的 fileName 与磁盘文件名一致」（防止 reviewN→reviewM 改名被静默吸收）。" +
-        "**不重跑构建脚本**（重跑会产出新字节、污染已审文件）。",
+        "本检查不重跑构建脚本；真正两轮生成的结果须另见独立重建记录。字段 repeatConsistent 保留供旧消费方读取，不能据此声称已执行两轮生成。",
       results: b1Results,
       allRepeatConsistent: b1Results.every((entry) => entry.repeatConsistent),
       allRegisteredMatch:
@@ -2150,7 +2169,7 @@ function main(): void {
     `  A2 待核实映射草案：${supplement.a2.entryCount} 条（status=unverified / basis=null）→ ${MAPPING_DRAFT_FILE}`,
   );
   console.log(
-    `  B1 重复构建一致：${supplement.b1.allRepeatConsistent ? "是" : "否"}；` +
+    `  B1 重复解析摘要一致：${supplement.b1.allRepeatConsistent ? "是" : "否"}；` +
       `登记一致=${supplement.b1.digestDrift.length === 0 ? "是" : "否"}；` +
       `文件名↔dataVersion 对应=${supplement.b1.fileNameMismatch.length === 0 ? "一致" : "不一致"}；` +
       `未登记=${supplement.b1.unregistered.length}；悬空登记=${supplement.b1.registeredWithoutFile.length}`,
@@ -2159,7 +2178,7 @@ function main(): void {
   // B1 护栏：登记值漂移 / 文件名与 dataVersion 不符 / 悬空登记 → 进 failures（exit 1）
   check(
     supplement.b1.allRepeatConsistent,
-    "B1 每份快照两次生成的业务内容摘要一致（同输入同摘要）",
+    "B1 每份已存快照两次解析的业务内容摘要一致（未执行生成器）",
   );
   check(
     supplement.b1.digestDrift.length === 0,
@@ -2180,14 +2199,15 @@ function main(): void {
     `  B3 新韵三项可追溯：规则/生成器仅在 notice 文本、pinyin SHA 一致=${String(supplement.b3.pinyinDigestMatches)}、结构化字段=${supplement.b3.structuredVersionFields}`,
   );
 
-  mkdirSync(path.join(ROOT, "data", "reviews"), { recursive: true });
+  mkdirSync(reportDirectory, { recursive: true });
   writeFileSync(
     path.join(ROOT, MAPPING_DRAFT_FILE),
     `${JSON.stringify(
       {
         draftId: `cilin-pingshui-mapping-draft-${REPORT_DATE}`,
         generatedAt: REPORT_DATE,
-        generatedBy: "scripts/data/precheck-lexicon.ts（队员 A 的 DeepSeek）",
+        generatedBy:
+          "scripts/data/precheck-lexicon.ts（机器生成；实际执行者见本批交接）",
         title: "词林正韵 19 部 → 平水韵 部的**待核实映射草案**",
         headerNote: supplement.a2.headerNote,
         prohibition: [
@@ -2300,19 +2320,37 @@ function main(): void {
       "D1 的 8232 不需订正；词林 5037 属原表口径、5033 属快照口径，两者都对但不可混用",
     actionKind: "接线/脚本可修",
   });
+  const sourceRecords = readJson<{
+    sources: {
+      id: string;
+      files?: { path: string; snapshotSha256: string }[];
+    }[];
+  }>("data/sources/manifest.json");
+  const termsFile = sourceRecords?.sources.find(
+    (s) => s.id === "src:wikimedia:terms-of-use",
+  )?.files?.[0];
+  const termsSaved =
+    termsFile !== undefined &&
+    existsSync(path.join(ROOT, termsFile.path)) &&
+    sha256Bytes(readFileSync(path.join(ROOT, termsFile.path))) ===
+      termsFile.snapshotSha256;
   addCross("F", "P2", {
     location: "data/sources/manifest.json · src:wikisource:pingshuiyun.license",
     fact:
       "该来源的许可为**两层**：作品层 {{PD-old}}（落盘字节第 655-656 行页脚，已核）；" +
-      "站点层 CC BY-SA 4.0（Wikimedia 站点条款，页面模板里没有，条款文本未取得）。" +
+      (termsSaved
+        ? `站点条款文本已保存且摘要与登记一致：${termsFile?.path}；适用性、署名和转载实施仍待审核。`
+        : "站点层 CC BY-SA 4.0（Wikimedia 站点条款，页面模板里没有，条款文本未取得）。") +
       "manifest 已改为 workLayer / siteLayer / conclusion 三键分别登记，不作单一许可结论",
-    basis:
-      "字节实测（页脚模板）+ 组长 2026-10-18 定论：两层不是矛盾也不是笔误；站点层条款文本未取得 → pendingReview",
+    basis: termsSaved
+      ? "页脚与固定修订 Terms of Use 字节留存；历史 pendingReview 不等于本次已完成授权审核"
+      : "字节实测（页脚模板）+ 组长 2026-10-18 定论：两层不是矛盾也不是笔误；站点层条款文本未取得 → pendingReview",
     impact:
       "若只引任一层都会出错：只引 PD-old 会漏掉站点署名义务；只引 CC BY-SA 会与字节不符。" +
       "两层均不构成「可商用」证明",
-    suggestedAction:
-      "保持双层登记；取得站点条款文本或确认署名方式后，仅更新 siteLayer.status，不改作品层",
+    suggestedAction: termsSaved
+      ? "保持双层登记，审核条款适用性和署名实施；文本留存不自动解除版权/发布门槛"
+      : "保持双层登记；取得站点条款文本或确认署名方式后，仅更新 siteLayer.status，不改作品层",
     actionKind: "数据事实需人审",
   });
 
@@ -2507,7 +2545,8 @@ function main(): void {
   const output: PrecheckOutput = {
     reportId: `ai-lexicon-precheck-${REPORT_DATE}`,
     generatedAt: REPORT_DATE,
-    generatedBy: "scripts/data/precheck-lexicon.ts（队员 A 的 DeepSeek）",
+    generatedBy:
+      "scripts/data/precheck-lexicon.ts（机器生成；实际执行者见本批交接）",
     nature:
       "机器初审报告：只回答机器可判的事实，不含韵字归属是否合于韵书原义。",
     inputMissing: [],
@@ -3200,7 +3239,7 @@ function renderMarkdown(input: PrecheckOutput): string {
 
   push("## 1-E. 方案 §2.1 补全（B1 / B2 / B3）");
   push("");
-  push("### B1 同 dataVersion 重复构建一致性");
+  push("### B1 同一快照重复解析的摘要稳定性（未重跑生成器）");
   push("");
   push(`规则：${input.supplement.b1.rule}`);
   push("");
@@ -3269,7 +3308,7 @@ function renderMarkdown(input: PrecheckOutput): string {
   push("| 护栏 | 结论 | 明细 |");
   push("|---|---|---|");
   push(
-    `| 同输入重复构建 → 同摘要 | ${input.guards.repeatBuildConsistent ? "✅" : "❌"} | — |`,
+    `| 同一已存快照重复解析 → 同摘要（非重建） | ${input.guards.repeatBuildConsistent ? "✅" : "❌"} | — |`,
   );
   push(
     `| 登记摘要 == 实测摘要 | ${input.guards.digestRegistered ? "✅" : "❌"} | ${input.guards.detail.digestDrift.join("；") || "无漂移"} |`,

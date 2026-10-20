@@ -1,0 +1,3870 @@
+{
+  "schemaVersion": "d4-review-batch-v1",
+  "batchId": "d4-a-huanghelou-xinyun-2026-10-20",
+  "baseSha": "cea831befa70a8842943d240f91f9816c9c55a94",
+  "dataVersions": {
+    "pingshui": "pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4",
+    "cilin": "cilin-cwr-ff0e9c1-d3-full-clean1",
+    "xinyun": "xinyun-rebuild-d2-full"
+  },
+  "generatedBy": "scripts/data/build-d4-review-batches.ts",
+  "approvalRecord": null,
+  "work": {
+    "caseId": "golden-huanghelou-ps-v1",
+    "workId": "work:huanghelou",
+    "title": "黄鹤楼",
+    "author": "崔颢",
+    "text": "昔人已乘黄鹤去，此地空余黄鹤楼。黄鹤一去不复返，白云千载空悠悠。晴川历历汉阳树，芳草萋萋鹦鹉洲。日暮乡关何处是，烟波江上使人愁。",
+    "fingerprint": "7b65737ca79258301a2dd35cd880c41020415945c1ea006478eaf816edbf47a2",
+    "formFamily": "regulated",
+    "formId": "qilv",
+    "historicalTags": [
+      "七律",
+      "特殊拗律",
+      "半古半律"
+    ],
+    "variants": [
+      {
+        "label": "首句「昔人已乘白云去」系统",
+        "text": "昔人已乘白云去，此地空余黄鹤楼。黄鹤一去不复返，白云千载空悠悠。晴川历历汉阳树，芳草萋萋鹦鹉洲。日暮乡关何处是，烟波江上使人愁。",
+        "fingerprint": "737f6baae90975871af8241627898d4c43ce31fc8725500a597b88281f57a90a",
+        "differsAt": [
+          "首句第五、六字 黄鹤→白云"
+        ],
+        "registeredAsSeparateWork": false
+      }
+    ],
+    "sourceRef": {
+      "locator": "维基文库《黃鶴樓 (崔顥)》oldid=2492584",
+      "via": "C 的 docs/rule-sources.md §7.4（已核文本与异文）",
+      "bytesStored": true,
+      "evidenceIds": [
+        "ev:work:huanghelou:j03"
+      ],
+      "path": "data/raw/works/huanghelou-2492584.wikitext",
+      "snapshotSha256": "e6e66503c45822fa0cf56fa7547866a3c044c411bda16e71db2b8a31e868fe34"
+    },
+    "pendingItems": [
+      "逐字归部证据及未审竞争候选详见 data/reviews/golden-token-review-2026-10-18.md；不属于本文本/体裁审批"
+    ],
+    "reviewStatus": "approved",
+    "reviewers": [
+      "原件记载：组长 J03 / C；Codex 仅落库"
+    ],
+    "evidenceIds": [
+      "ev:work:huanghelou:j03"
+    ],
+    "slug": "huanghelou"
+  },
+  "book": "xinyun",
+  "inputHashes": {
+    "snapshot": "cd0abe60175dd8da963129c09b4cf35878794bb1554958eb9bebd7dfc414f76b",
+    "works": "dab656e06856cba7bcaf3a12ffd4b0479d8140451a9ab63a1349e30199d177c0",
+    "bEffective": "59e6947f0fd79d413e8f50a262fb343895fb06e7b1283ab7dd07a5acfad82adf",
+    "sourceManifest": "e72966b0b680ac62f4acaf2761c56b34b6b1eb28f992ac0c4a5a9f27d18e5201",
+    "approvalRegistry": "deec5863ba6d3a04c24ac7b4c0864847c341a21a80890b74a5a592d5c017b419",
+    "cilinIndependentReference": null
+  },
+  "verificationScope": "只证明本地固定来源字节、候选引用及重建一致性，不证明语文学正确性、语境取舍或许可完备；证据仍未审核。",
+  "rules": {
+    "version": "xinyun-14-rules-d1",
+    "status": "unverified",
+    "path": "packages/lexicon/src/xinyun/rules.ts",
+    "sha256": "d38beca65391eb25f00e7ee221ce9e71c34ab70a8e691ae22e5b0fee9abe53d1",
+    "parserPath": "packages/lexicon/src/xinyun/pinyin.ts",
+    "parserSha256": "4180784595c2cb0f5506c2b925388a41acd89655ce49a37af613c2127953dba7"
+  },
+  "counts": {
+    "positions": 56,
+    "coveredPositions": 56,
+    "uniqueCandidates": 72,
+    "candidateOccurrences": 85,
+    "gaps": 0,
+    "needsReview": 72
+  },
+  "entries": [
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:昔:qu:二波·去声",
+      "character": "昔",
+      "positions": [
+        "huanghelou/l1c1"
+      ],
+      "groupIds": [
+        "group:xinyun:二波:二波·去声"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:二波:二波·去声"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L11944; xinyun-14-rules-d1 → 二波·去声",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 二波·去声"
+      ],
+      "toneClass": "qu",
+      "tone": "Z",
+      "modernReading": {
+        "pinyin": "cuo",
+        "toneNumber": 4,
+        "evidenceIds": [
+          "ev:xinyun:二波:二波·去声"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L11944; xinyun-14-rules-d1 → 二波·去声",
+        "rawReadings": [
+          "xī",
+          "cuò"
+        ],
+        "sourceLine": "U+6614: xī,cuò  # 昔",
+        "reconstructionMatches": [
+          "cuò"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:昔:yinping:十二齐·阴平",
+      "character": "昔",
+      "positions": [
+        "huanghelou/l1c1"
+      ],
+      "groupIds": [
+        "group:xinyun:十二齐:十二齐·阴平"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十二齐:十二齐·阴平"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L11944; xinyun-14-rules-d1 → 十二齐·阴平",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十二齐·阴平"
+      ],
+      "toneClass": "yinping",
+      "tone": "P",
+      "modernReading": {
+        "pinyin": "xi",
+        "toneNumber": 1,
+        "evidenceIds": [
+          "ev:xinyun:十二齐:十二齐·阴平"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L11944; xinyun-14-rules-d1 → 十二齐·阴平",
+        "rawReadings": [
+          "xī",
+          "cuò"
+        ],
+        "sourceLine": "U+6614: xī,cuò  # 昔",
+        "reconstructionMatches": [
+          "xī"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:人:yangping:九文·阳平",
+      "character": "人",
+      "positions": [
+        "huanghelou/l1c2",
+        "huanghelou/l8c6"
+      ],
+      "groupIds": [
+        "group:xinyun:九文:九文·阳平"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:九文:九文·阳平"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L5969; xinyun-14-rules-d1 → 九文·阳平",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 九文·阳平"
+      ],
+      "toneClass": "yangping",
+      "tone": "P",
+      "modernReading": {
+        "pinyin": "ren",
+        "toneNumber": 2,
+        "evidenceIds": [
+          "ev:xinyun:九文:九文·阳平"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L5969; xinyun-14-rules-d1 → 九文·阳平",
+        "rawReadings": [
+          "rén"
+        ],
+        "sourceLine": "U+4EBA: rén  # 人",
+        "reconstructionMatches": [
+          "rén"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:已:qu:十三支·去声",
+      "character": "已",
+      "positions": [
+        "huanghelou/l1c3"
+      ],
+      "groupIds": [
+        "group:xinyun:十三支:十三支·去声"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十三支:十三支·去声"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L9862; xinyun-14-rules-d1 → 十三支·去声",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十三支·去声"
+      ],
+      "toneClass": "qu",
+      "tone": "Z",
+      "modernReading": {
+        "pinyin": "si",
+        "toneNumber": 4,
+        "evidenceIds": [
+          "ev:xinyun:十三支:十三支·去声"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L9862; xinyun-14-rules-d1 → 十三支·去声",
+        "rawReadings": [
+          "yǐ",
+          "sì"
+        ],
+        "sourceLine": "U+5DF2: yǐ,sì  # 已",
+        "reconstructionMatches": [
+          "sì"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:已:shang:十二齐·上声",
+      "character": "已",
+      "positions": [
+        "huanghelou/l1c3"
+      ],
+      "groupIds": [
+        "group:xinyun:十二齐:十二齐·上声"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十二齐:十二齐·上声"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L9862; xinyun-14-rules-d1 → 十二齐·上声",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十二齐·上声"
+      ],
+      "toneClass": "shang",
+      "tone": "Z",
+      "modernReading": {
+        "pinyin": "yi",
+        "toneNumber": 3,
+        "evidenceIds": [
+          "ev:xinyun:十二齐:十二齐·上声"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L9862; xinyun-14-rules-d1 → 十二齐·上声",
+        "rawReadings": [
+          "yǐ",
+          "sì"
+        ],
+        "sourceLine": "U+5DF2: yǐ,sì  # 已",
+        "reconstructionMatches": [
+          "yǐ"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:乘:qu:十一庚·去声",
+      "character": "乘",
+      "positions": [
+        "huanghelou/l1c4"
+      ],
+      "groupIds": [
+        "group:xinyun:十一庚:十一庚·去声"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十一庚:十一庚·去声"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L5871; xinyun-14-rules-d1 → 十一庚·去声",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十一庚·去声"
+      ],
+      "toneClass": "qu",
+      "tone": "Z",
+      "modernReading": {
+        "pinyin": "sheng",
+        "toneNumber": 4,
+        "evidenceIds": [
+          "ev:xinyun:十一庚:十一庚·去声"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L5871; xinyun-14-rules-d1 → 十一庚·去声",
+        "rawReadings": [
+          "chéng",
+          "shèng"
+        ],
+        "sourceLine": "U+4E58: chéng,shèng  # 乘",
+        "reconstructionMatches": [
+          "shèng"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:乘:yangping:十一庚·阳平",
+      "character": "乘",
+      "positions": [
+        "huanghelou/l1c4"
+      ],
+      "groupIds": [
+        "group:xinyun:十一庚:十一庚·阳平"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十一庚:十一庚·阳平"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L5871; xinyun-14-rules-d1 → 十一庚·阳平",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十一庚·阳平"
+      ],
+      "toneClass": "yangping",
+      "tone": "P",
+      "modernReading": {
+        "pinyin": "cheng",
+        "toneNumber": 2,
+        "evidenceIds": [
+          "ev:xinyun:十一庚:十一庚·阳平"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L5871; xinyun-14-rules-d1 → 十一庚·阳平",
+        "rawReadings": [
+          "chéng",
+          "shèng"
+        ],
+        "sourceLine": "U+4E58: chéng,shèng  # 乘",
+        "reconstructionMatches": [
+          "chéng"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:黄:yangping:十唐·阳平",
+      "character": "黄",
+      "positions": [
+        "huanghelou/l1c5",
+        "huanghelou/l2c5",
+        "huanghelou/l3c1"
+      ],
+      "groupIds": [
+        "group:xinyun:十唐:十唐·阳平"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十唐:十唐·阳平"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L26449; xinyun-14-rules-d1 → 十唐·阳平",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十唐·阳平"
+      ],
+      "toneClass": "yangping",
+      "tone": "P",
+      "modernReading": {
+        "pinyin": "huang",
+        "toneNumber": 2,
+        "evidenceIds": [
+          "ev:xinyun:十唐:十唐·阳平"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L26449; xinyun-14-rules-d1 → 十唐·阳平",
+        "rawReadings": [
+          "huáng"
+        ],
+        "sourceLine": "U+9EC4: huáng  # 黄",
+        "reconstructionMatches": [
+          "huáng"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:鹤:qu:二波·去声",
+      "character": "鹤",
+      "positions": [
+        "huanghelou/l1c6",
+        "huanghelou/l2c6",
+        "huanghelou/l3c2"
+      ],
+      "groupIds": [
+        "group:xinyun:二波:二波·去声"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:二波:二波·去声"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L26353; xinyun-14-rules-d1 → 二波·去声",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 二波·去声"
+      ],
+      "toneClass": "qu",
+      "tone": "Z",
+      "modernReading": {
+        "pinyin": "he",
+        "toneNumber": 4,
+        "evidenceIds": [
+          "ev:xinyun:二波:二波·去声"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L26353; xinyun-14-rules-d1 → 二波·去声",
+        "rawReadings": [
+          "hè"
+        ],
+        "sourceLine": "U+9E64: hè  # 鹤",
+        "reconstructionMatches": [
+          "hè"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:去:qu:十二齐·去声",
+      "character": "去",
+      "positions": [
+        "huanghelou/l1c7",
+        "huanghelou/l3c4"
+      ],
+      "groupIds": [
+        "group:xinyun:十二齐:十二齐·去声"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十二齐:十二齐·去声"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L7248; xinyun-14-rules-d1 → 十二齐·去声",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十二齐·去声"
+      ],
+      "toneClass": "qu",
+      "tone": "Z",
+      "modernReading": {
+        "pinyin": "qu",
+        "toneNumber": 4,
+        "evidenceIds": [
+          "ev:xinyun:十二齐:十二齐·去声"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L7248; xinyun-14-rules-d1 → 十二齐·去声",
+        "rawReadings": [
+          "qù",
+          "qū"
+        ],
+        "sourceLine": "U+53BB: qù,qū  # 去",
+        "reconstructionMatches": [
+          "qù"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:去:yinping:十二齐·阴平",
+      "character": "去",
+      "positions": [
+        "huanghelou/l1c7",
+        "huanghelou/l3c4"
+      ],
+      "groupIds": [
+        "group:xinyun:十二齐:十二齐·阴平"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十二齐:十二齐·阴平"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L7248; xinyun-14-rules-d1 → 十二齐·阴平",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十二齐·阴平"
+      ],
+      "toneClass": "yinping",
+      "tone": "P",
+      "modernReading": {
+        "pinyin": "qu",
+        "toneNumber": 1,
+        "evidenceIds": [
+          "ev:xinyun:十二齐:十二齐·阴平"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L7248; xinyun-14-rules-d1 → 十二齐·阴平",
+        "rawReadings": [
+          "qù",
+          "qū"
+        ],
+        "sourceLine": "U+53BB: qù,qū  # 去",
+        "reconstructionMatches": [
+          "qū"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:此:shang:十三支·上声",
+      "character": "此",
+      "positions": [
+        "huanghelou/l2c1"
+      ],
+      "groupIds": [
+        "group:xinyun:十三支:十三支·上声"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十三支:十三支·上声"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L13303; xinyun-14-rules-d1 → 十三支·上声",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十三支·上声"
+      ],
+      "toneClass": "shang",
+      "tone": "Z",
+      "modernReading": {
+        "pinyin": "ci",
+        "toneNumber": 3,
+        "evidenceIds": [
+          "ev:xinyun:十三支:十三支·上声"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L13303; xinyun-14-rules-d1 → 十三支·上声",
+        "rawReadings": [
+          "cǐ"
+        ],
+        "sourceLine": "U+6B64: cǐ  # 此",
+        "reconstructionMatches": [
+          "cǐ"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:地:qu:十二齐·去声",
+      "character": "地",
+      "positions": [
+        "huanghelou/l2c2"
+      ],
+      "groupIds": [
+        "group:xinyun:十二齐:十二齐·去声"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十二齐:十二齐·去声"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L8132; xinyun-14-rules-d1 → 十二齐·去声",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十二齐·去声"
+      ],
+      "toneClass": "qu",
+      "tone": "Z",
+      "modernReading": {
+        "pinyin": "di",
+        "toneNumber": 4,
+        "evidenceIds": [
+          "ev:xinyun:十二齐:十二齐·去声"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L8132; xinyun-14-rules-d1 → 十二齐·去声",
+        "rawReadings": [
+          "dì",
+          "de"
+        ],
+        "sourceLine": "U+5730: dì,de  # 地",
+        "reconstructionMatches": [
+          "dì"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:空:shang:十一庚·上声",
+      "character": "空",
+      "positions": [
+        "huanghelou/l2c3",
+        "huanghelou/l4c5"
+      ],
+      "groupIds": [
+        "group:xinyun:十一庚:十一庚·上声"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十一庚:十一庚·上声"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L17159; xinyun-14-rules-d1 → 十一庚·上声",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十一庚·上声"
+      ],
+      "toneClass": "shang",
+      "tone": "Z",
+      "modernReading": {
+        "pinyin": "kong",
+        "toneNumber": 3,
+        "evidenceIds": [
+          "ev:xinyun:十一庚:十一庚·上声"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L17159; xinyun-14-rules-d1 → 十一庚·上声",
+        "rawReadings": [
+          "kōng",
+          "kòng",
+          "kǒng"
+        ],
+        "sourceLine": "U+7A7A: kōng,kòng,kǒng  # 空",
+        "reconstructionMatches": [
+          "kǒng"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:空:qu:十一庚·去声",
+      "character": "空",
+      "positions": [
+        "huanghelou/l2c3",
+        "huanghelou/l4c5"
+      ],
+      "groupIds": [
+        "group:xinyun:十一庚:十一庚·去声"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十一庚:十一庚·去声"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L17159; xinyun-14-rules-d1 → 十一庚·去声",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十一庚·去声"
+      ],
+      "toneClass": "qu",
+      "tone": "Z",
+      "modernReading": {
+        "pinyin": "kong",
+        "toneNumber": 4,
+        "evidenceIds": [
+          "ev:xinyun:十一庚:十一庚·去声"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L17159; xinyun-14-rules-d1 → 十一庚·去声",
+        "rawReadings": [
+          "kōng",
+          "kòng",
+          "kǒng"
+        ],
+        "sourceLine": "U+7A7A: kōng,kòng,kǒng  # 空",
+        "reconstructionMatches": [
+          "kòng"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:空:yinping:十一庚·阴平",
+      "character": "空",
+      "positions": [
+        "huanghelou/l2c3",
+        "huanghelou/l4c5"
+      ],
+      "groupIds": [
+        "group:xinyun:十一庚:十一庚·阴平"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十一庚:十一庚·阴平"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L17159; xinyun-14-rules-d1 → 十一庚·阴平",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十一庚·阴平"
+      ],
+      "toneClass": "yinping",
+      "tone": "P",
+      "modernReading": {
+        "pinyin": "kong",
+        "toneNumber": 1,
+        "evidenceIds": [
+          "ev:xinyun:十一庚:十一庚·阴平"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L17159; xinyun-14-rules-d1 → 十一庚·阴平",
+        "rawReadings": [
+          "kōng",
+          "kòng",
+          "kǒng"
+        ],
+        "sourceLine": "U+7A7A: kōng,kòng,kǒng  # 空",
+        "reconstructionMatches": [
+          "kōng"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:余:qu:十二齐·去声",
+      "character": "余",
+      "positions": [
+        "huanghelou/l2c4"
+      ],
+      "groupIds": [
+        "group:xinyun:十二齐:十二齐·去声"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十二齐:十二齐·去声"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L6128; xinyun-14-rules-d1 → 十二齐·去声",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十二齐·去声"
+      ],
+      "toneClass": "qu",
+      "tone": "Z",
+      "modernReading": {
+        "pinyin": "yu",
+        "toneNumber": 4,
+        "evidenceIds": [
+          "ev:xinyun:十二齐:十二齐·去声"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L6128; xinyun-14-rules-d1 → 十二齐·去声",
+        "rawReadings": [
+          "yú",
+          "tú",
+          "xú",
+          "yù"
+        ],
+        "sourceLine": "U+4F59: yú,tú,xú,yù  # 余",
+        "reconstructionMatches": [
+          "yù"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:余:yangping:十二齐·阳平",
+      "character": "余",
+      "positions": [
+        "huanghelou/l2c4"
+      ],
+      "groupIds": [
+        "group:xinyun:十二齐:十二齐·阳平"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十二齐:十二齐·阳平"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L6128; xinyun-14-rules-d1 → 十二齐·阳平",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十二齐·阳平"
+      ],
+      "toneClass": "yangping",
+      "tone": "P",
+      "modernReading": {
+        "pinyin": "xu",
+        "toneNumber": 2,
+        "evidenceIds": [
+          "ev:xinyun:十二齐:十二齐·阳平"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE",
+        "E-cross-009"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L6128; xinyun-14-rules-d1 → 十二齐·阳平",
+        "rawReadings": [
+          "yú",
+          "tú",
+          "xú",
+          "yù"
+        ],
+        "sourceLine": "U+4F59: yú,tú,xú,yù  # 余",
+        "reconstructionMatches": [
+          "yú",
+          "xú"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": [
+        "xu#2",
+        "yu#2"
+      ]
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:余:yangping:十四姑·阳平",
+      "character": "余",
+      "positions": [
+        "huanghelou/l2c4"
+      ],
+      "groupIds": [
+        "group:xinyun:十四姑:十四姑·阳平"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十四姑:十四姑·阳平"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L6128; xinyun-14-rules-d1 → 十四姑·阳平",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十四姑·阳平"
+      ],
+      "toneClass": "yangping",
+      "tone": "P",
+      "modernReading": {
+        "pinyin": "tu",
+        "toneNumber": 2,
+        "evidenceIds": [
+          "ev:xinyun:十四姑:十四姑·阳平"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L6128; xinyun-14-rules-d1 → 十四姑·阳平",
+        "rawReadings": [
+          "yú",
+          "tú",
+          "xú",
+          "yù"
+        ],
+        "sourceLine": "U+4F59: yú,tú,xú,yù  # 余",
+        "reconstructionMatches": [
+          "tú"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:楼:yangping:七尤·阳平",
+      "character": "楼",
+      "positions": [
+        "huanghelou/l2c7"
+      ],
+      "groupIds": [
+        "group:xinyun:七尤:七尤·阳平"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:七尤:七尤·阳平"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L12815; xinyun-14-rules-d1 → 七尤·阳平",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 七尤·阳平"
+      ],
+      "toneClass": "yangping",
+      "tone": "P",
+      "modernReading": {
+        "pinyin": "lou",
+        "toneNumber": 2,
+        "evidenceIds": [
+          "ev:xinyun:七尤:七尤·阳平"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L12815; xinyun-14-rules-d1 → 七尤·阳平",
+        "rawReadings": [
+          "lóu"
+        ],
+        "sourceLine": "U+697C: lóu  # 楼",
+        "reconstructionMatches": [
+          "lóu"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:一:qu:十二齐·去声",
+      "character": "一",
+      "positions": [
+        "huanghelou/l3c3"
+      ],
+      "groupIds": [
+        "group:xinyun:十二齐:十二齐·去声"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十二齐:十二齐·去声"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L5783; xinyun-14-rules-d1 → 十二齐·去声",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十二齐·去声"
+      ],
+      "toneClass": "qu",
+      "tone": "Z",
+      "modernReading": {
+        "pinyin": "yi",
+        "toneNumber": 4,
+        "evidenceIds": [
+          "ev:xinyun:十二齐:十二齐·去声"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE",
+        "E-cross-010"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致",
+        "一的本调/语流候选争议未裁；全部保留"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L5783; xinyun-14-rules-d1 → 十二齐·去声",
+        "rawReadings": [
+          "yī",
+          "yí",
+          "yì"
+        ],
+        "sourceLine": "U+4E00: yī,yí,yì  # 一",
+        "reconstructionMatches": [
+          "yì"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:一:yangping:十二齐·阳平",
+      "character": "一",
+      "positions": [
+        "huanghelou/l3c3"
+      ],
+      "groupIds": [
+        "group:xinyun:十二齐:十二齐·阳平"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十二齐:十二齐·阳平"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L5783; xinyun-14-rules-d1 → 十二齐·阳平",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十二齐·阳平"
+      ],
+      "toneClass": "yangping",
+      "tone": "P",
+      "modernReading": {
+        "pinyin": "yi",
+        "toneNumber": 2,
+        "evidenceIds": [
+          "ev:xinyun:十二齐:十二齐·阳平"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE",
+        "E-cross-010"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致",
+        "一的本调/语流候选争议未裁；全部保留"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L5783; xinyun-14-rules-d1 → 十二齐·阳平",
+        "rawReadings": [
+          "yī",
+          "yí",
+          "yì"
+        ],
+        "sourceLine": "U+4E00: yī,yí,yì  # 一",
+        "reconstructionMatches": [
+          "yí"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:一:yinping:十二齐·阴平",
+      "character": "一",
+      "positions": [
+        "huanghelou/l3c3"
+      ],
+      "groupIds": [
+        "group:xinyun:十二齐:十二齐·阴平"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十二齐:十二齐·阴平"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L5783; xinyun-14-rules-d1 → 十二齐·阴平",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十二齐·阴平"
+      ],
+      "toneClass": "yinping",
+      "tone": "P",
+      "modernReading": {
+        "pinyin": "yi",
+        "toneNumber": 1,
+        "evidenceIds": [
+          "ev:xinyun:十二齐:十二齐·阴平"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE",
+        "E-cross-010"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致",
+        "一的本调/语流候选争议未裁；全部保留"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L5783; xinyun-14-rules-d1 → 十二齐·阴平",
+        "rawReadings": [
+          "yī",
+          "yí",
+          "yì"
+        ],
+        "sourceLine": "U+4E00: yī,yí,yì  # 一",
+        "reconstructionMatches": [
+          "yī"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:不:shang:七尤·上声",
+      "character": "不",
+      "positions": [
+        "huanghelou/l3c5"
+      ],
+      "groupIds": [
+        "group:xinyun:七尤:七尤·上声"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:七尤:七尤·上声"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L5796; xinyun-14-rules-d1 → 七尤·上声",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 七尤·上声"
+      ],
+      "toneClass": "shang",
+      "tone": "Z",
+      "modernReading": {
+        "pinyin": "fou",
+        "toneNumber": 3,
+        "evidenceIds": [
+          "ev:xinyun:七尤:七尤·上声"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L5796; xinyun-14-rules-d1 → 七尤·上声",
+        "rawReadings": [
+          "bù",
+          "fǒu",
+          "fōu",
+          "fū",
+          "bú"
+        ],
+        "sourceLine": "U+4E0D: bù,fǒu,fōu,fū,bú  # 不",
+        "reconstructionMatches": [
+          "fǒu"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:不:yinping:七尤·阴平",
+      "character": "不",
+      "positions": [
+        "huanghelou/l3c5"
+      ],
+      "groupIds": [
+        "group:xinyun:七尤:七尤·阴平"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:七尤:七尤·阴平"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L5796; xinyun-14-rules-d1 → 七尤·阴平",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 七尤·阴平"
+      ],
+      "toneClass": "yinping",
+      "tone": "P",
+      "modernReading": {
+        "pinyin": "fou",
+        "toneNumber": 1,
+        "evidenceIds": [
+          "ev:xinyun:七尤:七尤·阴平"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L5796; xinyun-14-rules-d1 → 七尤·阴平",
+        "rawReadings": [
+          "bù",
+          "fǒu",
+          "fōu",
+          "fū",
+          "bú"
+        ],
+        "sourceLine": "U+4E0D: bù,fǒu,fōu,fū,bú  # 不",
+        "reconstructionMatches": [
+          "fōu"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:不:qu:十四姑·去声",
+      "character": "不",
+      "positions": [
+        "huanghelou/l3c5"
+      ],
+      "groupIds": [
+        "group:xinyun:十四姑:十四姑·去声"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十四姑:十四姑·去声"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L5796; xinyun-14-rules-d1 → 十四姑·去声",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十四姑·去声"
+      ],
+      "toneClass": "qu",
+      "tone": "Z",
+      "modernReading": {
+        "pinyin": "bu",
+        "toneNumber": 4,
+        "evidenceIds": [
+          "ev:xinyun:十四姑:十四姑·去声"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L5796; xinyun-14-rules-d1 → 十四姑·去声",
+        "rawReadings": [
+          "bù",
+          "fǒu",
+          "fōu",
+          "fū",
+          "bú"
+        ],
+        "sourceLine": "U+4E0D: bù,fǒu,fōu,fū,bú  # 不",
+        "reconstructionMatches": [
+          "bù"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:不:yangping:十四姑·阳平",
+      "character": "不",
+      "positions": [
+        "huanghelou/l3c5"
+      ],
+      "groupIds": [
+        "group:xinyun:十四姑:十四姑·阳平"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十四姑:十四姑·阳平"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L5796; xinyun-14-rules-d1 → 十四姑·阳平",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十四姑·阳平"
+      ],
+      "toneClass": "yangping",
+      "tone": "P",
+      "modernReading": {
+        "pinyin": "bu",
+        "toneNumber": 2,
+        "evidenceIds": [
+          "ev:xinyun:十四姑:十四姑·阳平"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L5796; xinyun-14-rules-d1 → 十四姑·阳平",
+        "rawReadings": [
+          "bù",
+          "fǒu",
+          "fōu",
+          "fū",
+          "bú"
+        ],
+        "sourceLine": "U+4E0D: bù,fǒu,fōu,fū,bú  # 不",
+        "reconstructionMatches": [
+          "bú"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:不:yinping:十四姑·阴平",
+      "character": "不",
+      "positions": [
+        "huanghelou/l3c5"
+      ],
+      "groupIds": [
+        "group:xinyun:十四姑:十四姑·阴平"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十四姑:十四姑·阴平"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L5796; xinyun-14-rules-d1 → 十四姑·阴平",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十四姑·阴平"
+      ],
+      "toneClass": "yinping",
+      "tone": "P",
+      "modernReading": {
+        "pinyin": "fu",
+        "toneNumber": 1,
+        "evidenceIds": [
+          "ev:xinyun:十四姑:十四姑·阴平"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L5796; xinyun-14-rules-d1 → 十四姑·阴平",
+        "rawReadings": [
+          "bù",
+          "fǒu",
+          "fōu",
+          "fū",
+          "bú"
+        ],
+        "sourceLine": "U+4E0D: bù,fǒu,fōu,fū,bú  # 不",
+        "reconstructionMatches": [
+          "fū"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:复:qu:十四姑·去声",
+      "character": "复",
+      "positions": [
+        "huanghelou/l3c6"
+      ],
+      "groupIds": [
+        "group:xinyun:十四姑:十四姑·去声"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十四姑:十四姑·去声"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L8609; xinyun-14-rules-d1 → 十四姑·去声",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十四姑·去声"
+      ],
+      "toneClass": "qu",
+      "tone": "Z",
+      "modernReading": {
+        "pinyin": "fu",
+        "toneNumber": 4,
+        "evidenceIds": [
+          "ev:xinyun:十四姑:十四姑·去声"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L8609; xinyun-14-rules-d1 → 十四姑·去声",
+        "rawReadings": [
+          "fù"
+        ],
+        "sourceLine": "U+590D: fù  # 复",
+        "reconstructionMatches": [
+          "fù"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:返:shang:八寒·上声",
+      "character": "返",
+      "positions": [
+        "huanghelou/l3c7"
+      ],
+      "groupIds": [
+        "group:xinyun:八寒:八寒·上声"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:八寒:八寒·上声"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L22625; xinyun-14-rules-d1 → 八寒·上声",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 八寒·上声"
+      ],
+      "toneClass": "shang",
+      "tone": "Z",
+      "modernReading": {
+        "pinyin": "fan",
+        "toneNumber": 3,
+        "evidenceIds": [
+          "ev:xinyun:八寒:八寒·上声"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L22625; xinyun-14-rules-d1 → 八寒·上声",
+        "rawReadings": [
+          "fǎn"
+        ],
+        "sourceLine": "U+8FD4: fǎn  # 返",
+        "reconstructionMatches": [
+          "fǎn"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:白:yangping:二波·阳平",
+      "character": "白",
+      "positions": [
+        "huanghelou/l4c1"
+      ],
+      "groupIds": [
+        "group:xinyun:二波:二波·阳平"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:二波:二波·阳平"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L16138; xinyun-14-rules-d1 → 二波·阳平",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 二波·阳平"
+      ],
+      "toneClass": "yangping",
+      "tone": "P",
+      "modernReading": {
+        "pinyin": "bo",
+        "toneNumber": 2,
+        "evidenceIds": [
+          "ev:xinyun:二波:二波·阳平"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L16138; xinyun-14-rules-d1 → 二波·阳平",
+        "rawReadings": [
+          "bái",
+          "bó"
+        ],
+        "sourceLine": "U+767D: bái,bó  # 白",
+        "reconstructionMatches": [
+          "bó"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:白:yangping:四开·阳平",
+      "character": "白",
+      "positions": [
+        "huanghelou/l4c1"
+      ],
+      "groupIds": [
+        "group:xinyun:四开:四开·阳平"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:四开:四开·阳平"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L16138; xinyun-14-rules-d1 → 四开·阳平",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 四开·阳平"
+      ],
+      "toneClass": "yangping",
+      "tone": "P",
+      "modernReading": {
+        "pinyin": "bai",
+        "toneNumber": 2,
+        "evidenceIds": [
+          "ev:xinyun:四开:四开·阳平"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L16138; xinyun-14-rules-d1 → 四开·阳平",
+        "rawReadings": [
+          "bái",
+          "bó"
+        ],
+        "sourceLine": "U+767D: bái,bó  # 白",
+        "reconstructionMatches": [
+          "bái"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:云:yangping:九文·阳平",
+      "character": "云",
+      "positions": [
+        "huanghelou/l4c2"
+      ],
+      "groupIds": [
+        "group:xinyun:九文:九文·阳平"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:九文:九文·阳平"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L5928; xinyun-14-rules-d1 → 九文·阳平",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 九文·阳平"
+      ],
+      "toneClass": "yangping",
+      "tone": "P",
+      "modernReading": {
+        "pinyin": "yun",
+        "toneNumber": 2,
+        "evidenceIds": [
+          "ev:xinyun:九文:九文·阳平"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L5928; xinyun-14-rules-d1 → 九文·阳平",
+        "rawReadings": [
+          "yún"
+        ],
+        "sourceLine": "U+4E91: yún  # 云",
+        "reconstructionMatches": [
+          "yún"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:千:yinping:八寒·阴平",
+      "character": "千",
+      "positions": [
+        "huanghelou/l4c3"
+      ],
+      "groupIds": [
+        "group:xinyun:八寒:八寒·阴平"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:八寒:八寒·阴平"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L7128; xinyun-14-rules-d1 → 八寒·阴平",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 八寒·阴平"
+      ],
+      "toneClass": "yinping",
+      "tone": "P",
+      "modernReading": {
+        "pinyin": "qian",
+        "toneNumber": 1,
+        "evidenceIds": [
+          "ev:xinyun:八寒:八寒·阴平"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L7128; xinyun-14-rules-d1 → 八寒·阴平",
+        "rawReadings": [
+          "qiān"
+        ],
+        "sourceLine": "U+5343: qiān  # 千",
+        "reconstructionMatches": [
+          "qiān"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:载:shang:四开·上声",
+      "character": "载",
+      "positions": [
+        "huanghelou/l4c4"
+      ],
+      "groupIds": [
+        "group:xinyun:四开:四开·上声"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:四开:四开·上声"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L22538; xinyun-14-rules-d1 → 四开·上声",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 四开·上声"
+      ],
+      "toneClass": "shang",
+      "tone": "Z",
+      "modernReading": {
+        "pinyin": "zai",
+        "toneNumber": 3,
+        "evidenceIds": [
+          "ev:xinyun:四开:四开·上声"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L22538; xinyun-14-rules-d1 → 四开·上声",
+        "rawReadings": [
+          "zài",
+          "zǎi"
+        ],
+        "sourceLine": "U+8F7D: zài,zǎi  # 载",
+        "reconstructionMatches": [
+          "zǎi"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:载:qu:四开·去声",
+      "character": "载",
+      "positions": [
+        "huanghelou/l4c4"
+      ],
+      "groupIds": [
+        "group:xinyun:四开:四开·去声"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:四开:四开·去声"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L22538; xinyun-14-rules-d1 → 四开·去声",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 四开·去声"
+      ],
+      "toneClass": "qu",
+      "tone": "Z",
+      "modernReading": {
+        "pinyin": "zai",
+        "toneNumber": 4,
+        "evidenceIds": [
+          "ev:xinyun:四开:四开·去声"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L22538; xinyun-14-rules-d1 → 四开·去声",
+        "rawReadings": [
+          "zài",
+          "zǎi"
+        ],
+        "sourceLine": "U+8F7D: zài,zǎi  # 载",
+        "reconstructionMatches": [
+          "zài"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:悠:yinping:七尤·阴平",
+      "character": "悠",
+      "positions": [
+        "huanghelou/l4c6",
+        "huanghelou/l4c7"
+      ],
+      "groupIds": [
+        "group:xinyun:七尤:七尤·阴平"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:七尤:七尤·阴平"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L10548; xinyun-14-rules-d1 → 七尤·阴平",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 七尤·阴平"
+      ],
+      "toneClass": "yinping",
+      "tone": "P",
+      "modernReading": {
+        "pinyin": "you",
+        "toneNumber": 1,
+        "evidenceIds": [
+          "ev:xinyun:七尤:七尤·阴平"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L10548; xinyun-14-rules-d1 → 七尤·阴平",
+        "rawReadings": [
+          "yōu"
+        ],
+        "sourceLine": "U+60A0: yōu  # 悠",
+        "reconstructionMatches": [
+          "yōu"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:晴:yangping:十一庚·阳平",
+      "character": "晴",
+      "positions": [
+        "huanghelou/l5c1"
+      ],
+      "groupIds": [
+        "group:xinyun:十一庚:十一庚·阳平"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十一庚:十一庚·阳平"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L12040; xinyun-14-rules-d1 → 十一庚·阳平",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十一庚·阳平"
+      ],
+      "toneClass": "yangping",
+      "tone": "P",
+      "modernReading": {
+        "pinyin": "qing",
+        "toneNumber": 2,
+        "evidenceIds": [
+          "ev:xinyun:十一庚:十一庚·阳平"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L12040; xinyun-14-rules-d1 → 十一庚·阳平",
+        "rawReadings": [
+          "qíng"
+        ],
+        "sourceLine": "U+6674: qíng  # 晴",
+        "reconstructionMatches": [
+          "qíng"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:川:yinping:八寒·阴平",
+      "character": "川",
+      "positions": [
+        "huanghelou/l5c2"
+      ],
+      "groupIds": [
+        "group:xinyun:八寒:八寒·阴平"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:八寒:八寒·阴平"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L9841; xinyun-14-rules-d1 → 八寒·阴平",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 八寒·阴平"
+      ],
+      "toneClass": "yinping",
+      "tone": "P",
+      "modernReading": {
+        "pinyin": "chuan",
+        "toneNumber": 1,
+        "evidenceIds": [
+          "ev:xinyun:八寒:八寒·阴平"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L9841; xinyun-14-rules-d1 → 八寒·阴平",
+        "rawReadings": [
+          "chuān"
+        ],
+        "sourceLine": "U+5DDD: chuān  # 川",
+        "reconstructionMatches": [
+          "chuān"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:历:qu:十二齐·去声",
+      "character": "历",
+      "positions": [
+        "huanghelou/l5c3",
+        "huanghelou/l5c4"
+      ],
+      "groupIds": [
+        "group:xinyun:十二齐:十二齐·去声"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十二齐:十二齐·去声"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L7195; xinyun-14-rules-d1 → 十二齐·去声",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十二齐·去声"
+      ],
+      "toneClass": "qu",
+      "tone": "Z",
+      "modernReading": {
+        "pinyin": "li",
+        "toneNumber": 4,
+        "evidenceIds": [
+          "ev:xinyun:十二齐:十二齐·去声"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L7195; xinyun-14-rules-d1 → 十二齐·去声",
+        "rawReadings": [
+          "lì"
+        ],
+        "sourceLine": "U+5386: lì  # 历",
+        "reconstructionMatches": [
+          "lì"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:汉:qu:八寒·去声",
+      "character": "汉",
+      "positions": [
+        "huanghelou/l5c5"
+      ],
+      "groupIds": [
+        "group:xinyun:八寒:八寒·去声"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:八寒:八寒·去声"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L13532; xinyun-14-rules-d1 → 八寒·去声",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 八寒·去声"
+      ],
+      "toneClass": "qu",
+      "tone": "Z",
+      "modernReading": {
+        "pinyin": "han",
+        "toneNumber": 4,
+        "evidenceIds": [
+          "ev:xinyun:八寒:八寒·去声"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L13532; xinyun-14-rules-d1 → 八寒·去声",
+        "rawReadings": [
+          "hàn"
+        ],
+        "sourceLine": "U+6C49: hàn  # 汉",
+        "reconstructionMatches": [
+          "hàn"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:阳:yangping:十唐·阳平",
+      "character": "阳",
+      "positions": [
+        "huanghelou/l5c6"
+      ],
+      "groupIds": [
+        "group:xinyun:十唐:十唐·阳平"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十唐:十唐·阳平"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L24256; xinyun-14-rules-d1 → 十唐·阳平",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十唐·阳平"
+      ],
+      "toneClass": "yangping",
+      "tone": "P",
+      "modernReading": {
+        "pinyin": "yang",
+        "toneNumber": 2,
+        "evidenceIds": [
+          "ev:xinyun:十唐:十唐·阳平"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L24256; xinyun-14-rules-d1 → 十唐·阳平",
+        "rawReadings": [
+          "yáng"
+        ],
+        "sourceLine": "U+9633: yáng  # 阳",
+        "reconstructionMatches": [
+          "yáng"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:树:qu:十四姑·去声",
+      "character": "树",
+      "positions": [
+        "huanghelou/l5c7"
+      ],
+      "groupIds": [
+        "group:xinyun:十四姑:十四姑·去声"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十四姑:十四姑·去声"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L12453; xinyun-14-rules-d1 → 十四姑·去声",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十四姑·去声"
+      ],
+      "toneClass": "qu",
+      "tone": "Z",
+      "modernReading": {
+        "pinyin": "shu",
+        "toneNumber": 4,
+        "evidenceIds": [
+          "ev:xinyun:十四姑:十四姑·去声"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L12453; xinyun-14-rules-d1 → 十四姑·去声",
+        "rawReadings": [
+          "shù"
+        ],
+        "sourceLine": "U+6811: shù  # 树",
+        "reconstructionMatches": [
+          "shù"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:芳:yinping:十唐·阴平",
+      "character": "芳",
+      "positions": [
+        "huanghelou/l6c1"
+      ],
+      "groupIds": [
+        "group:xinyun:十唐:十唐·阴平"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十唐:十唐·阴平"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L19264; xinyun-14-rules-d1 → 十唐·阴平",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十唐·阴平"
+      ],
+      "toneClass": "yinping",
+      "tone": "P",
+      "modernReading": {
+        "pinyin": "fang",
+        "toneNumber": 1,
+        "evidenceIds": [
+          "ev:xinyun:十唐:十唐·阴平"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L19264; xinyun-14-rules-d1 → 十唐·阴平",
+        "rawReadings": [
+          "fāng"
+        ],
+        "sourceLine": "U+82B3: fāng  # 芳",
+        "reconstructionMatches": [
+          "fāng"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:草:shang:六豪·上声",
+      "character": "草",
+      "positions": [
+        "huanghelou/l6c2"
+      ],
+      "groupIds": [
+        "group:xinyun:六豪:六豪·上声"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:六豪:六豪·上声"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L19414; xinyun-14-rules-d1 → 六豪·上声",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 六豪·上声"
+      ],
+      "toneClass": "shang",
+      "tone": "Z",
+      "modernReading": {
+        "pinyin": "cao",
+        "toneNumber": 3,
+        "evidenceIds": [
+          "ev:xinyun:六豪:六豪·上声"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L19414; xinyun-14-rules-d1 → 六豪·上声",
+        "rawReadings": [
+          "cǎo",
+          "zào"
+        ],
+        "sourceLine": "U+8349: cǎo,zào  # 草",
+        "reconstructionMatches": [
+          "cǎo"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:草:qu:六豪·去声",
+      "character": "草",
+      "positions": [
+        "huanghelou/l6c2"
+      ],
+      "groupIds": [
+        "group:xinyun:六豪:六豪·去声"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:六豪:六豪·去声"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L19414; xinyun-14-rules-d1 → 六豪·去声",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 六豪·去声"
+      ],
+      "toneClass": "qu",
+      "tone": "Z",
+      "modernReading": {
+        "pinyin": "zao",
+        "toneNumber": 4,
+        "evidenceIds": [
+          "ev:xinyun:六豪:六豪·去声"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L19414; xinyun-14-rules-d1 → 六豪·去声",
+        "rawReadings": [
+          "cǎo",
+          "zào"
+        ],
+        "sourceLine": "U+8349: cǎo,zào  # 草",
+        "reconstructionMatches": [
+          "zào"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:萋:yinping:十二齐·阴平",
+      "character": "萋",
+      "positions": [
+        "huanghelou/l6c3",
+        "huanghelou/l6c4"
+      ],
+      "groupIds": [
+        "group:xinyun:十二齐:十二齐·阴平"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十二齐:十二齐·阴平"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L19608; xinyun-14-rules-d1 → 十二齐·阴平",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十二齐·阴平"
+      ],
+      "toneClass": "yinping",
+      "tone": "P",
+      "modernReading": {
+        "pinyin": "qi",
+        "toneNumber": 1,
+        "evidenceIds": [
+          "ev:xinyun:十二齐:十二齐·阴平"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L19608; xinyun-14-rules-d1 → 十二齐·阴平",
+        "rawReadings": [
+          "qī"
+        ],
+        "sourceLine": "U+840B: qī  # 萋",
+        "reconstructionMatches": [
+          "qī"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:鹦:yinping:十一庚·阴平",
+      "character": "鹦",
+      "positions": [
+        "huanghelou/l6c5"
+      ],
+      "groupIds": [
+        "group:xinyun:十一庚:十一庚·阴平"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十一庚:十一庚·阴平"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L26355; xinyun-14-rules-d1 → 十一庚·阴平",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十一庚·阴平"
+      ],
+      "toneClass": "yinping",
+      "tone": "P",
+      "modernReading": {
+        "pinyin": "ying",
+        "toneNumber": 1,
+        "evidenceIds": [
+          "ev:xinyun:十一庚:十一庚·阴平"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L26355; xinyun-14-rules-d1 → 十一庚·阴平",
+        "rawReadings": [
+          "yīng"
+        ],
+        "sourceLine": "U+9E66: yīng  # 鹦",
+        "reconstructionMatches": [
+          "yīng"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:鹉:shang:十四姑·上声",
+      "character": "鹉",
+      "positions": [
+        "huanghelou/l6c6"
+      ],
+      "groupIds": [
+        "group:xinyun:十四姑:十四姑·上声"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十四姑:十四姑·上声"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L26326; xinyun-14-rules-d1 → 十四姑·上声",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十四姑·上声"
+      ],
+      "toneClass": "shang",
+      "tone": "Z",
+      "modernReading": {
+        "pinyin": "wu",
+        "toneNumber": 3,
+        "evidenceIds": [
+          "ev:xinyun:十四姑:十四姑·上声"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L26326; xinyun-14-rules-d1 → 十四姑·上声",
+        "rawReadings": [
+          "wǔ"
+        ],
+        "sourceLine": "U+9E49: wǔ  # 鹉",
+        "reconstructionMatches": [
+          "wǔ"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:洲:yinping:七尤·阴平",
+      "character": "洲",
+      "positions": [
+        "huanghelou/l6c7"
+      ],
+      "groupIds": [
+        "group:xinyun:七尤:七尤·阴平"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:七尤:七尤·阴平"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L13765; xinyun-14-rules-d1 → 七尤·阴平",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 七尤·阴平"
+      ],
+      "toneClass": "yinping",
+      "tone": "P",
+      "modernReading": {
+        "pinyin": "zhou",
+        "toneNumber": 1,
+        "evidenceIds": [
+          "ev:xinyun:七尤:七尤·阴平"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L13765; xinyun-14-rules-d1 → 七尤·阴平",
+        "rawReadings": [
+          "zhōu"
+        ],
+        "sourceLine": "U+6D32: zhōu  # 洲",
+        "reconstructionMatches": [
+          "zhōu"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:日:qu:十三支·去声",
+      "character": "日",
+      "positions": [
+        "huanghelou/l7c1"
+      ],
+      "groupIds": [
+        "group:xinyun:十三支:十三支·去声"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十三支:十三支·去声"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L11897; xinyun-14-rules-d1 → 十三支·去声",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十三支·去声"
+      ],
+      "toneClass": "qu",
+      "tone": "Z",
+      "modernReading": {
+        "pinyin": "ri",
+        "toneNumber": 4,
+        "evidenceIds": [
+          "ev:xinyun:十三支:十三支·去声"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L11897; xinyun-14-rules-d1 → 十三支·去声",
+        "rawReadings": [
+          "rì"
+        ],
+        "sourceLine": "U+65E5: rì  # 日",
+        "reconstructionMatches": [
+          "rì"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:暮:qu:十四姑·去声",
+      "character": "暮",
+      "positions": [
+        "huanghelou/l7c2"
+      ],
+      "groupIds": [
+        "group:xinyun:十四姑:十四姑·去声"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十四姑:十四姑·去声"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L12098; xinyun-14-rules-d1 → 十四姑·去声",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十四姑·去声"
+      ],
+      "toneClass": "qu",
+      "tone": "Z",
+      "modernReading": {
+        "pinyin": "mu",
+        "toneNumber": 4,
+        "evidenceIds": [
+          "ev:xinyun:十四姑:十四姑·去声"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L12098; xinyun-14-rules-d1 → 十四姑·去声",
+        "rawReadings": [
+          "mù"
+        ],
+        "sourceLine": "U+66AE: mù  # 暮",
+        "reconstructionMatches": [
+          "mù"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:乡:yinping:十唐·阴平",
+      "character": "乡",
+      "positions": [
+        "huanghelou/l7c3"
+      ],
+      "groupIds": [
+        "group:xinyun:十唐:十唐·阴平"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十唐:十唐·阴平"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L5880; xinyun-14-rules-d1 → 十唐·阴平",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十唐·阴平"
+      ],
+      "toneClass": "yinping",
+      "tone": "P",
+      "modernReading": {
+        "pinyin": "xiang",
+        "toneNumber": 1,
+        "evidenceIds": [
+          "ev:xinyun:十唐:十唐·阴平"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L5880; xinyun-14-rules-d1 → 十唐·阴平",
+        "rawReadings": [
+          "xiāng"
+        ],
+        "sourceLine": "U+4E61: xiāng  # 乡",
+        "reconstructionMatches": [
+          "xiāng"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:关:yinping:八寒·阴平",
+      "character": "关",
+      "positions": [
+        "huanghelou/l7c4"
+      ],
+      "groupIds": [
+        "group:xinyun:八寒:八寒·阴平"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:八寒:八寒·阴平"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L6664; xinyun-14-rules-d1 → 八寒·阴平",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 八寒·阴平"
+      ],
+      "toneClass": "yinping",
+      "tone": "P",
+      "modernReading": {
+        "pinyin": "guan",
+        "toneNumber": 1,
+        "evidenceIds": [
+          "ev:xinyun:八寒:八寒·阴平"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L6664; xinyun-14-rules-d1 → 八寒·阴平",
+        "rawReadings": [
+          "guān"
+        ],
+        "sourceLine": "U+5173: guān  # 关",
+        "reconstructionMatches": [
+          "guān"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:何:qu:二波·去声",
+      "character": "何",
+      "positions": [
+        "huanghelou/l7c5"
+      ],
+      "groupIds": [
+        "group:xinyun:二波:二波·去声"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:二波:二波·去声"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L6124; xinyun-14-rules-d1 → 二波·去声",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 二波·去声"
+      ],
+      "toneClass": "qu",
+      "tone": "Z",
+      "modernReading": {
+        "pinyin": "he",
+        "toneNumber": 4,
+        "evidenceIds": [
+          "ev:xinyun:二波:二波·去声"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L6124; xinyun-14-rules-d1 → 二波·去声",
+        "rawReadings": [
+          "hé",
+          "hè"
+        ],
+        "sourceLine": "U+4F55: hé,hè  # 何",
+        "reconstructionMatches": [
+          "hè"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:何:yangping:二波·阳平",
+      "character": "何",
+      "positions": [
+        "huanghelou/l7c5"
+      ],
+      "groupIds": [
+        "group:xinyun:二波:二波·阳平"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:二波:二波·阳平"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L6124; xinyun-14-rules-d1 → 二波·阳平",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 二波·阳平"
+      ],
+      "toneClass": "yangping",
+      "tone": "P",
+      "modernReading": {
+        "pinyin": "he",
+        "toneNumber": 2,
+        "evidenceIds": [
+          "ev:xinyun:二波:二波·阳平"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L6124; xinyun-14-rules-d1 → 二波·阳平",
+        "rawReadings": [
+          "hé",
+          "hè"
+        ],
+        "sourceLine": "U+4F55: hé,hè  # 何",
+        "reconstructionMatches": [
+          "hé"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:处:shang:十四姑·上声",
+      "character": "处",
+      "positions": [
+        "huanghelou/l7c6"
+      ],
+      "groupIds": [
+        "group:xinyun:十四姑:十四姑·上声"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十四姑:十四姑·上声"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L8600; xinyun-14-rules-d1 → 十四姑·上声",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十四姑·上声"
+      ],
+      "toneClass": "shang",
+      "tone": "Z",
+      "modernReading": {
+        "pinyin": "chu",
+        "toneNumber": 3,
+        "evidenceIds": [
+          "ev:xinyun:十四姑:十四姑·上声"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L8600; xinyun-14-rules-d1 → 十四姑·上声",
+        "rawReadings": [
+          "chù",
+          "chǔ"
+        ],
+        "sourceLine": "U+5904: chù,chǔ  # 处",
+        "reconstructionMatches": [
+          "chǔ"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:处:qu:十四姑·去声",
+      "character": "处",
+      "positions": [
+        "huanghelou/l7c6"
+      ],
+      "groupIds": [
+        "group:xinyun:十四姑:十四姑·去声"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十四姑:十四姑·去声"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L8600; xinyun-14-rules-d1 → 十四姑·去声",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十四姑·去声"
+      ],
+      "toneClass": "qu",
+      "tone": "Z",
+      "modernReading": {
+        "pinyin": "chu",
+        "toneNumber": 4,
+        "evidenceIds": [
+          "ev:xinyun:十四姑:十四姑·去声"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L8600; xinyun-14-rules-d1 → 十四姑·去声",
+        "rawReadings": [
+          "chù",
+          "chǔ"
+        ],
+        "sourceLine": "U+5904: chù,chǔ  # 处",
+        "reconstructionMatches": [
+          "chù"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:是:qu:十三支·去声",
+      "character": "是",
+      "positions": [
+        "huanghelou/l7c7"
+      ],
+      "groupIds": [
+        "group:xinyun:十三支:十三支·去声"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十三支:十三支·去声"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L11971; xinyun-14-rules-d1 → 十三支·去声",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十三支·去声"
+      ],
+      "toneClass": "qu",
+      "tone": "Z",
+      "modernReading": {
+        "pinyin": "shi",
+        "toneNumber": 4,
+        "evidenceIds": [
+          "ev:xinyun:十三支:十三支·去声"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L11971; xinyun-14-rules-d1 → 十三支·去声",
+        "rawReadings": [
+          "shì",
+          "tí"
+        ],
+        "sourceLine": "U+662F: shì,tí  # 是",
+        "reconstructionMatches": [
+          "shì"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:是:yangping:十二齐·阳平",
+      "character": "是",
+      "positions": [
+        "huanghelou/l7c7"
+      ],
+      "groupIds": [
+        "group:xinyun:十二齐:十二齐·阳平"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十二齐:十二齐·阳平"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L11971; xinyun-14-rules-d1 → 十二齐·阳平",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十二齐·阳平"
+      ],
+      "toneClass": "yangping",
+      "tone": "P",
+      "modernReading": {
+        "pinyin": "ti",
+        "toneNumber": 2,
+        "evidenceIds": [
+          "ev:xinyun:十二齐:十二齐·阳平"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L11971; xinyun-14-rules-d1 → 十二齐·阳平",
+        "rawReadings": [
+          "shì",
+          "tí"
+        ],
+        "sourceLine": "U+662F: shì,tí  # 是",
+        "reconstructionMatches": [
+          "tí"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:烟:yinping:九文·阴平",
+      "character": "烟",
+      "positions": [
+        "huanghelou/l8c1"
+      ],
+      "groupIds": [
+        "group:xinyun:九文:九文·阴平"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:九文:九文·阴平"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L14706; xinyun-14-rules-d1 → 九文·阴平",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 九文·阴平"
+      ],
+      "toneClass": "yinping",
+      "tone": "P",
+      "modernReading": {
+        "pinyin": "yin",
+        "toneNumber": 1,
+        "evidenceIds": [
+          "ev:xinyun:九文:九文·阴平"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L14706; xinyun-14-rules-d1 → 九文·阴平",
+        "rawReadings": [
+          "yān",
+          "yīn"
+        ],
+        "sourceLine": "U+70DF: yān,yīn  # 烟",
+        "reconstructionMatches": [
+          "yīn"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:烟:yinping:八寒·阴平",
+      "character": "烟",
+      "positions": [
+        "huanghelou/l8c1"
+      ],
+      "groupIds": [
+        "group:xinyun:八寒:八寒·阴平"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:八寒:八寒·阴平"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L14706; xinyun-14-rules-d1 → 八寒·阴平",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 八寒·阴平"
+      ],
+      "toneClass": "yinping",
+      "tone": "P",
+      "modernReading": {
+        "pinyin": "yan",
+        "toneNumber": 1,
+        "evidenceIds": [
+          "ev:xinyun:八寒:八寒·阴平"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L14706; xinyun-14-rules-d1 → 八寒·阴平",
+        "rawReadings": [
+          "yān",
+          "yīn"
+        ],
+        "sourceLine": "U+70DF: yān,yīn  # 烟",
+        "reconstructionMatches": [
+          "yān"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:波:yinping:二波·阴平",
+      "character": "波",
+      "positions": [
+        "huanghelou/l8c2"
+      ],
+      "groupIds": [
+        "group:xinyun:二波:二波·阴平"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:二波:二波·阴平"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L13685; xinyun-14-rules-d1 → 二波·阴平",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 二波·阴平"
+      ],
+      "toneClass": "yinping",
+      "tone": "P",
+      "modernReading": {
+        "pinyin": "bo",
+        "toneNumber": 1,
+        "evidenceIds": [
+          "ev:xinyun:二波:二波·阴平"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L13685; xinyun-14-rules-d1 → 二波·阴平",
+        "rawReadings": [
+          "bō",
+          "bēi",
+          "bì"
+        ],
+        "sourceLine": "U+6CE2: bō,bēi,bì  # 波",
+        "reconstructionMatches": [
+          "bō"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:波:yinping:五微·阴平",
+      "character": "波",
+      "positions": [
+        "huanghelou/l8c2"
+      ],
+      "groupIds": [
+        "group:xinyun:五微:五微·阴平"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:五微:五微·阴平"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L13685; xinyun-14-rules-d1 → 五微·阴平",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 五微·阴平"
+      ],
+      "toneClass": "yinping",
+      "tone": "P",
+      "modernReading": {
+        "pinyin": "bei",
+        "toneNumber": 1,
+        "evidenceIds": [
+          "ev:xinyun:五微:五微·阴平"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L13685; xinyun-14-rules-d1 → 五微·阴平",
+        "rawReadings": [
+          "bō",
+          "bēi",
+          "bì"
+        ],
+        "sourceLine": "U+6CE2: bō,bēi,bì  # 波",
+        "reconstructionMatches": [
+          "bēi"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:波:qu:十二齐·去声",
+      "character": "波",
+      "positions": [
+        "huanghelou/l8c2"
+      ],
+      "groupIds": [
+        "group:xinyun:十二齐:十二齐·去声"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十二齐:十二齐·去声"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L13685; xinyun-14-rules-d1 → 十二齐·去声",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十二齐·去声"
+      ],
+      "toneClass": "qu",
+      "tone": "Z",
+      "modernReading": {
+        "pinyin": "bi",
+        "toneNumber": 4,
+        "evidenceIds": [
+          "ev:xinyun:十二齐:十二齐·去声"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L13685; xinyun-14-rules-d1 → 十二齐·去声",
+        "rawReadings": [
+          "bō",
+          "bēi",
+          "bì"
+        ],
+        "sourceLine": "U+6CE2: bō,bēi,bì  # 波",
+        "reconstructionMatches": [
+          "bì"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:江:yinping:十唐·阴平",
+      "character": "江",
+      "positions": [
+        "huanghelou/l8c3"
+      ],
+      "groupIds": [
+        "group:xinyun:十唐:十唐·阴平"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十唐:十唐·阴平"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L13554; xinyun-14-rules-d1 → 十唐·阴平",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十唐·阴平"
+      ],
+      "toneClass": "yinping",
+      "tone": "P",
+      "modernReading": {
+        "pinyin": "jiang",
+        "toneNumber": 1,
+        "evidenceIds": [
+          "ev:xinyun:十唐:十唐·阴平"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L13554; xinyun-14-rules-d1 → 十唐·阴平",
+        "rawReadings": [
+          "jiāng"
+        ],
+        "sourceLine": "U+6C5F: jiāng  # 江",
+        "reconstructionMatches": [
+          "jiāng"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:上:shang:十唐·上声",
+      "character": "上",
+      "positions": [
+        "huanghelou/l8c4"
+      ],
+      "groupIds": [
+        "group:xinyun:十唐:十唐·上声"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十唐:十唐·上声"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L5793; xinyun-14-rules-d1 → 十唐·上声",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十唐·上声"
+      ],
+      "toneClass": "shang",
+      "tone": "Z",
+      "modernReading": {
+        "pinyin": "shang",
+        "toneNumber": 3,
+        "evidenceIds": [
+          "ev:xinyun:十唐:十唐·上声"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L5793; xinyun-14-rules-d1 → 十唐·上声",
+        "rawReadings": [
+          "shàng",
+          "shǎng"
+        ],
+        "sourceLine": "U+4E0A: shàng,shǎng  # 上",
+        "reconstructionMatches": [
+          "shǎng"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:上:qu:十唐·去声",
+      "character": "上",
+      "positions": [
+        "huanghelou/l8c4"
+      ],
+      "groupIds": [
+        "group:xinyun:十唐:十唐·去声"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十唐:十唐·去声"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L5793; xinyun-14-rules-d1 → 十唐·去声",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十唐·去声"
+      ],
+      "toneClass": "qu",
+      "tone": "Z",
+      "modernReading": {
+        "pinyin": "shang",
+        "toneNumber": 4,
+        "evidenceIds": [
+          "ev:xinyun:十唐:十唐·去声"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L5793; xinyun-14-rules-d1 → 十唐·去声",
+        "rawReadings": [
+          "shàng",
+          "shǎng"
+        ],
+        "sourceLine": "U+4E0A: shàng,shǎng  # 上",
+        "reconstructionMatches": [
+          "shàng"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:使:shang:十三支·上声",
+      "character": "使",
+      "positions": [
+        "huanghelou/l8c5"
+      ],
+      "groupIds": [
+        "group:xinyun:十三支:十三支·上声"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:十三支:十三支·上声"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L6166; xinyun-14-rules-d1 → 十三支·上声",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 十三支·上声"
+      ],
+      "toneClass": "shang",
+      "tone": "Z",
+      "modernReading": {
+        "pinyin": "shi",
+        "toneNumber": 3,
+        "evidenceIds": [
+          "ev:xinyun:十三支:十三支·上声"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L6166; xinyun-14-rules-d1 → 十三支·上声",
+        "rawReadings": [
+          "shǐ"
+        ],
+        "sourceLine": "U+4F7F: shǐ  # 使",
+        "reconstructionMatches": [
+          "shǐ"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:愁:yangping:七尤·阳平",
+      "character": "愁",
+      "positions": [
+        "huanghelou/l8c7"
+      ],
+      "groupIds": [
+        "group:xinyun:七尤:七尤·阳平"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:七尤:七尤·阳平"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L10645; xinyun-14-rules-d1 → 七尤·阳平",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 七尤·阳平"
+      ],
+      "toneClass": "yangping",
+      "tone": "P",
+      "modernReading": {
+        "pinyin": "chou",
+        "toneNumber": 2,
+        "evidenceIds": [
+          "ev:xinyun:七尤:七尤·阳平"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L10645; xinyun-14-rules-d1 → 七尤·阳平",
+        "rawReadings": [
+          "chóu",
+          "qiǎo",
+          "jiū"
+        ],
+        "sourceLine": "U+6101: chóu,qiǎo,jiū  # 愁",
+        "reconstructionMatches": [
+          "chóu"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:愁:yinping:七尤·阴平",
+      "character": "愁",
+      "positions": [
+        "huanghelou/l8c7"
+      ],
+      "groupIds": [
+        "group:xinyun:七尤:七尤·阴平"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:七尤:七尤·阴平"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L10645; xinyun-14-rules-d1 → 七尤·阴平",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 七尤·阴平"
+      ],
+      "toneClass": "yinping",
+      "tone": "P",
+      "modernReading": {
+        "pinyin": "jiu",
+        "toneNumber": 1,
+        "evidenceIds": [
+          "ev:xinyun:七尤:七尤·阴平"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L10645; xinyun-14-rules-d1 → 七尤·阴平",
+        "rawReadings": [
+          "chóu",
+          "qiǎo",
+          "jiū"
+        ],
+        "sourceLine": "U+6101: chóu,qiǎo,jiū  # 愁",
+        "reconstructionMatches": [
+          "jiū"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    },
+    {
+      "book": "xinyun",
+      "candidateId": "xinyun:愁:shang:六豪·上声",
+      "character": "愁",
+      "positions": [
+        "huanghelou/l8c7"
+      ],
+      "groupIds": [
+        "group:xinyun:六豪:六豪·上声"
+      ],
+      "evidenceIds": [
+        "ev:xinyun:六豪:六豪·上声"
+      ],
+      "sourceId": "src:pinyin-data",
+      "sourcePath": "data/raw/pinyin-data/pinyin.txt",
+      "sourceSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d",
+      "locator": "data/raw/pinyin-data/pinyin.txt:L10645; xinyun-14-rules-d1 → 六豪·上声",
+      "snapshotLocator": [
+        "data/raw/pinyin-data/pinyin.txt（v0.15.0）+ 十四韵规则 xinyun-14-rules-d1 → 六豪·上声"
+      ],
+      "toneClass": "shang",
+      "tone": "Z",
+      "modernReading": {
+        "pinyin": "qiao",
+        "toneNumber": 3,
+        "evidenceIds": [
+          "ev:xinyun:六豪:六豪·上声"
+        ]
+      },
+      "machineStatus": "needs_review",
+      "exceptionIds": [
+        "D4-A-SOURCE-RIGHTS",
+        "D4-A-XINYUN-RULE-SOURCE"
+      ],
+      "reviewBlockers": [
+        "尚无本批次 hash 对应的真实接受记录",
+        "十四韵权威规则原文未取得；本条只证明现有重建规则与源读音一致"
+      ],
+      "sourceCheck": {
+        "locator": "data/raw/pinyin-data/pinyin.txt:L10645; xinyun-14-rules-d1 → 六豪·上声",
+        "rawReadings": [
+          "chóu",
+          "qiǎo",
+          "jiū"
+        ],
+        "sourceLine": "U+6101: chóu,qiǎo,jiū  # 愁",
+        "reconstructionMatches": [
+          "qiǎo"
+        ]
+      },
+      "independentSource": null,
+      "otherReadingsInSameGroup": []
+    }
+  ],
+  "gaps": [],
+  "excludedScope": [
+    "未列举候选",
+    "所属整部",
+    "全库发布",
+    "语境选音",
+    "异体边自动生效",
+    "上游转载授权结论"
+  ]
+}
