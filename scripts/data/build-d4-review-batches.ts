@@ -128,7 +128,7 @@ for (const [index, text] of bytes(cilinReferencePath)
   if (!text.startsWith("【") || !referenceOrdinal || !referenceTone) continue;
   const body = text
     .replace(/^【[^】]*】/u, "")
-    .replace(/（[^（）]*）|\[[^\[\]]*\]|\{\{.*?\}\}/gu, "");
+    .replace(/（[^（）]*）|\[[^\u005B\u005D]*\]|\{\{.*?\}\}/gu, "");
   referenceRows.push({
     ordinal: referenceOrdinal,
     tone: referenceTone,
