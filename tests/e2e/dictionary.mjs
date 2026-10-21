@@ -3,13 +3,13 @@ import { createRequire } from "node:module";
 import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { mkdirSync, writeFileSync, readFileSync, readdirSync } from "node:fs";
-import { REPO_ROOT, startApi, revision, readiness } from "../../scripts/acceptance-runtime.mjs";
-import { waitFor as waitForBase } from "../../scripts/acceptance-runtime.mjs";
-// 本文件含 30 秒级客户端超时与跨页动画场景：默认等待 20 秒会先于被测时长超时。
-// 这里只提高等待上限，不改变任何断言与预期结果。
-const WAIT_MS = 45000;
-const waitFor = (predicate, ms) => waitForBase(predicate, ms ?? WAIT_MS);
-;
+import {
+  REPO_ROOT,
+  startApi,
+  waitFor,
+  revision,
+  readiness,
+} from "../../scripts/acceptance-runtime.mjs";
 import { launchBrowser } from "./cdp.mjs";
 
 const out = resolve(process.argv[2] ?? "artifacts/acceptance/dictionary");
@@ -475,7 +475,7 @@ try {
     async () => {
       await waitFor(() =>
         evaluate(
-          "!!document.querySelector('.pc-rain')",
+          "document.querySelector('.pc-continuous .pc-rain')?.dataset.running === 'true'",
         ),
       );
       await evaluate(
@@ -493,7 +493,7 @@ try {
       await click('[aria-controls="dictionary-space"]');
       await waitFor(() =>
         evaluate(
-          "!!window.__sharedRain && document.querySelector('.pc-rain') === window.__sharedRain && (document.querySelector('.pc-rain')?.getBoundingClientRect().height ?? 0) > 0",
+          "document.querySelector('.pc-continuous .pc-rain')?.dataset.running === 'true'",
         ),
       );
       assert.equal(
@@ -819,7 +819,7 @@ try {
         () =>
           paused.length > 0 &&
           evaluate(
-            "document.querySelector('.pc-input__submit').disabled && !!document.querySelector('.pc-busy')",
+            "document.querySelector('.pc-input__submit').disabled && document.querySelector('.pc-input__submit').textContent.includes('分析中')",
           ),
       );
       const action = async (text) => {

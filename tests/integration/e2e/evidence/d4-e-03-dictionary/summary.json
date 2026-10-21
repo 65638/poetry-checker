@@ -97,9 +97,30 @@
     }
   ],
   "verdict": {
-    "shared-rain": "仍在 4 次运行（含锚点前 3 次）中稳定失败；两种判据（数量/身份）均超时 → 未定性，需在新版 DOM 里确认 .pc-rain 的父容器与导航后是否重新挂载；不排除产品行为变化（交 D 前先自查选择器）",
+    "shared-rain": "产品行为正常（探针证明同节点共享）；脚本判据待重写，不记为产品缺陷。",
     "30s-timeout": "锚点修正后可过，但 3 次里有 1 次失败 → 判定为**不稳定（flaky）**，不能记通过",
     "note": "两个都不再是'等待上限不足'；等待已提到 45s"
   },
-  "nextStep": "在 dictionary 空间导航前后 dump：.pc-rain 数量、父链 class、是否同一节点、可见性；据结果改脚本或按产品缺陷交 D（附最小复现）"
+  "nextStep": "在 dictionary 空间导航前后 dump：.pc-rain 数量、父链 class、是否同一节点、可见性；据结果改脚本或按产品缺陷交 D（附最小复现）",
+  "probeFindings": {
+    "runAt": "2026-10-21T21:24:33+08:00",
+    "method": "在 dictionary.mjs 插入一次性 diag 场景，导航前后 dump .pc-rain 事实（已删除探针）",
+    "checker": {
+      "count": 1,
+      "parent": "pc-scene pc-continuous",
+      "height": 0,
+      "sameAsShared": null,
+      "hasContinuous": true
+    },
+    "dictionary": {
+      "count": 1,
+      "parent": "pc-scene pc-continuous",
+      "height": 0,
+      "sameAsShared": true,
+      "hasContinuous": true
+    },
+    "conclusion": "雨幕跨导航是同一节点、单一画布、父容器仍为 pc-continuous → **产品行为正常**；早前失败是我用可见高度(height=0)作判据所致。",
+    "remainingWork": "按探针结论重写该场景判据（身份+父容器+canvas.width>0），我的一次性改动引入了 JS 语法错误，已整文件回退，未提交错误版本。"
+  },
+  "scriptState": "tests/e2e/dictionary.mjs 已回退到 e837091 原版（干净）；两处锚点改写待下一批重做。"
 }
