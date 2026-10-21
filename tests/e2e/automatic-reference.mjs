@@ -40,7 +40,7 @@ try {
     assert.deepEqual(seen[0].readingOverrides, []);
     assert.equal(await h.evaluate("document.querySelector('.pc-status').textContent.includes('GLM已自动辨析')"), true);
     await h.click('[data-token-id="l4c1"]');
-    await waitFor(() => h.evaluate("document.querySelector('.pc-evidence')?.textContent.includes('GLM 自动辨音')"));
+    await waitFor(() => h.evaluate("document.querySelector('.pc-evidence')?.textContent.includes('AI 自动辨音')"));
     assert.equal(await h.evaluate("document.querySelector('.pc-evidence').textContent.includes('采用此读音并重查')"), false);
     await shot('automatic-character');
     await h.key('Escape');

@@ -13,5 +13,6 @@ DeepSeek使用官方API，密钥只读取服务端环境；未取得用户新Key
 - 同韵翻页保留DOM，按书/读音/页缓存，加载时禁用旧页操作；最后一页补不可交互占位，保留推荐与分页高度。空推荐显示反馈。推荐仍只覆盖当前页最多120读音候选。
 - pnpm verify：exit 0，77文件/953测试；lint、类型、构建和生成物一致性通过。构建仍有既存大于500kB分块提示，不影响本次验收。
 - tests/e2e/poetry-studio.mjs：exit 0，10场景通过，0浏览器异常。真实API/韵书、受控DeepSeek上游；验证连续长度变化改稿后l1c5韵脚、再荐字不增analyze、试用撤销、650ms延迟翻页不卸载DOM、末页等高、缓存往返不查云模型，1440/375截图及320适配通过。
-- 浏览器执行基线47a8707，dirty=true，证据位于工作区外outputs/DeepSeek荐字修复_2026-10-22/browser，不能称为干净提交SHA运行。DeepSeek真实调用因Key尚未填写明确未运行；GLM先前真实荐字HTTP200仅验证连通，不代表荐字准确率。
+- 补跑既有自动辨音 E2E 5/5、独立字典辨音 E2E 6/6，均0浏览器异常；受控provider标为DeepSeek，连同文字统一改动后的断言已覆盖。第一轮等待GLM旧文案的一次运行超时，修正断言后复跑通过。
+- 浏览器执行基线47a8707，dirty=true，证据位于工作区外outputs/DeepSeek荐字修复_2026-10-22/{browser,automatic-reference-final,reading-assistant}，不能称为干净提交SHA运行。DeepSeek真实调用因Key尚未填写明确未运行；GLM先前真实荐字HTTP200仅验证连通，不代表荐字准确率。
 - 私有.env.local已被Git忽略，不归档、不记录内容；配置文件可填写DEEPSEEK_API_KEY，重启预览后生效。各接口及报告保留真实provider/model标识。

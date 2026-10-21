@@ -35,8 +35,8 @@ const candidate = lookup.entries[0].candidates.find(
 const choice = (input) => {
   const poem = parseText({ text: input.text });
   return {
-    provider: "zhipu",
-    model: "glm-5.3-flash",
+    provider: "deepseek",
+    model: "deepseek-flash",
     inputHash: createHash("sha256").update(input.text).digest("hex"),
     rhymeBook: input.rhymeBook,
     dataVersion: lookup.dataVersion,
@@ -60,7 +60,7 @@ const choice = (input) => {
       })),
     missingTokenIds: [],
     truncated: false,
-    notice: "受控UI测试响应，非真实GLM推理。",
+    notice: "受控UI测试响应，非真实DeepSeek推理。",
   };
 };
 const fulfill = (requestId, body, responseCode = 200) =>
@@ -78,8 +78,8 @@ cdp.on("Fetch.requestPaused", (event) => {
     if (event.request.url.endsWith("/status"))
       return fulfill(event.requestId, {
         configured,
-        provider: "zhipu",
-        model: "glm-5.3-flash",
+        provider: "deepseek",
+        model: "deepseek-flash",
       });
     posts++;
     const input = JSON.parse(event.request.postData);
@@ -143,7 +143,7 @@ try {
       await fillPassage("更上一层楼。");
       await waitFor(() =>
         evaluate(
-          "document.querySelector('.pc-reading-assistant').textContent.includes('GLM尚未配置')",
+          "document.querySelector('.pc-reading-assistant').textContent.includes('AI尚未配置')",
         ),
       );
       assert.equal(
