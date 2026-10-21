@@ -186,6 +186,7 @@ describe("响应契约与原文映射", () => {
       "/api/v1/poetry-assistant",
       "/api/v1/reading-suggestions",
       "/api/v1/reading-suggestions/status",
+      "/api/v1/research",
       "/api/v1/rhyme-books",
       "/api/v1/rhyme-words",
       "/api/v1/rules/{ruleId}",

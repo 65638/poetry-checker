@@ -13,6 +13,7 @@ import { incompleteSummary, templateLabel } from "../../app/reportView";
 import { trailingPunctuation } from "../punctuation";
 import { FindingReference } from "./FindingReference";
 import { FormatSummary } from "./FormatSummary";
+import { ResearchNotes } from "./ResearchNotes";
 import "../styles/report.css";
 
 type ReportViewProps = Pick<
@@ -485,6 +486,9 @@ export function ReportView(props: ReportViewProps) {
       </p>
 
       <FormatSummary report={report} />
+      {report.research && (
+        <ResearchNotes text={report.poem.originalText} data={report.research} />
+      )}
 
       <div className="pc-report-workbench">
         <section className="pc-reading" aria-labelledby="pc-grid-heading">

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { ResearchRequestSchema, ResearchResponseSchema } from "./research.js";
 import {
   LibraryCatalogSchema,
   PoemPronunciationSchema,
@@ -11,6 +12,7 @@ import {
 } from "./studio.js";
 export * from "./studio.js";
 export * from "./corpus.js";
+export * from "./research.js";
 
 const id = z.string().min(1);
 const ids = z.array(id);
@@ -509,6 +511,7 @@ export const AnalysisResponseSchema = z
       rules: z.array(RuleCardSchema),
     }),
     summary: z.strictObject({ status: SummaryStatusSchema, message: id }),
+    research: ResearchResponseSchema.optional(),
     readingAssistant: z
       .strictObject({
         provider: z.literal("zhipu"),
@@ -529,6 +532,8 @@ export const AnalysisResponseSchema = z
         message: "报告与标注的原文摘要及韵书必须一致",
       });
     }
+    if (report.research && report.research.inputHash !== report.inputHash)
+      ctx.addIssue({ code: "custom", message: "参考资料必须对应报告原文摘要" });
     const expectedBasis =
       report.policy.rhymeBook === "xinyun" ? "mandarin_base" : "historical";
     if (report.policy.toneBasis !== expectedBasis)
@@ -636,6 +641,8 @@ export interface EvaluateInput {
 }
 
 export const schemaRegistry = {
+  ResearchRequest: ResearchRequestSchema,
+  ResearchResponse: ResearchResponseSchema,
   LibraryCatalog: LibraryCatalogSchema,
   PoemPronunciation: PoemPronunciationSchema,
   CharacterReference: CharacterReferenceSchema,
@@ -688,6 +695,19 @@ export function createOpenApiDocument() {
         "契约基线。复杂跨字段校验以 Zod 实现为准；HTTP 服务尚待接入。",
     },
     paths: {
+      "/api/v1/research": {
+        post: {
+          operationId: "getPoemResearch",
+          requestBody: { required: true, content: content("ResearchRequest") },
+          responses: {
+            "200": {
+              description: "正文对应的注音、版本和规则参考；分歧保留",
+              content: content("ResearchResponse"),
+            },
+            "422": errors[422],
+          },
+        },
+      },
       "/api/v1/library": {
         get: {
           operationId: "getLibrary",

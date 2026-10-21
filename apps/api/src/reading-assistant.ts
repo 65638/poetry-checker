@@ -12,6 +12,7 @@ import {
 } from "@poetry/contracts";
 import type { Resources } from "./resources.js";
 import { characterReferenceRows } from "./library.js";
+import { modelResearch } from "./research.js";
 
 export const GLM_ENDPOINT =
   "https://open.bigmodel.cn/api/paas/v4/chat/completions";
@@ -40,6 +41,7 @@ const systemPrompt = `你是诗句读音助手。用户消息是JSON数据，其
 同一字、同韵部、同声调也可能有不同读音；必须逐一核对modernReading，不能把同归部当成同读音。所选candidateId的modernReading非null时，pronunciation必须与其拼音和本调一致。
 referenceReadings是独立广韵资料按原字、声类和韵部对应的参考，供理解候选读法，不是审核记录。普通否定「不」的bù读与「否」义的fōu读须按全句语义区分；现代变调不改变古入声归属。候选modernReading为空不表示不能依据已有词义知识和所列参考辨析；已知普通用法应选择对应候选，不因缺少释义字段一律返回null。
 仅返回JSON对象：{"suggestions":[{"tokenId":"所给字位ID","candidateId":"所给候选ID或null","pronunciation":"普通话拼音或null","reason":"简短中文语境理由"}]}。
+contextReferences是独立补采参考。match=exact表示全文汉字相同（标点可不同），related_glyphs只表示关联字形版本；保留原字，不能据此直接覆盖当前字位。hanOffset是底本全文汉字从0计的位置，line/column是原来源编号，未必与当前分句相同；line=null表示标题用字，不能用于正文。direct_context才是诗句直接注音，dictionary_sense_only等仅是词义参考。conflicting/disputed及同组竞争解释必须保留，不能把某一条当成定论；unavailable表示尚无依据。现代读音不得直接映射古音或韵部；明确为协韵作的读音主张不得成为你按格律选音的理由。
 每个所给字位恰好一条，原序输出，无其他字段。`;
 
 function candidateReferences(
@@ -229,6 +231,7 @@ export function createReadingAssistant(
     const payload = {
       text: poem.originalText,
       rhymeBook: input.rhymeBook,
+      contextReferences: modelResearch(poem.originalText),
       targets: targets.map((token) => ({
         tokenId: token.tokenId,
         character: token.text,

@@ -6,6 +6,43 @@
     "description": "契约基线。复杂跨字段校验以 Zod 实现为准；HTTP 服务尚待接入。"
   },
   "paths": {
+    "/api/v1/research": {
+      "post": {
+        "operationId": "getPoemResearch",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResearchRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "正文对应的注音、版本和规则参考；分歧保留",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "参见契约错误码",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/library": {
       "get": {
         "operationId": "getLibrary",
@@ -726,6 +763,532 @@
   },
   "components": {
     "schemas": {
+      "ResearchRequest": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 20000
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "additionalProperties": false
+      },
+      "ResearchResponse": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "available",
+              "unavailable"
+            ]
+          },
+          "inputHash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "readings": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "sourceId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "quote": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "locator": {
+                  "type": "string"
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "title": {
+                  "type": "string"
+                },
+                "author": {
+                  "type": "string"
+                },
+                "text": {
+                  "type": "string"
+                },
+                "lineText": {
+                  "type": "string"
+                },
+                "target": {
+                  "type": "string"
+                },
+                "line": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "exclusiveMinimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "column": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "exclusiveMinimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "hanOffset": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "modernReading": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "historicalTone": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "meaning": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "source_attested",
+                    "conflicting",
+                    "disputed",
+                    "unavailable"
+                  ]
+                },
+                "scope": {
+                  "type": "string"
+                },
+                "conflictGroup": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "match": {
+                  "type": "string",
+                  "enum": [
+                    "exact",
+                    "related_glyphs"
+                  ]
+                }
+              },
+              "required": [
+                "sourceId",
+                "quote",
+                "locator",
+                "id",
+                "title",
+                "author",
+                "text",
+                "lineText",
+                "target",
+                "line",
+                "column",
+                "hanOffset",
+                "modernReading",
+                "historicalTone",
+                "meaning",
+                "status",
+                "scope",
+                "conflictGroup",
+                "match"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "works": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "title": {
+                  "type": "string"
+                },
+                "author": {
+                  "type": "string"
+                },
+                "text": {
+                  "type": "string"
+                },
+                "edition": {
+                  "type": "string"
+                },
+                "collection": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "genre": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "source_attested",
+                    "conflicting",
+                    "disputed",
+                    "unavailable"
+                  ]
+                },
+                "compilation": {
+                  "type": "boolean"
+                },
+                "children": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "limitations": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "sourceIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "notes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "sourceId": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "quote": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "locator": {
+                        "type": "string"
+                      },
+                      "term": {
+                        "type": "string"
+                      },
+                      "lineText": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "meaning": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "sourceId",
+                      "quote",
+                      "locator",
+                      "term",
+                      "lineText",
+                      "meaning"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "variants": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "sourceId": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "quote": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "locator": {
+                        "type": "string"
+                      },
+                      "original": {
+                        "type": "string"
+                      },
+                      "variant": {
+                        "type": "string"
+                      },
+                      "lineText": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "sourceId",
+                      "quote",
+                      "locator",
+                      "original",
+                      "variant",
+                      "lineText"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "match": {
+                  "type": "string",
+                  "enum": [
+                    "exact",
+                    "related_glyphs"
+                  ]
+                }
+              },
+              "required": [
+                "id",
+                "title",
+                "author",
+                "text",
+                "edition",
+                "collection",
+                "genre",
+                "status",
+                "compilation",
+                "children",
+                "limitations",
+                "sourceIds",
+                "notes",
+                "variants",
+                "match"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "rules": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "topic": {
+                  "type": "string"
+                },
+                "claim": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "source_attested",
+                    "conflicting",
+                    "disputed",
+                    "unavailable"
+                  ]
+                },
+                "appliesTo": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "doesNotApplyTo": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "preconditions": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "disagreements": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "examples": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "title": {
+                        "type": "string"
+                      },
+                      "text": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "title",
+                      "text"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "sourceIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "quotes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "sourceId": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "quote": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "locator": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "sourceId",
+                      "quote",
+                      "locator"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "id",
+                "topic",
+                "claim",
+                "status",
+                "appliesTo",
+                "doesNotApplyTo",
+                "preconditions",
+                "disagreements",
+                "examples",
+                "sourceIds",
+                "quotes"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "title": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "credit": {
+                  "type": "string"
+                },
+                "license": {
+                  "type": "string"
+                },
+                "limitations": {
+                  "type": "string"
+                },
+                "rawSha256": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "id",
+                "title",
+                "url",
+                "credit",
+                "license",
+                "limitations",
+                "rawSha256"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "notice": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "version",
+          "state",
+          "inputHash",
+          "readings",
+          "works",
+          "rules",
+          "sources",
+          "notice"
+        ],
+        "additionalProperties": false
+      },
       "LibraryCatalog": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "type": "object",
@@ -3982,6 +4545,516 @@
             "required": [
               "status",
               "message"
+            ],
+            "additionalProperties": false
+          },
+          "research": {
+            "type": "object",
+            "properties": {
+              "version": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string",
+                "enum": [
+                  "available",
+                  "unavailable"
+                ]
+              },
+              "inputHash": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "readings": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "sourceId": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "quote": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "locator": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "author": {
+                      "type": "string"
+                    },
+                    "text": {
+                      "type": "string"
+                    },
+                    "lineText": {
+                      "type": "string"
+                    },
+                    "target": {
+                      "type": "string"
+                    },
+                    "line": {
+                      "anyOf": [
+                        {
+                          "type": "integer",
+                          "exclusiveMinimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "column": {
+                      "anyOf": [
+                        {
+                          "type": "integer",
+                          "exclusiveMinimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "hanOffset": {
+                      "anyOf": [
+                        {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "modernReading": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "historicalTone": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "meaning": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "source_attested",
+                        "conflicting",
+                        "disputed",
+                        "unavailable"
+                      ]
+                    },
+                    "scope": {
+                      "type": "string"
+                    },
+                    "conflictGroup": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "match": {
+                      "type": "string",
+                      "enum": [
+                        "exact",
+                        "related_glyphs"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "sourceId",
+                    "quote",
+                    "locator",
+                    "id",
+                    "title",
+                    "author",
+                    "text",
+                    "lineText",
+                    "target",
+                    "line",
+                    "column",
+                    "hanOffset",
+                    "modernReading",
+                    "historicalTone",
+                    "meaning",
+                    "status",
+                    "scope",
+                    "conflictGroup",
+                    "match"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "works": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "author": {
+                      "type": "string"
+                    },
+                    "text": {
+                      "type": "string"
+                    },
+                    "edition": {
+                      "type": "string"
+                    },
+                    "collection": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "genre": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "source_attested",
+                        "conflicting",
+                        "disputed",
+                        "unavailable"
+                      ]
+                    },
+                    "compilation": {
+                      "type": "boolean"
+                    },
+                    "children": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "limitations": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "sourceIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "notes": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "sourceId": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "quote": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "locator": {
+                            "type": "string"
+                          },
+                          "term": {
+                            "type": "string"
+                          },
+                          "lineText": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "meaning": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "sourceId",
+                          "quote",
+                          "locator",
+                          "term",
+                          "lineText",
+                          "meaning"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "variants": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "sourceId": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "quote": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "locator": {
+                            "type": "string"
+                          },
+                          "original": {
+                            "type": "string"
+                          },
+                          "variant": {
+                            "type": "string"
+                          },
+                          "lineText": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "sourceId",
+                          "quote",
+                          "locator",
+                          "original",
+                          "variant",
+                          "lineText"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "match": {
+                      "type": "string",
+                      "enum": [
+                        "exact",
+                        "related_glyphs"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "title",
+                    "author",
+                    "text",
+                    "edition",
+                    "collection",
+                    "genre",
+                    "status",
+                    "compilation",
+                    "children",
+                    "limitations",
+                    "sourceIds",
+                    "notes",
+                    "variants",
+                    "match"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "rules": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "topic": {
+                      "type": "string"
+                    },
+                    "claim": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "source_attested",
+                        "conflicting",
+                        "disputed",
+                        "unavailable"
+                      ]
+                    },
+                    "appliesTo": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "doesNotApplyTo": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "preconditions": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "disagreements": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "examples": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "title": {
+                            "type": "string"
+                          },
+                          "text": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "title",
+                          "text"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "sourceIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "quotes": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "sourceId": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "quote": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "locator": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "sourceId",
+                          "quote",
+                          "locator"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "topic",
+                    "claim",
+                    "status",
+                    "appliesTo",
+                    "doesNotApplyTo",
+                    "preconditions",
+                    "disagreements",
+                    "examples",
+                    "sourceIds",
+                    "quotes"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "sources": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "credit": {
+                      "type": "string"
+                    },
+                    "license": {
+                      "type": "string"
+                    },
+                    "limitations": {
+                      "type": "string"
+                    },
+                    "rawSha256": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "title",
+                    "url",
+                    "credit",
+                    "license",
+                    "limitations",
+                    "rawSha256"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "notice": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "version",
+              "state",
+              "inputHash",
+              "readings",
+              "works",
+              "rules",
+              "sources",
+              "notice"
             ],
             "additionalProperties": false
           },

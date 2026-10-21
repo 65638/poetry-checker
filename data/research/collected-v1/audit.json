@@ -1,0 +1,84 @@
+{
+  "upstreamFileDigestsChecked": {
+    "metadata": 62,
+    "readings": 89,
+    "rules": 85
+  },
+  "inputs": [
+    {
+      "input": "metadata/works.jsonl",
+      "file": "data/raw/research-collected-v1/metadata-entries.gz",
+      "bytes": 81740,
+      "sha256": "5bd91c7ba9e7c15624e17eb4e4d8f47771258b6c6f74c96f8e675c25949ad272",
+      "archiveSha256": "7fa01eff80c4e3c76ad80322dddd645194f3f4fd948e3f58c66f79bde4238601"
+    },
+    {
+      "input": "metadata/sources.json",
+      "file": "data/raw/research-collected-v1/metadata-sources.gz",
+      "bytes": 112219,
+      "sha256": "2314e2913ffa8ef445d14d10c99d38454fa37186c8e8b9fb3a3b97d654fa5568",
+      "archiveSha256": "201c0fc3e90e4ff375dd9dcb1f5fa50106d9f24bb179dc6599aab73e389e8827"
+    },
+    {
+      "input": "readings/entries.jsonl",
+      "file": "data/raw/research-collected-v1/readings-entries.gz",
+      "bytes": 59853,
+      "sha256": "2defa4fda63bee97c77a9848511a8185a065bc732e00884cc4b17c8bfc5ec45c",
+      "archiveSha256": "90774bc0cab41a44621fc1eb45a99ebf64c5d77ba4b07249eb60129664875c96"
+    },
+    {
+      "input": "readings/sources.json",
+      "file": "data/raw/research-collected-v1/readings-sources.gz",
+      "bytes": 121865,
+      "sha256": "410101298493ac8391d11e0fbfbaba8a08906d5774dc53ce05b1ed494a6bb074",
+      "archiveSha256": "4856dbdc4d9627f9726593f76ca0f5ed0e655152f68c58f470edefdabc6df00e"
+    },
+    {
+      "input": "rules/rules.jsonl",
+      "file": "data/raw/research-collected-v1/rules-entries.gz",
+      "bytes": 48227,
+      "sha256": "d2368fc39110106a48d3fdb3ab5ea912d40359f6a745e8b0bbad90944b9fe0b9",
+      "archiveSha256": "41fe9199ec2c5336c7dbd57ca58549c774bd71e42f61e2f6292e6b6f28b52366"
+    },
+    {
+      "input": "rules/sources.json",
+      "file": "data/raw/research-collected-v1/rules-sources.gz",
+      "bytes": 49002,
+      "sha256": "201dd441434e3cd3964eccab0735378f2bc7d910d99b89bb080420214b7bb516",
+      "archiveSha256": "422c793d5f08c2255682c140e3ad8819e63390e65460c2b0536ebee461034bbe"
+    }
+  ],
+  "records": {
+    "sources": 154,
+    "readings": 63,
+    "works": 46,
+    "rules": 32
+  },
+  "statuses": {
+    "readings": {
+      "conflicting": 5,
+      "source_attested": 51,
+      "unavailable": 7
+    },
+    "works": {
+      "source_attested": 42,
+      "conflicting": 4
+    },
+    "rules": {
+      "source_attested": 28,
+      "disputed": 2,
+      "unavailable": 2
+    }
+  },
+  "compiledSha256": "fc613265d518e1a09ca785c61263f4794b8da138c725433e20c33cf1f8f10349",
+  "sourceLineNumberingDifferences": [
+    "cr-037",
+    "cr-038",
+    "cr-039",
+    "cr-063"
+  ],
+  "integrity": "摘要、字节数、来源外键、正文注音字位、组诗子篇引用通过；不等于内容人审。",
+  "humanReview": "未新增",
+  "evidenceApproved": "未新增；原记录保持不变",
+  "upstreamRetention": "原始网页/PDF/扫描字节由本地交付包留存；仓库冻结六个结构化输入原字节及摘要，不声称已逐页核对。"
+}

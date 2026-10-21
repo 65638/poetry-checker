@@ -41,6 +41,13 @@ export function characterReferenceRows(character: string): GuangyunEntry[] {
     ? reference.entries[character]!.entries
     : [];
 }
+// Retrieval only: aliases never authorize rewriting a poem or a reading.
+export function relatedCharacterGlyphs(character: string): string[] {
+  reference ??= read("reference") as NonNullable<typeof reference>;
+  return Object.hasOwn(reference.aliases, character)
+    ? reference.aliases[character]!
+    : [];
+}
 export function registerLibrary(app: FastifyInstance) {
   app.get("/api/v1/library", async (_req, reply) => {
     try {

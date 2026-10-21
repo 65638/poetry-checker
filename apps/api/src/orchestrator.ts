@@ -20,6 +20,7 @@ import { toLexiconErrorResponse } from "./lexicon-errors.js";
 import type { Resources } from "./resources.js";
 import type { ReadingAssistantService } from "./reading-assistant.js";
 import { AssistantError } from "./reading-assistant.js";
+import { poemResearch } from "./research.js";
 
 export type OrchestrationResult =
   | { kind: "ok"; response: AnalysisResponse }
@@ -291,6 +292,7 @@ export async function analyze(
         rules: resources.ruleCards,
       },
       summary: deriveSummary(prosody, genre, parsed.quality),
+      research: poemResearch(annotated.originalText),
       ...(assistant ? { readingAssistant: assistant } : {}),
     };
     const checked = AnalysisResponseSchema.safeParse(response);

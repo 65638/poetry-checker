@@ -13,6 +13,7 @@ import {
 import type { LibraryWork, PoemPronunciation } from "@poetry/contracts";
 import { loadCatalog, loadPronunciation } from "../api/library";
 import { AnnotatedVerses } from "../presentation/components/AnnotatedVerses";
+import { ResearchNotes } from "../presentation/components/ResearchNotes";
 import {
   BUILTIN_WORKS,
   IMPORT_BYTES,
@@ -851,6 +852,10 @@ export function LibraryContainer({
                 </>
               )}
             </p>
+            <ResearchNotes
+              key={selected.id}
+              text={selected.paragraphs.join("\n")}
+            />
             {selected.paragraphs.join("\n").length > 2000 && (
               <p className="pc-studio-notice">
                 长篇原文完整保留；研读按所选段落进行，选段结论不代表整篇。

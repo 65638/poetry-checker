@@ -159,7 +159,15 @@ describe("poetry studio with real lexicon and controlled model", () => {
             JSON.parse(fetcher.mock.calls[0]![1]!.body as string).messages[1]
               .content,
           ),
-        ).toEqual({ task: "compare", left: "月映山。", right: "月照水。" });
+        ).toMatchObject({
+          task: "compare",
+          left: "月映山。",
+          right: "月照水。",
+          contextReferences: {
+            left: { readings: [], versions: [] },
+            right: { readings: [], versions: [] },
+          },
+        });
       },
     );
   });
