@@ -63,6 +63,7 @@ export function LibraryContainer({
   const [importing, setImporting] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
   const [lookupChar, setLookupChar] = useState("");
+  const [compareLine, setCompareLine] = useState<number | null>(null);
   const fileInput = useRef<HTMLInputElement>(null);
   const reader = useRef<HTMLElement>(null);
   const catalogue = useRef<HTMLElement>(null);
@@ -132,6 +133,17 @@ export function LibraryContainer({
   const selected = works.find((w) => w.id === selectedId);
   const left = works.find((w) => w.id === leftId);
   const right = works.find((w) => w.id === rightId);
+  const compareUnavailable =
+    !left || !right
+      ? "请先选好左右两卷。"
+      : leftId === rightId
+        ? "两卷是同一首诗，换一首再比较。"
+        : Math.max(
+              left.paragraphs.join("\n").length,
+              right.paragraphs.join("\n").length,
+            ) > 2000
+          ? "可阅读全文；AI 对读暂限每首 2000 字，请换一首较短的诗。"
+          : null;
   const totalPages = Math.max(1, Math.ceil(display.length / 20));
   async function importFile(file: File) {
     if (file.size > IMPORT_BYTES) {
@@ -211,38 +223,93 @@ export function LibraryContainer({
       className="pc-library-poem"
       aria-label={side === "left" ? "左诗" : "右诗"}
     >
-      <label>
-        {side === "left" ? "左卷" : "右卷"}
+      <label className="pc-compare-picker">
+        <span>
+          <b aria-hidden="true">{side === "left" ? "壹" : "贰"}</b>
+          {side === "left" ? "左卷" : "右卷"}
+          <small>选一首诗</small>
+        </span>
         <select
           value={side === "left" ? leftId : rightId}
-          onChange={(e) =>
-            side === "left"
-              ? setLeftId(e.target.value)
-              : setRightId(e.target.value)
-          }
+          onChange={(e) => {
+            setCompareLine(null);
+            if (side === "left") setLeftId(e.target.value);
+            else setRightId(e.target.value);
+          }}
         >
           {workOptions}
         </select>
       </label>
       {work && (
-        <>
-          <h2>{work.title}</h2>
-          <p className="pc-studio-meta">
-            {work.dynasty || "朝代未载"} · {work.author || "作者未载"}
-          </p>
+        <div className="pc-compare-leaf" key={work.id}>
+          <header className="pc-compare-title">
+            <h2>{work.title}</h2>
+            <p className="pc-studio-meta">
+              {work.dynasty || "朝代未载"} · {work.author || "作者未载"}
+            </p>
+          </header>
           <div className="pc-library-verses">
             {work.paragraphs.map((line, i) => (
-              <p key={i}>
-                {line.split(/(?<=[，。！？；])/u).map((phrase, part) => (
-                  <span className="pc-library-phrase" key={part}>
-                    {phrase}
-                  </span>
-                ))}
+              <p
+                key={i}
+                className="pc-compare-line"
+                data-active={compareLine === i}
+                tabIndex={0}
+                onPointerEnter={() => setCompareLine(i)}
+                onPointerLeave={() => setCompareLine(null)}
+                onFocus={() => setCompareLine(i)}
+                onBlur={() => setCompareLine(null)}
+              >
+                <small aria-hidden="true">
+                  {String(i + 1).padStart(2, "0")}
+                </small>
+                <span>
+                  {line.split(/(?<=[，。！？；])/u).map((phrase, part) => (
+                    <span className="pc-library-phrase" key={part}>
+                      {phrase}
+                    </span>
+                  ))}
+                </span>
               </p>
             ))}
           </div>
-          <p className="pc-studio-meta">{work.source}</p>
-        </>
+          <div className="pc-compare-poem-tools">
+            <button
+              className="pc-studio-action"
+              disabled={work.paragraphs.join("\n").length > 2000}
+              onClick={() => onStudy(work)}
+            >
+              <BookOpen size={15} />
+              研读此诗
+            </button>
+            <button
+              className="pc-studio-icon"
+              aria-label={`收藏《${work.title}》`}
+              aria-pressed={favorites.includes(work.id)}
+              onClick={() => toggleFavorite(work.id)}
+            >
+              <Star
+                size={16}
+                fill={favorites.includes(work.id) ? "currentColor" : "none"}
+              />
+            </button>
+            <details className="pc-compare-source">
+              <summary>诗文来源</summary>
+              <p>
+                {work.source}
+                {work.sourceUrl && (
+                  <>
+                    {" "}
+                    ·{" "}
+                    <a href={work.sourceUrl} target="_blank" rel="noreferrer">
+                      原始页面
+                    </a>
+                  </>
+                )}
+              </p>
+            </details>
+          </div>
+        </div>
       )}
     </section>
   );
@@ -324,54 +391,83 @@ export function LibraryContainer({
           role="tabpanel"
           aria-label="对读"
         >
-          <div className="pc-studio-actions">
-            <button
-              className="pc-studio-icon"
-              title="交换左右诗作"
-              aria-label="交换左右诗作"
-              onClick={() => {
-                setLeftId(rightId);
-                setRightId(leftId);
-              }}
-            >
-              <ArrowLeftRight size={18} />
-            </button>
-            <button
-              className="pc-studio-action"
-              disabled={
-                !left ||
-                !right ||
-                leftId === rightId ||
-                comparison.busy ||
-                Math.max(
-                  left?.paragraphs.join("\n").length ?? 0,
-                  right?.paragraphs.join("\n").length ?? 0,
-                ) > 2000
-              }
-              onClick={() => {
-                if (left && right)
-                  void comparison.run({
-                    task: "compare",
-                    left: left.paragraphs.join("\n"),
-                    right: right.paragraphs.join("\n"),
-                  });
-              }}
-            >
-              <BookOpen size={17} />
-              比较两诗
-            </button>
+          <header className="pc-compare-heading">
+            <div>
+              <p className="pc-studio-eyebrow">灯 下 · 对 读</p>
+              <h2>两卷相照</h2>
+              <p>从一字一景，读出两首诗的相近与不同。</p>
+            </div>
+            <div className="pc-studio-actions">
+              <button
+                className="pc-studio-action"
+                title="交换左右诗作"
+                aria-label="交换左右诗作"
+                onClick={() => {
+                  setLeftId(rightId);
+                  setRightId(leftId);
+                }}
+              >
+                <ArrowLeftRight size={18} />
+                交换两卷
+              </button>
+              <button
+                className="pc-studio-action pc-compare-submit"
+                disabled={
+                  !!compareUnavailable ||
+                  comparison.busy ||
+                  comparison.result?.task === "compare"
+                }
+                aria-describedby="pc-compare-guidance"
+                onClick={() => {
+                  if (left && right)
+                    void comparison.run({
+                      task: "compare",
+                      left: left.paragraphs.join("\n"),
+                      right: right.paragraphs.join("\n"),
+                    });
+                }}
+              >
+                <BookOpen size={17} />
+                {comparison.result?.task === "compare"
+                  ? "对读已完成"
+                  : "比较两诗"}
+              </button>
+            </div>
+          </header>
+          <div className="pc-compare-guidance" id="pc-compare-guidance">
+            <span>
+              {compareUnavailable ??
+                "先并读原诗，再比较意象、章法与情绪。AI 解读仅供参考。"}
+            </span>
+            <small>停在诗段上，对照两卷同段位置</small>
           </div>
           <div className="pc-library-diptych">
             {poemColumn(left, "left")}
             {poemColumn(right, "right")}
           </div>
-          <StudioTaskState {...comparison} />
+          <div className="pc-compare-task">
+            <StudioTaskState {...comparison} />
+          </div>
           {comparison.result?.task === "compare" && (
             <div className="pc-library-comparison-notes">
-              <p>{comparison.result.result.overview}</p>
+              <header className="pc-compare-notes-heading">
+                <span aria-hidden="true">评</span>
+                <div>
+                  <h2>合卷细读</h2>
+                  <p>
+                    《{left?.title}》与《{right?.title}》 · AI 对读札记
+                  </p>
+                </div>
+              </header>
+              <p className="pc-compare-overview">
+                {comparison.result.result.overview}
+              </p>
               {comparison.result.result.aspects.map((aspect, i) => (
                 <div key={i} className="pc-library-aspect">
-                  <h3>{aspect.name}</h3>
+                  <h3>
+                    <small>{String(i + 1).padStart(2, "0")}</small>
+                    {aspect.name}
+                  </h3>
                   <p>
                     <strong>左卷</strong> {aspect.left}
                   </p>

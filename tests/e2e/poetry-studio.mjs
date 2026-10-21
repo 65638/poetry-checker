@@ -67,6 +67,9 @@ try {
     await clickText('.pc-library-reading button', '加入对读');
     await clickText('.pc-library-comparison button', '比较两诗');
     await waitFor(() => h.evaluate("document.querySelector('.pc-library-comparison-notes')?.textContent.includes('受控对读总评')"));
+    assert.equal(await h.evaluate("document.querySelector('.pc-compare-submit').disabled"), true, 'Completed pair must not flash a duplicate request');
+    await h.evaluate("document.querySelector('.pc-library-comparison-notes').scrollIntoView({block:'center',behavior:'instant'})");
+    await shot('compare-notes-1440');
     const before = await h.evaluate("document.querySelectorAll('.pc-library-poem h2')[0].textContent");
     await h.click('[aria-label="交换左右诗作"]');
     await waitFor(() => h.evaluate("!document.querySelector('.pc-library-comparison-notes')"));
@@ -77,6 +80,27 @@ try {
     await h.evaluate("document.querySelector('.pc-library-comparison').scrollIntoView({block:'start',behavior:'instant'})");
     await shot('compare-375');
     await h.viewport(1440, 1000);
+  });
+  await check('compare-guidance-keyboard-paired-reading-and-responsive-leaves', async () => {
+    const savedRight = await h.evaluate("document.querySelectorAll('.pc-compare-picker select')[1].value");
+    await h.evaluate("(() => { const [left,right]=document.querySelectorAll('.pc-compare-picker select'); right.value=left.value; right.dispatchEvent(new Event('change',{bubbles:true})); })()");
+    await waitFor(() => h.evaluate("document.querySelector('.pc-compare-guidance').textContent.includes('同一首诗')"));
+    assert.equal(await h.evaluate("document.querySelector('.pc-compare-submit').disabled"), true);
+    await h.evaluate(`(() => { const right=document.querySelectorAll('.pc-compare-picker select')[1]; right.value=${JSON.stringify(savedRight)}; right.dispatchEvent(new Event('change',{bubbles:true})); })()`);
+    await waitFor(() => h.evaluate("!document.querySelector('.pc-compare-submit').disabled"));
+    await h.evaluate("document.querySelector('.pc-compare-line').focus()");
+    assert.equal(await h.evaluate("document.querySelectorAll('.pc-compare-line[data-active=true]').length"), 2);
+    await h.cdp.send('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9 });
+    await h.cdp.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9 });
+    assert.equal(await h.evaluate("document.activeElement===document.querySelectorAll('.pc-compare-line')[1]"), true);
+    await h.evaluate("document.activeElement.blur()");
+    for (const width of [320,375,768,1024,1440]) {
+      await h.viewport(width, 1000, width < 800);
+      assert.equal(await h.evaluate('document.documentElement.scrollWidth <= innerWidth+1'), true, `${width}px overflow`);
+      assert.equal(await h.evaluate("[...document.querySelectorAll('.pc-compare-picker select')].every(el => {const a=el.getBoundingClientRect(),b=el.closest('.pc-library-poem').getBoundingClientRect();return a.left>=b.left && a.right<=b.right;})"), true);
+    }
+    await h.evaluate("document.querySelector('.pc-library-comparison').scrollIntoView({block:'start',behavior:'instant'})");
+    await shot('compare-desk-1440');
   });
   await check('library-study-opens-checker-in-reading-mode', async () => {
     await clickText('.pc-library > [role="tablist"] [role="tab"]', '诗库');
