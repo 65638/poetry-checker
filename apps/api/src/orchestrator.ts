@@ -172,7 +172,7 @@ export async function analyze(
             suggestions.push(...result.suggestions);
             processed += result.suggestions.length;
           } catch (cause) {
-            failure = `GLM本次辨音未完成：${cause instanceof AssistantError ? cause.message : "服务暂不可用或等候超时"}其余字位保留本地韵书与语境判断。`;
+            failure = `${service.name}本次辨音未完成：${cause instanceof AssistantError ? cause.message : "服务暂不可用或等候超时"}其余字位保留本地韵书与语境判断。`;
             break;
           }
         }
@@ -188,7 +188,7 @@ export async function analyze(
           (row) => row.tokenId === token.tokenId && row.candidateId === null,
         );
         if (unresolved)
-          token.reason = `GLM未选定：${unresolved.reason} 本地判断：${token.reason}`;
+          token.reason = `${service.name}未选定：${unresolved.reason} 本地判断：${token.reason}`;
       }
       const appliedTokenIds = annotated.tokens
         .filter((token) => token.selectionMethod === "model")
@@ -201,18 +201,18 @@ export async function analyze(
             ? "applied"
             : "partial";
       assistant = {
-        provider: "zhipu",
+        provider: service.provider,
         model: service.model,
         state,
         appliedTokenIds,
         message: !targets.length
           ? "当前读音无需进一步辨析。"
           : !service.configured
-            ? "GLM尚未配置，已使用本地韵书与语境规则分析。"
+            ? `${service.name}尚未配置，已使用本地韵书与语境规则分析。`
             : (failure ??
               (state === "applied"
-                ? `GLM已自动辨析并应用${appliedTokenIds.length}个字位。`
-                : `GLM已自动应用${appliedTokenIds.length}个字位，其余保留原候选与语境判断。`)),
+                ? `${service.name}已自动辨析并应用${appliedTokenIds.length}个字位。`
+                : `${service.name}已自动应用${appliedTokenIds.length}个字位，其余保留原候选与语境判断。`)),
       };
       const missing = annotated.tokens.filter(
         (token) => !token.candidates.length,

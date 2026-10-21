@@ -137,3 +137,25 @@ export function changedSpan(before: string, after: string) {
     suffix: a.slice(endA).join(""),
   };
 }
+
+/** Map an original line end through validated, punctuation-free pending edits. */
+export function currentLineEnd(
+  token: AnnotatedToken,
+  edits: Revision[],
+  tokens: AnnotatedToken[],
+) {
+  let column = token.column;
+  let text = token.text;
+  for (const edit of edits) {
+    const end = tokens.find((t) => t.tokenId === edit.endTokenId);
+    if (!end || end.line !== token.line || end.column > token.column) continue;
+    column += [...edit.replacement].length - [...edit.original].length;
+    if (end.tokenId === token.tokenId) text = [...edit.replacement].at(-1)!;
+  }
+  return {
+    tokenId: `l${token.line}c${column}`,
+    text,
+    line: token.line,
+    column,
+  };
+}

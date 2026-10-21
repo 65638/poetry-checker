@@ -9,14 +9,16 @@ import {
   type ReadingSuggestionResponse,
   type ReadingCandidate,
   type BookId,
+  type ModelProvider,
 } from "@poetry/contracts";
 import type { Resources } from "./resources.js";
 import { characterReferenceRows } from "./library.js";
 import { modelResearch } from "./research.js";
+import { resolveModelConfig } from "./model-config.js";
+export { GLM_ENDPOINT, DEEPSEEK_ENDPOINT } from "./model-config.js";
 
-export const GLM_ENDPOINT =
-  "https://open.bigmodel.cn/api/paas/v4/chat/completions";
 export interface ReadingAssistantOptions {
+  provider?: ModelProvider;
   apiKey?: string;
   model?: string;
   fetcher?: typeof fetch;
@@ -94,8 +96,8 @@ export function createReadingAssistant(
   resources: Resources,
   options: ReadingAssistantOptions = {},
 ) {
-  const apiKey = (options.apiKey ?? process.env.ZHIPU_API_KEY ?? "").trim();
-  const model = options.model ?? process.env.ZHIPU_MODEL ?? "glm-5.3-flash";
+  const { apiKey, model, provider, endpoint, name } =
+    resolveModelConfig(options);
   const configured = apiKey.trim().length > 0;
   const fetcher = options.fetcher ?? fetch;
   let active = 0;
@@ -107,7 +109,7 @@ export function createReadingAssistant(
       throw new AssistantError(
         503,
         "MODEL_NOT_CONFIGURED",
-        "GLM读音建议尚未配置；请在服务端设置 ZHIPU_API_KEY。",
+        `${name}尚未配置；请在服务端设置${provider === "deepseek" ? "DEEPSEEK_API_KEY" : "ZHIPU_API_KEY"}。`,
       );
     if (process.env.POETRY_DEV_MOCK === "1")
       throw new AssistantError(
@@ -143,13 +145,13 @@ export function createReadingAssistant(
         throw new AssistantError(
           504,
           "MODEL_TIMEOUT",
-          "GLM等候较久，请重试；原查阅结果已保留。",
+          `${name}等候较久，请重试；原查阅结果已保留。`,
         );
       if (cause instanceof AssistantError) throw cause;
       throw new AssistantError(
         502,
         "MODEL_UNAVAILABLE",
-        "GLM暂时不可用，请稍后重试；原查阅结果已保留。",
+        `${name}暂时不可用，请稍后重试；原查阅结果已保留。`,
       );
     } finally {
       clearTimeout(timer);
@@ -159,6 +161,8 @@ export function createReadingAssistant(
 
   return {
     configured,
+    provider,
+    name,
     model,
     analysisTimeoutMs: options.analysisTimeoutMs ?? 20000,
     suggest: (input: ReadingSuggestionRequest, signal?: AbortSignal) =>
@@ -212,7 +216,7 @@ export function createReadingAssistant(
       .filter((token) => (byCharacter.get(token.text)?.length ?? 0) > 0)
       .slice(0, 24);
     const base = {
-      provider: "zhipu" as const,
+      provider,
       model,
       inputHash: poem.inputHash,
       rhymeBook: input.rhymeBook,
@@ -340,7 +344,7 @@ export function createReadingAssistant(
               actual.syllable.toneNumber !== candidate.modernReading.toneNumber)
           ) {
             candidate = null;
-            reason = "GLM返回的拼音与所选候选不一致，本字暂不采用自动选音。";
+            reason = "模型返回的拼音与所选候选不一致，本字暂不采用自动选音。";
           }
         }
         const evidenceIds = candidate
@@ -393,7 +397,7 @@ export function createReadingAssistant(
     signal: AbortSignal,
   ): Promise<unknown> {
     signal.throwIfAborted();
-    const response = await fetcher(GLM_ENDPOINT, {
+    const response = await fetcher(endpoint, {
       method: "POST",
       redirect: "error",
       signal,
@@ -406,7 +410,7 @@ export function createReadingAssistant(
         stream: false,
         max_tokens: 4096,
         thinking: { type: "enabled" },
-        ...(/^glm-5\.3(?:-|$)/iu.test(model)
+        ...(provider === "deepseek" || /^glm-5\.3(?:-|$)/iu.test(model)
           ? { reasoning_effort: "low" }
           : {}),
         response_format: { type: "json_object" },
@@ -422,18 +426,18 @@ export function createReadingAssistant(
         throw new AssistantError(
           429,
           "MODEL_RATE_LIMITED",
-          "智谱额度或并发受限，请稍后重试。",
+          `${name}额度或并发受限，请稍后重试。`,
         );
       if ([401, 403].includes(response.status))
         throw new AssistantError(
           503,
           "MODEL_AUTH_ERROR",
-          "智谱密钥或模型权限不可用，请检查服务端配置。",
+          `${name}密钥或模型权限不可用，请检查服务端配置。`,
         );
       throw new AssistantError(
         502,
         "MODEL_UNAVAILABLE",
-        "智谱调用未成功，请检查模型权限和账户额度。",
+        `${name}调用未成功，请检查模型权限和账户额度。`,
       );
     }
     const envelope = (await response.json()) as {
@@ -477,7 +481,7 @@ export function registerReadingAssistant(
   const service = createReadingAssistant(resources, options);
   app.get("/api/v1/reading-suggestions/status", async () => ({
     configured: service.configured,
-    provider: "zhipu",
+    provider: service.provider,
     model: service.model,
   }));
   app.post("/api/v1/reading-suggestions", async (request, reply) => {
@@ -501,7 +505,7 @@ export function registerReadingAssistant(
       const error =
         cause instanceof AssistantError
           ? cause
-          : new AssistantError(502, "MODEL_UNAVAILABLE", "GLM暂时不可用。");
+          : new AssistantError(502, "MODEL_UNAVAILABLE", "AI建议暂时不可用。");
       if (error.status === 429) reply.header("Retry-After", "1");
       return reply.status(error.status).send({
         error: { code: error.code, message: error.message, fieldErrors: [] },

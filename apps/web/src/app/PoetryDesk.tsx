@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -12,8 +12,10 @@ import {
 } from "lucide-react";
 import type {
   PoetryAssistantRequest,
+  PoetryAssistantResponse,
   Revision,
   RhymeWordsResponse,
+  ReadingCandidate,
 } from "@poetry/contracts";
 import type { CheckerViewProps, InputDraft } from "../view-contract";
 import { usePoetryTask } from "../hooks/usePoetryTask";
@@ -22,10 +24,13 @@ import {
   StudioTaskState,
 } from "../presentation/components/StudioControls";
 import { requestRhymeWords } from "../api/poetry-studio";
+import { createCharacterLookup } from "../api/characters";
+import { readWebEnv, resolveApiConfig } from "./config";
 import { downloadJson } from "./library";
 import {
   applyRevisions,
   changedSpan,
+  currentLineEnd,
   parseNotebook,
   type NotebookEntry,
 } from "./notebook";
@@ -65,7 +70,32 @@ export function PoetryDesk({
   const [seedTokenId, setSeedTokenId] = useState("");
   const [readingId, setReadingId] = useState("");
   const [page, setPage] = useState(0);
-  const [rhymeWords, setRhymeWords] = useState<RhymeWordsResponse | null>(null);
+  const [rhymeSnapshot, setRhymeSnapshot] = useState<{
+    identity: string;
+    value: RhymeWordsResponse;
+  } | null>(null);
+  const rhymeCache = useRef(new Map<string, RhymeWordsResponse>());
+  const [recommendationCandidates, setRecommendationCandidates] = useState<
+    ReadingCandidate[]
+  >([]);
+  const [savedRecommendations, setSavedRecommendations] = useState<{
+    scope: string;
+    text: string;
+    matches: Extract<
+      PoetryAssistantResponse,
+      { task: "rhyme" }
+    >["result"]["matches"];
+    candidates: ReadingCandidate[];
+  } | null>(null);
+  const [changedSeed, setChangedSeed] = useState<{
+    identity: string;
+    candidates: ReadingCandidate[];
+    error?: string;
+  } | null>(null);
+  const lookupCharacter = useMemo(
+    () => createCharacterLookup(resolveApiConfig(readWebEnv()).baseUrl),
+    [],
+  );
   const [rhymeBusy, setRhymeBusy] = useState(false);
   const [rhymeError, setRhymeError] = useState<string | null>(null);
   const [revisionDrafts, setRevisionDrafts] = useState<{
@@ -100,18 +130,40 @@ export function PoetryDesk({
       );
       return token ? [token] : [];
     }) ?? [];
-  const seed = ends.find((t) => t.tokenId === seedTokenId) ?? ends.at(-1);
+  const originalSeed =
+    ends.find((t) => t.tokenId === seedTokenId) ?? ends.at(-1);
+  const seed = originalSeed
+    ? currentLineEnd(originalSeed, pendingEdits ?? [], report!.poem.tokens)
+    : undefined;
+  const changedSeedIdentity = JSON.stringify([draft.rhymeBook, seed?.text]);
+  const seedChanged = seed?.text !== originalSeed?.text;
+  const seedBusy = seedChanged && changedSeed?.identity !== changedSeedIdentity;
+  const seedCandidates = seedChanged
+    ? changedSeed?.identity === changedSeedIdentity
+      ? changedSeed.candidates
+      : []
+    : (originalSeed?.candidates ?? []);
   const seedReading =
-    seed?.candidates.find((c) => c.id === readingId) ??
-    seed?.candidates.find((c) => c.id === seed.selectedReadingId) ??
-    seed?.candidates[0];
+    seedCandidates.find((c) => c.id === readingId) ??
+    seedCandidates.find((c) => c.id === originalSeed?.selectedReadingId) ??
+    seedCandidates.find((c) =>
+      c.groupIds.some((id) =>
+        originalSeed?.candidates
+          .find((s) => s.id === originalSeed.selectedReadingId)
+          ?.groupIds.includes(id),
+      ),
+    ) ??
+    seedCandidates[0];
+  const rhymeIdentity = JSON.stringify([draft.rhymeBook, seedReading?.id]);
+  const rhymeWords =
+    rhymeSnapshot?.identity === rhymeIdentity ? rhymeSnapshot.value : null;
+  const currentPage = !!rhymeWords && rhymeWords.offset === page * 80;
   const rhyme = usePoetryTask(
     JSON.stringify([
-      report?.inputHash,
+      draft.text,
       draft.rhymeBook,
       seed?.tokenId,
       seedReading?.id,
-      page,
     ]),
   );
   useEffect(() => {
@@ -119,14 +171,42 @@ export function PoetryDesk({
     setReadingId("");
     setPage(0);
   }, [report?.poem.inputHash, draft.rhymeBook]);
+  useEffect(() => setPage(0), [rhymeIdentity]);
   useEffect(() => {
-    setRhymeWords(null);
+    if (!canUseSuggestions || !seedChanged || !seed?.text) return;
+    const controller = new AbortController();
+    void lookupCharacter(seed.text, draft.rhymeBook, controller.signal)
+      .then((result) => {
+        if (!controller.signal.aborted)
+          setChangedSeed({
+            identity: changedSeedIdentity,
+            candidates: result.entries.flatMap((e) => e.candidates),
+          });
+      })
+      .catch((error: Error) => {
+        if (!controller.signal.aborted)
+          setChangedSeed({
+            identity: changedSeedIdentity,
+            candidates: [],
+            error: error.message,
+          });
+      });
+    return () => controller.abort();
+  }, [canUseSuggestions, changedSeedIdentity, seedChanged, lookupCharacter]);
+  useEffect(() => {
     setRhymeError(null);
     if (!canUseSuggestions || !seedReading || tab !== "rhyme") {
       setRhymeBusy(false);
       return;
     }
     const controller = new AbortController();
+    const cacheKey = `${rhymeIdentity}:${page}`;
+    const cached = rhymeCache.current.get(cacheKey);
+    if (cached) {
+      setRhymeSnapshot({ identity: rhymeIdentity, value: cached });
+      setRhymeBusy(false);
+      return;
+    }
     setRhymeBusy(true);
     void requestRhymeWords(
       {
@@ -138,7 +218,12 @@ export function PoetryDesk({
       controller.signal,
     )
       .then((value) => {
-        if (!controller.signal.aborted) setRhymeWords(value);
+        if (!controller.signal.aborted) {
+          rhymeCache.current.set(cacheKey, value);
+          if (rhymeCache.current.size > 32)
+            rhymeCache.current.delete(rhymeCache.current.keys().next().value!);
+          setRhymeSnapshot({ identity: rhymeIdentity, value });
+        }
       })
       .catch((error: Error) => {
         if (!controller.signal.aborted) setRhymeError(error.message);
@@ -147,7 +232,7 @@ export function PoetryDesk({
         if (!controller.signal.aborted) setRhymeBusy(false);
       });
     return () => controller.abort();
-  }, [canUseSuggestions, seedReading?.id, draft.rhymeBook, page, tab]);
+  }, [canUseSuggestions, rhymeIdentity, page, tab]);
   const critiqueInput: CritiqueInput = {
     task: "critique",
     text: draft.text,
@@ -208,8 +293,33 @@ export function PoetryDesk({
   }
   const currentCritique =
     critique.result?.task === "critique" ? critique.result.result : null;
+  const recommendationScope = JSON.stringify([
+    report?.inputHash,
+    draft.rhymeBook,
+    originalSeed?.tokenId,
+    readingId,
+  ]);
+  const saved =
+    savedRecommendations?.scope === recommendationScope
+      ? savedRecommendations
+      : null;
+  useEffect(() => {
+    if (rhyme.result?.task === "rhyme")
+      setSavedRecommendations({
+        scope: recommendationScope,
+        text: draft.text,
+        matches: rhyme.result.result.matches,
+        candidates: recommendationCandidates,
+      });
+  }, [rhyme.result, recommendationScope]);
   const recommendations =
-    rhyme.result?.task === "rhyme" ? rhyme.result.result.matches : [];
+    rhyme.result?.task === "rhyme"
+      ? rhyme.result.result.matches
+      : (saved?.matches ?? []);
+  const displayedCandidates =
+    rhyme.result?.task === "rhyme"
+      ? recommendationCandidates
+      : (saved?.candidates ?? []);
   const peers = rhymeWords?.lookup.entries.flatMap((e) => e.candidates) ?? [];
   const canApply = canUseSuggestions && mode === "writing";
   return (
@@ -361,7 +471,7 @@ export function PoetryDesk({
                     onClick={() =>
                       adopt(
                         edit,
-                        `GLM炼字：${edit.original}→${edit.replacement}；${edit.reason}；取舍：${edit.tradeoff}`,
+                        `AI炼字：${edit.original}→${edit.replacement}；${edit.reason}；取舍：${edit.tradeoff}`,
                       )
                     }
                   >
@@ -399,13 +509,15 @@ export function PoetryDesk({
             </p>
           ) : (
             <>
-              {stale && <p className="pc-studio-meta">同韵候选沿用上次分析。</p>}
+              {stale && (
+                <p className="pc-studio-meta">同韵候选沿用上次分析。</p>
+              )}
               <div className="pc-studio-actions">
                 <label>
                   句末字
                   <select
                     aria-label="选择句末字"
-                    value={seed.tokenId}
+                    value={originalSeed!.tokenId}
                     onChange={(e) => {
                       setSeedTokenId(e.target.value);
                       setReadingId("");
@@ -414,7 +526,14 @@ export function PoetryDesk({
                   >
                     {ends.map((t) => (
                       <option key={t.tokenId} value={t.tokenId}>
-                        第{t.line}句 · {t.text}
+                        第{t.line}句 ·{" "}
+                        {
+                          currentLineEnd(
+                            t,
+                            pendingEdits ?? [],
+                            report.poem.tokens,
+                          ).text
+                        }
                       </option>
                     ))}
                   </select>
@@ -429,7 +548,7 @@ export function PoetryDesk({
                       setPage(0);
                     }}
                   >
-                    {seed.candidates.map((c) => (
+                    {seedCandidates.map((c) => (
                       <option key={c.id} value={c.id}>
                         {c.modernReading
                           ? `${c.modernReading.pinyin}${c.modernReading.toneNumber} · `
@@ -446,8 +565,22 @@ export function PoetryDesk({
                   </select>
                 </label>
               </div>
-              {!seed.candidates.length && <p>此字在所选韵书中未收录。</p>}
-              {rhymeBusy && <p role="status">查阅韵书…</p>}
+              {seedBusy && <p role="status">查阅当前韵脚…</p>}
+              {!seedBusy && !seedCandidates.length && (
+                <p>
+                  {changedSeed?.identity === changedSeedIdentity &&
+                  changedSeed.error
+                    ? changedSeed.error
+                    : "此字在所选韵书中未收录。"}
+                </p>
+              )}
+              <div
+                className="pc-rhyme-loading"
+                role="status"
+                aria-live="polite"
+              >
+                {rhymeBusy ? "查阅韵书…" : ""}
+              </div>
               {rhymeError && (
                 <p role="alert" className="pc-studio-error">
                   {rhymeError}
@@ -462,25 +595,45 @@ export function PoetryDesk({
                     </span>
                     <button
                       className="pc-studio-action"
-                      disabled={!usable || rhyme.busy || !peers.length}
-                      onClick={() =>
+                      disabled={
+                        !canUseSuggestions ||
+                        rhyme.busy ||
+                        rhymeBusy ||
+                        !currentPage ||
+                        !peers.length
+                      }
+                      onClick={() => {
+                        setRecommendationCandidates(peers.slice(0, 120));
                         void rhyme.run({
                           task: "rhyme",
-                          text: report.poem.originalText,
+                          text: draft.text,
                           rhymeBook: draft.rhymeBook,
                           targetTokenId: seed.tokenId,
                           readingId: seedReading!.id,
                           candidateIds: peers.slice(0, 120).map((c) => c.id),
-                        })
-                      }
+                        });
+                      }}
                     >
                       <Sparkles size={17} />
                       结合全诗荐字
                     </button>
                   </div>
                   <StudioTaskState {...rhyme} />
+                  {saved && saved.text !== draft.text && !rhyme.result && (
+                    <p className="pc-studio-meta">
+                      上次荐字 · 可按当前稿重新推荐
+                    </p>
+                  )}
+                  {rhyme.result?.task === "rhyme" &&
+                    !recommendations.length && (
+                      <p className="pc-studio-meta" role="status">
+                        本页未找到值得替换的字，可换页继续寻找；保留原字也可以。
+                      </p>
+                    )}
                   {recommendations.map((match) => {
-                    const c = peers.find((p) => p.id === match.id);
+                    const c = displayedCandidates.find(
+                      (p) => p.id === match.id,
+                    );
                     return (
                       c && (
                         <article className="pc-poetry-edit" key={c.id}>
@@ -501,9 +654,9 @@ export function PoetryDesk({
                             onClick={() =>
                               adopt(
                                 {
-                                  startTokenId: seed.tokenId,
-                                  endTokenId: seed.tokenId,
-                                  original: seed.text,
+                                  startTokenId: originalSeed!.tokenId,
+                                  endTokenId: originalSeed!.tokenId,
+                                  original: originalSeed!.text,
                                   replacement: c.character,
                                   reason: match.reason,
                                   tradeoff: "同韵不等于同义或整诗合律。",
@@ -519,11 +672,12 @@ export function PoetryDesk({
                       )
                     );
                   })}
-                  <div className="pc-rhyme-characters">
+                  <div className="pc-rhyme-characters" aria-busy={rhymeBusy}>
                     {rhymeWords.lookup.entries.map((e) => (
                       <button
                         key={e.character}
                         type="button"
+                        disabled={rhymeBusy || !currentPage}
                         title={e.candidates
                           .map((c) =>
                             c.modernReading
@@ -538,6 +692,22 @@ export function PoetryDesk({
                         {e.character}
                       </button>
                     ))}
+                    {Array.from(
+                      {
+                        length: Math.max(
+                          0,
+                          Math.min(80, rhymeWords.total) -
+                            rhymeWords.lookup.entries.length,
+                        ),
+                      },
+                      (_, i) => (
+                        <span
+                          key={`empty-${i}`}
+                          className="pc-rhyme-placeholder"
+                          aria-hidden="true"
+                        />
+                      ),
+                    )}
                   </div>
                   <div className="pc-library-pagination">
                     <button
@@ -545,12 +715,12 @@ export function PoetryDesk({
                       title="上一页韵字"
                       aria-label="上一页韵字"
                       disabled={!page || rhymeBusy}
-                      onClick={() => setPage(page - 1)}
+                      onClick={() => setPage((n) => n - 1)}
                     >
                       <ArrowLeft size={18} />
                     </button>
                     <span>
-                      {page + 1} /{" "}
+                      {Math.floor(rhymeWords.offset / 80) + 1} /{" "}
                       {Math.max(1, Math.ceil(rhymeWords.total / 80))}
                     </span>
                     <button
@@ -560,7 +730,7 @@ export function PoetryDesk({
                       disabled={
                         (page + 1) * 80 >= rhymeWords.total || rhymeBusy
                       }
-                      onClick={() => setPage(page + 1)}
+                      onClick={() => setPage((n) => n + 1)}
                     >
                       <ArrowRight size={18} />
                     </button>

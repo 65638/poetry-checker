@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { ModelProviderSchema } from "./model.js";
 
 const text = z.string().min(1).max(2000);
 const book = z.enum(["pingshui", "cilin", "xinyun"]);
@@ -84,7 +85,7 @@ export const PoetryAssistantRequestSchema = z.discriminatedUnion("task", [
   }),
 ]);
 const meta = {
-  provider: z.literal("zhipu"),
+  provider: ModelProviderSchema,
   model: z.string().min(1),
   inputHash: z.string().regex(/^[a-f0-9]{64}$/u),
   notice: z.string(),

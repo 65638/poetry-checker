@@ -50,7 +50,7 @@ export function ReadingAssistantContainer(props: {
         if (live) setStatus(next);
       })
       .catch(() => {
-        if (live) setStatusError("无法读取GLM配置状态。");
+        if (live) setStatusError("无法读取AI配置状态。");
       })
       .finally(() => window.clearTimeout(timer));
     return () => {
@@ -101,7 +101,7 @@ export function ReadingAssistantContainer(props: {
       if (id === serial.current && requestSignature === signatureRef.current)
         setError(
           controller.signal.aborted
-            ? "GLM等候较久，请重试。"
+            ? "AI等候较久，请重试。"
             : cause instanceof Error
               ? cause.message
               : "读音建议失败，请重试。",
@@ -132,14 +132,14 @@ export function ReadingAssistantContainer(props: {
   }, [signature, status?.configured]);
   return (
     <ReadingAssistantView
-      model={status?.model ?? "GLM"}
+      model={status?.model ?? "AI"}
       configured={status?.configured ?? false}
       statusText={
         statusError ??
         (status === null
-          ? "正在确认GLM连接配置…"
+          ? "正在确认AI连接配置…"
           : !status.configured
-            ? "GLM尚未配置，查字仍可正常使用。"
+            ? "AI尚未配置，查字仍可正常使用。"
             : null)
       }
       result={resultSignature.current === signature ? result : null}

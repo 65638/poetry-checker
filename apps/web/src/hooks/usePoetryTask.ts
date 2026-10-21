@@ -11,6 +11,9 @@ export function usePoetryTask(identity: string) {
   const [busy, setBusy] = useState(false);
   const sequence = useRef(0);
   const controller = useRef<AbortController | null>(null);
+  const currentIdentity = useRef(identity);
+  currentIdentity.current = identity;
+  const resultIdentity = useRef<string | null>(null);
   const cancel = useCallback(() => {
     sequence.current++;
     controller.current?.abort();
@@ -27,6 +30,7 @@ export function usePoetryTask(identity: string) {
   }, [identity, cancel]);
   const run = useCallback(async (input: PoetryAssistantRequest) => {
     const id = ++sequence.current;
+    const requestIdentity = currentIdentity.current;
     controller.current?.abort();
     const own = new AbortController();
     controller.current = own;
@@ -35,7 +39,13 @@ export function usePoetryTask(identity: string) {
     setError(null);
     try {
       const value = await requestPoetry(input, own.signal);
-      if (id === sequence.current) setResult(value);
+      if (
+        id === sequence.current &&
+        requestIdentity === currentIdentity.current
+      ) {
+        resultIdentity.current = requestIdentity;
+        setResult(value);
+      }
     } catch (cause) {
       if (id === sequence.current && !own.signal.aborted)
         setError(cause instanceof Error ? cause.message : "建议暂不可用。");
@@ -43,5 +53,11 @@ export function usePoetryTask(identity: string) {
       if (id === sequence.current) setBusy(false);
     }
   }, []);
-  return { result, busy, error, run, cancel };
+  return {
+    result: resultIdentity.current === identity ? result : null,
+    busy,
+    error,
+    run,
+    cancel,
+  };
 }

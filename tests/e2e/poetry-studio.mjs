@@ -7,6 +7,10 @@ import { startHarness, waitFor, sleep, revision } from '../../docs/design/moonli
 const out = resolve(process.argv[2] ?? 'artifacts/poetry-studio');
 mkdirSync(out, { recursive: true });
 const calls = [];
+const rhymeInputs = [];
+let emptyRhyme = false;
+let slowPages = false;
+let rhymeLookups = 0;
 const fetcher = async (_url, init) => {
   const data = JSON.parse(JSON.parse(init.body).messages[1].content);
   calls.push(data.task ?? 'reading');
@@ -18,12 +22,15 @@ const fetcher = async (_url, init) => {
   ] : [] };
   if (data.task === 'search') { const poem = data.poems.find((p) => p.title === '夜雨寄北'); assert(poem, '夜雨寄北 must be recalled for this scene'); output = { matches: [{ id: poem.id, quote: poem.paragraphs[0].slice(0, 5), reason: '受控意境排序，非真实推理。' }] }; }
   if (data.task === 'compare') output = { overview: '受控对读总评。', aspects: [{ name: '意象', left: '受控左诗分析。', right: '受控右诗分析。' }] };
-  if (data.task === 'rhyme') output = { matches: [{ id: data.candidates[0].id, reason: '受控同韵语义推荐。' }] };
+  if (data.task === 'rhyme') { rhymeInputs.push(data); output = { matches: emptyRhyme ? [] : [{ id: data.candidates[0].id, reason: '受控同韵语义推荐。' }] }; }
   return new Response(JSON.stringify({ choices: [{ finish_reason: 'stop', message: { content: JSON.stringify(output) } }] }));
 };
-const app = buildApp({ readingAssistant: { apiKey: 'controlled-test-key', fetcher } });
+const app = buildApp({ readingAssistant: { provider: 'deepseek', apiKey: 'controlled-test-key', fetcher } });
 let analyses = 0;
-app.addHook('preHandler', async request => { if (request.url === '/api/v1/analyze') analyses++; });
+app.addHook('preHandler', async request => {
+  if (request.url === '/api/v1/analyze') analyses++;
+  if (request.url === '/api/v1/rhyme-words') { rhymeLookups++; if (slowPages) await sleep(650); }
+});
 const baseUrl = await app.listen({ host: '127.0.0.1', port: 0 });
 const h = await startHarness({ production: true, api: { baseUrl, stop: () => app.close() } });
 const result = { revision: revision(), mode: 'controlled-upstream-real-api-lexicon-browser-indexeddb', realModelInference: false, checks: [], errors: [] };
@@ -140,6 +147,15 @@ try {
     assert.equal(await h.evaluate("document.querySelector('.pc-input__text').value"), '群山高水长。');
     await sleep(1800);
     assert.equal(analyses, before);
+    await clickText('.pc-poetry-desk > [role="tablist"] [role="tab"]', '同韵寻字');
+    await waitFor(() => h.evaluate("[...document.querySelectorAll('.pc-poetry-desk button')].some(el=>el.textContent.trim()==='结合全诗荐字' && !el.disabled)"));
+    await clickText('.pc-poetry-desk button', '结合全诗荐字');
+    await waitFor(() => h.evaluate("document.querySelector('.pc-poetry-edit')?.textContent.includes('受控同韵语义推荐')"));
+    assert.equal(rhymeInputs.at(-1).text, '群山高水长。');
+    assert.equal(rhymeInputs.at(-1).targetToken.tokenId, 'l1c5');
+    assert.equal(rhymeInputs.at(-1).targetToken.text, '长');
+    assert.equal(analyses, before, 'Current-draft rhyme requests must not reanalyze the poem');
+    await clickText('.pc-poetry-desk > [role="tablist"] [role="tab"]', '全诗评议');
     await h.evaluate("document.querySelector('.pc-poetry-desk').scrollIntoView({block:'start',behavior:'instant'}); true");
     await shot('batch-edits-1440');
     for (const width of [375, 320]) {
@@ -160,7 +176,7 @@ try {
     await clickText('.pc-poetry-desk > [role="tablist"] [role="tab"]', '推敲笺');
     await waitFor(() => h.evaluate("document.querySelectorAll('.pc-notebook-entry').length>=4"));
     const saved = await h.evaluate("JSON.parse(localStorage.getItem('poetry-notebook-v1')).entries");
-    assert(saved.some((entry) => entry.note.includes('GLM炼字') && entry.before.text==='群山高水远。' && entry.after.text==='群山高水长。'));
+    assert(saved.some((entry) => entry.note.includes('AI炼字') && entry.before.text==='群山高水远。' && entry.after.text==='群山高水长。'));
     await h.click('.pc-notebook-entry:nth-of-type(2) button');
     await h.idle();
     assert.equal(await h.evaluate("document.querySelector('.pc-input__text').value"), '群山高水远。');
@@ -191,6 +207,12 @@ try {
     assert.equal(analyses, beforeTrial);
     assert.notEqual(await h.evaluate("document.querySelector('.pc-input__text').value"), beforeText);
     assert.equal(await h.evaluate("!!document.querySelector('.pc-poetry-edit')"), true);
+    const afterTrial = await h.evaluate("document.querySelector('.pc-input__text').value");
+    await waitFor(() => h.evaluate("[...document.querySelectorAll('.pc-poetry-desk button')].some(el=>el.textContent.trim()==='结合全诗荐字' && !el.disabled)"));
+    await clickText('.pc-poetry-desk button', '结合全诗荐字');
+    await waitFor(() => h.evaluate("document.querySelector('.pc-poetry-edit')?.textContent.includes('受控同韵语义推荐') && !document.querySelector('.pc-poetry-desk [role=progressbar]')"));
+    assert.equal(rhymeInputs.at(-1).text, afterTrial);
+    assert.equal(analyses, beforeTrial);
     await h.click('[aria-label="撤销上次修改"]');
     await sleep(1800);
     assert.equal(analyses, beforeTrial);
@@ -218,6 +240,50 @@ try {
     await h.setText('手动新写的一首诗。');
     assert.equal(await h.evaluate("document.querySelector('[aria-label=\"重做修改\"]').disabled"), true);
     assert.equal(await h.evaluate("document.querySelector('.pc-input__text').value"), '手动新写的一首诗。');
+  });
+  await check('delayed-rhyme-pagination-retains-grid-height-cache-and-recommendations', async () => {
+    await h.setText('白日依山尽，黄河入海流。欲穷千里目，更上一层楼。');
+    await h.analyze();
+    await waitFor(() => h.evaluate("[...document.querySelectorAll('.pc-poetry-desk button')].some(el=>el.textContent.trim()==='结合全诗荐字' && !el.disabled)"));
+    await clickText('.pc-poetry-desk button', '结合全诗荐字');
+    await waitFor(() => h.evaluate("document.querySelector('.pc-poetry-edit')?.textContent.includes('受控同韵语义推荐')"));
+    const modelCalls = calls.length;
+    slowPages = true;
+    for (const width of [1440, 375]) {
+      await h.viewport(width, 1000, width < 800);
+      const baseline = await h.evaluate("(() => { const g=document.querySelector('.pc-rhyme-characters'); window.rhymeGrid=g; return {height:g.getBoundingClientRect().height,count:g.querySelectorAll('button').length}; })()");
+      assert.equal(baseline.count, 80);
+      await h.click('[aria-label="下一页韵字"]');
+      await sleep(100);
+      assert.equal(await h.evaluate("document.querySelector('.pc-rhyme-characters')===window.rhymeGrid"), true);
+      assert.equal(await h.evaluate("document.querySelectorAll('.pc-rhyme-characters button').length"), 80);
+      await waitFor(() => h.evaluate("document.querySelector('.pc-rhyme-characters').getAttribute('aria-busy')==='false' && document.querySelector('.pc-library-pagination span').textContent.trim().startsWith('2 /')"));
+      assert.equal(await h.evaluate("document.querySelector('.pc-rhyme-characters').getBoundingClientRect().height"), baseline.height);
+      assert.equal(await h.evaluate("!!document.querySelector('.pc-poetry-edit')"), true);
+      await shot('rhyme-page2-' + width);
+      // Visit the final page, whose spare cells must preserve the same footprint.
+      while (await h.evaluate("!document.querySelector('[aria-label=\"下一页韵字\"]').disabled")) {
+        await h.click('[aria-label="下一页韵字"]');
+        await waitFor(() => h.evaluate("document.querySelector('.pc-rhyme-characters').getAttribute('aria-busy')==='false'"));
+      }
+      assert.equal(await h.evaluate("document.querySelector('.pc-rhyme-characters').getBoundingClientRect().height"), baseline.height);
+      assert.equal(await h.evaluate('document.documentElement.scrollWidth<=innerWidth+1'), true);
+      const lookups = rhymeLookups;
+      while (await h.evaluate("!document.querySelector('[aria-label=\"上一页韵字\"]').disabled")) {
+        await h.click('[aria-label="上一页韵字"]');
+        await h.idle();
+      }
+      assert.equal(rhymeLookups, lookups, 'Cached pages must not refetch');
+    }
+    assert.equal(calls.length, modelCalls, 'Pagination must not make model requests');
+    slowPages = false;
+  });
+  await check('empty-rhyme-recommendations-have-visible-feedback', async () => {
+    emptyRhyme = true;
+    await clickText('.pc-poetry-desk button', '结合全诗荐字');
+    await waitFor(() => h.evaluate("document.querySelector('.pc-poetry-desk').textContent.includes('本页未找到值得替换的字')"));
+    assert.equal(await h.evaluate("document.querySelectorAll('.pc-poetry-edit').length"), 0);
+    await shot('rhyme-empty-375');
   });
   assert.deepEqual(result.errors, []);
 } catch (error) { result.failure = error.stack; process.exitCode = 1; await shot('failure').catch(() => {}); }

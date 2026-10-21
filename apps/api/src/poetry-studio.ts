@@ -116,7 +116,7 @@ export function registerPoetryStudio(
         throw new AssistantError(
           502,
           "MODEL_INVALID_RESPONSE",
-          "GLM返回内容不完整，请重试。",
+          "模型返回内容不完整，请重试。",
         );
       if (input.task === "critique") {
         const result = CritiqueSchema.parse(parsed.data);
@@ -187,7 +187,7 @@ export function registerPoetryStudio(
       return PoetryAssistantResponseSchema.parse({
         task: input.task,
         result: parsed.data,
-        provider: "zhipu",
+        provider: assistant.provider,
         model: assistant.model,
         inputHash: createHash("sha256")
           .update(JSON.stringify(input))

@@ -11,6 +11,7 @@ import {
   applyRevision,
   applyRevisions,
   changedSpan,
+  currentLineEnd,
   parseNotebook,
 } from "../src/app/notebook";
 
@@ -22,6 +23,58 @@ const raw = {
   sourceUrl: "https://example.org/poem",
 };
 describe("local classical corpus and revision notebook", () => {
+  it("maps current rhyme targets through multiple length changes, supplementary Han and other lines", () => {
+    const tokens = [
+      { tokenId: "l1c1", text: "山", column: 1, line: 1 },
+      { tokenId: "l1c2", text: "高", column: 2, line: 1 },
+      { tokenId: "l1c3", text: "水", column: 3, line: 1 },
+      { tokenId: "l1c4", text: "远", column: 4, line: 1 },
+      { tokenId: "l2c1", text: "月", column: 1, line: 2 },
+    ] as AnnotatedToken[];
+    const edits = [
+      {
+        startTokenId: "l1c1",
+        endTokenId: "l1c1",
+        original: "山",
+        replacement: "群山",
+      },
+      {
+        startTokenId: "l1c3",
+        endTokenId: "l1c4",
+        original: "水远",
+        replacement: "𠀀",
+      },
+      {
+        startTokenId: "l2c1",
+        endTokenId: "l2c1",
+        original: "月",
+        replacement: "明月",
+      },
+    ].map((edit) => ({
+      ...edit,
+      reason: "受控字位映射测试",
+      tradeoff: "测试",
+    }));
+    expect(currentLineEnd(tokens[3]!, edits, tokens)).toEqual({
+      tokenId: "l1c4",
+      text: "𠀀",
+      line: 1,
+      column: 4,
+    });
+    expect(currentLineEnd(tokens[3]!, edits.slice(0, 1), tokens)).toEqual({
+      tokenId: "l1c5",
+      text: "远",
+      line: 1,
+      column: 5,
+    });
+    expect(currentLineEnd(tokens[4]!, edits, tokens)).toEqual({
+      tokenId: "l2c2",
+      text: "月",
+      line: 2,
+      column: 2,
+    });
+    expect(currentLineEnd(tokens[3]!, [], tokens).tokenId).toBe("l1c4");
+  });
   it("hides identical works and completely covered compilations without deleting source versions or unique text", () => {
     const make = (
       id: string,

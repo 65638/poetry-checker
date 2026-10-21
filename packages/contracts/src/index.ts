@@ -1,4 +1,6 @@
 import { z } from "zod";
+import { ModelProviderSchema } from "./model.js";
+export * from "./model.js";
 import { ResearchRequestSchema, ResearchResponseSchema } from "./research.js";
 import {
   LibraryCatalogSchema,
@@ -179,7 +181,7 @@ export const ReadingSuggestionRequestSchema = z.strictObject({
 });
 export const ReadingAssistantStatusSchema = z.strictObject({
   configured: z.boolean(),
-  provider: z.literal("zhipu"),
+  provider: ModelProviderSchema,
   model: id,
 });
 export const ReadingSuggestionSchema = z.strictObject({
@@ -207,7 +209,7 @@ export const ReadingModelOutputSchema = z.strictObject({
     .max(24),
 });
 export const ReadingSuggestionResponseSchema = z.strictObject({
-  provider: z.literal("zhipu"),
+  provider: ModelProviderSchema,
   model: id,
   inputHash: sha256,
   rhymeBook: BookIdSchema,
@@ -514,7 +516,7 @@ export const AnalysisResponseSchema = z
     research: ResearchResponseSchema.optional(),
     readingAssistant: z
       .strictObject({
-        provider: z.literal("zhipu"),
+        provider: ModelProviderSchema,
         model: id,
         state: z.enum(["applied", "partial", "unavailable", "not_needed"]),
         appliedTokenIds: z.array(id).max(2000),

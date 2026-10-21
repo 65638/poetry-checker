@@ -1,4 +1,10 @@
-# 智谱 GLM 全局自动辨音
+# GLM / DeepSeek 全局自动辨音
+
+2026-10-22：增加 DeepSeek 官方 API，可用于全局辨音、全诗评议、同韵荐字、诗境检索和对读。配置服务端 `DEEPSEEK_API_KEY`，型号 `DEEPSEEK_MODEL` 默认 `deepseek-flash`；有非空 DeepSeek Key 时默认选 DeepSeek，否则沿用 GLM。可用 `POETRY_AI_PROVIDER=deepseek` 或 `zhipu` 明确选择，两个供应商的 Key 不交叉使用。切换后重启 API。Key 只放根目录已忽略的 `.env.local` 或服务端环境，禁止使用 `VITE_` 前缀。
+
+DeepSeek endpoint 为 `https://api.deepseek.com/chat/completions`，使用 JSON 输出和开启的思考模式，推理程度为 low，沿用已有字位、候选与原文校验。官方依据（2026-10-22查阅）：[模型与接口](https://api-docs.deepseek.com/api/create-chat-completion)、[JSON模式](https://api-docs.deepseek.com/guides/json_mode)。配置状态只表示服务端有 Key；真实调用成功才表示账户联通。
+
+同韵荐字在受控采纳改稿后可继续使用当前诗文；长度变化会更新韵脚字位，改了句末字会重新查阅它的韵书候选，无需为此重跑整诗分析。翻页保留字格及上次推荐，加载完成后原位替换，常用页缓存；最后一页保持相同字格占位高度。模型只从当前页所供候选筛选，不代表搜索了全韵部。无合适推荐时明确反馈，不强行推荐。
 
 2026-10-21用户更新：取消审核阻断，以网页可用为主；GLM自动应用，无需逐字确认；暂不考虑调用花费。校诗台每次分析自动辨析全诗多候选字位，24字位一批，后续批继续处理；藏韵阁展开诗句查询后停笔900ms自动辨音。用户仍可手动纠正，优先级高于模型。
 
