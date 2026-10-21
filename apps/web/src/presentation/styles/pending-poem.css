@@ -1,0 +1,124 @@
+.pc-pending {
+  min-width: 0;
+  padding-block: 8px 32px;
+  color: var(--pc-text);
+}
+
+.pc-pending__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--pc-divider);
+}
+
+.pc-pending__status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  color: var(--pc-accent);
+  font-size: 15px;
+}
+
+.pc-pending__status svg {
+  flex: none;
+  animation: pc-pending-turn 1800ms linear infinite;
+}
+
+.pc-pending__book {
+  margin: 6px 0 0;
+  color: var(--pc-text-muted);
+  font-size: 12px;
+}
+
+.pc-pending__edit {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  color: var(--pc-text-muted);
+  border: 1px solid var(--pc-divider);
+  border-radius: 3px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.pc-pending__edit:hover {
+  color: var(--pc-accent);
+  background: var(--pc-accent-soft);
+}
+
+.pc-pending__edit:focus-visible {
+  outline: var(--pc-focus-width) solid var(--pc-focus);
+  outline-offset: var(--pc-focus-offset);
+}
+
+.pc-pending__verses {
+  max-width: 760px;
+  padding-block: 24px 8px;
+  margin-inline: auto;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.pc-pending__line {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  align-items: baseline;
+  column-gap: 20px;
+  margin: 0;
+  padding-block: 14px;
+  border-bottom: 1px solid var(--pc-ruling);
+}
+
+.pc-pending__number {
+  color: var(--pc-text-muted);
+  font-family: var(--pc-font-sans);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+  user-select: none;
+}
+
+.pc-pending__line > span:last-child {
+  min-width: 0;
+  font-family: var(--pc-font-serif);
+  font-size: 28px;
+  line-height: 1.9;
+  letter-spacing: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+@keyframes pc-pending-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 599px) {
+  .pc-pending__line {
+    column-gap: 8px;
+    padding-block: 10px;
+  }
+  .pc-pending__line > span:last-child {
+    font-size: 23px;
+  }
+  .pc-pending__verses {
+    padding-top: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pc-pending__status svg {
+    animation: none;
+  }
+}
+
+.pc-root[data-motion="off"] .pc-pending__status svg {
+  animation: none;
+}

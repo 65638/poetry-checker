@@ -302,7 +302,7 @@
     calc(var(--pc-delay-stage) * 2) both;
 }
 
-.pc-hall--writing .pc-manuscript {
+.pc-hall--writing .pc-manuscript:not(.pc-manuscript--pending) {
   background: transparent;
   border: 0;
   box-shadow: none;
@@ -609,7 +609,7 @@
   .pc-manuscript {
     padding: var(--pc-space-5);
   }
-  .pc-hall--writing .pc-manuscript {
+  .pc-hall--writing .pc-manuscript:not(.pc-manuscript--pending) {
     padding-left: 8px;
   }
   .pc-steps {
@@ -647,7 +647,7 @@
     min-height: 0;
   }
 
-  .pc-hall--writing .pc-manuscript {
+  .pc-hall--writing .pc-manuscript:not(.pc-manuscript--pending) {
     min-height: 0;
     padding: 36px 12px;
     background: rgb(16 31 37 / 70%);
