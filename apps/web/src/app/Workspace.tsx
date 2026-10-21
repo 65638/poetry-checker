@@ -8,17 +8,32 @@ import "../presentation/styles/dictionary.css";
 import { DRAFT_KEY } from "./draftPersistence";
 import { ContinuousGarden } from "../presentation/components/ContinuousGarden";
 import "../presentation/styles/continuous-garden.css";
+import "../presentation/styles/poetry-studio.css";
+import { LibraryContainer } from "./LibraryContainer";
+import { PoetryDesk } from "./PoetryDesk";
+import {
+  NOTEBOOK_KEY,
+  NOTEBOOK_LIMIT,
+  readNotebook,
+  type NotebookEntry,
+} from "./notebook";
+import type { InputDraft } from "../view-contract";
 
-type Place = "checker" | "dictionary";
+type Place = "checker" | "dictionary" | "library";
+const places: Place[] = ["checker", "dictionary", "library"];
 const initialPlace = (): Place =>
-  /^#dictionary(?:\?|$)/u.test(window.location.hash) ? "dictionary" : "checker";
+  /^#library(?:\?|$)/u.test(window.location.hash)
+    ? "library"
+    : /^#dictionary(?:\?|$)/u.test(window.location.hash)
+      ? "dictionary"
+      : "checker";
 
 export function Workspace(props: CheckerViewProps) {
   const [place, setPlace] = useState<Place>(initialPlace);
   const [sceneryPlace, setSceneryPlace] = useState<Place>(initialPlace);
   const [direction, setDirection] = useState("forward");
   const motion = useMotionPreference();
-  const scrollPositions = useRef({ checker: 0, dictionary: 0 });
+  const scrollPositions = useRef({ checker: 0, dictionary: 0, library: 0 });
   const current = useRef(place);
   const rendered = useRef(place);
   const transition = useRef<ViewTransition | null>(null);
@@ -26,8 +41,68 @@ export function Workspace(props: CheckerViewProps) {
   const panels = useRef<HTMLDivElement>(null);
   const [saved, setSaved] = useState(false);
   const [passageRequest, setPassageRequest] = useState(0);
+  const [notebook, setNotebook] = useState(readNotebook);
+  const [notebookNotice, setNotebookNotice] = useState<string | null>(null);
+  const [workMode, setWorkMode] = useState<"writing" | "reading">("writing");
+  const undoStack = useRef<InputDraft[]>([]);
+  const redoStack = useRef<InputDraft[]>([]);
   const draft = useRef(props.draft);
   draft.current = props.draft;
+  function persistNotebook(next: NotebookEntry[]) {
+    setNotebook(next);
+    try {
+      localStorage.setItem(
+        NOTEBOOK_KEY,
+        JSON.stringify({ version: 1, entries: next }),
+      );
+      setNotebookNotice("推敲笺已存于此设备。");
+    } catch {
+      setNotebookNotice(
+        "修改已保留在本次会话，推敲笺未能写入设备，请导出备份。",
+      );
+    }
+  }
+  function revise(
+    next: InputDraft,
+    note: string,
+    action: "edit" | "undo" | "redo" = "edit",
+  ) {
+    const before =
+      JSON.stringify(next) === JSON.stringify(props.draft)
+        ? (notebook.at(-1)?.after ?? props.draft)
+        : props.draft;
+    if (action === "edit" && JSON.stringify(before) !== JSON.stringify(next)) {
+      undoStack.current.push(before);
+      redoStack.current = [];
+    }
+    persistNotebook(
+      [
+        ...notebook,
+        {
+          id: crypto.randomUUID(),
+          at: new Date().toISOString(),
+          before,
+          after: next,
+          note,
+        },
+      ].slice(-NOTEBOOK_LIMIT),
+    );
+    props.onDraftChange(next);
+  }
+  function undo() {
+    const previous = undoStack.current.pop();
+    if (!previous) return;
+    redoStack.current.push(props.draft);
+    revise(previous, "撤销上次修改", "undo");
+    props.onAnalyze();
+  }
+  function redo() {
+    const next = redoStack.current.pop();
+    if (!next) return;
+    undoStack.current.push(props.draft);
+    revise(next, "重做修改", "redo");
+    props.onAnalyze();
+  }
   useEffect(() => {
     setSaved(false);
     const id = window.setTimeout(() => {
@@ -54,10 +129,12 @@ export function Workspace(props: CheckerViewProps) {
   const switchPlace = (next: Place) => {
     if (current.current === next) return;
     scrollPositions.current[rendered.current] = window.scrollY;
+    const previous = current.current;
     current.current = next;
     const id = ++journey.current;
     transition.current?.skipTransition();
-    const heading = next === "dictionary" ? "forward" : "backward";
+    const heading =
+      places.indexOf(next) > places.indexOf(previous) ? "forward" : "backward";
     const previousScroll = window.scrollY;
     const update = () => {
       if (id !== journey.current) return;
@@ -133,7 +210,7 @@ export function Workspace(props: CheckerViewProps) {
     [],
   );
   const navigate = (next: Place) => {
-    window.location.hash = next === "dictionary" ? "dictionary" : "checker";
+    window.location.hash = next;
     switchPlace(next);
   };
   useEffect(() => {
@@ -161,11 +238,10 @@ export function Workspace(props: CheckerViewProps) {
           event.clientY >= rect.top &&
           event.clientY <= rect.bottom
         ) {
-          navigate(
-            button.getAttribute("aria-controls") === "dictionary-space"
-              ? "dictionary"
-              : "checker",
-          );
+          const target = button
+            .getAttribute("aria-controls")
+            ?.replace(/-space$/u, "") as Place;
+          if (places.includes(target)) navigate(target);
           break;
         }
       }
@@ -184,7 +260,7 @@ export function Workspace(props: CheckerViewProps) {
         place={sceneryPlace}
         active={motion.effects}
         quiet={
-          place === "dictionary" ||
+          place !== "checker" ||
           !!props.report ||
           props.busy ||
           props.selectedTokenId !== null
@@ -196,7 +272,7 @@ export function Workspace(props: CheckerViewProps) {
         inert={place === "checker" && props.selectedTokenId !== null}
       >
         <span className="pc-places__caption">
-          月下听韵 <i aria-hidden="true" /> 两处风景
+          月下听韵 <i aria-hidden="true" /> 三处风景
         </span>
         <div className="pc-places__links">
           <button
@@ -217,6 +293,17 @@ export function Workspace(props: CheckerViewProps) {
             onClick={() => navigate("dictionary")}
           >
             <span aria-hidden="true">贰</span> 藏韵阁
+          </button>
+          <span className="pc-places__path" aria-hidden="true">
+            ···
+          </span>
+          <button
+            type="button"
+            aria-current={place === "library" ? "page" : undefined}
+            aria-controls="library-space"
+            onClick={() => navigate("library")}
+          >
+            <span aria-hidden="true">叁</span> 典籍馆
           </button>
         </div>
       </nav>
@@ -247,7 +334,45 @@ export function Workspace(props: CheckerViewProps) {
           <span className="pc-draft-save" role="status">
             {saved ? "草稿已存于此设备" : ""}
           </span>
-          <CheckerView {...props} sharedScene />
+          <CheckerView
+            {...props}
+            sharedScene
+            poetryDesk={
+              <PoetryDesk
+                checker={props}
+                entries={notebook}
+                notice={notebookNotice}
+                onRevise={revise}
+                onImport={(incoming) => {
+                  const ids = new Set(notebook.map((n) => n.id));
+                  if (
+                    incoming.some(
+                      (n) =>
+                        ids.has(n.id) &&
+                        JSON.stringify(n) !==
+                          JSON.stringify(
+                            notebook.find((old) => old.id === n.id),
+                          ),
+                    )
+                  )
+                    throw new Error("推敲笺有相同ID但内容不同的记录，未合并。");
+                  const merged = [
+                    ...notebook,
+                    ...incoming.filter((n) => !ids.has(n.id)),
+                  ].sort((a, b) => a.at.localeCompare(b.at));
+                  if (merged.length > NOTEBOOK_LIMIT)
+                    throw new Error("合并后超过80笺，请先导出备份后分批整理。");
+                  persistNotebook(merged);
+                }}
+                onUndo={undo}
+                onRedo={redo}
+                canUndo={undoStack.current.length > 0}
+                canRedo={redoStack.current.length > 0}
+                mode={workMode}
+                onModeChange={setWorkMode}
+              />
+            }
+          />
         </div>
         <div
           id="dictionary-space"
@@ -260,6 +385,35 @@ export function Workspace(props: CheckerViewProps) {
           <DictionaryContainer
             poemText={props.draft.text}
             passageRequest={passageRequest}
+          />
+        </div>
+        <div
+          id="library-space"
+          className="pc-place"
+          role="region"
+          aria-label="典籍馆"
+          tabIndex={-1}
+          hidden={place !== "library"}
+        >
+          <LibraryContainer
+            onStudy={(work) => {
+              revise(
+                {
+                  ...props.draft,
+                  text: work.paragraphs.join("\n"),
+                  genreHint: "auto",
+                  formHint: "auto",
+                },
+                `研读《${work.title}》·${work.author}；来源：${work.source}`,
+              );
+              setWorkMode("reading");
+              navigate("checker");
+              props.onAnalyze();
+            }}
+            onLookup={(char) => {
+              window.location.hash = `dictionary?char=${encodeURIComponent(char)}&book=${props.draft.rhymeBook}`;
+              switchPlace("dictionary");
+            }}
           />
         </div>
       </div>

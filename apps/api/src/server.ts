@@ -15,6 +15,7 @@ import {
   type Resources,
 } from "./resources.js";
 import { toLexiconErrorResponse } from "./lexicon-errors.js";
+import { registerPoetryStudio } from "./poetry-studio.js";
 import { analyze } from "./orchestrator.js";
 import {
   registerReadingAssistant,
@@ -85,6 +86,7 @@ export function buildApp(options?: {
     resources,
     options?.readingAssistant,
   );
+  registerPoetryStudio(app, resources, readingAssistant);
 
   app.get("/healthz", async () => ({ status: "ok" }));
 

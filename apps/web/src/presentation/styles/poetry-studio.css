@@ -1,0 +1,551 @@
+.pc-studio-scope {
+  color: var(--pc-text);
+  line-height: 1.8;
+  letter-spacing: 0;
+}
+.pc-studio-scope *,
+.pc-studio-scope *::before,
+.pc-studio-scope *::after {
+  box-sizing: border-box;
+  letter-spacing: 0;
+}
+.pc-studio-scope :is(button, input, select, textarea) {
+  font: inherit;
+}
+.pc-studio-scope :is(input:not([type="checkbox"]), select) {
+  min-height: 42px;
+  max-width: 100%;
+  min-width: 0;
+  border: 1px solid var(--pc-border-control);
+  border-radius: 3px;
+  background: #fffdf7;
+  color: var(--pc-text);
+  padding: 7px 10px;
+}
+.pc-studio-scope select {
+  margin-left: 8px;
+}
+.pc-studio-scope button {
+  cursor: pointer;
+}
+.pc-studio-scope button:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+.pc-studio-scope :is(button, input, select):focus-visible {
+  outline: 2px solid var(--pc-focus);
+  outline-offset: 3px;
+}
+.pc-studio-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 12px 0;
+}
+.pc-studio-action,
+.pc-studio-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  border: 1px solid var(--pc-border-control);
+  border-radius: 3px;
+  color: inherit;
+  background: transparent;
+  padding: 7px 12px;
+  text-decoration: none;
+}
+.pc-studio-icon {
+  width: 42px;
+  height: 42px;
+  padding: 8px;
+  flex: 0 0 42px;
+}
+.pc-studio-action:hover:not(:disabled),
+.pc-studio-icon:hover:not(:disabled) {
+  background: var(--pc-accent-soft);
+  color: var(--pc-accent);
+}
+.pc-studio-action svg,
+.pc-studio-icon svg {
+  flex: 0 0 auto;
+}
+.pc-studio-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  border-bottom: 1px solid var(--pc-divider);
+  margin-bottom: 18px;
+}
+.pc-studio-tabs button {
+  min-height: 44px;
+  padding: 9px 16px;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid transparent;
+}
+.pc-studio-tabs button[aria-selected="true"] {
+  color: var(--pc-seal);
+  border-bottom-color: var(--pc-seal);
+  font-weight: 600;
+}
+.pc-studio-actions .pc-studio-tabs {
+  margin: 0;
+}
+.pc-studio-eyebrow {
+  font-size: 13px;
+  margin: 0 0 3px;
+  opacity: 0.8;
+}
+.pc-studio-meta {
+  font-size: 13px;
+  color: var(--pc-text-muted);
+  overflow-wrap: anywhere;
+}
+.pc-studio-notice,
+.pc-studio-error {
+  padding: 10px 0;
+  border-top: 1px solid currentColor;
+  overflow-wrap: anywhere;
+}
+.pc-studio-error {
+  color: var(--pc-fail-fg);
+}
+.pc-studio-status {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  min-height: 44px;
+}
+.pc-studio-status .pc-studio-icon {
+  margin-left: auto;
+}
+.pc-studio-spin {
+  animation: pc-studio-spin 1.5s linear infinite;
+}
+@keyframes pc-studio-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.pc-studio-empty {
+  padding: 24px 0;
+  color: var(--pc-text-muted);
+}
+.pc-poetry-desk {
+  border-top: 2px solid var(--pc-seal);
+  margin-top: 36px;
+  padding: 24px 0 10px;
+}
+.pc-poetry-desk-heading,
+.pc-library-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.pc-poetry-desk-heading h2 {
+  font: 500 26px/1.6 var(--pc-font-serif);
+  margin: 0;
+}
+.pc-poetry-desk :is(h3, h4) {
+  font-size: 17px;
+  margin: 14px 0 8px;
+}
+.pc-poetry-review > p {
+  font-size: 16px;
+}
+.pc-poetry-edit {
+  border-top: 1px solid var(--pc-divider);
+  padding: 16px 0;
+}
+.pc-poetry-substitution {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  overflow-wrap: anywhere;
+}
+.pc-poetry-substitution del {
+  color: var(--pc-fail-fg);
+  background: var(--pc-fail-bg);
+  padding: 2px 6px;
+}
+.pc-poetry-substitution ins {
+  color: var(--pc-pass-fg);
+  background: var(--pc-pass-bg);
+  padding: 2px 6px;
+  text-decoration: none;
+}
+.pc-rhyme-characters {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(46px, 1fr));
+  gap: 7px;
+  margin: 20px 0;
+}
+.pc-rhyme-characters button {
+  aspect-ratio: 1;
+  min-height: 46px;
+  border: 1px solid var(--pc-divider);
+  border-radius: 2px;
+  color: var(--pc-text);
+  background: transparent;
+  font: 24px/1 var(--pc-font-serif);
+}
+.pc-rhyme-characters button:hover {
+  background: var(--pc-accent-soft);
+}
+.pc-notebook-note {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1 1 200px;
+  min-width: 0;
+  white-space: nowrap;
+}
+.pc-notebook-note input {
+  flex: 1;
+  width: 0;
+  min-width: 0;
+}
+.pc-notebook-entry {
+  padding: 16px 0;
+  border-top: 1px solid var(--pc-divider);
+}
+.pc-notebook-entry header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.pc-notebook-entry time {
+  color: var(--pc-text-muted);
+  font-size: 13px;
+}
+.pc-notebook-entry > p {
+  overflow-wrap: anywhere;
+}
+.pc-notebook-entry details {
+  margin: 12px 0;
+}
+.pc-notebook-entry summary {
+  cursor: pointer;
+}
+.pc-notebook-diff {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 20px;
+}
+.pc-notebook-diff p {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.pc-library {
+  max-width: 1260px;
+  margin: 0 auto;
+  padding: 24px 40px 48px;
+  color: var(--pc-on-ink);
+  min-height: calc(100vh - 68px);
+}
+.pc-library-heading {
+  min-height: 140px;
+  padding-bottom: 24px;
+}
+.pc-library-heading h1 {
+  margin: 0;
+  font: 400 38px/1.5 var(--pc-font-serif);
+  color: var(--pc-moon);
+}
+.pc-library-heading p {
+  margin: 4px 0;
+}
+.pc-library > .pc-studio-tabs {
+  --pc-seal: var(--pc-on-ink-gold);
+  --pc-divider: #8a9f9a66;
+}
+.pc-library > .pc-studio-notice {
+  color: var(--pc-moon);
+}
+.pc-library-search {
+  border-bottom: 1px solid #8a9f9a66;
+  padding-bottom: 18px;
+}
+.pc-library-search .pc-studio-tabs {
+  --pc-seal: var(--pc-on-ink-gold);
+  --pc-divider: #8a9f9a66;
+  max-width: 350px;
+}
+.pc-library-query {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.pc-studio-searchbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+  background: #fffdf7;
+  border-radius: 3px;
+  color: var(--pc-text);
+  padding-left: 12px;
+}
+.pc-studio-searchbox input {
+  width: 100%;
+  border: 0 !important;
+}
+.pc-library-filters {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-top: 16px;
+}
+.pc-library-filters > span {
+  margin-left: auto;
+  font-size: 13px;
+}
+.pc-library-catalogue > .pc-studio-meta {
+  color: var(--pc-on-ink-muted);
+}
+.pc-library-list {
+  min-height: 230px;
+}
+.pc-library-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 4px;
+  border-bottom: 1px solid #8a9f9a50;
+}
+.pc-library-row > div {
+  min-width: 0;
+}
+.pc-library-row .pc-studio-meta {
+  color: var(--pc-on-ink-muted);
+  margin: 0 0 4px;
+}
+.pc-library-title {
+  display: block;
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--pc-moon);
+  text-align: left;
+  font: 25px/1.6 var(--pc-font-serif) !important;
+  overflow-wrap: anywhere;
+}
+.pc-library-title:hover {
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+.pc-library-excerpt {
+  margin: 8px 0 0;
+  color: var(--pc-on-ink);
+  max-width: 900px;
+  overflow-wrap: anywhere;
+}
+.pc-library-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  min-height: 70px;
+}
+.pc-library-reading {
+  color: var(--pc-text);
+  background: var(--pc-surface-sheet);
+  padding: 28px 36px 36px;
+  border-top: 3px solid var(--pc-seal);
+  scroll-margin-top: 16px;
+}
+.pc-library-reading > h2,
+.pc-library-poem h2 {
+  font: 400 30px/1.7 var(--pc-font-serif);
+  margin: 32px 0 6px;
+  overflow-wrap: anywhere;
+}
+.pc-library-verses {
+  font: 400 22px/2.2 var(--pc-font-serif);
+  margin: 28px 0;
+  overflow-wrap: anywhere;
+}
+.pc-library-verses p {
+  margin: 12px 0;
+}
+.pc-studio-inline-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.pc-studio-inline-label input {
+  width: 64px;
+  text-align: center;
+}
+.pc-library-diptych {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 36px;
+}
+.pc-library-poem {
+  min-width: 0;
+}
+.pc-library-poem label {
+  display: block;
+}
+.pc-library-poem select {
+  display: block;
+  width: 100%;
+  margin: 8px 0 0;
+}
+.pc-library-poem + .pc-library-poem {
+  border-left: 1px solid var(--pc-divider);
+  padding-left: 32px;
+}
+.pc-library-comparison-notes {
+  padding-top: 20px;
+  border-top: 1px solid var(--pc-divider);
+}
+.pc-library-aspect {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0 28px;
+  border-top: 1px solid var(--pc-divider);
+  margin-top: 18px;
+  padding-top: 12px;
+}
+.pc-library-aspect h3 {
+  grid-column: 1 / -1;
+  font-size: 18px;
+  margin: 0;
+}
+.pc-library-aspect p {
+  overflow-wrap: anywhere;
+}
+.pc-library-footer {
+  font-size: 12px;
+  color: var(--pc-on-ink-muted);
+  padding: 28px 0 0;
+}
+.pc-library .pc-studio-error {
+  color: #ffb3a6;
+}
+.pc-library-reading .pc-studio-error {
+  color: var(--pc-fail-fg);
+}
+.pc-library-catalogue .pc-studio-empty {
+  color: var(--pc-on-ink-muted);
+}
+.pc-continuous[data-place="library"] .pc-continuous__panorama {
+  transform: translateX(-38%);
+}
+@media (max-width: 900px) {
+  .pc-places {
+    flex-wrap: wrap;
+  }
+  .pc-places__caption {
+    display: none;
+  }
+  .pc-places__links {
+    width: 100%;
+    justify-content: center;
+    gap: 3px;
+  }
+  .pc-places button {
+    padding: 8px 12px;
+  }
+  .pc-places__path {
+    display: none;
+  }
+  .pc-library {
+    padding: 20px 24px 36px;
+  }
+  .pc-library-heading {
+    min-height: 120px;
+  }
+}
+@media (max-width: 599px) {
+  .pc-places button {
+    padding: 8px 10px;
+  }
+  .pc-places button span {
+    margin-right: 5px;
+    font-size: 18px;
+  }
+  .pc-library {
+    padding: 16px 16px 32px;
+  }
+  .pc-library-heading {
+    flex-wrap: wrap;
+    gap: 4px;
+    padding-bottom: 20px;
+  }
+  .pc-library-heading h1 {
+    font-size: 32px;
+  }
+  .pc-library-heading .pc-studio-actions {
+    margin: 4px 0;
+  }
+  .pc-library-reading {
+    padding: 18px 18px 28px;
+  }
+  .pc-library-reading > h2,
+  .pc-library-poem h2 {
+    font-size: 25px;
+  }
+  .pc-library-verses {
+    font-size: 19px;
+  }
+  .pc-library-diptych,
+  .pc-notebook-diff,
+  .pc-library-aspect {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+  .pc-library-poem + .pc-library-poem {
+    border-left: 0;
+    border-top: 1px solid var(--pc-divider);
+    padding-left: 0;
+    padding-top: 20px;
+  }
+  .pc-library-query {
+    gap: 6px;
+  }
+  .pc-library-query > .pc-studio-action {
+    padding: 7px 9px;
+    flex-shrink: 0;
+  }
+  .pc-library-filters {
+    gap: 12px;
+  }
+  .pc-studio-scope select {
+    max-width: 100%;
+  }
+  .pc-poetry-desk .pc-studio-actions > label:has(select) {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .pc-poetry-desk .pc-studio-actions > label > select {
+    flex: 1;
+    min-width: 0;
+    width: 0;
+  }
+  .pc-notebook-entry header {
+    flex-wrap: wrap;
+  }
+  .pc-studio-tabs button {
+    padding: 9px 10px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pc-studio-spin {
+    animation: none;
+  }
+}

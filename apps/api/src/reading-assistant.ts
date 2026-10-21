@@ -19,7 +19,7 @@ export interface ReadingAssistantOptions {
   timeoutMs?: number;
   analysisTimeoutMs?: number;
 }
-class AssistantError extends Error {
+export class AssistantError extends Error {
   constructor(
     readonly status: number,
     readonly code: string,
@@ -47,8 +47,8 @@ export function createReadingAssistant(
   const configured = apiKey.trim().length > 0;
   const fetcher = options.fetcher ?? fetch;
   let active = 0;
-  async function requestSuggestions(
-    input: ReadingSuggestionRequest,
+  async function runRequest<T>(
+    run: (signal: AbortSignal) => Promise<T>,
     signal?: AbortSignal,
   ) {
     if (!configured)
@@ -85,7 +85,7 @@ export function createReadingAssistant(
       options.timeoutMs ?? 45000,
     );
     try {
-      return await suggest(input, combinedSignal);
+      return await run(combinedSignal);
     } catch (cause) {
       if (combinedSignal.aborted)
         throw new AssistantError(
@@ -109,7 +109,10 @@ export function createReadingAssistant(
     configured,
     model,
     analysisTimeoutMs: options.analysisTimeoutMs ?? 20000,
-    suggest: requestSuggestions,
+    suggest: (input: ReadingSuggestionRequest, signal?: AbortSignal) =>
+      runRequest((combined) => suggest(input, combined), signal),
+    complete: (prompt: string, payload: unknown, signal?: AbortSignal) =>
+      runRequest((combined) => complete(prompt, payload, combined), signal),
   };
 
   async function suggest(
@@ -193,6 +196,110 @@ export function createReadingAssistant(
         })),
       })),
     };
+    const output = await complete(systemPrompt, payload, signal);
+    return projectSuggestions(output);
+
+    function projectSuggestions(output: unknown): ReadingSuggestionResponse {
+      const parsedOutput = ReadingModelOutputSchema.safeParse(output);
+      if (
+        !parsedOutput.success ||
+        parsedOutput.data.suggestions.length !== targets.length ||
+        new Set(parsedOutput.data.suggestions.map((row) => row.tokenId))
+          .size !== targets.length
+      )
+        throw new AssistantError(
+          502,
+          "MODEL_INVALID_RESPONSE",
+          "模型建议字位不完整，请重试。",
+        );
+      const modelSuggestions = parsedOutput.data.suggestions;
+      const suggestions = targets.map((token) => {
+        const row = modelSuggestions.find(
+          (item) => item.tokenId === token.tokenId,
+        );
+        let candidate =
+          row?.candidateId == null
+            ? null
+            : byCharacter
+                .get(token.text)!
+                .find((item) => item.id === row.candidateId);
+        if (
+          !row ||
+          candidate === undefined ||
+          (row.candidateId === null && row.pronunciation !== null)
+        )
+          throw new AssistantError(
+            502,
+            "MODEL_INVALID_RESPONSE",
+            "模型建议不属于当前韵书候选，已拒绝采用。",
+          );
+        let reason = row.reason;
+        if (candidate?.modernReading && row.pronunciation !== null) {
+          const expected = parsePinyin(candidate.modernReading.pinyin);
+          const actual = parsePinyin(
+            row.pronunciation.toLowerCase().normalize("NFC"),
+          );
+          if (
+            !expected.ok ||
+            !actual.ok ||
+            expected.syllable.initial !== actual.syllable.initial ||
+            expected.syllable.final !== actual.syllable.final ||
+            (actual.syllable.toneMarked &&
+              actual.syllable.toneNumber !== candidate.modernReading.toneNumber)
+          ) {
+            candidate = null;
+            reason = "GLM返回的拼音与所选候选不一致，本字暂不采用自动选音。";
+          }
+        }
+        const evidenceIds = candidate
+          ? [
+              ...candidate.evidenceIds,
+              ...(candidate.modernReading?.evidenceIds ?? []),
+              ...(candidate.fanqie?.evidenceIds ?? []),
+              ...candidate.groupIds.flatMap(
+                (id) =>
+                  lookup.groups.find((group) => group.id === id)?.evidenceIds ??
+                  [],
+              ),
+            ]
+          : [];
+        return {
+          tokenId: token.tokenId,
+          character: token.text,
+          line: token.line,
+          column: token.column,
+          candidateId: candidate?.id ?? null,
+          pronunciation: candidate
+            ? (row.pronunciation ??
+              (candidate.modernReading
+                ? `${candidate.modernReading.pinyin}${candidate.modernReading.toneNumber}`
+                : null))
+            : null,
+          reason,
+          candidate,
+          groupNames:
+            candidate?.groupIds.map(
+              (id) =>
+                lookup.groups.find((group) => group.id === id)?.name ?? id,
+            ) ?? [],
+          evidenceApproved:
+            evidenceIds.length > 0 &&
+            evidenceIds.every((id) =>
+              lookup.evidence.some(
+                (item) => item.id === id && item.reviewStatus === "approved",
+              ),
+            ),
+        };
+      });
+      return ReadingSuggestionResponseSchema.parse({ ...base, suggestions });
+    }
+  }
+
+  async function complete(
+    prompt: string,
+    payload: unknown,
+    signal: AbortSignal,
+  ): Promise<unknown> {
     signal.throwIfAborted();
     const response = await fetcher(GLM_ENDPOINT, {
       method: "POST",
@@ -212,7 +319,7 @@ export function createReadingAssistant(
           : {}),
         response_format: { type: "json_object" },
         messages: [
-          { role: "system", content: systemPrompt },
+          { role: "system", content: prompt },
           { role: "user", content: JSON.stringify(payload) },
         ],
       }),
@@ -264,121 +371,7 @@ export function createReadingAssistant(
         "模型建议格式异常，请重试。",
       );
     }
-    const parsedOutput = ReadingModelOutputSchema.safeParse(output);
-    if (
-      !parsedOutput.success ||
-      parsedOutput.data.suggestions.length !== targets.length ||
-      new Set(parsedOutput.data.suggestions.map((row) => row.tokenId)).size !==
-        targets.length
-    )
-      throw new AssistantError(
-        502,
-        "MODEL_INVALID_RESPONSE",
-        "模型建议字位不完整，请重试。",
-      );
-    const modelSuggestions = parsedOutput.data.suggestions;
-    const suggestions = targets.map((token) => {
-      const row = modelSuggestions.find(
-        (item) => item.tokenId === token.tokenId,
-      );
-      let candidate =
-        row?.candidateId == null
-          ? null
-          : byCharacter
-              .get(token.text)!
-              .find((item) => item.id === row.candidateId);
-      if (
-        !row ||
-        candidate === undefined ||
-        (row.candidateId === null && row.pronunciation !== null)
-      )
-        throw new AssistantError(
-          502,
-          "MODEL_INVALID_RESPONSE",
-          "模型建议不属于当前韵书候选，已拒绝采用。",
-        );
-      let reason = row.reason;
-      // Keep other suggestions usable if one choice contradicts its pronunciation.
-      if (candidate?.modernReading && row.pronunciation !== null) {
-        const expected = parsePinyin(candidate.modernReading.pinyin);
-        const actual = parsePinyin(row.pronunciation.toLowerCase().normalize("NFC"));
-        if (
-          !expected.ok ||
-          !actual.ok ||
-          expected.syllable.initial !== actual.syllable.initial ||
-          expected.syllable.final !== actual.syllable.final ||
-          (actual.syllable.toneMarked &&
-            actual.syllable.toneNumber !== candidate.modernReading.toneNumber)
-        ) {
-          candidate = null;
-          reason = "GLM返回的拼音与所选候选不一致，本字暂不采用自动选音。";
-        }
-      }
-      const evidenceIds = candidate
-        ? [
-            ...candidate.evidenceIds,
-            ...(candidate.modernReading?.evidenceIds ?? []),
-            ...(candidate.fanqie?.evidenceIds ?? []),
-            ...candidate.groupIds.flatMap(
-              (id) =>
-                lookup.groups.find((group) => group.id === id)?.evidenceIds ??
-                [],
-            ),
-          ]
-        : [];
-      return {
-        ...token,
-        candidateId: candidate?.id ?? null,
-        pronunciation: candidate
-          ? (row.pronunciation ??
-            (candidate.modernReading
-              ? `${candidate.modernReading.pinyin}${candidate.modernReading.toneNumber}`
-              : null))
-          : null,
-        reason,
-        candidate,
-        groupNames:
-          candidate?.groupIds.map(
-            (id) => lookup.groups.find((group) => group.id === id)?.name ?? id,
-          ) ?? [],
-        evidenceApproved:
-          evidenceIds.length > 0 &&
-          evidenceIds.every((id) =>
-            lookup.evidence.some(
-              (item) => item.id === id && item.reviewStatus === "approved",
-            ),
-          ),
-      };
-    });
-    // Strip parse offsets from the public response through the explicit projection.
-    return ReadingSuggestionResponseSchema.parse({
-      ...base,
-      suggestions: suggestions.map(
-        ({
-          tokenId,
-          text,
-          line,
-          column,
-          candidateId,
-          pronunciation,
-          reason,
-          candidate,
-          groupNames,
-          evidenceApproved,
-        }) => ({
-          tokenId,
-          character: text,
-          line,
-          column,
-          candidateId,
-          pronunciation,
-          reason,
-          candidate,
-          groupNames,
-          evidenceApproved,
-        }),
-      ),
-    });
+    return output;
   }
 }
 

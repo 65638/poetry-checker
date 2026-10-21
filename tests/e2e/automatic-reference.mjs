@@ -13,6 +13,7 @@ const app = buildApp({ readingAssistant: { apiKey: 'test-only-controlled-key', a
   modelCalls++;
   if (mode === 'failure') return new Response('controlled unavailable', { status: 500 });
   const data = JSON.parse(JSON.parse(init.body).messages[1].content);
+  if (data.task === 'critique') return new Response(JSON.stringify({ choices: [{ finish_reason: 'stop', message: { content: JSON.stringify({ overview: '受控评议，仅验证已有自动辨音流程不受新增工作台影响。', strengths: [], revisions: [] }) } }] }));
   const suggestions = data.targets.map((target) => ({ tokenId: target.tokenId, candidateId: (target.candidates.find((candidate) => candidate.toneClass === 'qu') ?? target.candidates[0]).id, pronunciation: null, reason: '受控推理，仅验证自动应用链路。' }));
   return new Response(JSON.stringify({ choices: [{ finish_reason: 'stop', message: { content: JSON.stringify({ suggestions }) } }] }));
 } } });

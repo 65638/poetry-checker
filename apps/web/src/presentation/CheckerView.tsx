@@ -24,6 +24,7 @@ export function CheckerView(
   props: CheckerViewProps & {
     sharedScene?: boolean;
     readingAssistant?: ReactNode;
+    poetryDesk?: ReactNode;
   },
 ) {
   const {
@@ -415,6 +416,7 @@ export function CheckerView(
                 )}
               </aside>
             )}
+            {props.poetryDesk}
           </section>
         </main>
 

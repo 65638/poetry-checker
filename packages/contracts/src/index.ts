@@ -1,4 +1,10 @@
 import { z } from "zod";
+import {
+  PoetryAssistantRequestSchema,
+  PoetryAssistantResponseSchema,
+  RhymeWordsRequestSchema,
+} from "./studio.js";
+export * from "./studio.js";
 
 const id = z.string().min(1);
 const ids = z.array(id);
@@ -119,6 +125,14 @@ export const LookupResultSchema = z.strictObject({
   evidence: z.array(EvidenceSchema),
   sources: z.array(SourceRecordSchema),
 });
+export const RhymeWordsResponseSchema = z.strictObject({
+  lookup: LookupResultSchema,
+  readingId: z.string().min(1),
+  total: z.number().int().nonnegative(),
+  offset: z.number().int().nonnegative(),
+  limit: z.number().int().positive(),
+});
+export type RhymeWordsResponse = z.infer<typeof RhymeWordsResponseSchema>;
 export const ParsedTokenSchema = z.strictObject({
   tokenId: id,
   text: id,
@@ -548,6 +562,10 @@ export interface EvaluateInput {
 }
 
 export const schemaRegistry = {
+  PoetryAssistantRequest: PoetryAssistantRequestSchema,
+  PoetryAssistantResponse: PoetryAssistantResponseSchema,
+  RhymeWordsRequest: RhymeWordsRequestSchema,
+  RhymeWordsResponse: RhymeWordsResponseSchema,
   ReadingSuggestionRequest: ReadingSuggestionRequestSchema,
   ReadingAssistantStatus: ReadingAssistantStatusSchema,
   ReadingSuggestionResponse: ReadingSuggestionResponseSchema,
@@ -592,6 +610,38 @@ export function createOpenApiDocument() {
         "契约基线。复杂跨字段校验以 Zod 实现为准；HTTP 服务尚待接入。",
     },
     paths: {
+      "/api/v1/poetry-assistant": {
+        post: {
+          operationId: "assistPoetry",
+          requestBody: {
+            required: true,
+            content: content("PoetryAssistantRequest"),
+          },
+          responses: {
+            "200": {
+              description: "绑定输入与实际候选的文学参考",
+              content: content("PoetryAssistantResponse"),
+            },
+            ...errors,
+          },
+        },
+      },
+      "/api/v1/rhyme-words": {
+        post: {
+          operationId: "findRhymeWords",
+          requestBody: {
+            required: true,
+            content: content("RhymeWordsRequest"),
+          },
+          responses: {
+            "200": {
+              description: "实际韵书中与所选候选同部的字",
+              content: content("RhymeWordsResponse"),
+            },
+            ...errors,
+          },
+        },
+      },
       "/api/v1/reading-suggestions/status": {
         get: {
           operationId: "readingAssistantStatus",

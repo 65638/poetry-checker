@@ -7,7 +7,7 @@ export function ContinuousGarden({
   active,
   quiet,
 }: {
-  place: "checker" | "dictionary";
+  place: "checker" | "dictionary" | "library";
   active: boolean;
   quiet: boolean;
 }) {

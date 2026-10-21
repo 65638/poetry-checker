@@ -1,0 +1,54 @@
+{
+  "revision": {
+    "commit": "e60d2ea51f9a60f19341798fe7f508bf90574706",
+    "dirty": true
+  },
+  "mode": "controlled-upstream-real-api-lexicon-browser-indexeddb",
+  "realModelInference": false,
+  "checks": [
+    {
+      "name": "third-library-region-and-import-dedup-persist",
+      "status": "pass"
+    },
+    {
+      "name": "scene-search-returns-verbatim-quote-and-opens-original",
+      "status": "pass"
+    },
+    {
+      "name": "two-poems-compare-and-swap-with-model-notes",
+      "status": "pass"
+    },
+    {
+      "name": "library-study-opens-checker-in-reading-mode",
+      "status": "pass"
+    },
+    {
+      "name": "adopt-revision-reanalyze-undo-redo-notebook",
+      "status": "pass"
+    },
+    {
+      "name": "real-rhyme-peers-semantic-selection-and-mobile-fit",
+      "status": "pass"
+    }
+  ],
+  "errors": [],
+  "calls": [
+    "search",
+    "compare",
+    "reading",
+    "critique",
+    "reading",
+    "critique",
+    "reading",
+    "critique",
+    "reading",
+    "critique",
+    "reading",
+    "critique",
+    "reading",
+    "critique",
+    "reading",
+    "critique",
+    "rhyme"
+  ]
+}
