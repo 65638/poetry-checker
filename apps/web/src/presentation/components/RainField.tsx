@@ -18,19 +18,23 @@ interface Ring {
   deliberate: boolean;
 }
 const SHELTER =
-  'button, a, input, textarea, select, label, summary, [role="dialog"], [contenteditable], .pc-plinth, .pc-rail, .pc-hall--reading .pc-manuscript, .pc-masthead, .pc-colophon, .pc-evidence, .pc-dictionary__desk, .pc-dictionary__folio:not([data-empty="true"]), .pc-dictionary__masthead, .pc-places';
+  'button, a, input, textarea, select, label, summary, [role="dialog"], [contenteditable], .pc-plinth, .pc-rail, .pc-hall--reading .pc-manuscript, .pc-masthead, .pc-colophon, .pc-evidence, .pc-dictionary__desk, .pc-dictionary__picker, .pc-dictionary__folio:not([data-empty="true"]), .pc-dictionary__masthead, .pc-places, .pc-library-worktable, .pc-library-comparison';
 const MAX_RINGS = 24;
 
 export function RainField({
   active,
   quiet,
+  indoor = false,
 }: {
   active: boolean;
   quiet: boolean;
+  indoor?: boolean;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const quietRef = useRef(quiet);
   quietRef.current = quiet;
+  const indoorRef = useRef(indoor);
+  indoorRef.current = indoor;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -54,12 +58,20 @@ export function RainField({
     const pointer = { x: 0, y: 0, vx: 0, at: -Infinity, visible: false };
     let breeze = 0;
     let rainGain = quietRef.current ? 0.24 : 1;
+    let roomGain = indoorRef.current ? 1 : 0;
+    const dust = Array.from({ length: 34 }, (_, i) => ({
+      x: (i * 0.618033) % 1,
+      y: (i * 0.381966) % 1,
+      dx: 0,
+      dy: 0,
+    }));
     let lastHoverRipple = -Infinity;
     let hoverX = 0,
       hoverY = 0;
     const isWater = (x: number, y: number) => {
       const depth = (y / height - 0.74) / 0.26;
       return (
+        !indoorRef.current &&
         depth >= 0 &&
         x > width * (0.4 + depth * 0.1) &&
         x < width * (0.89 - depth * 0.2)
@@ -133,10 +145,12 @@ export function RainField({
       last = now;
       time += dt;
       ctx.clearRect(0, 0, width, height);
+      roomGain +=
+        ((indoorRef.current ? 1 : 0) - roomGain) * (1 - Math.exp(-dt * 3));
       // Ease both directions without resetting drops or rings on state changes.
       rainGain +=
         ((quietRef.current ? 0.24 : 1) - rainGain) * (1 - Math.exp(-dt * 2.8));
-      const gain = rainGain;
+      const gain = rainGain * (1 - roomGain * 0.65);
       const wind =
         -25 + Math.sin(time * 0.35) * 14 + Math.sin(time * 0.11) * 12;
       const wake = pointer.visible
@@ -175,7 +189,11 @@ export function RainField({
           drop.x < width * 0.76 &&
           drop.y > height * 0.14 &&
           drop.y < height * 0.62;
-        ctx.strokeStyle = `rgba(199,221,218,${(0.13 + drop.depth * 0.25) * gain * (inTitle ? 0.46 : 1) * (1 - force * 0.55)})`;
+        const inWindow =
+          drop.x > width * (width <= 799 ? 0.6584 : 0.6389) &&
+          drop.y > height * 0.1 &&
+          drop.y < height * 0.5222;
+        ctx.strokeStyle = `rgba(199,221,218,${(0.13 + drop.depth * 0.25) * gain * (inWindow ? 1 : 1 - roomGain) * (inTitle ? 0.46 : 1) * (1 - force * 0.55)})`;
         ctx.lineWidth = 0.55 + drop.depth * 0.5;
         ctx.beginPath();
         ctx.moveTo(drop.x - drop.vx * 0.04, drop.y - length);
@@ -193,7 +211,7 @@ export function RainField({
         if (phase > 1.45) continue;
         const x = i === 0 ? 28 : width - (i === 1 ? 30 : 47);
         const y = 24 + 0.5 * 880 * phase * phase;
-        ctx.strokeStyle = `rgba(207,224,215,${0.4 * gain})`;
+        ctx.strokeStyle = `rgba(207,224,215,${0.4 * gain * (1 - roomGain)})`;
         ctx.lineWidth = 1.2;
         ctx.beginPath();
         ctx.moveTo(x, y - 7 - phase * 13);
@@ -209,7 +227,7 @@ export function RainField({
         }
         const progress = ring.age / ring.life;
         const radius = 2 + ring.size * (1 - (1 - progress) ** 2);
-        ctx.strokeStyle = `rgba(184,211,208,${(1 - progress) * (ring.deliberate ? 0.55 : 0.28) * gain})`;
+        ctx.strokeStyle = `rgba(184,211,208,${(1 - progress) * (ring.deliberate ? 0.55 : 0.28) * gain * (1 - roomGain)})`;
         ctx.lineWidth = ring.deliberate ? 0.9 : 0.65;
         ctx.beginPath();
         ctx.ellipse(ring.x, ring.y, radius, radius * 0.23, 0, 0, Math.PI * 2);
@@ -226,6 +244,31 @@ export function RainField({
             Math.PI * 2,
           );
           ctx.stroke();
+        }
+      }
+      // Sparse lamp-lit dust uses the same bounded loop and fades in with the room.
+      if (roomGain > 0.01) {
+        for (const [i, mote] of dust.entries()) {
+          const x = mote.x * width,
+            y = mote.y * height;
+          const dx = x - pointer.x,
+            dy = y - pointer.y;
+          const distance = Math.hypot(dx, dy);
+          const force = pointer.visible ? Math.max(0, 1 - distance / 130) : 0;
+          mote.dx +=
+            ((dx / Math.max(distance, 1)) * force * 32 - mote.dx) * dt * 3;
+          mote.dy +=
+            ((dy / Math.max(distance, 1)) * force * 24 - mote.dy) * dt * 3;
+          mote.x =
+            (mote.x +
+              ((Math.sin(time * 0.18 + i) * 2 + mote.dx) * dt) / width +
+              1) %
+            1;
+          mote.y = (mote.y + ((-3 + mote.dy) * dt) / height + 1) % 1;
+          ctx.fillStyle = `rgba(225,203,154,${roomGain * (0.12 + (0.16 * (1 + Math.sin(time * 0.7 + i))) / 2)})`;
+          ctx.beginPath();
+          ctx.arc(x, y, i % 4 === 0 ? 1 : 0.6, 0, Math.PI * 2);
+          ctx.fill();
         }
       }
       // Distant scenery responds a few pixels to the same gust, with no luminous follower.

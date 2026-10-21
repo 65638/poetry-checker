@@ -9,6 +9,7 @@ import { DRAFT_KEY } from "./draftPersistence";
 import { ContinuousGarden } from "../presentation/components/ContinuousGarden";
 import "../presentation/styles/continuous-garden.css";
 import "../presentation/styles/poetry-studio.css";
+import "../presentation/styles/library-atmosphere.css";
 import { LibraryContainer } from "./LibraryContainer";
 import { PoetryDesk } from "./PoetryDesk";
 import {
@@ -272,7 +273,12 @@ export function Workspace(props: CheckerViewProps) {
         inert={place === "checker" && props.selectedTokenId !== null}
       >
         <span className="pc-places__caption">
-          月下听韵 <i aria-hidden="true" /> 三处风景
+          <span className="pc-places__seal" aria-hidden="true">
+            韵
+          </span>
+          <span>
+            月下听韵<small>一庭山水 · 三处书声</small>
+          </span>
         </span>
         <div className="pc-places__links">
           <button
@@ -281,29 +287,32 @@ export function Workspace(props: CheckerViewProps) {
             aria-controls="checker-space"
             onClick={() => navigate("checker")}
           >
-            <span aria-hidden="true">壹</span> 校诗台
+            <span aria-hidden="true">壹</span>
+            <b>
+              校诗台<small>听雨 · 校诗</small>
+            </b>
           </button>
-          <span className="pc-places__path" aria-hidden="true">
-            ···
-          </span>
           <button
             type="button"
             aria-current={place === "dictionary" ? "page" : undefined}
             aria-controls="dictionary-space"
             onClick={() => navigate("dictionary")}
           >
-            <span aria-hidden="true">贰</span> 藏韵阁
+            <span aria-hidden="true">贰</span>
+            <b>
+              藏韵阁<small>临水 · 寻字</small>
+            </b>
           </button>
-          <span className="pc-places__path" aria-hidden="true">
-            ···
-          </span>
           <button
             type="button"
             aria-current={place === "library" ? "page" : undefined}
             aria-controls="library-space"
             onClick={() => navigate("library")}
           >
-            <span aria-hidden="true">叁</span> 典籍馆
+            <span aria-hidden="true">叁</span>
+            <b>
+              典籍馆<small>灯前 · 展卷</small>
+            </b>
           </button>
         </div>
       </nav>

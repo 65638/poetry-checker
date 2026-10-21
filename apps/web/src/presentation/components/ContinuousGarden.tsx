@@ -1,4 +1,5 @@
 import { RainField } from "./RainField";
+import { LibraryRoom } from "./LibraryRoom";
 
 // One 2,880-unit drawing: the pavilion and library share an unbroken shoreline.
 // The sky/moon are outside this moving drawing, with one persistent rain field.
@@ -337,7 +338,8 @@ export function ContinuousGarden({
         <div className="pc-scene__glint pc-scene__glint--a" />
         <div className="pc-scene__glint pc-scene__glint--b" />
       </div>
-      <RainField active={active} quiet={quiet} />
+      <LibraryRoom />
+      <RainField active={active} quiet={quiet} indoor={place === "library"} />
     </div>
   );
 }

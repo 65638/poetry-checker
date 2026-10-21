@@ -10,7 +10,25 @@ import {
 const out = resolve(process.argv[2] ?? "artifacts/dictionary-journey");
 mkdirSync(out, { recursive: true });
 const h = await startHarness({ production: true });
-const { evaluate, click, cdp } = h;
+const { evaluate, cdp } = h;
+async function click(selector) {
+  if (
+    !selector.startsWith("[aria-controls=") ||
+    !(await evaluate("!!document.documentElement.dataset.journey"))
+  )
+    return h.click(selector);
+  // Captured navigation is hit-tested as HTML; exercise the real pointer path.
+  const point = await evaluate(
+    `(() => { const r=document.querySelector(${JSON.stringify(selector)}).getBoundingClientRect(); return {x:r.x+r.width/2,y:r.y+r.height/2}; })()`,
+  );
+  for (const type of ["mousePressed", "mouseReleased"])
+    await cdp.send("Input.dispatchMouseEvent", {
+      type,
+      button: "left",
+      clickCount: 1,
+      ...point,
+    });
+}
 const report = { revision: revision(), checks: [], errors: [] };
 cdp.on("Runtime.exceptionThrown", (e) =>
   report.errors.push(e.exceptionDetails.text),
