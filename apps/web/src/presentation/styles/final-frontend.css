@@ -1,0 +1,266 @@
+/* Final integration pass: align the catalogue, reading sheet and new references. */
+.pc-library-worktable {
+  grid-template-columns: clamp(300px, 24vw, 352px) minmax(0, 1fr);
+  gap: clamp(20px, 2vw, 32px);
+}
+.pc-library-query {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  position: relative;
+  align-items: stretch;
+}
+.pc-library-query .pc-studio-searchbox {
+  min-width: 0;
+  grid-column: 1;
+  grid-row: 1;
+  padding-right: 30px;
+}
+.pc-library-query > .pc-studio-icon {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: center;
+  justify-self: end;
+  z-index: 1;
+  width: 30px;
+  min-width: 30px;
+  min-height: 36px;
+  margin-right: 2px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+.pc-library-query > .pc-studio-action {
+  grid-column: 2;
+  grid-row: 1;
+}
+.pc-library-filters {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 10px 12px;
+}
+.pc-library-filters .pc-library-filter {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+.pc-library-filters .pc-library-filter--collection,
+.pc-library-filters .pc-library-filter--duplicates {
+  grid-column: 1 / -1;
+}
+.pc-library .pc-library-filters select {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  min-height: 36px;
+  padding-inline: 7px;
+}
+.pc-library-filter-check {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 28px;
+  line-height: 1.5;
+}
+.pc-library-filters input {
+  margin: 0;
+  width: 14px;
+  height: 14px;
+  flex: none;
+}
+.pc-library-count {
+  justify-self: end;
+  align-self: center;
+  font-variant-numeric: tabular-nums;
+}
+.pc-library-retry {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #83978950;
+  color: #dedfce;
+  font: 13px/1.8 var(--pc-font-sans);
+}
+.pc-library-reading > h2 {
+  text-align: center;
+  text-wrap: balance;
+  font-size: clamp(26px, 2.4vw, 34px);
+  line-height: 1.5;
+  padding-left: 0.08em;
+  margin-bottom: 10px;
+}
+.pc-library-reading > .pc-library-byline {
+  text-align: center;
+  margin-bottom: 22px;
+}
+.pc-library-reading > .pc-studio-actions,
+.pc-library-section-picker {
+  row-gap: 10px;
+}
+.pc-library-reading .pc-library-reading-hint {
+  color: #455952;
+}
+.pc-library-verses rt {
+  font-size: 12px;
+}
+.pc-library-syllable {
+  display: inline-block;
+  white-space: nowrap;
+}
+.pc-library-section-picker select {
+  flex: 1;
+  min-height: 40px;
+}
+.pc-workspace .pc-dictionary__input {
+  padding-inline: 36px;
+  text-indent: 0;
+}
+.pc-research {
+  border-radius: 3px;
+  background: #cdd1c463;
+  border-color: #81907d66;
+}
+.pc-research > summary {
+  padding: 14px 16px;
+  font-size: 14px;
+  line-height: 1.8;
+}
+.pc-research > summary span {
+  display: inline-block;
+  font-size: 12px;
+}
+.pc-research small,
+.pc-research__notice {
+  font-size: 12px;
+  line-height: 1.8;
+}
+.pc-research summary {
+  cursor: var(--pc-cursor-action);
+}
+.pc-research :is(summary, button, a):focus-visible {
+  outline: 2px solid #536e5c;
+  outline-offset: 3px;
+}
+.pc-corpus__readings {
+  gap: 8px;
+  margin-top: 12px;
+}
+.pc-corpus__reading {
+  background: #e1e2d66b;
+  border: 1px solid #81907d66;
+  border-radius: 2px;
+  min-width: 0;
+}
+.pc-corpus__reading > summary {
+  display: grid;
+  place-content: center;
+  gap: 3px;
+  min-height: 80px;
+  box-sizing: border-box;
+  list-style: none;
+}
+.pc-corpus__reading > summary::-webkit-details-marker {
+  display: none;
+}
+.pc-corpus__reading > summary strong {
+  font-size: 24px;
+  line-height: 1.3;
+}
+.pc-corpus__reading > summary::after {
+  content: "+";
+  color: #536e5c;
+  font: 12px/1 var(--pc-font-sans);
+}
+.pc-corpus__reading[open] > summary::after {
+  content: "−";
+}
+.pc-corpus__reading[open] {
+  padding: 0 14px 12px;
+  box-shadow: inset 2px 0 #7e8e76;
+}
+.pc-corpus__paging button {
+  min-width: 36px;
+  min-height: 36px;
+  color: var(--pc-text);
+  background: #dde0d2;
+  border: 1px solid #81907d;
+  border-radius: 2px;
+}
+.pc-corpus__paging button:disabled {
+  opacity: 0.4;
+}
+.pc-format-reference {
+  margin-bottom: 14px;
+}
+.pc-format-reference select {
+  width: 100%;
+  min-height: 40px;
+}
+@media (max-width: 799px) {
+  .pc-library-worktable {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .pc-library-reading > h2 {
+    margin-top: 22px;
+  }
+  .pc-library-pinyin-toggle {
+    min-height: 36px;
+  }
+  .pc-research__body {
+    padding-inline: 12px;
+  }
+  .pc-research > summary {
+    padding-inline: 12px;
+  }
+  .pc-research > summary span {
+    margin-left: 0;
+    display: block;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .pc-workspace[data-motion="on"] .pc-corpus__reading[open] > :not(summary) {
+    animation: pc-reference-reveal 140ms ease-out;
+  }
+}
+@media (max-width: 599px) {
+  .pc-library-reading .pc-library-verse-row {
+    padding-inline: 0;
+  }
+  .pc-library-reading .pc-library-verses {
+    font-size: 21px;
+  }
+  .pc-library-verses[data-pinyin="true"] .pc-library-character {
+    min-width: 1.25em;
+    line-height: 2.6 !important;
+    padding-inline: 0;
+  }
+  .pc-library-verses[data-pinyin="true"] .pc-library-phrase {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .pc-library-verses[data-pinyin="true"] rt {
+    font-size: 10.5px;
+  }
+  .pc-library .pc-library-verse-row .pc-excerpt-copy {
+    position: static;
+    display: block;
+    translate: none;
+    margin: 4px auto 0;
+    opacity: 1;
+    min-height: 30px;
+    padding-inline: 12px;
+  }
+}
+@keyframes pc-reference-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

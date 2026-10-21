@@ -40,7 +40,7 @@ export function ResearchNotes({
   const current = data ?? (loaded?.text === text ? loaded.data : undefined);
   const error = loaded?.text === text ? loaded.error : undefined;
   useEffect(() => {
-    if (!open || data) return;
+    if (!open || data || loaded?.text === text) return;
     const controller = new AbortController();
     const { baseUrl } = resolveApiConfig(readWebEnv());
     void (async () => {
@@ -65,7 +65,7 @@ export function ResearchNotes({
       }
     })();
     return () => controller.abort();
-  }, [open, text, data]);
+  }, [open, text, data, loaded]);
   const sources = new Map(current?.sources.map((s) => [s.id, s]) ?? []);
   const cite = (id: string) => {
     const s = sources.get(id);
@@ -91,6 +91,17 @@ export function ResearchNotes({
       {open && (
         <div className="pc-research__body">
           {!current && <p role="status">{error ?? "正在查阅…"}</p>}
+          {!current && error && (
+            <button
+              type="button"
+              className="pc-studio-action"
+              onClick={() => {
+                setLoaded(null);
+              }}
+            >
+              重新查阅出处
+            </button>
+          )}
           {current?.state === "unavailable" && (
             <p role="status">{current.notice}</p>
           )}

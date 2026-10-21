@@ -89,7 +89,7 @@ export async function startApi(timeoutMs = 20000, { realModel = false } = {}) {
     process.execPath,
     ["--import", "tsx", "apps/api/src/server.ts"],
     {
-      env: { ...process.env, ...(!realModel ? { ZHIPU_API_KEY: "" } : {}), PORT: String(port), POETRY_DEV_MOCK: "0" },
+      env: { ...process.env, ...(!realModel ? { ZHIPU_API_KEY: "", DEEPSEEK_API_KEY: "" } : {}), PORT: String(port), POETRY_DEV_MOCK: "0" },
     },
   );
   const baseUrl = `http://127.0.0.1:${port}`;

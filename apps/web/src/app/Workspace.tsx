@@ -12,6 +12,7 @@ import "../presentation/styles/poetry-studio.css";
 import "../presentation/styles/library-atmosphere.css";
 import "../presentation/styles/final-polish.css";
 import "../presentation/styles/three-round-polish.css";
+import "../presentation/styles/final-frontend.css";
 import { LibraryContainer } from "./LibraryContainer";
 import { PoetryDesk } from "./PoetryDesk";
 import { ReadingTools } from "../presentation/components/ReadingTools";

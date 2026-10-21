@@ -57,6 +57,7 @@ export function LibraryContainer({
   const motion = useMotionPreference();
   const [works, setWorks] = useState<LibraryWork[]>(BUILTIN_WORKS);
   const [ready, setReady] = useState(false);
+  const [catalogFailed, setCatalogFailed] = useState(false);
   const [query, setQuery] = useState("");
   const [mode, setMode] = useState<"literal" | "scene">("literal");
   const [view, setView] = useState<"library" | "compare">("library");
@@ -137,14 +138,17 @@ export function LibraryContainer({
   const literary = usePoetryTask(`${selectedId}|${studySection}`);
   useEffect(() => {
     if (!active || ready) return;
+    setCatalogFailed(false);
     let live = true;
     const controller = new AbortController();
     void Promise.all([
       loadCatalog(controller.signal)
         .then((c) => c.works)
         .catch(() => {
-          if (live)
+          if (live) {
+            setCatalogFailed(true);
             setFeedback("扩展诗库暂不可用，已保留基础示例与本机导入。 ");
+          }
           return BUILTIN_WORKS;
         }),
       libraryStorage("read").catch((error: Error) => {
@@ -331,14 +335,14 @@ export function LibraryContainer({
         : null;
     setSelectedId(work.id);
     setLookupChar("");
-    if (window.matchMedia("(max-width: 799px)").matches) {
-      window.requestAnimationFrame(() =>
+    window.requestAnimationFrame(() => {
+      reader.current?.focus({ preventScroll: true });
+      if (window.matchMedia("(max-width: 799px)").matches)
         reader.current?.scrollIntoView({
           block: "start",
           behavior: motion.effects ? "smooth" : "instant",
-        }),
-      );
-    }
+        });
+    });
   }
   function closeWork() {
     setSelectedId(null);
@@ -347,7 +351,10 @@ export function LibraryContainer({
         block: "start",
         behavior: motion.effects ? "smooth" : "instant",
       });
-    returnTitle.current?.focus({ preventScroll: true });
+    const target = returnTitle.current?.isConnected
+      ? returnTitle.current
+      : catalogue.current;
+    target?.focus({ preventScroll: true });
   }
   function toggleFavorite(id: string) {
     const next = favorites.includes(id)
@@ -364,20 +371,26 @@ export function LibraryContainer({
       setFeedback("收藏只保留到本次会话，设备存储不可用。");
     }
   }
-  const workOptions = works
-    .filter(
-      (w) =>
-        showDuplicates ||
-        !unique.hiddenIds.has(w.id) ||
-        w.id === leftId ||
-        w.id === rightId,
-    )
-    .map((w) => (
-      <option key={w.id} value={w.id}>
-        {w.title} · {w.author || "作者未载"}
-        {w.sourceUrl ? ` · ${new URL(w.sourceUrl).hostname}` : ""}
-      </option>
-    ));
+  const workOptions = useMemo(
+    () =>
+      view !== "compare"
+        ? []
+        : works
+            .filter(
+              (w) =>
+                showDuplicates ||
+                !unique.hiddenIds.has(w.id) ||
+                w.id === leftId ||
+                w.id === rightId,
+            )
+            .map((w) => (
+              <option key={w.id} value={w.id}>
+                {w.title} · {w.author || "作者未载"}
+                {w.sourceUrl ? ` · ${new URL(w.sourceUrl).hostname}` : ""}
+              </option>
+            )),
+    [view, works, showDuplicates, unique.hiddenIds, leftId, rightId],
+  );
   const poemColumn = (
     work: LibraryWork | undefined,
     side: "left" | "right",
@@ -519,6 +532,7 @@ export function LibraryContainer({
             className="pc-studio-icon"
             title="导出诗库"
             aria-label="导出诗库"
+            disabled={!ready || importing}
             onClick={() => downloadJson("典籍馆.json", { version: 1, works })}
           >
             <Download size={18} />
@@ -650,12 +664,28 @@ export function LibraryContainer({
           role="tabpanel"
           aria-label="诗库"
           className="pc-library-catalogue"
+          tabIndex={-1}
         >
+          {catalogFailed && ready && (
+            <div className="pc-library-retry" role="status">
+              <span>完整诗库尚未载入，当前仅显示本机作品与示例。</span>
+              <button
+                type="button"
+                className="pc-studio-action"
+                onClick={() => {
+                  setFeedback(null);
+                  setReady(false);
+                }}
+              >
+                重新载入诗库
+              </button>
+            </div>
+          )}
           <form
             className="pc-library-search"
             onSubmit={(e) => {
               e.preventDefault();
-              if (queryComposing.current || searchTask.busy) return;
+              if (!ready || queryComposing.current || searchTask.busy) return;
               if (mode === "scene" && query.trim() && candidates.length)
                 void searchTask.run({
                   task: "search",
@@ -725,14 +755,16 @@ export function LibraryContainer({
                 className="pc-studio-action"
                 type="submit"
                 disabled={
-                  searchTask.busy || (mode === "scene" && !query.trim())
+                  !ready ||
+                  searchTask.busy ||
+                  (mode === "scene" && !query.trim())
                 }
               >
                 寻诗
               </button>
             </div>
             <div className="pc-library-filters">
-              <label>
+              <label className="pc-library-filter pc-library-filter--collection">
                 选集
                 <select
                   aria-label="按选集筛选"
@@ -751,7 +783,7 @@ export function LibraryContainer({
                   ))}
                 </select>
               </label>
-              <label>
+              <label className="pc-library-filter">
                 文类
                 <select
                   aria-label="按文类筛选"
@@ -763,7 +795,7 @@ export function LibraryContainer({
                   <option value="prose">散文</option>
                 </select>
               </label>
-              <label>
+              <label className="pc-library-filter">
                 朝代
                 <select
                   aria-label="筛选朝代"
@@ -778,7 +810,7 @@ export function LibraryContainer({
                   ))}
                 </select>
               </label>
-              <label>
+              <label className="pc-library-filter-check">
                 <input
                   type="checkbox"
                   checked={onlyFavorites}
@@ -786,13 +818,13 @@ export function LibraryContainer({
                 />
                 只看收藏
               </label>
-              <span>
+              <span className="pc-library-count" aria-live="polite">
                 {matches
-                  ? `GLM精选 ${matches.length} 首 / ${candidates.length}首候选`
+                  ? `AI精选 ${matches.length} 首 / ${candidates.length}首候选`
                   : `${display.length}首`}
               </span>
               {unique.hiddenCount > 0 && (
-                <label>
+                <label className="pc-library-filter-check pc-library-filter--duplicates">
                   <input
                     type="checkbox"
                     aria-label="显示合编与重复篇"
@@ -807,7 +839,7 @@ export function LibraryContainer({
           <div className="pc-library-discover">
             <button
               type="button"
-              disabled={!filtered.length}
+              disabled={!ready || !filtered.length}
               onClick={openRandomWork}
             >
               随手翻一卷 <span aria-hidden="true">↗</span>
@@ -818,7 +850,7 @@ export function LibraryContainer({
           {mode === "scene" && (
             <p className="pc-studio-meta">
               本库{filtered.length}首 ·
-              意象匹配后最多40首交GLM研读；单篇超过2000字暂不进入AI候选。
+              意象匹配后最多40首交AI研读；单篇超过2000字暂不进入AI候选。
             </p>
           )}
           <div className="pc-library-list" ref={catalogueList}>
@@ -908,6 +940,7 @@ export function LibraryContainer({
             className="pc-library-reading"
             role="tabpanel"
             aria-label="原诗阅读"
+            tabIndex={-1}
           >
             <div className="pc-studio-actions">
               <button className="pc-studio-action" onClick={closeWork}>
@@ -954,7 +987,7 @@ export function LibraryContainer({
               </button>
             </div>
             <h2>{selected.title}</h2>
-            <p className="pc-studio-meta">
+            <p className="pc-studio-meta pc-library-byline">
               {selected.dynasty || "朝代未载"} · {selected.author || "作者未载"}
               {selected.kind === "prose" ? " · 散文" : ""}
             </p>

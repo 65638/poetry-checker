@@ -33,7 +33,7 @@ export function ReadingAssistantView(props: {
           disabled={!props.configured || props.disabled || props.busy}
           onClick={props.onRequest}
         >
-          {props.busy ? "GLM 正在辨音…" : "重新辨音"}
+          {props.busy ? "AI 正在辨音…" : "重新辨音"}
         </button>
         {props.busy && (
           <button
@@ -57,7 +57,7 @@ export function ReadingAssistantView(props: {
       {props.statusText && <p role="status">{props.statusText}</p>}
       {props.configured && !props.result && (
         <p className="pc-reading-assistant__notice">
-          GLM 自动辨析当前诗句的多音字。
+          AI 自动辨析当前诗句的多音字。
         </p>
       )}
       {props.error && <p role="alert">{props.error}</p>}
