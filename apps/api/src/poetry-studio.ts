@@ -37,6 +37,36 @@ const formats = {
     '按全诗语意筛选所给同韵候选，替换目标为targetToken指定的字位，须说明改后该句的语义和得失，不把同韵当同义。允许返回空数组，最多12项。返回{"matches":[{"id":"所给候选ID","reason":"在此诗句中替换的语义和得失"}]}。不得创造候选或承诺整首合律。',
 };
 
+function formalProsodyNote(
+  context: Extract<
+    PoetryAssistantRequest,
+    { task: "critique" }
+  >["prosodyContext"],
+) {
+  if (!context || context.issues.length === 0) return null;
+  const meterTokens = new Set(
+    context.issues
+      .filter((issue) => issue.ruleId === "METER.POSITION")
+      .flatMap((issue) => issue.locations.map((location) => location.tokenId)),
+  );
+  const roots = context.issues.filter(
+    (issue) =>
+      !["RELATION.DUI", "RELATION.NIAN"].includes(issue.ruleId) ||
+      !issue.locations.some((location) => meterTokens.has(location.tokenId)),
+  );
+  if (roots.length === 0) return null;
+  const rows = roots.map((issue) => {
+    const places = issue.locations
+      .map(
+        (location) =>
+          `第${location.line}句第${location.column}字「${location.text}」`,
+      )
+      .join("、");
+    return `${places}${issue.status === "uncertain" ? "待确认" : "出律"}`;
+  });
+  return `规则复核（${context.format}）：独立问题${roots.length}处——${rows.join("；")}。同字位的失对/失粘仅作派生后果说明。`;
+}
+
 export function registerPoetryStudio(
   app: FastifyInstance,
   resources: Resources,
@@ -185,9 +215,25 @@ export function registerPoetryStudio(
             "模型引句不在对应原诗中，已拒绝显示。",
           );
       }
+      const critiqueResult =
+        input.task === "critique"
+          ? (() => {
+              const critique = CritiqueSchema.parse(parsed.data);
+              return {
+                ...critique,
+                overview: [
+                  formalProsodyNote(input.prosodyContext),
+                  critique.overview,
+                ]
+                  .filter(Boolean)
+                  .join(" ")
+                  .slice(0, 1600),
+              };
+            })()
+          : parsed.data;
       return PoetryAssistantResponseSchema.parse({
         task: input.task,
-        result: parsed.data,
+        result: critiqueResult,
         provider: assistant.provider,
         model: assistant.model,
         inputHash: createHash("sha256")

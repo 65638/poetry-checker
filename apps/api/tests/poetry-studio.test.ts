@@ -103,6 +103,12 @@ describe("poetry studio with real lexicon and controlled model", () => {
           locations: [{ tokenId: "l6c2", line: 6, column: 2, text: "更" }],
           message: "失粘；由同字位平仄偏离造成的派生关系问题",
         },
+        {
+          ruleId: "METER.POSITION",
+          status: "fail" as const,
+          locations: [{ tokenId: "l6c2", line: 6, column: 2, text: "更" }],
+          message: "此字平仄与允许集合不符",
+        },
       ],
     };
     await withApp(result, async (app, fetcher) => {
@@ -113,6 +119,8 @@ describe("poetry studio with real lexicon and controlled model", () => {
         prosodyContext,
       );
       expect(payload.messages[0].content).toContain("派生影响");
+      expect(response.json().result.overview).toContain("第5句第2字「十」");
+      expect(response.json().result.overview).toContain("独立问题2处");
     });
   });
   it.each([
