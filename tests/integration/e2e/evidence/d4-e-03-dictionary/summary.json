@@ -1,0 +1,33 @@
+{
+  "batch": "d4-e-03-dictionary",
+  "generatedAt": "2026-10-21T19:30:51+08:00",
+  "timezone": "China Standard Time (UTC+8)",
+  "version": {
+    "sha": "e8370913688c764099db2b8bd29062a91dfae0c6",
+    "subject": "Follow the precise poem annotation under the pointer"
+  },
+  "change": "tests/e2e/dictionary.mjs 默认等待 20s→45s（只提上限，不改断言）；目的是区分'timing 不足'与'功能真的不通'",
+  "conclusion": "45s 下三次运行结果完全一致：16 通过 / 2 失败，均为功能级失败，不是等待不足",
+  "runs": [],
+  "defects": [
+    {
+      "id": "shared-rain-survives-navigation-and-preserves-report",
+      "symptom": "等待 .pc-continuous .pc-rain 的 dataset.running === 'true' 超时（45s）",
+      "next": "核对新版 DOM 中 .pc-rain 是否改名/移入别的容器（D 侧 UI 变更），或 shared rain 未跨导航保留"
+    },
+    {
+      "id": "analysis-real-30-second-timeout-blocks-copy-export-and-recovers",
+      "symptom": "等待提交按钮进入 disabled/文案变化的判据超时（45s）",
+      "next": "核对新版 busy 态是否仍以 .pc-input__submit 的 disabled+文案表达（D 侧 UI 变更）"
+    }
+  ],
+  "responsibility": "先由 E 判定选择器/期望是否随新版 UI 变迁；若选择器无误则按产品缺陷交 D（最小复现为本文件两次运行的 fail 行）",
+  "notRun": [
+    "nearby-notes",
+    "continuous-garden",
+    "dictionary-journey",
+    "dictionary-polish",
+    "五态受控",
+    "最终 main 复验"
+  ]
+}
