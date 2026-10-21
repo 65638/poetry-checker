@@ -839,7 +839,7 @@ try {
       await waitFor(
         () =>
           evaluate(
-            "document.querySelector('#checker-space [role=alert]')?.textContent.includes('30 秒')",
+            "document.querySelector('#checker-space .pc-banner--error')?.textContent.includes('30 秒')",
           ),
         33000,
       );
@@ -860,7 +860,7 @@ try {
       await click(".pc-input__submit");
       await waitFor(() =>
         evaluate(
-          "!document.querySelector('#checker-space [role=alert]') && !!document.querySelector('.pc-status--pass') && !document.querySelector('.pc-report--stale')",
+          "!document.querySelector('#checker-space .pc-banner--error') && !document.querySelector('.pc-input__submit').disabled && !!document.querySelector('.pc-status--pass') && !document.querySelector('.pc-report--stale')",
         ),
       );
       await action("复制摘要");
