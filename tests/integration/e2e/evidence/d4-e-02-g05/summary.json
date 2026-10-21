@@ -1,0 +1,46 @@
+{
+  "batch": "d4-e-02-g05",
+  "generatedAt": "2026-10-21T10:46:40",
+  "task": "G05 干净 clone 独立验收",
+  "cloneDir": "C:\\study\\w1\\g05-clone-cea831b",
+  "cloneHead": "cea831befa70a8842943d240f91f9816c9c55a94",
+  "cloneDirty": false,
+  "mode": "real",
+  "install": "pnpm install --frozen-lockfile → exit 0",
+  "verify": "pnpm verify → exit 0，56 文件 / 763 测试",
+  "e2e": {
+    "passed": 19,
+    "blocked": 0,
+    "failed": 0,
+    "exitCode": 0
+  },
+  "browser": "Edg/155.0.4283.62",
+  "exportParse": {
+    "exportFiles": [
+      {
+        "name": "poetry-report-白日依山尽.json",
+        "bytes": 271883,
+        "inputHash": "4dc6ac3926c8",
+        "summary": "pass",
+        "tokens": 20
+      },
+      {
+        "name": "poetry-report-昔人已乘黄鹤去.json",
+        "bytes": 403690,
+        "inputHash": "b3031b9e603f",
+        "summary": "fail",
+        "tokens": 56
+      },
+      {
+        "name": "poetry-report-昔人已乘黄鹤去.json",
+        "bytes": 403690,
+        "inputHash": "b3031b9e603f",
+        "summary": "fail",
+        "tokens": 56
+      }
+    ],
+    "parseable": 3
+  },
+  "personalPaths": "scripts/tests/package.json 中未发现 C:\\Users / C:\\study 绝对路径",
+  "note": "全新目录 clone、装依赖、构建、起服务、真实点击、退出；未使用个人绝对路径。"
+}
