@@ -58,5 +58,48 @@
     "run2-1440.png",
     "run3-1440.png",
     "summary.json"
-  ]
+  ],
+  "anchorFix": {
+    "why": "新版 UI 锚点变化，不是产品缺陷：.pc-rain 不再有 data-running；busy 文案是 CSS ::after，状态改用独立 .pc-busy 元素",
+    "changed": [
+      "雨幕等待：data-running → 先'canvas 存在'，导航后'同一元素身份保留 + 可见'",
+      "busy 等待：button.textContent → disabled + !!document.querySelector('.pc-busy')"
+    ]
+  },
+  "runsAfterAnchorFix": [
+    {
+      "run": 1,
+      "passed": 16,
+      "failed": 2,
+      "exitCode": 1,
+      "failures": [
+        "shared-rain-survives-navigation-and-preserves-report",
+        "analysis-real-30-second-timeout-blocks-copy-export-and-recovers"
+      ]
+    },
+    {
+      "run": 2,
+      "passed": 17,
+      "failed": 1,
+      "exitCode": 1,
+      "failures": [
+        "shared-rain-survives-navigation-and-preserves-report"
+      ]
+    },
+    {
+      "run": 3,
+      "passed": 17,
+      "failed": 1,
+      "exitCode": 1,
+      "failures": [
+        "shared-rain-survives-navigation-and-preserves-report"
+      ]
+    }
+  ],
+  "verdict": {
+    "shared-rain": "仍在 4 次运行（含锚点前 3 次）中稳定失败；两种判据（数量/身份）均超时 → 未定性，需在新版 DOM 里确认 .pc-rain 的父容器与导航后是否重新挂载；不排除产品行为变化（交 D 前先自查选择器）",
+    "30s-timeout": "锚点修正后可过，但 3 次里有 1 次失败 → 判定为**不稳定（flaky）**，不能记通过",
+    "note": "两个都不再是'等待上限不足'；等待已提到 45s"
+  },
+  "nextStep": "在 dictionary 空间导航前后 dump：.pc-rain 数量、父链 class、是否同一节点、可见性；据结果改脚本或按产品缺陷交 D（附最小复现）"
 }
