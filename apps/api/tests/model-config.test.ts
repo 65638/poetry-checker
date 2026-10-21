@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
+  DEFAULT_ANALYSIS_TIMEOUT_MS,
+  DEFAULT_MODEL_TIMEOUT_MS,
   resolveModelConfig,
   DEEPSEEK_ENDPOINT,
   GLM_ENDPOINT,
@@ -10,6 +12,16 @@ describe("server model selection", () => {
     ZHIPU_API_KEY: "glm-private",
     DEEPSEEK_API_KEY: " deepseek-private ",
   };
+  it("keeps the existing GLM windows and gives DeepSeek enough inference time", () => {
+    expect(DEFAULT_MODEL_TIMEOUT_MS).toEqual({
+      zhipu: 45_000,
+      deepseek: 90_000,
+    });
+    expect(DEFAULT_ANALYSIS_TIMEOUT_MS).toEqual({
+      zhipu: 20_000,
+      deepseek: 90_000,
+    });
+  });
   it("uses DeepSeek when its server key is present and otherwise preserves GLM", () => {
     expect(resolveModelConfig({}, environment)).toMatchObject({
       provider: "deepseek",

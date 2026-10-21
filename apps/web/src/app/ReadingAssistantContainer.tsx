@@ -83,7 +83,8 @@ export function ReadingAssistantContainer(props: {
     pending.current = controller;
     setBusy(true);
     setError(null);
-    const timer = window.setTimeout(() => controller.abort(), 50000);
+    // 与服务端 DeepSeek 默认单次请求窗口一致，避免浏览器提前中止。
+    const timer = window.setTimeout(() => controller.abort(), 90000);
     try {
       const response = await client.suggest(
         {

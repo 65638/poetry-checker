@@ -25,8 +25,8 @@ function hangingTransport(): Transport {
 }
 
 describe("分析超时", () => {
-  it("默认超时是 30 秒（不是无限等待）", () => {
-    expect(DEFAULT_REQUEST_TIMEOUT_MS).toBe(30_000);
+  it("默认超时是 90 秒（不是无限等待）", () => {
+    expect(DEFAULT_REQUEST_TIMEOUT_MS).toBe(90_000);
   });
 
   it("服务端不返回时按 TIMEOUT 结束，busy 恢复、正文保留、不产生报告", async () => {

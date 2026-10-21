@@ -14,7 +14,11 @@ import {
 import type { Resources } from "./resources.js";
 import { characterReferenceRows } from "./library.js";
 import { modelResearch } from "./research.js";
-import { resolveModelConfig } from "./model-config.js";
+import {
+  DEFAULT_ANALYSIS_TIMEOUT_MS,
+  DEFAULT_MODEL_TIMEOUT_MS,
+  resolveModelConfig,
+} from "./model-config.js";
 export { GLM_ENDPOINT, DEEPSEEK_ENDPOINT } from "./model-config.js";
 
 export interface ReadingAssistantOptions {
@@ -136,7 +140,7 @@ export function createReadingAssistant(
       : controller.signal;
     const timer = setTimeout(
       () => controller.abort(),
-      options.timeoutMs ?? 45000,
+      options.timeoutMs ?? DEFAULT_MODEL_TIMEOUT_MS[provider],
     );
     try {
       return await run(combinedSignal);
@@ -164,7 +168,8 @@ export function createReadingAssistant(
     provider,
     name,
     model,
-    analysisTimeoutMs: options.analysisTimeoutMs ?? 20000,
+    analysisTimeoutMs:
+      options.analysisTimeoutMs ?? DEFAULT_ANALYSIS_TIMEOUT_MS[provider],
     suggest: (input: ReadingSuggestionRequest, signal?: AbortSignal) =>
       runRequest((combined) => suggest(input, combined), signal),
     complete: (prompt: string, payload: unknown, signal?: AbortSignal) =>

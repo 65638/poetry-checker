@@ -70,8 +70,8 @@ export interface StoreOptions {
   requestTimeoutMs?: number;
 }
 
-/** 默认 30 秒：足够慢网络下的真实编排，又不至于让用户干等。 */
-export const DEFAULT_REQUEST_TIMEOUT_MS = 30_000;
+/** 默认 90 秒：覆盖 DeepSeek 的慢速推理，同时仍保留可重试的有限等待。 */
+export const DEFAULT_REQUEST_TIMEOUT_MS = 90_000;
 export const AUTO_ANALYZE_DELAY_MS = 1_500;
 
 function initialState(draft: InputDraft): CheckerState {

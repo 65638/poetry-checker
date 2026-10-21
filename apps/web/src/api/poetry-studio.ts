@@ -16,7 +16,7 @@ export async function studioPost(
   const { baseUrl } = resolveApiConfig(readWebEnv());
   const combined = AbortSignal.any([
     ...(signal ? [signal] : []),
-    AbortSignal.timeout(50000),
+    AbortSignal.timeout(90000),
   ]);
   const response = await fetch(`${baseUrl}/api/v1/${path}`, {
     method: "POST",

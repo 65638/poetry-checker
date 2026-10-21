@@ -3,7 +3,9 @@ import { ReadingSuggestionResponseSchema } from "@poetry/contracts";
 import { buildApp } from "../src/server.js";
 import { loadResources } from "../src/resources.js";
 import {
+  DEEPSEEK_ENDPOINT,
   GLM_ENDPOINT,
+  createReadingAssistant,
   type ReadingAssistantOptions,
 } from "../src/reading-assistant.js";
 
@@ -50,6 +52,22 @@ const post = (app: ReturnType<typeof buildApp>, payload = input) =>
   app.inject({ method: "POST", url: "/api/v1/reading-suggestions", payload });
 
 describe("GLM reading suggestions preserve candidate and approval boundaries", () => {
+  it("uses the longer DeepSeek defaults while preserving explicit test windows", () => {
+    const deepseek = createReadingAssistant(resources, {
+      provider: "deepseek",
+      apiKey: "test-only-key",
+    });
+    expect(deepseek.analysisTimeoutMs).toBe(90_000);
+
+    const overridden = createReadingAssistant(resources, {
+      provider: "deepseek",
+      apiKey: "test-only-key",
+      timeoutMs: 40,
+      analysisTimeoutMs: 25,
+    });
+    expect(overridden.analysisTimeoutMs).toBe(25);
+    expect(DEEPSEEK_ENDPOINT).toBe("https://api.deepseek.com/chat/completions");
+  });
   it("supplies independent exact-glyph reading clues for otherwise empty historical candidates", async () => {
     await withApp(
       {
