@@ -401,11 +401,13 @@ node node_modules/tsx/dist/cli.mjs packages/readings/scripts/d3-effective-candid
 
 ## D5：语境依据与六格独立预期（2026-10-21）
 
+以下冻结产物使用其记录的旧基线 `cea831b`、词林clean1和新韵旧版本，描述旧严格审核策略，不是当前参考分析API的HTTP预期。当前主线已合入词林16项批准、新韵V2和参考分析策略；这些历史材料不作为新版已验收的声明。
+
 产物 `data/reviews/d5/b/`：`context-behavior-map.json`（G34–G36 用例映射，标 mechanism/real-data）、
 `context-review-ready.json`（13 条草稿逐条材料，全部 not-approval-ready）、
 `six-cell-expectations.json`（三首×词林/新韵 192 字位，当前层与条件层分列）。
 
-要点：两库当前 `evidence approved = 0`，有候选的字位当前一律 blocked（运行时 503）；
+该生成基线的要点：两库当时 `evidence approved = 0`，旧严格策略下有候选的字位一律 blocked（运行时503）；
 条件层 147 个单候选字位在证据审齐后可判，38 个多音位置必须保持 ambiguous，0 个能由规则定死。
 期望由快照候选与已批规则推导，不调用 API、不抄 API 输出。
 

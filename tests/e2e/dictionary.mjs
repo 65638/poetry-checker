@@ -9,7 +9,6 @@ import { waitFor as waitForBase } from "../../scripts/acceptance-runtime.mjs";
 // 这里只提高等待上限，不改变任何断言与预期结果。
 const WAIT_MS = 45000;
 const waitFor = (predicate, ms) => waitForBase(predicate, ms ?? WAIT_MS);
-;
 import { launchBrowser } from "./cdp.mjs";
 
 const out = resolve(process.argv[2] ?? "artifacts/acceptance/dictionary");
