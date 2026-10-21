@@ -8,38 +8,6 @@
   },
   "change": "tests/e2e/dictionary.mjs 默认等待 20s→45s（只提上限，不改断言）；目的是区分'timing 不足'与'功能真的不通'",
   "conclusion": "45s 下三次运行结果一致：16 通过 / 2 失败；失败为功能级，不是等待不足。",
-  "runs": [
-    {
-      "run": 1,
-      "file": "run1.json",
-      "passed": null,
-      "failed": null,
-      "blocked": null,
-      "exitCode": null,
-      "failures": [],
-      "total": 0
-    },
-    {
-      "run": 2,
-      "file": "run2.json",
-      "passed": null,
-      "failed": null,
-      "blocked": null,
-      "exitCode": null,
-      "failures": [],
-      "total": 0
-    },
-    {
-      "run": 3,
-      "file": "run3.json",
-      "passed": null,
-      "failed": null,
-      "blocked": null,
-      "exitCode": null,
-      "failures": [],
-      "total": 0
-    }
-  ],
   "defects": [
     {
       "id": "shared-rain-survives-navigation-and-preserves-report",
@@ -61,5 +29,34 @@
     "五态受控",
     "最终 main 复验"
   ],
-  "runsNote": "脚本产物文件名为 browser.json（不是 result.json），本次已按真实文件名归档为 run{1,2,3}.json。"
+  "consoleRuns": [
+    {
+      "run": 1,
+      "passed": 16,
+      "failed": 2,
+      "exitCode": 1,
+      "pipeline": "控制台 [PASS]/[FAIL] 计数"
+    },
+    {
+      "run": 2,
+      "passed": 16,
+      "failed": 2,
+      "exitCode": 1,
+      "pipeline": "控制台 [PASS]/[FAIL] 计数"
+    },
+    {
+      "run": 3,
+      "passed": 16,
+      "failed": 2,
+      "exitCode": 1,
+      "pipeline": "控制台 [PASS]/[FAIL] 计数"
+    }
+  ],
+  "artifactGap": "该脚本只写截图与一个 results 为空的 browser.json，**不落每场景结构化结果**；上面三次数字来自控制台计数，不是从 JSON 反推。缺口：需给 dictionary.mjs 增加结构化输出（同 d3-browser 的 scenario-result 写法）。",
+  "keptArtifacts": [
+    "run1-1440.png",
+    "run2-1440.png",
+    "run3-1440.png",
+    "summary.json"
+  ]
 }
