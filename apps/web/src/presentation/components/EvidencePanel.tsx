@@ -147,7 +147,7 @@ export function EvidencePanel(props: EvidencePanelProps) {
                     {c.gloss && <p className="pc-candidate__line">释义：{c.gloss}</p>}
                     <p className="pc-candidate__line">
                       {c.modernReading
-                        ? `现代读音：${c.modernReading.pinyin}（普通话参考，不是古音构拟）`
+                        ? `现代读音：${c.modernReading.pinyin} · ${c.modernReading.toneNumber}声（普通话参考，不是古音构拟）`
                         : '现代读音：未提供'}
                     </p>
                     <p className="pc-candidate__line">反切：{c.fanqie ? c.fanqie.text : '未提供'}</p>

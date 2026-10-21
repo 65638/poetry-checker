@@ -30,7 +30,8 @@ GLM-5.3系列使用官方支持的`reasoning_effort=low`，避免默认max推理
 - `POST /api/v1/reading-suggestions`：`text`最多2000码点、`rhymeBook`、可选`targetTokenIds`最多24个。完整定义在公共Schema与生成OpenAPI。
 - 独立接口不传字位时取前24个多候选字位，返回truncated与缺字字位；整诗分析自动分批继续处理后续字位。传字位必须属于当前原文，缺字保留未定。
 - 服务端从所选快照取得候选，模型返回JSON，经Schema和字位/候选ID归属校验；外书、外字或臆造ID整个请求拒绝，不部分静默采用。
-- 普通话拼音是AI参考；若候选已有明确现代读音，回传该原值。古入声与韵部仍取韵书候选，不从普通话声调推导古声。
+- 普通话拼音是AI参考；若候选已有现代读音，校验模型拼音的声母、韵母和显式本调与其一致，再保留模型拼音（无拼音时使用候选拼音+声调）。不一致的字位回传空候选并说明原因，其他字位继续可用。古入声与韵部仍取韵书候选，不从普通话声调推导古声。
+- 新韵使用 `xinyun-rebuild-readings-v2`：同字同部同声调的不同拼音各有候选，例如“余”的 yu2 与 xu2。旧候选 ID 和内容保留，新增读音附加拼音/声调后缀；迁移见 `data/reviews/xinyun-readings-v2.json`，历史快照保持原字节。
 - GLM通过校验后直接应用，高于语境规则，低于用户手动纠正。逐字标注selectionMethod=model，理由保留AI解释和普通话参考；readingOverrides仅表达真实用户纠正。响应新增可选readingAssistant（provider/model/state/appliedTokenIds/message），状态applied/partial/unavailable/not_needed，导出保留来源。藏韵阁结果可打开原字条目。
 - 超时45秒、上游错误、格式错误、取消和迟到响应均独立处理；前端50秒兜底，改诗/换书/换字位会取消并清除旧建议。重试失败时可保留对应同一输入的上次建议供参考。
 - 整诗模型阶段总预算20秒，已完成批保留，其余回退为本地分析，客户端仍30秒。无Key、格式异常、权限或上游故障也返回本地报告。独立字典辨音接口维持服务端45秒/客户端50秒。

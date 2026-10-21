@@ -65,6 +65,40 @@ const post = (
 ) => app.inject({ method: "POST", url: "/api/v1/analyze", payload: input });
 
 describe("global automatic reference analysis", () => {
+  it("applies yu2 for 空余 and leaves a contradictory xu2 choice unresolved", async () => {
+    for (const consistent of [true, false]) {
+      const id = "xinyun:余:yangping:十二齐·阳平" + (consistent ? ":yu2" : "");
+      await withApp(
+        {
+          fetcher: async () =>
+            modelResponse([
+              {
+                tokenId: "l1c1",
+                candidateId: id,
+                pronunciation: "yú",
+                reason: "空余中表示剩余。",
+              },
+            ]),
+        },
+        async (app) => {
+          const response = await post(app, {
+            ...payload,
+            text: "余",
+            rhymeBook: "xinyun",
+          });
+          expect(response.statusCode).toBe(200);
+          const report = AnalysisResponseSchema.parse(response.json());
+          expect(report.poem.tokens[0]?.selectionMethod).toBe(
+            consistent ? "model" : "unresolved",
+          );
+          expect(report.poem.tokens[0]?.selectedReadingId).toBe(
+            consistent ? id : null,
+          );
+          if (consistent) expect(report.poem.tokens[0]?.reason).toContain("yú");
+        },
+      );
+    }
+  });
   it("automatically applies GLM choices without manufacturing user overrides or approving evidence", async () => {
     const before = JSON.stringify(resources);
     const fetcher = vi.fn<typeof fetch>(choose);

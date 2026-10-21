@@ -1,5 +1,5 @@
 /**
- * 中华新韵（十四韵）全量快照 → data/normalized/xinyun.full-d2.json
+ * 中华新韵（十四韵）全量快照 → data/normalized/xinyun.full-readings-v2.json
  *
  *   node node_modules/tsx/dist/cli.mjs scripts/data/build-xinyun.ts
  *
@@ -61,8 +61,10 @@ import {
 } from "./snapshot-report.js";
 
 const PINYIN_REL = "data/raw/pinyin-data/pinyin.txt";
-const OUT_REL = "data/normalized/xinyun.full-d2.json";
-const DATA_VERSION = "xinyun-rebuild-d2-full";
+const OUT_REL = "data/normalized/xinyun.full-readings-v2.json";
+const DATA_VERSION = "xinyun-rebuild-readings-v2";
+const BASE_REL = "data/normalized/xinyun.full-d2.json";
+const MIGRATION_REL = "data/reviews/xinyun-readings-v2.json";
 const PINYIN_REVISION = "fa9761fff402f8560196b1ba085c437c52b56d7c";
 const PINYIN_TAG = "v0.15.0";
 const SOURCE_ID = "src:pinyin-data";
@@ -141,8 +143,12 @@ function main(): void {
   const members = new Map<string, Map<string, Set<string>>>();
   const perCharacterGroups = new Map<string, Set<string>>();
   const unmappedReasons = new Map<string, number>();
-  /** 同 (字形, 子卷) 多个读音：候选只能承载一条 modernReading，其余必须列出，不得静默丢弃。 */
-  const readingCollisions: { character: string; groupName: string; readings: string[] }[] = [];
+  const readingCollisions: {
+    character: string;
+    groupName: string;
+    retainedCandidateId: string;
+    readings: { reading: string; candidateId: string }[];
+  }[] = [];
   let readings = 0;
   let mappedReadings = 0;
   let neutralReadings = 0;
@@ -186,7 +192,9 @@ function main(): void {
       const groupName = `${yun}·${toneName}`;
       const bucket = members.get(groupName) ?? new Map<string, Set<string>>();
       const charReadings = bucket.get(row.character) ?? new Set<string>();
-      charReadings.add(`${tonelessPinyin(parsed.syllable.raw)}#${parsed.syllable.toneNumber}`);
+      charReadings.add(
+        `${tonelessPinyin(parsed.syllable.raw)}#${parsed.syllable.toneNumber}`,
+      );
       bucket.set(row.character, charReadings);
       members.set(groupName, bucket);
       const groups = perCharacterGroups.get(row.character) ?? new Set<string>();
@@ -195,7 +203,9 @@ function main(): void {
     }
   }
 
-  console.log(`读音源字符 ${rows.length}；读音 ${readings}；已归部 ${mappedReadings}`);
+  console.log(
+    `读音源字符 ${rows.length}；读音 ${readings}；已归部 ${mappedReadings}`,
+  );
   console.log(
     `未映射 ${readings - mappedReadings}；轻声丢弃 ${neutralReadings}（按读音计）；规则待核实影响 ${ruleUnverifiedReadings}`,
   );
@@ -235,7 +245,8 @@ function main(): void {
       check(false, `声调类 ${toneClass} 无对应平仄`);
       continue;
     }
-    const byCharacter = members.get(groupName) ?? new Map<string, Set<string>>();
+    const byCharacter =
+      members.get(groupName) ?? new Map<string, Set<string>>();
     const characters = [...byCharacter.keys()].sort();
     const groupId = `group:xinyun:${yun}:${groupName}`;
     const evidenceId = `ev:xinyun:${yun}:${groupName}`;
@@ -267,57 +278,42 @@ function main(): void {
       const readings = [
         ...(byCharacter.get(character) ?? new Set<string>()),
       ].sort();
-      const [pinyin = "", toneText = ""] = (readings[0] ?? "").split("#");
       if (readings.length > 1) {
-         readingCollisions.push({ character, groupName, readings });
+        readingCollisions.push({
+          character,
+          groupName,
+          retainedCandidateId: id,
+          readings: readings.map((reading, index) => ({
+            reading,
+            candidateId: index === 0 ? id : `${id}:${reading.replace("#", "")}`,
+          })),
+        });
       }
-      candidates.push({
-        id,
-        character,
-        book: "xinyun",
-        toneClass: toneClass as ReadingCandidate["toneClass"],
-        tone,
-        groupIds: [groupId],
-        gloss: null,
-        modernReading: {
-          pinyin,
-          toneNumber: Number(toneText) as 1 | 2 | 3 | 4 | 5,
+      for (const [index, reading] of readings.entries()) {
+        const [pinyin = "", toneText = ""] = reading.split("#");
+        candidates.push({
+          id: index === 0 ? id : `${id}:${pinyin}${toneText}`,
+          character,
+          book: "xinyun",
+          toneClass: toneClass as ReadingCandidate["toneClass"],
+          tone,
+          groupIds: [groupId],
+          gloss: null,
+          modernReading: {
+            pinyin,
+            toneNumber: Number(toneText) as 1 | 2 | 3 | 4 | 5,
+            evidenceIds: [evidenceId],
+          },
+          fanqie: null,
           evidenceIds: [evidenceId],
-        },
-        fanqie: null,
-        evidenceIds: [evidenceId],
-      });
+        });
+      }
     }
   }
 
-  if (readingCollisions.length > 0) {
-    const collisionPath = path.join(
-      ROOT,
-      "data",
-      "patches",
-      "xinyun-reading-collisions.dev.json",
-    );
-    writeFileSync(
-      collisionPath,
-      `${JSON.stringify(
-        {
-          title: "同(字形,子卷)多读音清单（候选只承载一条 modernReading，其余在此列明）",
-          generatedBy: "scripts/data/build-xinyun.ts",
-          note: "不得把「同归部」当成「同读音」：这些字形在该子卷下有多个源读音，未合并、未丢弃。",
-          count: readingCollisions.length,
-          items: readingCollisions,
-        },
-        null,
-        2,
-      )}\n`,
-      "utf8",
-    );
-    console.log(
-      `同(字,子卷)多读音 ${readingCollisions.length} 组，已写入 ${path.relative(ROOT, collisionPath)}`,
-    );
-  } else {
-    console.log("同(字,子卷)多读音 0 组");
-  }
+  console.log(
+    `同(字,子卷)多读音 ${readingCollisions.length} 组，全部生成独立候选`,
+  );
 
   const input: SnapshotInput = {
     dataVersion: DATA_VERSION,
@@ -330,6 +326,16 @@ function main(): void {
     sources: [source],
   };
   const snapshot = defineSnapshot(input);
+  const baselineBytes = readFileSync(path.join(ROOT, BASE_REL));
+  const baseline = JSON.parse(baselineBytes.toString("utf8")) as SnapshotInput;
+  const baselineIds = new Set(baseline.candidates.map((c) => c.id));
+  const currentById = new Map(snapshot.candidates.map((c) => [c.id, c]));
+  check(
+    baseline.candidates.every(
+      (c) => JSON.stringify(c) === JSON.stringify(currentById.get(c.id)),
+    ),
+    "旧候选 ID 与内容全部原样保留（用户覆盖与语境引用兼容）",
+  );
   const report = checkCompleteness(snapshot, XINYUN_GATE);
 
   printSnapshotReport(
@@ -480,9 +486,45 @@ function main(): void {
 
   section("写出");
   mkdirSync(path.join(ROOT, "data", "normalized"), { recursive: true });
+  const output = `${JSON.stringify(snapshot, null, 2)}\n`;
+  writeFileSync(path.join(ROOT, OUT_REL), output, "utf8");
   writeFileSync(
-    path.join(ROOT, OUT_REL),
-    `${JSON.stringify(snapshot, null, 2)}\n`,
+    path.join(ROOT, MIGRATION_REL),
+    `${JSON.stringify(
+      {
+        generatedBy: "scripts/data/build-xinyun.ts",
+        before: {
+          path: BASE_REL,
+          dataVersion: baseline.dataVersion,
+          sha256: sha256Bytes(baselineBytes),
+          candidates: baseline.candidates.length,
+        },
+        after: {
+          path: OUT_REL,
+          dataVersion: DATA_VERSION,
+          sha256: sha256Bytes(Buffer.from(output)),
+          candidates: candidates.length,
+        },
+        source: { path: PINYIN_REL, sha256: pinyinDigest },
+        migration:
+          "全部旧 ID 原样映射到自身且内容不变；仅新增同部读音。新 ID = 旧 ID + ':' + 无调号拼音 + 声调数字。",
+        removedCandidateIds: [],
+        addedCandidateIds: candidates
+          .filter((c) => !baselineIds.has(c.id))
+          .map((c) => c.id),
+        collisionGroups: readingCollisions.length,
+        items: readingCollisions,
+        reviewStatus: "unverified",
+        verification: {
+          structural: "56子卷检查通过",
+          machine: "固定来源字节与旧候选逐项校验",
+          human: "未新增人工核验",
+          evidenceApproved: 0,
+        },
+      },
+      null,
+      2,
+    )}\n`,
     "utf8",
   );
   console.log(`写出 ${OUT_REL}`);

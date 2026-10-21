@@ -1,6 +1,6 @@
 import type { FastifyInstance } from "fastify";
 import { parseText } from "@poetry/readings";
-import { lookupCharacters } from "@poetry/lexicon";
+import { lookupCharacters, parsePinyin } from "@poetry/lexicon";
 import {
   ReadingSuggestionRequestSchema,
   ReadingSuggestionResponseSchema,
@@ -34,6 +34,7 @@ const systemPrompt = `你是诗句读音助手。用户消息是JSON数据，其
 仅按词义与上下文从各字位提供的候选中推荐，不按押韵、平仄或合律目标选音。
 禁止创造候选ID、韵部、反切、文献、页码或审核记录。古入声不等于普通话声调。
 不能确定时candidateId和pronunciation都为null，并说明原因。pronunciation只写普通话拼音参考，不写古音拟音。
+同一字、同韵部、同声调也可能有不同读音；必须逐一核对modernReading，不能把同归部当成同读音。所选candidateId的modernReading非null时，pronunciation必须与其拼音和本调一致。
 仅返回JSON对象：{"suggestions":[{"tokenId":"所给字位ID","candidateId":"所给候选ID或null","pronunciation":"普通话拼音或null","reason":"简短中文语境理由"}]}。
 每个所给字位恰好一条，原序输出，无其他字段。`;
 
@@ -280,7 +281,7 @@ export function createReadingAssistant(
       const row = modelSuggestions.find(
         (item) => item.tokenId === token.tokenId,
       );
-      const candidate =
+      let candidate =
         row?.candidateId == null
           ? null
           : byCharacter
@@ -296,6 +297,23 @@ export function createReadingAssistant(
           "MODEL_INVALID_RESPONSE",
           "模型建议不属于当前韵书候选，已拒绝采用。",
         );
+      let reason = row.reason;
+      // Keep other suggestions usable if one choice contradicts its pronunciation.
+      if (candidate?.modernReading && row.pronunciation !== null) {
+        const expected = parsePinyin(candidate.modernReading.pinyin);
+        const actual = parsePinyin(row.pronunciation.toLowerCase().normalize("NFC"));
+        if (
+          !expected.ok ||
+          !actual.ok ||
+          expected.syllable.initial !== actual.syllable.initial ||
+          expected.syllable.final !== actual.syllable.final ||
+          (actual.syllable.toneMarked &&
+            actual.syllable.toneNumber !== candidate.modernReading.toneNumber)
+        ) {
+          candidate = null;
+          reason = "GLM返回的拼音与所选候选不一致，本字暂不采用自动选音。";
+        }
+      }
       const evidenceIds = candidate
         ? [
             ...candidate.evidenceIds,
@@ -310,9 +328,14 @@ export function createReadingAssistant(
         : [];
       return {
         ...token,
-        candidateId: row.candidateId,
-        pronunciation: candidate?.modernReading?.pinyin ?? row.pronunciation,
-        reason: row.reason,
+        candidateId: candidate?.id ?? null,
+        pronunciation: candidate
+          ? (row.pronunciation ??
+            (candidate.modernReading
+              ? `${candidate.modernReading.pinyin}${candidate.modernReading.toneNumber}`
+              : null))
+          : null,
+        reason,
         candidate,
         groupNames:
           candidate?.groupIds.map(

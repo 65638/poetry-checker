@@ -12,7 +12,7 @@ import type { Tone } from "@poetry/contracts";
 import { isApicalInitial, type Syllable, type ToneNumber } from "./pinyin.js";
 
 /** 生成器版本；与 dataVersion、规则版本一起写进快照描述。 */
-export const XINYUN_GENERATOR_VERSION = "xinyun-rebuild-gen/0.1.0";
+export const XINYUN_GENERATOR_VERSION = "xinyun-rebuild-gen/0.2.0";
 
 export const XINYUN_RULES_VERSION = "xinyun-14-rules-d1";
 

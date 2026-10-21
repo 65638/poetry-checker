@@ -50,6 +50,99 @@ const post = (app: ReturnType<typeof buildApp>, payload = input) =>
   app.inject({ method: "POST", url: "/api/v1/reading-suggestions", payload });
 
 describe("GLM reading suggestions preserve candidate and approval boundaries", () => {
+  const yuId = "xinyun:余:yangping:十二齐·阳平:yu2";
+  const xuId = "xinyun:余:yangping:十二齐·阳平";
+  const yuInput = {
+    text: "空余",
+    rhymeBook: "xinyun",
+    targetTokenIds: ["l1c2"],
+  };
+  it.each(["yú", "yu2", "yu", "YÚ", "yu\u0301"])(
+    "preserves the valid reading %s with the distinct yu2 candidate",
+    async (pronunciation) => {
+      await withApp(
+        {
+          fetcher: async () =>
+            modelResponse([
+              { ...choice, tokenId: "l1c2", candidateId: yuId, pronunciation },
+            ]),
+        },
+        async (app) => {
+          const response = await post(app, yuInput);
+          expect(response.statusCode).toBe(200);
+          expect(response.json().suggestions[0]).toMatchObject({
+            candidateId: yuId,
+            pronunciation,
+            candidate: { modernReading: { pinyin: "yu", toneNumber: 2 } },
+          });
+        },
+      );
+    },
+  );
+  it.each([
+    { candidateId: xuId, pronunciation: "yú" },
+    { candidateId: yuId, pronunciation: "xú" },
+    { candidateId: yuId, pronunciation: "yù" },
+    { candidateId: yuId, pronunciation: "tu2" },
+    { candidateId: yuId, pronunciation: "cannot determine" },
+  ])(
+    "does not silently overwrite a mismatched pronunciation %#",
+    async (row) => {
+      await withApp(
+        {
+          fetcher: async () =>
+            modelResponse([{ ...choice, tokenId: "l1c2", ...row }]),
+        },
+        async (app) => {
+          const response = await post(app, yuInput);
+          expect(response.statusCode).toBe(200);
+          expect(response.json().suggestions[0]).toMatchObject({
+            candidateId: null,
+            pronunciation: null,
+            candidate: null,
+            reason: expect.stringContaining("不一致"),
+          });
+        },
+      );
+    },
+  );
+  it("keeps valid positions usable beside a mismatched one", async () => {
+    await withApp(
+      {
+        fetcher: async () =>
+          modelResponse([
+            {
+              ...choice,
+              tokenId: "l1c1",
+              candidateId: xuId,
+              pronunciation: "yú",
+            },
+            {
+              ...choice,
+              tokenId: "l1c2",
+              candidateId: yuId,
+              pronunciation: null,
+            },
+          ]),
+      },
+      async (app) => {
+        const response = await post(app, {
+          text: "余余",
+          rhymeBook: "xinyun",
+          targetTokenIds: ["l1c1", "l1c2"],
+        });
+        expect(response.statusCode).toBe(200);
+        expect(
+          response
+            .json()
+            .suggestions.map(
+              (s: { candidateId: string | null }) => s.candidateId,
+            ),
+        ).toEqual([null, yuId]);
+        expect(response.json().suggestions[1].pronunciation).toBe("yu2");
+      },
+    );
+  });
   it("exposes only configuration metadata and never calls upstream without a key", async () => {
     const fetcher = vi.fn<typeof fetch>();
     await withApp({ apiKey: "", fetcher }, async (app) => {
