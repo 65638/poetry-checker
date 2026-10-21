@@ -87,9 +87,20 @@ export function RainField({
       drop.floor = isWater(drop.x, waterY) ? waterY : height + 50;
     };
     const resize = () => {
-      width = window.innerWidth;
-      height = window.innerHeight;
+      const previousWidth = width,
+        previousHeight = height;
+      const nextWidth = Math.max(1, window.innerWidth),
+        nextHeight = Math.max(1, window.innerHeight);
       const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      if (
+        width === nextWidth &&
+        height === nextHeight &&
+        canvas.width === Math.round(width * dpr) &&
+        canvas.height === Math.round(height * dpr)
+      )
+        return;
+      width = nextWidth;
+      height = nextHeight;
       canvas.width = Math.round(width * dpr);
       canvas.height = Math.round(height * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -97,12 +108,23 @@ export function RainField({
         width < 600 ? 90 : 250,
         Math.max(65, Math.round((width * height) / 5300)),
       );
-      drops = Array.from({ length: count }, () => {
+      if (previousWidth && previousHeight) {
+        for (const drop of drops) {
+          drop.x *= width / previousWidth;
+          drop.y *= height / previousHeight;
+          drop.floor *= height / previousHeight;
+        }
+        for (const ring of rings) {
+          ring.x *= width / previousWidth;
+          ring.y *= height / previousHeight;
+        }
+      }
+      drops = drops.slice(0, count);
+      while (drops.length < count) {
         const drop = { x: 0, y: 0, vx: 0, speed: 0, depth: 0, floor: 0 };
         reset(drop, true);
-        return drop;
-      });
-      rings.length = 0;
+        drops.push(drop);
+      }
     };
     const addRing = (
       x: number,

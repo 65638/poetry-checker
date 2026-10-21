@@ -1,0 +1,493 @@
+/* Round one: small tools should feel like parts of the desk. */
+.pc-input__measure {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 7px 0 14px;
+  color: #b6c3b6;
+  font: 11px/1.6 var(--pc-font-sans);
+}
+.pc-input__measure kbd {
+  font: inherit;
+  color: #cbbc9d;
+}
+.pc-input__text {
+  transition:
+    border-color 180ms,
+    box-shadow 180ms;
+}
+.pc-input__text:focus {
+  box-shadow: inset 2px 0 #c8b791;
+}
+.pc-input__hint--keys {
+  display: none;
+}
+.pc-workspace .pc-dictionary__searchline {
+  position: relative;
+}
+.pc-workspace .pc-dictionary__input {
+  padding-right: 36px;
+}
+.pc-workspace .pc-dictionary__searchline .pc-dictionary__clear {
+  position: absolute;
+  right: 122px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 0;
+  background: transparent;
+  color: #c7d0bf;
+  font: 22px var(--pc-font-sans);
+  width: 32px;
+  height: 36px;
+  padding: 0;
+  flex: none;
+  text-indent: 0;
+  letter-spacing: 0;
+  cursor: var(--pc-cursor-action);
+}
+.pc-dictionary__clear:hover {
+  color: #fff0cc;
+}
+.pc-dictionary__landscapes button {
+  text-underline-offset: 6px;
+}
+.pc-dictionary__landscapes button[aria-pressed="true"] {
+  text-decoration: underline;
+  text-decoration-color: #bcaa85;
+}
+.pc-dictionary__examples button:focus-visible {
+  outline: 1px solid #d4c49d;
+  outline-offset: 3px;
+}
+.pc-workspace .pc-dictionary__examples button {
+  transition:
+    background-color 160ms,
+    color 160ms,
+    translate 160ms;
+}
+.pc-dictionary__examples button:hover {
+  translate: 0 -2px;
+}
+.pc-library-discover {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  align-items: center;
+  padding: 8px 0 12px;
+  border-bottom: 1px solid #82978340;
+}
+.pc-library-discover button {
+  padding: 4px 0;
+  color: #d6c49e;
+  background: none;
+  border: 0;
+  font: 14px var(--pc-font-serif);
+}
+.pc-library-discover button span {
+  display: inline-block;
+  transition: translate 160ms;
+}
+.pc-library-discover button:hover span {
+  translate: 2px -2px;
+}
+.pc-library-discover > span {
+  font-size: 10px;
+  color: #a9bba9;
+}
+.pc-library-row .pc-library-excerpt {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.8;
+}
+.pc-library .pc-studio-icon[aria-pressed="true"] {
+  color: #c4a66e;
+}
+.pc-library-reading .pc-studio-icon[aria-pressed="true"] {
+  color: #806236;
+}
+.pc-library .pc-studio-icon[aria-pressed="true"] svg {
+  animation: pc-collected 240ms ease-out;
+}
+@keyframes pc-collected {
+  0% {
+    transform: scale(0.84) rotate(-12deg);
+  }
+  65% {
+    transform: scale(1.12) rotate(3deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+.pc-workspace .pc-library-pagination {
+  min-height: 60px;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.pc-workspace .pc-studio-empty p {
+  margin: 0 0 14px;
+}
+/* Round two: annotations and small acts of reading. */
+.pc-notes-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 0;
+}
+.pc-notes-heading .pc-section-title {
+  margin: 0;
+}
+.pc-return-poem {
+  flex: none;
+  font: 12px/1.6 var(--pc-font-serif);
+  color: var(--pc-text-muted);
+  background: none;
+  border: 0;
+  padding: 8px 0;
+  cursor: var(--pc-cursor-action);
+}
+.pc-return-poem:hover {
+  color: var(--pc-seal);
+}
+.pc-reference__note {
+  border-radius: 2px;
+  box-shadow: 0 8px 28px #07171c33;
+  line-height: 1.85;
+}
+.pc-reference__note:popover-open {
+  animation: pc-note-settle 160ms ease-out;
+}
+@keyframes pc-note-settle {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.pc-reference__title {
+  font-weight: 600;
+  font-size: 13px;
+}
+.pc-reference__note .pc-finding__compare {
+  border-top: 1px solid var(--pc-divider);
+  padding-top: 10px;
+}
+.pc-dictionary__trail {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 20px 0 12px;
+  padding: 10px 0;
+  border-block: 1px solid var(--pc-divider);
+}
+.pc-dictionary__trail button {
+  background: none;
+  border: 0;
+  color: var(--pc-accent);
+  padding: 6px 4px;
+  font: 18px var(--pc-font-serif);
+  cursor: var(--pc-cursor-action);
+  transition:
+    color 160ms,
+    translate 160ms;
+}
+.pc-dictionary__trail button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.pc-dictionary__trail button:not(:disabled):hover {
+  color: var(--pc-seal);
+  translate: 0 -1px;
+}
+.pc-dictionary__trail span {
+  font-size: 11px;
+  color: var(--pc-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+.pc-dictionary__trail b {
+  font-weight: 500;
+  color: var(--pc-text);
+}
+.pc-workspace .pc-dictionary__candidate-no {
+  font-variant-numeric: tabular-nums;
+  color: var(--pc-seal);
+}
+.pc-workspace .pc-dictionary__candidate header {
+  gap: 12px;
+  align-items: center;
+}
+.pc-workspace .pc-dictionary__badge {
+  border-radius: 2px;
+  padding: 2px 7px;
+  font-size: 11px;
+}
+.pc-workspace .pc-dictionary__facts dd {
+  line-height: 1.85;
+}
+.pc-library-verse-row {
+  position: relative;
+  padding-inline: 35px;
+}
+.pc-library .pc-excerpt-copy {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  translate: 0 -50%;
+  padding: 5px 3px;
+  font: 11px/1.4 var(--pc-font-serif);
+  border: 0;
+  background: none;
+  color: var(--pc-text-muted);
+  opacity: 0;
+  transition:
+    opacity 160ms,
+    color 160ms;
+}
+.pc-library-verse-row:hover .pc-excerpt-copy,
+.pc-library-verse-row:focus-within .pc-excerpt-copy {
+  opacity: 1;
+}
+.pc-library .pc-excerpt-copy:hover {
+  color: var(--pc-seal);
+}
+.pc-library-copy-feedback {
+  font: 12px/1.8 var(--pc-font-serif);
+  color: var(--pc-text-muted);
+  min-height: 22px;
+  margin: 4px 0 20px;
+}
+.pc-library-character[aria-pressed="true"] {
+  border-radius: 2px;
+  background: #58755c20;
+}
+.pc-workspace .pc-dictionary__result {
+  animation: pc-folio-arrive 220ms ease-out;
+}
+@keyframes pc-folio-arrive {
+  from {
+    opacity: 0.65;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (hover: none) {
+  .pc-library .pc-excerpt-copy {
+    opacity: 1;
+  }
+}
+@media (max-width: 799px) {
+  .pc-library-verse-row {
+    padding-inline: 0 28px;
+  }
+  .pc-notes-heading {
+    margin-bottom: 0;
+  }
+}
+/* Round three: long pages, small screens and a continuous atmosphere. */
+.pc-workspace {
+  padding-bottom: 72px;
+}
+.pc-reading-shade {
+  position: absolute;
+  inset: 0;
+  z-index: 12;
+  background: #06191f;
+  opacity: var(--pc-reading-shade, 0);
+  transition: opacity 360ms ease;
+  pointer-events: none;
+}
+.pc-reading-tools {
+  position: fixed;
+  bottom: max(16px, env(safe-area-inset-bottom));
+  right: max(16px, env(safe-area-inset-right));
+  z-index: 25;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  view-transition-name: garden-tools;
+}
+.pc-reading-tools button {
+  border: 1px solid #97a38c66;
+  background: #152c31f0;
+  color: #d7ceb0;
+  min-height: 42px;
+  cursor: var(--pc-cursor-action);
+  box-shadow: 0 3px 12px #071b2226;
+  transition:
+    background-color 160ms,
+    color 160ms;
+}
+.pc-reading-tools__caption {
+  display: none;
+}
+.pc-reading-tools button:hover {
+  background: #29423f;
+  color: #eee2bc;
+}
+.pc-reading-light {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 12px;
+  font: 12px var(--pc-font-serif);
+  border-radius: 3px;
+}
+.pc-reading-light[aria-pressed="true"] {
+  border-color: #bca77c;
+}
+.pc-page-return {
+  position: relative;
+  width: 42px;
+  border-radius: 50%;
+  padding: 4px;
+  animation: pc-bookmark-arrive 180ms ease-out;
+}
+.pc-page-return[hidden] {
+  display: none;
+}
+.pc-page-return svg {
+  display: block;
+  width: 32px;
+  height: 32px;
+  fill: none;
+  stroke-width: 1;
+  transform: rotate(-90deg);
+}
+.pc-progress-track {
+  stroke: #81948144;
+}
+.pc-progress-ink {
+  stroke: #c9b98e;
+  transition: stroke-dasharray 140ms linear;
+}
+.pc-page-return span {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font: 18px var(--pc-font-serif);
+}
+@keyframes pc-bookmark-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+html[data-journey]::view-transition-group(garden-tools),
+html[data-journey]::view-transition-new(garden-tools) {
+  animation: none;
+}
+html[data-journey]::view-transition-old(garden-tools) {
+  display: none;
+}
+.pc-workspace:has(.pc-evidence:not(.pc-evidence--leaving)) .pc-reading-tools {
+  visibility: hidden;
+}
+.pc-workspace :is(.pc-dictionary__character-list, .pc-dictionary__shelf-list) {
+  max-height: 240px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #829786 transparent;
+  padding: 3px;
+}
+.pc-workspace :is(.pc-notes__body, .pc-library-list, .pc-evidence__body) {
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+}
+.pc-workspace .pc-dictionary__passage textarea {
+  resize: vertical;
+  min-height: 88px;
+  max-height: 280px;
+  line-height: 1.9;
+}
+.pc-workspace .pc-library-poem select {
+  text-overflow: ellipsis;
+}
+.pc-workspace
+  :is(.pc-studio-meta, .pc-finding__message, .pc-dictionary__facts dd) {
+  overflow-wrap: anywhere;
+}
+.pc-workspace :is(button, select, summary, input, textarea):focus-visible {
+  outline-width: 2px;
+  outline-offset: 3px;
+}
+.pc-workspace .pc-dictionary__input:focus {
+  box-shadow: none;
+}
+.pc-workspace .pc-rhyme-characters {
+  align-content: start;
+}
+@media (max-width: 799px) {
+  .pc-reading-tools {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 8px 16px max(8px, env(safe-area-inset-bottom));
+    min-height: 42px;
+    background: #12292e;
+    border-top: 1px solid #7c947b55;
+    justify-content: flex-end;
+  }
+  .pc-reading-tools__caption {
+    display: block;
+    margin-right: auto;
+    font: 11px var(--pc-font-serif);
+    color: #a9b7a8;
+  }
+  html:has(.pc-workspace) {
+    scroll-padding-bottom: 80px;
+  }
+  .pc-workspace:has(.pc-place:not([hidden]) :is(input, textarea, select):focus)
+    .pc-reading-tools {
+    visibility: hidden;
+  }
+  .pc-workspace .pc-notes {
+    padding: 18px;
+  }
+  .pc-workspace .pc-library-reading:not(.pc-library-comparison) {
+    padding-inline: 20px;
+  }
+  .pc-workspace .pc-dictionary__folio:not([data-empty="true"]) {
+    padding-inline: 20px;
+  }
+  .pc-workspace .pc-dictionary__trail {
+    gap: 8px;
+  }
+  .pc-workspace .pc-dictionary__trail button {
+    min-height: 44px;
+  }
+  .pc-workspace .pc-library-discover button {
+    min-height: 40px;
+  }
+}
+.pc-workspace[data-motion="off"] *,
+.pc-workspace[data-motion="off"] *::before,
+.pc-workspace[data-motion="off"] *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pc-workspace *,
+  .pc-workspace *::before,
+  .pc-workspace *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -6,20 +6,25 @@ export function AnnotatedVerses({
   showPinyin,
   selected,
   onSelect,
+  onExcerpt,
+  excerptLine,
 }: {
   work: LibraryWork;
   pronunciation: PoemPronunciation | null;
   showPinyin: boolean;
   selected: string;
   onSelect: (character: string) => void;
+  onExcerpt?: (line: number) => void;
+  excerptLine?: number;
 }) {
   const aligned = pronunciation?.id === work.id ? pronunciation : null;
   return (
     <div className="pc-library-verses" data-pinyin={showPinyin && !!aligned}>
+      <span className="pc-library-reading-hint">点选诗字，可查其音韵</span>
       {work.paragraphs.map((line, i) => {
         let offset = 0;
         return (
-          <p key={i}>
+          <p key={i} className="pc-library-verse-row">
             {line.split(/(?<=[，。！？；])/u).map((phrase, part) => {
               const start = offset;
               offset += [...phrase].length;
@@ -57,6 +62,16 @@ export function AnnotatedVerses({
                 </span>
               );
             })}
+            {onExcerpt && (
+              <button
+                type="button"
+                className="pc-excerpt-copy"
+                aria-label={`摘录第${i + 1}段诗句`}
+                onClick={() => onExcerpt(i)}
+              >
+                {excerptLine === i ? "已摘" : "摘句"}
+              </button>
+            )}
           </p>
         );
       })}

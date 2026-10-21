@@ -26,6 +26,7 @@ export function CheckerView(
     sharedScene?: boolean;
     readingAssistant?: ReactNode;
     poetryDesk?: ReactNode;
+    draftTools?: ReactNode;
   },
 ) {
   const {
@@ -48,6 +49,10 @@ export function CheckerView(
   } | null>(null);
   const motion = useMotionPreference();
   const showBusy = useBusyIndicator(busy);
+  // A current report already contains this poem. Keep it stable on repeat
+  // analysis; only a new draft needs a separate readable original while waiting.
+  const showPendingPoem =
+    (busy && (report === null || stale)) || (report === null && error !== null);
   const effectsRef = useRef(motion.effects);
   effectsRef.current = motion.effects;
   const [editorCollapsed, setEditorCollapsed] = useState(false);
@@ -334,6 +339,7 @@ export function CheckerView(
                     />
                   </div>
                 </div>
+                {props.draftTools}
               </section>
               {hasReport ? (
                 <div className="pc-hall__rail">
@@ -351,7 +357,7 @@ export function CheckerView(
 
           <section
             ref={manuscriptRef}
-            className={`pc-manuscript pc-surface${busy || (report === null && error !== null) ? " pc-manuscript--pending" : ""}`}
+            className={`pc-manuscript pc-surface${showPendingPoem ? " pc-manuscript--pending" : ""}`}
             aria-labelledby="pc-report-heading"
             aria-busy={busy}
           >
@@ -382,7 +388,7 @@ export function CheckerView(
               {feedback}
             </div>
 
-            {(busy || (report === null && error !== null)) && (
+            {showPendingPoem && (
               <PendingPoem
                 text={draft.text}
                 rhymeBook={draft.rhymeBook}

@@ -83,7 +83,40 @@ export function LibraryContainer({
   const [importing, setImporting] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
   const [lookupChar, setLookupChar] = useState("");
+  const [compareLine, setCompareLine] = useState<number | null>(null);
+  const [excerptFeedback, setExcerptFeedback] = useState<{
+    id: string;
+    line: number;
+    message: string;
+  } | null>(null);
+  const excerptRequest = useRef(0);
+  const selectedRef = useRef(selectedId);
+  selectedRef.current = selectedId;
+  async function copyExcerpt(work: LibraryWork, line: number) {
+    const request = ++excerptRequest.current;
+    try {
+      await navigator.clipboard.writeText(
+        `${work.paragraphs[line]}\n——${work.author || "作者未载"}《${work.title}》`,
+      );
+      if (request === excerptRequest.current && selectedRef.current === work.id)
+        setExcerptFeedback({
+          id: work.id,
+          line,
+          message: "此句已摘录，诗题与作者一同带走。",
+        });
+    } catch {
+      if (request === excerptRequest.current && selectedRef.current === work.id)
+        setExcerptFeedback({
+          id: work.id,
+          line,
+          message: "暂不能访问剪贴板，可选中诗句手动复制。",
+        });
+    }
+  }
   const fileInput = useRef<HTMLInputElement>(null);
+  const queryInput = useRef<HTMLInputElement>(null);
+  const queryComposing = useRef(false);
+  const catalogueList = useRef<HTMLDivElement>(null);
   const reader = useRef<HTMLElement>(null);
   const catalogue = useRef<HTMLElement>(null);
   const returnTitle = useRef<HTMLButtonElement | null>(null);
@@ -224,7 +257,49 @@ export function LibraryContainer({
   }, [selected, showPinyin]);
   const left = works.find((w) => w.id === leftId);
   const right = works.find((w) => w.id === rightId);
+  const compareUnavailable =
+    !left || !right
+      ? "请先选好左右两卷。"
+      : leftId === rightId
+        ? "两卷是同一首诗，换一首再比较。"
+        : Math.max(
+              left.paragraphs.join("\n").length,
+              right.paragraphs.join("\n").length,
+            ) > 2000
+          ? "可阅读全文；AI 对读暂限每首 2000 字，请换一首较短的诗。"
+          : null;
   const totalPages = Math.max(1, Math.ceil(display.length / 20));
+  const visiblePage = Math.min(page, totalPages - 1);
+  useEffect(() => {
+    if (page !== visiblePage) setPage(visiblePage);
+  }, [page, visiblePage]);
+  useEffect(() => {
+    catalogueList.current?.scrollTo({ top: 0, behavior: "instant" });
+  }, [
+    visiblePage,
+    query,
+    dynasty,
+    collection,
+    kind,
+    onlyFavorites,
+    showDuplicates,
+    mode,
+  ]);
+  function resetFilters() {
+    setQuery("");
+    setDynasty("");
+    setCollection("");
+    setKind("");
+    setShowDuplicates(false);
+    setOnlyFavorites(false);
+    setPage(0);
+    queryInput.current?.focus();
+  }
+  function openRandomWork() {
+    const pool = filtered.filter((w) => w.id !== selectedId);
+    const work = pool[Math.floor(Math.random() * pool.length)] ?? filtered[0];
+    if (work) openWork(work);
+  }
   async function importFile(file: File) {
     if (file.size > IMPORT_BYTES) {
       setFeedback("单次导入最多10MB，请分批导入。");
@@ -311,38 +386,93 @@ export function LibraryContainer({
       className="pc-library-poem"
       aria-label={side === "left" ? "左诗" : "右诗"}
     >
-      <label>
-        {side === "left" ? "左卷" : "右卷"}
+      <label className="pc-compare-picker">
+        <span>
+          <b aria-hidden="true">{side === "left" ? "壹" : "贰"}</b>
+          {side === "left" ? "左卷" : "右卷"}
+          <small>选一首诗</small>
+        </span>
         <select
           value={side === "left" ? leftId : rightId}
-          onChange={(e) =>
-            side === "left"
-              ? setLeftId(e.target.value)
-              : setRightId(e.target.value)
-          }
+          onChange={(e) => {
+            setCompareLine(null);
+            if (side === "left") setLeftId(e.target.value);
+            else setRightId(e.target.value);
+          }}
         >
           {workOptions}
         </select>
       </label>
       {work && (
-        <>
-          <h2>{work.title}</h2>
-          <p className="pc-studio-meta">
-            {work.dynasty || "朝代未载"} · {work.author || "作者未载"}
-          </p>
+        <div className="pc-compare-leaf" key={work.id}>
+          <header className="pc-compare-title">
+            <h2>{work.title}</h2>
+            <p className="pc-studio-meta">
+              {work.dynasty || "朝代未载"} · {work.author || "作者未载"}
+            </p>
+          </header>
           <div className="pc-library-verses">
             {work.paragraphs.map((line, i) => (
-              <p key={i}>
-                {line.split(/(?<=[，。！？；])/u).map((phrase, part) => (
-                  <span className="pc-library-phrase" key={part}>
-                    {phrase}
-                  </span>
-                ))}
+              <p
+                key={i}
+                className="pc-compare-line"
+                data-active={compareLine === i}
+                tabIndex={0}
+                onPointerEnter={() => setCompareLine(i)}
+                onPointerLeave={() => setCompareLine(null)}
+                onFocus={() => setCompareLine(i)}
+                onBlur={() => setCompareLine(null)}
+              >
+                <small aria-hidden="true">
+                  {String(i + 1).padStart(2, "0")}
+                </small>
+                <span>
+                  {line.split(/(?<=[，。！？；])/u).map((phrase, part) => (
+                    <span className="pc-library-phrase" key={part}>
+                      {phrase}
+                    </span>
+                  ))}
+                </span>
               </p>
             ))}
           </div>
-          <p className="pc-studio-meta">{work.source}</p>
-        </>
+          <div className="pc-compare-poem-tools">
+            <button
+              className="pc-studio-action"
+              disabled={work.paragraphs.join("\n").length > 2000}
+              onClick={() => onStudy(work)}
+            >
+              <BookOpen size={15} />
+              研读此诗
+            </button>
+            <button
+              className="pc-studio-icon"
+              aria-label={`收藏《${work.title}》`}
+              aria-pressed={favorites.includes(work.id)}
+              onClick={() => toggleFavorite(work.id)}
+            >
+              <Star
+                size={16}
+                fill={favorites.includes(work.id) ? "currentColor" : "none"}
+              />
+            </button>
+            <details className="pc-compare-source">
+              <summary>诗文来源</summary>
+              <p>
+                {work.source}
+                {work.sourceUrl && (
+                  <>
+                    {" "}
+                    ·{" "}
+                    <a href={work.sourceUrl} target="_blank" rel="noreferrer">
+                      原始页面
+                    </a>
+                  </>
+                )}
+              </p>
+            </details>
+          </div>
+        </div>
       )}
     </section>
   );
@@ -353,6 +483,9 @@ export function LibraryContainer({
       data-view={view}
     >
       <header className="pc-library-heading">
+        <span className="pc-seal" aria-hidden="true">
+          藏
+        </span>
         <div>
           <p className="pc-studio-eyebrow">叁 / 灯 前 展 卷</p>
           <h1>典籍馆</h1>
@@ -422,54 +555,83 @@ export function LibraryContainer({
           role="tabpanel"
           aria-label="对读"
         >
-          <div className="pc-studio-actions">
-            <button
-              className="pc-studio-icon"
-              title="交换左右诗作"
-              aria-label="交换左右诗作"
-              onClick={() => {
-                setLeftId(rightId);
-                setRightId(leftId);
-              }}
-            >
-              <ArrowLeftRight size={18} />
-            </button>
-            <button
-              className="pc-studio-action"
-              disabled={
-                !left ||
-                !right ||
-                leftId === rightId ||
-                comparison.busy ||
-                Math.max(
-                  left?.paragraphs.join("\n").length ?? 0,
-                  right?.paragraphs.join("\n").length ?? 0,
-                ) > 2000
-              }
-              onClick={() => {
-                if (left && right)
-                  void comparison.run({
-                    task: "compare",
-                    left: left.paragraphs.join("\n"),
-                    right: right.paragraphs.join("\n"),
-                  });
-              }}
-            >
-              <BookOpen size={17} />
-              比较两诗
-            </button>
+          <header className="pc-compare-heading">
+            <div>
+              <p className="pc-studio-eyebrow">灯 下 · 对 读</p>
+              <h2>两卷相照</h2>
+              <p>从一字一景，读出两首诗的相近与不同。</p>
+            </div>
+            <div className="pc-studio-actions">
+              <button
+                className="pc-studio-action"
+                title="交换左右诗作"
+                aria-label="交换左右诗作"
+                onClick={() => {
+                  setLeftId(rightId);
+                  setRightId(leftId);
+                }}
+              >
+                <ArrowLeftRight size={18} />
+                交换两卷
+              </button>
+              <button
+                className="pc-studio-action pc-compare-submit"
+                disabled={
+                  !!compareUnavailable ||
+                  comparison.busy ||
+                  comparison.result?.task === "compare"
+                }
+                aria-describedby="pc-compare-guidance"
+                onClick={() => {
+                  if (left && right)
+                    void comparison.run({
+                      task: "compare",
+                      left: left.paragraphs.join("\n"),
+                      right: right.paragraphs.join("\n"),
+                    });
+                }}
+              >
+                <BookOpen size={17} />
+                {comparison.result?.task === "compare"
+                  ? "对读已完成"
+                  : "比较两诗"}
+              </button>
+            </div>
+          </header>
+          <div className="pc-compare-guidance" id="pc-compare-guidance">
+            <span>
+              {compareUnavailable ??
+                "先并读原诗，再比较意象、章法与情绪。AI 解读仅供参考。"}
+            </span>
+            <small>停在诗段上，对照两卷同段位置</small>
           </div>
           <div className="pc-library-diptych">
             {poemColumn(left, "left")}
             {poemColumn(right, "right")}
           </div>
-          <StudioTaskState {...comparison} />
+          <div className="pc-compare-task">
+            <StudioTaskState {...comparison} />
+          </div>
           {comparison.result?.task === "compare" && (
             <div className="pc-library-comparison-notes">
-              <p>{comparison.result.result.overview}</p>
+              <header className="pc-compare-notes-heading">
+                <span aria-hidden="true">评</span>
+                <div>
+                  <h2>合卷细读</h2>
+                  <p>
+                    《{left?.title}》与《{right?.title}》 · AI 对读札记
+                  </p>
+                </div>
+              </header>
+              <p className="pc-compare-overview">
+                {comparison.result.result.overview}
+              </p>
               {comparison.result.result.aspects.map((aspect, i) => (
                 <div key={i} className="pc-library-aspect">
-                  <h3>{aspect.name}</h3>
+                  <h3>
+                    <small>{String(i + 1).padStart(2, "0")}</small>
+                    {aspect.name}
+                  </h3>
                   <p>
                     <strong>左卷</strong> {aspect.left}
                   </p>
@@ -493,6 +655,7 @@ export function LibraryContainer({
             className="pc-library-search"
             onSubmit={(e) => {
               e.preventDefault();
+              if (queryComposing.current || searchTask.busy) return;
               if (mode === "scene" && query.trim() && candidates.length)
                 void searchTask.run({
                   task: "search",
@@ -514,6 +677,26 @@ export function LibraryContainer({
               <label className="pc-studio-searchbox">
                 <Search size={18} aria-hidden="true" />
                 <input
+                  ref={queryInput}
+                  onCompositionStart={() => {
+                    queryComposing.current = true;
+                  }}
+                  onCompositionEnd={() => {
+                    queryComposing.current = false;
+                  }}
+                  onKeyDown={(e) => {
+                    if (
+                      e.key === "Enter" &&
+                      (queryComposing.current ||
+                        e.nativeEvent.isComposing ||
+                        e.nativeEvent.keyCode === 229)
+                    )
+                      e.preventDefault();
+                    if (e.key === "Escape" && !queryComposing.current) {
+                      setQuery("");
+                      e.stopPropagation();
+                    }
+                  }}
                   aria-label="检索诗库"
                   placeholder={
                     mode === "scene"
@@ -530,7 +713,10 @@ export function LibraryContainer({
                   type="button"
                   title="清空检索"
                   aria-label="清空检索"
-                  onClick={() => setQuery("")}
+                  onClick={() => {
+                    setQuery("");
+                    queryInput.current?.focus();
+                  }}
                 >
                   <X size={17} />
                 </button>
@@ -618,6 +804,16 @@ export function LibraryContainer({
               )}
             </div>
           </form>
+          <div className="pc-library-discover">
+            <button
+              type="button"
+              disabled={!filtered.length}
+              onClick={openRandomWork}
+            >
+              随手翻一卷 <span aria-hidden="true">↗</span>
+            </button>
+            <span>在诗里偶遇一程山水</span>
+          </div>
           <StudioTaskState {...searchTask} />
           {mode === "scene" && (
             <p className="pc-studio-meta">
@@ -625,72 +821,81 @@ export function LibraryContainer({
               意象匹配后最多40首交GLM研读；单篇超过2000字暂不进入AI候选。
             </p>
           )}
-          <div className="pc-library-list">
-            {display.slice(page * 20, page * 20 + 20).map((hit) => (
-              <article
-                key={hit.work.id}
-                className="pc-library-row"
-                data-selected={selectedId === hit.work.id}
-              >
-                <div>
-                  <p className="pc-studio-meta">
-                    {hit.work.dynasty || "朝代未载"} ·{" "}
-                    {hit.work.author || "作者未载"}
-                  </p>
-                  <button
-                    className="pc-library-title"
-                    aria-current={
-                      selectedId === hit.work.id ? "true" : undefined
-                    }
-                    onClick={() => openWork(hit.work)}
-                  >
-                    {hit.work.title}
-                  </button>
-                  <p className="pc-library-excerpt">{hit.excerpt}</p>
-                </div>
-                <button
-                  className="pc-studio-icon"
-                  title={`收藏《${hit.work.title}》`}
-                  aria-label={`收藏《${hit.work.title}》`}
-                  aria-pressed={favorites.includes(hit.work.id)}
-                  onClick={() => toggleFavorite(hit.work.id)}
+          <div className="pc-library-list" ref={catalogueList}>
+            {display
+              .slice(visiblePage * 20, visiblePage * 20 + 20)
+              .map((hit) => (
+                <article
+                  key={hit.work.id}
+                  className="pc-library-row"
+                  data-selected={selectedId === hit.work.id}
                 >
-                  <Star
-                    size={18}
-                    fill={
-                      favorites.includes(hit.work.id) ? "currentColor" : "none"
-                    }
-                  />
-                </button>
-              </article>
-            ))}
+                  <div>
+                    <p className="pc-studio-meta">
+                      {hit.work.dynasty || "朝代未载"} ·{" "}
+                      {hit.work.author || "作者未载"}
+                    </p>
+                    <button
+                      className="pc-library-title"
+                      aria-current={
+                        selectedId === hit.work.id ? "true" : undefined
+                      }
+                      onClick={() => openWork(hit.work)}
+                    >
+                      {hit.work.title}
+                    </button>
+                    <p className="pc-library-excerpt">{hit.excerpt}</p>
+                  </div>
+                  <button
+                    className="pc-studio-icon"
+                    title={`收藏《${hit.work.title}》`}
+                    aria-label={`收藏《${hit.work.title}》`}
+                    aria-pressed={favorites.includes(hit.work.id)}
+                    onClick={() => toggleFavorite(hit.work.id)}
+                  >
+                    <Star
+                      size={18}
+                      fill={
+                        favorites.includes(hit.work.id)
+                          ? "currentColor"
+                          : "none"
+                      }
+                    />
+                  </button>
+                </article>
+              ))}
           </div>
           {!display.length && (
-            <p className="pc-studio-empty">
-              {mode === "scene" && matches
-                ? "本批候选中没有贴合此意境的诗作。"
-                : "未找到相符诗作。"}
-            </p>
+            <div className="pc-studio-empty">
+              <p>
+                {mode === "scene" && matches
+                  ? "本批候选中没有贴合此意境的诗作。"
+                  : "未找到相符诗作。"}
+              </p>
+              <button className="pc-studio-action" onClick={resetFilters}>
+                清除筛选，重寻一卷
+              </button>
+            </div>
           )}
           <div className="pc-library-pagination">
             <button
               className="pc-studio-icon"
               title="上一页"
               aria-label="上一页"
-              disabled={page === 0}
-              onClick={() => setPage(page - 1)}
+              disabled={visiblePage === 0}
+              onClick={() => setPage(visiblePage - 1)}
             >
               <ArrowLeft size={18} />
             </button>
             <span>
-              {page + 1} / {totalPages}
+              {visiblePage + 1} / {totalPages}
             </span>
             <button
               className="pc-studio-icon"
               title="下一页"
               aria-label="下一页"
-              disabled={page + 1 >= totalPages}
-              onClick={() => setPage(page + 1)}
+              disabled={visiblePage + 1 >= totalPages}
+              onClick={() => setPage(visiblePage + 1)}
             >
               <ArrowRight size={18} />
             </button>
@@ -839,7 +1044,19 @@ export function LibraryContainer({
               showPinyin={showPinyin}
               selected={lookupChar}
               onSelect={setLookupChar}
+              onExcerpt={(line) => void copyExcerpt(selected, line)}
+              excerptLine={
+                excerptFeedback?.id === selected.id &&
+                excerptFeedback.message.startsWith("此句")
+                  ? excerptFeedback.line
+                  : undefined
+              }
             />
+            <p className="pc-library-copy-feedback" role="status">
+              {excerptFeedback?.id === selected.id
+                ? excerptFeedback.message
+                : "摘一句诗，把此刻的心境带走。"}
+            </p>
             <p className="pc-studio-meta">
               来源：{selected.source}
               {selected.sourceUrl && (

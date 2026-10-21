@@ -10,8 +10,11 @@ import { ContinuousGarden } from "../presentation/components/ContinuousGarden";
 import "../presentation/styles/continuous-garden.css";
 import "../presentation/styles/poetry-studio.css";
 import "../presentation/styles/library-atmosphere.css";
+import "../presentation/styles/final-polish.css";
+import "../presentation/styles/three-round-polish.css";
 import { LibraryContainer } from "./LibraryContainer";
 import { PoetryDesk } from "./PoetryDesk";
+import { ReadingTools } from "../presentation/components/ReadingTools";
 import { CharacterReference } from "./CharacterReference";
 import {
   NOTEBOOK_KEY,
@@ -39,6 +42,9 @@ export function Workspace(props: CheckerViewProps) {
   const current = useRef(place);
   const rendered = useRef(place);
   const transition = useRef<ViewTransition | null>(null);
+  const pendingPlace = useRef<Place | null>(null);
+  const switchLatest = useRef<(next: Place) => void>(() => {});
+  const [requestedPlace, setRequestedPlace] = useState<Place>(initialPlace);
   const journey = useRef(0);
   const panels = useRef<HTMLDivElement>(null);
   const [saved, setSaved] = useState(false);
@@ -127,12 +133,19 @@ export function Workspace(props: CheckerViewProps) {
     return () => window.removeEventListener("pagehide", flush);
   }, []);
   const switchPlace = (next: Place) => {
+    setRequestedPlace(next);
+    // Never tear down a visible snapshot to start another one: Chromium exposes
+    // the destination for a frame when skipTransition() is used mid-flight.
+    // Coalesce rapid input into one latest destination, then continue the walk.
+    if (transition.current) {
+      pendingPlace.current = next;
+      return;
+    }
     if (current.current === next) return;
     scrollPositions.current[rendered.current] = window.scrollY;
     const previous = current.current;
     current.current = next;
     const id = ++journey.current;
-    transition.current?.skipTransition();
     const heading =
       places.indexOf(next) > places.indexOf(previous) ? "forward" : "backward";
     const previousScroll = window.scrollY;
@@ -163,7 +176,7 @@ export function Workspace(props: CheckerViewProps) {
     );
     const nextTransition = document.startViewTransition(update);
     transition.current = nextTransition;
-    // Rapid reversals can skip a snapshot. Its rejection must not escape.
+    // Snapshot failure still commits the destination without leaving the world behind.
     const moveScenery = () => {
       if (id === journey.current) setSceneryPlace(next);
     };
@@ -174,9 +187,17 @@ export function Workspace(props: CheckerViewProps) {
         transition.current = null;
         delete document.documentElement.dataset.journey;
         document.documentElement.style.removeProperty("--pc-journey-span");
+        document.documentElement.style.removeProperty(
+          "--pc-journey-scroll-shift",
+        );
+        const pending = pendingPlace.current;
+        pendingPlace.current = null;
+        if (pending !== null && pending !== current.current)
+          switchLatest.current(pending);
       })
       .catch(() => {});
   };
+  switchLatest.current = switchPlace;
   useEffect(() => {
     const sync = () => switchPlace(initialPlace());
     window.addEventListener("hashchange", sync);
@@ -203,6 +224,7 @@ export function Workspace(props: CheckerViewProps) {
   useEffect(
     () => () => {
       journey.current++;
+      pendingPlace.current = null;
       transition.current?.skipTransition();
       delete document.documentElement.dataset.journey;
       document.documentElement.style.removeProperty("--pc-journey-span");
@@ -253,6 +275,7 @@ export function Workspace(props: CheckerViewProps) {
     <div
       className="pc-root pc-workspace"
       data-place={place}
+      data-requested-place={requestedPlace}
       data-direction={direction}
       data-motion={motion.effects ? "on" : "off"}
     >
@@ -284,6 +307,7 @@ export function Workspace(props: CheckerViewProps) {
             type="button"
             aria-current={place === "checker" ? "page" : undefined}
             aria-controls="checker-space"
+            data-requested={requestedPlace === "checker" && place !== "checker"}
             onClick={() => navigate("checker")}
           >
             <span aria-hidden="true">壹</span>
@@ -295,6 +319,9 @@ export function Workspace(props: CheckerViewProps) {
             type="button"
             aria-current={place === "dictionary" ? "page" : undefined}
             aria-controls="dictionary-space"
+            data-requested={
+              requestedPlace === "dictionary" && place !== "dictionary"
+            }
             onClick={() => navigate("dictionary")}
           >
             <span aria-hidden="true">贰</span>
@@ -306,6 +333,7 @@ export function Workspace(props: CheckerViewProps) {
             type="button"
             aria-current={place === "library" ? "page" : undefined}
             aria-controls="library-space"
+            data-requested={requestedPlace === "library" && place !== "library"}
             onClick={() => navigate("library")}
           >
             <span aria-hidden="true">叁</span>
@@ -324,27 +352,38 @@ export function Workspace(props: CheckerViewProps) {
           tabIndex={-1}
           hidden={place !== "checker"}
         >
-          {props.draft.text.trim() && (
-            <div className="pc-explore-current">
-              <button
-                type="button"
-                onClick={() => {
-                  setPassageRequest((n) => n + 1);
-                  navigate("dictionary");
-                }}
-              >
-                {props.error?.code === "HTTP_503"
-                  ? "分析数据尚未就绪，先逐字查阅 →"
-                  : "带这首诗去藏韵阁 →"}
-              </button>
-            </div>
-          )}
-          <span className="pc-draft-save" role="status">
-            {saved ? "草稿已存于此设备" : ""}
-          </span>
           <CheckerView
             {...props}
+            onDraftChange={(next, options) => {
+              if (JSON.stringify(next) !== JSON.stringify(props.draft))
+                redoStack.current = [];
+              props.onDraftChange(next, options);
+            }}
+            onLoadExample={(id) => {
+              redoStack.current = [];
+              props.onLoadExample(id);
+            }}
             sharedScene
+            draftTools={
+              <div className="pc-draft-tools">
+                <span className="pc-draft-save" role="status">
+                  {saved ? "草稿已存于此设备" : ""}
+                </span>
+                {props.draft.text.trim() && (
+                  <div className="pc-explore-current">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setPassageRequest((n) => n + 1);
+                        navigate("dictionary");
+                      }}
+                    >
+                      带此诗查字 <span aria-hidden="true">→</span>
+                    </button>
+                  </div>
+                )}
+              </div>
+            }
             readingAssistant={(() => {
               const token = props.report?.poem.tokens.find(
                 (t) => t.tokenId === props.selectedTokenId,
@@ -441,6 +480,7 @@ export function Workspace(props: CheckerViewProps) {
           />
         </div>
       </div>
+      <ReadingTools place={place} />
     </div>
   );
 }

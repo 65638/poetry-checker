@@ -1,0 +1,826 @@
+/* Shared palette and rhythm for the three places. Ink, jade, paper and brass. */
+.pc-workspace,
+.pc-workspace .pc-root {
+  --pc-page-max: 1440px;
+  --pc-paper-texture: url("/design/paper-fiber.webp");
+  --pc-paper-tile: 512px;
+  --pc-surface-sheet: #ddded1;
+  --pc-manuscript: #ddded1;
+  --pc-surface: #ddded1;
+  --pc-bg: #ddded1;
+  --pc-surface-sunken: #d2d5c7;
+  --pc-surface-hover: #cbd1c1;
+  --pc-divider: #b9c1b1;
+  --pc-ruling: #c7cebe;
+  --pc-text: #263b3e;
+  --pc-text-muted: #455952;
+  --pc-fail-fg: #883e33;
+  --pc-fail-bg: #e4d7cd;
+  --pc-fail-bg-strong: #dfcabe;
+  --pc-pass-fg: #285b4b;
+  --pc-pass-bg: #d0ddce;
+  --pc-review-fg: #694e19;
+  --pc-review-bg: #e0d8bf;
+  --pc-neutral-bg: #d2d5c7;
+  --pc-on-ink-gold: #ccb991;
+  --pc-seal: #9d5144;
+}
+html:has(.pc-workspace) {
+  scrollbar-color: #647c75 #12272e;
+  scrollbar-width: thin;
+  scrollbar-gutter: stable;
+}
+.pc-workspace :is(input[type="checkbox"], input[type="radio"]) {
+  accent-color: #638e79;
+}
+.pc-workspace :is(.pc-places, .pc-dictionary__page, .pc-library),
+.pc-workspace .pc-root .pc-hall {
+  max-width: var(--pc-page-max);
+}
+.pc-workspace .pc-root .pc-hall {
+  padding-inline: var(--pc-page-margin);
+}
+.pc-workspace .pc-hall--writing {
+  grid-template-columns: 320px minmax(0, 1fr);
+  gap: 40px;
+}
+.pc-workspace .pc-masthead,
+.pc-workspace .pc-dictionary__masthead {
+  min-height: 146px;
+  padding-block: 24px;
+}
+.pc-workspace .pc-title {
+  font-size: clamp(28px, 3vw, 42px);
+}
+.pc-workspace .pc-places {
+  min-height: 96px;
+  padding-top: 16px;
+  padding-bottom: 12px;
+}
+.pc-places__links {
+  width: 468px;
+}
+.pc-places button small {
+  font-size: 11px;
+  opacity: 1;
+  color: #a4b5ad;
+}
+.pc-places button[aria-current] small {
+  color: #d5c6a4;
+}
+.pc-places button[data-requested="true"]::before {
+  content: "";
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  width: 4px;
+  height: 4px;
+  background: #d5c6a4;
+  border-radius: 50%;
+}
+.pc-workspace .pc-places button:focus-visible {
+  outline: 1px solid #bec9b3;
+  outline-offset: -3px;
+}
+
+/* Every journey has one clock. Subsequent clicks are coalesced in Workspace. */
+html[data-journey]::view-transition-group(garden-content),
+html[data-journey]::view-transition-old(garden-content),
+html[data-journey]::view-transition-new(garden-content) {
+  animation-duration: 560ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+html[data-journey]::view-transition-group(garden-navigation),
+html[data-journey]::view-transition-new(garden-navigation) {
+  animation: none;
+}
+html[data-journey]::view-transition-old(garden-navigation) {
+  display: none;
+}
+.pc-continuous__panorama,
+.pc-library-room {
+  transition-duration: 560ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+.pc-continuous__architecture,
+.pc-continuous .pc-scene__mist,
+.pc-continuous .pc-scene__water {
+  transition-duration: 560ms;
+}
+.pc-places__links::after {
+  transition: transform 360ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* Draft tools belong to the desk, leaving the moon and masthead unobstructed. */
+.pc-draft-tools {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px 12px;
+  min-height: 30px;
+  margin-top: 12px;
+  padding-top: 6px;
+  border-top: 1px solid #74908845;
+}
+.pc-draft-tools :is(.pc-draft-save, .pc-explore-current) {
+  position: static;
+}
+.pc-draft-tools .pc-draft-save {
+  font-size: 11px;
+  letter-spacing: 0;
+  color: #adbbb1;
+}
+.pc-draft-tools .pc-explore-current {
+  margin-left: auto;
+}
+.pc-draft-tools .pc-explore-current button {
+  padding: 4px 0;
+  color: #d8caac;
+  text-decoration: none;
+  transition: color 160ms;
+}
+.pc-draft-tools .pc-explore-current button:hover {
+  color: #faf0d8;
+}
+.pc-workspace .pc-motion-toggle {
+  min-height: 36px;
+  padding: 6px 12px;
+  font: 12px/1.5 var(--pc-font-sans);
+  border-color: #94aa9d4d;
+  background: #12272e80;
+  color: #c9d2c4;
+}
+.pc-motion-toggle__dot {
+  width: 6px;
+  height: 6px;
+  border-color: #b5c4ad;
+}
+.pc-workspace .pc-intro__lead {
+  font-size: clamp(36px, 4.2vw, 58px);
+}
+.pc-workspace .pc-steps {
+  margin-top: 78px;
+}
+.pc-workspace .pc-hall--writing .pc-manuscript {
+  padding-top: 36px;
+}
+
+/* Match every paper surface; retain warm ink for annotations, never neon red. */
+.pc-workspace .pc-library-reading,
+.pc-workspace .pc-dictionary__folio:not([data-empty="true"]) {
+  background-color: var(--pc-surface-sheet);
+}
+.pc-workspace .pc-manuscript {
+  transition-property: background-color, border-color;
+}
+.pc-workspace .pc-hall--reading .pc-manuscript {
+  background-image: var(--pc-paper-texture);
+}
+.pc-workspace .pc-status {
+  padding-bottom: 24px;
+}
+.pc-workspace
+  .pc-studio-scope
+  :is(input:not([type="checkbox"]), select, textarea) {
+  background-color: var(--pc-surface-sheet);
+  color: var(--pc-text);
+  border-color: #87978b;
+}
+.pc-workspace .pc-studio-scope :is(button, a, select) {
+  cursor: var(--pc-cursor-action);
+}
+.pc-workspace .pc-studio-scope :is(button, a, select, input) {
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease;
+}
+.pc-workspace .pc-studio-tabs button {
+  font-weight: 400;
+}
+.pc-workspace .pc-studio-tabs button:hover:not([aria-selected="true"]) {
+  background: #7b968a14;
+}
+.pc-workspace .pc-studio-tabs button[aria-selected="true"] {
+  color: var(--pc-seal);
+}
+.pc-poetry-desk {
+  border-top: 1px solid #9b9f865e;
+  padding-top: 26px;
+}
+.pc-poetry-desk-heading {
+  margin-bottom: 16px;
+}
+.pc-poetry-desk-heading .pc-studio-eyebrow {
+  letter-spacing: 0.18em;
+  font-size: 11px;
+}
+.pc-poetry-desk > .pc-studio-tabs {
+  gap: 18px;
+}
+.pc-poetry-desk > .pc-studio-tabs button {
+  padding-inline: 4px;
+  font: 18px var(--pc-font-serif);
+}
+.pc-poetry-desk .pc-studio-actions {
+  gap: 12px 18px;
+}
+.pc-poetry-critique > .pc-studio-actions:first-child {
+  padding: 12px 0;
+}
+.pc-poetry-desk :is(.pc-poetry-critique, .pc-poetry-rhyme, .pc-notebook) {
+  animation: pc-polish-appear 180ms ease-out;
+}
+.pc-studio-error {
+  border: 0;
+  border-left: 2px solid #a26d5b;
+  padding: 12px 16px;
+  background: #a26d5b0a;
+}
+.pc-studio-status {
+  font-size: 13px;
+  color: var(--pc-text-muted);
+  animation: pc-polish-appear 160ms ease-out;
+}
+.pc-studio-notice {
+  border-top-color: #83948155;
+  font-size: 13px;
+}
+.pc-workspace .pc-hall--writing .pc-poetry-desk {
+  --pc-text: #dedfce;
+  --pc-text-muted: #afc0b5;
+  --pc-surface-sheet: #1b3438;
+  --pc-divider: #77908555;
+  --pc-border-control: #789183;
+  --pc-seal: #ccb991;
+  --pc-accent: #ded7ba;
+  --pc-accent-soft: #2d4747;
+  padding: 24px 28px;
+  margin-top: 32px;
+  background: linear-gradient(115deg, #142e34eb, #183238b3);
+  border: 1px solid #6a82745e;
+}
+
+/* Library: a compact catalogue, a quiet reader, controls at hand. */
+.pc-library-heading {
+  min-height: 160px;
+  padding-block: 16px 20px;
+  gap: 20px;
+}
+.pc-library-heading > .pc-seal {
+  flex: none;
+  --pc-seal: #9d5144;
+}
+.pc-library-heading h1 {
+  font-size: 42px;
+}
+.pc-library-heading .pc-library-heading__verse {
+  font-size: 16px;
+}
+.pc-library-heading > .pc-studio-actions {
+  margin-left: 32px;
+  align-self: center;
+}
+.pc-library-room > .pc-library-lantern {
+  position: absolute;
+  right: 4%;
+  top: 8%;
+  width: clamp(48px, 6vw, 86px);
+  height: auto;
+  overflow: visible;
+}
+.pc-library-lantern .pc-library-room__lamp {
+  transform: none;
+  transform-origin: 1328px 82px;
+  animation: pc-lantern-breathe 12s ease-in-out infinite alternate;
+}
+.pc-continuous[data-paused] .pc-library-room__lamp {
+  animation-play-state: paused;
+}
+@keyframes pc-lantern-breathe {
+  from {
+    rotate: -0.6deg;
+  }
+  to {
+    rotate: 0.6deg;
+  }
+}
+.pc-library-reading-hint {
+  display: block;
+  font: 12px/1.6 var(--pc-font-serif);
+  color: #64766a;
+  letter-spacing: 0.1em;
+  margin: 0 0 18px;
+}
+.pc-library > .pc-studio-tabs {
+  margin-bottom: 22px;
+}
+.pc-library-worktable {
+  grid-template-columns: 320px minmax(0, 1fr);
+}
+.pc-library-catalogue {
+  padding: 18px 22px 8px;
+}
+.pc-library-row {
+  padding-block: 14px;
+}
+.pc-library-list {
+  max-height: min(410px, 48dvh);
+  overscroll-behavior-y: contain;
+}
+.pc-library .pc-library-catalogue,
+.pc-library-heading {
+  --pc-text: #dedfce;
+  --pc-text-muted: #b0bfb4;
+  --pc-surface-sheet: #193238;
+  --pc-accent: #e2d4b3;
+  --pc-accent-soft: #2b4546;
+  --pc-seal: #ccb991;
+  --pc-focus: #b6c9ad;
+}
+.pc-workspace .pc-library-query .pc-studio-searchbox input {
+  background: transparent;
+  color: #e8e5d5;
+}
+.pc-workspace .pc-library-catalogue select {
+  background: #213b3e;
+  color: #e1e4d2;
+}
+.pc-library-reading {
+  animation: pc-polish-appear 200ms ease-out;
+  box-shadow: 0 12px 38px #07171c26;
+}
+.pc-library-reading > h2 {
+  margin-top: 18px;
+}
+.pc-library-invitation {
+  min-height: 460px;
+  padding-block: 44px;
+}
+.pc-library-invitation__foot::before {
+  content: "";
+  display: inline-block;
+  width: 24px;
+  height: 1px;
+  margin: 0 12px 3px 0;
+  background: #9f9d7b;
+}
+.pc-library .pc-library-character {
+  border-bottom: 0;
+  box-shadow: inset 0 -1px transparent;
+}
+.pc-library .pc-library-character:hover,
+.pc-library .pc-library-character[aria-pressed="true"] {
+  box-shadow: inset 0 -1px #9c6f5a;
+}
+.pc-library-comparison .pc-library-verses {
+  font-size: clamp(20px, 1.9vw, 26px);
+}
+.pc-library .pc-studio-action:hover:not(:disabled),
+.pc-library .pc-studio-icon:hover:not(:disabled) {
+  background: var(--pc-accent-soft);
+  color: var(--pc-accent);
+}
+.pc-library-reading .pc-studio-meta a {
+  color: #456e60;
+  text-underline-offset: 4px;
+}
+.pc-workspace :is(.pc-colophon, .pc-library-footer, .pc-dictionary__footer) {
+  font-size: 12px;
+  line-height: 1.8;
+  color: #afbeb4;
+}
+@keyframes pc-polish-appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* Two separate leaves on the same desk, with the tools above the reading area. */
+.pc-workspace .pc-library-comparison {
+  padding: 0;
+  min-height: 0;
+  background: none;
+  border: 0;
+  box-shadow: none;
+}
+.pc-library-comparison::before {
+  display: none;
+}
+.pc-compare-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px 24px;
+  padding: 20px 24px;
+  background: linear-gradient(110deg, #152d32eb, #193337c7);
+  border-top: 1px solid #98a38b55;
+  color: #e1dfcc;
+}
+.pc-compare-heading h2 {
+  margin: 4px 0;
+  font: 400 30px/1.6 var(--pc-font-display);
+  letter-spacing: 0.12em;
+}
+.pc-compare-heading p {
+  margin: 0;
+  font-size: 13px;
+  color: #b6c3b6;
+}
+.pc-compare-heading .pc-studio-eyebrow {
+  color: #c5b28d;
+  font-size: 11px;
+}
+.pc-compare-heading .pc-studio-actions {
+  margin: 0;
+  gap: 12px;
+}
+.pc-compare-heading .pc-studio-action {
+  min-height: 42px;
+  padding-inline: 16px;
+  border-color: #869c8966;
+}
+.pc-library .pc-compare-heading .pc-studio-action:hover:not(:disabled) {
+  color: #f0e8d1;
+  background: #36504c;
+}
+.pc-library .pc-compare-submit {
+  background: #c6b58d;
+  color: #213936;
+  border-color: #c6b58d;
+}
+.pc-library .pc-compare-submit:hover:not(:disabled) {
+  background: #dbcca8;
+  color: #182e2d;
+}
+.pc-compare-guidance {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 6px 20px;
+  padding: 12px 0 20px;
+  border-top: 1px solid #98a38b55;
+  color: #b6c3b6;
+  font-size: 12px;
+}
+.pc-compare-guidance small {
+  font-size: 12px;
+  color: #c5b894;
+}
+.pc-library-comparison .pc-library-diptych {
+  gap: 24px;
+  align-items: start;
+}
+.pc-library-comparison .pc-library-poem {
+  padding: 0;
+  border: 1px solid #afb59f;
+  border-top: 2px solid #ad9875;
+  background: var(--pc-paper-texture), var(--pc-surface-sheet);
+  box-shadow:
+    0 10px 28px #07171c26,
+    inset 5px 0 #c0c6b64d;
+}
+.pc-compare-picker {
+  padding: 16px 24px;
+  background: #67795a0b;
+  border-bottom: 1px solid var(--pc-divider);
+}
+.pc-compare-picker > span {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font: 15px var(--pc-font-serif);
+}
+.pc-compare-picker b {
+  font: 26px var(--pc-font-display);
+  color: var(--pc-seal);
+}
+.pc-compare-picker small {
+  margin-left: auto;
+  color: var(--pc-text-muted);
+  font: 11px var(--pc-font-sans);
+}
+.pc-workspace .pc-compare-picker select {
+  margin: 10px 0 0;
+  background-color: #e4e5d9;
+  border-color: #a1ad9b;
+  font-size: 14px;
+}
+.pc-compare-leaf {
+  padding: 22px 24px 18px;
+  animation: pc-polish-appear 180ms ease-out;
+}
+.pc-compare-title {
+  text-align: center;
+}
+.pc-compare-title h2 {
+  font-size: clamp(26px, 2.3vw, 34px);
+  margin: 0 0 8px;
+  letter-spacing: 0.08em;
+}
+.pc-compare-title .pc-studio-meta {
+  margin: 0;
+}
+.pc-library-comparison .pc-library-verses {
+  margin: 20px 0 14px;
+  padding: 14px 0;
+  font-size: clamp(20px, 1.8vw, 26px);
+}
+.pc-library-comparison .pc-compare-line {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  align-items: baseline;
+  gap: 6px;
+  margin: 0;
+  padding: 10px 8px 10px 0;
+  border-left: 2px solid transparent;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease;
+}
+.pc-compare-line > small {
+  font: 11px/2 var(--pc-font-sans);
+  color: #6c7967;
+  text-align: center;
+  user-select: none;
+}
+.pc-compare-line > span {
+  text-align: center;
+}
+.pc-library-comparison .pc-compare-line[data-active="true"] {
+  background: #5b756312;
+  border-left-color: #9d6d56;
+}
+.pc-compare-line:focus-visible {
+  outline: 1px solid var(--pc-focus);
+  outline-offset: 2px;
+}
+.pc-compare-poem-tools {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.pc-library .pc-compare-poem-tools .pc-studio-action {
+  border-color: transparent;
+  padding-left: 0;
+}
+.pc-library .pc-compare-poem-tools .pc-studio-icon {
+  border: 0;
+  color: #76603b;
+}
+.pc-compare-source {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--pc-text-muted);
+}
+.pc-compare-source summary {
+  cursor: var(--pc-cursor-action);
+  text-align: right;
+  text-underline-offset: 4px;
+}
+.pc-compare-source summary:hover {
+  text-decoration: underline;
+}
+.pc-compare-source[open] {
+  flex-basis: 100%;
+}
+.pc-compare-source p {
+  padding: 12px 0 0;
+  margin: 0;
+  border-top: 1px solid var(--pc-divider);
+  overflow-wrap: anywhere;
+}
+.pc-compare-source a {
+  color: var(--pc-accent);
+}
+.pc-compare-task {
+  min-height: 58px;
+  color: #d7ddca;
+  --pc-text-muted: #c0cbb7;
+  --pc-fail-fg: #edb5a3;
+}
+.pc-compare-task:has(.pc-studio-status, .pc-studio-error) {
+  padding-block: 0;
+}
+.pc-library-comparison-notes {
+  margin-top: 0;
+  padding: 26px 28px;
+  border: 1px solid var(--pc-divider);
+  background: var(--pc-paper-texture), var(--pc-surface-sheet);
+  animation: pc-polish-appear 180ms ease-out;
+}
+.pc-compare-notes-heading {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.pc-compare-notes-heading > span {
+  font: 28px var(--pc-font-display);
+  color: var(--pc-seal);
+  border: 1px solid #a47c6466;
+  padding: 4px 8px;
+}
+.pc-compare-notes-heading h2 {
+  font: 400 25px/1.5 var(--pc-font-serif);
+  margin: 0;
+}
+.pc-compare-notes-heading p {
+  font-size: 12px;
+  color: var(--pc-text-muted);
+  margin: 4px 0 0;
+}
+.pc-compare-overview {
+  font: 17px/1.9 var(--pc-font-serif);
+  padding-bottom: 6px;
+}
+.pc-library-comparison .pc-library-aspect {
+  padding: 18px 0 0;
+  background: none;
+  gap: 12px 32px;
+}
+.pc-library-aspect h3 {
+  font: 400 20px var(--pc-font-serif);
+}
+.pc-library-aspect h3 small {
+  font: 12px var(--pc-font-sans);
+  color: var(--pc-seal);
+  margin-right: 12px;
+}
+.pc-library-aspect p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.9;
+}
+.pc-library-aspect p strong {
+  display: block;
+  color: var(--pc-text-muted);
+  font-size: 11px;
+  margin-bottom: 6px;
+  font-weight: 400;
+}
+@media (max-width: 799px) {
+  .pc-library-comparison .pc-library-diptych {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+  .pc-compare-heading {
+    padding: 18px;
+    gap: 12px;
+  }
+  .pc-compare-heading h2 {
+    font-size: 28px;
+  }
+  .pc-compare-heading .pc-studio-actions {
+    width: 100%;
+  }
+  .pc-compare-heading .pc-studio-action {
+    flex: 1;
+  }
+  .pc-compare-guidance small {
+    display: none;
+  }
+  .pc-compare-picker {
+    padding: 14px 18px;
+  }
+  .pc-compare-leaf {
+    padding: 20px 16px 14px;
+  }
+  .pc-library-comparison .pc-library-verses {
+    font-size: 22px;
+  }
+  .pc-compare-line .pc-library-phrase {
+    display: block;
+  }
+  .pc-library-comparison-notes {
+    padding: 20px;
+  }
+  .pc-library-comparison .pc-library-aspect {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+}
+@media (max-width: 1099px) {
+  .pc-workspace .pc-hall--writing {
+    grid-template-columns: 290px minmax(0, 1fr);
+    gap: 24px;
+  }
+  .pc-library-worktable {
+    grid-template-columns: 290px minmax(0, 1fr);
+  }
+  .pc-library-heading > .pc-studio-actions {
+    max-width: 260px;
+    justify-content: flex-end;
+  }
+}
+@media (max-width: 899px) {
+  .pc-workspace .pc-hall--writing {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 799px) {
+  .pc-workspace .pc-places {
+    min-height: 82px;
+    padding: 10px 16px 8px;
+  }
+  .pc-places__links {
+    width: 100%;
+  }
+  .pc-places button small {
+    font-size: 10px;
+  }
+  .pc-workspace .pc-masthead,
+  .pc-workspace .pc-dictionary__masthead {
+    min-height: 132px;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding-block: 18px;
+  }
+  .pc-workspace .pc-masthead__titles {
+    flex: 1 0 calc(100% - 70px);
+  }
+  .pc-workspace .pc-masthead__tools {
+    margin-left: auto;
+  }
+  .pc-workspace .pc-motion-toggle {
+    min-height: 32px;
+    padding: 5px 9px;
+    font-size: 11px;
+  }
+  .pc-workspace .pc-hall--writing .pc-manuscript {
+    padding-top: 20px;
+  }
+  .pc-workspace .pc-steps {
+    margin-top: 32px;
+  }
+  .pc-workspace .pc-hall--writing .pc-poetry-desk {
+    padding: 20px 18px;
+  }
+  .pc-library-heading {
+    min-height: 188px;
+    gap: 12px;
+  }
+  .pc-library-heading h1 {
+    font-size: 34px;
+  }
+  .pc-library-heading > .pc-studio-actions {
+    max-width: none;
+    margin-left: 0;
+    justify-content: flex-start;
+    gap: 8px;
+    flex-basis: 100%;
+  }
+  .pc-library-heading > .pc-seal {
+    width: 34px;
+    height: 38px;
+    font-size: 23px;
+  }
+  .pc-library-heading {
+    gap: 12px 16px;
+  }
+  .pc-library-room > .pc-library-lantern {
+    left: 77.5%;
+    right: auto;
+    top: 9%;
+    width: 44px;
+  }
+  .pc-library-worktable {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .pc-library-invitation {
+    min-height: 330px;
+    padding: 28px;
+  }
+  .pc-library-list {
+    max-height: 330px;
+  }
+  .pc-library-reading .pc-library-verses {
+    font-size: 22px;
+  }
+}
+.pc-workspace[data-motion="off"]
+  :is(
+    .pc-library-reading,
+    .pc-studio-status,
+    .pc-poetry-critique,
+    .pc-poetry-rhyme,
+    .pc-notebook,
+    .pc-compare-leaf,
+    .pc-library-comparison-notes
+  ),
+.pc-workspace[data-motion="off"] .pc-continuous * {
+  animation: none;
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pc-workspace *,
+  .pc-workspace *::before,
+  .pc-workspace *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

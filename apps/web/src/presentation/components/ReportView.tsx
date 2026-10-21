@@ -632,12 +632,30 @@ export function ReportView(props: ReportViewProps) {
         </section>
 
         <section className="pc-notes" aria-labelledby="pc-findings-heading">
-          <h3 id="pc-findings-heading" className="pc-section-title">
-            <span className="pc-section-title__no" aria-hidden="true">
-              叁
-            </span>
-            批注
-          </h3>
+          <div className="pc-notes-heading">
+            <h3 id="pc-findings-heading" className="pc-section-title">
+              <span className="pc-section-title__no" aria-hidden="true">
+                叁
+              </span>
+              批注
+            </h3>
+            <button
+              type="button"
+              className="pc-return-poem"
+              onClick={() => {
+                const target =
+                  gridRef.current?.querySelector<HTMLElement>(".pc-line");
+                target?.scrollIntoView({
+                  block: "center",
+                  behavior: prefersReducedMotion(target) ? "instant" : "smooth",
+                });
+                target?.setAttribute("tabindex", "-1");
+                target?.focus({ preventScroll: true });
+              }}
+            >
+              回诗首 ↑
+            </button>
+          </div>
           {conditionRows.length > 0 && (
             <label className="pc-format-reference">
               参考格式

@@ -140,14 +140,20 @@ export function LibraryRoom() {
           />
           <path d="M1365 311q-38-40-72-32 24 21 72 32m-22-59q-4-48 28-66-1 34-28 66m-25-39q-44-36-69-19 30 18 69 19m64 145q-46-12-73 11 42 4 73-11Z" />
         </g>
+
+        <path
+          d="M12 812H1428M20 824H1420M30 850H1410"
+          stroke="#75806b"
+          opacity=".13"
+          fill="none"
+        />
+      </svg>
+      <svg
+        className="pc-library-lantern"
+        viewBox="1280 70 96 260"
+        aria-hidden="true"
+      >
         <g className="pc-library-room__lamp">
-          <ellipse
-            cx="1328"
-            cy="226"
-            rx="150"
-            ry="155"
-            fill="url(#pc-lamp-light)"
-          />
           <path d="M1328 82v59" stroke="#afa681" strokeWidth="1" />
           <path
             d="M1307 146h42l13 27v65l-13 21h-42l-13-21v-65Z"
@@ -168,12 +174,6 @@ export function LibraryRoom() {
             stroke="#968b66"
           />
         </g>
-        <path
-          d="M12 812H1428M20 824H1420M30 850H1410"
-          stroke="#75806b"
-          opacity=".13"
-          fill="none"
-        />
       </svg>
     </div>
   );

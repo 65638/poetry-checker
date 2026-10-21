@@ -1,4 +1,5 @@
 import { X, LoaderCircle } from "lucide-react";
+import { useBusyIndicator } from "../useBusyIndicator";
 
 export function StudioTabs<T extends string>({
   tabs,
@@ -57,22 +58,24 @@ export function StudioTaskState({
   error: string | null;
   cancel: () => void;
 }) {
+  const visible = useBusyIndicator(busy);
   return (
     <>
-      {busy && (
+      {visible && (
         <div className="pc-studio-status" role="status">
           <LoaderCircle
             size={17}
-            className="pc-studio-spin"
+            className={busy ? "pc-studio-spin" : undefined}
             aria-hidden="true"
           />{" "}
-          GLM 正在研读…{" "}
+          {busy ? "正在研读…" : "研读已结束"}{" "}
           <button
             type="button"
             className="pc-studio-icon"
             aria-label="取消请求"
             title="取消请求"
             onClick={cancel}
+            disabled={!busy}
           >
             <X size={17} />
           </button>

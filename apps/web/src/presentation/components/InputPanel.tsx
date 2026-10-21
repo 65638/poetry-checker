@@ -53,6 +53,11 @@ export function InputPanel(props: InputPanelProps) {
     onDraftChange({ ...draft, ...patch });
   const isEmpty = draft.text.trim() === "";
   const canAnalyze = !busy && composeValue === null && !isEmpty;
+  const visibleText = composeValue ?? draft.text;
+  const hanCount = (visibleText.match(/\p{Script=Han}/gu) ?? []).length;
+  const phraseCount = visibleText
+    .split(/[，。！？；\n]+/u)
+    .filter((line) => /\p{Script=Han}/u.test(line)).length;
   const activeBook = BOOKS.find((b) => b.id === draft.rhymeBook);
 
   const analyze = () => {
@@ -148,6 +153,12 @@ export function InputPanel(props: InputPanelProps) {
           }
         }}
       />
+      <div className="pc-input__measure" aria-label="诗文字数">
+        <span>
+          {hanCount ? `${hanCount} 字 · ${phraseCount} 句` : "落笔成诗"}
+        </span>
+        <kbd title="Mac 可用 Command + Enter">Ctrl ↵ 分析</kbd>
+      </div>
       <p
         id={`${uid}-text-hint`}
         className="pc-input__hint pc-input__hint--keys"

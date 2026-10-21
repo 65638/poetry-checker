@@ -46,7 +46,7 @@ try {
         "document.getAnimations().some(a=>a.animationName==='pc-walk-in-right')",
       ),
     );
-    for (const time of [120, 380, 640]) {
+    for (const time of [90, 280, 470]) {
       await evaluate(`document.getAnimations().forEach(a=>{
         if (['pc-walk-in-right','pc-walk-out-left'].includes(a.animationName) ||
             (a.effect?.target?.classList?.contains('pc-continuous__panorama'))) {
@@ -83,7 +83,7 @@ try {
     await shot("library");
     return {
       moon: before,
-      checkpoints: [120, 380, 640],
+      checkpoints: [90, 280, 470],
       persistentCanvas: true,
     };
   });
