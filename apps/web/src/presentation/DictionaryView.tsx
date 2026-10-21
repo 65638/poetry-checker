@@ -87,6 +87,10 @@ export function DictionaryView(props: DictionaryViewProps) {
   const uid = useId();
   const [landscape, setLandscape] = useState(0);
   const composing = useRef(false);
+  const passageComposing = useRef(false);
+  const [passageComposition, setPassageComposition] = useState<string | null>(
+    null,
+  );
   const searchInput = useRef<HTMLInputElement>(null);
   const shelfInput = useRef<HTMLInputElement>(null);
   const folio = useRef<HTMLElement>(null);
@@ -97,6 +101,11 @@ export function DictionaryView(props: DictionaryViewProps) {
   const showComparing = useBusyIndicator(props.comparing);
   const showPassageBusy = useBusyIndicator(props.passageBusy);
   const candidates = result?.entries.flatMap((entry) => entry.candidates) ?? [];
+  const trail =
+    props.passageOpen && props.passageCharacters.length
+      ? props.passageCharacters
+      : LANDSCAPES[landscape]!.characters;
+  const trailIndex = trail.indexOf(character);
   const selectedBook = BOOKS.find(
     (item) => item.id === (error ? book : (result?.book ?? book)),
   )!;
@@ -201,6 +210,19 @@ export function DictionaryView(props: DictionaryViewProps) {
                       composing.current = false;
                     }}
                   />
+                  {props.text && (
+                    <button
+                      className="pc-dictionary__clear"
+                      type="button"
+                      aria-label="清空查字"
+                      onClick={() => {
+                        props.onTextChange("");
+                        searchInput.current?.focus();
+                      }}
+                    >
+                      ×
+                    </button>
+                  )}
                   <button
                     className="pc-button pc-button--primary"
                     type="submit"
@@ -258,10 +280,21 @@ export function DictionaryView(props: DictionaryViewProps) {
                 <textarea
                   id={`${uid}-passage`}
                   rows={3}
-                  value={props.passage}
-                  onChange={(event) =>
-                    props.onPassageChange(event.target.value)
-                  }
+                  value={passageComposition ?? props.passage}
+                  onCompositionStart={(event) => {
+                    passageComposing.current = true;
+                    setPassageComposition(event.currentTarget.value);
+                  }}
+                  onCompositionEnd={(event) => {
+                    passageComposing.current = false;
+                    setPassageComposition(null);
+                    props.onPassageChange(event.currentTarget.value);
+                  }}
+                  onChange={(event) => {
+                    if (passageComposing.current)
+                      setPassageComposition(event.target.value);
+                    else props.onPassageChange(event.target.value);
+                  }}
                   placeholder="明月松间照，清泉石上流。"
                 />
                 <div className="pc-dictionary__character-list">
@@ -381,7 +414,34 @@ export function DictionaryView(props: DictionaryViewProps) {
               <p className="pc-dictionary__slip-caption">
                 {LANDSCAPES[landscape]!.caption}
               </p>
-              <div className="pc-dictionary__examples" key={landscape}>
+              <div
+                className="pc-dictionary__examples"
+                key={landscape}
+                onKeyDown={(e) => {
+                  const keys = ["ArrowRight", "ArrowLeft", "Home", "End"];
+                  if (!keys.includes(e.key)) return;
+                  const buttons = Array.from(
+                    e.currentTarget.querySelectorAll<HTMLButtonElement>(
+                      "button",
+                    ),
+                  );
+                  const at = buttons.indexOf(
+                    document.activeElement as HTMLButtonElement,
+                  );
+                  if (at < 0) return;
+                  e.preventDefault();
+                  const next =
+                    e.key === "Home"
+                      ? 0
+                      : e.key === "End"
+                        ? buttons.length - 1
+                        : (at +
+                            (e.key === "ArrowRight" ? 1 : -1) +
+                            buttons.length) %
+                          buttons.length;
+                  buttons[next]?.focus();
+                }}
+              >
                 {LANDSCAPES[landscape]!.characters.map((text) => (
                   <button
                     key={text}
@@ -565,6 +625,37 @@ export function DictionaryView(props: DictionaryViewProps) {
                     </p>
                   </div>
                 </div>
+                {trailIndex >= 0 && trail.length > 1 && (
+                  <nav className="pc-dictionary__trail" aria-label="字签接力">
+                    <button
+                      type="button"
+                      disabled={busy || trailIndex === 0}
+                      onClick={() =>
+                        revealAfter(() =>
+                          props.onExample(trail[trailIndex - 1]!),
+                        )
+                      }
+                      aria-label="查上一个字"
+                    >
+                      ← {trail[trailIndex - 1] ?? "起笔"}
+                    </button>
+                    <span>
+                      循签读字 <b>{trailIndex + 1}</b> / {trail.length}
+                    </span>
+                    <button
+                      type="button"
+                      disabled={busy || trailIndex === trail.length - 1}
+                      onClick={() =>
+                        revealAfter(() =>
+                          props.onExample(trail[trailIndex + 1]!),
+                        )
+                      }
+                      aria-label="查下一个字"
+                    >
+                      {trail[trailIndex + 1] ?? "卷末"} →
+                    </button>
+                  </nav>
+                )}
                 <div className="pc-dictionary__actions" inert={busy}>
                   <button
                     type="button"
@@ -844,7 +935,8 @@ export function DictionaryView(props: DictionaryViewProps) {
           </section>
         </main>
         <footer className="pc-dictionary__footer">
-          参考分析：韵书数据与 AI 读音可能有误，未经全面人工核验，不作为权威结论。
+          参考分析：韵书数据与 AI
+          读音可能有误，未经全面人工核验，不作为权威结论。
         </footer>
       </div>
     </div>

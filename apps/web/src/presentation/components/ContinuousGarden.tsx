@@ -340,6 +340,7 @@ export function ContinuousGarden({
       </div>
       <LibraryRoom />
       <RainField active={active} quiet={quiet} indoor={place === "library"} />
+      <div className="pc-reading-shade" />
     </div>
   );
 }

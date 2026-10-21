@@ -161,6 +161,19 @@ try {
     await waitFor(() => h.evaluate("location.hash.startsWith('#dictionary?') && !!document.querySelector('.pc-dictionary__result')"));
     assert.equal(await h.evaluate('document.documentElement.scrollWidth<=innerWidth+1'), true);
   });
+  await check('manual-edit-after-undo-invalidates-old-redo-branch', async () => {
+    await h.evaluate("location.hash='checker'");
+    await waitFor(() => h.evaluate("document.querySelector('.pc-workspace').dataset.place==='checker' && !document.documentElement.dataset.journey"));
+    await clickText('.pc-poetry-edit button', '试用并复查');
+    await h.idle();
+    await waitFor(() => h.evaluate("!document.querySelector('[aria-label=\"撤销上次修改\"]').disabled"));
+    await h.click('[aria-label="撤销上次修改"]');
+    await h.idle();
+    assert.equal(await h.evaluate("document.querySelector('[aria-label=\"重做修改\"]').disabled"), false);
+    await h.setText('手动新写的一首诗。');
+    assert.equal(await h.evaluate("document.querySelector('[aria-label=\"重做修改\"]').disabled"), true);
+    assert.equal(await h.evaluate("document.querySelector('.pc-input__text').value"), '手动新写的一首诗。');
+  });
   assert.deepEqual(result.errors, []);
 } catch (error) { result.failure = error.stack; process.exitCode = 1; await shot('failure').catch(() => {}); }
 finally { result.calls = calls; await h.stop(); writeFileSync(join(out, 'results.json'), JSON.stringify(result, null, 2)+'\n'); }

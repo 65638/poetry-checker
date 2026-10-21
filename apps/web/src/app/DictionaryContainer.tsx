@@ -87,6 +87,7 @@ export function DictionaryContainer({
   }, [shelf]);
   const pending = useRef<AbortController | null>(null);
   const serial = useRef(0);
+  const copySerial = useRef(0);
   useEffect(
     () => () => {
       serial.current++;
@@ -256,18 +257,22 @@ export function DictionaryContainer({
   };
   const copy = async (link: boolean) => {
     if (!result) return;
+    const lookupId = serial.current;
+    const copyId = ++copySerial.current;
     try {
       await navigator.clipboard.writeText(
         link
           ? `${window.location.href.split("#")[0]}${dictionaryHash({ character, book: result.book })}`
           : dictionaryText(character, result),
       );
+      if (lookupId !== serial.current || copyId !== copySerial.current) return;
       setFeedback(
         link
           ? "查字链接已复制。打开链接会重新查询最新数据。"
           : "查字条目已复制，包含审核状态与数据版本。",
       );
     } catch {
+      if (lookupId !== serial.current || copyId !== copySerial.current) return;
       setFeedback("复制未成功，请允许剪贴板访问后重试。");
     }
   };

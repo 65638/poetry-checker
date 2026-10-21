@@ -32,6 +32,8 @@ export function FindingReference({
     if (dwell.current) clearTimeout(dwell.current);
     dwell.current = null;
     cancelClose();
+    if (document.hidden || trigger.current?.closest("[hidden], [inert]"))
+      return;
     setOpen(true);
     onFollow();
   };
@@ -54,6 +56,36 @@ export function FindingReference({
     },
     [finding],
   );
+  useEffect(() => {
+    const dismiss = () => {
+      if (dwell.current) clearTimeout(dwell.current);
+      dwell.current = null;
+      cancelClose();
+      changeRef.current(false);
+    };
+    const key = (event: KeyboardEvent) => {
+      if (event.key === "Escape") dismiss();
+    };
+    const region = trigger.current?.closest(".pc-place");
+    const observer = new MutationObserver(() => {
+      if (region?.hasAttribute("hidden")) dismiss();
+    });
+    if (region)
+      observer.observe(region, {
+        attributes: true,
+        attributeFilter: ["hidden"],
+      });
+    const visibility = () => {
+      if (document.hidden) dismiss();
+    };
+    document.addEventListener("keydown", key);
+    document.addEventListener("visibilitychange", visibility);
+    return () => {
+      observer.disconnect();
+      document.removeEventListener("keydown", key);
+      document.removeEventListener("visibilitychange", visibility);
+    };
+  }, []);
   useLayoutEffect(() => {
     if (!open || !note.current || !trigger.current) return;
     const panel = note.current;

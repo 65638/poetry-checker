@@ -11,8 +11,10 @@ import "../presentation/styles/continuous-garden.css";
 import "../presentation/styles/poetry-studio.css";
 import "../presentation/styles/library-atmosphere.css";
 import "../presentation/styles/final-polish.css";
+import "../presentation/styles/three-round-polish.css";
 import { LibraryContainer } from "./LibraryContainer";
 import { PoetryDesk } from "./PoetryDesk";
+import { ReadingTools } from "../presentation/components/ReadingTools";
 import {
   NOTEBOOK_KEY,
   NOTEBOOK_LIMIT,
@@ -353,6 +355,15 @@ export function Workspace(props: CheckerViewProps) {
         >
           <CheckerView
             {...props}
+            onDraftChange={(next) => {
+              if (JSON.stringify(next) !== JSON.stringify(props.draft))
+                redoStack.current = [];
+              props.onDraftChange(next);
+            }}
+            onLoadExample={(id) => {
+              redoStack.current = [];
+              props.onLoadExample(id);
+            }}
             sharedScene
             draftTools={
               <div className="pc-draft-tools">
@@ -454,6 +465,7 @@ export function Workspace(props: CheckerViewProps) {
           />
         </div>
       </div>
+      <ReadingTools place={place} />
     </div>
   );
 }
