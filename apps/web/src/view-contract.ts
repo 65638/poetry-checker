@@ -39,7 +39,7 @@ export interface CheckerViewProps {
   onAnalyze: () => void;
   onLoadExample: (exampleId: string) => void;
   onSelectToken: (tokenId: string) => void;
-  onSelectFinding: (findingId: string) => void;
+  onSelectFinding: (findingId: string | null) => void;
   onChooseReading: (override: ReadingOverride) => void;
   onCloseEvidence: () => void;
   onCopySummary: () => void;

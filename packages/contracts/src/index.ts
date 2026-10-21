@@ -358,24 +358,91 @@ export const FindingSchema = z.strictObject({
   resolvedBy: id.nullable(),
   relatedFindingIds: ids,
 });
-export const ProsodyReportSchema = z.strictObject({
-  candidates: z.array(TemplateCandidateSchema),
-  selectedTemplateId: id.nullable(),
-  checks: z.array(FindingSchema),
-  rhyme: z.strictObject({
-    status: CheckStatusSchema,
-    tokenIds: ids,
-    commonGroupIds: ids,
+export const FormatIdentificationSchema = z.strictObject({
+  shape: z.strictObject({
+    formId: FormIdSchema,
+    lineCount: positive,
+    width: z.union([z.literal(5), z.literal(7)]),
+    description: id,
   }),
-  relations: z.array(
-    z.strictObject({
-      kind: z.enum(["nian", "dui"]),
-      tokenIds: ids,
-      status: CheckStatusSchema,
-      findingIds: ids,
-    }),
-  ),
+  start: z.strictObject({
+    value: z.enum(["ping", "ze"]).nullable(),
+    tokenId: id.nullable(),
+    reason: id,
+    evidenceIds: ids,
+    alternative: z.enum(["ping", "ze"]).nullable(),
+    alternativeReason: z.string().nullable(),
+  }),
+  firstLineRhyme: z.strictObject({
+    value: z.enum(["rhymed", "unrhymed", "uncertain"]),
+    observed: z.enum(["shared", "different", "unknown"]),
+    evenLineStatus: z.enum(["shared", "different", "unknown"]),
+    evenLineGroupIds: ids,
+    firstLineGroupIds: ids,
+    reason: id,
+    evidenceIds: ids,
+  }),
+  referenceTemplateIds: ids,
 });
+export const ProsodyReportSchema = z
+  .strictObject({
+    candidates: z.array(TemplateCandidateSchema),
+    selectedTemplateId: id.nullable(),
+    checks: z.array(FindingSchema),
+    format: FormatIdentificationSchema.optional(),
+    conditionalChecks: z
+      .array(
+        z.strictObject({
+          templateId: id,
+          checks: z.array(FindingSchema),
+          conditionalFindingIds: ids,
+        }),
+      )
+      .optional(),
+    rhyme: z.strictObject({
+      status: CheckStatusSchema,
+      tokenIds: ids,
+      commonGroupIds: ids,
+    }),
+    relations: z.array(
+      z.strictObject({
+        kind: z.enum(["nian", "dui"]),
+        tokenIds: ids,
+        status: CheckStatusSchema,
+        findingIds: ids,
+      }),
+    ),
+  })
+  .superRefine((report, ctx) => {
+    const templateIds = new Set(report.candidates.map((c) => c.id));
+    const blocks = report.conditionalChecks ?? [];
+    if (new Set(blocks.map((b) => b.templateId)).size !== blocks.length)
+      ctx.addIssue({
+        code: "custom",
+        message: "同一参考格式的条件检查不能重复",
+      });
+    for (const block of report.conditionalChecks ?? []) {
+      if (
+        !templateIds.has(block.templateId) ||
+        block.checks.some((c) => c.templateId !== block.templateId)
+      )
+        ctx.addIssue({
+          code: "custom",
+          message: "条件检查必须指向报告内的同一候选格式",
+        });
+      const findingIds = new Set(block.checks.map((c) => c.id));
+      if (block.conditionalFindingIds.some((id) => !findingIds.has(id)))
+        ctx.addIssue({
+          code: "custom",
+          message: "条件批注必须在该候选格式的检查中存在",
+        });
+    }
+    if (report.format?.referenceTemplateIds.some((id) => !templateIds.has(id)))
+      ctx.addIssue({
+        code: "custom",
+        message: "格式识别的参考必须属于本报告候选",
+      });
+  });
 export const AnalyzeRequestSchema = z
   .strictObject({
     text: z
@@ -543,6 +610,7 @@ export type AnnotatedPoem = z.infer<typeof AnnotatedPoemSchema>;
 export type TemplateCandidate = z.infer<typeof TemplateCandidateSchema>;
 export type WorkMetadata = z.infer<typeof WorkMetadataSchema>;
 export type GenreDecision = z.infer<typeof GenreDecisionSchema>;
+export type FormatIdentification = z.infer<typeof FormatIdentificationSchema>;
 export type Finding = z.infer<typeof FindingSchema>;
 export type ProsodyReport = z.infer<typeof ProsodyReportSchema>;
 export type AnalyzeRequest = z.infer<typeof AnalyzeRequestSchema>;
@@ -590,6 +658,7 @@ export const schemaRegistry = {
   AnnotatedPoem: AnnotatedPoemSchema,
   TemplateCandidate: TemplateCandidateSchema,
   GenreDecision: GenreDecisionSchema,
+  FormatIdentification: FormatIdentificationSchema,
   ProsodyReport: ProsodyReportSchema,
   RhymeBooksResponse: RhymeBooksResponseSchema,
   RuleResponse: RuleResponseSchema,

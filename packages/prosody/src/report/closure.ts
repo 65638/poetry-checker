@@ -18,7 +18,11 @@ export const FROZEN_RULE_IDS = [
 ] as const;
 
 /** 允许出现在 Finding.resolvedBy 的救法规则 ID。 */
-export const RESCUE_RULE_IDS = ["RESCUE.SELF", "RESCUE.TEAO", "RESCUE.DUIJU"] as const;
+export const RESCUE_RULE_IDS = [
+  "RESCUE.SELF",
+  "RESCUE.TEAO",
+  "RESCUE.DUIJU",
+] as const;
 
 const FROZEN = new Set<string>(FROZEN_RULE_IDS);
 const RESCUES = new Set<string>(RESCUE_RULE_IDS);
@@ -34,7 +38,10 @@ export interface RuleReferences {
 export function collectRuleReferences(report: ProsodyReport): RuleReferences {
   const ruleIds = new Set<string>();
   const rescueRuleIds = new Set<string>();
-  for (const check of report.checks) {
+  for (const check of [
+    ...report.checks,
+    ...(report.conditionalChecks ?? []).flatMap((block) => block.checks),
+  ]) {
     ruleIds.add(check.ruleId);
     if (check.resolvedBy !== null) rescueRuleIds.add(check.resolvedBy);
   }
@@ -90,7 +97,10 @@ export function checkReportClosure(
     seenIds.add(check.id);
 
     if (!FROZEN.has(check.ruleId)) {
-      problems.push({ code: "rule_id_unknown", detail: `${check.id} ruleId=${check.ruleId}` });
+      problems.push({
+        code: "rule_id_unknown",
+        detail: `${check.id} ruleId=${check.ruleId}`,
+      });
     }
     if (check.ruleVersion !== "1") {
       problems.push({
@@ -106,13 +116,19 @@ export function checkReportClosure(
     }
     for (const related of check.relatedFindingIds) {
       if (!findingIds.has(related)) {
-        problems.push({ code: "related_finding_missing", detail: `${check.id} -> ${related}` });
+        problems.push({
+          code: "related_finding_missing",
+          detail: `${check.id} -> ${related}`,
+        });
       }
     }
     for (const location of check.locations) {
       const token = tokens.get(location.tokenId);
       if (!token) {
-        problems.push({ code: "location_token_missing", detail: location.tokenId });
+        problems.push({
+          code: "location_token_missing",
+          detail: location.tokenId,
+        });
         continue;
       }
       if (token.line !== location.line || token.column !== location.column) {
@@ -145,7 +161,10 @@ export function checkReportClosure(
     }
     for (const tokenId of relation.tokenIds) {
       if (!tokens.has(tokenId)) {
-        problems.push({ code: "relation_token_missing", detail: `${relation.kind} -> ${tokenId}` });
+        problems.push({
+          code: "relation_token_missing",
+          detail: `${relation.kind} -> ${tokenId}`,
+        });
       }
     }
   }
@@ -156,5 +175,25 @@ export function checkReportClosure(
     }
   }
 
+  for (const block of report.conditionalChecks ?? []) {
+    const conditional = checkReportClosure(
+      {
+        ...report,
+        selectedTemplateId: block.templateId,
+        checks: block.checks,
+        conditionalChecks: undefined,
+        relations: [],
+      },
+      poem,
+    );
+    problems.push(...conditional.problems);
+    for (const findingId of block.conditionalFindingIds) {
+      if (!block.checks.some((check) => check.id === findingId))
+        problems.push({
+          code: "related_finding_missing",
+          detail: `${block.templateId} -> ${findingId}`,
+        });
+    }
+  }
   return { ok: problems.length === 0, problems };
 }

@@ -3274,6 +3274,360 @@
                   "additionalProperties": false
                 }
               },
+              "format": {
+                "type": "object",
+                "properties": {
+                  "shape": {
+                    "type": "object",
+                    "properties": {
+                      "formId": {
+                        "type": "string",
+                        "enum": [
+                          "wujue",
+                          "qijue",
+                          "wulv",
+                          "qilv"
+                        ]
+                      },
+                      "lineCount": {
+                        "type": "integer",
+                        "exclusiveMinimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "width": {
+                        "anyOf": [
+                          {
+                            "type": "number",
+                            "const": 5
+                          },
+                          {
+                            "type": "number",
+                            "const": 7
+                          }
+                        ]
+                      },
+                      "description": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "formId",
+                      "lineCount",
+                      "width",
+                      "description"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "start": {
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "enum": [
+                              "ping",
+                              "ze"
+                            ]
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "tokenId": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "reason": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "evidenceIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "alternative": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "enum": [
+                              "ping",
+                              "ze"
+                            ]
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "alternativeReason": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "value",
+                      "tokenId",
+                      "reason",
+                      "evidenceIds",
+                      "alternative",
+                      "alternativeReason"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "firstLineRhyme": {
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "string",
+                        "enum": [
+                          "rhymed",
+                          "unrhymed",
+                          "uncertain"
+                        ]
+                      },
+                      "observed": {
+                        "type": "string",
+                        "enum": [
+                          "shared",
+                          "different",
+                          "unknown"
+                        ]
+                      },
+                      "evenLineStatus": {
+                        "type": "string",
+                        "enum": [
+                          "shared",
+                          "different",
+                          "unknown"
+                        ]
+                      },
+                      "evenLineGroupIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "firstLineGroupIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "reason": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "evidenceIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      }
+                    },
+                    "required": [
+                      "value",
+                      "observed",
+                      "evenLineStatus",
+                      "evenLineGroupIds",
+                      "firstLineGroupIds",
+                      "reason",
+                      "evidenceIds"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "referenceTemplateIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                },
+                "required": [
+                  "shape",
+                  "start",
+                  "firstLineRhyme",
+                  "referenceTemplateIds"
+                ],
+                "additionalProperties": false
+              },
+              "conditionalChecks": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "templateId": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "checks": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "ruleId": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "ruleVersion": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "pass",
+                              "fail",
+                              "uncertain",
+                              "not_applicable",
+                              "unsupported"
+                            ]
+                          },
+                          "severity": {
+                            "type": "string",
+                            "enum": [
+                              "error",
+                              "warning",
+                              "info"
+                            ]
+                          },
+                          "locations": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "tokenId": {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                "line": {
+                                  "type": "integer",
+                                  "exclusiveMinimum": 0,
+                                  "maximum": 9007199254740991
+                                },
+                                "column": {
+                                  "type": "integer",
+                                  "exclusiveMinimum": 0,
+                                  "maximum": 9007199254740991
+                                }
+                              },
+                              "required": [
+                                "tokenId",
+                                "line",
+                                "column"
+                              ],
+                              "additionalProperties": false
+                            }
+                          },
+                          "expected": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "observed": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "message": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "templateId": {
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "evidenceIds": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "resolvedBy": {
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "relatedFindingIds": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "ruleId",
+                          "ruleVersion",
+                          "status",
+                          "severity",
+                          "locations",
+                          "expected",
+                          "observed",
+                          "message",
+                          "templateId",
+                          "evidenceIds",
+                          "resolvedBy",
+                          "relatedFindingIds"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "conditionalFindingIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  },
+                  "required": [
+                    "templateId",
+                    "checks",
+                    "conditionalFindingIds"
+                  ],
+                  "additionalProperties": false
+                }
+              },
               "rhyme": {
                 "type": "object",
                 "properties": {
@@ -5245,6 +5599,202 @@
         ],
         "additionalProperties": false
       },
+      "FormatIdentification": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "shape": {
+            "type": "object",
+            "properties": {
+              "formId": {
+                "type": "string",
+                "enum": [
+                  "wujue",
+                  "qijue",
+                  "wulv",
+                  "qilv"
+                ]
+              },
+              "lineCount": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
+              },
+              "width": {
+                "anyOf": [
+                  {
+                    "type": "number",
+                    "const": 5
+                  },
+                  {
+                    "type": "number",
+                    "const": 7
+                  }
+                ]
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "formId",
+              "lineCount",
+              "width",
+              "description"
+            ],
+            "additionalProperties": false
+          },
+          "start": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "ping",
+                      "ze"
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "tokenId": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1
+              },
+              "evidenceIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "alternative": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "ping",
+                      "ze"
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "alternativeReason": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "value",
+              "tokenId",
+              "reason",
+              "evidenceIds",
+              "alternative",
+              "alternativeReason"
+            ],
+            "additionalProperties": false
+          },
+          "firstLineRhyme": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string",
+                "enum": [
+                  "rhymed",
+                  "unrhymed",
+                  "uncertain"
+                ]
+              },
+              "observed": {
+                "type": "string",
+                "enum": [
+                  "shared",
+                  "different",
+                  "unknown"
+                ]
+              },
+              "evenLineStatus": {
+                "type": "string",
+                "enum": [
+                  "shared",
+                  "different",
+                  "unknown"
+                ]
+              },
+              "evenLineGroupIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "firstLineGroupIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1
+              },
+              "evidenceIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "required": [
+              "value",
+              "observed",
+              "evenLineStatus",
+              "evenLineGroupIds",
+              "firstLineGroupIds",
+              "reason",
+              "evidenceIds"
+            ],
+            "additionalProperties": false
+          },
+          "referenceTemplateIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "required": [
+          "shape",
+          "start",
+          "firstLineRhyme",
+          "referenceTemplateIds"
+        ],
+        "additionalProperties": false
+      },
       "ProsodyReport": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "type": "object",
@@ -5536,6 +6086,360 @@
                 "evidenceIds",
                 "resolvedBy",
                 "relatedFindingIds"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "format": {
+            "type": "object",
+            "properties": {
+              "shape": {
+                "type": "object",
+                "properties": {
+                  "formId": {
+                    "type": "string",
+                    "enum": [
+                      "wujue",
+                      "qijue",
+                      "wulv",
+                      "qilv"
+                    ]
+                  },
+                  "lineCount": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "width": {
+                    "anyOf": [
+                      {
+                        "type": "number",
+                        "const": 5
+                      },
+                      {
+                        "type": "number",
+                        "const": 7
+                      }
+                    ]
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "formId",
+                  "lineCount",
+                  "width",
+                  "description"
+                ],
+                "additionalProperties": false
+              },
+              "start": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "enum": [
+                          "ping",
+                          "ze"
+                        ]
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "tokenId": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "reason": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "evidenceIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "alternative": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "enum": [
+                          "ping",
+                          "ze"
+                        ]
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "alternativeReason": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "value",
+                  "tokenId",
+                  "reason",
+                  "evidenceIds",
+                  "alternative",
+                  "alternativeReason"
+                ],
+                "additionalProperties": false
+              },
+              "firstLineRhyme": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "string",
+                    "enum": [
+                      "rhymed",
+                      "unrhymed",
+                      "uncertain"
+                    ]
+                  },
+                  "observed": {
+                    "type": "string",
+                    "enum": [
+                      "shared",
+                      "different",
+                      "unknown"
+                    ]
+                  },
+                  "evenLineStatus": {
+                    "type": "string",
+                    "enum": [
+                      "shared",
+                      "different",
+                      "unknown"
+                    ]
+                  },
+                  "evenLineGroupIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "firstLineGroupIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "reason": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "evidenceIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                },
+                "required": [
+                  "value",
+                  "observed",
+                  "evenLineStatus",
+                  "evenLineGroupIds",
+                  "firstLineGroupIds",
+                  "reason",
+                  "evidenceIds"
+                ],
+                "additionalProperties": false
+              },
+              "referenceTemplateIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "required": [
+              "shape",
+              "start",
+              "firstLineRhyme",
+              "referenceTemplateIds"
+            ],
+            "additionalProperties": false
+          },
+          "conditionalChecks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "templateId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "checks": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "ruleId": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "ruleVersion": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "status": {
+                        "type": "string",
+                        "enum": [
+                          "pass",
+                          "fail",
+                          "uncertain",
+                          "not_applicable",
+                          "unsupported"
+                        ]
+                      },
+                      "severity": {
+                        "type": "string",
+                        "enum": [
+                          "error",
+                          "warning",
+                          "info"
+                        ]
+                      },
+                      "locations": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "tokenId": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "line": {
+                              "type": "integer",
+                              "exclusiveMinimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "column": {
+                              "type": "integer",
+                              "exclusiveMinimum": 0,
+                              "maximum": 9007199254740991
+                            }
+                          },
+                          "required": [
+                            "tokenId",
+                            "line",
+                            "column"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "expected": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "observed": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "message": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "templateId": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "evidenceIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "resolvedBy": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "relatedFindingIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "ruleId",
+                      "ruleVersion",
+                      "status",
+                      "severity",
+                      "locations",
+                      "expected",
+                      "observed",
+                      "message",
+                      "templateId",
+                      "evidenceIds",
+                      "resolvedBy",
+                      "relatedFindingIds"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "conditionalFindingIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "required": [
+                "templateId",
+                "checks",
+                "conditionalFindingIds"
               ],
               "additionalProperties": false
             }

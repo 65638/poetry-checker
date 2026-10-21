@@ -4,17 +4,21 @@ import { join, resolve } from 'node:path';
 import { buildApp } from '../../apps/api/src/server.ts';
 import { startHarness, waitFor, sleep, revision } from '../../docs/design/moonlit-ui/harness.mjs';
 import { POEMS } from '../integration/e2e/d3-acceptance-api.mjs';
+import { assertSummaryExport } from './export-checks.mjs';
 
 const out = resolve(process.argv[2] ?? 'artifacts/concise-report');
 mkdirSync(out, { recursive: true });
 let latestReport;
+let analysisCalls = 0;
+let modelCalls = 0;
 const app = buildApp({ readingAssistant: { apiKey: 'controlled-ui-test', fetcher: async (_url, init) => {
+  modelCalls++;
   const data = JSON.parse(JSON.parse(init.body).messages[1].content);
   const suggestions = data.targets.map(t => ({ tokenId: t.tokenId, candidateId: t.candidates[0].id, pronunciation: null, reason: 'Controlled choice for presentation verification only.' }));
   return new Response(JSON.stringify({ choices: [{ finish_reason: 'stop', message: { content: JSON.stringify({ suggestions }) } }] }));
 } } });
 app.addHook('onSend', async (request, _reply, payload) => {
-  if (request.url === '/api/v1/analyze' && typeof payload === 'string') latestReport = JSON.parse(payload);
+  if (request.url === '/api/v1/analyze' && typeof payload === 'string') { latestReport = JSON.parse(payload); analysisCalls++; }
 });
 const baseUrl = await app.listen({ host: '127.0.0.1', port: 0 });
 const h = await startHarness({ production: true, api: { baseUrl, stop: () => app.close() } });
@@ -29,17 +33,84 @@ try {
     await h.analyze();
     assert.equal(latestReport.summary.status, 'needs_review');
     assert.equal(latestReport.prosody.selectedTemplateId, null);
+    assert.equal(latestReport.prosody.format.start.value, 'ping');
+    assert.equal(latestReport.prosody.format.start.tokenId, 'l1c2');
     assert(latestReport.poem.tokens.every(t => t.readingStatus === 'resolved' && t.toneStatus === 'resolved'));
     const summary = await h.evaluate("document.querySelector('.pc-status').innerText");
-    assert(summary.includes('结论：格律格式未确定'));
-    assert(summary.includes('平起／仄起'));
+    assert(summary.includes('参考分析：七绝形制 · 平起'));
+    assert(!summary.includes('平起／仄起'));
     assert(!/待复核|下一步|点击带|缺字|缺录/.test(summary));
     const pending = await h.evaluate("(() => {const el=Array.from(document.querySelectorAll('[data-finding-id]')).find(el=>el.dataset.findingId.endsWith(':template'));return {text:el.innerText,compare:!!el.querySelector('dl'),locate:!!el.querySelector('button')};})()");
-    assert(pending.text.includes('格律格式未确定'));
+    assert(pending.text.includes('整诗参考格式未唯一确定'));
     assert.equal(pending.compare, false);
     assert.equal(pending.locate, false);
     await h.evaluate("document.querySelector('.pc-status').scrollIntoView({block:'start',behavior:'instant'}); true");
     await shot('template-1440');
+  });
+  await check('first-rhyme-difference-keeps-start-known-and-rhyme-independent', async () => {
+    await h.setText('灯前夜半键声秋，一局未终天欲明。错落音符随指下，参差节拍搅心旌。');
+    await h.analyze();
+    assert.equal(latestReport.prosody.format.start.value, 'ping');
+    assert.equal(latestReport.prosody.format.firstLineRhyme.value, 'uncertain');
+    assert.equal(latestReport.prosody.format.firstLineRhyme.observed, 'different');
+    const format = await h.evaluate("document.querySelector('.pc-format').innerText");
+    assert(format.includes('第二字「前」为平声'));
+    assert(format.includes('首句用韵\n待确认'));
+  });
+  await check('local-reference-switch-locates-conditional-issues-without-analysis-or-reading-changes', async () => {
+    await h.setText('灯前夜半键声轻，一局未终天欲明。错落音符随指下，参差节拍搅心旌。');
+    await h.analyze();
+    const block = latestReport.prosody.conditionalChecks.find(b => b.checks.some(c => b.conditionalFindingIds.includes(c.id) && c.status === 'fail' && c.locations.length && c.resolvedBy === null));
+    assert(block);
+    const finding = block.checks.find(c => bIncludes(block, c) && c.status === 'fail' && c.locations.length && c.resolvedBy === null);
+    const analysisBefore = analysisCalls, modelBefore = modelCalls;
+    const snapshot = JSON.stringify(latestReport);
+    const choose = async value => h.evaluate(`(() => {const s=document.querySelector('[aria-label="参考格式"]');Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype,'value').set.call(s,${JSON.stringify(value)});s.dispatchEvent(new Event('change',{bubbles:true}));return true;})()`);
+    await choose(block.templateId);
+    await waitFor(() => h.evaluate("!!document.querySelector('section.pc-conditional')"));
+    assert((await h.evaluate("document.querySelector('section.pc-conditional').innerText")).includes('条件批注'));
+    const selector = `[data-finding-id=${JSON.stringify(finding.id)}] .pc-finding__locate`;
+    await h.click(selector);
+    await waitFor(() => h.evaluate(`document.activeElement.dataset.tokenId === ${JSON.stringify(finding.locations[0].tokenId)}`));
+    assert.equal(await h.evaluate("!!document.querySelector('.pc-reference--conditional')"), true);
+    const trigger = `.pc-cell__reference[aria-label*=${JSON.stringify('：若按')} ]`;
+    await h.click(trigger);
+    await waitFor(() => h.evaluate("!!document.querySelector('.pc-reference__note')"));
+    assert((await h.evaluate("document.querySelector('.pc-reference__note').innerText")).includes('若按'));
+    await h.key('Escape');
+    for (const width of [1440, 768, 375, 320]) {
+      await h.viewport(width, 900, width < 600);
+      await h.evaluate("document.querySelector('.pc-format').scrollIntoView({block:'start',behavior:'instant'}); true");
+      await sleep(150);
+      assert.equal(await h.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
+      assert.equal(await h.evaluate("Array.from(document.querySelectorAll('.pc-format dd,.pc-format p,.pc-format-reference select')).every(e=>e.scrollWidth<=e.clientWidth+1)"), true);
+      await shot('format-' + width);
+    }
+    await choose('');
+    await waitFor(() => h.evaluate("!document.querySelector('.pc-reference--conditional')"));
+    await sleep(1800);
+    assert.equal(analysisCalls, analysisBefore);
+    assert.equal(modelCalls, modelBefore);
+    assert.equal(JSON.stringify(latestReport), snapshot);
+    await h.viewport(1440, 900);
+  });
+  await check('shared-summary-is-readable-chinese-and-explains-ze-endings-without-debug-fields', async () => {
+    const poem = '空山不见人，但闻人语响。返景入深林，复照青苔上。';
+    await h.setText(poem);
+    await h.analyze();
+    await h.evaluate("navigator.clipboard.writeText = async text => { window.__sharedText = text; }; true");
+    await h.click('.pc-status__actions button');
+    await waitFor(() => h.evaluate("typeof window.__sharedText === 'string'"));
+    const text = await h.evaluate('window.__sharedText');
+    assert(text.includes(poem));
+    assert(text.includes('依据：平水韵'));
+    assert(text.includes('偶数句均仄收'));
+    assert(text.includes('仅作逐字平仄参考'));
+    assert(!/发现\d+项问题|此处失对|应为平，实际为仄/.test(text));
+    assert(!/needs_review|undetermined|uncertain|historical|pingshui|METER\.|请求快照|规则版本|原文摘要/.test(text));
+    assert(!text.includes(latestReport.inputHash));
+    assertSummaryExport(text, latestReport, { text: poem });
+    writeFileSync(join(out, '鹿柴-分享摘要.txt'), text + '\n');
   });
   await check('sources-show-groups-with-technical-records-preserved-under-details', async () => {
     await h.setText(POEMS[0].text);
@@ -110,3 +181,5 @@ try {
   writeFileSync(join(out, 'result.json'), JSON.stringify(result, null, 2) + '\n');
   console.log(JSON.stringify({ passed: result.checks.length, failure: result.failure, errors: result.errors }));
 }
+
+function bIncludes(block, check) { return block.conditionalFindingIds.includes(check.id); }

@@ -32,7 +32,9 @@ describe("开发场景自检", () => {
   });
 
   it("五种状态的正文互不相同（避免只能靠正文选中一种状态）", () => {
-    const texts = scenarios.map((name) => loadMockScenario(name).poem.originalText);
+    const texts = scenarios.map(
+      (name) => loadMockScenario(name).poem.originalText,
+    );
     expect(new Set(texts).size).toBe(texts.length);
   });
 
@@ -62,7 +64,9 @@ describe("开发场景自检", () => {
   it("unsupported 场景没有任何「通过」迹象", () => {
     const report = loadMockScenario("unsupported");
     expect(report.summary.status).toBe("unsupported");
-    expect(report.prosody.checks.every((check) => check.status !== "pass")).toBe(true);
+    expect(
+      report.prosody.checks.every((check) => check.status !== "pass"),
+    ).toBe(true);
     expect(report.prosody.rhyme.status).not.toBe("pass");
   });
 
@@ -71,9 +75,12 @@ describe("开发场景自检", () => {
     expect(report.summary.status).toBe("pass");
     // 行文本与字位刻意错位
     const firstToken = report.poem.tokens[0]!;
-    expect(report.poem.originalText.slice(firstToken.startUtf16, firstToken.endUtf16)).toBe(
-      firstToken.text,
-    );
+    expect(
+      report.poem.originalText.slice(
+        firstToken.startUtf16,
+        firstToken.endUtf16,
+      ),
+    ).toBe(firstToken.text);
     const line2 = report.poem.lines[1]!;
     expect(line2.text.length).toBeLessThan(5);
   });
@@ -111,23 +118,52 @@ describe("buildReportJson / buildSummaryText", () => {
   };
 
   it("JSON 导出含原文、请求快照、完整报告、版本、覆盖与不确定项", () => {
-    const payload = buildReportJson({ report, request, overrides: request.readingOverrides });
+    const payload = buildReportJson({
+      report,
+      request,
+      overrides: request.readingOverrides,
+    });
     expect(payload.originalText).toBe(report.poem.originalText);
     expect(payload.request).toEqual(request);
     expect(payload.inputHash).toBe(report.inputHash);
     expect(payload.readingOverrides).toHaveLength(1);
     expect(payload.uncertainties.ambiguousReadings.length).toBeGreaterThan(0);
     expect(payload.report.summary.status).toBe(report.summary.status);
-    expect(payload.exportedAtVersion.versions.rules).toBe(report.versions.rules);
+    expect(payload.exportedAtVersion.versions.rules).toBe(
+      report.versions.rules,
+    );
   });
 
-  it("摘要文本包含结论、口径、版本与不确定项数量", () => {
+  it("分享摘要使用中文、保留诗文与不确定性，技术信息只进入 JSON", () => {
     const text = buildSummaryText({ report, request, overrides: [] });
-    expect(text).toContain(report.summary.status);
-    expect(text).toContain(report.policy.notice);
-    expect(text).toContain(report.versions.rules);
-    expect(text).toContain("可疑/待复核项");
+    expect(text).toContain(report.poem.originalText);
+    expect(text).toContain("依据：平水韵");
+    expect(text).toContain("暂不作合律结论");
+    expect(text).toContain("尚待确认");
+    expect(text).not.toMatch(
+      /needs_review|undetermined|uncertain|historical|pingshui|METER\.|l\dc\d|请求快照|规则版本|原文摘要/,
+    );
+    expect(text).not.toContain(report.inputHash);
+    expect(text).not.toContain(report.versions.rules);
+    expect(buildReportJson({ report, request, overrides: [] }).request).toEqual(
+      request,
+    );
   });
+
+  it.each(["pass", "fail", "not_applicable", "unsupported"] as const)(
+    "%s 分享状态不会伪装成通过，也不输出英文枚举",
+    (name) => {
+      const value = loadMockScenario(name);
+      const text = buildSummaryText({
+        report: value,
+        request: {},
+        overrides: [],
+      });
+      expect(text).not.toContain(`结论：${name}`);
+      if (name !== "pass") expect(text).not.toContain("必检项均通过");
+      expect(text).toContain(value.poem.originalText);
+    },
+  );
 
   it("文件名安全且限制长度", () => {
     const name = reportFileName(report);

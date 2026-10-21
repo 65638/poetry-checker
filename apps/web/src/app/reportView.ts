@@ -1,4 +1,8 @@
-import type { AnalysisResponse } from "@poetry/contracts";
+import type {
+  AnalysisResponse,
+  FormId,
+  TemplateCandidate,
+} from "@poetry/contracts";
 
 /**
  * D2 逐字谱 / 诊断 / 押韵的视图模型（纯函数，无 DOM、无格律计算）。
@@ -10,6 +14,25 @@ import type { AnalysisResponse } from "@poetry/contracts";
  */
 
 export type ToneLabel = "平" | "仄" | "未定";
+
+export const FORM_LABEL: Record<FormId, string> = {
+  wujue: "五绝",
+  qijue: "七绝",
+  wulv: "五律",
+  qilv: "七律",
+};
+export function templateLabel(template: TemplateCandidate): string {
+  const tones = template.expectedTones[0]?.[1] ?? [];
+  const start =
+    tones.length === 1 ? (tones[0] === "P" ? "平起" : "仄起") : "起式未定";
+  return `${start} · 首句${template.requiredRhymeLines.includes(1) ? "入韵" : "不入韵"}`;
+}
+
+export function formatHeading(report: AnalysisResponse): string | null {
+  const format = report.prosody.format;
+  if (!format) return null;
+  return `${FORM_LABEL[format.shape.formId]}形制${format.start.value ? ` · ${format.start.value === "ping" ? "平起" : "仄起"}` : " · 起式未定"}`;
+}
 
 /** Explain incomplete reports using their recorded causes, without re-evaluating rules. */
 export function incompleteSummary(report: AnalysisResponse): {
@@ -37,7 +60,24 @@ export function incompleteSummary(report: AnalysisResponse): {
     labels.push("部分读音未定");
   }
   if (templatePending) {
-    reasons.push("尚未确定采用哪种格律格式（平起／仄起、首句是否入韵）");
+    const format = report.prosody.format;
+    if (!format)
+      reasons.push("尚未确定采用哪种格律格式（平起／仄起、首句是否入韵）");
+    else {
+      if (format.start.value === null)
+        reasons.push("首句第二字平仄未定，起式待确认");
+      if (format.firstLineRhyme.value === "uncertain")
+        reasons.push("首句用韵待确认");
+      if (
+        format.start.value !== null &&
+        format.firstLineRhyme.value !== "uncertain"
+      )
+        reasons.push("已识别原文格式，近体适用性仍待确认");
+      const problems = report.prosody.checks.filter(
+        (c) => c.status === "fail" && c.resolvedBy === null,
+      ).length;
+      if (problems) reasons.push(`共同检查已发现${problems}处问题`);
+    }
     labels.push("格律格式未确定");
   }
   if (report.poem.quality === "needs_review") {
@@ -45,7 +85,9 @@ export function incompleteSummary(report: AnalysisResponse): {
     labels.push("分句需确认");
   }
   return {
-    label: labels.length === 1 ? labels[0]! : "暂无完整结论",
+    label:
+      formatHeading(report) ??
+      (labels.length === 1 ? labels[0]! : "暂无完整结论"),
     desc: reasons.length
       ? `${reasons.join("；")}。`
       : "仍有检查项目未确定，详见诗旁批注。",
@@ -77,9 +119,7 @@ export function toneLabel(tone: "P" | "Z" | null): ToneLabel {
 }
 
 /** 逐字谱：保持原文顺序，标出韵脚与关联诊断。 */
-export function buildTokenSpectrum(
-  report: AnalysisResponse,
-): TokenCell[] {
+export function buildTokenSpectrum(report: AnalysisResponse): TokenCell[] {
   const rhyme = new Set(report.prosody.rhyme.tokenIds);
   const findingsByToken = new Map<string, string[]>();
   for (const check of report.prosody.checks) {
@@ -127,13 +167,25 @@ export function findingGroup(ruleId: string): FindingGroup {
   const upper = ruleId.toUpperCase();
   if (upper.startsWith("METER") || upper.startsWith("TONE")) return "meter";
   if (upper.startsWith("RHYME") || upper.startsWith("RIME")) return "rhyme";
-  if (upper.startsWith("NIAN") || upper.startsWith("DUI") || upper.startsWith("RELATION")) {
+  if (
+    upper.startsWith("NIAN") ||
+    upper.startsWith("DUI") ||
+    upper.startsWith("RELATION")
+  ) {
     return "relation";
   }
-  if (upper.startsWith("ISOLATED") || upper.startsWith("TAIL") || upper.startsWith("END")) {
+  if (
+    upper.startsWith("ISOLATED") ||
+    upper.startsWith("TAIL") ||
+    upper.startsWith("END")
+  ) {
     return "isolated";
   }
-  if (upper.startsWith("VARIATION") || upper.startsWith("RESCUE") || upper.startsWith("BENG")) {
+  if (
+    upper.startsWith("VARIATION") ||
+    upper.startsWith("RESCUE") ||
+    upper.startsWith("BENG")
+  ) {
     return "variation";
   }
   return "other";
@@ -183,8 +235,10 @@ export function buildFindings(report: AnalysisResponse): FindingView[] {
     tokenIds: check.locations.map((location) => location.tokenId),
     resolvedBy: check.resolvedBy,
     needsAttention:
-      check.status === "fail" || check.status === "uncertain" ||
-      check.severity === "error" || check.severity === "warning",
+      check.status === "fail" ||
+      check.status === "uncertain" ||
+      check.severity === "error" ||
+      check.severity === "warning",
   }));
 }
 
@@ -214,7 +268,8 @@ export function groupFindings(
       const items = filtered
         .filter((item) => item.group === group)
         .sort((a, b) => {
-          const bySeverity = SEVERITY_RANK[a.severity] - SEVERITY_RANK[b.severity];
+          const bySeverity =
+            SEVERITY_RANK[a.severity] - SEVERITY_RANK[b.severity];
           if (bySeverity !== 0) return bySeverity;
           const byStatus = STATUS_RANK[a.status] - STATUS_RANK[b.status];
           if (byStatus !== 0) return byStatus;
@@ -243,9 +298,16 @@ export function locateFinding(
   report: AnalysisResponse,
   findingId: string,
 ): PositionTarget[] {
-  const finding = report.prosody.checks.find((item) => item.id === findingId);
+  const finding = [
+    ...report.prosody.checks,
+    ...(report.prosody.conditionalChecks ?? []).flatMap(
+      (block) => block.checks,
+    ),
+  ].find((item) => item.id === findingId);
   if (finding === undefined) return [];
-  const byId = new Map(report.poem.tokens.map((token) => [token.tokenId, token]));
+  const byId = new Map(
+    report.poem.tokens.map((token) => [token.tokenId, token]),
+  );
   const targets: PositionTarget[] = [];
   for (const location of finding.locations) {
     const token = byId.get(location.tokenId);
@@ -272,14 +334,18 @@ export interface RhymeFootView {
 
 /** 押韵区：韵脚 + 每个韵脚命中的韵部（来自报告候选，不新造）。 */
 export function buildRhymeFeet(report: AnalysisResponse): RhymeFootView[] {
-  const byId = new Map(report.poem.tokens.map((token) => [token.tokenId, token]));
+  const byId = new Map(
+    report.poem.tokens.map((token) => [token.tokenId, token]),
+  );
   return report.prosody.rhyme.tokenIds.flatMap((tokenId) => {
     const token = byId.get(tokenId);
     if (token === undefined) return [];
     const groupIds = [
       ...new Set(
         token.candidates
-          .filter((candidate) => token.effectiveCandidateIds.includes(candidate.id))
+          .filter((candidate) =>
+            token.effectiveCandidateIds.includes(candidate.id),
+          )
           .flatMap((candidate) => candidate.groupIds),
       ),
     ];
@@ -335,7 +401,9 @@ export interface RelationView {
  * 不补造关系，也不显示「已通过」。
  */
 export function buildRelations(report: AnalysisResponse): RelationView[] {
-  const byId = new Map(report.poem.tokens.map((token) => [token.tokenId, token]));
+  const byId = new Map(
+    report.poem.tokens.map((token) => [token.tokenId, token]),
+  );
   return report.prosody.relations.map((relation) => {
     let hasUnresolvedTokens = false;
     const sides: RelationSideView[] = relation.tokenIds.map((tokenId) => {

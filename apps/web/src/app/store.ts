@@ -408,9 +408,12 @@ export class CheckerStore {
   selectFinding(findingId: string | null): void {
     const { report } = this.state;
     if (findingId !== null && report !== null) {
-      const exists = report.prosody.checks.some(
-        (check) => check.id === findingId,
-      );
+      const exists = [
+        ...report.prosody.checks,
+        ...(report.prosody.conditionalChecks ?? []).flatMap(
+          (block) => block.checks,
+        ),
+      ].some((check) => check.id === findingId);
       if (!exists) {
         this.commit({ feedback: `诊断 ${findingId} 不在当前报告中。` });
         return;

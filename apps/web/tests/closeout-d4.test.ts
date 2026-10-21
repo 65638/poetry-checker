@@ -84,8 +84,9 @@ describe("D4 收口：并发归属", () => {
     store.downloadReport();
 
     expect(exportSink.copied).toHaveLength(1);
-    expect(exportSink.copied[0]).toContain("B 的结果");
-    expect(exportSink.copied[0]).not.toContain("A 的迟到结果");
+    expect(exportSink.copied[0]).toContain("评语：已实现的必检项均通过");
+    expect(exportSink.copied[0]).not.toContain("发现格律问题");
+    expect(exportSink.copied[0]).toContain(base.poem.originalText);
 
     expect(exportSink.downloaded).toHaveLength(1);
     const json = JSON.parse(exportSink.downloaded[0]!.json) as {
@@ -345,7 +346,10 @@ describe("D4 收口：请求体形状（与 E 的浏览器断言对齐）", () =
     await store.analyze();
 
     expect(transport.calls).toHaveLength(1);
-    const body = transport.calls[0]?.body as { inputHash: string; text: string };
+    const body = transport.calls[0]?.body as {
+      inputHash: string;
+      text: string;
+    };
     expect(body.text).toBe(draft.text);
     expect(body.inputHash).toBe(sha256Hex(draft.text));
     expect(store.getState().error?.code).toBe("TIMEOUT");

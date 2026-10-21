@@ -9,9 +9,10 @@ import type {
   SummaryStatus,
 } from "@poetry/contracts";
 import type { CheckerViewProps } from "../../view-contract";
-import { incompleteSummary } from "../../app/reportView";
+import { incompleteSummary, templateLabel } from "../../app/reportView";
 import { trailingPunctuation } from "../punctuation";
 import { FindingReference } from "./FindingReference";
+import { FormatSummary } from "./FormatSummary";
 import "../styles/report.css";
 
 type ReportViewProps = Pick<
@@ -109,6 +110,11 @@ export function ReportView(props: ReportViewProps) {
   const notesRef = useRef<HTMLDivElement>(null);
   const followTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const locatingPoem = useRef(false);
+  const [reference, setReference] = useState<{
+    report: AnalysisResponse;
+    id: string;
+  } | null>(null);
+  const referenceId = reference?.report === report ? reference.id : "";
   const [hoverToken, setHoverToken] = useState<string | null>(null);
   const [hoverFinding, setHoverFinding] = useState<string | null>(null);
   const [focusToken, setFocusToken] = useState<string | null>(null);
@@ -126,8 +132,51 @@ export function ReportView(props: ReportViewProps) {
     ...checks.filter((f) => !SETTLED.has(f.status)),
     ...checks.filter((f) => SETTLED.has(f.status)),
   ].map((f, i) => ({ f, n: i + 1 }));
-  const tokenLinks = new Map<string, typeof numbered>();
-  for (const item of numbered.filter(({ f }) => !SETTLED.has(f.status))) {
+  const conditionalGroups = (report.prosody.conditionalChecks ?? []).map(
+    (block) => {
+      const label = templateLabel(
+        report.prosody.candidates.find((c) => c.id === block.templateId)!,
+      );
+      return {
+        id: block.templateId,
+        label,
+        checks: block.checks
+          .filter(
+            (f) =>
+              block.conditionalFindingIds.includes(f.id) &&
+              (f.status === "uncertain" ||
+                f.status === "unsupported" ||
+                (f.status === "fail" && f.resolvedBy === null)),
+          )
+          .map((f) => ({ ...f, message: `若按${label}：${f.message}` })),
+      };
+    },
+  );
+  let conditionNumber = numbered.length;
+  const conditionRows = conditionalGroups.map((group) => ({
+    ...group,
+    items: group.checks.map((f) => ({
+      f,
+      n: ++conditionNumber,
+      conditional: group.label,
+    })),
+  }));
+  const allChecks = [
+    ...checks,
+    ...(report.prosody.conditionalChecks ?? []).flatMap(
+      (block) => block.checks,
+    ),
+  ];
+  const tokenLinks = new Map<
+    string,
+    Array<{ f: Finding; n: number; conditional?: string }>
+  >();
+  for (const item of [
+    ...numbered.filter(({ f }) => !SETTLED.has(f.status)),
+    ...conditionRows
+      .filter((g) => g.id === referenceId)
+      .flatMap((g) => g.items),
+  ]) {
     for (const { tokenId } of item.f.locations) {
       const list = tokenLinks.get(tokenId) ?? [];
       if (!list.includes(item)) list.push(item);
@@ -138,12 +187,14 @@ export function ReportView(props: ReportViewProps) {
   const activeFindingId =
     hoverFinding ?? followedFindingId ?? focusFinding ?? selectedFindingId;
   const selectedFinding =
-    checks.find((f) => f.id === selectedFindingId) ?? null;
-  const activeFinding = checks.find((f) => f.id === activeFindingId) ?? null;
+    allChecks.find((f) => f.id === selectedFindingId) ?? null;
+  const activeFinding = allChecks.find((f) => f.id === activeFindingId) ?? null;
   const related = new Set(
     [
       activeFinding,
-      ...checks.filter((f) => activeFinding?.relatedFindingIds.includes(f.id)),
+      ...allChecks.filter((f) =>
+        activeFinding?.relatedFindingIds.includes(f.id),
+      ),
     ].flatMap((f) => f?.locations.map((l) => l.tokenId) ?? []),
   );
   const noteIsActive = (f: Finding) =>
@@ -203,6 +254,11 @@ export function ReportView(props: ReportViewProps) {
   };
   const selectFinding = (finding: Finding, destination: "poem" | "note") => {
     if (followTimer.current) clearTimeout(followTimer.current);
+    const group = conditionRows.find((g) =>
+      g.items.some((item) => item.f.id === finding.id),
+    );
+    if (group && group.id !== referenceId)
+      setReference({ report, id: group.id });
     setFollowedFindingId(finding.id);
     destinationRef.current = destination;
     props.onSelectFinding(finding.id);
@@ -214,7 +270,15 @@ export function ReportView(props: ReportViewProps) {
       ? { ...SUMMARY.needs_review, ...incompleteSummary(report) }
       : SUMMARY[report.summary.status];
   const firstRelated = selectedFinding?.locations[0]?.tokenId ?? null;
-  const renderFinding = ({ f, n }: { f: Finding; n: number }) => {
+  const renderFinding = ({
+    f,
+    n,
+    conditional,
+  }: {
+    f: Finding;
+    n: number;
+    conditional?: string;
+  }) => {
     const st = CHECK[f.status];
     const rule = report.provenance.rules.find((r) => r.id === f.ruleId);
     const templatePending =
@@ -239,24 +303,33 @@ export function ReportView(props: ReportViewProps) {
           if (!event.currentTarget.contains(event.relatedTarget))
             setFocusFinding(null);
         }}
-        className={`pc-finding pc-finding--${f.status}${noteIsActive(f) ? " pc-finding--selected" : ""}`}
+        className={`pc-finding pc-finding--${f.status}${conditional ? " pc-finding--conditional" : ""}${noteIsActive(f) ? " pc-finding--selected" : ""}`}
       >
         <span className="pc-finding__no" aria-hidden="true">
           {n}
         </span>
         <div className="pc-finding__body">
           <div className="pc-finding__head">
+            {conditional && (
+              <span className="pc-tag pc-tag--quiet">条件批注</span>
+            )}
             <span className="pc-tag">
               <span aria-hidden="true">{st.icon}</span> {st.label}
             </span>
             <span className="pc-tag pc-tag--quiet">{SEVERITY[f.severity]}</span>
             <span className="pc-finding__rule">
-              {templatePending ? "格律格式未确定" : rule ? rule.name : f.ruleId}
+              {templatePending
+                ? "整诗参考格式未唯一确定"
+                : rule
+                  ? rule.name
+                  : f.ruleId}
             </span>
           </div>
           <p className="pc-finding__msg">
             {templatePending
-              ? "平起／仄起、首句是否入韵尚未确定。目前仅显示各候选格式共有的检查结果。"
+              ? report.prosody.format
+                ? "已知形制与起式分别列于上方；共同问题照常标出，其余可切换参考格式查看。"
+                : "平起／仄起、首句是否入韵尚未确定。目前仅显示各候选格式共有的检查结果。"
               : f.message}
           </p>
           {!templatePending && (
@@ -364,7 +437,12 @@ export function ReportView(props: ReportViewProps) {
           <span className="pc-status__glyph">{summary.icon}</span>
         </span>
         <div className="pc-status__body">
-          <h3 className="pc-status__label">结论：{summary.label}</h3>
+          <h3 className="pc-status__label">
+            {report.summary.status === "needs_review" && report.prosody.format
+              ? "参考分析"
+              : "结论"}
+            ：{summary.label}
+          </h3>
           <p className="pc-status__text">{summary.desc}</p>
           {report.readingAssistant && (
             <p className="pc-status__text" role="status">
@@ -406,6 +484,8 @@ export function ReportView(props: ReportViewProps) {
         )}
       </p>
 
+      <FormatSummary report={report} />
+
       <div className="pc-report-workbench">
         <section className="pc-reading" aria-labelledby="pc-grid-heading">
           <div className="pc-reading__head">
@@ -438,7 +518,11 @@ export function ReportView(props: ReportViewProps) {
                     const isRelated = related.has(id);
                     const links = tokenLinks.get(id) ?? [];
                     const violation = links.some(
-                      ({ f }) => f.status === "fail",
+                      ({ f, conditional }) =>
+                        f.status === "fail" && !conditional,
+                    );
+                    const conditionalViolation = links.some(
+                      ({ conditional }) => !!conditional,
                     );
                     const nextToken = tokens.get(line.tokenIds[i + 1] ?? "");
                     const nextLineToken =
@@ -475,7 +559,7 @@ export function ReportView(props: ReportViewProps) {
                         <button
                           type="button"
                           data-token-id={id}
-                          className={`pc-cell pc-cell--${tone.mod}${isRhyme ? " pc-cell--rhyme" : ""}${violation ? " pc-cell--violation" : ""}${isRelated ? " pc-cell--related" : ""}${selectedTokenId === id ? " pc-cell--selected" : ""}`}
+                          className={`pc-cell pc-cell--${tone.mod}${isRhyme ? " pc-cell--rhyme" : ""}${violation ? " pc-cell--violation" : ""}${conditionalViolation && !violation ? " pc-cell--conditional" : ""}${isRelated ? " pc-cell--related" : ""}${selectedTokenId === id ? " pc-cell--selected" : ""}`}
                           aria-label={label}
                           aria-haspopup="dialog"
                           aria-expanded={selectedTokenId === id}
@@ -508,10 +592,11 @@ export function ReportView(props: ReportViewProps) {
                           )}
                         </button>
                         <span className="pc-cell__references">
-                          {links.map(({ f, n }) => (
+                          {links.map(({ f, n, conditional }) => (
                             <FindingReference
                               key={f.id}
                               finding={f}
+                              conditional={!!conditional}
                               number={n}
                               open={openReference === `${id}:${f.id}`}
                               onOpenChange={(open) =>
@@ -523,11 +608,11 @@ export function ReportView(props: ReportViewProps) {
                                       : current,
                                 )
                               }
-                              rule={
+                              rule={`${conditional ? "条件批注 · " : ""}${
                                 report.provenance.rules.find(
                                   (rule) => rule.id === f.ruleId,
                                 )?.name ?? f.ruleId
-                              }
+                              }`}
                               onFollow={() => followFinding(f.id, 0)}
                             />
                           ))}
@@ -549,6 +634,31 @@ export function ReportView(props: ReportViewProps) {
             </span>
             批注
           </h3>
+          {conditionRows.length > 0 && (
+            <label className="pc-format-reference">
+              参考格式
+              <select
+                aria-label="参考格式"
+                value={referenceId}
+                onChange={(e) => {
+                  cancelFollow();
+                  setReference({ report, id: e.target.value });
+                  setOpenReference(null);
+                  setFollowedFindingId(null);
+                  setHoverFinding(null);
+                  setFocusFinding(null);
+                  props.onSelectFinding(null);
+                }}
+              >
+                <option value="">各式共有</option>
+                {conditionRows.map((group) => (
+                  <option key={group.id} value={group.id}>
+                    {group.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+          )}
           <div
             ref={notesRef}
             className="pc-notes__body"
@@ -587,6 +697,45 @@ export function ReportView(props: ReportViewProps) {
                     </ol>
                   </details>
                 )}
+                {conditionRows.length > 0 &&
+                  (referenceId ? (
+                    <section className="pc-conditional" aria-label="条件批注">
+                      <h4>
+                        若按
+                        {conditionRows.find((g) => g.id === referenceId)?.label}
+                      </h4>
+                      <ol className="pc-findings">
+                        {conditionRows
+                          .find((g) => g.id === referenceId)
+                          ?.items.map(renderFinding)}
+                      </ol>
+                      {!conditionRows.find((g) => g.id === referenceId)?.items
+                        .length && (
+                        <p className="pc-legend">
+                          此格式没有额外的未解决问题。
+                        </p>
+                      )}
+                    </section>
+                  ) : (
+                    <details className="pc-conditional">
+                      <summary>
+                        条件批注（{conditionRows.length}种参考格式）
+                      </summary>
+                      {conditionRows.map((group) => (
+                        <details
+                          key={group.id}
+                          className="pc-conditional__group"
+                        >
+                          <summary>
+                            若按{group.label}：{group.items.length}项
+                          </summary>
+                          <ol className="pc-findings">
+                            {group.items.map(renderFinding)}
+                          </ol>
+                        </details>
+                      ))}
+                    </details>
+                  ))}
               </>
             )}
           </div>

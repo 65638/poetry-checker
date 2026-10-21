@@ -4,6 +4,47 @@
   min-width: 0;
 }
 
+.pc-format {
+  border-block: 1px solid var(--pc-divider);
+  padding-block: 14px;
+}
+.pc-format__items {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 24px;
+  margin: 0;
+}
+.pc-format__items dt { color: var(--pc-text-muted); font-size: 13px; }
+.pc-format__items dd { margin: 4px 0 0; font-size: 16px; font-weight: 600; }
+.pc-format__items p { margin: 4px 0 0; font-size: 13px; color: var(--pc-text-muted); }
+.pc-format__basis { margin-top: 14px; font-size: 13px; }
+.pc-format__basis summary { cursor: pointer; color: var(--pc-accent); width: fit-content; }
+.pc-format__basis p { margin: 6px 0; }
+.pc-format__alternative { margin: 14px 0 0; color: var(--pc-review-fg); }
+.pc-format-reference { display: grid; gap: 6px; font-size: 13px; }
+.pc-format-reference select {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  min-height: 40px;
+  padding: 6px;
+  background: var(--pc-surface-sheet);
+  color: var(--pc-text);
+  border: 1px solid var(--pc-divider);
+  border-radius: 3px;
+  font: inherit;
+}
+.pc-conditional { margin-top: 16px; border-top: 1px solid var(--pc-divider); padding-top: 12px; }
+.pc-conditional h4 { margin: 0 0 12px; font-size: 14px; }
+.pc-conditional summary { cursor: pointer; font-size: 13px; }
+.pc-conditional__group { margin-top: 12px; }
+.pc-conditional__group > ol { margin-top: 12px; }
+.pc-finding--conditional { border-left: 2px dashed var(--pc-review-border); padding-left: 8px; }
+.pc-cell--conditional { border-bottom: 2px dotted var(--pc-review-border); }
+@media (max-width: 599px) {
+  .pc-format__items { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+}
+
 .pc-report-workbench {
   display: grid;
   gap: 24px;
@@ -500,6 +541,12 @@
   --pc-f-bg: var(--pc-fail-bg);
 }
 .pc-finding--uncertain {
+  --pc-f-fg: var(--pc-review-fg);
+  --pc-f-bg: var(--pc-review-bg);
+}
+.pc-finding--conditional,
+.pc-reference--conditional .pc-cell__reference,
+.pc-reference--conditional .pc-reference__note {
   --pc-f-fg: var(--pc-review-fg);
   --pc-f-bg: var(--pc-review-bg);
 }
