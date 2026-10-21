@@ -61,6 +61,55 @@
   font-size: 0.78rem;
   color: var(--pc-text-muted);
 }
+.pc-corpus__readings {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
+  align-items: start;
+  gap: 4px;
+}
+.pc-corpus__reading[open] {
+  grid-column: 1 / -1;
+}
+.pc-corpus__reading > summary {
+  min-height: 72px;
+  text-align: center;
+  padding: 6px;
+}
+.pc-corpus__reading strong,
+.pc-corpus__reading > summary span {
+  display: block;
+}
+.pc-corpus__reading strong {
+  font-size: 20px;
+  font-family: var(--pc-font-serif);
+}
+.pc-corpus__reading > summary span {
+  font-size: 12px;
+  color: var(--pc-text-muted);
+}
+.pc-corpus__paging {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 8px 0;
+}
+.pc-corpus__paging button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--pc-border);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--pc-text);
+  cursor: pointer;
+}
+.pc-corpus__paging button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
 @media (max-width: 480px) {
   .pc-research > summary span {
     display: block;

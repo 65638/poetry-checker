@@ -1,0 +1,82 @@
+{
+  "packageManifestSha256": "dabb4807af7a0728e4d178947d32786254b69171ca2d055f635068b85f36225b",
+  "packageFilesVerified": 6359,
+  "inputs": [
+    {
+      "input": "data/works.jsonl",
+      "file": "data/raw/research-full-corpus-v1/data-works.jsonl.gz",
+      "sha256": "cf7fcd19eae87299e0082a0055ab19bd55c2e1affba2d6e8b3bfed688ee860e4",
+      "bytes": 14312204,
+      "archiveSha256": "51118272affe697c76b63a1809d092c4c9ccc9ff7412126e3de3c07dd571ad27"
+    },
+    {
+      "input": "data/readings.jsonl",
+      "file": "data/raw/research-full-corpus-v1/data-readings.jsonl.gz",
+      "sha256": "ec91b30c77d07f50b43bd85df098eb72f643ba975264d37d48bd112d01ce3b19",
+      "bytes": 162573859,
+      "archiveSha256": "7ebd54409400cae16fb414f9cb24138882c489595c85632982cb4d519caa669c"
+    },
+    {
+      "input": "data/variants.jsonl",
+      "file": "data/raw/research-full-corpus-v1/data-variants.jsonl.gz",
+      "sha256": "858c1d436c69ec731f0093fdcf43ff7b44fb29e9472e54572726fbf91dbb234f",
+      "bytes": 1107198,
+      "archiveSha256": "5c02e3d76acc50cc70b7d8b57f6b6001c150591d455b7d3ddd71c9d62b618a35"
+    },
+    {
+      "input": "data/sources.jsonl",
+      "file": "data/raw/research-full-corpus-v1/data-sources.jsonl.gz",
+      "sha256": "0c72275f8d122449d1e03a9f7e5e92c2dccfd45ba55af22d63dd5d3e53d9e9d8",
+      "bytes": 4540222,
+      "archiveSha256": "9829ffad264144fd3c59dab1d3acd6ddcf5c917ac99bf4fd95759d4dd6274d7e"
+    },
+    {
+      "input": "coverage.jsonl",
+      "file": "data/raw/research-full-corpus-v1/coverage.jsonl.gz",
+      "sha256": "12654953e52d675c4cb0f770e582e4929f9dd453a4d785ea70f56fec10f20f1c",
+      "bytes": 1951198,
+      "archiveSha256": "6809d381aaeefd7a72c4209015a677b7287dcd4cac8ea2bd6f2975d8df4f15c3"
+    },
+    {
+      "input": "summary.json",
+      "file": "data/raw/research-full-corpus-v1/summary.json.gz",
+      "sha256": "7bcbeccedf2e8557044c4c2bbf0edc1bdfdc39b073b005aefcb44a21cee93992",
+      "bytes": 8231,
+      "archiveSha256": "c923dc17e639a48c7ca50a9bbbe85153e7901b05e3fd63c3079ce02c31a4c798"
+    }
+  ],
+  "rawFilesVerified": 4172,
+  "pinyinXPathPairsVerified": 161782,
+  "snapshotArchiveSha256": "96c34c7a6cb1a3a59087fa05845108b5ea93c7ce9740a00f41e08f76a891c051",
+  "compiledSha256": "e206863e34135e970f40e3737344d62753581e0a6707ca6460d36224377e1c30",
+  "works": 2022,
+  "hanPositions": 166462,
+  "directContextCount": 161789,
+  "conflictingCount": 79,
+  "unavailableCount": 4673,
+  "products": {
+    "reference.json.gz": "e206863e34135e970f40e3737344d62753581e0a6707ca6460d36224377e1c30",
+    "batch-01.json.gz": "af1de5b25d8e42d80b43afa2382ab692647f60624be78e21f09d8f667296e9ff",
+    "batch-02.json.gz": "ff7b940159349771909d475c2e8b405829d1147cd51a6a6674b958a3a7f513c1",
+    "batch-03.json.gz": "a5d649632d9ae430ffe131a681e820654b4d668d06616f3ae7ae3bada5dc4d36",
+    "batch-04.json.gz": "34e15de42ac69ca2d893698e5bd5cd63b66d20319fbbe331c43eb5ef9d0eff64",
+    "batch-05.json.gz": "f852b4ca76bf64c41a8fc8ed1b4366d581300b40f2e5d1ce67068c6ffd37e981",
+    "batch-06.json.gz": "1ec9c0ff3b885d42ca93540de40682369e8976885b2f0ccf85c6c4e8ad609b43",
+    "batch-07.json.gz": "b50706d895e812262da6c1ae4650dba84d6f4b898cd4b3bd924d93da5f0fc71b",
+    "batch-08.json.gz": "69e5d2d06b3d05c4e21a82d4ce09bc1defb3277e3f2e763ab047f7f651a21665",
+    "batch-09.json.gz": "6ac53b1cb50531b5c9ae7a89ddb80c10910907bbc68d3454136410daea7d16b2",
+    "batch-10.json.gz": "8442a563bc0fd2a052f650702ace94b8d00bc96c4fec2a5b3c3e2ea00404a7cd",
+    "batch-11.json.gz": "401173ec08b44bac34820817c2a5d3ae843299d810de65b27f9f1b7ac6247dab",
+    "batch-12.json.gz": "bb04b862e81d8a39ded20897eac05b275fee053f0209cf8caa111c94c71afb0b",
+    "batch-13.json.gz": "3f9831437a36ef3dd40063171961e34d372b86a4091a1e4c0a0567b908f60641",
+    "batch-14.json.gz": "27a8c0f11644384ccdb0a746d2606b69c4593edb4ee6813c5ae0a119689776ed",
+    "batch-15.json.gz": "8eb905a8188f804eeba19d6bf3c8d6584bd6b079a378b1878a90f63537821c2d",
+    "batch-16.json.gz": "5df38ec85cb024eb5ef46415b4655cab2a4bf53757fb29750452f190dd14ea7d",
+    "batch-17.json.gz": "3ad2c26e411622046de5b39f5648203862acb2cd6d7475a0e454c1f755ba7702",
+    "batch-18.json.gz": "15018f84c99ea5ecb57257d9b0770028532af64ec63178863937fcb3ae318e9f",
+    "batch-19.json.gz": "e32c652ab8e3d4af85c7045a07c6236bdc4cd9ca8a5a6a1d1c16dfc1e14ac3b3",
+    "batch-20.json.gz": "269339ff724fb02abdc79da808f346753588a2aadf921bf8b12afdf53c7b8b83",
+    "batch-21.json.gz": "d655f9742734269087ccdb2690fd72bc754d9ce67801c159b763d236c59730e9",
+    "index.json.gz": "1922f700a8245235ef6c719ec5adf10de5137b8b1c539c9e17fa0c7917a2752d"
+  }
+}

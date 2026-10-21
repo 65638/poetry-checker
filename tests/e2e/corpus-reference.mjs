@@ -224,19 +224,110 @@ try {
     },
   );
   await check(
-    "missing-astral-reading-remains-visible-without-shifting-next-syllable",
+    "sourced-astral-reading-is-filled-without-shifting-next-syllable",
     async () => {
       await open("望海潮·东南形胜");
       await waitFor(() =>
         h.evaluate(
-          "document.querySelector('.pc-library-character[aria-label=\"选字「𪩘」\"] rt')?.textContent==='·'",
+          "document.querySelector('.pc-library-character[aria-label=\"选字「𪩘」\"] rt')?.textContent==='yǎn'",
         ),
       );
       assert.equal(
         await h.evaluate(
           "document.querySelector('.pc-library-character[aria-label=\"选字「𪩘」\"]').title",
         ),
-        "本字未提供注音",
+        "yǎn",
+      );
+    },
+  );
+  await check(
+    "full-corpus-references-page-through-source-bound-readings",
+    async () => {
+      await h.click(".pc-library-reading .pc-research > summary");
+      await waitFor(() => h.evaluate("!!document.querySelector('.pc-corpus')"));
+      assert(
+        (
+          await h.evaluate("document.querySelector('.pc-corpus').innerText")
+        ).includes("107 / 107"),
+      );
+      await clickText(".pc-corpus > details > summary", "逐字注音与出处");
+      await waitFor(() =>
+        h.evaluate(
+          "document.querySelectorAll('.pc-corpus__readings > details').length===80",
+        ),
+      );
+      await h.click('[aria-label="下一页注音"]');
+      await waitFor(() =>
+        h.evaluate(
+          "document.querySelectorAll('.pc-corpus__readings > details').length===27",
+        ),
+      );
+      await h.click('[aria-label="上一页注音"]');
+      await waitFor(() =>
+        h.evaluate(
+          "document.querySelectorAll('.pc-corpus__readings > details').length===80",
+        ),
+      );
+      await h.click(".pc-corpus__reading > summary");
+      assert(
+        await h.evaluate(
+          "!!document.querySelector('.pc-corpus__reading[open] a[href^=https]')",
+        ),
+      );
+      const count = requests.filter(
+        (url) =>
+          url.includes("/api/v1/analyze") ||
+          url.includes("/api/v1/reading-suggestions"),
+      ).length;
+      for (const width of [1440, 375]) {
+        await h.viewport(width, 1000, width < 600);
+        await h.evaluate(
+          "document.querySelector('.pc-corpus').scrollIntoView({block:'start',behavior:'instant'})",
+        );
+        assert(
+          await h.evaluate(
+            "document.documentElement.scrollWidth<=innerWidth+1",
+          ),
+        );
+        await shot("full-corpus-" + width);
+      }
+      assert.equal(
+        requests.filter(
+          (url) =>
+            url.includes("/api/v1/analyze") ||
+            url.includes("/api/v1/reading-suggestions"),
+        ).length,
+        count,
+      );
+      await h.viewport(1440, 1000);
+    },
+  );
+  await check(
+    "full-corpus-references-work-outside-the-original-ten-samples",
+    async () => {
+      await open("关雎");
+      assert.equal(
+        await h.evaluate(
+          "document.querySelector('.pc-library-reading .pc-research').open",
+        ),
+        false,
+      );
+      await h.click(".pc-library-reading .pc-research > summary");
+      await waitFor(() =>
+        h.evaluate(
+          "document.querySelector('.pc-corpus')?.innerText.includes('80 / 80')",
+        ),
+      );
+      await clickText(".pc-corpus > details > summary", "逐字注音与出处");
+      await waitFor(() =>
+        h.evaluate(
+          "document.querySelector('.pc-corpus__reading')?.textContent.includes('guān')",
+        ),
+      );
+      assert(
+        !(
+          await h.evaluate("document.querySelector('.pc-corpus').innerText")
+        ).includes("107 / 107"),
       );
     },
   );

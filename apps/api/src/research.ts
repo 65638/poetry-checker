@@ -10,6 +10,7 @@ import {
   type ResearchResponse,
 } from "@poetry/contracts";
 import { relatedCharacterGlyphs } from "./library.js";
+import { corpusResearch } from "./corpus-research.js";
 
 const han = (text: string) =>
   [...text].filter((c) => /\p{Script=Han}/u.test(c));
@@ -80,6 +81,7 @@ function containsRelatedExcerpt(body: string[], excerpt: string) {
 export function poemResearch(text: string): ResearchResponse {
   const inputHash = createHash("sha256").update(text).digest("hex");
   const base = { version: "collected-v1", inputHash, notice };
+  const corpus = corpusResearch(text);
   try {
     const data = load();
     const readings = data.readings.flatMap((r) => {
@@ -125,26 +127,69 @@ export function poemResearch(text: string): ResearchResponse {
       readings,
       works,
       rules,
-      sources: data.sources.filter((s) => used.has(s.id)),
+      sources: [
+        ...data.sources.filter((s) => used.has(s.id)),
+        ...corpus.sources,
+      ],
+      corpus: corpus.works,
     });
   } catch {
     return {
       ...base,
-      state: "unavailable",
+      state: corpus.available ? "available" : "unavailable",
       readings: [],
       works: [],
       rules: [],
-      sources: [],
-      notice: "补采参考暂不可用；基础查字与分析仍可使用。",
+      sources: corpus.sources,
+      corpus: corpus.works,
+      notice: corpus.available
+        ? notice
+        : "补采参考暂不可用；基础查字与分析仍可使用。",
     };
   }
 }
 
-export function modelResearch(text: string) {
+export function modelResearch(text: string, targetHanOffsets?: number[]) {
   const research = poemResearch(text);
+  const targets = targetHanOffsets ? new Set(targetHanOffsets) : null;
   return {
     notice: research.notice,
     readings: research.readings,
+    corpusReferences: research.corpus?.map((w) => ({
+      title: w.title,
+      author: w.author,
+      textHash: w.textHash,
+      binding:
+        "full_han_sequence_only; hanOffset indexes source Han characters; no glyph conversion",
+      coverage: w.coverage,
+      omittedReadings:
+        w.readings.length -
+        (targets
+          ? w.readings.filter((r) => targets.has(r.hanOffset)).length
+          : Math.min(w.readings.length, 160)),
+      readings: (targets
+        ? w.readings.filter((r) => targets.has(r.hanOffset))
+        : w.readings.slice(0, 160)
+      ).map((r) => ({
+        hanOffset: r.hanOffset,
+        character: r.character,
+        status: r.status,
+        evidenceScope: r.evidenceScope,
+        modernReading: r.modernReading,
+        candidates: r.candidates.map((c) => ({
+          modernReading: c.modernReading,
+          historicalTone: c.historicalTone,
+          rhymeGroup: c.rhymeGroup,
+          evidenceScope: c.evidenceScope,
+          sourceIds: c.sourceIds,
+          quote: c.quote,
+        })),
+      })),
+      notes: w.notes.slice(0, 40),
+      omittedNotes: Math.max(0, w.notes.length - 40),
+      limitations:
+        "同站聚合注音不代表独立核验；来源体式摘录可能涉及他篇，不能直接判定当前诗体。分歧不裁决，缺失不猜。",
+    })),
     versions: research.works.map(
       ({
         title,

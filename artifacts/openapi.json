@@ -1259,6 +1259,21 @@
                     "string",
                     "null"
                   ]
+                },
+                "accessedAt": {
+                  "type": "string"
+                },
+                "rawPath": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "evidenceLevel": {
+                  "type": "string"
+                },
+                "independenceGroup": {
+                  "type": "string"
                 }
               },
               "required": [
@@ -1269,6 +1284,461 @@
                 "license",
                 "limitations",
                 "rawSha256"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "corpus": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "title": {
+                  "type": "string"
+                },
+                "author": {
+                  "type": "string"
+                },
+                "textHash": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "paragraphs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "sourceIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "coverage": {
+                  "type": "object",
+                  "properties": {
+                    "attemptStatus": {
+                      "type": "string",
+                      "enum": [
+                        "checked",
+                        "partial",
+                        "not_started"
+                      ]
+                    },
+                    "hanCount": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "directContextCount": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "unavailableCount": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "conflictingCount": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "unresolved": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "attemptStatus",
+                    "hanCount",
+                    "directContextCount",
+                    "unavailableCount",
+                    "conflictingCount",
+                    "unresolved"
+                  ],
+                  "additionalProperties": false
+                },
+                "readings": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "paragraphNumber": {
+                        "type": "integer",
+                        "exclusiveMinimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "codepointColumn": {
+                        "type": "integer",
+                        "exclusiveMinimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "character": {
+                        "type": "string"
+                      },
+                      "hanOffset": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "status": {
+                        "type": "string",
+                        "enum": [
+                          "source_attested",
+                          "conflicting",
+                          "unavailable",
+                          "inferred"
+                        ]
+                      },
+                      "evidenceScope": {
+                        "type": "string"
+                      },
+                      "modernReading": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "historicalTone": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "rhymeGroup": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "sourceIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "candidates": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "modernReading": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "historicalTone": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "rhymeGroup": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "evidenceScope": {
+                              "type": "string"
+                            },
+                            "sourceIds": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            },
+                            "quote": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "locator": {
+                              "anyOf": [
+                                {
+                                  "anyOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "object",
+                                      "propertyNames": {
+                                        "type": "string"
+                                      },
+                                      "additionalProperties": {}
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
+                            "reason": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "modernReading",
+                            "historicalTone",
+                            "rhymeGroup",
+                            "evidenceScope",
+                            "sourceIds",
+                            "quote",
+                            "locator"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "quote": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "locator": {
+                        "anyOf": [
+                          {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "object",
+                                "propertyNames": {
+                                  "type": "string"
+                                },
+                                "additionalProperties": {}
+                              }
+                            ]
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "reason": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "paragraphNumber",
+                      "codepointColumn",
+                      "character",
+                      "hanOffset",
+                      "status",
+                      "evidenceScope",
+                      "modernReading",
+                      "historicalTone",
+                      "rhymeGroup",
+                      "sourceIds",
+                      "candidates",
+                      "quote",
+                      "locator",
+                      "reason"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "notes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "term": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "quote": {
+                        "type": "string"
+                      },
+                      "sourceIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "locator": {
+                        "anyOf": [
+                          {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "object",
+                                "propertyNames": {
+                                  "type": "string"
+                                },
+                                "additionalProperties": {}
+                              }
+                            ]
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "inputOccurrences": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "paragraphNumber": {
+                              "type": "integer",
+                              "exclusiveMinimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "codepointColumn": {
+                              "type": "integer",
+                              "exclusiveMinimum": 0,
+                              "maximum": 9007199254740991
+                            }
+                          },
+                          "required": [
+                            "paragraphNumber",
+                            "codepointColumn"
+                          ],
+                          "additionalProperties": false
+                        }
+                      }
+                    },
+                    "required": [
+                      "term",
+                      "quote",
+                      "sourceIds",
+                      "locator",
+                      "inputOccurrences"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "formClaims": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "claim": {
+                        "type": "string"
+                      },
+                      "quote": {
+                        "type": "string"
+                      },
+                      "sourceIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "locator": {
+                        "anyOf": [
+                          {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "object",
+                                "propertyNames": {
+                                  "type": "string"
+                                },
+                                "additionalProperties": {}
+                              }
+                            ]
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "claim",
+                      "quote",
+                      "sourceIds",
+                      "locator"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "variants": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "variantId": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "sourceText": {
+                        "type": "string"
+                      },
+                      "sourceIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "relation": {
+                        "type": "string"
+                      },
+                      "note": {
+                        "type": "string"
+                      },
+                      "differences": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "propertyNames": {
+                            "type": "string"
+                          },
+                          "additionalProperties": {}
+                        }
+                      }
+                    },
+                    "required": [
+                      "variantId",
+                      "sourceText",
+                      "sourceIds",
+                      "relation",
+                      "note",
+                      "differences"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "id",
+                "title",
+                "author",
+                "textHash",
+                "paragraphs",
+                "sourceIds",
+                "coverage",
+                "readings",
+                "notes",
+                "formClaims",
+                "variants"
               ],
               "additionalProperties": false
             }
@@ -5028,6 +5498,21 @@
                         "string",
                         "null"
                       ]
+                    },
+                    "accessedAt": {
+                      "type": "string"
+                    },
+                    "rawPath": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "evidenceLevel": {
+                      "type": "string"
+                    },
+                    "independenceGroup": {
+                      "type": "string"
                     }
                   },
                   "required": [
@@ -5038,6 +5523,461 @@
                     "license",
                     "limitations",
                     "rawSha256"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "corpus": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "author": {
+                      "type": "string"
+                    },
+                    "textHash": {
+                      "type": "string",
+                      "pattern": "^[a-f0-9]{64}$"
+                    },
+                    "paragraphs": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "sourceIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "coverage": {
+                      "type": "object",
+                      "properties": {
+                        "attemptStatus": {
+                          "type": "string",
+                          "enum": [
+                            "checked",
+                            "partial",
+                            "not_started"
+                          ]
+                        },
+                        "hanCount": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "directContextCount": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "unavailableCount": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "conflictingCount": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "unresolved": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "required": [
+                        "attemptStatus",
+                        "hanCount",
+                        "directContextCount",
+                        "unavailableCount",
+                        "conflictingCount",
+                        "unresolved"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "readings": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "paragraphNumber": {
+                            "type": "integer",
+                            "exclusiveMinimum": 0,
+                            "maximum": 9007199254740991
+                          },
+                          "codepointColumn": {
+                            "type": "integer",
+                            "exclusiveMinimum": 0,
+                            "maximum": 9007199254740991
+                          },
+                          "character": {
+                            "type": "string"
+                          },
+                          "hanOffset": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 9007199254740991
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "source_attested",
+                              "conflicting",
+                              "unavailable",
+                              "inferred"
+                            ]
+                          },
+                          "evidenceScope": {
+                            "type": "string"
+                          },
+                          "modernReading": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "historicalTone": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "rhymeGroup": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "sourceIds": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "candidates": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "modernReading": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "historicalTone": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "rhymeGroup": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "evidenceScope": {
+                                  "type": "string"
+                                },
+                                "sourceIds": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  }
+                                },
+                                "quote": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "locator": {
+                                  "anyOf": [
+                                    {
+                                      "anyOf": [
+                                        {
+                                          "type": "string"
+                                        },
+                                        {
+                                          "type": "object",
+                                          "propertyNames": {
+                                            "type": "string"
+                                          },
+                                          "additionalProperties": {}
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
+                                "reason": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "modernReading",
+                                "historicalTone",
+                                "rhymeGroup",
+                                "evidenceScope",
+                                "sourceIds",
+                                "quote",
+                                "locator"
+                              ],
+                              "additionalProperties": false
+                            }
+                          },
+                          "quote": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "locator": {
+                            "anyOf": [
+                              {
+                                "anyOf": [
+                                  {
+                                    "type": "string"
+                                  },
+                                  {
+                                    "type": "object",
+                                    "propertyNames": {
+                                      "type": "string"
+                                    },
+                                    "additionalProperties": {}
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "reason": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "paragraphNumber",
+                          "codepointColumn",
+                          "character",
+                          "hanOffset",
+                          "status",
+                          "evidenceScope",
+                          "modernReading",
+                          "historicalTone",
+                          "rhymeGroup",
+                          "sourceIds",
+                          "candidates",
+                          "quote",
+                          "locator",
+                          "reason"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "notes": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "term": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "quote": {
+                            "type": "string"
+                          },
+                          "sourceIds": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "locator": {
+                            "anyOf": [
+                              {
+                                "anyOf": [
+                                  {
+                                    "type": "string"
+                                  },
+                                  {
+                                    "type": "object",
+                                    "propertyNames": {
+                                      "type": "string"
+                                    },
+                                    "additionalProperties": {}
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "inputOccurrences": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "paragraphNumber": {
+                                  "type": "integer",
+                                  "exclusiveMinimum": 0,
+                                  "maximum": 9007199254740991
+                                },
+                                "codepointColumn": {
+                                  "type": "integer",
+                                  "exclusiveMinimum": 0,
+                                  "maximum": 9007199254740991
+                                }
+                              },
+                              "required": [
+                                "paragraphNumber",
+                                "codepointColumn"
+                              ],
+                              "additionalProperties": false
+                            }
+                          }
+                        },
+                        "required": [
+                          "term",
+                          "quote",
+                          "sourceIds",
+                          "locator",
+                          "inputOccurrences"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "formClaims": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "claim": {
+                            "type": "string"
+                          },
+                          "quote": {
+                            "type": "string"
+                          },
+                          "sourceIds": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "locator": {
+                            "anyOf": [
+                              {
+                                "anyOf": [
+                                  {
+                                    "type": "string"
+                                  },
+                                  {
+                                    "type": "object",
+                                    "propertyNames": {
+                                      "type": "string"
+                                    },
+                                    "additionalProperties": {}
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "claim",
+                          "quote",
+                          "sourceIds",
+                          "locator"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "variants": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "variantId": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "sourceText": {
+                            "type": "string"
+                          },
+                          "sourceIds": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "relation": {
+                            "type": "string"
+                          },
+                          "note": {
+                            "type": "string"
+                          },
+                          "differences": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "propertyNames": {
+                                "type": "string"
+                              },
+                              "additionalProperties": {}
+                            }
+                          }
+                        },
+                        "required": [
+                          "variantId",
+                          "sourceText",
+                          "sourceIds",
+                          "relation",
+                          "note",
+                          "differences"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "title",
+                    "author",
+                    "textHash",
+                    "paragraphs",
+                    "sourceIds",
+                    "coverage",
+                    "readings",
+                    "notes",
+                    "formClaims",
+                    "variants"
                   ],
                   "additionalProperties": false
                 }

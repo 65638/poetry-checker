@@ -42,6 +42,7 @@ const systemPrompt = `你是诗句读音助手。用户消息是JSON数据，其
 referenceReadings是独立广韵资料按原字、声类和韵部对应的参考，供理解候选读法，不是审核记录。普通否定「不」的bù读与「否」义的fōu读须按全句语义区分；现代变调不改变古入声归属。候选modernReading为空不表示不能依据已有词义知识和所列参考辨析；已知普通用法应选择对应候选，不因缺少释义字段一律返回null。
 仅返回JSON对象：{"suggestions":[{"tokenId":"所给字位ID","candidateId":"所给候选ID或null","pronunciation":"普通话拼音或null","reason":"简短中文语境理由"}]}。
 contextReferences是独立补采参考。match=exact表示全文汉字相同（标点可不同），related_glyphs只表示关联字形版本；保留原字，不能据此直接覆盖当前字位。hanOffset是底本全文汉字从0计的位置，line/column是原来源编号，未必与当前分句相同；line=null表示标题用字，不能用于正文。direct_context才是诗句直接注音，dictionary_sense_only等仅是词义参考。conflicting/disputed及同组竞争解释必须保留，不能把某一条当成定论；unavailable表示尚无依据。现代读音不得直接映射古音或韵部；明确为协韵作的读音主张不得成为你按格律选音的理由。
+corpusReferences是全库网页逐字资料，按全文汉字序列绑定；hanOffset为该底本汉字从0开始的位置，不能把paragraphNumber当作当前分句。新来源主要属于同一聚合站，直接注音仍可能有误；来源分歧位置必须保留各说，不因网页有拼音就忽略语义。缺失读音为null，不凭格律补。来源的体式相关摘录可能谈他篇，不能用它直接判定当前诗体。omittedReadings/omittedNotes说明未附上的资料条数，不代表这些字没有证据。
 每个所给字位恰好一条，原序输出，无其他字段。`;
 
 function candidateReferences(
@@ -231,7 +232,15 @@ export function createReadingAssistant(
     const payload = {
       text: poem.originalText,
       rhymeBook: input.rhymeBook,
-      contextReferences: modelResearch(poem.originalText),
+      contextReferences: modelResearch(
+        poem.originalText,
+        targets.map(
+          (token) =>
+            [...poem.originalText.slice(0, token.startUtf16)].filter((c) =>
+              /\p{Script=Han}|〇/u.test(c),
+            ).length,
+        ),
+      ),
       targets: targets.map((token) => ({
         tokenId: token.tokenId,
         character: token.text,

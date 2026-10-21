@@ -7,6 +7,7 @@ import {
   CharacterReferenceSchema,
   type GuangyunEntry,
 } from "@poetry/contracts";
+import { fillMissingCorpusReadings } from "./corpus-research.js";
 
 function read(name: string): unknown {
   return JSON.parse(
@@ -73,7 +74,21 @@ export function registerLibrary(app: FastifyInstance) {
               fieldErrors: [],
             },
           });
-        return PoemPronunciationSchema.parse(value);
+        const original = PoemPronunciationSchema.parse(value);
+        const supplement = fillMissingCorpusReadings(
+          original.id,
+          original.textHash,
+          original.lines,
+        );
+        return {
+          ...original,
+          lines: supplement.lines,
+          notice:
+            original.notice +
+            (supplement.added
+              ? ` 已据本诗公开注音补充${supplement.added}字，出处见“读音与版本”。`
+              : ""),
+        };
       } catch {
         return reply.code(503).send(unavailable);
       }

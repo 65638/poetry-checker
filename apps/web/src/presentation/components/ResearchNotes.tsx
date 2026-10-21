@@ -6,6 +6,7 @@ import {
 import { readWebEnv, resolveApiConfig } from "../../app/config";
 import { digest } from "../../app/library";
 import "../styles/research.css";
+import { CorpusNotes } from "./CorpusNotes";
 
 const scope: Record<string, string> = {
   direct_context: "诗句注音",
@@ -77,7 +78,7 @@ export function ResearchNotes({
     );
   };
   const count = current
-    ? `${current.readings.length}条参考 · ${current.works.length}个底本`
+    ? `${current.readings.length + (current.corpus ?? []).reduce((n, w) => n + w.coverage.directContextCount, 0)}条参考 · ${current.works.length}个底本`
     : "查看出处与异文";
   return (
     <details
@@ -95,11 +96,16 @@ export function ResearchNotes({
           )}
           {current?.state === "available" && (
             <>
-              {!current.readings.length && !current.works.length && (
-                <p>
-                  这首诗暂未收录专门的注音与版本资料。下方可查阅通用格律依据。
-                </p>
-              )}
+              {!current.readings.length &&
+                !current.works.length &&
+                !current.corpus?.length && (
+                  <p>
+                    这首诗暂未收录专门的注音与版本资料。下方可查阅通用格律依据。
+                  </p>
+                )}
+              {current.corpus?.map((work) => (
+                <CorpusNotes key={work.id} work={work} cite={cite} />
+              ))}
               {current.readings.length > 0 && (
                 <section aria-label="语境读音">
                   <h3>语境读音</h3>
@@ -227,6 +233,12 @@ export function ResearchNotes({
                     {s.license}
                     <br />
                     {s.limitations}
+                    {s.accessedAt && (
+                      <small>
+                        快照时间：{s.accessedAt} ·{" "}
+                        {s.rawSha256 ? `SHA-256 ${s.rawSha256}` : "无原始快照"}
+                      </small>
+                    )}
                   </p>
                 ))}
               </details>
