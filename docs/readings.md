@@ -398,3 +398,20 @@ node node_modules/tsx/dist/cli.mjs packages/readings/scripts/d3-effective-candid
 结论：平水 96/96 有效候选有已审证据（85 resolved + 11 ambiguous + 0 blocked）；
 词林/新韵各 96 字位全部 blocked（两库 evidence approved = 0），属数据未就绪。
 多读同调仍写作 reading=ambiguous、tone=resolved，不伪称读音确定。
+
+## D5：语境依据与六格独立预期（2026-10-21）
+
+产物 `data/reviews/d5/b/`：`context-behavior-map.json`（G34–G36 用例映射，标 mechanism/real-data）、
+`context-review-ready.json`（13 条草稿逐条材料，全部 not-approval-ready）、
+`six-cell-expectations.json`（三首×词林/新韵 192 字位，当前层与条件层分列）。
+
+要点：两库当前 `evidence approved = 0`，有候选的字位当前一律 blocked（运行时 503）；
+条件层 147 个单候选字位在证据审齐后可判，38 个多音位置必须保持 ambiguous，0 个能由规则定死。
+期望由快照候选与已批规则推导，不调用 API、不抄 API 输出。
+
+生成命令：
+
+```text
+node node_modules/tsx/dist/cli.mjs packages/readings/scripts/d5-six-cell-expectations.ts
+node node_modules/tsx/dist/cli.mjs packages/readings/scripts/d5-context-review-ready.ts
+```
