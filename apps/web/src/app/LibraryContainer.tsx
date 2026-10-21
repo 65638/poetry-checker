@@ -253,6 +253,9 @@ export function LibraryContainer({
       data-view={view}
     >
       <header className="pc-library-heading">
+        <span className="pc-seal" aria-hidden="true">
+          藏
+        </span>
         <div>
           <p className="pc-studio-eyebrow">叁 / 灯 前 展 卷</p>
           <h1>典籍馆</h1>
@@ -630,6 +633,9 @@ export function LibraryContainer({
               </button>
             </div>
             <div className="pc-library-verses">
+              <span className="pc-library-reading-hint">
+                点选诗字，可查其音韵
+              </span>
               {selected.paragraphs.map((line, i) => (
                 <p key={i}>
                   {line.split(/(?<=[，。！？；])/u).map((phrase, part) => (

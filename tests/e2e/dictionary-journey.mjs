@@ -63,7 +63,7 @@ try {
       return animations.map(a => ({name:a.animationName, frames:a.effect.getKeyframes(), duration:a.effect.getTiming().duration}));
     })()`);
     assert.equal(frames.length, 2);
-    assert.ok(frames.every((f) => f.duration === 760));
+    assert.ok(frames.every((f) => f.duration === 560));
     await sleep(100);
     const transforms = await evaluate(`['old','new'].map(kind => {
       const style = getComputedStyle(document.documentElement, '::view-transition-' + kind + '(garden-content)');

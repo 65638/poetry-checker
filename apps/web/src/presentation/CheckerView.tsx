@@ -25,6 +25,7 @@ export function CheckerView(
     sharedScene?: boolean;
     readingAssistant?: ReactNode;
     poetryDesk?: ReactNode;
+    draftTools?: ReactNode;
   },
 ) {
   const {
@@ -313,6 +314,7 @@ export function CheckerView(
                     />
                   </div>
                 </div>
+                {props.draftTools}
               </section>
               {hasReport ? (
                 <div className="pc-hall__rail">
@@ -375,45 +377,40 @@ export function CheckerView(
               />
             ) : (
               <aside className="pc-intro" aria-label="使用说明">
-                {showBusy ? (
-                  <p className="pc-intro__busy">
-                    <span className="pc-intro__busy-seal" aria-hidden="true">
-                      律
-                    </span>
-                    正在逐字核对，结果出来后会展陈在这里。
+                <>
+                  <p className="pc-intro__eyebrow">
+                    <span /> {showBusy ? "正在逐字校韵" : "山 亭 听 雨"}
                   </p>
-                ) : (
-                  <>
-                    <p className="pc-intro__eyebrow">
-                      <span /> 山 亭 听 雨
-                    </p>
-                    <p className="pc-intro__lead">
-                      <span className="pc-intro__quote">檐下听微雨，</span>
-                      <span className="pc-intro__quote">诗中见平仄。</span>
-                    </p>
-                    <p className="pc-intro__caption">
-                      一字一音，一句一韵。
-                      <br />
-                      在古人的声律里，读懂一首诗。
-                    </p>
-                    <div className="pc-intro__inscription" aria-hidden="true">
-                      微雨 · 远山 <span>听韵</span>
-                    </div>
-                    <ol className="pc-steps">
-                      {STEPS.map((s) => (
-                        <li key={s.title} className="pc-step">
-                          <span className="pc-step__no" aria-hidden="true">
-                            {s.no}
-                          </span>
-                          <div>
-                            <h3 className="pc-step__title">{s.title}</h3>
-                            <p className="pc-step__text">{s.text}</p>
-                          </div>
-                        </li>
-                      ))}
-                    </ol>
-                  </>
-                )}
+                  <p className="pc-intro__lead">
+                    <span className="pc-intro__quote">檐下听微雨，</span>
+                    <span className="pc-intro__quote">诗中见平仄。</span>
+                  </p>
+                  <p className="pc-intro__caption">
+                    {showBusy
+                      ? "正在核对字音、声律与用韵。"
+                      : "一字一音，一句一韵。"}
+                    <br />
+                    {showBusy
+                      ? "结果将在此展开。"
+                      : "在古人的声律里，读懂一首诗。"}
+                  </p>
+                  <div className="pc-intro__inscription" aria-hidden="true">
+                    微雨 · 远山 <span>听韵</span>
+                  </div>
+                  <ol className="pc-steps">
+                    {STEPS.map((s) => (
+                      <li key={s.title} className="pc-step">
+                        <span className="pc-step__no" aria-hidden="true">
+                          {s.no}
+                        </span>
+                        <div>
+                          <h3 className="pc-step__title">{s.title}</h3>
+                          <p className="pc-step__text">{s.text}</p>
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+                </>
               </aside>
             )}
             {props.poetryDesk}
@@ -424,7 +421,8 @@ export function CheckerView(
           <span className="pc-colophon__seal" aria-hidden="true">
             律
           </span>
-          参考分析：韵书数据与 AI 读音可能有误，未经全面人工核验，不作为权威结论。
+          参考分析：韵书数据与 AI
+          读音可能有误，未经全面人工核验，不作为权威结论。
         </footer>
       </div>
 

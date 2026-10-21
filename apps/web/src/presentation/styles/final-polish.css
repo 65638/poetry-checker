@@ -1,0 +1,511 @@
+/* Shared palette and rhythm for the three places. Ink, jade, paper and brass. */
+.pc-workspace,
+.pc-workspace .pc-root {
+  --pc-page-max: 1440px;
+  --pc-surface-sheet: #eeece1;
+  --pc-manuscript: #eeece1;
+  --pc-surface-sunken: #e4e3d6;
+  --pc-divider: #c9cebf;
+  --pc-ruling: #d8ddcf;
+  --pc-text: #263b3e;
+  --pc-text-muted: #546461;
+  --pc-fail-fg: #994c40;
+  --pc-fail-bg: #f1e5dc;
+  --pc-fail-bg-strong: #ebd6ca;
+  --pc-pass-fg: #326b5b;
+  --pc-pass-bg: #e0e9df;
+  --pc-review-fg: #856629;
+  --pc-review-bg: #eee6cf;
+  --pc-neutral-bg: #e4e3d6;
+  --pc-on-ink-gold: #ccb991;
+  --pc-seal: #9d5144;
+}
+html:has(.pc-workspace) {
+  scrollbar-color: #647c75 #12272e;
+  scrollbar-width: thin;
+  scrollbar-gutter: stable;
+}
+.pc-workspace :is(input[type="checkbox"], input[type="radio"]) {
+  accent-color: #638e79;
+}
+.pc-workspace :is(.pc-places, .pc-dictionary__page, .pc-library),
+.pc-workspace .pc-root .pc-hall {
+  max-width: var(--pc-page-max);
+}
+.pc-workspace .pc-root .pc-hall {
+  padding-inline: var(--pc-page-margin);
+}
+.pc-workspace .pc-hall--writing {
+  grid-template-columns: 320px minmax(0, 1fr);
+  gap: 40px;
+}
+.pc-workspace .pc-masthead,
+.pc-workspace .pc-dictionary__masthead {
+  min-height: 146px;
+  padding-block: 24px;
+}
+.pc-workspace .pc-title {
+  font-size: clamp(28px, 3vw, 42px);
+}
+.pc-workspace .pc-places {
+  min-height: 96px;
+  padding-top: 16px;
+  padding-bottom: 12px;
+}
+.pc-places__links {
+  width: 468px;
+}
+.pc-places button small {
+  font-size: 11px;
+  opacity: 1;
+  color: #a4b5ad;
+}
+.pc-places button[aria-current] small {
+  color: #d5c6a4;
+}
+.pc-places button[data-requested="true"]::before {
+  content: "";
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  width: 4px;
+  height: 4px;
+  background: #d5c6a4;
+  border-radius: 50%;
+}
+.pc-workspace .pc-places button:focus-visible {
+  outline: 1px solid #bec9b3;
+  outline-offset: -3px;
+}
+
+/* Every journey has one clock. Subsequent clicks are coalesced in Workspace. */
+html[data-journey]::view-transition-group(garden-content),
+html[data-journey]::view-transition-old(garden-content),
+html[data-journey]::view-transition-new(garden-content) {
+  animation-duration: 560ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+html[data-journey]::view-transition-group(garden-navigation),
+html[data-journey]::view-transition-new(garden-navigation) {
+  animation: none;
+}
+html[data-journey]::view-transition-old(garden-navigation) {
+  display: none;
+}
+.pc-continuous__panorama,
+.pc-library-room {
+  transition-duration: 560ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+.pc-continuous__architecture,
+.pc-continuous .pc-scene__mist,
+.pc-continuous .pc-scene__water {
+  transition-duration: 560ms;
+}
+.pc-places__links::after {
+  transition: transform 360ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* Draft tools belong to the desk, leaving the moon and masthead unobstructed. */
+.pc-draft-tools {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px 12px;
+  min-height: 30px;
+  margin-top: 12px;
+  padding-top: 6px;
+  border-top: 1px solid #74908845;
+}
+.pc-draft-tools :is(.pc-draft-save, .pc-explore-current) {
+  position: static;
+}
+.pc-draft-tools .pc-draft-save {
+  font-size: 11px;
+  letter-spacing: 0;
+  color: #adbbb1;
+}
+.pc-draft-tools .pc-explore-current {
+  margin-left: auto;
+}
+.pc-draft-tools .pc-explore-current button {
+  padding: 4px 0;
+  color: #d8caac;
+  text-decoration: none;
+  transition: color 160ms;
+}
+.pc-draft-tools .pc-explore-current button:hover {
+  color: #faf0d8;
+}
+.pc-workspace .pc-motion-toggle {
+  min-height: 36px;
+  padding: 6px 12px;
+  font: 12px/1.5 var(--pc-font-sans);
+  border-color: #94aa9d4d;
+  background: #12272e80;
+  color: #c9d2c4;
+}
+.pc-motion-toggle__dot {
+  width: 6px;
+  height: 6px;
+  border-color: #b5c4ad;
+}
+.pc-workspace .pc-intro__lead {
+  font-size: clamp(36px, 4.2vw, 58px);
+}
+.pc-workspace .pc-steps {
+  margin-top: 78px;
+}
+.pc-workspace .pc-hall--writing .pc-manuscript {
+  padding-top: 36px;
+}
+
+/* Match every paper surface; retain warm ink for annotations, never neon red. */
+.pc-workspace .pc-library-reading,
+.pc-workspace .pc-dictionary__folio:not([data-empty="true"]) {
+  background-color: var(--pc-surface-sheet);
+}
+.pc-workspace .pc-manuscript {
+  transition-property: background-color, border-color;
+}
+.pc-workspace .pc-status {
+  padding-bottom: 24px;
+}
+.pc-workspace
+  .pc-studio-scope
+  :is(input:not([type="checkbox"]), select, textarea) {
+  background-color: var(--pc-surface-sheet);
+  color: var(--pc-text);
+  border-color: #87978b;
+}
+.pc-workspace .pc-studio-scope :is(button, a, select) {
+  cursor: var(--pc-cursor-action);
+}
+.pc-workspace .pc-studio-scope :is(button, a, select, input) {
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease;
+}
+.pc-workspace .pc-studio-tabs button {
+  font-weight: 400;
+}
+.pc-workspace .pc-studio-tabs button:hover:not([aria-selected="true"]) {
+  background: #7b968a14;
+}
+.pc-workspace .pc-studio-tabs button[aria-selected="true"] {
+  color: var(--pc-seal);
+}
+.pc-poetry-desk {
+  border-top: 1px solid #9b9f865e;
+  padding-top: 26px;
+}
+.pc-poetry-desk-heading {
+  margin-bottom: 16px;
+}
+.pc-poetry-desk-heading .pc-studio-eyebrow {
+  letter-spacing: 0.18em;
+  font-size: 11px;
+}
+.pc-poetry-desk > .pc-studio-tabs {
+  gap: 18px;
+}
+.pc-poetry-desk > .pc-studio-tabs button {
+  padding-inline: 4px;
+  font: 18px var(--pc-font-serif);
+}
+.pc-poetry-desk .pc-studio-actions {
+  gap: 12px 18px;
+}
+.pc-poetry-critique > .pc-studio-actions:first-child {
+  padding: 12px 0;
+}
+.pc-poetry-desk :is(.pc-poetry-critique, .pc-poetry-rhyme, .pc-notebook) {
+  animation: pc-polish-appear 180ms ease-out;
+}
+.pc-studio-error {
+  border: 0;
+  border-left: 2px solid #a26d5b;
+  padding: 12px 16px;
+  background: #a26d5b0a;
+}
+.pc-studio-status {
+  font-size: 13px;
+  color: var(--pc-text-muted);
+  animation: pc-polish-appear 160ms ease-out;
+}
+.pc-studio-notice {
+  border-top-color: #83948155;
+  font-size: 13px;
+}
+.pc-workspace .pc-hall--writing .pc-poetry-desk {
+  --pc-text: #dedfce;
+  --pc-text-muted: #afc0b5;
+  --pc-surface-sheet: #1b3438;
+  --pc-divider: #77908555;
+  --pc-border-control: #789183;
+  --pc-seal: #ccb991;
+  --pc-accent: #ded7ba;
+  --pc-accent-soft: #2d4747;
+  padding: 24px 28px;
+  margin-top: 32px;
+  background: linear-gradient(115deg, #142e34eb, #183238b3);
+  border: 1px solid #6a82745e;
+}
+
+/* Library: a compact catalogue, a quiet reader, controls at hand. */
+.pc-library-heading {
+  min-height: 160px;
+  padding-block: 16px 20px;
+  gap: 20px;
+}
+.pc-library-heading > .pc-seal {
+  flex: none;
+  --pc-seal: #9d5144;
+}
+.pc-library-heading h1 {
+  font-size: 42px;
+}
+.pc-library-heading .pc-library-heading__verse {
+  font-size: 16px;
+}
+.pc-library-heading > .pc-studio-actions {
+  margin-left: 32px;
+  align-self: center;
+}
+.pc-library-room > .pc-library-lantern {
+  position: absolute;
+  right: 4%;
+  top: 8%;
+  width: clamp(48px, 6vw, 86px);
+  height: auto;
+  overflow: visible;
+}
+.pc-library-lantern .pc-library-room__lamp {
+  transform: none;
+  transform-origin: 1328px 82px;
+  animation: pc-lantern-breathe 12s ease-in-out infinite alternate;
+}
+.pc-continuous[data-paused] .pc-library-room__lamp {
+  animation-play-state: paused;
+}
+@keyframes pc-lantern-breathe {
+  from {
+    rotate: -0.6deg;
+  }
+  to {
+    rotate: 0.6deg;
+  }
+}
+.pc-library-reading-hint {
+  display: block;
+  font: 12px/1.6 var(--pc-font-serif);
+  color: #64766a;
+  letter-spacing: 0.1em;
+  margin: 0 0 18px;
+}
+.pc-library > .pc-studio-tabs {
+  margin-bottom: 22px;
+}
+.pc-library-worktable {
+  grid-template-columns: 320px minmax(0, 1fr);
+}
+.pc-library-catalogue {
+  padding: 18px 22px 8px;
+}
+.pc-library-row {
+  padding-block: 14px;
+}
+.pc-library-list {
+  max-height: min(410px, 48dvh);
+  overscroll-behavior-y: contain;
+}
+.pc-library .pc-library-catalogue,
+.pc-library-heading {
+  --pc-text: #dedfce;
+  --pc-text-muted: #b0bfb4;
+  --pc-surface-sheet: #193238;
+  --pc-accent: #e2d4b3;
+  --pc-accent-soft: #2b4546;
+  --pc-seal: #ccb991;
+  --pc-focus: #b6c9ad;
+}
+.pc-workspace .pc-library-query .pc-studio-searchbox input {
+  background: transparent;
+  color: #e8e5d5;
+}
+.pc-workspace .pc-library-catalogue select {
+  background: #213b3e;
+  color: #e1e4d2;
+}
+.pc-library-reading {
+  animation: pc-polish-appear 200ms ease-out;
+  box-shadow: 0 12px 38px #07171c26;
+}
+.pc-library-reading > h2 {
+  margin-top: 18px;
+}
+.pc-library-invitation {
+  min-height: 460px;
+  padding-block: 44px;
+}
+.pc-library-invitation__foot::before {
+  content: "";
+  display: inline-block;
+  width: 24px;
+  height: 1px;
+  margin: 0 12px 3px 0;
+  background: #9f9d7b;
+}
+.pc-library .pc-library-character {
+  border-bottom: 0;
+  box-shadow: inset 0 -1px transparent;
+}
+.pc-library .pc-library-character:hover,
+.pc-library .pc-library-character[aria-pressed="true"] {
+  box-shadow: inset 0 -1px #9c6f5a;
+}
+.pc-library-comparison .pc-library-verses {
+  font-size: clamp(20px, 1.9vw, 26px);
+}
+.pc-library .pc-studio-action:hover:not(:disabled),
+.pc-library .pc-studio-icon:hover:not(:disabled) {
+  background: var(--pc-accent-soft);
+  color: var(--pc-accent);
+}
+.pc-library-reading .pc-studio-meta a {
+  color: #456e60;
+  text-underline-offset: 4px;
+}
+.pc-workspace :is(.pc-colophon, .pc-library-footer, .pc-dictionary__footer) {
+  font-size: 12px;
+  line-height: 1.8;
+  color: #afbeb4;
+}
+@keyframes pc-polish-appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (max-width: 1099px) {
+  .pc-workspace .pc-hall--writing {
+    grid-template-columns: 290px minmax(0, 1fr);
+    gap: 24px;
+  }
+  .pc-library-worktable {
+    grid-template-columns: 290px minmax(0, 1fr);
+  }
+  .pc-library-heading > .pc-studio-actions {
+    max-width: 260px;
+    justify-content: flex-end;
+  }
+}
+@media (max-width: 899px) {
+  .pc-workspace .pc-hall--writing {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 799px) {
+  .pc-workspace .pc-places {
+    min-height: 82px;
+    padding: 10px 16px 8px;
+  }
+  .pc-places__links {
+    width: 100%;
+  }
+  .pc-places button small {
+    font-size: 10px;
+  }
+  .pc-workspace .pc-masthead,
+  .pc-workspace .pc-dictionary__masthead {
+    min-height: 132px;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding-block: 18px;
+  }
+  .pc-workspace .pc-masthead__titles {
+    flex: 1 0 calc(100% - 70px);
+  }
+  .pc-workspace .pc-masthead__tools {
+    margin-left: auto;
+  }
+  .pc-workspace .pc-motion-toggle {
+    min-height: 32px;
+    padding: 5px 9px;
+    font-size: 11px;
+  }
+  .pc-workspace .pc-hall--writing .pc-manuscript {
+    padding-top: 20px;
+  }
+  .pc-workspace .pc-steps {
+    margin-top: 32px;
+  }
+  .pc-workspace .pc-hall--writing .pc-poetry-desk {
+    padding: 20px 18px;
+  }
+  .pc-library-heading {
+    min-height: 188px;
+    gap: 12px;
+  }
+  .pc-library-heading h1 {
+    font-size: 34px;
+  }
+  .pc-library-heading > .pc-studio-actions {
+    max-width: none;
+    margin-left: 0;
+    justify-content: flex-start;
+    gap: 8px;
+    flex-basis: 100%;
+  }
+  .pc-library-heading > .pc-seal {
+    width: 34px;
+    height: 38px;
+    font-size: 23px;
+  }
+  .pc-library-heading {
+    gap: 12px 16px;
+  }
+  .pc-library-room > .pc-library-lantern {
+    left: 77.5%;
+    right: auto;
+    top: 9%;
+    width: 44px;
+  }
+  .pc-library-worktable {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .pc-library-invitation {
+    min-height: 330px;
+    padding: 28px;
+  }
+  .pc-library-list {
+    max-height: 330px;
+  }
+  .pc-library-reading .pc-library-verses {
+    font-size: 22px;
+  }
+}
+.pc-workspace[data-motion="off"]
+  :is(
+    .pc-library-reading,
+    .pc-studio-status,
+    .pc-poetry-critique,
+    .pc-poetry-rhyme,
+    .pc-notebook
+  ),
+.pc-workspace[data-motion="off"] .pc-continuous * {
+  animation: none;
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pc-workspace *,
+  .pc-workspace *::before,
+  .pc-workspace *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -95,7 +95,7 @@ try {
           (a) => a.name === (forward ? "pc-walk-in-right" : "pc-walk-in-left"),
         ),
       );
-      assert.ok(animations.every((a) => a.duration === 760));
+      assert.ok(animations.every((a) => a.duration === 560));
       assert.equal(
         await evaluate(
           "document.querySelectorAll('.pc-place:not([hidden])').length",
