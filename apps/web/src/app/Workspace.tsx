@@ -12,6 +12,7 @@ import "../presentation/styles/poetry-studio.css";
 import "../presentation/styles/library-atmosphere.css";
 import { LibraryContainer } from "./LibraryContainer";
 import { PoetryDesk } from "./PoetryDesk";
+import { CharacterReference } from "./CharacterReference";
 import {
   NOTEBOOK_KEY,
   NOTEBOOK_LIMIT,
@@ -346,6 +347,21 @@ export function Workspace(props: CheckerViewProps) {
           <CheckerView
             {...props}
             sharedScene
+            readingAssistant={(() => {
+              const token = props.report?.poem.tokens.find(
+                (t) => t.tokenId === props.selectedTokenId,
+              );
+              return token ? (
+                <CharacterReference
+                  key={token.tokenId}
+                  character={token.text}
+                  onLookup={(char) => {
+                    window.location.hash = `dictionary?char=${encodeURIComponent(char)}&book=${props.draft.rhymeBook}`;
+                    switchPlace("dictionary");
+                  }}
+                />
+              ) : undefined;
+            })()}
             poetryDesk={
               <PoetryDesk
                 checker={props}

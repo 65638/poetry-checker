@@ -124,7 +124,7 @@ export function EvidencePanel(props: EvidencePanelProps) {
             </p>
           )}
           {token.candidates.length === 0 ? (
-            <p className="pc-evidence__muted">所选韵书数据中没有此字的读音记录，声调记为未定。</p>
+            <p className="pc-evidence__muted">所选韵书缺录本字，没有候选可供AI选择。独立广韵与现代读音可在上方查阅，不将参考映射冒充本书已收录。</p>
           ) : (
             <ul className="pc-candidates">
               {token.candidates.map((c) => {

@@ -5,6 +5,7 @@ import {
   mergeLibrary,
   parseLibraryImport,
   searchLibrary,
+  uniqueLibrary,
 } from "../src/app/library";
 import { applyRevision, changedSpan, parseNotebook } from "../src/app/notebook";
 
@@ -16,6 +17,73 @@ const raw = {
   sourceUrl: "https://example.org/poem",
 };
 describe("local classical corpus and revision notebook", () => {
+  it("hides identical works and completely covered compilations without deleting source versions or unique text", () => {
+    const make = (
+      id: string,
+      title: string,
+      text: string,
+      author = "李白",
+    ) => ({
+      ...BUILTIN_WORKS[0]!,
+      id,
+      title,
+      author,
+      dynasty: "唐",
+      paragraphs: [text],
+    });
+    const first = make(
+      "one",
+      "行路难·其一",
+      "金樽清酒斗十千，玉盘珍羞直万钱。停杯投箸不能食。",
+    );
+    const second = make(
+      "two",
+      "行路难·其二",
+      "大道如青天，我独不得出。羞逐长安社中儿，赤鸡白雉赌梨栗。",
+    );
+    const group = make(
+      "group",
+      "行路难二首",
+      first.paragraphs.join("") + second.paragraphs.join(""),
+    );
+    const duplicate = {
+      ...first,
+      id: "duplicate",
+      title: "行路难",
+      sourceUrl: "https://example.org/other",
+    };
+    const incomplete = make(
+      "incomplete",
+      "行路难三首",
+      group.paragraphs.join("") + "额外独有诗句。",
+    );
+    const otherAuthor = { ...first, id: "other", author: "他人" };
+    const variant = {
+      ...first,
+      id: "variant",
+      paragraphs: [first.paragraphs[0]!.replace("羞", "馐")],
+    };
+    const original = [
+      first,
+      second,
+      group,
+      duplicate,
+      incomplete,
+      otherAuthor,
+      variant,
+    ];
+    const snapshot = JSON.stringify(original);
+    const result = uniqueLibrary(original);
+    expect(result.works.map((w) => w.id)).toEqual([
+      "one",
+      "two",
+      "incomplete",
+      "other",
+      "variant",
+    ]);
+    expect(result.hiddenCount).toBe(2);
+    expect(JSON.stringify(original)).toBe(snapshot);
+  });
   it("imports JSON and JSONL while preserving glyphs, provenance and variants", async () => {
     const a = await parseLibraryImport(
       JSON.stringify([{ ...raw, paragraphs: ["餘雨未歇。"] }]),

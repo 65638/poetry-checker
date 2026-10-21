@@ -22,6 +22,7 @@ import {
   parseLibraryImport,
   searchLibrary,
   readingSections,
+  uniqueLibrary,
 } from "./library";
 import { useMotionPreference } from "../presentation/useMotionPreference";
 import { usePoetryTask } from "../hooks/usePoetryTask";
@@ -75,6 +76,8 @@ export function LibraryContainer({
   const [studySection, setStudySection] = useState(0);
   const [favorites, setFavorites] = useState(readFavorites);
   const [onlyFavorites, setOnlyFavorites] = useState(false);
+  const [showDuplicates, setShowDuplicates] = useState(false);
+  const unique = useMemo(() => uniqueLibrary(works), [works]);
   const [page, setPage] = useState(0);
   const [importing, setImporting] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
@@ -91,6 +94,7 @@ export function LibraryContainer({
       collection,
       kind,
       onlyFavorites,
+      showDuplicates,
       onlyFavorites ? favorites : null,
       works.map((w) => w.id),
     ]),
@@ -140,10 +144,10 @@ export function LibraryContainer({
   }, [active, ready]);
   useEffect(() => {
     setPage(0);
-  }, [query, mode, dynasty, collection, kind, onlyFavorites]);
+  }, [query, mode, dynasty, collection, kind, onlyFavorites, showDuplicates]);
   const filtered = useMemo(
     () =>
-      works.filter(
+      (showDuplicates || onlyFavorites ? works : unique.works).filter(
         (w) =>
           (!dynasty || w.dynasty === dynasty) &&
           (!collection ||
@@ -153,7 +157,16 @@ export function LibraryContainer({
             (kind === "prose" ? w.kind === "prose" : w.kind !== "prose")) &&
           (!onlyFavorites || favorites.includes(w.id)),
       ),
-    [works, dynasty, collection, kind, favorites, onlyFavorites],
+    [
+      works,
+      unique,
+      dynasty,
+      collection,
+      kind,
+      favorites,
+      onlyFavorites,
+      showDuplicates,
+    ],
   );
   const hits = useMemo(
     () => searchLibrary(filtered, query, mode === "scene"),
@@ -275,12 +288,20 @@ export function LibraryContainer({
       setFeedback("收藏只保留到本次会话，设备存储不可用。");
     }
   }
-  const workOptions = works.map((w) => (
-    <option key={w.id} value={w.id}>
-      {w.title} · {w.author || "作者未载"}
-      {w.sourceUrl ? ` · ${new URL(w.sourceUrl).hostname}` : ""}
-    </option>
-  ));
+  const workOptions = works
+    .filter(
+      (w) =>
+        showDuplicates ||
+        !unique.hiddenIds.has(w.id) ||
+        w.id === leftId ||
+        w.id === rightId,
+    )
+    .map((w) => (
+      <option key={w.id} value={w.id}>
+        {w.title} · {w.author || "作者未载"}
+        {w.sourceUrl ? ` · ${new URL(w.sourceUrl).hostname}` : ""}
+      </option>
+    ));
   const poemColumn = (
     work: LibraryWork | undefined,
     side: "left" | "right",
@@ -583,6 +604,17 @@ export function LibraryContainer({
                   ? `GLM精选 ${matches.length} 首 / ${candidates.length}首候选`
                   : `${display.length}首`}
               </span>
+              {unique.hiddenCount > 0 && (
+                <label>
+                  <input
+                    type="checkbox"
+                    aria-label="显示合编与重复篇"
+                    checked={showDuplicates}
+                    onChange={(e) => setShowDuplicates(e.target.checked)}
+                  />
+                  显示合编与重复篇（{unique.hiddenCount}）
+                </label>
+              )}
             </div>
           </form>
           <StudioTaskState {...searchTask} />

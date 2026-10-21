@@ -40,7 +40,7 @@ const valid = (g) => {
   assert.ok(g.lines.bottom <= g.edit.top - 6, JSON.stringify(g));
   assert.ok(g.directory.bottom <= g.edit.top - 6, JSON.stringify(g));
   assert.ok(g.edit.bottom <= g.rail.bottom - 6, JSON.stringify(g));
-  assert.ok(g.lines.height >= 43, JSON.stringify(g));
+  assert.ok(g.lines.height >= 175, JSON.stringify(g));
   assert.ok(g.pageWidth <= g.width, JSON.stringify(g));
 };
 const check = async (name, fn) => {

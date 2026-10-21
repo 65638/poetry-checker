@@ -110,6 +110,56 @@ export function mergeLibrary(current: LibraryWork[], incoming: LibraryWork[]) {
     duplicates: incoming.length - (result.length - current.length),
   };
 }
+export function uniqueLibrary(works: LibraryWork[]) {
+  const textOf = (work: LibraryWork) =>
+    work.paragraphs.join("").replace(/[\p{P}\p{Z}\s]/gu, "");
+  const byAuthor = new Map<
+    string,
+    Array<{ work: LibraryWork; text: string }>
+  >();
+  const hidden = new Set<string>();
+  for (const work of works) {
+    const text = textOf(work);
+    const key = `${work.author}\n${work.dynasty}`;
+    const rows = byAuthor.get(key) ?? [];
+    // Anonymous works from different sources may share lines without being one work.
+    if (work.author && rows.some((row) => row.text === text))
+      hidden.add(work.id);
+    else rows.push({ work, text });
+    byAuthor.set(key, rows);
+  }
+  for (const rows of byAuthor.values()) {
+    for (const row of rows) {
+      if (
+        !row.work.author ||
+        !/(?:[二三四五六七八九十两\d]+首|组诗)/u.test(row.work.title)
+      )
+        continue;
+      const parts = rows.filter(
+        (part) => part.text.length >= 20 && part.text.length < row.text.length,
+      );
+      const covered = new Map<number, number>([[0, 0]]);
+      for (let at = 0; at < row.text.length; at++) {
+        const count = covered.get(at);
+        if (count === undefined) continue;
+        for (const part of parts) {
+          if (row.text.startsWith(part.text, at))
+            covered.set(
+              at + part.text.length,
+              Math.max(covered.get(at + part.text.length) ?? 0, count + 1),
+            );
+        }
+      }
+      // Hide a compilation only when complete standalone works cover its entire text.
+      if ((covered.get(row.text.length) ?? 0) >= 2) hidden.add(row.work.id);
+    }
+  }
+  return {
+    works: works.filter((work) => !hidden.has(work.id)),
+    hiddenCount: hidden.size,
+    hiddenIds: hidden,
+  };
+}
 const THEMES = [
   {
     triggers: ["思乡", "思鄉", "乡愁", "鄉愁", "故乡", "故鄉"],

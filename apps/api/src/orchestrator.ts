@@ -19,6 +19,7 @@ import { toGenreErrorResponse } from "./genre-errors.js";
 import { toLexiconErrorResponse } from "./lexicon-errors.js";
 import type { Resources } from "./resources.js";
 import type { ReadingAssistantService } from "./reading-assistant.js";
+import { AssistantError } from "./reading-assistant.js";
 
 export type OrchestrationResult =
   | { kind: "ok"; response: AnalysisResponse }
@@ -169,9 +170,8 @@ export async function analyze(
             );
             suggestions.push(...result.suggestions);
             processed += result.suggestions.length;
-          } catch {
-            failure =
-              "GLM暂不可用或等候超时，其余字位已使用韵书与语境规则分析。";
+          } catch (cause) {
+            failure = `GLM本次辨音未完成：${cause instanceof AssistantError ? cause.message : "服务暂不可用或等候超时"}其余字位保留本地韵书与语境判断。`;
             break;
           }
         }
@@ -181,6 +181,14 @@ export async function analyze(
           ...readingInput,
           modelReadings: suggestions,
         });
+      for (const token of annotated.tokens) {
+        if (token.readingStatus === "resolved") continue;
+        const unresolved = suggestions.find(
+          (row) => row.tokenId === token.tokenId && row.candidateId === null,
+        );
+        if (unresolved)
+          token.reason = `GLM未选定：${unresolved.reason} 本地判断：${token.reason}`;
+      }
       const appliedTokenIds = annotated.tokens
         .filter((token) => token.selectionMethod === "model")
         .map((token) => token.tokenId);
@@ -205,6 +213,15 @@ export async function analyze(
                 ? `GLM已自动辨析并应用${appliedTokenIds.length}个字位。`
                 : `GLM已自动应用${appliedTokenIds.length}个字位，其余保留原候选与语境判断。`)),
       };
+      const missing = annotated.tokens.filter(
+        (token) => !token.candidates.length,
+      );
+      if (missing.length) {
+        const glyphs = [...new Set(missing.map((token) => token.text))]
+          .slice(0, 8)
+          .join("、");
+        assistant.message += ` 所选韵书缺录${missing.length}个字位（${glyphs}），无候选可供AI选择；可在字条中查阅独立读音参考。`;
+      }
     }
 
     // 4/5. 模板与体裁（API 调度，不建环依赖）

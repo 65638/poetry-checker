@@ -35,6 +35,12 @@ const unavailable = {
     fieldErrors: [],
   },
 };
+export function characterReferenceRows(character: string): GuangyunEntry[] {
+  reference ??= read("reference") as NonNullable<typeof reference>;
+  return Object.hasOwn(reference.entries, character)
+    ? reference.entries[character]!.entries
+    : [];
+}
 export function registerLibrary(app: FastifyInstance) {
   app.get("/api/v1/library", async (_req, reply) => {
     try {
@@ -53,15 +59,13 @@ export function registerLibrary(app: FastifyInstance) {
           ? annotations[req.params.id]
           : undefined;
         if (!value)
-          return reply
-            .code(404)
-            .send({
-              error: {
-                code: "NOT_FOUND",
-                message: "本篇未提供逐字注音。",
-                fieldErrors: [],
-              },
-            });
+          return reply.code(404).send({
+            error: {
+              code: "NOT_FOUND",
+              message: "本篇未提供逐字注音。",
+              fieldErrors: [],
+            },
+          });
         return PoemPronunciationSchema.parse(value);
       } catch {
         return reply.code(503).send(unavailable);
@@ -73,15 +77,13 @@ export function registerLibrary(app: FastifyInstance) {
     async (req, reply) => {
       const ch = req.params.char;
       if (!/^\p{Script=Han}$/u.test(ch))
-        return reply
-          .code(422)
-          .send({
-            error: {
-              code: "VALIDATION_ERROR",
-              message: "请输入一个汉字。",
-              fieldErrors: [],
-            },
-          });
+        return reply.code(422).send({
+          error: {
+            code: "VALIDATION_ERROR",
+            message: "请输入一个汉字。",
+            fieldErrors: [],
+          },
+        });
       try {
         reference ??= read("reference") as NonNullable<typeof reference>;
         const exact = Object.hasOwn(reference.entries, ch)

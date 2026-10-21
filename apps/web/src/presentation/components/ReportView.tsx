@@ -89,7 +89,7 @@ function toneOf(t: AnnotatedToken) {
       ? { label: "平", mod: "ping" }
       : { label: "仄", mod: "ze" };
   }
-  return { label: "未定", mod: "unknown" };
+  return { label: t.candidates.length ? "未定" : "缺录", mod: "unknown" };
 }
 
 function prefersReducedMotion(el?: Element | null) {

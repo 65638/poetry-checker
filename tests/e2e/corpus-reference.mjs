@@ -90,6 +90,43 @@ try {
     );
   });
   await check(
+    "compilation-is-hidden-until-explicitly-included-with-original-intact",
+    async () => {
+      await fill('[aria-label="检索诗库"]', "行路难");
+      await waitFor(() =>
+        h.evaluate(
+          "document.querySelector('.pc-library-title')?.textContent.includes('行路难')",
+        ),
+      );
+      const titles = await h.evaluate(
+        "[...document.querySelectorAll('.pc-library-title')].map(el=>el.textContent)",
+      );
+      for (const title of ["行路难·其一", "行路难·其二", "行路难·其三"])
+        assert(titles.includes(title));
+      assert(!titles.includes("行路难三首"));
+      await h.click('[aria-label="显示合编与重复篇"]');
+      await waitFor(() =>
+        h.evaluate(
+          "[...document.querySelectorAll('.pc-library-title')].some(el=>el.textContent==='行路难三首')",
+        ),
+      );
+      await clickText(".pc-library-title", "行路难三首");
+      await waitFor(() =>
+        h.evaluate(
+          "document.querySelector('.pc-library-reading > h2')?.textContent==='行路难三首'",
+        ),
+      );
+      assert.equal(
+        await h.evaluate(
+          "document.querySelector('.pc-library-verses').textContent.includes('大道如青天')",
+        ),
+        true,
+      );
+      await h.click('[aria-label="显示合编与重复篇"]');
+      await fill('[aria-label="检索诗库"]', "");
+    },
+  );
+  await check(
     "local-scene-search-ranks-related-passages-above-repeated-long-text",
     async () => {
       await clickText('.pc-library-search [role="tab"]', "诗境");
