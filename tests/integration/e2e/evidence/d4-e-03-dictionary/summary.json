@@ -1,0 +1,105 @@
+{
+  "batch": "d4-e-03-dictionary",
+  "generatedAt": "2026-10-21T19:30:51+08:00",
+  "timezone": "China Standard Time (UTC+8)",
+  "version": {
+    "sha": "e8370913688c764099db2b8bd29062a91dfae0c6",
+    "subject": "Follow the precise poem annotation under the pointer"
+  },
+  "change": "tests/e2e/dictionary.mjs 默认等待 20s→45s（只提上限，不改断言）；目的是区分'timing 不足'与'功能真的不通'",
+  "conclusion": "45s 下三次运行结果一致：16 通过 / 2 失败；失败为功能级，不是等待不足。",
+  "defects": [
+    {
+      "id": "shared-rain-survives-navigation-and-preserves-report",
+      "symptom": "等待 .pc-continuous .pc-rain 的 dataset.running === 'true' 超时（45s）",
+      "next": "核对新版 DOM 中 .pc-rain 是否改名/移入别的容器（D 侧 UI 变更），或 shared rain 未跨导航保留"
+    },
+    {
+      "id": "analysis-real-30-second-timeout-blocks-copy-export-and-recovers",
+      "symptom": "等待提交按钮进入 disabled/文案变化的判据超时（45s）",
+      "next": "核对新版 busy 态是否仍以 .pc-input__submit 的 disabled+文案表达（D 侧 UI 变更）"
+    }
+  ],
+  "responsibility": "先由 E 判定选择器/期望是否随新版 UI 变迁；若选择器无误则按产品缺陷交 D（最小复现为本文件两次运行的 fail 行）",
+  "notRun": [
+    "nearby-notes",
+    "continuous-garden",
+    "dictionary-journey",
+    "dictionary-polish",
+    "五态受控",
+    "最终 main 复验"
+  ],
+  "consoleRuns": [
+    {
+      "run": 1,
+      "passed": 16,
+      "failed": 2,
+      "exitCode": 1,
+      "pipeline": "控制台 [PASS]/[FAIL] 计数"
+    },
+    {
+      "run": 2,
+      "passed": 16,
+      "failed": 2,
+      "exitCode": 1,
+      "pipeline": "控制台 [PASS]/[FAIL] 计数"
+    },
+    {
+      "run": 3,
+      "passed": 16,
+      "failed": 2,
+      "exitCode": 1,
+      "pipeline": "控制台 [PASS]/[FAIL] 计数"
+    }
+  ],
+  "artifactGap": "该脚本只写截图与一个 results 为空的 browser.json，**不落每场景结构化结果**；上面三次数字来自控制台计数，不是从 JSON 反推。缺口：需给 dictionary.mjs 增加结构化输出（同 d3-browser 的 scenario-result 写法）。",
+  "keptArtifacts": [
+    "run1-1440.png",
+    "run2-1440.png",
+    "run3-1440.png",
+    "summary.json"
+  ],
+  "anchorFix": {
+    "why": "新版 UI 锚点变化，不是产品缺陷：.pc-rain 不再有 data-running；busy 文案是 CSS ::after，状态改用独立 .pc-busy 元素",
+    "changed": [
+      "雨幕等待：data-running → 先'canvas 存在'，导航后'同一元素身份保留 + 可见'",
+      "busy 等待：button.textContent → disabled + !!document.querySelector('.pc-busy')"
+    ]
+  },
+  "runsAfterAnchorFix": [
+    {
+      "run": 1,
+      "passed": 16,
+      "failed": 2,
+      "exitCode": 1,
+      "failures": [
+        "shared-rain-survives-navigation-and-preserves-report",
+        "analysis-real-30-second-timeout-blocks-copy-export-and-recovers"
+      ]
+    },
+    {
+      "run": 2,
+      "passed": 17,
+      "failed": 1,
+      "exitCode": 1,
+      "failures": [
+        "shared-rain-survives-navigation-and-preserves-report"
+      ]
+    },
+    {
+      "run": 3,
+      "passed": 17,
+      "failed": 1,
+      "exitCode": 1,
+      "failures": [
+        "shared-rain-survives-navigation-and-preserves-report"
+      ]
+    }
+  ],
+  "verdict": {
+    "shared-rain": "仍在 4 次运行（含锚点前 3 次）中稳定失败；两种判据（数量/身份）均超时 → 未定性，需在新版 DOM 里确认 .pc-rain 的父容器与导航后是否重新挂载；不排除产品行为变化（交 D 前先自查选择器）",
+    "30s-timeout": "锚点修正后可过，但 3 次里有 1 次失败 → 判定为**不稳定（flaky）**，不能记通过",
+    "note": "两个都不再是'等待上限不足'；等待已提到 45s"
+  },
+  "nextStep": "在 dictionary 空间导航前后 dump：.pc-rain 数量、父链 class、是否同一节点、可见性；据结果改脚本或按产品缺陷交 D（附最小复现）"
+}
