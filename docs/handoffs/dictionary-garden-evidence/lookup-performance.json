@@ -1,0 +1,64 @@
+{
+  "createdAt": "2026-10-20T10:02:21.998Z",
+  "revision": {
+    "commit": "52318c6554137756b20151599b3bc1b008ad6722",
+    "dirty": false
+  },
+  "node": "v24.19.0",
+  "scope": "in-process lookup only; not API latency",
+  "beforeSourceSha": "c0e0c71014c7d5383f9655a04f5f7264310d2713ae0e9da70f0b3125f71eee54",
+  "afterSourceSha": "c90aeba8ccc5099c5c3a48e2057520c07f33272036ccf48acac10606fa8efb25",
+  "results": [
+    {
+      "book": "pingshui",
+      "dataVersion": "pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4",
+      "comparedQueries": 27,
+      "businessBytesIdentical": true,
+      "before": {
+        "count": 500,
+        "p50Ms": 0.7334000000000742,
+        "p95Ms": 1.0367000000001099
+      },
+      "after": {
+        "count": 500,
+        "p50Ms": 0.01619999999979882,
+        "p95Ms": 0.045900000000074215
+      },
+      "snapshotSha": "4b6fc33ea23a4b49cfb70ecc68a31a90ba1e061be1c40219ca3ba35a4ace293f"
+    },
+    {
+      "book": "cilin",
+      "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
+      "comparedQueries": 27,
+      "businessBytesIdentical": true,
+      "before": {
+        "count": 500,
+        "p50Ms": 0.27539999999999054,
+        "p95Ms": 0.37750000000005457
+      },
+      "after": {
+        "count": 500,
+        "p50Ms": 0.00580000000036307,
+        "p95Ms": 0.013999999999668944
+      },
+      "snapshotSha": "ed7d80315b7cbaff6feef81d8927944b11ae90489bc1da909e251a2958887256"
+    },
+    {
+      "book": "xinyun",
+      "dataVersion": "xinyun-rebuild-d2-full",
+      "comparedQueries": 27,
+      "businessBytesIdentical": true,
+      "before": {
+        "count": 500,
+        "p50Ms": 5.04989999999998,
+        "p95Ms": 14.682999999999993
+      },
+      "after": {
+        "count": 500,
+        "p50Ms": 0.03209999999990032,
+        "p95Ms": 0.050200000000131695
+      },
+      "snapshotSha": "cd0abe60175dd8da963129c09b4cf35878794bb1554958eb9bebd7dfc414f76b"
+    }
+  ]
+}

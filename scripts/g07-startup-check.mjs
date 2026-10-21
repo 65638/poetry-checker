@@ -15,10 +15,12 @@ import { launchBrowser } from "../tests/e2e/cdp.mjs";
 import { POEMS } from "../tests/integration/e2e/d3-acceptance-api.mjs";
 
 const out = resolve(process.argv[2] ?? "artifacts/acceptance/g07/startup.json");
+const previewMode = process.argv.includes("--preview");
 const result = {
   generatedAt: new Date().toISOString(),
   revision: revision(),
   node: process.version,
+  runtime: previewMode ? "production-preview" : "development",
   checks: [],
   offlineRuntime: {
     scope:
@@ -27,17 +29,21 @@ const result = {
 };
 let child, browser, occupied;
 function launch(port, webPort) {
-  return fork(resolve(REPO_ROOT, "scripts/dev.mjs"), [], {
-    cwd: REPO_ROOT,
-    env: {
-      ...process.env,
-      PORT: String(port),
-      WEB_PORT: String(webPort),
-      POETRY_DEV_MOCK: "0",
+  return fork(
+    resolve(REPO_ROOT, "scripts/dev.mjs"),
+    previewMode ? ["--preview"] : [],
+    {
+      cwd: REPO_ROOT,
+      env: {
+        ...process.env,
+        PORT: String(port),
+        WEB_PORT: String(webPort),
+        POETRY_DEV_MOCK: "0",
+      },
+      stdio: ["ignore", "pipe", "pipe", "ipc"],
+      windowsHide: true,
     },
-    stdio: ["ignore", "pipe", "pipe", "ipc"],
-    windowsHide: true,
-  });
+  );
 }
 async function shutdown(proc) {
   if (!proc || proc.exitCode !== null || proc.signalCode !== null) return;
@@ -77,6 +83,11 @@ try {
   result.readinessHttp = ready.status;
   browser = await launchBrowser();
   const { cdp, evaluate, click, key } = browser;
+  // Startup/connection checks need stable hit targets, independent of the
+  // scene-transition animation. Normal motion is covered by dictionary.mjs.
+  await cdp.send("Emulation.setEmulatedMedia", {
+    features: [{ name: "prefers-reduced-motion", value: "reduce" }],
+  });
   let allow = true;
   const blocked = [];
   cdp.on("Fetch.requestPaused", (e) => {
@@ -98,12 +109,34 @@ try {
   await waitFor(() =>
     evaluate("Boolean(document.querySelector('.pc-input__text'))"),
   );
+  if (previewMode)
+    assert.equal(
+      await evaluate(
+        "!!document.querySelector('[data-testid=dev-shell-panel]')",
+      ),
+      false,
+    );
   await click(".pc-input__text");
   await key("a", "KeyA", 65, 2);
   await cdp.send("Input.insertText", { text: POEMS[0].text });
   await click(".pc-input__submit");
   await waitFor(() =>
     evaluate("Boolean(document.querySelector('.pc-status--pass'))"),
+  );
+  await click('[aria-controls="dictionary-space"]');
+  await click(".pc-dictionary__input");
+  await cdp.send("Input.insertText", { text: "月" });
+  await click(".pc-dictionary__searchline button");
+  await waitFor(() =>
+    evaluate(
+      "document.querySelector('.pc-dictionary__glyph')?.textContent === '月'",
+    ),
+  );
+  await click(".pc-dictionary__compare-button");
+  await waitFor(() =>
+    evaluate(
+      "document.querySelectorAll('.pc-dictionary__comparison-row').length === 3",
+    ),
   );
   await evaluate(
     "fetch('https://example.com/g07-offline-probe').catch(()=>null)",
@@ -115,10 +148,19 @@ try {
     formalRoute: "/",
     realPoem: POEMS[0].id,
     summary: "pass",
+    dictionary: {
+      character: "月",
+      threeBookComparison: true,
+      dataVersion: await evaluate(
+        "document.querySelector('.pc-dictionary__version').textContent",
+      ),
+    },
     blockedOrigins: blocked,
   };
   allow = false;
-  console.log("[PASS] real analysis with browser non-loopback requests blocked");
+  console.log(
+    "[PASS] real analysis with browser non-loopback requests blocked",
+  );
   await cdp.send("Fetch.disable");
   await browser.stop();
   browser = null;

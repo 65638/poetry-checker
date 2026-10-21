@@ -1,0 +1,212 @@
+/* One persistent world, independently captured from the moving text sheets. */
+html:has(.pc-continuous) {
+  background: #101f25;
+}
+.pc-workspace {
+  view-transition-name: garden-content;
+}
+html[data-journey]::view-transition-group(root) {
+  z-index: -2;
+  animation: none;
+}
+html[data-journey]::view-transition-old(root) {
+  display: none;
+}
+html[data-journey]::view-transition-new(root) {
+  animation: none;
+}
+html[data-journey]::view-transition-group(garden-content) {
+  z-index: 1;
+  animation: none;
+}
+html[data-journey]::view-transition-old(garden-content),
+html[data-journey]::view-transition-new(garden-content) {
+  height: auto;
+}
+html[data-journey]::view-transition-group(garden-navigation) {
+  z-index: 2;
+}
+.pc-workspace,
+.pc-workspace .pc-root {
+  background: transparent;
+}
+.pc-continuous {
+  view-transition-name: garden-world;
+  background: var(--pc-scene-sky);
+}
+.pc-dictionary__masthead {
+  box-sizing: border-box;
+}
+.pc-dictionary__folio {
+  transition:
+    background-color 360ms ease,
+    box-shadow 360ms ease,
+    color 360ms ease;
+}
+.pc-dictionary__folio[data-empty="true"] {
+  background: transparent;
+  box-shadow: none;
+  border-color: transparent;
+  color: var(--pc-on-ink);
+  --pc-text-muted: var(--pc-on-ink-muted);
+  --pc-divider: #a9b8b43d;
+  --pc-cursor: url("/design/cursor-rain-light.svg") 12 12, crosshair;
+  --pc-cursor-action:
+    url("/design/cursor-rain-action-light.svg") 12 12, pointer;
+}
+.pc-dictionary__folio[data-empty="true"]::before,
+.pc-dictionary__folio[data-empty="true"] .pc-dictionary__bookmark {
+  display: none;
+}
+.pc-dictionary__folio[data-empty="true"] .pc-dictionary__empty {
+  position: relative;
+  min-height: 400px;
+  align-items: flex-start;
+  padding-left: 18px;
+}
+.pc-dictionary__folio[data-empty="true"] .pc-dictionary__empty-glyph {
+  position: absolute;
+  right: 24px;
+  top: 22px;
+  font-size: 180px;
+  color: #d9dccf;
+  opacity: 0.09;
+}
+.pc-dictionary__folio[data-empty="true"] .pc-dictionary__empty h2 {
+  font: 400 clamp(34px, 3.5vw, 50px) / 1.7 var(--pc-font-display);
+  letter-spacing: 0.18em;
+}
+.pc-dictionary__folio[data-empty="true"] .pc-dictionary__empty p {
+  color: var(--pc-on-ink);
+  font-size: 18px;
+  line-height: 2.2;
+}
+.pc-dictionary__folio[data-empty="true"] .pc-dictionary__folio-head {
+  color: var(--pc-on-ink-muted);
+}
+.pc-dictionary__desk::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: -7px;
+  right: -7px;
+  height: 9px;
+  border-top: 1px solid #92836a;
+  border-radius: 0 0 3px 3px;
+  background: linear-gradient(#554c3e, #2d302b);
+  box-shadow: 0 10px 18px #05131940;
+}
+@media (max-width: 799px) {
+  .pc-dictionary__folio[data-empty="true"] .pc-dictionary__empty {
+    padding-left: 0;
+    min-height: 320px;
+  }
+  .pc-continuous__moon {
+    top: 22%;
+  }
+}
+.pc-workspace[data-motion="off"] .pc-dictionary__folio {
+  transition: none;
+}
+.pc-continuous__sky {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 38% 35% at 82% 27%,
+    #f3ecd829,
+    transparent 70%
+  );
+}
+.pc-continuous__moon {
+  position: absolute;
+  left: 82%;
+  top: 27%;
+  width: clamp(82px, 8.3vw, 120px);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  opacity: 0.72;
+}
+.pc-continuous__moon svg {
+  width: 100%;
+  height: 100%;
+}
+.pc-continuous__panorama {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 200%;
+  transition: transform 760ms cubic-bezier(0.65, 0, 0.25, 1);
+  transform: translateX(0);
+}
+.pc-continuous[data-place="dictionary"] .pc-continuous__panorama {
+  transform: translateX(-50%);
+}
+.pc-continuous__drawing,
+.pc-continuous__architecture {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.pc-continuous__architecture {
+  z-index: 2;
+}
+.pc-continuous__bamboo {
+  transform-box: fill-box;
+  transform-origin: bottom center;
+  animation: pc-bamboo-breeze 11s ease-in-out infinite alternate;
+}
+@keyframes pc-bamboo-breeze {
+  from {
+    rotate: -0.35deg;
+  }
+  to {
+    rotate: 0.5deg;
+  }
+}
+.pc-continuous__chime {
+  transform-box: fill-box;
+  transform-origin: top center;
+  animation: pc-chime-breeze 7s ease-in-out infinite;
+}
+@keyframes pc-chime-breeze {
+  0%,
+  100% {
+    rotate: calc(-2deg + var(--pc-px) * 1deg);
+  }
+  45% {
+    rotate: calc(3deg + var(--pc-px) * 1deg);
+  }
+  70% {
+    rotate: calc(-0.8deg + var(--pc-px) * 1deg);
+  }
+}
+html[data-journey]::view-transition-group(garden-world) {
+  animation: none;
+  z-index: 0;
+}
+html[data-journey]::view-transition-old(garden-world) {
+  display: none;
+}
+html[data-journey]::view-transition-new(garden-world) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+.pc-continuous[data-active="false"] *,
+.pc-continuous[data-paused] * {
+  animation-play-state: paused;
+}
+.pc-workspace[data-motion="off"] .pc-continuous__panorama {
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce), (forced-colors: active) {
+  .pc-continuous *,
+  .pc-continuous *::before {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+@media (forced-colors: active) {
+  .pc-continuous {
+    display: none;
+  }
+}

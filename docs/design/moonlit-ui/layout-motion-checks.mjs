@@ -1,7 +1,7 @@
 /* global process, console, Buffer */
 import assert from "node:assert/strict";
 import { mkdirSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
 import {
   startHarness,
   sleep,
@@ -13,7 +13,9 @@ const result = { revision: revision(), scenarios: [] };
 const record = makeRecorder(result);
 const h = await startHarness();
 const poem = "白日依山尽，黄河入海流。欲穷千里目，更上一层楼。";
-const dir = join(REPO_ROOT, "docs/design/moonlit-ui/layout-motion");
+const dir = process.argv[3]
+  ? resolve(process.argv[3])
+  : join(REPO_ROOT, "docs/design/moonlit-ui/layout-motion");
 mkdirSync(dir, { recursive: true });
 async function shot(name) {
   const { data } = await h.cdp.send("Page.captureScreenshot", {

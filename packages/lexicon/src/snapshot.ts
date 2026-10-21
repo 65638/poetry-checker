@@ -40,6 +40,14 @@ export interface SnapshotInput {
   sources: readonly SourceRecord[];
 }
 
+// Only snapshots frozen recursively by this module are safe index-cache keys.
+// Object.isFrozen on the outer object/arrays alone cannot prove that records
+// (and therefore their character/id fields) are immutable.
+const definedSnapshots = new WeakSet<LexiconSnapshot>();
+export function isDefinedSnapshot(snapshot: LexiconSnapshot): boolean {
+  return definedSnapshots.has(snapshot);
+}
+
 function deepFreeze<T>(value: T): T {
   if (value !== null && typeof value === "object") {
     for (const key of Object.keys(value as Record<string, unknown>)) {
@@ -168,5 +176,7 @@ export function defineSnapshot(input: SnapshotInput): LexiconSnapshot {
     sources: [...input.sources],
   };
   assertSnapshotIntegrity(snapshot);
-  return deepFreeze(snapshot);
+  deepFreeze(snapshot);
+  definedSnapshots.add(snapshot);
+  return snapshot;
 }

@@ -18,6 +18,7 @@ import type {
 import { LexiconError } from "./errors.js";
 import {
   defineSnapshot,
+  isDefinedSnapshot,
   type LexiconSnapshot,
   type SnapshotInput,
 } from "./snapshot.js";
@@ -92,6 +93,35 @@ function referencedEvidenceIds(
   ];
 }
 
+interface SnapshotIndex {
+  byCharacter: Map<string, ReadingCandidate[]>;
+  groupById: Map<string, RhymeGroup>;
+  evidenceById: Map<string, Evidence>;
+  sourceById: Map<string, SourceRecord>;
+}
+// defineSnapshot deep-freezes its result. Keep one index for that exact object,
+// rather than rescanning every candidate for every single-character lookup.
+// Weak keys let old versions be collected; mutable caller inputs are never cached.
+const snapshotIndexes = new WeakMap<LexiconSnapshot, SnapshotIndex>();
+function indexSnapshot(snapshot: LexiconSnapshot): SnapshotIndex {
+  const cached = snapshotIndexes.get(snapshot);
+  if (cached) return cached;
+  const byCharacter = new Map<string, ReadingCandidate[]>();
+  for (const candidate of snapshot.candidates) {
+    const bucket = byCharacter.get(candidate.character);
+    if (bucket) bucket.push(candidate);
+    else byCharacter.set(candidate.character, [candidate]);
+  }
+  const index = {
+    byCharacter,
+    groupById: new Map(snapshot.groups.map((group) => [group.id, group])),
+    evidenceById: new Map(snapshot.evidence.map((item) => [item.id, item])),
+    sourceById: new Map(snapshot.sources.map((item) => [item.id, item])),
+  };
+  if (isDefinedSnapshot(snapshot)) snapshotIndexes.set(snapshot, index);
+  return index;
+}
+
 /**
  * 在给定快照上执行查询。同步纯函数，便于测试与复用。
  */
@@ -108,21 +138,8 @@ export function lookupInSnapshot(
 
   const characters = uniqueCharacters(request.characters);
 
-  const byCharacter = new Map<string, ReadingCandidate[]>();
-  for (const candidate of snapshot.candidates) {
-    const bucket = byCharacter.get(candidate.character);
-    if (bucket === undefined) {
-      byCharacter.set(candidate.character, [candidate]);
-    } else {
-      bucket.push(candidate);
-    }
-  }
-
-  const groupById = new Map(snapshot.groups.map((group) => [group.id, group]));
-  const evidenceById = new Map(
-    snapshot.evidence.map((item) => [item.id, item]),
-  );
-  const sourceById = new Map(snapshot.sources.map((item) => [item.id, item]));
+  const { byCharacter, groupById, evidenceById, sourceById } =
+    indexSnapshot(snapshot);
 
   const entries: LookupResult["entries"] = [];
   const missing: string[] = [];

@@ -20,7 +20,9 @@ const STEPS = [
   { no: "叁", title: "循字寻源", text: "点开字格，让每个读音有据可查。" },
 ];
 
-export function CheckerView(props: CheckerViewProps) {
+export function CheckerView(
+  props: CheckerViewProps & { sharedScene?: boolean },
+) {
   const {
     draft,
     report,
@@ -219,7 +221,9 @@ export function CheckerView(props: CheckerViewProps) {
       data-motion={motion.effects ? "on" : "off"}
       data-ambient={quiet ? "quiet" : "live"}
     >
-      <MoonlitScene active={motion.effects} quiet={quiet} />
+      {!props.sharedScene && (
+        <MoonlitScene active={motion.effects} quiet={quiet} />
+      )}
 
       <div className="pc-page" inert={panelOpen}>
         <header className="pc-masthead">

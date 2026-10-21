@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { spawn } from "node:child_process";
+import { existsSync } from "node:fs";
 import { createServer as createNetServer } from "node:net";
 import { createRequire } from "node:module";
 import { join } from "node:path";
@@ -8,6 +9,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 const root = fileURLToPath(new URL("../", import.meta.url));
 const apiPort = Number(process.env.PORT ?? 3000);
 const webPort = Number(process.env.WEB_PORT ?? 5173);
+const previewMode = process.argv.includes("--preview");
 let api, web;
 let closing;
 async function stop(code = 0) {
@@ -33,6 +35,12 @@ if (process.send)
   });
 
 try {
+  if (process.argv.slice(2).some((arg) => arg !== "--preview"))
+    throw new Error("用法：node scripts/dev.mjs [--preview]");
+  if (previewMode && !existsSync(join(root, "apps/web/dist/index.html")))
+    throw new Error(
+      "缺少页面构建，请先运行 pnpm build，再运行 node scripts/dev.mjs --preview",
+    );
   for (const port of [apiPort, webPort]) {
     if (!Number.isInteger(port) || port < 1 || port > 65535)
       throw new Error("PORT / WEB_PORT 必须是 1–65535 的整数");
@@ -61,27 +69,42 @@ try {
     }
   });
   const require = createRequire(join(root, "apps/web/package.json"));
-  const { createServer } = await import(
+  const { createServer, preview } = await import(
     pathToFileURL(require.resolve("vite")).href
   );
-  web = await createServer({
+  const connection = {
+    host: "127.0.0.1",
+    port: webPort,
+    strictPort: true,
+    proxy: Object.fromEntries(
+      ["/api", "/healthz", "/readyz"].map((path) => [
+        path,
+        `http://127.0.0.1:${apiPort}`,
+      ]),
+    ),
+  };
+  const config = {
     root: join(root, "apps/web"),
     configFile: join(root, "apps/web/vite.config.ts"),
-    server: {
-      host: "127.0.0.1",
-      port: webPort,
-      strictPort: true,
-      proxy: Object.fromEntries(
-        ["/api", "/healthz", "/readyz"].map((path) => [
-          path,
-          `http://127.0.0.1:${apiPort}`,
-        ]),
-      ),
-    },
-  });
-  await web.listen();
+    server: connection,
+    preview: connection,
+  };
+  if (previewMode) {
+    const server = await preview(config);
+    web = {
+      close: () =>
+        new Promise((resolve, reject) =>
+          server.httpServer.close((error) =>
+            error ? reject(error) : resolve(),
+          ),
+        ),
+    };
+  } else {
+    web = await createServer(config);
+    await web.listen();
+  }
   console.log(
-    `[dev] API http://127.0.0.1:${apiPort} · Web http://127.0.0.1:${webPort} · Ctrl+C 全部停止`,
+    `[${previewMode ? "preview" : "dev"}] API http://127.0.0.1:${apiPort} · Web http://127.0.0.1:${webPort} · Ctrl+C 全部停止`,
   );
 } catch (error) {
   console.error(`[dev] 启动失败：${error.message}`);

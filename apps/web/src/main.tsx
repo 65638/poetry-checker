@@ -2,20 +2,13 @@ import { lazy, Suspense, useMemo } from "react";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { CheckerStore } from "./app/store";
-import { CheckerView } from "./presentation/CheckerView";
+import { Workspace } from "./app/Workspace";
 import { EXAMPLES } from "./app/examples";
 import { createRuntimeTransport, readWebEnv } from "./app/config";
 import { useCheckerStore } from "./hooks/useCheckerStore";
 import type { CheckerViewProps } from "./view-contract";
 import type { DevShell as DevShellComponent } from "./app/DevShell";
-
-/** 空草稿：韵书默认为平水韵，体裁与体式自动。 */
-const EMPTY_DRAFT = {
-  text: "",
-  rhymeBook: "pingshui" as const,
-  genreHint: "auto" as const,
-  formHint: "auto" as const,
-};
+import { loadSavedDraft } from "./app/draftPersistence";
 
 /**
  * 开发壳按需加载。
@@ -37,7 +30,7 @@ function App() {
   // 误开 VITE_DEV_MOCK 会在构建产物里直接抛错，不做静默兜底。
   const store = useMemo(() => {
     const { transport } = createRuntimeTransport(readWebEnv());
-    return new CheckerStore(EMPTY_DRAFT, { transport });
+    return new CheckerStore(loadSavedDraft(), { transport });
   }, []);
   const state = useCheckerStore(store);
 
@@ -91,7 +84,7 @@ function App() {
     );
   }
 
-  return <CheckerView {...props} />;
+  return <Workspace {...props} />;
 }
 
 const root = document.getElementById("root");

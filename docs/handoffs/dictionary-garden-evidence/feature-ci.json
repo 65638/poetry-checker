@@ -1,0 +1,106 @@
+{
+  "checkedAt": "2026-10-20T10:02:42.524Z",
+  "pr": {
+    "number": 29,
+    "url": "https://github.com/65638/poetry-checker/pull/29",
+    "state": "open",
+    "draft": true,
+    "head": "52318c6554137756b20151599b3bc1b008ad6722",
+    "base": "main",
+    "baseSha": "cea831befa70a8842943d240f91f9816c9c55a94",
+    "mergeable": true,
+    "mergeableState": "clean"
+  },
+  "checks": [
+    {
+      "name": "基础检查",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/65638/poetry-checker/actions/runs/39471117948/job/118795112732",
+      "headSha": "52318c6554137756b20151599b3bc1b008ad6722"
+    },
+    {
+      "name": "基础检查",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/65638/poetry-checker/actions/runs/39471108589/job/118795080169",
+      "headSha": "52318c6554137756b20151599b3bc1b008ad6722"
+    }
+  ],
+  "commitStatus": "pending",
+  "statuses": [],
+  "runs": [
+    {
+      "id": 39471117948,
+      "name": "基础检查",
+      "event": "pull_request",
+      "headSha": "52318c6554137756b20151599b3bc1b008ad6722",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/65638/poetry-checker/actions/runs/39471117948"
+    },
+    {
+      "id": 39471108589,
+      "name": "基础检查",
+      "event": "push",
+      "headSha": "52318c6554137756b20151599b3bc1b008ad6722",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/65638/poetry-checker/actions/runs/39471108589"
+    },
+    {
+      "id": 39470193270,
+      "name": "基础检查",
+      "event": "pull_request",
+      "headSha": "9c464ac716730796da4758be655e03d6feb8a4ef",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/65638/poetry-checker/actions/runs/39470193270"
+    },
+    {
+      "id": 39470184773,
+      "name": "基础检查",
+      "event": "push",
+      "headSha": "9c464ac716730796da4758be655e03d6feb8a4ef",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/65638/poetry-checker/actions/runs/39470184773"
+    },
+    {
+      "id": 39469805260,
+      "name": "基础检查",
+      "event": "pull_request",
+      "headSha": "2186977603d41af4d38d8a9dcdb551efa3670dad",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/65638/poetry-checker/actions/runs/39469805260"
+    },
+    {
+      "id": 39469796888,
+      "name": "基础检查",
+      "event": "push",
+      "headSha": "2186977603d41af4d38d8a9dcdb551efa3670dad",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/65638/poetry-checker/actions/runs/39469796888"
+    },
+    {
+      "id": 39467408894,
+      "name": "基础检查",
+      "event": "pull_request",
+      "headSha": "d919132714a87e8f5efb209181ad0eb1e2f7b568",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/65638/poetry-checker/actions/runs/39467408894"
+    },
+    {
+      "id": 39467289250,
+      "name": "基础检查",
+      "event": "push",
+      "headSha": "d919132714a87e8f5efb209181ad0eb1e2f7b568",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/65638/poetry-checker/actions/runs/39467289250"
+    }
+  ]
+}

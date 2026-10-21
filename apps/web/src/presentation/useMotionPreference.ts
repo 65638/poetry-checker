@@ -1,20 +1,21 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from "react";
 
-const STORAGE_KEY = 'pc-motion-effects';
-const QUERY = '(prefers-reduced-motion: reduce)';
+const STORAGE_KEY = "pc-motion-effects";
+const QUERY = "(prefers-reduced-motion: reduce)";
+const CHANGE_EVENT = "pc-motion-preference-change";
 
-type Saved = 'on' | 'off' | null;
+type Saved = "on" | "off" | null;
 
 function readSaved(): Saved {
   try {
     const value = window.localStorage.getItem(STORAGE_KEY);
-    return value === 'on' || value === 'off' ? value : null;
+    return value === "on" || value === "off" ? value : null;
   } catch {
     return null;
   }
 }
 
-function writeSaved(value: 'on' | 'off') {
+function writeSaved(value: "on" | "off") {
   try {
     window.localStorage.setItem(STORAGE_KEY, value);
   } catch {
@@ -23,7 +24,9 @@ function writeSaved(value: 'on' | 'off') {
 }
 
 function systemReduced(): boolean {
-  return typeof window.matchMedia === 'function' && window.matchMedia(QUERY).matches;
+  return (
+    typeof window.matchMedia === "function" && window.matchMedia(QUERY).matches
+  );
 }
 
 export interface MotionPreference {
@@ -38,23 +41,32 @@ export function useMotionPreference(): MotionPreference {
   const [saved, setSaved] = useState<Saved>(readSaved);
 
   useEffect(() => {
-    if (typeof window.matchMedia !== 'function') return;
+    if (typeof window.matchMedia !== "function") return;
     const query = window.matchMedia(QUERY);
     const onChange = () => setReduced(query.matches);
-    query.addEventListener('change', onChange);
-    return () => query.removeEventListener('change', onChange);
+    query.addEventListener("change", onChange);
+    return () => query.removeEventListener("change", onChange);
   }, []);
 
-  const effects = !reduced && saved !== 'off';
+  useEffect(() => {
+    const sync = () => setSaved(readSaved());
+    const local = (event: Event) =>
+      setSaved((event as CustomEvent<"on" | "off">).detail);
+    window.addEventListener("storage", sync);
+    window.addEventListener(CHANGE_EVENT, local);
+    return () => {
+      window.removeEventListener("storage", sync);
+      window.removeEventListener(CHANGE_EVENT, local);
+    };
+  }, []);
+
+  const effects = !reduced && saved !== "off";
 
   const toggle = useCallback(() => {
-    setSaved((current) => {
-      const currentlyOn = !reduced && current !== 'off';
-      const next = currentlyOn ? 'off' : 'on';
-      writeSaved(next);
-      return next;
-    });
-  }, [reduced]);
+    const next = !reduced && saved !== "off" ? "off" : "on";
+    writeSaved(next);
+    window.dispatchEvent(new CustomEvent(CHANGE_EVENT, { detail: next }));
+  }, [reduced, saved]);
 
   return { effects, systemReduced: reduced, toggle };
 }

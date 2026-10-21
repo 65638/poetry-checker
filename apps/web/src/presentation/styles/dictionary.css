@@ -1,0 +1,1436 @@
+/* A second stop in the same garden: slate sky, moon gate, warm manuscript. */
+.pc-workspace {
+  background: var(--pc-night);
+}
+html:has(.pc-workspace) {
+  background: #101f25;
+}
+.pc-workspace .pc-place[hidden] {
+  display: none !important;
+}
+.pc-places {
+  view-transition-name: garden-navigation;
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  box-sizing: border-box;
+  max-width: var(--pc-page-max);
+  margin: auto;
+  min-height: 68px;
+  padding: 14px var(--pc-page-margin) 0;
+  color: var(--pc-on-ink);
+}
+.pc-places__caption {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--pc-font-serif);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  color: var(--pc-on-ink-muted);
+}
+.pc-places__caption i {
+  width: 24px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.5;
+}
+.pc-places__links {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.pc-places button {
+  font: inherit;
+  color: var(--pc-on-ink-muted);
+  padding: 9px 16px;
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  min-height: 44px;
+  border-radius: 3px;
+}
+.pc-places button span {
+  margin-right: 9px;
+  opacity: 0.65;
+  font-family: var(--pc-font-serif);
+  font-size: 22px;
+}
+.pc-places button[aria-current] {
+  color: var(--pc-moon);
+  border-color: #9aa99b80;
+  background: #ecedcd0d;
+}
+.pc-places button:hover {
+  background: #ecedcd16;
+  color: var(--pc-moon);
+}
+.pc-places button:focus-visible {
+  outline-color: var(--pc-focus-on-ink);
+}
+.pc-places__path {
+  color: var(--pc-mist);
+  letter-spacing: 3px;
+}
+.pc-place {
+  position: relative;
+  outline: none;
+}
+/* Snapshot the content sheets separately from the persistent garden.
+   No transformed live ancestor is left behind to break fixed/sticky surfaces. */
+html[data-journey]::view-transition-group(root) {
+  animation-duration: 760ms;
+}
+html[data-journey]::view-transition-old(garden-content),
+html[data-journey]::view-transition-new(garden-content) {
+  animation-duration: 760ms;
+  animation-timing-function: cubic-bezier(0.65, 0, 0.25, 1);
+  animation-fill-mode: both;
+  mix-blend-mode: normal;
+}
+html[data-journey="forward"]::view-transition-old(garden-content) {
+  animation-name: pc-walk-out-left;
+}
+html[data-journey="forward"]::view-transition-new(garden-content) {
+  animation-name: pc-walk-in-right;
+}
+html[data-journey="backward"]::view-transition-old(garden-content) {
+  animation-name: pc-walk-out-right;
+}
+html[data-journey="backward"]::view-transition-new(garden-content) {
+  animation-name: pc-walk-in-left;
+}
+html[data-journey]::view-transition-group(garden-navigation) {
+  animation-duration: 760ms;
+}
+html[data-journey]::view-transition-old(garden-navigation),
+html[data-journey]::view-transition-new(garden-navigation) {
+  animation-duration: 180ms;
+}
+html[data-journey]::view-transition,
+html[data-journey]::view-transition-group(*),
+html[data-journey]::view-transition-image-pair(*),
+html[data-journey]::view-transition-old(*),
+html[data-journey]::view-transition-new(*) {
+  pointer-events: none;
+}
+@keyframes pc-walk-out-left {
+  from {
+    transform: translateY(var(--pc-journey-scroll-shift, 0px));
+  }
+  to {
+    transform: translate(
+      calc(-1 * var(--pc-journey-span, 100vw)),
+      var(--pc-journey-scroll-shift, 0px)
+    );
+  }
+}
+@keyframes pc-walk-in-right {
+  from {
+    transform: translateX(var(--pc-journey-span, 100vw));
+  }
+}
+@keyframes pc-walk-out-right {
+  from {
+    transform: translateY(var(--pc-journey-scroll-shift, 0px));
+  }
+  to {
+    transform: translate(
+      var(--pc-journey-span, 100vw),
+      var(--pc-journey-scroll-shift, 0px)
+    );
+  }
+}
+@keyframes pc-walk-in-left {
+  from {
+    transform: translateX(calc(-1 * var(--pc-journey-span, 100vw)));
+  }
+}
+.pc-workspace :is(.pc-masthead, .pc-seal, .pc-plinth, .pc-intro) {
+  animation: none;
+}
+
+.pc-dictionary {
+  position: relative;
+  isolation: isolate;
+  background: transparent;
+  min-height: calc(100vh - 68px);
+}
+.pc-dictionary__page {
+  position: relative;
+  z-index: 1;
+  max-width: 1320px;
+  margin: auto;
+  padding: 0 var(--pc-page-margin) 24px;
+  box-sizing: border-box;
+}
+.pc-dictionary__masthead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 32px 0 36px;
+  color: var(--pc-on-ink);
+}
+.pc-dictionary__title {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.pc-dictionary__title h1 {
+  font: 400 clamp(32px, 3.4vw, 46px) / 1.25 var(--pc-font-display);
+  letter-spacing: 0.2em;
+  margin: 2px 0 8px;
+}
+.pc-dictionary__title p {
+  font-family: var(--pc-font-serif);
+  margin: 0;
+  font-size: 14px;
+  letter-spacing: 0.14em;
+  color: var(--pc-on-ink-muted);
+}
+.pc-dictionary__title .pc-dictionary__eyebrow {
+  font: 11px var(--pc-font-sans);
+  letter-spacing: 0.3em;
+  margin-bottom: 8px;
+}
+.pc-dictionary__layout {
+  display: grid;
+  grid-template-columns: 344px minmax(0, 1fr);
+  align-items: start;
+  gap: 40px;
+}
+.pc-dictionary__desk,
+.pc-dictionary__picker {
+  --pc-text: #ece6d6;
+  --pc-text-muted: #b5c4bd;
+  --pc-manuscript: #1c333a;
+  --pc-surface-sheet: #142b32;
+  --pc-surface-sunken: #203940;
+  --pc-divider: #47605f;
+  --pc-border-control: #6a817b;
+  --pc-accent: #c5d7c3;
+  --pc-accent-soft: #2c494b;
+  --pc-focus: #c5d7c3;
+  --pc-pass-fg: #d4e4cb;
+  --pc-pass-bg: #2d4944;
+  --pc-pass-border: #8ba88c;
+  --pc-review-fg: #ead09c;
+  --pc-review-bg: #3d3e32;
+  --pc-fail-fg: #f2b7a9;
+  --pc-fail-bg: #493837;
+  color: var(--pc-text);
+  padding: 32px;
+  border: 1px solid #60736b80;
+  border-top: 2px solid #b7a687;
+  background-image: var(--pc-paper-texture);
+  box-shadow: var(--pc-shadow-plinth);
+}
+.pc-dictionary__desk h2 {
+  font: 400 25px/1.45 var(--pc-font-display);
+  margin: 8px 0;
+}
+.pc-dictionary__kicker {
+  color: var(--pc-text-muted);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  margin: 0;
+}
+.pc-dictionary__guide {
+  font-family: var(--pc-font-serif);
+  color: var(--pc-text-muted);
+  font-size: 14px;
+  margin: 6px 0 28px;
+}
+.pc-dictionary__label {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+.pc-dictionary__searchline {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+}
+.pc-dictionary__input {
+  text-align: center;
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--pc-border-control);
+  border-radius: 3px;
+  background: var(--pc-surface-sheet);
+  font: 26px/1.4 var(--pc-font-serif);
+  color: var(--pc-text);
+  padding: 10px 16px;
+}
+.pc-dictionary__input::placeholder {
+  color: var(--pc-text-muted);
+  opacity: 0.6;
+}
+.pc-dictionary__searchline button {
+  white-space: nowrap;
+  padding: 10px 16px;
+  flex: 0 0 112px;
+  width: 112px;
+  letter-spacing: 0.18em;
+  text-indent: 0.18em;
+  text-align: center;
+}
+.pc-dictionary__hint {
+  font-size: 12px;
+  color: var(--pc-text-muted);
+  margin: 9px 0 26px;
+}
+.pc-dictionary__books {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+.pc-dictionary__books legend {
+  font-size: 13px;
+  padding: 0;
+  margin-bottom: 8px;
+}
+.pc-dictionary__book {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 12px;
+  margin: 6px 0;
+  border: 1px solid var(--pc-divider);
+  border-radius: 3px;
+  cursor: pointer;
+}
+.pc-dictionary__book:has(input:checked) {
+  border-color: var(--pc-accent);
+  background: var(--pc-accent-soft);
+}
+.pc-dictionary__book input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--pc-accent);
+}
+.pc-dictionary__book span:nth-child(2) {
+  flex: 1;
+}
+.pc-dictionary__book strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 500;
+}
+.pc-dictionary__book small {
+  color: var(--pc-text-muted);
+  font-size: 12px;
+}
+.pc-dictionary__book span:last-child {
+  color: var(--pc-accent);
+  font-size: 10px;
+}
+.pc-dictionary__examples {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+  padding-top: 0;
+  margin-top: 14px;
+}
+.pc-dictionary__examples > span {
+  font-size: 12px;
+  color: var(--pc-text-muted);
+  margin-right: auto;
+}
+.pc-dictionary__examples button {
+  width: 100%;
+  flex-shrink: 0;
+  min-height: 64px;
+  border: 1px solid var(--pc-divider);
+  background: var(--pc-surface-sheet);
+  color: var(--pc-text);
+  border-radius: 2px;
+  font: 20px var(--pc-font-serif);
+  cursor: pointer;
+  position: relative;
+  padding: 10px 0 4px;
+  border-radius: 2px 2px 10px 2px;
+}
+.pc-dictionary__examples button::before {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 1px;
+  background: #b7a687;
+  top: 8px;
+  left: calc(50% - 4px);
+}
+.pc-dictionary__examples button[aria-pressed="true"] {
+  background: var(--pc-accent-soft);
+  border-color: var(--pc-accent);
+}
+.pc-dictionary__wordslips {
+  border-top: 1px solid var(--pc-divider);
+  margin-top: 24px;
+  padding-top: 20px;
+}
+.pc-dictionary__wordslips-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.pc-dictionary__wordslips-head h3 {
+  margin: 0;
+  font: 19px var(--pc-font-display);
+}
+.pc-dictionary__wordslips-head > span {
+  font: 12px var(--pc-font-serif);
+  color: var(--pc-text-muted);
+}
+.pc-dictionary__landscapes {
+  display: flex;
+  margin-top: 12px;
+  gap: 8px;
+}
+.pc-dictionary__landscapes button {
+  flex: 1;
+  min-height: 44px;
+  border: 0;
+  border-bottom: 1px solid var(--pc-divider);
+  background: transparent;
+  color: var(--pc-text-muted);
+  font: 15px var(--pc-font-serif);
+}
+.pc-dictionary__landscapes button[aria-pressed="true"] {
+  color: var(--pc-text);
+  border-color: #b7a687;
+  background: #b7a6870c;
+}
+.pc-dictionary__slip-caption {
+  font: 13px/1.8 var(--pc-font-serif);
+  color: var(--pc-text-muted);
+  margin: 14px 0 0;
+}
+.pc-dictionary__examples button > span {
+  display: inline-block;
+  animation: pc-dictionary-ink var(--pc-dur-panel) ease;
+}
+.pc-dictionary__bookmark {
+  position: absolute;
+  top: -6px;
+  right: 32px;
+  padding: 10px 8px 18px;
+  writing-mode: vertical-rl;
+  font: 13px var(--pc-font-serif);
+  letter-spacing: 0.18em;
+  color: #f3ecd8;
+  background: #49605c;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 7px), 0 100%);
+  transition: background-color var(--pc-dur-control) ease;
+}
+.pc-dictionary__bookmark[data-collected="true"] {
+  background: var(--pc-seal);
+}
+.pc-dictionary__examples button:hover {
+  border-color: var(--pc-accent);
+}
+.pc-dictionary__aside {
+  font-size: 12px;
+  line-height: 1.9;
+  color: var(--pc-text-muted);
+  margin: 24px 0 0;
+}
+.pc-dictionary__folio {
+  scroll-margin-top: 76px;
+  position: relative;
+  padding: 0 40px;
+  box-shadow: var(--pc-shadow-sheet);
+  min-height: 610px;
+  border-radius: 3px 8px 8px 3px;
+  border-right: 5px double var(--pc-divider);
+  background-image: var(--pc-paper-texture);
+}
+.pc-dictionary__folio::before {
+  content: "";
+  position: absolute;
+  top: 16px;
+  bottom: 16px;
+  left: 13px;
+  width: 1px;
+  background: var(--pc-ruling);
+}
+.pc-dictionary__folio-head,
+.pc-dictionary__folio-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--pc-text-muted);
+  font: 12px var(--pc-font-serif);
+  letter-spacing: 0.2em;
+  padding: 22px 0;
+}
+.pc-dictionary__folio-head {
+  border-bottom: 1px solid var(--pc-divider);
+  padding-right: 44px;
+}
+.pc-dictionary__return {
+  display: none;
+  color: var(--pc-text-muted);
+  border: 0;
+  background: transparent;
+  font: inherit;
+  letter-spacing: 0;
+  cursor: pointer;
+  min-height: 44px;
+}
+.pc-dictionary__folio-foot {
+  border-top: 1px solid var(--pc-divider);
+  margin-top: 32px;
+}
+.pc-dictionary__status {
+  font-size: 13px;
+  color: var(--pc-text-muted);
+  margin-top: 20px;
+  min-height: 22px;
+}
+.pc-dictionary__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 410px;
+}
+.pc-dictionary__empty-glyph {
+  font: 100px/1.2 var(--pc-font-display);
+  color: var(--pc-accent);
+  opacity: 0.24;
+}
+.pc-dictionary__empty h2 {
+  font: 400 30px var(--pc-font-display);
+  margin: 20px 0 12px;
+  letter-spacing: 0.12em;
+}
+.pc-dictionary__empty p {
+  font: 15px/2 var(--pc-font-serif);
+  color: var(--pc-text-muted);
+  margin: 0;
+}
+.pc-dictionary__empty-mark {
+  font: 12px var(--pc-font-serif);
+  color: var(--pc-text-muted);
+  letter-spacing: 0.2em;
+  margin-top: 36px;
+}
+.pc-dictionary__entry {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 16px 0 26px;
+}
+.pc-dictionary__glyph {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 112px;
+  height: 120px;
+  font: 80px/1.2 var(--pc-font-display);
+  background:
+    linear-gradient(
+      90deg,
+      transparent calc(50% - 0.5px),
+      var(--pc-ruling) 50%,
+      transparent calc(50% + 0.5px)
+    ),
+    linear-gradient(
+      transparent calc(50% - 0.5px),
+      var(--pc-ruling) 50%,
+      transparent calc(50% + 0.5px)
+    );
+  border: 1px solid var(--pc-divider);
+}
+.pc-dictionary__entry h2 {
+  font: 400 28px/1.5 var(--pc-font-display);
+  margin: 7px 0;
+}
+.pc-dictionary__entry p:last-child {
+  font-size: 14px;
+  color: var(--pc-text-muted);
+  margin: 0;
+}
+.pc-dictionary__notice {
+  font-size: 13px;
+  line-height: 1.8;
+  padding: 13px 16px;
+  border-left: 2px solid var(--pc-accent);
+  background: var(--pc-accent-soft);
+  margin: 0 0 24px;
+}
+.pc-dictionary__candidates {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.pc-dictionary__candidate {
+  margin: 22px 0;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--pc-divider);
+}
+.pc-dictionary__candidate:last-child {
+  border-bottom: 0;
+}
+.pc-dictionary__candidate > header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.pc-dictionary__candidate-no {
+  color: var(--pc-text-muted);
+  font: 22px var(--pc-font-display);
+  letter-spacing: 0.1em;
+}
+.pc-dictionary__candidate h3 {
+  font: 400 23px var(--pc-font-display);
+  margin: 0;
+  flex: 1;
+}
+.pc-dictionary__badge {
+  flex-shrink: 0;
+  font-size: 12px;
+  border: 1px solid #80550077;
+  color: var(--pc-review-fg);
+  background: var(--pc-review-bg);
+  border-radius: 2px;
+  padding: 2px 9px;
+}
+.pc-dictionary__badge[data-approved="true"] {
+  border-color: var(--pc-pass-border);
+  color: var(--pc-pass-fg);
+  background: var(--pc-pass-bg);
+}
+.pc-dictionary__facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 22px 0;
+}
+.pc-dictionary__facts dt {
+  font-size: 12px;
+  color: var(--pc-text-muted);
+  margin-bottom: 4px;
+}
+.pc-dictionary__facts dd {
+  font-size: 17px;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.pc-dictionary__gloss {
+  font-family: var(--pc-font-serif);
+}
+.pc-dictionary__source {
+  font-size: 14px;
+}
+.pc-dictionary__source summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+  cursor: pointer;
+  padding: 12px 0;
+  color: var(--pc-accent);
+  min-height: 44px;
+  box-sizing: border-box;
+}
+.pc-dictionary__source summary::-webkit-details-marker {
+  display: none;
+}
+.pc-dictionary__source[open] summary > span {
+  transform: rotate(45deg);
+}
+.pc-dictionary__evidence {
+  border-top: 1px dashed var(--pc-divider);
+  padding: 16px 0;
+  color: var(--pc-text-muted);
+  overflow-wrap: anywhere;
+}
+.pc-dictionary__evidence p {
+  margin: 6px 0;
+}
+.pc-dictionary__evidence-title {
+  color: var(--pc-text);
+  font-weight: 600;
+}
+.pc-dictionary__evidence-title span {
+  display: block;
+  font-weight: 400;
+  font-size: 11px;
+  margin-top: 4px;
+}
+.pc-dictionary__evidence a {
+  color: var(--pc-accent);
+  text-underline-offset: 4px;
+  display: inline-block;
+  padding: 8px 0;
+}
+.pc-dictionary__version {
+  font-size: 11px;
+  color: var(--pc-text-muted);
+  overflow-wrap: anywhere;
+  margin: 26px 0 0;
+}
+.pc-dictionary__error {
+  padding: 50px 0;
+}
+.pc-dictionary__error h2 {
+  font: 400 26px var(--pc-font-display);
+}
+.pc-dictionary__error p {
+  color: var(--pc-fail-fg);
+  overflow-wrap: anywhere;
+}
+.pc-dictionary__footer {
+  font-size: 12px;
+  color: var(--pc-on-ink-muted);
+  text-align: center;
+  margin: 32px 0 0;
+}
+.pc-draft-save {
+  position: absolute;
+  top: 12px;
+  right: var(--pc-page-margin);
+  z-index: 2;
+  font-size: 10px;
+  color: var(--pc-on-ink-muted);
+  letter-spacing: 0.08em;
+  pointer-events: none;
+}
+.pc-dictionary__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 20px;
+}
+.pc-dictionary__actions .pc-button {
+  font-size: 12px;
+  padding: 8px 12px;
+  min-height: 44px;
+}
+.pc-dictionary__actions [aria-pressed="true"] {
+  color: var(--pc-accent);
+  border-color: var(--pc-accent);
+  background: var(--pc-accent-soft);
+}
+.pc-dictionary__feedback {
+  min-height: 24px;
+  margin: 16px 0 0;
+  font-size: 12px;
+  color: var(--pc-accent);
+}
+.pc-explore-current {
+  position: absolute;
+  top: 0;
+  right: var(--pc-page-margin);
+  z-index: 2;
+}
+.pc-explore-current button {
+  font: 11px var(--pc-font-sans);
+  color: var(--pc-on-ink-muted);
+  border: 0;
+  background: transparent;
+  min-height: 32px;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.pc-explore-current + .pc-draft-save {
+  top: 32px;
+}
+.pc-dictionary__comparison {
+  border: 1px solid var(--pc-divider);
+  padding: 18px;
+  margin: 4px 0 24px;
+  background: #e9e9dc80;
+}
+.pc-dictionary__comparison h3 {
+  font: 400 21px var(--pc-font-display);
+  margin: 0 0 8px;
+}
+.pc-dictionary__comparison > p {
+  font-size: 12px;
+  color: var(--pc-text-muted);
+}
+.pc-dictionary__comparison-row {
+  display: grid;
+  grid-template-columns: 90px minmax(0, 1fr);
+  align-items: start;
+  gap: 12px;
+  border-top: 1px solid var(--pc-divider);
+  padding: 14px 0;
+}
+.pc-dictionary__comparison-row:last-child {
+  padding-bottom: 0;
+}
+.pc-dictionary__comparison-row > button {
+  padding: 8px 0;
+  background: transparent;
+  border: 0;
+  text-align: left;
+  min-height: 44px;
+  font: 16px var(--pc-font-serif);
+  color: var(--pc-accent);
+  cursor: pointer;
+}
+.pc-dictionary__comparison-row > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 15px;
+  padding-top: 10px;
+}
+.pc-dictionary__comparison-row small {
+  color: var(--pc-text-muted);
+  white-space: nowrap;
+  font-size: 12px;
+  border: 1px solid var(--pc-divider);
+  padding: 1px 5px;
+}
+.pc-dictionary__comparison-row > p {
+  font-size: 12px;
+  color: var(--pc-fail-fg);
+}
+.pc-dictionary__passage,
+.pc-dictionary__shelf {
+  border-top: 1px solid var(--pc-divider);
+  margin-top: 22px;
+  font-size: 13px;
+}
+.pc-dictionary__passage summary,
+.pc-dictionary__shelf summary {
+  font-size: 16px;
+  font-family: var(--pc-font-serif);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  cursor: pointer;
+  list-style: none;
+}
+.pc-dictionary__passage summary::-webkit-details-marker,
+.pc-dictionary__shelf summary::-webkit-details-marker {
+  display: none;
+}
+.pc-dictionary__shelf summary > span {
+  font-size: 11px;
+  color: var(--pc-text-muted);
+}
+.pc-dictionary__shelf-tools {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.pc-dictionary__shelf-tools .pc-button {
+  min-height: 44px;
+  padding: 8px 12px;
+  font-size: 12px;
+}
+.pc-dictionary__shelf-feedback {
+  border-left: 2px solid var(--pc-accent);
+  padding-left: 10px;
+}
+.pc-dictionary__passage label {
+  display: block;
+  color: var(--pc-text-muted);
+  margin: 8px 0;
+}
+.pc-dictionary__passage textarea {
+  box-sizing: border-box;
+  width: 100%;
+  border: 1px solid var(--pc-border-control);
+  border-radius: 2px;
+  background: var(--pc-surface-sheet);
+  font: 16px/1.7 var(--pc-font-serif);
+  color: var(--pc-text);
+  resize: vertical;
+  padding: 10px;
+}
+.pc-dictionary__passage .pc-button {
+  font-size: 12px;
+  margin-top: 10px;
+  width: 100%;
+}
+.pc-dictionary__passage p,
+.pc-dictionary__shelf p {
+  color: var(--pc-text-muted);
+  line-height: 1.8;
+}
+.pc-dictionary__character-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-height: 220px;
+  overflow: auto;
+  padding: 3px;
+}
+.pc-dictionary__character-list button {
+  min-width: 38px;
+  min-height: 44px;
+  border: 1px solid var(--pc-divider);
+  border-radius: 2px;
+  background: var(--pc-surface-sheet);
+  color: var(--pc-text);
+  font: 20px var(--pc-font-serif);
+  cursor: pointer;
+}
+.pc-dictionary__character-list button[aria-pressed="true"] {
+  border-color: var(--pc-accent);
+  background: var(--pc-accent-soft);
+}
+.pc-dictionary__shelf h3 {
+  font-size: 12px;
+  font-weight: 500;
+}
+.pc-dictionary__shelf-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.pc-dictionary__shelf-list button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 6px 9px;
+  border: 1px solid var(--pc-divider);
+  border-radius: 2px;
+  background: var(--pc-surface-sheet);
+  color: var(--pc-text);
+  font: 20px var(--pc-font-serif);
+  cursor: pointer;
+}
+.pc-dictionary__shelf-list small {
+  font: 12px var(--pc-font-sans);
+  color: var(--pc-text-muted);
+}
+.pc-dictionary__recent-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.pc-dictionary__recent-head button {
+  border: 0;
+  background: transparent;
+  text-decoration: underline;
+  color: var(--pc-text-muted);
+  font: inherit;
+  cursor: pointer;
+  min-height: 44px;
+}
+.pc-dictionary__recent-head button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.pc-dictionary__overview-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.pc-dictionary__overview-grid button {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: center;
+  min-width: 42px;
+  min-height: 56px;
+  border: 1px solid var(--pc-divider);
+  border-radius: 3px;
+  background: var(--pc-surface-sheet);
+  cursor: pointer;
+  color: var(--pc-text);
+  padding: 6px;
+}
+.pc-dictionary__overview-grid button > span {
+  font: 22px var(--pc-font-serif);
+}
+.pc-dictionary__overview-grid small {
+  font-size: 12px;
+}
+.pc-dictionary__overview-grid [data-status="backed"] {
+  color: var(--pc-pass-fg);
+  background: var(--pc-pass-bg);
+  border-color: var(--pc-pass-border);
+}
+.pc-dictionary__overview-grid [data-status="needs_review"] {
+  color: var(--pc-review-fg);
+  background: var(--pc-review-bg);
+}
+.pc-dictionary__overview-grid [data-status="error"] {
+  color: var(--pc-fail-fg);
+  background: var(--pc-fail-bg);
+}
+.pc-dictionary__passage-result {
+  padding-top: 8px;
+  border-top: 1px dashed var(--pc-divider);
+  margin-top: 20px;
+}
+/* Keep the previous page of the book in place while the next query resolves. */
+.pc-dictionary__result {
+  animation: pc-dictionary-ink 260ms var(--pc-ease-out);
+}
+@keyframes pc-dictionary-ink {
+  from {
+    opacity: 0.45;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.pc-dictionary__reveal {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    grid-template-rows var(--pc-dur-disclosure) var(--pc-ease-in-out),
+    opacity var(--pc-dur-disclosure) ease,
+    visibility var(--pc-dur-disclosure) allow-discrete;
+}
+.pc-dictionary__reveal[data-open="true"] {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  visibility: visible;
+}
+.pc-dictionary__reveal > div {
+  min-height: 0;
+  overflow: hidden;
+}
+.pc-dictionary__facts .pc-dictionary__tone {
+  font: 26px/1.4 var(--pc-font-display);
+}
+.pc-dictionary__tone[data-tone="P"] {
+  color: var(--pc-tone-ping);
+}
+.pc-dictionary__facts > div:nth-child(-n + 2) {
+  padding: 12px 14px;
+  border-left: 2px solid var(--pc-divider);
+  background: #e8e6d957;
+}
+.pc-dictionary__facts > div:nth-child(2) dd {
+  font: 23px/1.6 var(--pc-font-display);
+}
+.pc-dictionary__compare-button {
+  min-width: 94px;
+}
+.pc-dictionary [data-pending="true"][data-busy-visible="false"] {
+  opacity: 1;
+}
+.pc-dictionary .pc-button--primary[data-pending="true"] {
+  color: var(--pc-seal-ink);
+  background: var(--pc-seal);
+  border-color: var(--pc-seal);
+}
+.pc-dictionary .pc-button--primary[data-busy-visible="true"] {
+  font-size: 14px;
+  letter-spacing: 0.06em;
+}
+.pc-dictionary .pc-button--quiet[data-pending="true"] {
+  color: var(--pc-text);
+  border: 1px solid var(--pc-border-control);
+}
+.pc-dictionary :is(button, .pc-dictionary__book, summary > span),
+.pc-places button {
+  transition:
+    color var(--pc-dur-control) ease,
+    background-color var(--pc-dur-control) ease,
+    border-color var(--pc-dur-control) ease,
+    transform var(--pc-dur-control) var(--pc-ease-out);
+}
+.pc-dictionary__desk
+  :is(button:not(.pc-button--primary), .pc-dictionary__book):hover:not(
+    :disabled
+  ),
+.pc-dictionary__folio .pc-button:hover:not(:disabled) {
+  border-color: var(--pc-accent);
+  background-color: var(--pc-accent-soft);
+}
+.pc-dictionary__passage[open] summary > span {
+  transform: rotate(45deg);
+}
+.pc-dictionary__folio
+  :is(
+    .pc-dictionary__glyph,
+    .pc-dictionary__facts,
+    .pc-dictionary__gloss,
+    .pc-dictionary__evidence,
+    .pc-dictionary__comparison-row > div
+  ) {
+  user-select: text;
+  -webkit-user-select: text;
+}
+.pc-dictionary__desk .pc-button--quiet,
+.pc-dictionary__picker .pc-button--quiet {
+  color: var(--pc-text);
+}
+@media (max-width: 1099px) {
+  .pc-dictionary__layout {
+    grid-template-columns: 290px minmax(0, 1fr);
+    gap: 24px;
+  }
+  .pc-dictionary__desk {
+    padding: 24px;
+  }
+  .pc-dictionary__examples {
+    flex-wrap: wrap;
+  }
+  .pc-dictionary__examples > span {
+    flex-basis: 100%;
+  }
+  .pc-dictionary__folio {
+    padding: 0 28px;
+  }
+  .pc-dictionary__glyph {
+    width: 80px;
+    height: 94px;
+    font-size: 64px;
+  }
+}
+@media (max-width: 799px) {
+  .pc-dictionary__return {
+    display: inline-block;
+  }
+  .pc-dictionary__folio-head {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .pc-dictionary__layout {
+    grid-template-columns: 1fr;
+  }
+  .pc-dictionary__books {
+    display: flex;
+    gap: 8px;
+  }
+  .pc-dictionary__book {
+    flex: 1;
+    padding: 10px 8px;
+  }
+  .pc-dictionary__book input {
+    flex-shrink: 0;
+  }
+  .pc-dictionary__book small,
+  .pc-dictionary__book span:last-child {
+    display: none;
+  }
+  .pc-dictionary__book strong {
+    font-size: 14px;
+  }
+  .pc-dictionary__hint {
+    margin-bottom: 16px;
+  }
+  .pc-dictionary__examples {
+    margin-top: 16px;
+    padding-top: 16px;
+  }
+  .pc-dictionary__aside {
+    margin-top: 14px;
+  }
+  .pc-dictionary__folio {
+    min-height: 420px;
+  }
+  .pc-dictionary__empty {
+    min-height: 300px;
+  }
+  .pc-dictionary__empty-glyph {
+    font-size: 70px;
+  }
+}
+@media (max-width: 599px) {
+  .pc-dictionary__book {
+    position: relative;
+    text-align: center;
+    justify-content: center;
+    padding: 12px 6px;
+  }
+  .pc-dictionary__book input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+  }
+  .pc-dictionary__book strong {
+    white-space: nowrap;
+    font-size: 14px;
+  }
+  .pc-dictionary__book:focus-within {
+    outline: 3px solid var(--pc-focus);
+    outline-offset: 2px;
+  }
+  .pc-places {
+    justify-content: center;
+    padding-top: 10px;
+  }
+  .pc-places__caption {
+    display: none;
+  }
+  .pc-places button {
+    padding: 8px 18px;
+    font-size: 14px;
+  }
+  .pc-dictionary__masthead {
+    gap: 12px;
+    padding: 26px 0;
+    align-items: start;
+    flex-wrap: wrap;
+  }
+  .pc-dictionary__title {
+    gap: 14px;
+  }
+  .pc-dictionary__title h1 {
+    font-size: 32px;
+  }
+  .pc-dictionary__title p:last-child {
+    font-size: 13px;
+    letter-spacing: 0.04em;
+  }
+  .pc-dictionary__masthead .pc-motion-toggle {
+    font-size: 11px;
+    padding: 0 8px;
+  }
+  .pc-dictionary__title .pc-dictionary__eyebrow {
+    font-size: 10px;
+  }
+  .pc-dictionary__desk {
+    padding: 24px 20px;
+  }
+  .pc-dictionary__desk h2 {
+    font-size: 24px;
+  }
+  .pc-dictionary__guide {
+    margin-bottom: 18px;
+  }
+  .pc-dictionary__folio {
+    padding: 0 22px;
+  }
+  .pc-dictionary__entry {
+    gap: 18px;
+  }
+  .pc-dictionary__entry p:last-child {
+    font-size: 13px;
+  }
+  .pc-dictionary__comparison {
+    padding: 14px;
+  }
+  .pc-dictionary__comparison-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .pc-dictionary__comparison-row > div {
+    padding-top: 0;
+  }
+  .pc-dictionary__facts {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .pc-dictionary__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .pc-dictionary__books {
+    gap: 6px;
+  }
+  .pc-dictionary__entry h2 {
+    font-size: 24px;
+  }
+  .pc-dictionary__entry .pc-dictionary__kicker {
+    font-size: 10px;
+    letter-spacing: 0.04em;
+  }
+  .pc-dictionary__candidate h3 {
+    font-size: 21px;
+  }
+  .pc-dictionary__facts {
+    gap: 14px;
+  }
+  .pc-dictionary__folio::before {
+    left: 8px;
+  }
+  .pc-dictionary__footer {
+    line-height: 1.8;
+  }
+}
+.pc-workspace[data-motion="off"] .pc-place .pc-page,
+.pc-workspace[data-motion="off"] .pc-dictionary__page,
+.pc-dictionary[data-motion="off"] .pc-dictionary__result,
+.pc-dictionary[data-motion="off"] .pc-rain {
+  animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-journey]::view-transition-group(*),
+  html[data-journey]::view-transition-old(*),
+  html[data-journey]::view-transition-new(*) {
+    animation-duration: 0s !important;
+  }
+  .pc-place .pc-page,
+  .pc-dictionary__page,
+  .pc-dictionary__result,
+  .pc-dictionary__examples button > span {
+    animation: none !important;
+  }
+}
+@media (forced-colors: active) {
+  .pc-places button[aria-current],
+  .pc-dictionary__book:has(input:checked) {
+    border: 2px solid Highlight;
+  }
+}
+
+/* The search sits above the book; the character picker stays beside its entry. */
+.pc-dictionary__masthead {
+  min-height: 150px;
+  padding: 24px 0;
+  align-items: center;
+}
+.pc-dictionary__title {
+  align-items: center;
+  min-width: 0;
+}
+.pc-dictionary__title h1 {
+  text-indent: 0;
+  transform: none;
+  white-space: nowrap;
+}
+.pc-dictionary__layout {
+  grid-template-columns: 320px minmax(0, 1fr);
+  gap: 24px;
+}
+.pc-dictionary__desk {
+  grid-column: 1 / -1;
+  padding: 20px 28px;
+}
+.pc-dictionary__desk::after {
+  display: none;
+}
+.pc-dictionary__desk h2 {
+  font-size: 18px;
+  margin: 0 0 12px;
+  letter-spacing: 0.12em;
+}
+.pc-dictionary__desk form {
+  display: grid;
+  grid-template-columns: minmax(240px, 1fr) minmax(0, 1.6fr);
+  align-items: start;
+  gap: 32px;
+}
+.pc-dictionary__hint {
+  margin: 8px 0 0;
+}
+.pc-dictionary__books {
+  display: flex;
+  gap: 8px;
+}
+.pc-dictionary__book {
+  flex: 1;
+  padding: 12px 10px;
+  margin: 0;
+  min-height: 64px;
+  box-sizing: border-box;
+}
+.pc-dictionary__book span:last-child {
+  display: none;
+}
+.pc-dictionary__book strong {
+  white-space: nowrap;
+}
+.pc-dictionary__picker {
+  padding: 20px;
+  position: sticky;
+  top: 24px;
+  max-height: calc(100dvh - 48px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #80978b #20373e;
+}
+.pc-dictionary__picker .pc-dictionary__passage {
+  margin-top: 0;
+  border-top: 0;
+  border-bottom: 1px solid var(--pc-divider);
+  padding-bottom: 12px;
+}
+.pc-dictionary__picker .pc-dictionary__wordslips {
+  border-top: 0;
+  margin-top: 20px;
+  padding-top: 0;
+}
+.pc-dictionary__wordslips[hidden] {
+  display: none;
+}
+.pc-dictionary__picker .pc-dictionary__examples {
+  padding-top: 0;
+  margin-top: 12px;
+}
+.pc-dictionary__character-list {
+  margin-top: 12px;
+}
+.pc-dictionary__picker .pc-dictionary__shelf {
+  margin-top: 20px;
+}
+@media (max-width: 1099px) {
+  .pc-dictionary__layout {
+    grid-template-columns: 280px minmax(0, 1fr);
+  }
+  .pc-dictionary__desk form {
+    gap: 20px;
+  }
+  .pc-dictionary__book small {
+    display: none;
+  }
+}
+@media (max-width: 799px) {
+  .pc-dictionary__layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+  .pc-dictionary__masthead {
+    min-height: 0;
+    padding: 20px 0;
+  }
+  .pc-dictionary__desk {
+    padding: 20px;
+  }
+  .pc-dictionary__desk form {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+  .pc-dictionary__book {
+    min-height: 44px;
+  }
+  .pc-dictionary__picker {
+    position: static;
+    max-height: none;
+    padding: 16px 20px;
+  }
+  .pc-dictionary__picker .pc-dictionary__wordslips {
+    margin-top: 12px;
+  }
+  .pc-dictionary__landscapes {
+    margin-top: 8px;
+  }
+  .pc-dictionary__slip-caption {
+    display: none;
+  }
+  .pc-dictionary__picker .pc-dictionary__examples {
+    margin-top: 8px;
+  }
+  .pc-dictionary__examples button {
+    min-height: 48px;
+  }
+  .pc-dictionary__picker .pc-dictionary__shelf {
+    margin-top: 12px;
+  }
+  .pc-dictionary__title {
+    gap: 16px;
+  }
+  .pc-dictionary__masthead .pc-motion-toggle {
+    margin-left: auto;
+  }
+}
