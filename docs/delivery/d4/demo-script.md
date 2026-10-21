@@ -22,7 +22,10 @@
 
 ## 备份方案（网络/服务异常时按顺序）
 
-1. **静态 JSON 报告样例**：G05 干净 clone 的真实导出产物（可直接展示字段与版本）
+1. **静态 JSON 报告样例（已随 PR 提交实物）**：`tests/integration/e2e/evidence/d4-e-02-g05/exports/`
+   - `report-1.json` 登鹳雀楼（pass，20 字位）sha256 `f6b0d92a6786…`
+   - `report-2.json` 黄鹤楼（fail，56 字位）sha256 `28a0da12d076…`
+   - 清单与来源：`exports/exports-manifest.json`（3 次解析 / 2 种报告；静夜思未被这 3 条证明）
 2. **截图**：`report-1440.png / report-768.png / report-375.png`（真实浏览器截图）
 3. **命令复跑**：`pnpm verify`（763）、`pnpm test:acceptance`（九格 3/6/0）、`pnpm test:e2e`（19/0/0）
 4. **录屏**：**未做**（本轮未录入；如需，用系统录屏并标注实际设备与日期）
