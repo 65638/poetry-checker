@@ -1,10 +1,16 @@
 import { z } from "zod";
 import {
+  LibraryCatalogSchema,
+  PoemPronunciationSchema,
+  CharacterReferenceSchema,
+} from "./corpus.js";
+import {
   PoetryAssistantRequestSchema,
   PoetryAssistantResponseSchema,
   RhymeWordsRequestSchema,
 } from "./studio.js";
 export * from "./studio.js";
+export * from "./corpus.js";
 
 const id = z.string().min(1);
 const ids = z.array(id);
@@ -562,6 +568,9 @@ export interface EvaluateInput {
 }
 
 export const schemaRegistry = {
+  LibraryCatalog: LibraryCatalogSchema,
+  PoemPronunciation: PoemPronunciationSchema,
+  CharacterReference: CharacterReferenceSchema,
   PoetryAssistantRequest: PoetryAssistantRequestSchema,
   PoetryAssistantResponse: PoetryAssistantResponseSchema,
   RhymeWordsRequest: RhymeWordsRequestSchema,
@@ -610,6 +619,60 @@ export function createOpenApiDocument() {
         "契约基线。复杂跨字段校验以 Zod 实现为准；HTTP 服务尚待接入。",
     },
     paths: {
+      "/api/v1/library": {
+        get: {
+          operationId: "getLibrary",
+          responses: {
+            "200": {
+              description: "扩展诗文目录，保留来源",
+              content: content("LibraryCatalog"),
+            },
+            "503": errors[503],
+          },
+        },
+      },
+      "/api/v1/library/{id}/pronunciation": {
+        get: {
+          operationId: "getPoemPronunciation",
+          parameters: [
+            {
+              name: "id",
+              in: "path",
+              required: true,
+              schema: { type: "string" },
+            },
+          ],
+          responses: {
+            "200": {
+              description: "与正文摘要绑定的现代参考注音",
+              content: content("PoemPronunciation"),
+            },
+            "404": errors[404],
+            "503": errors[503],
+          },
+        },
+      },
+      "/api/v1/character-reference/{char}": {
+        get: {
+          operationId: "getCharacterReference",
+          parameters: [
+            {
+              name: "char",
+              in: "path",
+              required: true,
+              schema: { type: "string" },
+            },
+          ],
+          responses: {
+            "200": {
+              description: "独立广韵与现代读音参考，不参与格律判定",
+              content: content("CharacterReference"),
+            },
+            "422": errors[422],
+            "503": errors[503],
+          },
+        },
+      },
       "/api/v1/poetry-assistant": {
         post: {
           operationId: "assistPoetry",

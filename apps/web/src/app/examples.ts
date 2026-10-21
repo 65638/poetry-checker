@@ -1,4 +1,4 @@
-import type { InputDraft } from "../view-contract";
+import type { InputDraft } from "../view-contract.js";
 
 /**
  * 示例入口：三首已批准固定正文。

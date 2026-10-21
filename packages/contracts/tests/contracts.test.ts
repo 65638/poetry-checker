@@ -135,7 +135,10 @@ describe("响应契约与原文映射", () => {
     );
     expect(Object.keys(api.paths).sort()).toEqual([
       "/api/v1/analyze",
+      "/api/v1/character-reference/{char}",
       "/api/v1/characters/{char}",
+      "/api/v1/library",
+      "/api/v1/library/{id}/pronunciation",
       "/api/v1/poetry-assistant",
       "/api/v1/reading-suggestions",
       "/api/v1/reading-suggestions/status",

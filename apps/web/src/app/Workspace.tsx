@@ -405,6 +405,7 @@ export function Workspace(props: CheckerViewProps) {
           hidden={place !== "library"}
         >
           <LibraryContainer
+            active={place === "library"}
             onStudy={(work) => {
               revise(
                 {

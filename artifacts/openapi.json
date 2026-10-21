@@ -6,6 +6,127 @@
     "description": "契约基线。复杂跨字段校验以 Zod 实现为准；HTTP 服务尚待接入。"
   },
   "paths": {
+    "/api/v1/library": {
+      "get": {
+        "operationId": "getLibrary",
+        "responses": {
+          "200": {
+            "description": "扩展诗文目录，保留来源",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LibraryCatalog"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "参见契约错误码",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/library/{id}/pronunciation": {
+      "get": {
+        "operationId": "getPoemPronunciation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "与正文摘要绑定的现代参考注音",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PoemPronunciation"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "参见契约错误码",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "参见契约错误码",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/character-reference/{char}": {
+      "get": {
+        "operationId": "getCharacterReference",
+        "parameters": [
+          {
+            "name": "char",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "独立广韵与现代读音参考，不参与格律判定",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CharacterReference"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "参见契约错误码",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "参见契约错误码",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/poetry-assistant": {
       "post": {
         "operationId": "assistPoetry",
@@ -605,6 +726,241 @@
   },
   "components": {
     "schemas": {
+      "LibraryCatalog": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "string",
+            "minLength": 1
+          },
+          "works": {
+            "maxItems": 10000,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 160
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "author": {
+                  "type": "string",
+                  "maxLength": 120
+                },
+                "dynasty": {
+                  "type": "string",
+                  "maxLength": 80
+                },
+                "paragraphs": {
+                  "minItems": 1,
+                  "maxItems": 200,
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2000
+                  }
+                },
+                "source": {
+                  "type": "string",
+                  "maxLength": 500
+                },
+                "sourceUrl": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "tags": {
+                  "maxItems": 32,
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 80
+                  }
+                },
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "verse",
+                    "prose",
+                    "unknown"
+                  ]
+                },
+                "collection": {
+                  "type": "string",
+                  "maxLength": 120
+                }
+              },
+              "required": [
+                "id",
+                "title",
+                "author",
+                "dynasty",
+                "paragraphs",
+                "source",
+                "sourceUrl",
+                "tags"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "version",
+          "works"
+        ],
+        "additionalProperties": false
+      },
+      "PoemPronunciation": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "textHash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "lines": {
+            "maxItems": 200,
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 40
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          },
+          "notice": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "textHash",
+          "lines",
+          "notice"
+        ],
+        "additionalProperties": false
+      },
+      "CharacterReference": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "character": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "readings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "entries": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "character": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "pronunciation": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "fanqie": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "rhyme": {
+                  "type": "string"
+                },
+                "tone": {
+                  "type": "string"
+                },
+                "initial": {
+                  "type": "string"
+                },
+                "pingshui": {
+                  "type": "string"
+                },
+                "cilin": {
+                  "type": "string"
+                },
+                "note": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "character",
+                "pronunciation",
+                "fanqie",
+                "rhyme",
+                "tone",
+                "initial",
+                "pingshui",
+                "cilin",
+                "note"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "relatedGlyphs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "notice": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "character",
+          "version",
+          "readings",
+          "entries",
+          "relatedGlyphs",
+          "notice"
+        ],
+        "additionalProperties": false
+      },
       "PoetryAssistantRequest": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "oneOf": [
@@ -748,6 +1104,18 @@
                         "minLength": 1,
                         "maxLength": 80
                       }
+                    },
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "verse",
+                        "prose",
+                        "unknown"
+                      ]
+                    },
+                    "collection": {
+                      "type": "string",
+                      "maxLength": 120
                     }
                   },
                   "required": [

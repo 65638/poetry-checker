@@ -309,6 +309,89 @@
   margin-left: auto;
   font-size: 13px;
 }
+.pc-library-filters label {
+  min-width: 0;
+  max-width: 100%;
+}
+.pc-library-filters select {
+  max-width: 170px;
+  min-width: 0;
+}
+.pc-library-section-picker {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 0;
+}
+.pc-library-section-picker select {
+  min-width: 0;
+  max-width: 100%;
+}
+.pc-library-pinyin-toggle {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  margin: 16px 0 0;
+  font-size: 14px;
+}
+.pc-library-verses[data-pinyin="true"] {
+  line-height: 3.4;
+}
+.pc-library-verses[data-pinyin="true"] .pc-library-phrase {
+  display: inline;
+  white-space: normal;
+}
+.pc-library-verses[data-pinyin="true"] .pc-library-character {
+  min-width: 1.8em;
+  line-height: 3.4;
+}
+.pc-library-verses rt {
+  font:
+    11px/1.4 system-ui,
+    sans-serif;
+  color: var(--pc-text-muted);
+  white-space: nowrap;
+  letter-spacing: 0;
+}
+.pc-guangyun {
+  border-top: 1px solid var(--pc-divider);
+  margin-top: 24px;
+  padding: 18px 0;
+  overflow-wrap: anywhere;
+}
+.pc-guangyun summary {
+  cursor: pointer;
+  font-size: 16px;
+}
+.pc-guangyun ul {
+  list-style: none;
+  padding: 0;
+}
+.pc-guangyun li {
+  padding: 12px 0;
+  border-top: 1px solid var(--pc-divider);
+}
+.pc-guangyun li p {
+  margin: 6px 0;
+  font-size: 14px;
+}
+.pc-guangyun-related {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.pc-guangyun-related button {
+  width: 40px;
+  height: 40px;
+  font: 20px var(--pc-font-serif);
+  border: 1px solid var(--pc-divider);
+  color: inherit;
+  background: transparent;
+  border-radius: 3px;
+  cursor: pointer;
+}
 .pc-library-catalogue > .pc-studio-meta {
   color: var(--pc-on-ink-muted);
 }

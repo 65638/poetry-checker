@@ -13,7 +13,7 @@ const fetcher = async (_url, init) => {
   let output;
   if (!data.task) output = { suggestions: data.targets.map((target) => ({ tokenId: target.tokenId, candidateId: target.candidates[0].id, pronunciation: null, reason: '受控浏览器测试，不是语言学判定。' })) };
   if (data.task === 'critique') output = { overview: '受控全诗评议：结合全文讨论山水。', strengths: ['受控优点说明。'], revisions: data.mode === 'writing' && data.text === '山高水远。' ? [{ startTokenId: 'l1c4', endTokenId: 'l1c4', original: '远', replacement: '长', reason: '受控改字场景。', tradeoff: '受控取舍说明。' }] : [] };
-  if (data.task === 'search') { const poem = data.poems.find((p) => p.title === '静夜思') ?? data.poems[0]; output = { matches: [{ id: poem.id, quote: poem.paragraphs[0].slice(0, 5), reason: '受控意境排序，非真实推理。' }] }; }
+  if (data.task === 'search') { const poem = data.poems.find((p) => p.title === '夜雨寄北'); assert(poem, '夜雨寄北 must be recalled for this scene'); output = { matches: [{ id: poem.id, quote: poem.paragraphs[0].slice(0, 5), reason: '受控意境排序，非真实推理。' }] }; }
   if (data.task === 'compare') output = { overview: '受控对读总评。', aspects: [{ name: '意象', left: '受控左诗分析。', right: '受控右诗分析。' }] };
   if (data.task === 'rhyme') output = { matches: [{ id: data.candidates[0].id, reason: '受控同韵语义推荐。' }] };
   return new Response(JSON.stringify({ choices: [{ finish_reason: 'stop', message: { content: JSON.stringify(output) } }] }));
@@ -44,11 +44,11 @@ try {
     const path = join(out, 'import.json');
     writeFileSync(path, JSON.stringify([{ title: '浏览器导入样本', author: '测试', paragraphs: ['举头望明月，低头思故乡。'], source: '临时导入测试，非审核数据' }]));
     await upload('.pc-library input[type="file"]', path);
-    await waitFor(() => h.evaluate("document.querySelector('.pc-library-heading').textContent.includes('4首入藏')"));
+    await waitFor(() => h.evaluate("document.querySelector('.pc-library-heading').textContent.includes('2023首入藏')"));
     await upload('.pc-library input[type="file"]', path);
     await waitFor(() => h.evaluate("document.querySelector('.pc-library > .pc-studio-notice')?.textContent.includes('重复1首')"));
     await h.cdp.send('Page.reload');
-    await waitFor(() => h.evaluate("document.querySelector('.pc-library-heading')?.textContent.includes('4首入藏')"));
+    await waitFor(() => h.evaluate("document.querySelector('.pc-library-heading')?.textContent.includes('2023首入藏')"));
     await shot('library-1440');
   });
   await check('scene-search-returns-verbatim-quote-and-opens-original', async () => {
@@ -58,7 +58,8 @@ try {
     await waitFor(() => h.evaluate("document.querySelector('.pc-library-excerpt')?.textContent.includes('受控意境排序')"));
     await h.click('.pc-library-title');
     await waitFor(() => h.evaluate("!!document.querySelector('.pc-library-reading .pc-library-verses')"));
-    assert.equal(await h.evaluate("document.querySelector('.pc-library-reading').textContent.includes('低头思故乡')"), true);
+    assert.equal(await h.evaluate("document.querySelector('.pc-library-reading > h2').textContent"), '夜雨寄北');
+    assert.equal(await h.evaluate("document.querySelector('.pc-library-reading').textContent.includes('巴山夜雨涨秋池')"), true);
     await h.click('.pc-library-reading [aria-label="收藏此诗"]');
     assert.equal(await h.evaluate("document.querySelector('.pc-library-reading [aria-label=\"收藏此诗\"]').getAttribute('aria-pressed')"), 'true');
     await shot('original-poem');

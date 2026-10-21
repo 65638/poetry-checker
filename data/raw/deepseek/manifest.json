@@ -1,0 +1,110 @@
+{
+  "version": "deepseek-v1",
+  "receivedOn": "2026-10-21",
+  "works": 2022,
+  "source": "User-provided DeepSeek extraction; no independent human approval asserted.",
+  "license": "Upstream text, selection and annotation rights not independently verified; includes modern works.",
+  "pronunciationScope": "Modern Mandarin; not historical pronunciation or approved rhyme-book evidence.",
+  "provenance": [
+    {
+      "input": "古诗注音/data/poems.json",
+      "file": "data/raw/deepseek/poems.gz",
+      "bytes": 1528041,
+      "sha256": "8ac2cd8ab13fc665a49af898c7a36df97ee2ea3ca0e97520f3d452f08f962911",
+      "archiveSha256": "04b4bbcef88946b00695189fb206ff19c10491a616a22740a460fcb19b0499b5"
+    },
+    {
+      "input": "古诗注音/data/annotated.json",
+      "file": "data/raw/deepseek/annotations.gz",
+      "bytes": 17426611,
+      "sha256": "ef2fafcb5c085412407ce7ce35693f1828f10a8932dd39c9317e0ea76ec31f47",
+      "archiveSha256": "caad0f44243407e8ad2317e784e9a368dd6ef22b68150aa50cf2c7112961281d"
+    },
+    {
+      "input": "古诗注音/data/char_dict.json",
+      "file": "data/raw/deepseek/dictionary.gz",
+      "bytes": 154205,
+      "sha256": "ddbbf20547906e019b9f2aa9a58df66eaf5b09eb4ea8c4834805a0cde019a765",
+      "archiveSha256": "1d7950f99aed7437152b1c0f4c4dab5a27b6057c7849590703ff1c69ca659332"
+    },
+    {
+      "input": "汉字读音/output/汉字韵书总表.json",
+      "file": "data/raw/deepseek/lexicon.gz",
+      "bytes": 15710046,
+      "sha256": "43d5e62989ba78b6d5e7b81f24c7d7e804ce0853af6443ba3a1431e466934a24",
+      "archiveSha256": "ab43305f19cc8e61294bd7cdd44b06479dfae34ce90ebfa4b91c943091c8922d"
+    },
+    {
+      "input": "汉字读音/output/广韵未收字·读音补充.csv",
+      "file": "data/raw/deepseek/supplement.gz",
+      "bytes": 1181807,
+      "sha256": "6fca1dc270a52550e65128f1541d341f3a5e20ebd3e063c9785b95af51133e64",
+      "archiveSha256": "65616d29c8010d824113ae94ea73c3a68090be57d8ce6d4b544bfdee6bb90a7f"
+    },
+    {
+      "input": "汉字读音/raw/SieuxYonh.txt",
+      "file": "data/raw/deepseek/xiaoyun.gz",
+      "bytes": 135527,
+      "sha256": "6bc4045701b904939c5831d0a7a58363334a6b8cd4df24067b7312bfb813e28d",
+      "archiveSha256": "0ae51c6d3022848844c3d73bab72355966529217407f9ba92cff4761aef017de"
+    },
+    {
+      "input": "汉字读音/raw/Dzih.txt",
+      "file": "data/raw/deepseek/characters.gz",
+      "bytes": 894126,
+      "sha256": "8668f0cecc5f273a3b3065fb1e0611926a64e92612c648ae743b1a96acd78082",
+      "archiveSha256": "17f345efa09835119de2153cdd26a148478d2774b97f95e9ed1549098769477f"
+    }
+  ],
+  "corrections": [
+    {
+      "character": "乾",
+      "fanqie": "古寒切",
+      "original": "qián",
+      "value": "gān",
+      "reason": "订正提供表配反的今音；古寒切属寒韵，渠焉切属仙韵。"
+    },
+    {
+      "character": "乾",
+      "fanqie": "渠焉切",
+      "original": "gān",
+      "value": "qián",
+      "reason": "订正提供表配反的今音；古寒切属寒韵，渠焉切属仙韵。"
+    },
+    {
+      "character": "樂",
+      "fanqie": "五敎切",
+      "original": "yào",
+      "value": null,
+      "reason": "原表今音对应不完整，暂不将今音绑定本条反切；上方列字典现代读音。"
+    },
+    {
+      "character": "樂",
+      "fanqie": "五角切",
+      "original": "lè",
+      "value": null,
+      "reason": "原表今音对应不完整，暂不将今音绑定本条反切；上方列字典现代读音。"
+    },
+    {
+      "character": "樂",
+      "fanqie": "盧各切",
+      "original": "luò",
+      "value": null,
+      "reason": "原表今音对应不完整，暂不将今音绑定本条反切；上方列字典现代读音。"
+    }
+  ],
+  "products": [
+    {
+      "file": "data/library/deepseek-v1/catalog.json.gz",
+      "sha256": "e97c07ea354457fc3fd2a8cfe0a78cc72dfbc87b8655f8b46885fcd784b1c61d"
+    },
+    {
+      "file": "data/library/deepseek-v1/annotations.json.gz",
+      "sha256": "ee1d6e8663169df6bc0e5b7e6bdb1f063dd9992dbfc3b0af24b8f345fe0119c9"
+    },
+    {
+      "file": "data/library/deepseek-v1/reference.json.gz",
+      "sha256": "d07cad9639b2e809896e97b0a049b7876bf729a0e6d6396b4c8df8b8f540ac66"
+    }
+  ]
+}

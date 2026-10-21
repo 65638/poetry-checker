@@ -1,5 +1,6 @@
 {
   "manifestVersion": "d4-a-source-1",
+  "supplementaryManifests": ["data/raw/deepseek/manifest.json"],
   "updatedAt": "2026-10-20T08:16:34.168Z",
   "updatedAtNote": "D4 Codex 接管：仅新增实际获取的词林固定修订与 Wikimedia 条款字节；旧获取失败留在 previousAttempts，历史审批与原有 raw 字节不改。",
   "maintainer": "A 数据目录，D4 经用户授权由 Codex 接管",

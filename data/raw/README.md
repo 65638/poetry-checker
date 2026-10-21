@@ -2,6 +2,8 @@
 
 本目录只放**上游原样字节**，不编辑、不清洗、不合并。所有统计与导入都从这里的字节出发。
 
+2026-10-21新增`deepseek/`：用户提供的2022篇诗文、注音、字典及广韵表等共七份原始文件，以gzip保存原样字节。各文件解压摘要、压缩摘要与取得范围见`deepseek/manifest.json`；派生库在`data/library/deepseek-v1/`，不改原三书证据。复现及权利边界见`docs/features/deepseek-corpus.md`。
+
 | 文件                                                     | 上游                                                                    | 固定引用                                                         |
 | -------------------------------------------------------- | ----------------------------------------------------------------------- | ---------------------------------------------------------------- |
 | `chinese_word_rhyme/Pingshui_Rhyme.json`                 | [chinese_word_rhyme](https://github.com/charlesix59/chinese_word_rhyme) | 提交 `ff0e9c13fb037c43e0eaa5dc929c0fe4fa2ffb18`                  |

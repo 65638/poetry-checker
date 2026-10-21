@@ -44,6 +44,7 @@ const LANDSCAPES = [
 ];
 
 export interface DictionaryViewProps {
+  characterReference?: ReactNode;
   readingAssistant?: ReactNode;
   text: string;
   book: BookId;
@@ -814,6 +815,7 @@ export function DictionaryView(props: DictionaryViewProps) {
                     当前字形没有收录记录。可另查繁体或异体，系统不会自动合并。
                   </p>
                 )}
+                {props.characterReference}
                 <p className="pc-dictionary__version">
                   数据版本：{result.dataVersion}
                 </p>
@@ -844,7 +846,8 @@ export function DictionaryView(props: DictionaryViewProps) {
           </section>
         </main>
         <footer className="pc-dictionary__footer">
-          参考分析：韵书数据与 AI 读音可能有误，未经全面人工核验，不作为权威结论。
+          参考分析：韵书数据与 AI
+          读音可能有误，未经全面人工核验，不作为权威结论。
         </footer>
       </div>
     </div>

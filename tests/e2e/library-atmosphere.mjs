@@ -143,10 +143,27 @@ try {
     async () => {
       await nav("library");
       await settled();
+      await waitFor(() =>
+        evaluate(
+          "document.querySelector('.pc-library-heading').textContent.includes('2022首入藏')",
+        ),
+      );
       await evaluate(
         "window.__catalogue=document.querySelector('.pc-library-catalogue');window.__list=document.querySelector('.pc-library-list');window.__list.scrollTop=80;window.__listY=window.__list.scrollTop;true",
       );
-      await h.click(".pc-library-title");
+      await evaluate(
+        "(() => {const r=window.__list.getBoundingClientRect();const el=[...window.__list.querySelectorAll('.pc-library-title')].find(el=>{const t=el.getBoundingClientRect();return t.top>=r.top && t.bottom<=r.bottom});if(!el)throw new Error('No visible title');el.dataset.visibleTitle='yes';return true})()",
+      );
+      const titlePoint = await evaluate(
+        "(() => {const r=document.querySelector('[data-visible-title]').getBoundingClientRect();return {x:r.x+r.width/2,y:r.y+r.height/2}})()",
+      );
+      for (const type of ["mousePressed", "mouseReleased"])
+        await cdp.send("Input.dispatchMouseEvent", {
+          type,
+          button: "left",
+          clickCount: 1,
+          ...titlePoint,
+        });
       await sleep(400);
       assert.ok(
         await evaluate(
@@ -179,10 +196,13 @@ try {
         ),
       );
       await h.viewport(1440, 900);
-      await h.click('.pc-library-character[aria-label="选字「山」"]');
+      const picked = await evaluate(
+        "document.querySelector('.pc-library-character').textContent",
+      );
+      await h.click(".pc-library-character");
       assert.equal(
         await evaluate("document.querySelector('[aria-label=原诗查字]').value"),
-        "山",
+        picked,
       );
       assert.equal(
         await evaluate(
