@@ -32,6 +32,23 @@ export const CritiqueSchema = z.strictObject({
   strengths: z.array(note).max(5),
   revisions: z.array(RevisionSchema).max(6),
 });
+const ProsodyLocationSchema = z.strictObject({
+  tokenId: z.string().min(1).max(100),
+  line: z.number().int().positive(),
+  column: z.number().int().positive(),
+  text: z.string().min(1).max(4),
+});
+const ProsodyIssueSchema = z.strictObject({
+  ruleId: z.string().min(1).max(80),
+  status: z.enum(["fail", "uncertain"]),
+  locations: z.array(ProsodyLocationSchema).max(12),
+  message: z.string().min(1).max(600),
+});
+export const ProsodyContextSchema = z.strictObject({
+  format: z.string().min(1).max(160),
+  templateId: z.string().max(160).nullable(),
+  issues: z.array(ProsodyIssueSchema).max(120),
+});
 export const ComparisonSchema = z.strictObject({
   overview: note,
   aspects: z
@@ -68,6 +85,7 @@ export const PoetryAssistantRequestSchema = z.discriminatedUnion("task", [
     rhymeBook: book,
     direction: z.enum(["meaning", "imagery", "sound"]),
     mode: z.enum(["writing", "reading"]),
+    prosodyContext: ProsodyContextSchema.optional(),
   }),
   z.strictObject({ task: z.literal("compare"), left: text, right: text }),
   z.strictObject({

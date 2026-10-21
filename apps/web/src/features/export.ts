@@ -3,7 +3,7 @@ import type {
   Finding,
   ReadingOverride,
 } from "@poetry/contracts";
-import { FORM_LABEL, formatHeading } from "../app/reportView";
+import { FORM_LABEL, formatHeading, rootCauseChecks } from "../app/reportView";
 
 export interface ExportState {
   report: AnalysisResponse;
@@ -147,9 +147,7 @@ export function buildSummaryText({ report }: ExportState): string {
   lines.push(
     `评语：${outsideBasicRhyme ? "当前仅作逐字平仄参考，不据平韵基本谱判定合律。" : STATUS_LABEL[report.summary.status]}`,
   );
-  const problems = report.prosody.checks.filter(
-    (c) => c.status === "fail" && c.resolvedBy === null,
-  );
+  const problems = rootCauseChecks(report).filter((c) => c.status === "fail");
   if (problems.length && !outsideBasicRhyme) {
     lines.push(
       report.genre.applicability === "uncertain"

@@ -16,3 +16,9 @@ DeepSeek使用官方API，密钥只读取服务端环境；未取得用户新Key
 - 补跑既有自动辨音 E2E 5/5、独立字典辨音 E2E 6/6，均0浏览器异常；受控provider标为DeepSeek，连同文字统一改动后的断言已覆盖。第一轮等待GLM旧文案的一次运行超时，修正断言后复跑通过。
 - 浏览器执行基线47a8707，dirty=true，证据位于工作区外outputs/DeepSeek荐字修复_2026-10-22/{browser,automatic-reference-final,reading-assistant}，不能称为干净提交SHA运行。DeepSeek真实调用因Key尚未填写明确未运行；GLM先前真实荐字HTTP200仅验证连通，不代表荐字准确率。
 - 私有.env.local已被Git忽略，不归档、不记录内容；配置文件可填写DEEPSEEK_API_KEY，重启预览后生效。各接口及报告保留真实provider/model标识。
+
+## 复审修正（2026-10-22）
+
+用户复核指出自动简评可能漏报字位，并把同一出律字引起的失对、失粘重复计数。根因是文学助手此前只收到诗文，没有收到正式规则报告，模型会自行重算格律。现已在 critique 请求增加结构化 `prosodyContext`：包含形制、模板、所有未解决规则项、字位和原规则消息；提示明确要求逐项覆盖规则引擎的失败项，并把同一字位的 `RELATION.DUI/NIAN` 作为 `METER.POSITION` 的派生后果，不重复计根因。页面摘要和复制摘要通过 `rootCauseChecks` 去重计数，详细诊断仍保留关系项供定位。
+
+本次追加验证：`pnpm verify` 通过，77 文件 / 955 测试；推敲台浏览器 10 场景通过。复审修正提交在后续主线提交中，预览需重启后加载新构建。

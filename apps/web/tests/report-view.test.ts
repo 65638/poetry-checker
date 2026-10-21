@@ -13,6 +13,7 @@ import {
   findingGroup,
   groupFindings,
   incompleteSummary,
+  rootCauseChecks,
   locateFinding,
   rhymeCommonGroups,
   toneLabel,
@@ -29,6 +30,28 @@ const scenarios: MockScenario[] = [
 ];
 
 describe("incompleteSummary", () => {
+  it("does not count relation consequences as separate root causes", () => {
+    const report = loadMockScenario("fail");
+    report.prosody.checks = [
+      {
+        ...report.prosody.checks[0]!,
+        id: "meter",
+        ruleId: "METER.POSITION",
+        status: "fail",
+        resolvedBy: null,
+        locations: [{ tokenId: "l1c2", line: 1, column: 2 }],
+      },
+      {
+        ...report.prosody.checks[0]!,
+        id: "dui",
+        ruleId: "RELATION.DUI",
+        status: "fail",
+        resolvedBy: null,
+        locations: [{ tokenId: "l1c2", line: 1, column: 2 }],
+      },
+    ];
+    expect(rootCauseChecks(report).map((check) => check.id)).toEqual(["meter"]);
+  });
   it("读音已确定而格式未定时准确说明原因，不要求查看问号字", () => {
     const report = loadMockScenario("pass");
     report.prosody.selectedTemplateId = null;
@@ -47,7 +70,9 @@ describe("incompleteSummary", () => {
     report.poem.tokens[1]!.readingStatus = "ambiguous";
     const summary = incompleteSummary(report);
     expect(summary.label).toBe("暂无完整结论");
-    expect(summary.desc).toContain(`所选韵书缺录：${report.poem.tokens[0]!.text}`);
+    expect(summary.desc).toContain(
+      `所选韵书缺录：${report.poem.tokens[0]!.text}`,
+    );
     expect(summary.desc).toContain("1个字位的读音或声调未确定");
     expect(summary.desc).toContain("平起／仄起");
   });
@@ -59,7 +84,9 @@ describe("incompleteSummary", () => {
     expect(incompleteSummary(report).label).toBe("分句需确认");
     expect(incompleteSummary(report).desc).toContain("分句和标点");
     report.poem.quality = "ok";
-    expect(incompleteSummary(report).desc).toBe("仍有检查项目未确定，详见诗旁批注。");
+    expect(incompleteSummary(report).desc).toBe(
+      "仍有检查项目未确定，详见诗旁批注。",
+    );
   });
 });
 
@@ -72,24 +99,29 @@ describe("toneLabel", () => {
 });
 
 describe("trailingPunctuation", () => {
-  const token = (startUtf16: number, endUtf16: number, text = "尽") => ({
-    tokenId: "l1c5",
-    text,
-    line: 1,
-    column: 5,
-    startUtf16,
-    endUtf16,
-  } as Parameters<typeof trailingPunctuation>[1]);
+  const token = (startUtf16: number, endUtf16: number, text = "尽") =>
+    ({
+      tokenId: "l1c5",
+      text,
+      line: 1,
+      column: 5,
+      startUtf16,
+      endUtf16,
+    }) as Parameters<typeof trailingPunctuation>[1];
 
   it("句末标点不吞掉后续无换行的汉字", () => {
     const original = "白日依山尽，黄河入海流。";
-    expect(trailingPunctuation(original, token(4, 5), undefined, 11)).toBe("，");
+    expect(trailingPunctuation(original, token(4, 5), undefined, 11)).toBe(
+      "，",
+    );
   });
 
   it("支持换行前的标点与闭引号", () => {
     const original = "白日依山尽。\n黄河入海流。";
     expect(trailingPunctuation(original, token(4, 5), undefined, 6)).toBe("。");
-    expect(trailingPunctuation("白日依山尽。”\n黄河", token(4, 5), undefined, 7)).toBe("。”");
+    expect(
+      trailingPunctuation("白日依山尽。”\n黄河", token(4, 5), undefined, 7),
+    ).toBe("。”");
   });
 
   it("无句末标点时不把空白或后续文本渲染到右侧", () => {
@@ -112,9 +144,9 @@ describe("buildTokenSpectrum", () => {
     expect([...starts].sort((a, b) => a - b)).toEqual(starts);
     // 每个字位的区间必须能切回它自己的文本
     for (const cell of cells) {
-      expect(report.poem.originalText.slice(cell.startUtf16, cell.endUtf16)).toBe(
-        cell.text,
-      );
+      expect(
+        report.poem.originalText.slice(cell.startUtf16, cell.endUtf16),
+      ).toBe(cell.text);
     }
   });
 
@@ -152,7 +184,9 @@ describe("buildTokenSpectrum", () => {
         check.locations.map((location) => location.tokenId),
       ),
     );
-    expect(new Set(located.map((cell) => cell.tokenId))).toEqual(expectedTokenIds);
+    expect(new Set(located.map((cell) => cell.tokenId))).toEqual(
+      expectedTokenIds,
+    );
   });
 });
 
@@ -274,9 +308,9 @@ describe("locateFinding", () => {
     const targets = locateFinding(report, finding.id);
     expect(targets.length).toBeGreaterThan(0);
     const first = targets[0]!;
-    expect(report.poem.originalText.slice(first.startUtf16, first.endUtf16)).toBe(
-      first.text,
-    );
+    expect(
+      report.poem.originalText.slice(first.startUtf16, first.endUtf16),
+    ).toBe(first.text);
   });
 });
 
@@ -284,9 +318,13 @@ describe("buildRhymeFeet / rhymeCommonGroups", () => {
   it("韵脚文本与位置来自报告 token，不新造", () => {
     const report = loadMockScenario("pass");
     const feet = buildRhymeFeet(report);
-    expect(feet.map((foot) => foot.tokenId)).toEqual(report.prosody.rhyme.tokenIds);
+    expect(feet.map((foot) => foot.tokenId)).toEqual(
+      report.prosody.rhyme.tokenIds,
+    );
     for (const foot of feet) {
-      const token = report.poem.tokens.find((item) => item.tokenId === foot.tokenId)!;
+      const token = report.poem.tokens.find(
+        (item) => item.tokenId === foot.tokenId,
+      )!;
       expect(foot.text).toBe(token.text);
       expect(foot.line).toBe(token.line);
       expect(foot.column).toBe(token.column);
@@ -301,7 +339,9 @@ describe("buildRhymeFeet / rhymeCommonGroups", () => {
     )!;
     const effectiveGroupIds = new Set(
       token.candidates
-        .filter((candidate) => token.effectiveCandidateIds.includes(candidate.id))
+        .filter((candidate) =>
+          token.effectiveCandidateIds.includes(candidate.id),
+        )
         .flatMap((candidate) => candidate.groupIds),
     );
     for (const groupId of feet[0]!.groupIds) {
@@ -372,7 +412,9 @@ describe("buildRelations", () => {
     expect(nian!.hasUnresolvedTokens).toBe(false);
     expect(nian!.sides.map((side) => side.tokenId)).toEqual(["l1c1", "l2c1"]);
     for (const side of nian!.sides) {
-      const token = report.poem.tokens.find((item) => item.tokenId === side.tokenId)!;
+      const token = report.poem.tokens.find(
+        (item) => item.tokenId === side.tokenId,
+      )!;
       expect(side.text).toBe(token.text);
       expect(side.line).toBe(token.line);
       expect(side.column).toBe(token.column);

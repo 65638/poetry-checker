@@ -2031,6 +2031,102 @@
                   "writing",
                   "reading"
                 ]
+              },
+              "prosodyContext": {
+                "type": "object",
+                "properties": {
+                  "format": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 160
+                  },
+                  "templateId": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "maxLength": 160
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "issues": {
+                    "maxItems": 120,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "ruleId": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 80
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "fail",
+                            "uncertain"
+                          ]
+                        },
+                        "locations": {
+                          "maxItems": 12,
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "tokenId": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 100
+                              },
+                              "line": {
+                                "type": "integer",
+                                "exclusiveMinimum": 0,
+                                "maximum": 9007199254740991
+                              },
+                              "column": {
+                                "type": "integer",
+                                "exclusiveMinimum": 0,
+                                "maximum": 9007199254740991
+                              },
+                              "text": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 4
+                              }
+                            },
+                            "required": [
+                              "tokenId",
+                              "line",
+                              "column",
+                              "text"
+                            ],
+                            "additionalProperties": false
+                          }
+                        },
+                        "message": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 600
+                        }
+                      },
+                      "required": [
+                        "ruleId",
+                        "status",
+                        "locations",
+                        "message"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": [
+                  "format",
+                  "templateId",
+                  "issues"
+                ],
+                "additionalProperties": false
               }
             },
             "required": [

@@ -1,5 +1,5 @@
 import type { AnalysisResponse } from "@poetry/contracts";
-import { FORM_LABEL } from "../../app/reportView";
+import { FORM_LABEL, rootCauseChecks } from "../../app/reportView";
 
 export function FormatSummary({ report }: { report: AnalysisResponse }) {
   const format = report.prosody.format;
@@ -9,8 +9,8 @@ export function FormatSummary({ report }: { report: AnalysisResponse }) {
   const groupNames = rhyme.evenLineGroupIds.map(
     (id) => report.provenance.groups.find((g) => g.id === id)?.name ?? id,
   );
-  const problems = report.prosody.checks.filter(
-    (c) => c.status === "fail" && c.resolvedBy === null,
+  const problems = rootCauseChecks(report).filter(
+    (c) => c.status === "fail",
   ).length;
   const pending = report.prosody.checks.filter(
     (c) => c.status === "uncertain",

@@ -34,6 +34,26 @@ export function formatHeading(report: AnalysisResponse): string | null {
   return `${FORM_LABEL[format.shape.formId]}形制${format.start.value ? ` · ${format.start.value === "ping" ? "平起" : "仄起"}` : " · 起式未定"}`;
 }
 
+/** Return independent rule causes; relation failures caused by a failing meter
+ * position remain available in the detailed report but are not double-counted. */
+export function rootCauseChecks(report: AnalysisResponse) {
+  const checks = report.prosody.checks.filter(
+    (check) =>
+      (check.status === "fail" || check.status === "uncertain") &&
+      check.resolvedBy === null,
+  );
+  const meterByToken = new Set(
+    checks
+      .filter((check) => check.ruleId === "METER.POSITION")
+      .flatMap((check) => check.locations.map((location) => location.tokenId)),
+  );
+  return checks.filter(
+    (check) =>
+      !["RELATION.DUI", "RELATION.NIAN"].includes(check.ruleId) ||
+      !check.locations.some((location) => meterByToken.has(location.tokenId)),
+  );
+}
+
 /** Explain incomplete reports using their recorded causes, without re-evaluating rules. */
 export function incompleteSummary(report: AnalysisResponse): {
   label: string;
@@ -73,8 +93,8 @@ export function incompleteSummary(report: AnalysisResponse): {
         format.firstLineRhyme.value !== "uncertain"
       )
         reasons.push("已识别原文格式，近体适用性仍待确认");
-      const problems = report.prosody.checks.filter(
-        (c) => c.status === "fail" && c.resolvedBy === null,
+      const problems = rootCauseChecks(report).filter(
+        (c) => c.status === "fail",
       ).length;
       if (problems) reasons.push(`共同检查已发现${problems}处问题`);
     }

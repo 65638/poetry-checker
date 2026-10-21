@@ -86,6 +86,35 @@ describe("poetry studio with real lexicon and controlled model", () => {
       expect(response.body).not.toContain("test-only-key");
     });
   });
+  it("passes formal prosody findings to the model instead of asking it to recount them", async () => {
+    const prosodyContext = {
+      format: "七言八句；起式平起；首句用韵不入韵",
+      templateId: "qilv-ping-unrhymed",
+      issues: [
+        {
+          ruleId: "METER.POSITION",
+          status: "fail" as const,
+          locations: [{ tokenId: "l5c2", line: 5, column: 2, text: "十" }],
+          message: "此字平仄与允许集合不符",
+        },
+        {
+          ruleId: "RELATION.NIAN",
+          status: "fail" as const,
+          locations: [{ tokenId: "l6c2", line: 6, column: 2, text: "更" }],
+          message: "失粘；由同字位平仄偏离造成的派生关系问题",
+        },
+      ],
+    };
+    await withApp(result, async (app, fetcher) => {
+      const response = await post(app, { ...critique, prosodyContext });
+      expect(response.statusCode).toBe(200);
+      const payload = JSON.parse(fetcher.mock.calls[0]![1]!.body as string);
+      expect(JSON.parse(payload.messages[1].content).prosodyContext).toEqual(
+        prosodyContext,
+      );
+      expect(payload.messages[0].content).toContain("派生影响");
+    });
+  });
   it.each([
     { ...edit, original: "近" },
     { ...edit, startTokenId: "l9c9" },
