@@ -9,6 +9,7 @@ import type {
   SummaryStatus,
 } from "@poetry/contracts";
 import type { CheckerViewProps } from "../../view-contract";
+import { incompleteSummary } from "../../app/reportView";
 import { trailingPunctuation } from "../punctuation";
 import { FindingReference } from "./FindingReference";
 import "../styles/report.css";
@@ -27,23 +28,22 @@ type ReportViewProps = Pick<
 
 const SUMMARY: Record<
   SummaryStatus,
-  { label: string; icon: string; desc: string; next?: string }
+  { label: string; icon: string; desc: string }
 > = {
   pass: {
     label: "通过",
     icon: "✓",
-    desc: "按所选韵书与规则集，已实现的必检项均通过；不代表文学水平评价。",
+    desc: "已实现的必检项均通过。",
   },
   fail: {
     label: "不合律",
     icon: "✕",
-    desc: "存在明确违规。悬停红色编号可查看原因，完整说明见诗旁批注。",
+    desc: "存在明确违规，详见诗旁批注。",
   },
   needs_review: {
-    label: "待复核",
+    label: "暂无完整结论",
     icon: "?",
-    desc: "部分读音、体裁或依据尚未确定，暂不能给出结论。",
-    next: "下一步：点击带「?」标记的字，查看候选读音与依据。",
+    desc: "仍有检查项目未确定。",
   },
   not_applicable: {
     label: "不适用",
@@ -59,7 +59,7 @@ const SUMMARY: Record<
 const CHECK: Record<CheckStatus, { label: string; icon: string }> = {
   pass: { label: "通过", icon: "✓" },
   fail: { label: "违规", icon: "✕" },
-  uncertain: { label: "待复核", icon: "?" },
+  uncertain: { label: "未确定", icon: "?" },
   not_applicable: { label: "不适用", icon: "–" },
   unsupported: { label: "未支持", icon: "∅" },
 };
@@ -209,11 +209,18 @@ export function ReportView(props: ReportViewProps) {
     // Repeated activation must still navigate when selection has not changed.
     if (finding.id === selectedFindingId) scrollToFinding(finding, destination);
   };
-  const summary = SUMMARY[report.summary.status];
+  const summary =
+    report.summary.status === "needs_review"
+      ? { ...SUMMARY.needs_review, ...incompleteSummary(report) }
+      : SUMMARY[report.summary.status];
   const firstRelated = selectedFinding?.locations[0]?.tokenId ?? null;
   const renderFinding = ({ f, n }: { f: Finding; n: number }) => {
     const st = CHECK[f.status];
     const rule = report.provenance.rules.find((r) => r.id === f.ruleId);
+    const templatePending =
+      f.status === "uncertain" &&
+      f.ruleId === "METER.POSITION" &&
+      f.id.endsWith(":template");
     const where =
       f.locations.map((l) => `第${l.line}句第${l.column}字`).join("、") ||
       "整首";
@@ -244,28 +251,36 @@ export function ReportView(props: ReportViewProps) {
             </span>
             <span className="pc-tag pc-tag--quiet">{SEVERITY[f.severity]}</span>
             <span className="pc-finding__rule">
-              {rule ? rule.name : f.ruleId}
+              {templatePending ? "格律格式未确定" : rule ? rule.name : f.ruleId}
             </span>
           </div>
-          <p className="pc-finding__msg">{f.message}</p>
-          <dl className="pc-finding__compare">
-            <div>
-              <dt>应为</dt>
-              <dd>{f.expected.map(toneText).join(" / ") || "无记录"}</dd>
-            </div>
-            <div>
-              <dt>实际</dt>
-              <dd>{f.observed.map(toneText).join(" / ") || "无记录"}</dd>
-            </div>
-          </dl>
-          <button
-            type="button"
-            className="pc-button pc-button--quiet pc-finding__locate"
-            aria-pressed={f.id === selectedFindingId}
-            onClick={() => selectFinding(f, "poem")}
-          >
-            在诗中定位：{where}
-          </button>
+          <p className="pc-finding__msg">
+            {templatePending
+              ? "平起／仄起、首句是否入韵尚未确定。目前仅显示各候选格式共有的检查结果。"
+              : f.message}
+          </p>
+          {!templatePending && (
+            <dl className="pc-finding__compare">
+              <div>
+                <dt>应为</dt>
+                <dd>{f.expected.map(toneText).join(" / ") || "无记录"}</dd>
+              </div>
+              <div>
+                <dt>实际</dt>
+                <dd>{f.observed.map(toneText).join(" / ") || "无记录"}</dd>
+              </div>
+            </dl>
+          )}
+          {f.locations.length > 0 && (
+            <button
+              type="button"
+              className="pc-button pc-button--quiet pc-finding__locate"
+              aria-pressed={f.id === selectedFindingId}
+              onClick={() => selectFinding(f, "poem")}
+            >
+              在诗中定位：{where}
+            </button>
+          )}
         </div>
       </li>
     );
@@ -351,13 +366,11 @@ export function ReportView(props: ReportViewProps) {
         <div className="pc-status__body">
           <h3 className="pc-status__label">结论：{summary.label}</h3>
           <p className="pc-status__text">{summary.desc}</p>
-          <p className="pc-status__text">{report.summary.message}</p>
           {report.readingAssistant && (
             <p className="pc-status__text" role="status">
               {report.readingAssistant.message}
             </p>
           )}
-          {summary.next && <p className="pc-status__next">{summary.next}</p>}
         </div>
         <div className="pc-status__actions">
           <button
@@ -562,7 +575,7 @@ export function ReportView(props: ReportViewProps) {
                     {attention.map(renderFinding)}
                   </ol>
                 ) : (
-                  <p className="pc-legend">没有违规、待复核或未支持的条目。</p>
+                  <p className="pc-legend">没有需要关注的条目。</p>
                 )}
                 {settled.length > 0 && (
                   <details ref={settledRef} className="pc-settled">

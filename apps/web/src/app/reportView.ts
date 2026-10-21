@@ -11,6 +11,47 @@ import type { AnalysisResponse } from "@poetry/contracts";
 
 export type ToneLabel = "平" | "仄" | "未定";
 
+/** Explain incomplete reports using their recorded causes, without re-evaluating rules. */
+export function incompleteSummary(report: AnalysisResponse): {
+  label: string;
+  desc: string;
+} {
+  const missing = report.poem.tokens.filter((t) => t.candidates.length === 0);
+  const unresolved = report.poem.tokens.filter(
+    (t) =>
+      t.candidates.length > 0 &&
+      (t.readingStatus !== "resolved" || t.toneStatus !== "resolved"),
+  );
+  const templatePending = report.prosody.selectedTemplateId === null;
+  const reasons: string[] = [];
+  const labels: string[] = [];
+  if (missing.length) {
+    const glyphs = [...new Set(missing.map((t) => t.text))];
+    reasons.push(
+      `所选韵书缺录：${glyphs.slice(0, 8).join("、")}${glyphs.length > 8 ? "等" : ""}`,
+    );
+    labels.push("韵书缺字");
+  }
+  if (unresolved.length) {
+    reasons.push(`${unresolved.length}个字位的读音或声调未确定`);
+    labels.push("部分读音未定");
+  }
+  if (templatePending) {
+    reasons.push("尚未确定采用哪种格律格式（平起／仄起、首句是否入韵）");
+    labels.push("格律格式未确定");
+  }
+  if (report.poem.quality === "needs_review") {
+    reasons.push("文本解析存在疑问，请检查分句和标点");
+    labels.push("分句需确认");
+  }
+  return {
+    label: labels.length === 1 ? labels[0]! : "暂无完整结论",
+    desc: reasons.length
+      ? `${reasons.join("；")}。`
+      : "仍有检查项目未确定，详见诗旁批注。",
+  };
+}
+
 export interface TokenCell {
   tokenId: string;
   text: string;

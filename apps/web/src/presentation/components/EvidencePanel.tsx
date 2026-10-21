@@ -28,7 +28,7 @@ const READING: Record<AnnotatedToken['readingStatus'], string> = {
 const KIND: Record<Evidence['kind'], string> = {
   rhyme_entry: '韵书条目', dictionary: '字典', fanqie: '反切', context: '语境', work_metadata: '作品资料',
 };
-const FOCUSABLE = 'button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])';
+const FOCUSABLE = 'button:not([disabled]), a[href], summary, [tabindex]:not([tabindex="-1"])';
 const toneText = (t: string) => (t === 'P' ? '平' : t === 'Z' ? '仄' : t);
 const safeUrl = (url: string | null) => (url !== null && /^https?:\/\//i.test(url) ? url : null);
 
@@ -61,7 +61,14 @@ export function EvidencePanel(props: EvidencePanelProps) {
       return;
     }
     if (e.key !== 'Tab') return;
-    const nodes = Array.from(dialogRef.current?.querySelectorAll<HTMLElement>(FOCUSABLE) ?? []);
+    const nodes = Array.from(dialogRef.current?.querySelectorAll<HTMLElement>(FOCUSABLE) ?? [])
+      .filter((node) => {
+        if (node.closest('[inert]') || node.getClientRects().length === 0) return false;
+        for (let parent = node.parentElement; parent; parent = parent.parentElement) {
+          if (parent instanceof HTMLDetailsElement && !parent.open && node !== parent.querySelector('summary')) return false;
+        }
+        return true;
+      });
     const first = nodes[0];
     const last = nodes[nodes.length - 1];
     if (!first || !last) return;
@@ -124,7 +131,7 @@ export function EvidencePanel(props: EvidencePanelProps) {
             </p>
           )}
           {token.candidates.length === 0 ? (
-            <p className="pc-evidence__muted">所选韵书缺录本字，没有候选可供AI选择。独立广韵与现代读音可在上方查阅，不将参考映射冒充本书已收录。</p>
+            <p className="pc-evidence__muted">所选韵书未收录此字；上方可查广韵和现代读音参考。</p>
           ) : (
             <ul className="pc-candidates">
               {token.candidates.map((c) => {
@@ -145,12 +152,8 @@ export function EvidencePanel(props: EvidencePanelProps) {
                         : '未提供'}
                     </p>
                     {c.gloss && <p className="pc-candidate__line">释义：{c.gloss}</p>}
-                    <p className="pc-candidate__line">
-                      {c.modernReading
-                        ? `现代读音：${c.modernReading.pinyin} · ${c.modernReading.toneNumber}声（普通话参考，不是古音构拟）`
-                        : '现代读音：未提供'}
-                    </p>
-                    <p className="pc-candidate__line">反切：{c.fanqie ? c.fanqie.text : '未提供'}</p>
+                    {c.modernReading && <p className="pc-candidate__line">今音参考：{c.modernReading.pinyin}</p>}
+                    {c.fanqie && <p className="pc-candidate__line">反切：{c.fanqie.text}</p>}
                     {!isSelected && (
                       <button
                         type="button"
@@ -168,7 +171,7 @@ export function EvidencePanel(props: EvidencePanelProps) {
             </ul>
           )}
 
-          <h3 className="pc-evidence__section">依据与来源</h3>
+          <h3 className="pc-evidence__section">来源</h3>
           {evidenceIds.length === 0 ? (
             <p className="pc-evidence__muted">此字没有可显示的依据记录。</p>
           ) : (
@@ -176,29 +179,29 @@ export function EvidencePanel(props: EvidencePanelProps) {
               {evidenceIds.map((id) => {
                 const ev = evidence.find((e) => e.id === id);
                 if (!ev) {
-                  return <li key={id} className="pc-ev pc-ev--missing">依据记录 {id} 未包含在本报告中。</li>;
+                  return <li key={id} className="pc-ev pc-ev--missing">此项依据未随报告返回。<details className="pc-ev__details"><summary>记录详情</summary><p className="pc-ev__meta">{id}</p></details></li>;
                 }
                 const src = sources.find((s) => s.id === ev.sourceId);
                 const url = safeUrl(src?.url ?? null);
+                const groupNames = groups.filter((g) => g.evidenceIds.includes(ev.id)).map((g) => g.name);
                 return (
                   <li key={id} className={`pc-ev pc-ev--${ev.reviewStatus}`}>
                     <div className="pc-ev__head">
-                      <span className="pc-chip pc-chip--quiet">{KIND[ev.kind]}</span>
-                      <span className="pc-ev__review">
-                        {ev.reviewStatus === 'approved' ? '✓ 已审核' : '… 待核实，不作为已核实依据'}
-                      </span>
+                      <strong>{groupNames.length ? groupNames.join('、') : KIND[ev.kind]}</strong>
+                      {url && <a className="pc-ev__link" href={url} target="_blank" rel="noopener noreferrer" aria-label="原始来源（新窗口）">原始来源</a>}
+                      {!src && <span className="pc-ev__meta">来源记录缺失</span>}
                     </div>
-                    <p className="pc-ev__text">{ev.assertion}</p>
-                    {ev.excerpt && <blockquote className="pc-ev__excerpt">{ev.excerpt}</blockquote>}
-                    <p className="pc-ev__meta">
-                      来源：{src ? `${src.title}${src.edition ? `（${src.edition}）` : ''}` : '来源记录不可用'} · 位置：{ev.locator}
-                    </p>
-                    {src && <p className="pc-ev__meta">许可：{src.license}</p>}
-                    {url && (
-                      <a className="pc-ev__link" href={url} target="_blank" rel="noopener noreferrer">
-                        查看来源（新窗口）
-                      </a>
-                    )}
+                    <details className="pc-ev__details">
+                      <summary>来源详情</summary>
+                      <div className="pc-ev__detail-body">
+                        <p className="pc-ev__meta">{ev.reviewStatus === 'approved' ? '已人工核验' : '尚未经人工核验'}</p>
+                        <p className="pc-ev__text">{ev.assertion}</p>
+                        {ev.excerpt && <blockquote className="pc-ev__excerpt">{ev.excerpt}</blockquote>}
+                        <p className="pc-ev__meta">来源：{src ? `${src.title}${src.edition ? `（${src.edition}）` : ''}` : '来源记录不可用'}</p>
+                        <p className="pc-ev__meta">位置：{ev.locator}</p>
+                        {src && <p className="pc-ev__meta">许可：{src.license}</p>}
+                      </div>
+                    </details>
                   </li>
                 );
               })}

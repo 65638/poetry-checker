@@ -12,6 +12,7 @@ import {
   buildTokenSpectrum,
   findingGroup,
   groupFindings,
+  incompleteSummary,
   locateFinding,
   rhymeCommonGroups,
   toneLabel,
@@ -26,6 +27,41 @@ const scenarios: MockScenario[] = [
   "not_applicable",
   "unsupported",
 ];
+
+describe("incompleteSummary", () => {
+  it("读音已确定而格式未定时准确说明原因，不要求查看问号字", () => {
+    const report = loadMockScenario("pass");
+    report.prosody.selectedTemplateId = null;
+    const before = structuredClone(report);
+    expect(incompleteSummary(report)).toEqual({
+      label: "格律格式未确定",
+      desc: "尚未确定采用哪种格律格式（平起／仄起、首句是否入韵）。",
+    });
+    expect(report).toEqual(before);
+  });
+
+  it("同时列出缺字、未定读音与格式，不将AI已介入视为全部确定", () => {
+    const report = loadMockScenario("pass");
+    report.prosody.selectedTemplateId = null;
+    report.poem.tokens[0]!.candidates = [];
+    report.poem.tokens[1]!.readingStatus = "ambiguous";
+    const summary = incompleteSummary(report);
+    expect(summary.label).toBe("暂无完整结论");
+    expect(summary.desc).toContain(`所选韵书缺录：${report.poem.tokens[0]!.text}`);
+    expect(summary.desc).toContain("1个字位的读音或声调未确定");
+    expect(summary.desc).toContain("平起／仄起");
+  });
+
+  it("解析问题与其他未定检查各自说明，不误报缺字或模板", () => {
+    const report = loadMockScenario("pass");
+    report.prosody.selectedTemplateId = "test-selected-template";
+    report.poem.quality = "needs_review";
+    expect(incompleteSummary(report).label).toBe("分句需确认");
+    expect(incompleteSummary(report).desc).toContain("分句和标点");
+    report.poem.quality = "ok";
+    expect(incompleteSummary(report).desc).toBe("仍有检查项目未确定，详见诗旁批注。");
+  });
+});
 
 describe("toneLabel", () => {
   it("只翻译报告给出的 tone，不推断", () => {

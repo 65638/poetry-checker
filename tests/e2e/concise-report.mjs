@@ -1,0 +1,112 @@
+import assert from 'node:assert/strict';
+import { mkdirSync, writeFileSync } from 'node:fs';
+import { join, resolve } from 'node:path';
+import { buildApp } from '../../apps/api/src/server.ts';
+import { startHarness, waitFor, sleep, revision } from '../../docs/design/moonlit-ui/harness.mjs';
+import { POEMS } from '../integration/e2e/d3-acceptance-api.mjs';
+
+const out = resolve(process.argv[2] ?? 'artifacts/concise-report');
+mkdirSync(out, { recursive: true });
+let latestReport;
+const app = buildApp({ readingAssistant: { apiKey: 'controlled-ui-test', fetcher: async (_url, init) => {
+  const data = JSON.parse(JSON.parse(init.body).messages[1].content);
+  const suggestions = data.targets.map(t => ({ tokenId: t.tokenId, candidateId: t.candidates[0].id, pronunciation: null, reason: 'Controlled choice for presentation verification only.' }));
+  return new Response(JSON.stringify({ choices: [{ finish_reason: 'stop', message: { content: JSON.stringify({ suggestions }) } }] }));
+} } });
+app.addHook('onSend', async (request, _reply, payload) => {
+  if (request.url === '/api/v1/analyze' && typeof payload === 'string') latestReport = JSON.parse(payload);
+});
+const baseUrl = await app.listen({ host: '127.0.0.1', port: 0 });
+const h = await startHarness({ production: true, api: { baseUrl, stop: () => app.close() } });
+const result = { revision: revision(), mode: 'real-api-controlled-model-for-ui-only', realModelAccuracyTested: false, checks: [], errors: [] };
+h.cdp.on('Runtime.exceptionThrown', event => result.errors.push(event.exceptionDetails.text));
+const check = async (name, run) => { await run(); result.checks.push({ name, status: 'pass' }); console.log('[PASS]', name); };
+const shot = async name => writeFileSync(join(out, name + '.png'), Buffer.from((await h.cdp.send('Page.captureScreenshot', { format: 'png' })).data, 'base64'));
+try {
+  await check('resolved-readings-explain-template-pending-without-missing-data-or-human-review', async () => {
+    await h.load({ reduce: true });
+    await h.setText('灯前夜半键声轻，一局未终天欲明。错落音符随指下，参差节拍搅心旌。');
+    await h.analyze();
+    assert.equal(latestReport.summary.status, 'needs_review');
+    assert.equal(latestReport.prosody.selectedTemplateId, null);
+    assert(latestReport.poem.tokens.every(t => t.readingStatus === 'resolved' && t.toneStatus === 'resolved'));
+    const summary = await h.evaluate("document.querySelector('.pc-status').innerText");
+    assert(summary.includes('结论：格律格式未确定'));
+    assert(summary.includes('平起／仄起'));
+    assert(!/待复核|下一步|点击带|缺字|缺录/.test(summary));
+    const pending = await h.evaluate("(() => {const el=Array.from(document.querySelectorAll('[data-finding-id]')).find(el=>el.dataset.findingId.endsWith(':template'));return {text:el.innerText,compare:!!el.querySelector('dl'),locate:!!el.querySelector('button')};})()");
+    assert(pending.text.includes('格律格式未确定'));
+    assert.equal(pending.compare, false);
+    assert.equal(pending.locate, false);
+    await h.evaluate("document.querySelector('.pc-status').scrollIntoView({block:'start',behavior:'instant'}); true");
+    await shot('template-1440');
+  });
+  await check('sources-show-groups-with-technical-records-preserved-under-details', async () => {
+    await h.setText(POEMS[0].text);
+    await h.analyze();
+    await h.click('[data-token-id=l4c1]');
+    await waitFor(() => h.evaluate("!!document.querySelector('.pc-ev__details')"));
+    const visible = await h.evaluate("document.querySelector('.pc-evlist').innerText");
+    assert(visible.includes('八庚'));
+    assert(visible.includes('二十四敬'));
+    assert(visible.includes('原始来源'));
+    assert(!/data\/|提交 |MIT|待核实|许可：|审核记录：|批次为裁定|仅覆盖候选/.test(visible), visible);
+    assert.equal(await h.evaluate("document.querySelectorAll('.pc-ev__details[open]').length"), 0);
+    const evId = latestReport.poem.tokens.find(t => t.tokenId === 'l4c1').candidates[0].evidenceIds[0];
+    const ev = latestReport.provenance.evidence.find(e => e.id === evId);
+    assert.equal(ev.reviewStatus, 'unverified');
+    await h.evaluate("document.querySelector('.pc-evlist').scrollIntoView({block:'start',behavior:'instant'}); true");
+    await shot('sources-1440');
+    await h.click('.pc-ev__details summary');
+    const expanded = await h.evaluate("document.querySelector('.pc-evlist').innerText");
+    assert(expanded.includes(ev.assertion));
+    assert(expanded.includes(ev.locator));
+    assert(expanded.includes('尚未经人工核验'));
+    assert(expanded.includes('许可：'));
+    await shot('source-details-1440');
+  });
+  await check('details-support-keyboard-and-dialog-focus-trap', async () => {
+    await h.evaluate("document.querySelectorAll('.pc-ev__details').forEach(el=>el.open=false); document.querySelector('.pc-evidence__header button').focus(); true");
+    await h.key('Tab', 'Tab', 9, 8);
+    assert.equal(await h.evaluate("document.activeElement.matches('.pc-ev__details summary')"), true);
+    await h.key('Enter', 'Enter', 13, 0, '\r');
+    assert.equal(await h.evaluate('document.activeElement.parentElement.open'), true);
+    await h.key('Tab');
+    assert.equal(await h.evaluate("document.activeElement.matches('.pc-evidence__header button')"), true);
+    let returned = false;
+    for (let i = 0; i < 60; i++) {
+      await h.key('Tab');
+      assert.equal(await h.evaluate("!!document.activeElement.closest('[role=dialog]')"), true);
+      returned = await h.evaluate("document.activeElement.matches('.pc-evidence__header button')");
+      if (returned) break;
+    }
+    assert(returned);
+    await h.key('Escape');
+    await waitFor(() => h.evaluate("!document.querySelector('[role=dialog]')"));
+    assert.equal(await h.evaluate("document.activeElement.dataset.tokenId"), 'l4c1');
+  });
+  await check('compact-source-and-summary-fit-mobile-at-375-and-320', async () => {
+    for (const width of [375, 320]) {
+      await h.viewport(width, 812, true);
+      await h.click('[data-token-id=l4c1]');
+      await h.evaluate("document.querySelector('.pc-evlist').scrollIntoView({block:'start',behavior:'instant'}); true");
+      await sleep(150);
+      assert.equal(await h.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
+      assert.equal(await h.evaluate("(() => {const el=document.querySelector('.pc-evidence__body');return el.scrollWidth<=el.clientWidth;})()"), true);
+      await shot('sources-' + width);
+      await h.click('.pc-ev__details summary');
+      assert.equal(await h.evaluate("(() => {const el=document.querySelector('.pc-evidence__body');return el.scrollWidth<=el.clientWidth;})()"), true);
+      await shot('source-details-' + width);
+      await h.key('Escape');
+    }
+  });
+  assert.deepEqual(result.errors, []);
+} catch (error) {
+  result.failure = error.stack;
+  await shot('failure').catch(() => {});
+  process.exitCode = 1;
+} finally {
+  await h.stop();
+  writeFileSync(join(out, 'result.json'), JSON.stringify(result, null, 2) + '\n');
+  console.log(JSON.stringify({ passed: result.checks.length, failure: result.failure, errors: result.errors }));
+}

@@ -17,7 +17,7 @@ const BOOK: Record<BookId, string> = {
 };
 const COUNTS: Array<{ status: CheckStatus; label: string; icon: string }> = [
   { status: "fail", label: "违规", icon: "✕" },
-  { status: "uncertain", label: "待复核", icon: "?" },
+  { status: "uncertain", label: "未确定", icon: "?" },
   { status: "unsupported", label: "未支持", icon: "∅" },
   { status: "pass", label: "通过", icon: "✓" },
   { status: "not_applicable", label: "不适用", icon: "–" },
