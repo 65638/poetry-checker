@@ -6,6 +6,7 @@
  *
  * 未注册的 dataVersion 抛 LexiconError('LEXICON_VERSION_NOT_FOUND')，不回退、不返回空成功。
  */
+import type { RhymeWordsRequest, RhymeWordsResponse } from "@poetry/contracts";
 import { LexiconError, isLexiconError } from "./errors.js";
 import {
   createLexicon,
@@ -72,6 +73,51 @@ export function registerSnapshots(
 
 export function dataVersions(): string[] {
   return defaultLexicon.dataVersions();
+}
+
+export function findRhymeWords(
+  input: RhymeWordsRequest & { dataVersion: string },
+): RhymeWordsResponse {
+  const snapshot = defaultLexicon.snapshotOf(input.dataVersion);
+  if (!snapshot || snapshot.book !== input.rhymeBook)
+    throw new LexiconError("LEXICON_VERSION_NOT_FOUND", "所选韵书未装载");
+  const seed = snapshot.candidates.find((c) => c.id === input.readingId);
+  if (!seed)
+    throw new LexiconError("LEXICON_INVALID_INPUT", "读音不属于当前韵书");
+  const groups = new Set(seed.groupIds);
+  const characters = [
+    ...new Set(
+      snapshot.candidates
+        .filter(
+          (c) =>
+            c.character !== seed.character &&
+            c.groupIds.some((id) => groups.has(id)),
+        )
+        .map((c) => c.character),
+    ),
+  ];
+  const basic = (c: string) => (/^[\u4e00-\u9fff]$/u.test(c) ? 0 : 1);
+  characters.sort(
+    (a, b) => basic(a) - basic(b) || a.codePointAt(0)! - b.codePointAt(0)!,
+  );
+  const lookup = lookupInSnapshot(snapshot, {
+    rhymeBook: input.rhymeBook,
+    dataVersion: input.dataVersion,
+    characters: characters.slice(input.offset, input.offset + input.limit),
+  });
+  lookup.entries = lookup.entries.map((entry) => ({
+    ...entry,
+    candidates: entry.candidates.filter((c) =>
+      c.groupIds.some((id) => groups.has(id)),
+    ),
+  }));
+  return {
+    lookup,
+    readingId: seed.id,
+    total: characters.length,
+    offset: input.offset,
+    limit: input.limit,
+  };
 }
 
 /**

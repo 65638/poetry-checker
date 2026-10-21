@@ -59,7 +59,8 @@ describe("真实资源加载与失败闭合", () => {
           resources.evidenceRegistry.find((item) => item.id === id)?.kind,
         ).toBe("context");
     }
-    expect(resources.ready).toBe(false); // 不把模块接线成功当成全量发布通过。
+    expect(resources.ready).toBe(true);
+    expect(resources.unverifiedBooks.length).toBeGreaterThan(0);
   });
   it("坏 JSON、非数组、Schema 缺字段均记录具体文件，不能悄悄当空资源", () => {
     for (const content of ["{bad", "{}", '[{"id":"missing-fields"}]']) {
@@ -70,7 +71,7 @@ describe("真实资源加载与失败闭合", () => {
       expect(result.errors.join(";")).toContain("data/context/rules.json");
     }
   });
-  it("缺文件、悬空来源、悬空卡片证据及已审规则引用未审证据都不可静默放行", () => {
+  it("缺文件、悬空来源、悬空证据和错误用途仍拒绝；未审核状态不阻断", () => {
     const root = fixture();
     rmSync(join(root, "data/context/evidence.json"));
     expect(loadSupplementalResources(root).errors.join(";")).toContain(
@@ -82,6 +83,15 @@ describe("真实资源加载与失败闭合", () => {
     const id = resources.contextRules[0]!.evidenceIds[0];
     resources.evidenceRegistry.find((item) => item.id === id)!.reviewStatus =
       "unverified";
+    expect(
+      validateResourceReferences({
+        ...resources,
+        sourceRegistry: loadResources().sourceRegistry,
+        ruleCards: loadResources().ruleCards,
+      }),
+    ).toEqual([]);
+    resources.evidenceRegistry.find((item) => item.id === id)!.kind =
+      "dictionary";
     const errors = validateResourceReferences(resources).join(";");
     expect(errors).toContain("缺少来源");
     expect(errors).toContain("ev:missing");

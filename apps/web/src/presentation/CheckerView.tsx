@@ -1,5 +1,5 @@
 // apps/web/src/presentation/CheckerView.tsx
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import type { CheckerViewProps } from "../view-contract";
 import { InputPanel } from "./components/InputPanel";
 import { ReportView } from "./components/ReportView";
@@ -21,7 +21,11 @@ const STEPS = [
 ];
 
 export function CheckerView(
-  props: CheckerViewProps & { sharedScene?: boolean },
+  props: CheckerViewProps & {
+    sharedScene?: boolean;
+    readingAssistant?: ReactNode;
+    poetryDesk?: ReactNode;
+  },
 ) {
   const {
     draft,
@@ -412,6 +416,7 @@ export function CheckerView(
                 )}
               </aside>
             )}
+            {props.poetryDesk}
           </section>
         </main>
 
@@ -419,13 +424,16 @@ export function CheckerView(
           <span className="pc-colophon__seal" aria-hidden="true">
             律
           </span>
-          结论只依据所选韵书与已实现规则，不评价文学水平。
+          参考分析：韵书数据与 AI 读音可能有误，未经全面人工核验，不作为权威结论。
         </footer>
       </div>
 
       {(report !== null && selectedToken !== null) ||
       (panelExiting && lastPanel !== null) ? (
         <EvidencePanel
+          readingAssistant={
+            selectedToken !== null ? props.readingAssistant : undefined
+          }
           report={
             report !== null && selectedToken !== null
               ? report

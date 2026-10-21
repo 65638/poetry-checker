@@ -71,6 +71,9 @@ export function buildSummaryText(state: ExportState): string {
   if (overrides.length > 0) {
     lines.push(`用户指定读音：${overrides.map((item) => `${item.tokenId}→${item.readingId}`).join("、")}`);
   }
+  if (report.readingAssistant) {
+    lines.push(`自动辨音：${report.readingAssistant.model}｜${report.readingAssistant.message}`);
+  }
   lines.push("", `请求快照：${JSON.stringify(request)}`);
   return lines.join("\n");
 }

@@ -1,5 +1,5 @@
 // apps/web/src/presentation/components/EvidencePanel.tsx
-import { useEffect, useId, useRef, type KeyboardEvent } from 'react';
+import { useEffect, useId, useRef, type KeyboardEvent, type ReactNode } from 'react';
 import type { AnalysisResponse, AnnotatedToken, Evidence, ReadingCandidate } from '@poetry/contracts';
 import type { CheckerViewProps } from '../../view-contract';
 import '../styles/evidence.css';
@@ -12,6 +12,7 @@ type EvidencePanelProps = {
   onClose: () => void;
   leaving?: boolean;
   onExited?: () => void;
+  readingAssistant?: ReactNode;
 };
 
 const TONE_CLASS: Record<ReadingCandidate['toneClass'], string> = {
@@ -19,7 +20,7 @@ const TONE_CLASS: Record<ReadingCandidate['toneClass'], string> = {
   yinping: '阴平', yangping: '阳平', neutral: '轻声', ze_unspecified: '仄声（未细分）',
 };
 const METHOD: Record<AnnotatedToken['selectionMethod'], string> = {
-  unique: '唯一候选', context_rule: '语境规则选定', user: '用户手动选择', unresolved: '尚未确定',
+  unique: '唯一候选', context_rule: '语境规则选定', model: 'GLM 自动辨音', user: '用户手动选择', unresolved: '尚未确定',
 };
 const READING: Record<AnnotatedToken['readingStatus'], string> = {
   resolved: '已确定', ambiguous: '多音待定', unknown: '无读音数据',
@@ -115,6 +116,7 @@ export function EvidencePanel(props: EvidencePanelProps) {
             <p className="pc-evidence__note">当前读音来自你的手动选择，不是文献依据。</p>
           )}
 
+          {props.readingAssistant}
           <h3 className="pc-evidence__section">候选读音（{token.candidates.length}）</h3>
           {lockedReason !== null && (
             <p id={`${uid}-lock`} className="pc-evidence__lock">
@@ -145,7 +147,7 @@ export function EvidencePanel(props: EvidencePanelProps) {
                     {c.gloss && <p className="pc-candidate__line">释义：{c.gloss}</p>}
                     <p className="pc-candidate__line">
                       {c.modernReading
-                        ? `现代读音：${c.modernReading.pinyin}（普通话参考，不是古音构拟）`
+                        ? `现代读音：${c.modernReading.pinyin} · ${c.modernReading.toneNumber}声（普通话参考，不是古音构拟）`
                         : '现代读音：未提供'}
                     </p>
                     <p className="pc-candidate__line">反切：{c.fanqie ? c.fanqie.text : '未提供'}</p>

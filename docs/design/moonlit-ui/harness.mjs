@@ -19,8 +19,8 @@ export const LONG =
     2,
   );
 
-export async function startStack({ production = false } = {}) {
-  const api = await startApi();
+export async function startStack({ production = false, api: suppliedApi } = {}) {
+  const api = suppliedApi ?? await startApi();
   const root = join(REPO_ROOT, "apps/web");
   const require = createRequire(join(root, "package.json"));
   const { createServer, preview } = await import(
@@ -55,7 +55,7 @@ export async function startStack({ production = false } = {}) {
     else await web.close();
     await api.stop();
   }
-  return { url, stop, apiPid: api.child.pid };
+  return { url, stop, apiPid: api.child?.pid };
 }
 
 export async function startHarness(options) {

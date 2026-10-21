@@ -1,5 +1,7 @@
 # apps/api
 
+2026-10-21当前策略：[全局GLM自动辨音](../../docs/features/glm-reading-assistant.md)。`POST /analyze`自动调用并应用候选选择，按model记录来源；无Key/上游失败/20秒预算耗尽均回退到本地分析。网页/API使用参考分析，未审核记录可参与推导但保持原reviewStatus。readyz检查资源是否可运行，审核不再阻断；结构损坏、缺失与冲突仍503。页面底部统一参考提示。下文D2/D3发布审核门槛仅为历史。
+
 负责人：组长 / 本地 GLM。本次 Codex 接管与归还记录见 `docs/handoffs/0012-codex-d2-closeout.md`。
 
 默认走真实编排：parseText → lookup → resolveReadings → matchTemplates → classifyGenre → evaluateProsody。仅显式设置 `POETRY_DEV_MOCK=1` 才加载合成 fixture。

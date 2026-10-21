@@ -1,5 +1,6 @@
 import type {
   AnalysisResponse,
+  AnnotatedToken,
   Evidence,
   ReadingCandidate,
   SourceRecord,
@@ -15,7 +16,7 @@ import type {
  * - 引用了但解析不到的 evidence/source 要显式列出，不静默丢弃。
  */
 
-export type CandidateOrigin = "unique" | "context_rule" | "user" | "unresolved";
+export type CandidateOrigin = AnnotatedToken["selectionMethod"];
 
 export interface CandidateView {
   id: string;

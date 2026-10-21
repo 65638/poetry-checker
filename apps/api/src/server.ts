@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
-import { readFileSync } from "node:fs";
-import { pathToFileURL } from "node:url";
+import { existsSync, readFileSync } from "node:fs";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import Fastify, { type FastifyInstance } from "fastify";
 import {
   AnalyzeRequestSchema,
@@ -15,7 +15,12 @@ import {
   type Resources,
 } from "./resources.js";
 import { toLexiconErrorResponse } from "./lexicon-errors.js";
+import { registerPoetryStudio } from "./poetry-studio.js";
 import { analyze } from "./orchestrator.js";
+import {
+  registerReadingAssistant,
+  type ReadingAssistantOptions,
+} from "./reading-assistant.js";
 
 const fixtureNames = [
   "pass",
@@ -67,12 +72,21 @@ function mapModuleErrorForServer(
   return mapped === null ? null : { status: mapped.status, body: mapped.body };
 }
 
-export function buildApp(options?: { resources?: Resources }): FastifyInstance {
+export function buildApp(options?: {
+  resources?: Resources;
+  readingAssistant?: ReadingAssistantOptions;
+}): FastifyInstance {
   const app = Fastify({ logger: false });
   // 真实编排默认启用；POETRY_DEV_MOCK=1 时显式回退 fixture mock（开发联调专用）
   const devMock = process.env.POETRY_DEV_MOCK === "1";
   const resources: Resources = options?.resources ?? loadResources();
   const realReady = resources.ready;
+  const readingAssistant = registerReadingAssistant(
+    app,
+    resources,
+    options?.readingAssistant,
+  );
+  registerPoetryStudio(app, resources, readingAssistant);
 
   app.get("/healthz", async () => ({ status: "ok" }));
 
@@ -264,10 +278,22 @@ export function buildApp(options?: { resources?: Resources }): FastifyInstance {
           },
         });
       }
-      const result = await analyze(parsedReq.data, resources);
-      if (result.kind === "error")
-        return reply.status(result.status).send(result.body);
-      return reply.send(result.response);
+      const controller = new AbortController();
+      const onClose = () => {
+        if (!reply.raw.writableEnded) controller.abort();
+      };
+      reply.raw.on("close", onClose);
+      try {
+        const result = await analyze(parsedReq.data, resources, {
+          readingAssistant,
+          signal: controller.signal,
+        });
+        if (result.kind === "error")
+          return reply.status(result.status).send(result.body);
+        return reply.send(result.response);
+      } finally {
+        reply.raw.off("close", onClose);
+      }
     }
     const raw = request.body;
     if (typeof raw === "object" && raw !== null && "text" in raw) {
@@ -364,6 +390,10 @@ const isDirectRun =
   import.meta.url === pathToFileURL(process.argv[1]).href;
 
 if (isDirectRun) {
+  const localEnvironment = fileURLToPath(
+    new URL("../../../.env.local", import.meta.url),
+  );
+  if (existsSync(localEnvironment)) process.loadEnvFile(localEnvironment);
   const port = Number(process.env.PORT ?? 3000);
   const app = buildApp();
   await app.listen({ port, host: "127.0.0.1" });

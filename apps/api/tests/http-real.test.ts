@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
   LookupResultSchema,
-  ErrorResponseSchema,
   VersionsSchema,
   RhymeBooksResponseSchema,
 } from "@poetry/contracts";
@@ -91,12 +90,10 @@ describe("HTTP 层·真实模式（A 全量数据，manifest 装载）", () => {
     ).toBe(404);
   });
 
-  it("readyz：全库未审核与规则部分依据 → 503 列明缺口", async () => {
+  it("readyz：完整资源可运行，审核不再阻断服务就绪", async () => {
     const res = await app.inject({ method: "GET", url: "/readyz" });
-    expect(res.statusCode).toBe(503);
-    expect(ErrorResponseSchema.parse(res.json()).error.code).toBe(
-      "DATA_NOT_READY",
-    );
+    expect(res.statusCode).toBe(200);
+    expect(res.json().status).toBe("ready");
     expect(res.headers["x-poetry-mode"]).toBe("real");
     const versions = VersionsSchema.parse(
       JSON.parse(decodeURIComponent(String(res.headers["x-poetry-versions"]))),
@@ -106,7 +103,7 @@ describe("HTTP 层·真实模式（A 全量数据，manifest 装载）", () => {
     expect(versions.rules).toBe("teaching-v1+reviewed-works-v1");
   });
 
-  it("analyze：平水已审范围返回 200，词林与新韵仍受证据门槛约束", async () => {
+  it("analyze：三书均可返回真实参考分析", async () => {
     for (const book of ["pingshui", "cilin", "xinyun"] as const) {
       const res = await app.inject({
         method: "POST",
@@ -120,14 +117,14 @@ describe("HTTP 层·真实模式（A 全量数据，manifest 装载）", () => {
           readingOverrides: [],
         },
       });
+      expect(res.statusCode, book).toBe(200);
+      expect(AnalysisResponseSchema.parse(res.json()).policy.notice).toContain(
+        "参考分析",
+      );
       if (book === "pingshui") {
-        expect(res.statusCode, book).toBe(200);
         expect(AnalysisResponseSchema.parse(res.json()).summary.status).toBe(
           "pass",
         );
-      } else {
-        expect(res.statusCode, book).toBe(503);
-        expect(res.json().error.code).toBe("DATA_NOT_READY");
       }
     }
   });
@@ -150,7 +147,7 @@ describe("HTTP 层·真实模式（A 全量数据，manifest 装载）", () => {
     expect(report.poem.tokens).toHaveLength(7);
     expect(report.summary.status).toBe("unsupported");
     expect(report.provenance.rules).toHaveLength(10);
-    expect(report.policy.notice).toContain("全库审核尚未完成");
+    expect(report.policy.notice).toContain("参考分析");
     expect(
       report.poem.tokens.find((token) => token.text === "更")?.readingStatus,
     ).toBe("ambiguous");

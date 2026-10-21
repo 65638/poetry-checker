@@ -94,9 +94,9 @@ export function checkCell(poem, book, res) {
   for (const token of annotated.tokens) {
     for (const id of token.effectiveCandidateIds) {
       const candidate = token.candidates.find((c) => c.id === id);
-      require(candidate?.evidenceIds.some(
-        (eid) => evidence.get(eid)?.reviewStatus === "approved",
-      ), `有效候选缺已审依据: ${id}`);
+      require(candidate?.evidenceIds.length > 0 && candidate.evidenceIds.every(
+        (eid) => evidence.has(eid),
+      ), `有效候选缺可追溯依据: ${id}`);
     }
   }
   for (const finding of prosody.checks) {
@@ -179,11 +179,13 @@ function parseArgs(argv) {
     spawn: false,
     apiUrl: null,
     out: join(REPO_ROOT, "artifacts/acceptance/d3-api.json"),
-    timeoutMs: 20000,
+    timeoutMs: 30000,
+    realModel: false,
   };
   for (let i = 0; i < argv.length; i++) {
     const key = argv[i];
     if (key === "--spawn") args.spawn = true;
+    else if (key === "--real-model") args.realModel = true;
     else if (key === "--api-url") args.apiUrl = argv[++i];
     else if (key === "--out") args.out = argv[++i];
     else if (key === "--timeout-ms") args.timeoutMs = Number(argv[++i]);
@@ -208,7 +210,7 @@ async function main() {
   const args = parseArgs(process.argv.slice(2));
   if (args.help) {
     console.log(
-      "node tests/integration/e2e/d3-acceptance-api.mjs [--spawn | --api-url URL] [--out FILE] [--timeout-ms N]",
+      "node tests/integration/e2e/d3-acceptance-api.mjs [--spawn | --api-url URL] [--real-model] [--out FILE] [--timeout-ms N]",
     );
     return 0;
   }
@@ -221,9 +223,10 @@ async function main() {
     node: process.version,
     results: [],
     total: 9,
+    modelMode: args.spawn ? args.realModel ? "configured-live-provider" : "disabled-for-deterministic-local-analysis" : "external-api-configuration",
   };
   try {
-    if (args.spawn) server = await startApi(args.timeoutMs);
+    if (args.spawn) server = await startApi(args.timeoutMs, { realModel: args.realModel });
     const baseUrl = server?.baseUrl ?? args.apiUrl;
     payload.apiUrl = baseUrl;
     payload.readiness = await readiness(baseUrl);

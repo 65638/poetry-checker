@@ -16,7 +16,7 @@ const req = (
   readingOverrides: [],
 });
 
-describe("真实编排（部分候选已审，全库仍未发布）", () => {
+describe("真实编排（参考分析，不阻断未审候选）", () => {
   it("登鹳雀楼的全部有效候选证据齐备，真实编排返回合律", async () => {
     const r = await analyze(req(), loadResources());
     expect(r.kind).toBe("ok");
@@ -26,15 +26,18 @@ describe("真实编排（部分候选已审，全库仍未发布）", () => {
     expect(r.response.prosody.rhyme.status).toBe("pass");
   });
 
-  it("未审竞争候选仍被拦截；固定句语境不得泛化到单字", async () => {
+  it("未审竞争候选保留，固定句语境不泛化到单字", async () => {
     const r = await analyze(req("里"), loadResources());
-    expect(r.kind).toBe("error");
-    if (r.kind !== "error") return;
-    expect(r.status).toBe(503);
-    expect(r.body.error.code).toBe("DATA_NOT_READY");
-    expect(r.body.error.message).toContain("LOOKUP_EVIDENCE_UNVERIFIED");
-    // 定位信息透出到 fieldErrors，可追溯字位
-    expect(JSON.stringify(r.body.error.fieldErrors)).toContain("tokenId");
+    expect(r.kind).toBe("ok");
+    if (r.kind !== "ok") return;
+    const token = r.response.poem.tokens[0]!;
+    expect(token.selectionMethod).toBe("unresolved");
+    expect(token.effectiveCandidateIds).toHaveLength(token.candidates.length);
+    expect(
+      r.response.provenance.evidence.some(
+        (item) => item.reviewStatus === "unverified",
+      ),
+    ).toBe(true);
   });
 
   it("同一输入两次分析逐字节稳定", async () => {
@@ -44,12 +47,16 @@ describe("真实编排（部分候选已审，全库仍未发布）", () => {
     expect(JSON.stringify(a)).toBe(JSON.stringify(b));
   });
 
-  it("词林全量已装载：未审批范围仍在证据门槛返回 503", async () => {
+  it("词林未审范围可分析，保留参考提示和原审核状态", async () => {
     const r = await analyze(req(POEM, "cilin"), loadResources());
-    expect(r.kind).toBe("error");
-    if (r.kind === "error") {
-      expect(r.status).toBe(503);
-      expect(r.body.error.code).toBe("DATA_NOT_READY");
+    expect(r.kind).toBe("ok");
+    if (r.kind === "ok") {
+      expect(r.response.policy.notice).toContain("参考分析");
+      expect(
+        r.response.provenance.evidence.some(
+          (item) => item.reviewStatus === "unverified",
+        ),
+      ).toBe(true);
     }
   });
 });

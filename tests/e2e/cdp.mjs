@@ -149,11 +149,14 @@ export async function launchBrowser(executable) {
       return result.result.value;
     };
     const click = async (selector) => {
-      const point = await evaluate(`(() => {
+      const point = await evaluate(`(async () => {
         const el = document.querySelector(${JSON.stringify(selector)});
         if (!el || el.disabled) throw new Error('元素缺失或禁用');
-        el.scrollIntoView({block:'center'});
+        el.scrollIntoView({block:'center',behavior:'instant'});
+        await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
         const r = el.getBoundingClientRect();
+        const hit = document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);
+        if (!hit || !el.contains(hit)) throw new Error('目标被遮挡或尚未稳定');
         return {x:r.x+r.width/2,y:r.y+r.height/2};
       })()`);
       await cdp.send("Input.dispatchMouseEvent", {

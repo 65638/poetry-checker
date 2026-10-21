@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import type { BookId, LookupResult, ReadingCandidate } from "@poetry/contracts";
 import { useMotionPreference } from "./useMotionPreference";
 import { useBusyIndicator } from "./useBusyIndicator";
@@ -44,6 +44,7 @@ const LANDSCAPES = [
 ];
 
 export interface DictionaryViewProps {
+  readingAssistant?: ReactNode;
   text: string;
   book: BookId;
   character: string;
@@ -303,6 +304,7 @@ export function DictionaryView(props: DictionaryViewProps) {
                   逐字查阅，不作整诗判定
                 </p>
                 {props.passageError && <p role="alert">{props.passageError}</p>}
+                {props.readingAssistant}
                 {props.passageResult && (
                   <div
                     className="pc-dictionary__passage-result"
@@ -842,7 +844,7 @@ export function DictionaryView(props: DictionaryViewProps) {
           </section>
         </main>
         <footer className="pc-dictionary__footer">
-          查字与校诗共用韵书。收录记录、审核状态与诗中读音分别呈现。
+          参考分析：韵书数据与 AI 读音可能有误，未经全面人工核验，不作为权威结论。
         </footer>
       </div>
     </div>

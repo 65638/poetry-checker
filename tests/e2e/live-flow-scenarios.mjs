@@ -202,8 +202,8 @@ export async function runLiveFlowScenarios({
     await choose();
     await click(".pc-segmented__option:has(input[value=cilin])");
     const otherBook = await submit();
-    assert.equal(otherBook.status, 503);
-    assert.equal(otherBook.body.error.code, "DATA_NOT_READY");
+    assert.equal(otherBook.status, 200);
+    assert.equal(otherBook.body.policy.rhymeBook, "cilin");
     assert.deepEqual(otherBook.request.readingOverrides, []);
     assert.equal(otherBook.request.inputHash, edited.request.inputHash);
     await click(".pc-segmented__option:has(input[value=pingshui])");
@@ -220,7 +220,7 @@ export async function runLiveFlowScenarios({
       selectedExport: exported,
       textEditClearsOverrides: true,
       bookSwitchClearsOverrides: true,
-      cilinRemains503: true,
+      cilinReferenceAnalysis200: true,
       restoredContextSelection: true,
     };
   });
@@ -231,7 +231,7 @@ export async function runLiveFlowScenarios({
       await click(".pc-input__submit");
       await waitFor(() =>
         evaluate(
-          "document.querySelector('[role=alert]')?.textContent.includes('NETWORK_ERROR')",
+          "document.querySelector('.pc-banner--error[role=alert]')?.textContent.includes('NETWORK_ERROR')",
         ),
       );
       assert.equal(
@@ -247,7 +247,7 @@ export async function runLiveFlowScenarios({
     }
     const recovered = await submit();
     assert.equal(recovered.status, 200);
-    await waitFor(() => evaluate("!document.querySelector('[role=alert]')"));
+    await waitFor(() => evaluate("!document.querySelector('.pc-banner--error[role=alert]')"));
     return {
       faultInjection: "CDP Network.setBlockedURLs",
       inputPreserved: true,
@@ -309,7 +309,7 @@ export async function runLiveFlowScenarios({
       });
       await waitFor(() =>
         evaluate(
-          "document.querySelector('[role=alert]')?.textContent.includes('NETWORK_ERROR')",
+          "document.querySelector('.pc-banner--error[role=alert]')?.textContent.includes('NETWORK_ERROR')",
         ),
       );
       await assertBlocked("已阻止", "failed");
