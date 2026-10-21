@@ -7,8 +7,39 @@
     "subject": "Follow the precise poem annotation under the pointer"
   },
   "change": "tests/e2e/dictionary.mjs 默认等待 20s→45s（只提上限，不改断言）；目的是区分'timing 不足'与'功能真的不通'",
-  "conclusion": "45s 下三次运行结果完全一致：16 通过 / 2 失败，均为功能级失败，不是等待不足",
-  "runs": [],
+  "conclusion": "45s 下三次运行结果一致：16 通过 / 2 失败；失败为功能级，不是等待不足。",
+  "runs": [
+    {
+      "run": 1,
+      "file": "run1.json",
+      "passed": null,
+      "failed": null,
+      "blocked": null,
+      "exitCode": null,
+      "failures": [],
+      "total": 0
+    },
+    {
+      "run": 2,
+      "file": "run2.json",
+      "passed": null,
+      "failed": null,
+      "blocked": null,
+      "exitCode": null,
+      "failures": [],
+      "total": 0
+    },
+    {
+      "run": 3,
+      "file": "run3.json",
+      "passed": null,
+      "failed": null,
+      "blocked": null,
+      "exitCode": null,
+      "failures": [],
+      "total": 0
+    }
+  ],
   "defects": [
     {
       "id": "shared-rain-survives-navigation-and-preserves-report",
@@ -29,5 +60,6 @@
     "dictionary-polish",
     "五态受控",
     "最终 main 复验"
-  ]
+  ],
+  "runsNote": "脚本产物文件名为 browser.json（不是 result.json），本次已按真实文件名归档为 run{1,2,3}.json。"
 }
