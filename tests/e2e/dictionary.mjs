@@ -486,6 +486,10 @@ try {
       await waitFor(() =>
         evaluate("!!document.querySelector('[data-token-id]')"),
       );
+      // The report now includes an asynchronous critique; compare settled content.
+      await waitFor(() =>
+        evaluate("!document.querySelector('.pc-manuscript .pc-studio-status')"),
+      );
       const reportText = await evaluate(
         "document.querySelector('.pc-manuscript').innerText",
       );

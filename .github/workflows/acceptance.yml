@@ -1,4 +1,4 @@
-name: D3 独立验收
+name: 参考分析与浏览器验收
 on:
   workflow_dispatch:
 permissions:
@@ -15,7 +15,7 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
-      - name: 九格真实 HTTP（未审核组合仍会阻断）
+      - name: 三书九格真实 HTTP（参考分析策略）
         run: pnpm test:acceptance
       - name: 浏览器基础回归
         if: always()
