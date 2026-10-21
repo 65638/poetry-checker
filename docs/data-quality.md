@@ -2,6 +2,8 @@
 
 日期：2026-10-17。负责人：队员 A / DeepSeek。**本文件只写已经跑出来的数字，不写目标数、不写计划数。**
 
+2026-10-21 来源留存更正：以下 D1–D3 统计与审核状态按历史批次保留；当前《平水韻》及《詞林正韻》固定修订 wikitext 均已落盘，字节数与摘要见 `data/sources/manifest.json`。留存原文不等于全部候选内容已核验。
+
 ## 1. 自动检查 vs 人工审核（两件事，分开报）
 
 | 项目                | 自动检查（可复现命令）                                         | 结果                                            | 人工审核                           |
@@ -24,7 +26,7 @@
 - 缺：**上声三讲**。`data/patches/pingshui-shang-sanj-jiang.draft.json` 的 `proposedCharacters`
   已由人工在维基文库网页端肉眼核实并补录 9 字：讲、港、棒、蚌、项、缿、玤、傋、耩。
   **已获取并填入维基文库对应页面的修订号（oldid）：8264804**
-  （固定链接 `https://zh.wikisource.org/w/index.php?oldid=8264804`）；wikitext 快照尚未落盘。
+  （固定链接 `https://zh.wikisource.org/w/index.php?oldid=8264804`）；wikitext 已落盘至 `data/raw/wikisource/PingshuiYun-8264804.wikitext`，37,073 字节，SHA-256 `f0297bff7b66cde18bcb2644b5d9c6320ac90253f63a8aa178e489170a810ce2`。
   补丁仍维持 `status: draft`、`reviewStatus: unverified`，**未生效、未进 `data/releases`**。
 - 原表内部重复：85 个韵部里存在同字重复（例如“一东”里“同”“筒”各出现两次），
   导入时按“同字同部”去重：原表条目 10,671 → 候选 10,378。
@@ -36,7 +38,7 @@
 - 19 部 / 33 子卷（第 1–14 部各分平/仄，第 15–19 部只有入声），归属 5,575 条 / 字形 5,037。
 - 只标仄声的记录保留 `ze_unspecified`，**没有**擅自补成上/去。
 - 韵目名：源表只给 `第N部`，没有“东钟”“江阳”之类韵目名；要不要补名列为待核实。
-- 与维基文库《詞林正韻》的正文对照：**未做**（页面不可达）。
+- D1 因页面不可达未做正文对照；D4 已取得固定修订 oldid=2123337，落盘 `data/raw/wikisource/CilinZhengyun-2123337.wikitext`，27,665 字节，SHA-256 `8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a`。三首名篇相关候选已做同部同声原字机器对照，结果见 `data/reviews/d4/a/`；不等于全库内容核验。
 
 ### 中华新韵（十四韵，项目重建表）
 

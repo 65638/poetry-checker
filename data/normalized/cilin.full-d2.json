@@ -1,8 +1,8 @@
 {
-  "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
+  "dataVersion": "cilin-cwr-ff0e9c1-d4-candidate-review1",
   "book": "cilin",
   "reviewStatus": "unverified",
-  "notice": "词林正韵全量候选（19 部 / 33 子卷）：源自 chinese_word_rhyme 固定提交 ff0e9c13 的原表转载，仅登记部/声归属与平仄；反切、义项、今读一律为 null。前 14 部分平/仄两个子卷，第 15–19 部只标入声。来源仅标「仄声」的记录一律保留 ze_unspecified（不改写成上声或去声，也不臆测具体古声类）。本表不与平水韵做无依据的一字一部合并。reviewStatus=unverified，未经人审签，不得作为发布数据，也不得据此启用词牌或允许平仄通押。 本快照已在**导入层**剔除原表非汉字杂项 8 条（4 个字形：[]空格，）；原表 data/raw 字节未改动。 生成器：scripts/data/build-cilin.ts@d3-1（数据源 chinese_word_rhyme@ff0e9c13）；快照 Schema 无版本字段，版本以此戳记为据。",
+  "notice": "词林正韵全量候选（19 部 / 33 子卷）：源自 chinese_word_rhyme 固定提交 ff0e9c13 的原表转载，仅登记部/声归属与平仄；反切、义项、今读一律为 null。前 14 部分平/仄两个子卷，第 15–19 部只标入声。来源仅标「仄声」的记录一律保留 ze_unspecified（不改写成上声或去声，也不臆测具体古声类）。本表不与平水韵做无依据的一字一部合并。reviewStatus=unverified，未经人审签，不得作为发布数据，也不得据此启用词牌或允许平仄通押。 本快照已在**导入层**剔除原表非汉字杂项 8 条（4 个字形：[]空格，）；原表 data/raw 字节未改动。 生成器：scripts/data/build-cilin.ts@d4-1（数据源 chinese_word_rhyme@ff0e9c13）；快照 Schema 无版本字段，版本以此戳记为据。",
   "candidates": [
     {
       "id": "cilin:东:ping:第一部·平声",
@@ -6865,7 +6865,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:cilin:第二部:第二部·仄声"
+        "ev:cilin:第二部:第二部·仄声",
+        "ev:candidate:cilin:上:ze_unspecified:第二部·仄声:d4-a-01"
       ]
     },
     {
@@ -11633,7 +11634,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:cilin:第三部:第三部·平声"
+        "ev:cilin:第三部:第三部·平声",
+        "ev:candidate:cilin:依:ping:第三部·平声:d4-a-01"
       ]
     },
     {
@@ -14353,7 +14355,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:cilin:第三部:第三部·仄声"
+        "ev:cilin:第三部:第三部·仄声",
+        "ev:candidate:cilin:里:ze_unspecified:第三部·仄声:d4-a-01"
       ]
     },
     {
@@ -29009,7 +29012,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:cilin:第五部:第五部·仄声"
+        "ev:cilin:第五部:第五部·仄声",
+        "ev:candidate:cilin:海:ze_unspecified:第五部·仄声:d4-a-01"
       ]
     },
     {
@@ -37697,7 +37701,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:cilin:第七部:第七部·平声"
+        "ev:cilin:第七部:第七部·平声",
+        "ev:candidate:cilin:山:ping:第七部·平声:d4-a-01"
       ]
     },
     {
@@ -38065,7 +38070,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:cilin:第七部:第七部·平声"
+        "ev:cilin:第七部:第七部·平声",
+        "ev:candidate:cilin:千:ping:第七部·平声:d4-a-01"
       ]
     },
     {
@@ -51137,7 +51143,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:cilin:第九部:第九部·平声"
+        "ev:cilin:第九部:第九部·平声",
+        "ev:candidate:cilin:河:ping:第九部·平声:d4-a-01"
       ]
     },
     {
@@ -56033,7 +56040,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:cilin:第十一部:第十一部·平声"
+        "ev:cilin:第十一部:第十一部·平声",
+        "ev:candidate:cilin:更:ping:第十一部·平声:d4-a-01"
       ]
     },
     {
@@ -61313,7 +61321,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:cilin:第十一部:第十一部·仄声"
+        "ev:cilin:第十一部:第十一部·仄声",
+        "ev:candidate:cilin:更:ze_unspecified:第十一部·仄声:d4-a-01"
       ]
     },
     {
@@ -62129,7 +62138,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:cilin:第十二部:第十二部·平声"
+        "ev:cilin:第十二部:第十二部·平声",
+        "ev:candidate:cilin:流:ping:第十二部·平声:d4-a-01"
       ]
     },
     {
@@ -71089,7 +71099,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:cilin:第十五部:第十五部·入声"
+        "ev:cilin:第十五部:第十五部·入声",
+        "ev:candidate:cilin:目:ru:第十五部·入声:d4-a-01"
       ]
     },
     {
@@ -72833,7 +72844,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:cilin:第十五部:第十五部·入声"
+        "ev:cilin:第十五部:第十五部·入声",
+        "ev:candidate:cilin:欲:ru:第十五部·入声:d4-a-01"
       ]
     },
     {
@@ -75441,7 +75453,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:cilin:第十七部:第十七部·入声"
+        "ev:cilin:第十七部:第十七部·入声",
+        "ev:candidate:cilin:日:ru:第十七部·入声:d4-a-01"
       ]
     },
     {
@@ -75553,7 +75566,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:cilin:第十七部:第十七部·入声"
+        "ev:cilin:第十七部:第十七部·入声",
+        "ev:candidate:cilin:一:ru:第十七部·入声:d4-a-01"
       ]
     },
     {
@@ -76577,7 +76591,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:cilin:第十七部:第十七部·入声"
+        "ev:cilin:第十七部:第十七部·入声",
+        "ev:candidate:cilin:白:ru:第十七部·入声:d4-a-01"
       ]
     },
     {
@@ -80401,7 +80416,8 @@
       "modernReading": null,
       "fanqie": null,
       "evidenceIds": [
-        "ev:cilin:第十七部:第十七部·入声"
+        "ev:cilin:第十七部:第十七部·入声",
+        "ev:candidate:cilin:入:ru:第十七部·入声:d4-a-01"
       ]
     },
     {
@@ -86921,6 +86937,150 @@
       "assertion": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十九部/入声 共收录 63 个字形（原表条目 63 条）；声类按来源标为 ru。",
       "excerpt": null,
       "reviewStatus": "unverified"
+    },
+    {
+      "id": "ev:candidate:cilin:白:ru:第十七部·入声:d4-a-01",
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "kind": "rhyme_entry",
+      "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十七部/入声；候选 cilin:白:ru:第十七部·入声；审核记录 data/reviews/d4/a/acceptance-01.json；data/reviews/d4/a/approval-request-01.json；data/reviews/d4/a/d4-a-dengguanquelou-cilin-2026-10-20.json",
+      "assertion": "用户接受审批请求01明确列出的16项词林候选；cwr原表及词林固定底本同字同部同声机器对照，不裁定语境；仅覆盖候选 cilin:白:ru:第十七部·入声，不批准所属整部。审核记录：本会话用户（明确接受机器初审16项，非声称逐字人工校对），2026-10-20",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:cilin:日:ru:第十七部·入声:d4-a-01",
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "kind": "rhyme_entry",
+      "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十七部/入声；候选 cilin:日:ru:第十七部·入声；审核记录 data/reviews/d4/a/acceptance-01.json；data/reviews/d4/a/approval-request-01.json；data/reviews/d4/a/d4-a-dengguanquelou-cilin-2026-10-20.json",
+      "assertion": "用户接受审批请求01明确列出的16项词林候选；cwr原表及词林固定底本同字同部同声机器对照，不裁定语境；仅覆盖候选 cilin:日:ru:第十七部·入声，不批准所属整部。审核记录：本会话用户（明确接受机器初审16项，非声称逐字人工校对），2026-10-20",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:cilin:依:ping:第三部·平声:d4-a-01",
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "kind": "rhyme_entry",
+      "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第三部/平声；候选 cilin:依:ping:第三部·平声；审核记录 data/reviews/d4/a/acceptance-01.json；data/reviews/d4/a/approval-request-01.json；data/reviews/d4/a/d4-a-dengguanquelou-cilin-2026-10-20.json",
+      "assertion": "用户接受审批请求01明确列出的16项词林候选；cwr原表及词林固定底本同字同部同声机器对照，不裁定语境；仅覆盖候选 cilin:依:ping:第三部·平声，不批准所属整部。审核记录：本会话用户（明确接受机器初审16项，非声称逐字人工校对），2026-10-20",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:cilin:山:ping:第七部·平声:d4-a-01",
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "kind": "rhyme_entry",
+      "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第七部/平声；候选 cilin:山:ping:第七部·平声；审核记录 data/reviews/d4/a/acceptance-01.json；data/reviews/d4/a/approval-request-01.json；data/reviews/d4/a/d4-a-dengguanquelou-cilin-2026-10-20.json",
+      "assertion": "用户接受审批请求01明确列出的16项词林候选；cwr原表及词林固定底本同字同部同声机器对照，不裁定语境；仅覆盖候选 cilin:山:ping:第七部·平声，不批准所属整部。审核记录：本会话用户（明确接受机器初审16项，非声称逐字人工校对），2026-10-20",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:cilin:河:ping:第九部·平声:d4-a-01",
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "kind": "rhyme_entry",
+      "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第九部/平声；候选 cilin:河:ping:第九部·平声；审核记录 data/reviews/d4/a/acceptance-01.json；data/reviews/d4/a/approval-request-01.json；data/reviews/d4/a/d4-a-dengguanquelou-cilin-2026-10-20.json",
+      "assertion": "用户接受审批请求01明确列出的16项词林候选；cwr原表及词林固定底本同字同部同声机器对照，不裁定语境；仅覆盖候选 cilin:河:ping:第九部·平声，不批准所属整部。审核记录：本会话用户（明确接受机器初审16项，非声称逐字人工校对），2026-10-20",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:cilin:入:ru:第十七部·入声:d4-a-01",
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "kind": "rhyme_entry",
+      "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十七部/入声；候选 cilin:入:ru:第十七部·入声；审核记录 data/reviews/d4/a/acceptance-01.json；data/reviews/d4/a/approval-request-01.json；data/reviews/d4/a/d4-a-dengguanquelou-cilin-2026-10-20.json",
+      "assertion": "用户接受审批请求01明确列出的16项词林候选；cwr原表及词林固定底本同字同部同声机器对照，不裁定语境；仅覆盖候选 cilin:入:ru:第十七部·入声，不批准所属整部。审核记录：本会话用户（明确接受机器初审16项，非声称逐字人工校对），2026-10-20",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:cilin:海:ze_unspecified:第五部·仄声:d4-a-01",
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "kind": "rhyme_entry",
+      "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第五部/仄声；候选 cilin:海:ze_unspecified:第五部·仄声；审核记录 data/reviews/d4/a/acceptance-01.json；data/reviews/d4/a/approval-request-01.json；data/reviews/d4/a/d4-a-dengguanquelou-cilin-2026-10-20.json",
+      "assertion": "用户接受审批请求01明确列出的16项词林候选；cwr原表及词林固定底本同字同部同声机器对照，不裁定语境；仅覆盖候选 cilin:海:ze_unspecified:第五部·仄声，不批准所属整部。审核记录：本会话用户（明确接受机器初审16项，非声称逐字人工校对），2026-10-20",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:cilin:流:ping:第十二部·平声:d4-a-01",
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "kind": "rhyme_entry",
+      "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十二部/平声；候选 cilin:流:ping:第十二部·平声；审核记录 data/reviews/d4/a/acceptance-01.json；data/reviews/d4/a/approval-request-01.json；data/reviews/d4/a/d4-a-dengguanquelou-cilin-2026-10-20.json",
+      "assertion": "用户接受审批请求01明确列出的16项词林候选；cwr原表及词林固定底本同字同部同声机器对照，不裁定语境；仅覆盖候选 cilin:流:ping:第十二部·平声，不批准所属整部。审核记录：本会话用户（明确接受机器初审16项，非声称逐字人工校对），2026-10-20",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:cilin:欲:ru:第十五部·入声:d4-a-01",
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "kind": "rhyme_entry",
+      "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十五部/入声；候选 cilin:欲:ru:第十五部·入声；审核记录 data/reviews/d4/a/acceptance-01.json；data/reviews/d4/a/approval-request-01.json；data/reviews/d4/a/d4-a-dengguanquelou-cilin-2026-10-20.json",
+      "assertion": "用户接受审批请求01明确列出的16项词林候选；cwr原表及词林固定底本同字同部同声机器对照，不裁定语境；仅覆盖候选 cilin:欲:ru:第十五部·入声，不批准所属整部。审核记录：本会话用户（明确接受机器初审16项，非声称逐字人工校对），2026-10-20",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:cilin:千:ping:第七部·平声:d4-a-01",
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "kind": "rhyme_entry",
+      "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第七部/平声；候选 cilin:千:ping:第七部·平声；审核记录 data/reviews/d4/a/acceptance-01.json；data/reviews/d4/a/approval-request-01.json；data/reviews/d4/a/d4-a-dengguanquelou-cilin-2026-10-20.json",
+      "assertion": "用户接受审批请求01明确列出的16项词林候选；cwr原表及词林固定底本同字同部同声机器对照，不裁定语境；仅覆盖候选 cilin:千:ping:第七部·平声，不批准所属整部。审核记录：本会话用户（明确接受机器初审16项，非声称逐字人工校对），2026-10-20",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:cilin:里:ze_unspecified:第三部·仄声:d4-a-01",
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "kind": "rhyme_entry",
+      "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第三部/仄声；候选 cilin:里:ze_unspecified:第三部·仄声；审核记录 data/reviews/d4/a/acceptance-01.json；data/reviews/d4/a/approval-request-01.json；data/reviews/d4/a/d4-a-dengguanquelou-cilin-2026-10-20.json",
+      "assertion": "用户接受审批请求01明确列出的16项词林候选；cwr原表及词林固定底本同字同部同声机器对照，不裁定语境；仅覆盖候选 cilin:里:ze_unspecified:第三部·仄声，不批准所属整部。审核记录：本会话用户（明确接受机器初审16项，非声称逐字人工校对），2026-10-20",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:cilin:目:ru:第十五部·入声:d4-a-01",
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "kind": "rhyme_entry",
+      "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十五部/入声；候选 cilin:目:ru:第十五部·入声；审核记录 data/reviews/d4/a/acceptance-01.json；data/reviews/d4/a/approval-request-01.json；data/reviews/d4/a/d4-a-dengguanquelou-cilin-2026-10-20.json",
+      "assertion": "用户接受审批请求01明确列出的16项词林候选；cwr原表及词林固定底本同字同部同声机器对照，不裁定语境；仅覆盖候选 cilin:目:ru:第十五部·入声，不批准所属整部。审核记录：本会话用户（明确接受机器初审16项，非声称逐字人工校对），2026-10-20",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:cilin:更:ping:第十一部·平声:d4-a-01",
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "kind": "rhyme_entry",
+      "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十一部/平声；候选 cilin:更:ping:第十一部·平声；审核记录 data/reviews/d4/a/acceptance-01.json；data/reviews/d4/a/approval-request-01.json；data/reviews/d4/a/d4-a-dengguanquelou-cilin-2026-10-20.json",
+      "assertion": "用户接受审批请求01明确列出的16项词林候选；cwr原表及词林固定底本同字同部同声机器对照，不裁定语境；仅覆盖候选 cilin:更:ping:第十一部·平声，不批准所属整部。审核记录：本会话用户（明确接受机器初审16项，非声称逐字人工校对），2026-10-20",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:cilin:更:ze_unspecified:第十一部·仄声:d4-a-01",
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "kind": "rhyme_entry",
+      "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十一部/仄声；候选 cilin:更:ze_unspecified:第十一部·仄声；审核记录 data/reviews/d4/a/acceptance-01.json；data/reviews/d4/a/approval-request-01.json；data/reviews/d4/a/d4-a-dengguanquelou-cilin-2026-10-20.json",
+      "assertion": "用户接受审批请求01明确列出的16项词林候选；cwr原表及词林固定底本同字同部同声机器对照，不裁定语境；仅覆盖候选 cilin:更:ze_unspecified:第十一部·仄声，不批准所属整部。审核记录：本会话用户（明确接受机器初审16项，非声称逐字人工校对），2026-10-20",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:cilin:上:ze_unspecified:第二部·仄声:d4-a-01",
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "kind": "rhyme_entry",
+      "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第二部/仄声；候选 cilin:上:ze_unspecified:第二部·仄声；审核记录 data/reviews/d4/a/acceptance-01.json；data/reviews/d4/a/approval-request-01.json；data/reviews/d4/a/d4-a-dengguanquelou-cilin-2026-10-20.json",
+      "assertion": "用户接受审批请求01明确列出的16项词林候选；cwr原表及词林固定底本同字同部同声机器对照，不裁定语境；仅覆盖候选 cilin:上:ze_unspecified:第二部·仄声，不批准所属整部。审核记录：本会话用户（明确接受机器初审16项，非声称逐字人工校对），2026-10-20",
+      "excerpt": null,
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "ev:candidate:cilin:一:ru:第十七部·入声:d4-a-01",
+      "sourceId": "src:chinese_word_rhyme:cilin",
+      "kind": "rhyme_entry",
+      "locator": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十七部/入声；候选 cilin:一:ru:第十七部·入声；审核记录 data/reviews/d4/a/acceptance-01.json；data/reviews/d4/a/approval-request-01.json；data/reviews/d4/a/d4-a-dengguanquelou-cilin-2026-10-20.json",
+      "assertion": "用户接受审批请求01明确列出的16项词林候选；cwr原表及词林固定底本同字同部同声机器对照，不裁定语境；仅覆盖候选 cilin:一:ru:第十七部·入声，不批准所属整部。审核记录：本会话用户（明确接受机器初审16项，非声称逐字人工校对），2026-10-20",
+      "excerpt": null,
+      "reviewStatus": "approved"
     }
   ],
   "sources": [

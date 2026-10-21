@@ -1,0 +1,206 @@
+{
+  "schemaVersion": "d5-b/context-behavior-map-1",
+  "generatedBy": "hand-written from packages/readings/tests, guarded by tests/d5-artifacts.test.ts",
+  "baseline": "本地 HEAD 274ce7d（PR #23 已并入 main 后的内容）；远端 main 与 PR #28 因网络未取到",
+  "runCommand": "pnpm --filter @poetry/readings test",
+  "runResult": "见 docs/handoffs/d5-b.md 记录的实际输出",
+  "dataKindLegend": {
+    "mechanism": "受控 fixture（合成数据），只证明机制，不证明真实词林/新韵已审核",
+    "real-data": "真实快照与已审正文，可证明真实链路行为"
+  },
+  "behaviors": [
+    {
+      "id": "G34",
+      "title": "语境命中：规则选音生效，且不越界",
+      "cases": [
+        {
+          "testFile": "packages/readings/tests/resolve.test.ts",
+          "caseName": "approved 规则按最长精确词组优先，并传播规则证据",
+          "dataKind": "mechanism",
+          "asserts": "最长精确短语胜出；选中候选的规则证据被传播到字位；短词组不参与竞争",
+          "proves": "命中即按最长精确匹配选音，不是模糊或最短匹配",
+          "notProves": "真实词林/新韵候选已审核"
+        },
+        {
+          "testFile": "packages/readings/tests/resolve.test.ts",
+          "caseName": "GATE 完整审核依据的正向路径：规则选音、平仄 resolved、证据完整保留",
+          "dataKind": "mechanism",
+          "asserts": "规则选音后 readingStatus=resolved、toneStatus=resolved，证据链完整保留",
+          "proves": "证据齐全时规则确实能把字位定到唯一读音",
+          "notProves": "真实数据同样齐全"
+        },
+        {
+          "testFile": "packages/readings/tests/resolve.test.ts",
+          "caseName": "用户覆盖优先于已审核语境规则",
+          "dataKind": "mechanism",
+          "asserts": "override 胜过已批准规则，selectionMethod 标为 override",
+          "proves": "优先级顺序：用户覆盖 → 语境规则 → 唯一候选 → 歧义",
+          "notProves": "规则的学术正确性"
+        },
+        {
+          "testFile": "packages/readings/tests/resolve.test.ts",
+          "caseName": "B2-04 同一短语内目标字重现：只按 targetOffset 命中那一个字位",
+          "dataKind": "mechanism",
+          "asserts": "短语内出现多个同字时，只有 targetOffset 指到的字位被选中",
+          "proves": "命中位置精确到码点偏移，不会整短语连带选音",
+          "notProves": "真实语料中偏移全部正确"
+        },
+        {
+          "testFile": "packages/readings/tests/rules.test.ts",
+          "caseName": "每条规则能在三首正文里精确命中，且目标偏移指向目标字",
+          "dataKind": "real-data",
+          "asserts": "11 条规则逐条在三首真实正文中命中，且 targetOffset 处就是目标字",
+          "proves": "已批准规则与真实正文的绑定没有漂移",
+          "notProves": "词林/新韵规则存在（当前为 0 条）"
+        },
+        {
+          "testFile": "packages/readings/tests/d3-acceptance.test.ts",
+          "caseName": "登鹳雀楼可标注，里命中固定句规则并保留竞争候选",
+          "dataKind": "real-data",
+          "asserts": "真实平水链路中「里」被选中上声四纸，去声四寘竞争候选仍在候选集里",
+          "proves": "真实数据上语境命中生效，且不删除竞争候选",
+          "notProves": "词林/新韵同样生效"
+        }
+      ]
+    },
+    {
+      "id": "G35",
+      "title": "语境缺失/依据不足：保持未定，不猜",
+      "cases": [
+        {
+          "testFile": "packages/readings/tests/resolve.test.ts",
+          "caseName": "多个候选含平含仄：ambiguous，possibleTones 为 P、Z，不任选",
+          "dataKind": "mechanism",
+          "asserts": "无规则时 readingStatus=ambiguous，possibleTones=[P,Z]，不选任一个",
+          "proves": "缺少语境依据时读音与平仄都不强定",
+          "notProves": "真实数据下同样如此（真实数据由 GATE 阻断，见下）"
+        },
+        {
+          "testFile": "packages/readings/tests/resolve.test.ts",
+          "caseName": "两个不同读音都是仄：读音 ambiguous，但平仄 resolved 为 Z",
+          "dataKind": "mechanism",
+          "asserts": "多读同调时 readingStatus=ambiguous、toneStatus=resolved",
+          "proves": "不把多读同调写成读音已确定",
+          "notProves": "具体该选哪个读音"
+        },
+        {
+          "testFile": "packages/readings/tests/resolve.test.ts",
+          "caseName": "已知平声候选加声调未知候选：不掩盖未知",
+          "dataKind": "mechanism",
+          "asserts": "存在声调未知候选时 toneStatus=unknown，不被已知候选掩盖",
+          "proves": "未知不会被已知项吞掉",
+          "notProves": "真实词林/新韵是否存在声调未知候选"
+        },
+        {
+          "testFile": "packages/readings/tests/resolve.test.ts",
+          "caseName": "B-D1-06 没有候选时为 unknown，六个字段全部保持一致",
+          "dataKind": "mechanism",
+          "asserts": "无候选时 readingStatus/toneStatus 等六字段一致为 unknown",
+          "proves": "缺字保持 unknown，不造读音",
+          "notProves": "缺字清单的完整性"
+        },
+        {
+          "testFile": "packages/readings/tests/resolve.test.ts",
+          "caseName": "FIX-2 规则已审核但 evidenceIds 为空：不选音并留 notice",
+          "dataKind": "mechanism",
+          "asserts": "规则证据为空时不选音，notice 为 CONTEXT_RULE_EVIDENCE_INSUFFICIENT",
+          "proves": "规则自身证据不足时保持未定",
+          "notProves": "真实规则集的证据完整性"
+        },
+        {
+          "testFile": "packages/readings/tests/resolve.test.ts",
+          "caseName": "FIX-2 规则证据未审核：不选音并留 notice",
+          "dataKind": "mechanism",
+          "asserts": "规则证据 unverified 时不选音并留 notice",
+          "proves": "未审核证据不支撑选音",
+          "notProves": "真实审批进度"
+        },
+        {
+          "testFile": "packages/readings/tests/resolve.test.ts",
+          "caseName": "FIX-2 规则证据在 lookup 中缺失：不选音并留 notice",
+          "dataKind": "mechanism",
+          "asserts": "证据在 lookup 中缺失时同样不选音",
+          "proves": "来源断链不会被当作通过",
+          "notProves": "真实来源链的完整性"
+        },
+        {
+          "testFile": "packages/readings/tests/resolve.test.ts",
+          "caseName": "FIX-2 规则引用已审核但非语境用途的证据（韵书归部）不能顶替",
+          "dataKind": "mechanism",
+          "asserts": "kind≠context 的已审证据不能替代语境证据",
+          "proves": "语境依据必须名副其实",
+          "notProves": "真实语境证据全部齐备"
+        },
+        {
+          "testFile": "packages/readings/tests/d3-acceptance.test.ts",
+          "caseName": "「里」在千里／里外／欲穷千里山下都不被固定句规则选中",
+          "dataKind": "real-data",
+          "asserts": "相似字符串不命中固定句规则，退回证据门槛（blocked 或 ambiguous，绝不是 rule）",
+          "proves": "规则不泛化",
+          "notProves": "其他短语的安全边界同样覆盖"
+        },
+        {
+          "testFile": "packages/readings/tests/real-pingshui.test.ts",
+          "caseName": "登鹳雀楼（不加载语境）：在第一个未审竞争候选处拦截，位置由数据推导",
+          "dataKind": "real-data",
+          "asserts": "不加载语境时在首个未审竞争候选处抛 LOOKUP_EVIDENCE_UNVERIFIED，拦截位置由数据推导",
+          "proves": "真实数据上缺语境即阻断，不降级成猜测",
+          "notProves": "加载语境后所有字位都可通过"
+        }
+      ]
+    },
+    {
+      "id": "G36",
+      "title": "冲突/失效规则：不静默择一",
+      "cases": [
+        {
+          "testFile": "packages/readings/tests/resolve.test.ts",
+          "caseName": "同优先级规则冲突保留歧义，不任选",
+          "dataKind": "mechanism",
+          "asserts": "等长冲突规则选中不同候选时保留全部被选候选，readingStatus=ambiguous，reason 写明冲突规则",
+          "proves": "冲突不静默择一",
+          "notProves": "真实规则集不存在冲突"
+        },
+        {
+          "testFile": "packages/readings/tests/resolve.test.ts",
+          "caseName": "GATE 语境规则冲突且其中一个候选未审核：同样抛数据未就绪",
+          "dataKind": "mechanism",
+          "asserts": "冲突后留下的有效候选若有未审项，抛 LOOKUP_EVIDENCE_UNVERIFIED",
+          "proves": "冲突路径同样受证据门槛约束",
+          "notProves": "真实冲突已全部消失"
+        },
+        {
+          "testFile": "packages/readings/tests/resolve.test.ts",
+          "caseName": "规则指向当前数据不存在的候选时抛 CONTEXT_RULE_STALE，不静默生效",
+          "dataKind": "mechanism",
+          "asserts": "候选 ID 失效时抛 CONTEXT_RULE_STALE",
+          "proves": "旧 ID 不会静默复用",
+          "notProves": "真实规则引用的候选全部有效（见 rules.test.ts 的绑定检查）"
+        },
+        {
+          "testFile": "packages/readings/tests/resolve.test.ts",
+          "caseName": "规则结构自相矛盾时抛 CONTEXT_RULE_INVALID",
+          "dataKind": "mechanism",
+          "asserts": "target 与短语偏移不一致等结构矛盾抛 CONTEXT_RULE_INVALID",
+          "proves": "坏规则不进入判定",
+          "notProves": "规则语义正确性"
+        },
+        {
+          "testFile": "packages/readings/tests/resolve.test.ts",
+          "caseName": "GATE 语境规则选中未审核候选：抛数据未就绪，不能只剩它去定平仄",
+          "dataKind": "mechanism",
+          "asserts": "规则选中的候选未审时抛 LOOKUP_EVIDENCE_UNVERIFIED",
+          "proves": "规则不能借由「唯一候选」绕过证据门槛",
+          "notProves": "真实规则选中的候选都已审"
+        }
+      ]
+    }
+  ],
+  "gaps": [
+    {
+      "id": "G36-gap-1",
+      "description": "真实数据上尚无「两条已批准规则同时命中同一字位」的实例，冲突路径目前只有受控 fixture 支撑。",
+      "suggestion": "若组长裁定中出现等长冲突短语，需补一条真实数据用例；当前不伪造该场景。"
+    }
+  ]
+}

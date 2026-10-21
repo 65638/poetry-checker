@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import type {
   PoetryAssistantRequest,
+  Revision,
   RhymeWordsResponse,
 } from "@poetry/contracts";
 import type { CheckerViewProps, InputDraft } from "../view-contract";
@@ -23,7 +24,7 @@ import {
 import { requestRhymeWords } from "../api/poetry-studio";
 import { downloadJson } from "./library";
 import {
-  applyRevision,
+  applyRevisions,
   changedSpan,
   parseNotebook,
   type NotebookEntry,
@@ -67,11 +68,31 @@ export function PoetryDesk({
   const [rhymeWords, setRhymeWords] = useState<RhymeWordsResponse | null>(null);
   const [rhymeBusy, setRhymeBusy] = useState(false);
   const [rhymeError, setRhymeError] = useState<string | null>(null);
+  const [revisionDrafts, setRevisionDrafts] = useState<{
+    baseHash: string;
+    versions: Array<{ text: string; edits: Revision[] }>;
+  }>({ baseHash: "", versions: [] });
+  const lastAutoReview = useRef<string | null>(null);
   const notebookFile = useRef<HTMLInputElement>(null);
   const { report, draft, stale, busy } = checker;
   const usable =
     !!report && !stale && !busy && report.poem.originalText === draft.text;
-  const critique = usePoetryTask(JSON.stringify([draft, direction, mode]));
+  const critique = usePoetryTask(
+    JSON.stringify([report?.inputHash, draft.rhymeBook, direction, mode]),
+  );
+  const pendingEdits =
+    report?.poem.originalText === draft.text
+      ? []
+      : revisionDrafts.baseHash === report?.inputHash
+        ? [...revisionDrafts.versions]
+            .reverse()
+            .find((v) => v.text === draft.text)?.edits
+        : undefined;
+  const canUseSuggestions =
+    !!report &&
+    !busy &&
+    pendingEdits !== undefined &&
+    draft.rhymeBook === report.policy.rhymeBook;
   const ends =
     report?.poem.lines.flatMap((line) => {
       const token = report.poem.tokens.find(
@@ -85,7 +106,13 @@ export function PoetryDesk({
     seed?.candidates.find((c) => c.id === seed.selectedReadingId) ??
     seed?.candidates[0];
   const rhyme = usePoetryTask(
-    JSON.stringify([draft, seed?.tokenId, seedReading?.id, page]),
+    JSON.stringify([
+      report?.inputHash,
+      draft.rhymeBook,
+      seed?.tokenId,
+      seedReading?.id,
+      page,
+    ]),
   );
   useEffect(() => {
     setSeedTokenId("");
@@ -95,7 +122,7 @@ export function PoetryDesk({
   useEffect(() => {
     setRhymeWords(null);
     setRhymeError(null);
-    if (!usable || !seedReading || tab !== "rhyme") {
+    if (!canUseSuggestions || !seedReading || tab !== "rhyme") {
       setRhymeBusy(false);
       return;
     }
@@ -120,7 +147,7 @@ export function PoetryDesk({
         if (!controller.signal.aborted) setRhymeBusy(false);
       });
     return () => controller.abort();
-  }, [usable, seedReading?.id, draft.rhymeBook, page, tab]);
+  }, [canUseSuggestions, seedReading?.id, draft.rhymeBook, page, tab]);
   const critiqueInput: CritiqueInput = {
     task: "critique",
     text: draft.text,
@@ -129,15 +156,14 @@ export function PoetryDesk({
     mode,
   };
   const reviewIdentity = JSON.stringify([
-    usable,
     report?.poem.inputHash,
     draft.rhymeBook,
     direction,
     mode,
-    automatic,
   ]);
   useEffect(() => {
-    if (usable && automatic)
+    if (usable && automatic && lastAutoReview.current !== reviewIdentity) {
+      lastAutoReview.current = reviewIdentity;
       void critique.run({
         task: "critique",
         text: draft.text,
@@ -145,17 +171,47 @@ export function PoetryDesk({
         direction,
         mode,
       });
-  }, [reviewIdentity, critique.run]);
+    }
+  }, [reviewIdentity, usable, automatic, critique.run]);
   function revise(next: InputDraft, reason: string) {
     onRevise(next, reason);
-    checker.onAnalyze();
+    setFeedback(null);
+  }
+  function adopt(edit: Revision, reason: string) {
+    if (!report || !canUseSuggestions || !pendingEdits) return;
+    try {
+      const edits = [
+        ...pendingEdits.filter(
+          (previous) =>
+            previous.startTokenId !== edit.startTokenId ||
+            previous.endTokenId !== edit.endTokenId,
+        ),
+        edit,
+      ];
+      const text = applyRevisions(
+        report.poem.originalText,
+        edits,
+        report.poem.tokens,
+      );
+      if (text === draft.text) return;
+      setRevisionDrafts((previous) => ({
+        baseHash: report.inputHash,
+        versions: [
+          ...(previous.baseHash === report.inputHash ? previous.versions : []),
+          { text, edits },
+        ].slice(-80),
+      }));
+      revise({ ...draft, text }, reason);
+    } catch (error) {
+      setFeedback((error as Error).message);
+    }
   }
   const currentCritique =
     critique.result?.task === "critique" ? critique.result.result : null;
   const recommendations =
     rhyme.result?.task === "rhyme" ? rhyme.result.result.matches : [];
   const peers = rhymeWords?.lookup.entries.flatMap((e) => e.candidates) ?? [];
-  const canApply = usable && mode === "writing";
+  const canApply = canUseSuggestions && mode === "writing";
   return (
     <section
       className="pc-poetry-desk pc-studio-scope"
@@ -167,6 +223,15 @@ export function PoetryDesk({
           <h2 id="poetry-desk-title">推敲台</h2>
         </div>
         <div className="pc-studio-actions">
+          {stale && (
+            <button
+              className="pc-studio-action"
+              disabled={busy}
+              onClick={checker.onAnalyze}
+            >
+              <Sparkles size={17} /> 分析修改
+            </button>
+          )}
           <button
             className="pc-studio-icon"
             disabled={!canUndo || busy}
@@ -255,7 +320,7 @@ export function PoetryDesk({
           {!usable && (
             <p className="pc-studio-empty">
               {stale
-                ? "原文已修改，请先重新分析。"
+                ? "修改已保存，当前保留上次分析。"
                 : "整诗分析完成后，在此研读与推敲。"}
             </p>
           )}
@@ -284,27 +349,31 @@ export function PoetryDesk({
                   <p className="pc-studio-meta">取舍：{edit.tradeoff}</p>
                   <button
                     className="pc-studio-action"
-                    disabled={!canApply}
-                    onClick={() => {
-                      try {
-                        revise(
-                          {
-                            ...draft,
-                            text: applyRevision(
-                              draft.text,
-                              edit,
-                              report!.poem.tokens,
-                            ),
-                          },
-                          `GLM炼字：${edit.original}→${edit.replacement}；${edit.reason}；取舍：${edit.tradeoff}`,
-                        );
-                      } catch (error) {
-                        setFeedback((error as Error).message);
-                      }
-                    }}
+                    disabled={
+                      !canApply ||
+                      pendingEdits?.some(
+                        (e) =>
+                          e.startTokenId === edit.startTokenId &&
+                          e.endTokenId === edit.endTokenId &&
+                          e.replacement === edit.replacement,
+                      )
+                    }
+                    onClick={() =>
+                      adopt(
+                        edit,
+                        `GLM炼字：${edit.original}→${edit.replacement}；${edit.reason}；取舍：${edit.tradeoff}`,
+                      )
+                    }
                   >
                     <Check size={17} />
-                    采纳并复查
+                    {pendingEdits?.some(
+                      (e) =>
+                        e.startTokenId === edit.startTokenId &&
+                        e.endTokenId === edit.endTokenId &&
+                        e.replacement === edit.replacement,
+                    )
+                      ? "已采纳"
+                      : "采纳"}
                   </button>
                 </article>
               ))}
@@ -324,12 +393,13 @@ export function PoetryDesk({
       )}
       {tab === "rhyme" && (
         <div role="tabpanel" aria-label="同韵寻字">
-          {!usable || !seed ? (
+          {!canUseSuggestions || !seed ? (
             <p className="pc-studio-empty">
               请先完成当前诗作分析，再选择句末韵字。
             </p>
           ) : (
             <>
+              {stale && <p className="pc-studio-meta">同韵候选沿用上次分析。</p>}
               <div className="pc-studio-actions">
                 <label>
                   句末字
@@ -392,11 +462,11 @@ export function PoetryDesk({
                     </span>
                     <button
                       className="pc-studio-action"
-                      disabled={rhyme.busy || !peers.length}
+                      disabled={!usable || rhyme.busy || !peers.length}
                       onClick={() =>
                         void rhyme.run({
                           task: "rhyme",
-                          text: draft.text,
+                          text: report.poem.originalText,
                           rhymeBook: draft.rhymeBook,
                           targetTokenId: seed.tokenId,
                           readingId: seedReading!.id,
@@ -429,20 +499,21 @@ export function PoetryDesk({
                             className="pc-studio-action"
                             disabled={!canApply}
                             onClick={() =>
-                              revise(
+                              adopt(
                                 {
-                                  ...draft,
-                                  text:
-                                    draft.text.slice(0, seed.startUtf16) +
-                                    c.character +
-                                    draft.text.slice(seed.endUtf16),
+                                  startTokenId: seed.tokenId,
+                                  endTokenId: seed.tokenId,
+                                  original: seed.text,
+                                  replacement: c.character,
+                                  reason: match.reason,
+                                  tradeoff: "同韵不等于同义或整诗合律。",
                                 },
                                 `同韵推敲：${seed.text}→${c.character}；候选${c.id}；${match.reason}`,
                               )
                             }
                           >
                             <Check size={16} />
-                            试用并复查
+                            试用
                           </button>
                         </article>
                       )

@@ -1,0 +1,136 @@
+{
+  "baseMain": "f3ef270d344a8a0534a19d4a735e04d66a10a5c0",
+  "runCommit": "6257e1a3c412eec3f0932b96c9497245cc329b40",
+  "dirty": false,
+  "node": "24.19.0",
+  "pnpm": "11.25.0",
+  "commands": [
+    {
+      "command": "pnpm verify",
+      "exit": 0,
+      "testFiles": 56,
+      "testsPassed": 763
+    },
+    {
+      "command": "pnpm test:acceptance",
+      "runnerExit": 2,
+      "pnpmWrapperExit": 1,
+      "passed": 3,
+      "blocked": 6,
+      "failed": 0,
+      "notRun": 0
+    },
+    {
+      "command": "pnpm test:e2e",
+      "exit": 0,
+      "passed": 19,
+      "blocked": 0,
+      "failed": 0
+    },
+    {
+      "command": "node scripts/g07-startup-check.mjs",
+      "exit": 0,
+      "scope": "isolated custom ports + browser-blocked non-loopback requests + owned-service coordinated cleanup"
+    },
+    {
+      "command": "node scripts/g07-performance.mjs",
+      "exit": 0,
+      "aggregate": [
+        {
+          "concurrency": 1,
+          "success200": 300,
+          "p50Ms": 14.580500000000029,
+          "p95Ms": 21.04989999999998
+        },
+        {
+          "concurrency": 4,
+          "success200": 300,
+          "p50Ms": 14.227599999999256,
+          "p95Ms": 24.362599999999475
+        }
+      ]
+    }
+  ],
+  "sourcePackage": {
+    "file": "poetry-checker-source-6257e1a.zip",
+    "sha256": "a374250a69ef9a71c9ab5d1c5fd5d215797e0111d799e9e3b9e3902c1bf79555",
+    "files": 235,
+    "hashesVerified": 234,
+    "buildExit": 0,
+    "scope": "code-only, excludes all real data, historical evidence and images; not a complete real-data runtime distribution"
+  },
+  "offline": {
+    "emptyStoreInstall": {
+      "exit": 1,
+      "error": "ERR_PNPM_NO_OFFLINE_TARBALL",
+      "suppliedDependencyCache": false
+    },
+    "newUnpackExistingCacheInstall": {
+      "exit": 0,
+      "command": "pnpm install --offline --frozen-lockfile --config.node-linker=hoisted",
+      "downloaded": 0
+    },
+    "cachedOfflineBuild": {
+      "exit": 0,
+      "pnpmConfigOffline": true
+    },
+    "installedRealRuntime": {
+      "passed": true,
+      "browserScope": "non-loopback HTTP requests denied through CDP; controlled loopback remains available",
+      "osNetworkIsolation": false
+    }
+  },
+  "g08": {
+    "d5Date": "2026-10-21",
+    "morning": "final verification and mainline fixes",
+    "afternoon": "debt reduction",
+    "rehearsal": "cancelled by user",
+    "materialsCheckedMain": "f3ef270",
+    "missing": [
+      "E five-minute script",
+      "dedicated demo JSON",
+      "recording file or explicit recording plan"
+    ],
+    "owner": "E; C supplies Huanghelou wording"
+  },
+  "archiveProvenance": [
+    {
+      "file": "main-ci.json",
+      "originalSha256": "b688369baa95280294724de88e98b36cd2a27dc07e21012783b8e1183f085365",
+      "archivedSha256": "b688369baa95280294724de88e98b36cd2a27dc07e21012783b8e1183f085365",
+      "pathRedacted": false
+    },
+    {
+      "file": "performance.json",
+      "originalSha256": "209f4f4001d76eee5a0783468a568c13f6d56eb61f0f06719a6d0c5062350df3",
+      "archivedSha256": "209f4f4001d76eee5a0783468a568c13f6d56eb61f0f06719a6d0c5062350df3",
+      "pathRedacted": false
+    },
+    {
+      "file": "startup.json",
+      "originalSha256": "459a798abb9e55f4f66629b4ca6a958be9685a991e1c7994a8807181b49e303d",
+      "archivedSha256": "459a798abb9e55f4f66629b4ca6a958be9685a991e1c7994a8807181b49e303d",
+      "pathRedacted": false
+    },
+    {
+      "file": "api.json",
+      "originalSha256": "0c0c467c356c180d2e80919f4917097d554be95765e6d335ec7bb099ea32b3ef",
+      "archivedSha256": "0c0c467c356c180d2e80919f4917097d554be95765e6d335ec7bb099ea32b3ef",
+      "pathRedacted": false
+    },
+    {
+      "file": "browser.json",
+      "originalSha256": "5074539f8522d0adea08c538a3655b16ccf9684f07832c6799b331126681ab2f",
+      "archivedSha256": "586987122ec3e09a43f6b3efb894cba00859062b886f5a46cf9ce18035cbad02",
+      "pathRedacted": true
+    }
+  ],
+  "limits": [
+    "main CI is base-main actual success; branch CI is tracked separately",
+    "all-library readiness remains 503",
+    "source package does not grant rights for excluded data",
+    "first cold array entry is process-first analysis; later entries share the warm server",
+    "local loopback latency is not remote production latency",
+    "G05 independent full clone acceptance remains with E/D"
+  ]
+}

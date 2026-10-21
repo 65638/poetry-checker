@@ -1,5 +1,7 @@
 # D4 E 批次 01：基线复跑 + 并发迟到场景
 
+> 2026-10-21整合说明：下列多批证据仅对应各自runSha和当时策略；旧记录的六格数据阻断不能用于描述当前参考分析。当前整合九格HTTP已复跑9通过/0阻断/0判错，详情与其他回归见 [主线整合](main-closeout-2026-10-21.md)。
+
 日期：2026-10-19。执行者：队员 E / DeepSeek。
 分支 `feat/e-d4-closeout`；**base** = `origin/integrate/d4 @ 4146371`（已发布、已核对与 `c409d20` 的祖先关系）。
 **head** = `169446e80d7d`（证据归档提交）；**实际运行 SHA** = `dba8684c4c00`（dirty=false，mode=real）。
@@ -53,3 +55,31 @@
 ## 待与 D 约定
 
 30 秒超时的前端表现与失败文案、以及"进行中"状态的按钮禁用口径——本批未改前端，等待 D 的确认后再补场景。
+
+---
+
+## 批次 02（2026-10-20，基线 main `cea831b`）
+
+### G05 干净 clone 独立验收（已完成）
+
+- 新目录 `C:\study\w1\g05-clone-cea831b`，`git clone` → HEAD `cea831b`（dirty=false）
+- `pnpm install --frozen-lockfile` exit 0；`pnpm verify` **exit 0，56 文件 / 763 测试**
+- `pnpm test:e2e` **exit 0，19 通过 / 0 阻断 / 0 失败**（Edge 155 + CDP，真实点击）
+- **导出可解析**：3 个导出 JSON 全部 `json.load` 成功（pass 20 字位 / fail 56 字位），含 inputHash、summary、tokens
+- **无个人绝对路径**：`scripts/**`、`tests/**`、`package.json` 中未发现 `C:\Users` / `C:\study`
+- 证据：`tests/integration/e2e/evidence/d4-e-02-g05/`（browser.json、三视口截图、summary.json）
+
+### G09 四目标对照表（已交）
+
+`docs/delivery/d4/g09-target-coverage.md`：金标准 3/12、规则组 33/36（C 盘点）、多音位置 44/60（B 盘点）、场景 19/12。
+缺口与责任列明；不代抄、不凑数、不从引擎输出反写。
+
+### 演示素材（已交）
+
+`docs/delivery/d4/demo-script.md`：5 分钟时间轴 + 必须照实讲的三句 + 备份顺序 + 应答话术 + 演示前清单。
+**录屏未做**，已如实标注。
+
+### 顺手项（e06-e08 旧分支残留）
+
+`eaf3b1a`、`5bbf481` 两个提交的内容（09 增量与第三批交接）**已被 Codex 集成进主线**；
+旧分支 `feat/e-d3-e06-e08-scenarios` 与 PR #19 **声明作废，不再 cherry-pick**（避免重复记账）。

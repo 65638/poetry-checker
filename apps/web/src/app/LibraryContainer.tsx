@@ -10,7 +10,9 @@ import {
   Upload,
   X,
 } from "lucide-react";
-import type { LibraryWork } from "@poetry/contracts";
+import type { LibraryWork, PoemPronunciation } from "@poetry/contracts";
+import { loadCatalog, loadPronunciation } from "../api/library";
+import { AnnotatedVerses } from "../presentation/components/AnnotatedVerses";
 import {
   BUILTIN_WORKS,
   IMPORT_BYTES,
@@ -19,6 +21,8 @@ import {
   mergeLibrary,
   parseLibraryImport,
   searchLibrary,
+  readingSections,
+  uniqueLibrary,
 } from "./library";
 import { useMotionPreference } from "../presentation/useMotionPreference";
 import { usePoetryTask } from "../hooks/usePoetryTask";
@@ -43,9 +47,11 @@ function readFavorites(): string[] {
 export function LibraryContainer({
   onStudy,
   onLookup,
+  active = true,
 }: {
   onStudy: (work: LibraryWork) => void;
   onLookup: (char: string) => void;
+  active?: boolean;
 }) {
   const motion = useMotionPreference();
   const [works, setWorks] = useState<LibraryWork[]>(BUILTIN_WORKS);
@@ -57,8 +63,21 @@ export function LibraryContainer({
   const [leftId, setLeftId] = useState(BUILTIN_WORKS[0]!.id);
   const [rightId, setRightId] = useState(BUILTIN_WORKS[1]!.id);
   const [dynasty, setDynasty] = useState("");
+  const [collection, setCollection] = useState("");
+  const [kind, setKind] = useState("");
+  const [showPinyin, setShowPinyin] = useState(false);
+  const [pronunciation, setPronunciation] = useState<PoemPronunciation | null>(
+    null,
+  );
+  const [pronunciationError, setPronunciationError] = useState<string | null>(
+    null,
+  );
+  const [pronunciationBusy, setPronunciationBusy] = useState(false);
+  const [studySection, setStudySection] = useState(0);
   const [favorites, setFavorites] = useState(readFavorites);
   const [onlyFavorites, setOnlyFavorites] = useState(false);
+  const [showDuplicates, setShowDuplicates] = useState(false);
+  const unique = useMemo(() => uniqueLibrary(works), [works]);
   const [page, setPage] = useState(0);
   const [importing, setImporting] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
@@ -105,17 +124,45 @@ export function LibraryContainer({
       query,
       mode,
       dynasty,
+      collection,
+      kind,
       onlyFavorites,
+      showDuplicates,
       onlyFavorites ? favorites : null,
       works.map((w) => w.id),
     ]),
   );
   const comparison = usePoetryTask(`${leftId}|${rightId}`);
+  const literary = usePoetryTask(`${selectedId}|${studySection}`);
   useEffect(() => {
+    if (!active || ready) return;
     let live = true;
-    void libraryStorage("read")
-      .then((saved) => {
-        if (live) setWorks(mergeLibrary(BUILTIN_WORKS, saved).works);
+    const controller = new AbortController();
+    void Promise.all([
+      loadCatalog(controller.signal)
+        .then((c) => c.works)
+        .catch(() => {
+          if (live)
+            setFeedback("扩展诗库暂不可用，已保留基础示例与本机导入。 ");
+          return BUILTIN_WORKS;
+        }),
+      libraryStorage("read").catch((error: Error) => {
+        if (live) setFeedback(error.message);
+        return [];
+      }),
+    ])
+      .then(([catalog, saved]) => {
+        if (!live) return;
+        const merged = mergeLibrary(catalog, saved).works;
+        setWorks(merged);
+        setLeftId(
+          merged.find((w) => w.title === "登鹳雀楼")?.id ?? merged[0]!.id,
+        );
+        setRightId(
+          merged.find((w) => w.title === "静夜思")?.id ??
+            merged[1]?.id ??
+            merged[0]!.id,
+        );
       })
       .catch((error: Error) => {
         if (live) setFeedback(error.message);
@@ -125,19 +172,34 @@ export function LibraryContainer({
       });
     return () => {
       live = false;
+      controller.abort();
     };
-  }, []);
+  }, [active, ready]);
   useEffect(() => {
     setPage(0);
-  }, [query, mode, dynasty, onlyFavorites]);
+  }, [query, mode, dynasty, collection, kind, onlyFavorites, showDuplicates]);
   const filtered = useMemo(
     () =>
-      works.filter(
+      (showDuplicates || onlyFavorites ? works : unique.works).filter(
         (w) =>
           (!dynasty || w.dynasty === dynasty) &&
+          (!collection ||
+            w.collection === collection ||
+            w.tags.includes(collection)) &&
+          (!kind ||
+            (kind === "prose" ? w.kind === "prose" : w.kind !== "prose")) &&
           (!onlyFavorites || favorites.includes(w.id)),
       ),
-    [works, dynasty, favorites, onlyFavorites],
+    [
+      works,
+      unique,
+      dynasty,
+      collection,
+      kind,
+      favorites,
+      onlyFavorites,
+      showDuplicates,
+    ],
   );
   const hits = useMemo(
     () => searchLibrary(filtered, query, mode === "scene"),
@@ -163,6 +225,35 @@ export function LibraryContainer({
       })
     : hits;
   const selected = works.find((w) => w.id === selectedId);
+  const sections = useMemo(
+    () => (selected ? readingSections(selected) : []),
+    [selected],
+  );
+  useEffect(() => {
+    setPronunciation(null);
+    setPronunciationError(null);
+    setStudySection(0);
+  }, [selectedId]);
+  useEffect(() => {
+    if (!showPinyin || !selected?.id.startsWith("deepseek:")) {
+      setPronunciationBusy(false);
+      return;
+    }
+    const controller = new AbortController();
+    setPronunciationBusy(true);
+    setPronunciationError(null);
+    void loadPronunciation(selected, controller.signal)
+      .then((value) => {
+        if (!controller.signal.aborted) setPronunciation(value);
+      })
+      .catch((error: Error) => {
+        if (!controller.signal.aborted) setPronunciationError(error.message);
+      })
+      .finally(() => {
+        if (!controller.signal.aborted) setPronunciationBusy(false);
+      });
+    return () => controller.abort();
+  }, [selected, showPinyin]);
   const left = works.find((w) => w.id === leftId);
   const right = works.find((w) => w.id === rightId);
   const compareUnavailable =
@@ -183,10 +274,22 @@ export function LibraryContainer({
   }, [page, visiblePage]);
   useEffect(() => {
     catalogueList.current?.scrollTo({ top: 0, behavior: "instant" });
-  }, [visiblePage, query, dynasty, onlyFavorites, mode]);
+  }, [
+    visiblePage,
+    query,
+    dynasty,
+    collection,
+    kind,
+    onlyFavorites,
+    showDuplicates,
+    mode,
+  ]);
   function resetFilters() {
     setQuery("");
     setDynasty("");
+    setCollection("");
+    setKind("");
+    setShowDuplicates(false);
     setOnlyFavorites(false);
     setPage(0);
     queryInput.current?.focus();
@@ -260,12 +363,20 @@ export function LibraryContainer({
       setFeedback("收藏只保留到本次会话，设备存储不可用。");
     }
   }
-  const workOptions = works.map((w) => (
-    <option key={w.id} value={w.id}>
-      {w.title} · {w.author || "作者未载"}
-      {w.sourceUrl ? ` · ${new URL(w.sourceUrl).hostname}` : ""}
-    </option>
-  ));
+  const workOptions = works
+    .filter(
+      (w) =>
+        showDuplicates ||
+        !unique.hiddenIds.has(w.id) ||
+        w.id === leftId ||
+        w.id === rightId,
+    )
+    .map((w) => (
+      <option key={w.id} value={w.id}>
+        {w.title} · {w.author || "作者未载"}
+        {w.sourceUrl ? ` · ${new URL(w.sourceUrl).hostname}` : ""}
+      </option>
+    ));
   const poemColumn = (
     work: LibraryWork | undefined,
     side: "left" | "right",
@@ -379,7 +490,8 @@ export function LibraryContainer({
           <h1>典籍馆</h1>
           <p className="pc-library-heading__verse">半窗山月，一室书声。</p>
           <p>
-            {works.length}首入藏 · {favorites.length}首收藏
+            {ready ? `${works.length}首入藏` : "载入诗库…"} · {favorites.length}
+            首收藏
           </p>
         </div>
         <div className="pc-studio-actions">
@@ -620,6 +732,37 @@ export function LibraryContainer({
             </div>
             <div className="pc-library-filters">
               <label>
+                选集
+                <select
+                  aria-label="按选集筛选"
+                  value={collection}
+                  onChange={(e) => setCollection(e.target.value)}
+                >
+                  <option value="">全部</option>
+                  {[
+                    ...new Set(
+                      works.flatMap((w) =>
+                        w.collection ? [w.collection] : [],
+                      ),
+                    ),
+                  ].map((c) => (
+                    <option key={c}>{c}</option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                文类
+                <select
+                  aria-label="按文类筛选"
+                  value={kind}
+                  onChange={(e) => setKind(e.target.value)}
+                >
+                  <option value="">全部</option>
+                  <option value="poetry">诗词曲及未定</option>
+                  <option value="prose">散文</option>
+                </select>
+              </label>
+              <label>
                 朝代
                 <select
                   aria-label="筛选朝代"
@@ -647,6 +790,17 @@ export function LibraryContainer({
                   ? `GLM精选 ${matches.length} 首 / ${candidates.length}首候选`
                   : `${display.length}首`}
               </span>
+              {unique.hiddenCount > 0 && (
+                <label>
+                  <input
+                    type="checkbox"
+                    aria-label="显示合编与重复篇"
+                    checked={showDuplicates}
+                    onChange={(e) => setShowDuplicates(e.target.checked)}
+                  />
+                  显示合编与重复篇（{unique.hiddenCount}）
+                </label>
+              )}
             </div>
           </form>
           <div className="pc-library-discover">
@@ -775,17 +929,60 @@ export function LibraryContainer({
               </button>
               <button
                 className="pc-studio-action"
-                disabled={selected.paragraphs.join("\n").length > 2000}
-                onClick={() => onStudy(selected)}
+                disabled={!sections[studySection]}
+                onClick={() => {
+                  const section = sections[studySection];
+                  if (!section) return;
+                  if (selected.kind === "prose")
+                    void literary.run({
+                      task: "critique",
+                      text: section.paragraphs.join("\n"),
+                      rhymeBook: "pingshui",
+                      direction: "meaning",
+                      mode: "reading",
+                    });
+                  else onStudy(section);
+                }}
               >
                 <BookOpen size={17} />
-                研读此诗
+                {selected.kind === "prose"
+                  ? "赏读此文"
+                  : sections.length > 1
+                    ? "研读选段"
+                    : "研读此诗"}
               </button>
             </div>
             <h2>{selected.title}</h2>
             <p className="pc-studio-meta">
               {selected.dynasty || "朝代未载"} · {selected.author || "作者未载"}
+              {selected.kind === "prose" ? " · 散文" : ""}
             </p>
+            {sections.length > 1 && (
+              <label className="pc-library-section-picker">
+                研读选段
+                <select
+                  aria-label="研读选段"
+                  value={studySection}
+                  onChange={(e) => setStudySection(Number(e.target.value))}
+                >
+                  {sections.map((section, i) => (
+                    <option key={i} value={i}>
+                      第{i + 1}/{sections.length}段 ·{" "}
+                      {section.paragraphs[0]?.slice(0, 14)}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            )}
+            <StudioTaskState {...literary} />
+            {literary.result?.task === "critique" && (
+              <section aria-label="文章赏读" className="pc-library-literary">
+                <p>{literary.result.result.overview}</p>
+                {literary.result.result.strengths.map((value, i) => (
+                  <p key={i}>{value}</p>
+                ))}
+              </section>
+            )}
             <div className="pc-studio-actions">
               <label className="pc-studio-inline-label">
                 查字
@@ -822,47 +1019,38 @@ export function LibraryContainer({
                 加入对读
               </button>
             </div>
-            <div className="pc-library-verses">
-              <span className="pc-library-reading-hint">
-                点选诗字，可查其音韵
-              </span>
-              {selected.paragraphs.map((line, i) => (
-                <p key={i} className="pc-library-verse-row">
-                  {line.split(/(?<=[，。！？；])/u).map((phrase, part) => (
-                    <span className="pc-library-phrase" key={part}>
-                      {[...phrase].map((char, index) =>
-                        /\p{Script=Han}/u.test(char) ? (
-                          <button
-                            type="button"
-                            className="pc-library-character"
-                            key={index}
-                            aria-label={`选字「${char}」`}
-                            aria-pressed={lookupChar === char}
-                            onClick={() => setLookupChar(char)}
-                          >
-                            {char}
-                          </button>
-                        ) : (
-                          <span key={index}>{char}</span>
-                        ),
-                      )}
-                    </span>
-                  ))}
-                  <button
-                    type="button"
-                    className="pc-excerpt-copy"
-                    aria-label={`摘录第${i + 1}段诗句`}
-                    onClick={() => void copyExcerpt(selected, i)}
-                  >
-                    {excerptFeedback?.id === selected.id &&
-                    excerptFeedback.line === i &&
-                    excerptFeedback.message.startsWith("此句")
-                      ? "已摘"
-                      : "摘句"}
-                  </button>
-                </p>
-              ))}
-            </div>
+            <label className="pc-library-pinyin-toggle">
+              <input
+                type="checkbox"
+                checked={showPinyin}
+                onChange={(e) => setShowPinyin(e.target.checked)}
+              />
+              现代注音
+            </label>
+            {showPinyin && (
+              <p className="pc-studio-meta" role="status">
+                {pronunciationBusy
+                  ? "载入注音…"
+                  : (pronunciationError ??
+                    (selected.id.startsWith("deepseek:")
+                      ? pronunciation?.notice
+                      : "本机导入作品未附逐字注音。"))}
+              </p>
+            )}
+            <AnnotatedVerses
+              work={selected}
+              pronunciation={pronunciation}
+              showPinyin={showPinyin}
+              selected={lookupChar}
+              onSelect={setLookupChar}
+              onExcerpt={(line) => void copyExcerpt(selected, line)}
+              excerptLine={
+                excerptFeedback?.id === selected.id &&
+                excerptFeedback.message.startsWith("此句")
+                  ? excerptFeedback.line
+                  : undefined
+              }
+            />
             <p className="pc-library-copy-feedback" role="status">
               {excerptFeedback?.id === selected.id
                 ? excerptFeedback.message
@@ -882,7 +1070,7 @@ export function LibraryContainer({
             </p>
             {selected.paragraphs.join("\n").length > 2000 && (
               <p className="pc-studio-notice">
-                此篇超过2000字，保留全文阅读；整诗研读与AI对读暂限2000字。
+                长篇原文完整保留；研读按所选段落进行，选段结论不代表整篇。
               </p>
             )}
           </article>
@@ -909,7 +1097,7 @@ export function LibraryContainer({
         )}
       </div>
       <footer className="pc-library-footer">
-        诗文以所列来源为准；AI赏析与意境匹配仅供参考。导入诗库、收藏和推敲记录保存在此设备。
+        诗文以所列来源为准；现代注音、AI赏析与意境匹配仅供参考。语料含近现代作品；来源与整理权利见原站。导入、收藏和推敲记录保存在此设备。
       </footer>
     </div>
   );

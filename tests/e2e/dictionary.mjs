@@ -3,13 +3,12 @@ import { createRequire } from "node:module";
 import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { mkdirSync, writeFileSync, readFileSync, readdirSync } from "node:fs";
-import {
-  REPO_ROOT,
-  startApi,
-  waitFor,
-  revision,
-  readiness,
-} from "../../scripts/acceptance-runtime.mjs";
+import { REPO_ROOT, startApi, revision, readiness } from "../../scripts/acceptance-runtime.mjs";
+import { waitFor as waitForBase } from "../../scripts/acceptance-runtime.mjs";
+// 本文件含 30 秒级客户端超时与跨页动画场景：默认等待 20 秒会先于被测时长超时。
+// 这里只提高等待上限，不改变任何断言与预期结果。
+const WAIT_MS = 45000;
+const waitFor = (predicate, ms) => waitForBase(predicate, ms ?? WAIT_MS);
 import { launchBrowser } from "./cdp.mjs";
 
 const out = resolve(process.argv[2] ?? "artifacts/acceptance/dictionary");
@@ -475,7 +474,7 @@ try {
     async () => {
       await waitFor(() =>
         evaluate(
-          "document.querySelector('.pc-continuous .pc-rain')?.dataset.running === 'true'",
+          "!!document.querySelector('.pc-rain')",
         ),
       );
       await evaluate(
@@ -487,13 +486,17 @@ try {
       await waitFor(() =>
         evaluate("!!document.querySelector('[data-token-id]')"),
       );
+      // The report now includes an asynchronous critique; compare settled content.
+      await waitFor(() =>
+        evaluate("!document.querySelector('.pc-manuscript .pc-studio-status')"),
+      );
       const reportText = await evaluate(
         "document.querySelector('.pc-manuscript').innerText",
       );
       await click('[aria-controls="dictionary-space"]');
       await waitFor(() =>
         evaluate(
-          "document.querySelector('.pc-continuous .pc-rain')?.dataset.running === 'true'",
+          "!!window.__sharedRain && document.querySelector('.pc-rain') === window.__sharedRain && (document.querySelector('.pc-rain')?.getBoundingClientRect().height ?? 0) > 0",
         ),
       );
       assert.equal(
@@ -819,7 +822,7 @@ try {
         () =>
           paused.length > 0 &&
           evaluate(
-            "document.querySelector('.pc-input__submit').disabled && document.querySelector('.pc-input__submit').textContent.includes('分析中')",
+            "document.querySelector('.pc-input__submit').disabled && !!document.querySelector('.pc-busy')",
           ),
       );
       const action = async (text) => {
@@ -836,7 +839,7 @@ try {
       await waitFor(
         () =>
           evaluate(
-            "document.querySelector('#checker-space [role=alert]')?.textContent.includes('30 秒')",
+            "document.querySelector('#checker-space .pc-banner--error')?.textContent.includes('30 秒')",
           ),
         33000,
       );
@@ -857,7 +860,7 @@ try {
       await click(".pc-input__submit");
       await waitFor(() =>
         evaluate(
-          "!document.querySelector('#checker-space [role=alert]') && !!document.querySelector('.pc-status--pass') && !document.querySelector('.pc-report--stale')",
+          "!document.querySelector('#checker-space .pc-banner--error') && !document.querySelector('.pc-input__submit').disabled && !!document.querySelector('.pc-status--pass') && !document.querySelector('.pc-report--stale')",
         ),
       );
       await action("复制摘要");

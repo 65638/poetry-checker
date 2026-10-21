@@ -1,0 +1,70 @@
+{
+  "implementationSha": "4a38c6c9dc4d7d2c78759346dbbbda73fb2ad632",
+  "baseSha": "cea831befa70a8842943d240f91f9816c9c55a94",
+  "recordedAt": "2026-10-20T08:31:31.877Z",
+  "mode": "real-local-data-review",
+  "versions": {
+    "pingshui": "pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4",
+    "cilin": "cilin-cwr-ff0e9c1-d3-full-clean1",
+    "xinyun": "xinyun-rebuild-d2-full"
+  },
+  "checks": [
+    {
+      "command": "pnpm --filter @poetry/lexicon test",
+      "exitCode": 0,
+      "files": 8,
+      "tests": 83
+    },
+    {
+      "command": "node scripts/data/verify-d4-rebuild.mjs",
+      "exitCode": 0,
+      "runSha": "2ee0d68ae95debf75af790ae7432bc4ac9a5b708",
+      "dirty": false,
+      "rounds": 2,
+      "subprocesses": 6,
+      "byteIdentical": true
+    },
+    {
+      "command": "pnpm exec tsx scripts/data/check-normalized.ts",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm exec tsx scripts/data/precheck-lexicon.ts --report-date 2026-10-20 --output-dir data/reviews/d4/a/precheck",
+      "exitCode": 0,
+      "findings": 12
+    },
+    {
+      "command": "pnpm exec tsx scripts/data/build-d4-review-batches.ts --base-sha cea831befa70a8842943d240f91f9816c9c55a94 --check",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm verify",
+      "exitCode": 0,
+      "runSha": "4a38c6c9dc4d7d2c78759346dbbbda73fb2ad632",
+      "dirty": true,
+      "dirtyScope": "untracked rebuild-verification.json and rebuild-logs only",
+      "files": 57,
+      "tests": 768,
+      "generatedFiles": 8
+    }
+  ],
+  "failuresBeforeRepair": [
+    {
+      "command": "pnpm verify",
+      "runSha": "2ee0d68",
+      "phase": "lint",
+      "exitCode": 1,
+      "reason": "no-useless-escape in source checker regex",
+      "fixedBy": "4a38c6c"
+    }
+  ],
+  "notRun": [
+    "real HTTP nine-combination acceptance",
+    "browser e2e",
+    "clean clone",
+    "new data approval application",
+    "full-book factual and licensing review",
+    "D5 final verification"
+  ],
+  "newApprovals": 0
+}

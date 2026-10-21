@@ -17,7 +17,7 @@ const BOOK: Record<BookId, string> = {
 };
 const COUNTS: Array<{ status: CheckStatus; label: string; icon: string }> = [
   { status: "fail", label: "违规", icon: "✕" },
-  { status: "uncertain", label: "待复核", icon: "?" },
+  { status: "uncertain", label: "未确定", icon: "?" },
   { status: "unsupported", label: "未支持", icon: "∅" },
   { status: "pass", label: "通过", icon: "✓" },
   { status: "not_applicable", label: "不适用", icon: "–" },
@@ -201,7 +201,7 @@ export function ReadingRail({
         </ul>
 
         <p className="pc-rail__kicker" id="pc-rail-lines">
-          诗句{stale ? "（报告已过期，目录暂停）" : ""}
+          诗句{stale ? "（上次分析）" : ""}
         </p>
         <ol className="pc-rail__lines" aria-labelledby="pc-rail-lines">
           {lines.map((l) => {
@@ -215,7 +215,6 @@ export function ReadingRail({
                   type="button"
                   className={`pc-rail__line${current ? " pc-rail__line--active" : ""}`}
                   aria-current={current ? "location" : undefined}
-                  disabled={stale}
                   onClick={(event) => jump(l.line, event)}
                 >
                   <span className="pc-rail__no">{l.line}</span>

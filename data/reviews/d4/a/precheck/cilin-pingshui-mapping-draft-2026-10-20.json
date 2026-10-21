@@ -1,0 +1,1602 @@
+{
+  "draftId": "cilin-pingshui-mapping-draft-2026-10-20",
+  "generatedAt": "2026-10-20",
+  "generatedBy": "scripts/data/precheck-lexicon.ts（机器生成；实际执行者见本批交接）",
+  "title": "词林正韵 19 部 → 平水韵 部的**待核实映射草案**",
+  "headerNote": "本文件是「待核实映射草案」：status 一律 unverified、basis 一律 null。所有条目仅由同字共现统计导出，**不得被任何快照或报告当作事实引用**，也不得据此认定词林某部等于平水某部。",
+  "prohibition": [
+    "不得被任何快照当作事实引用",
+    "不得被任何报告当作结论引用（报告只允许引用「草案条数」）",
+    "不得据此断言「词林第N部等于平水某部」",
+    "status 一律 unverified、basis 一律 null；任何一条改 status 必须有权威来源与审核人"
+  ],
+  "howDerived": "只用「同字在两库共现」统计：对每个词林部，按其子卷所在层（平/仄/入）限定允许的平水分卷（平→上平/下平；仄→上/去；入→入），再统计落在该分卷各韵部上的共享字数并降序排列。",
+  "entryCount": 19,
+  "entries": [
+    {
+      "cilinOrdinal": "第一部",
+      "statement": "第一部 ⊃ 平水{上平:一东、上平:二冬、上:二肿、去:一送、去:二宋、上:一董、上平:三江、下平:十蒸、上平:七虞、去:三绛、上:二十七感、去:二十八勘}",
+      "candidatePingshuiGroups": [
+        {
+          "groupName": "上平:一东",
+          "layer": "平",
+          "sharedCharacters": 71
+        },
+        {
+          "groupName": "上平:二冬",
+          "layer": "平",
+          "sharedCharacters": 53
+        },
+        {
+          "groupName": "上:二肿",
+          "layer": "仄",
+          "sharedCharacters": 23
+        },
+        {
+          "groupName": "去:一送",
+          "layer": "仄",
+          "sharedCharacters": 19
+        },
+        {
+          "groupName": "去:二宋",
+          "layer": "仄",
+          "sharedCharacters": 18
+        },
+        {
+          "groupName": "上:一董",
+          "layer": "仄",
+          "sharedCharacters": 14
+        },
+        {
+          "groupName": "上平:三江",
+          "layer": "平",
+          "sharedCharacters": 4
+        },
+        {
+          "groupName": "下平:十蒸",
+          "layer": "平",
+          "sharedCharacters": 2
+        },
+        {
+          "groupName": "上平:七虞",
+          "layer": "平",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "去:三绛",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上:二十七感",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "去:二十八勘",
+          "layer": "仄",
+          "sharedCharacters": 1
+        }
+      ],
+      "sharedCharacterTotal": 179,
+      "status": "unverified",
+      "basis": null,
+      "note": "词林正韵部次合并关系的权威来源**未取得**。本条仅由「同字在两库共现」统计导出，**不是**已核定的部对部映射，不得被任何快照、报告或消费方当作事实引用；尤其不得据此断言「词林第N部等于平水某部」。"
+    },
+    {
+      "cilinOrdinal": "第七部",
+      "statement": "第七部 ⊃ 平水{下平:一先、去:十七霰、上平:十四寒、去:十五翰、上:十六铣、上平:十五删、上平:十三元、上:十四旱、去:十六谏、上:十三阮、去:十四愿、上:十五潸、上平:十二文、上平:十一真、去:二十五径、下平:五歌、下平:十三覃、上:二十哿、去:二十四敬、去:二十九艳}",
+      "candidatePingshuiGroups": [
+        {
+          "groupName": "下平:一先",
+          "layer": "平",
+          "sharedCharacters": 127
+        },
+        {
+          "groupName": "去:十七霰",
+          "layer": "仄",
+          "sharedCharacters": 89
+        },
+        {
+          "groupName": "上平:十四寒",
+          "layer": "平",
+          "sharedCharacters": 79
+        },
+        {
+          "groupName": "去:十五翰",
+          "layer": "仄",
+          "sharedCharacters": 66
+        },
+        {
+          "groupName": "上:十六铣",
+          "layer": "仄",
+          "sharedCharacters": 62
+        },
+        {
+          "groupName": "上平:十五删",
+          "layer": "平",
+          "sharedCharacters": 39
+        },
+        {
+          "groupName": "上平:十三元",
+          "layer": "平",
+          "sharedCharacters": 38
+        },
+        {
+          "groupName": "上:十四旱",
+          "layer": "仄",
+          "sharedCharacters": 30
+        },
+        {
+          "groupName": "去:十六谏",
+          "layer": "仄",
+          "sharedCharacters": 27
+        },
+        {
+          "groupName": "上:十三阮",
+          "layer": "仄",
+          "sharedCharacters": 25
+        },
+        {
+          "groupName": "去:十四愿",
+          "layer": "仄",
+          "sharedCharacters": 22
+        },
+        {
+          "groupName": "上:十五潸",
+          "layer": "仄",
+          "sharedCharacters": 21
+        },
+        {
+          "groupName": "上平:十二文",
+          "layer": "平",
+          "sharedCharacters": 3
+        },
+        {
+          "groupName": "上平:十一真",
+          "layer": "平",
+          "sharedCharacters": 3
+        },
+        {
+          "groupName": "去:二十五径",
+          "layer": "仄",
+          "sharedCharacters": 2
+        },
+        {
+          "groupName": "下平:五歌",
+          "layer": "平",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "下平:十三覃",
+          "layer": "平",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上:二十哿",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "去:二十四敬",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "去:二十九艳",
+          "layer": "仄",
+          "sharedCharacters": 1
+        }
+      ],
+      "sharedCharacterTotal": 507,
+      "status": "unverified",
+      "basis": null,
+      "note": "词林正韵部次合并关系的权威来源**未取得**。本条仅由「同字在两库共现」统计导出，**不是**已核定的部对部映射，不得被任何快照、报告或消费方当作事实引用；尤其不得据此断言「词林第N部等于平水某部」。"
+    },
+    {
+      "cilinOrdinal": "第三部",
+      "statement": "第三部 ⊃ 平水{上平:四支、去:四寘、上:四纸、去:八霁、上平:八齐、上平:五微、上平:十灰、去:十一队、上:八荠、去:五未、上:五尾、去:九泰、上:十贿、上平:九佳、去:十卦、下平:六麻、上:七麌、上:二十哿、下平:五歌、下平:十一尤、上平:十二文、上平:十三元、上:二十五有、上:九蟹、上:十六铣、上:六语、去:十八啸、去:二十二祃、去:二十一个、去:十四愿}",
+      "candidatePingshuiGroups": [
+        {
+          "groupName": "上平:四支",
+          "layer": "平",
+          "sharedCharacters": 190
+        },
+        {
+          "groupName": "去:四寘",
+          "layer": "仄",
+          "sharedCharacters": 135
+        },
+        {
+          "groupName": "上:四纸",
+          "layer": "仄",
+          "sharedCharacters": 117
+        },
+        {
+          "groupName": "去:八霁",
+          "layer": "仄",
+          "sharedCharacters": 102
+        },
+        {
+          "groupName": "上平:八齐",
+          "layer": "平",
+          "sharedCharacters": 55
+        },
+        {
+          "groupName": "上平:五微",
+          "layer": "平",
+          "sharedCharacters": 42
+        },
+        {
+          "groupName": "上平:十灰",
+          "layer": "平",
+          "sharedCharacters": 39
+        },
+        {
+          "groupName": "去:十一队",
+          "layer": "仄",
+          "sharedCharacters": 32
+        },
+        {
+          "groupName": "上:八荠",
+          "layer": "仄",
+          "sharedCharacters": 28
+        },
+        {
+          "groupName": "去:五未",
+          "layer": "仄",
+          "sharedCharacters": 27
+        },
+        {
+          "groupName": "上:五尾",
+          "layer": "仄",
+          "sharedCharacters": 23
+        },
+        {
+          "groupName": "去:九泰",
+          "layer": "仄",
+          "sharedCharacters": 18
+        },
+        {
+          "groupName": "上:十贿",
+          "layer": "仄",
+          "sharedCharacters": 14
+        },
+        {
+          "groupName": "上平:九佳",
+          "layer": "平",
+          "sharedCharacters": 4
+        },
+        {
+          "groupName": "去:十卦",
+          "layer": "仄",
+          "sharedCharacters": 4
+        },
+        {
+          "groupName": "下平:六麻",
+          "layer": "平",
+          "sharedCharacters": 2
+        },
+        {
+          "groupName": "上:七麌",
+          "layer": "仄",
+          "sharedCharacters": 2
+        },
+        {
+          "groupName": "上:二十哿",
+          "layer": "仄",
+          "sharedCharacters": 2
+        },
+        {
+          "groupName": "下平:五歌",
+          "layer": "平",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "下平:十一尤",
+          "layer": "平",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上平:十二文",
+          "layer": "平",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上平:十三元",
+          "layer": "平",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上:二十五有",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上:九蟹",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上:十六铣",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上:六语",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "去:十八啸",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "去:二十二祃",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "去:二十一个",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "去:十四愿",
+          "layer": "仄",
+          "sharedCharacters": 1
+        }
+      ],
+      "sharedCharacterTotal": 733,
+      "status": "unverified",
+      "basis": null,
+      "note": "词林正韵部次合并关系的权威来源**未取得**。本条仅由「同字在两库共现」统计导出，**不是**已核定的部对部映射，不得被任何快照、报告或消费方当作事实引用；尤其不得据此断言「词林第N部等于平水某部」。"
+    },
+    {
+      "cilinOrdinal": "第九部",
+      "statement": "第九部 ⊃ 平水{下平:五歌、上:二十哿、去:二十一个、上平:四支、上:二十一马、下平:六麻、去:四寘、下平:二萧、上平:十灰、上:九蟹、上:十四旱、上:四纸、去:九泰、去:七遇、去:八霁}",
+      "candidatePingshuiGroups": [
+        {
+          "groupName": "下平:五歌",
+          "layer": "平",
+          "sharedCharacters": 74
+        },
+        {
+          "groupName": "上:二十哿",
+          "layer": "仄",
+          "sharedCharacters": 41
+        },
+        {
+          "groupName": "去:二十一个",
+          "layer": "仄",
+          "sharedCharacters": 37
+        },
+        {
+          "groupName": "上平:四支",
+          "layer": "平",
+          "sharedCharacters": 3
+        },
+        {
+          "groupName": "上:二十一马",
+          "layer": "仄",
+          "sharedCharacters": 3
+        },
+        {
+          "groupName": "下平:六麻",
+          "layer": "平",
+          "sharedCharacters": 2
+        },
+        {
+          "groupName": "去:四寘",
+          "layer": "仄",
+          "sharedCharacters": 2
+        },
+        {
+          "groupName": "下平:二萧",
+          "layer": "平",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上平:十灰",
+          "layer": "平",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上:九蟹",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上:十四旱",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上:四纸",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "去:九泰",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "去:七遇",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "去:八霁",
+          "layer": "仄",
+          "sharedCharacters": 1
+        }
+      ],
+      "sharedCharacterTotal": 130,
+      "status": "unverified",
+      "basis": null,
+      "note": "词林正韵部次合并关系的权威来源**未取得**。本条仅由「同字在两库共现」统计导出，**不是**已核定的部对部映射，不得被任何快照、报告或消费方当作事实引用；尤其不得据此断言「词林第N部等于平水某部」。"
+    },
+    {
+      "cilinOrdinal": "第二部",
+      "statement": "第二部 ⊃ 平水{下平:七阳、去:二十三漾、上:二十二养、上平:三江、上:三讲、去:三绛、下平:八庚、上平:一东、上平:二冬、上:十四旱、去:二十四敬、上:七麌、上:二十五有、上:二十三梗}",
+      "candidatePingshuiGroups": [
+        {
+          "groupName": "下平:七阳",
+          "layer": "平",
+          "sharedCharacters": 167
+        },
+        {
+          "groupName": "去:二十三漾",
+          "layer": "仄",
+          "sharedCharacters": 71
+        },
+        {
+          "groupName": "上:二十二养",
+          "layer": "仄",
+          "sharedCharacters": 67
+        },
+        {
+          "groupName": "上平:三江",
+          "layer": "平",
+          "sharedCharacters": 16
+        },
+        {
+          "groupName": "上:三讲",
+          "layer": "仄",
+          "sharedCharacters": 6
+        },
+        {
+          "groupName": "去:三绛",
+          "layer": "仄",
+          "sharedCharacters": 5
+        },
+        {
+          "groupName": "下平:八庚",
+          "layer": "平",
+          "sharedCharacters": 4
+        },
+        {
+          "groupName": "上平:一东",
+          "layer": "平",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上平:二冬",
+          "layer": "平",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上:十四旱",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "去:二十四敬",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上:七麌",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上:二十五有",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上:二十三梗",
+          "layer": "仄",
+          "sharedCharacters": 1
+        }
+      ],
+      "sharedCharacterTotal": 294,
+      "status": "unverified",
+      "basis": null,
+      "note": "词林正韵部次合并关系的权威来源**未取得**。本条仅由「同字在两库共现」统计导出，**不是**已核定的部对部映射，不得被任何快照、报告或消费方当作事实引用；尤其不得据此断言「词林第N部等于平水某部」。"
+    },
+    {
+      "cilinOrdinal": "第五部",
+      "statement": "第五部 ⊃ 平水{去:十卦、去:十一队、上平:九佳、上平:十灰、上:十贿、去:九泰、上:九蟹、上平:四支、去:四寘、去:五未、下平:六麻、去:二十一个、下平:十五咸、上:二十一马、上:八荠、去:八霁}",
+      "candidatePingshuiGroups": [
+        {
+          "groupName": "去:十卦",
+          "layer": "仄",
+          "sharedCharacters": 35
+        },
+        {
+          "groupName": "去:十一队",
+          "layer": "仄",
+          "sharedCharacters": 31
+        },
+        {
+          "groupName": "上平:九佳",
+          "layer": "平",
+          "sharedCharacters": 30
+        },
+        {
+          "groupName": "上平:十灰",
+          "layer": "平",
+          "sharedCharacters": 26
+        },
+        {
+          "groupName": "上:十贿",
+          "layer": "仄",
+          "sharedCharacters": 22
+        },
+        {
+          "groupName": "去:九泰",
+          "layer": "仄",
+          "sharedCharacters": 20
+        },
+        {
+          "groupName": "上:九蟹",
+          "layer": "仄",
+          "sharedCharacters": 12
+        },
+        {
+          "groupName": "上平:四支",
+          "layer": "平",
+          "sharedCharacters": 6
+        },
+        {
+          "groupName": "去:四寘",
+          "layer": "仄",
+          "sharedCharacters": 4
+        },
+        {
+          "groupName": "去:五未",
+          "layer": "仄",
+          "sharedCharacters": 3
+        },
+        {
+          "groupName": "下平:六麻",
+          "layer": "平",
+          "sharedCharacters": 2
+        },
+        {
+          "groupName": "去:二十一个",
+          "layer": "仄",
+          "sharedCharacters": 2
+        },
+        {
+          "groupName": "下平:十五咸",
+          "layer": "平",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上:二十一马",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上:八荠",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "去:八霁",
+          "layer": "仄",
+          "sharedCharacters": 1
+        }
+      ],
+      "sharedCharacterTotal": 164,
+      "status": "unverified",
+      "basis": null,
+      "note": "词林正韵部次合并关系的权威来源**未取得**。本条仅由「同字在两库共现」统计导出，**不是**已核定的部对部映射，不得被任何快照、报告或消费方当作事实引用；尤其不得据此断言「词林第N部等于平水某部」。"
+    },
+    {
+      "cilinOrdinal": "第八部",
+      "statement": "第八部 ⊃ 平水{下平:二萧、下平:四豪、去:十八啸、上:十九皓、上:十七筱、下平:三肴、去:二十号、去:十九效、上:十八巧、下平:十一尤、下平:六麻、下平:五歌、上平:四支、上:二十五有、去:二十六宥、去:十一队}",
+      "candidatePingshuiGroups": [
+        {
+          "groupName": "下平:二萧",
+          "layer": "平",
+          "sharedCharacters": 99
+        },
+        {
+          "groupName": "下平:四豪",
+          "layer": "平",
+          "sharedCharacters": 68
+        },
+        {
+          "groupName": "去:十八啸",
+          "layer": "仄",
+          "sharedCharacters": 49
+        },
+        {
+          "groupName": "上:十九皓",
+          "layer": "仄",
+          "sharedCharacters": 48
+        },
+        {
+          "groupName": "上:十七筱",
+          "layer": "仄",
+          "sharedCharacters": 43
+        },
+        {
+          "groupName": "下平:三肴",
+          "layer": "平",
+          "sharedCharacters": 41
+        },
+        {
+          "groupName": "去:二十号",
+          "layer": "仄",
+          "sharedCharacters": 37
+        },
+        {
+          "groupName": "去:十九效",
+          "layer": "仄",
+          "sharedCharacters": 23
+        },
+        {
+          "groupName": "上:十八巧",
+          "layer": "仄",
+          "sharedCharacters": 18
+        },
+        {
+          "groupName": "下平:十一尤",
+          "layer": "平",
+          "sharedCharacters": 2
+        },
+        {
+          "groupName": "下平:六麻",
+          "layer": "平",
+          "sharedCharacters": 2
+        },
+        {
+          "groupName": "下平:五歌",
+          "layer": "平",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上平:四支",
+          "layer": "平",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上:二十五有",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "去:二十六宥",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "去:十一队",
+          "layer": "仄",
+          "sharedCharacters": 1
+        }
+      ],
+      "sharedCharacterTotal": 366,
+      "status": "unverified",
+      "basis": null,
+      "note": "词林正韵部次合并关系的权威来源**未取得**。本条仅由「同字在两库共现」统计导出，**不是**已核定的部对部映射，不得被任何快照、报告或消费方当作事实引用；尤其不得据此断言「词林第N部等于平水某部」。"
+    },
+    {
+      "cilinOrdinal": "第六部",
+      "statement": "第六部 ⊃ 平水{上平:十一真、去:十二震、上平:十三元、上平:十二文、上:十一轸、去:十三问、上:十三阮、上:十二吻、去:十四愿、下平:一先、上:十六铣、上平:十五删、上平:四支、上平:十四寒、去:二宋、去:三绛、上:二十三梗、去:四寘、去:十七霰}",
+      "candidatePingshuiGroups": [
+        {
+          "groupName": "上平:十一真",
+          "layer": "平",
+          "sharedCharacters": 92
+        },
+        {
+          "groupName": "去:十二震",
+          "layer": "仄",
+          "sharedCharacters": 50
+        },
+        {
+          "groupName": "上平:十三元",
+          "layer": "平",
+          "sharedCharacters": 46
+        },
+        {
+          "groupName": "上平:十二文",
+          "layer": "平",
+          "sharedCharacters": 37
+        },
+        {
+          "groupName": "上:十一轸",
+          "layer": "仄",
+          "sharedCharacters": 32
+        },
+        {
+          "groupName": "去:十三问",
+          "layer": "仄",
+          "sharedCharacters": 23
+        },
+        {
+          "groupName": "上:十三阮",
+          "layer": "仄",
+          "sharedCharacters": 22
+        },
+        {
+          "groupName": "上:十二吻",
+          "layer": "仄",
+          "sharedCharacters": 17
+        },
+        {
+          "groupName": "去:十四愿",
+          "layer": "仄",
+          "sharedCharacters": 17
+        },
+        {
+          "groupName": "下平:一先",
+          "layer": "平",
+          "sharedCharacters": 3
+        },
+        {
+          "groupName": "上:十六铣",
+          "layer": "仄",
+          "sharedCharacters": 3
+        },
+        {
+          "groupName": "上平:十五删",
+          "layer": "平",
+          "sharedCharacters": 2
+        },
+        {
+          "groupName": "上平:四支",
+          "layer": "平",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上平:十四寒",
+          "layer": "平",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "去:二宋",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "去:三绛",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上:二十三梗",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "去:四寘",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "去:十七霰",
+          "layer": "仄",
+          "sharedCharacters": 1
+        }
+      ],
+      "sharedCharacterTotal": 305,
+      "status": "unverified",
+      "basis": null,
+      "note": "词林正韵部次合并关系的权威来源**未取得**。本条仅由「同字在两库共现」统计导出，**不是**已核定的部对部映射，不得被任何快照、报告或消费方当作事实引用；尤其不得据此断言「词林第N部等于平水某部」。"
+    },
+    {
+      "cilinOrdinal": "第十一部",
+      "statement": "第十一部 ⊃ 平水{下平:八庚、下平:九青、下平:十蒸、上:二十三梗、去:二十四敬、去:二十五径、上:二十四迥、下平:七阳、下平:一先、上平:一东、上平:二冬、上平:四支、上平:十一真、下平:十四盐、上平:十二文、上平:十灰、上:二十一马、上:二十二养、去:二十三漾、上:十二吻、上:六语、去:六御}",
+      "candidatePingshuiGroups": [
+        {
+          "groupName": "下平:八庚",
+          "layer": "平",
+          "sharedCharacters": 118
+        },
+        {
+          "groupName": "下平:九青",
+          "layer": "平",
+          "sharedCharacters": 61
+        },
+        {
+          "groupName": "下平:十蒸",
+          "layer": "平",
+          "sharedCharacters": 57
+        },
+        {
+          "groupName": "上:二十三梗",
+          "layer": "仄",
+          "sharedCharacters": 50
+        },
+        {
+          "groupName": "去:二十四敬",
+          "layer": "仄",
+          "sharedCharacters": 40
+        },
+        {
+          "groupName": "去:二十五径",
+          "layer": "仄",
+          "sharedCharacters": 36
+        },
+        {
+          "groupName": "上:二十四迥",
+          "layer": "仄",
+          "sharedCharacters": 19
+        },
+        {
+          "groupName": "下平:七阳",
+          "layer": "平",
+          "sharedCharacters": 3
+        },
+        {
+          "groupName": "下平:一先",
+          "layer": "平",
+          "sharedCharacters": 2
+        },
+        {
+          "groupName": "上平:一东",
+          "layer": "平",
+          "sharedCharacters": 2
+        },
+        {
+          "groupName": "上平:二冬",
+          "layer": "平",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上平:四支",
+          "layer": "平",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上平:十一真",
+          "layer": "平",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "下平:十四盐",
+          "layer": "平",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上平:十二文",
+          "layer": "平",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上平:十灰",
+          "layer": "平",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上:二十一马",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上:二十二养",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "去:二十三漾",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上:十二吻",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上:六语",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "去:六御",
+          "layer": "仄",
+          "sharedCharacters": 1
+        }
+      ],
+      "sharedCharacterTotal": 342,
+      "status": "unverified",
+      "basis": null,
+      "note": "词林正韵部次合并关系的权威来源**未取得**。本条仅由「同字在两库共现」统计导出，**不是**已核定的部对部映射，不得被任何快照、报告或消费方当作事实引用；尤其不得据此断言「词林第N部等于平水某部」。"
+    },
+    {
+      "cilinOrdinal": "第十七部",
+      "statement": "第十七部 ⊃ 平水{入:入声十一陌、入:入声十三职、入:入声四质、入:入声十二锡、入:入声十四缉、入:入声九屑、入:入声十药、入:入声十六叶、入:入声一屋、入:入声六月、入:入声八黠、入:入声十五合、入:入声七曷、入:入声五物、入:入声二沃}",
+      "candidatePingshuiGroups": [
+        {
+          "groupName": "入:入声十一陌",
+          "layer": "入",
+          "sharedCharacters": 115
+        },
+        {
+          "groupName": "入:入声十三职",
+          "layer": "入",
+          "sharedCharacters": 68
+        },
+        {
+          "groupName": "入:入声四质",
+          "layer": "入",
+          "sharedCharacters": 67
+        },
+        {
+          "groupName": "入:入声十二锡",
+          "layer": "入",
+          "sharedCharacters": 53
+        },
+        {
+          "groupName": "入:入声十四缉",
+          "layer": "入",
+          "sharedCharacters": 42
+        },
+        {
+          "groupName": "入:入声九屑",
+          "layer": "入",
+          "sharedCharacters": 9
+        },
+        {
+          "groupName": "入:入声十药",
+          "layer": "入",
+          "sharedCharacters": 7
+        },
+        {
+          "groupName": "入:入声十六叶",
+          "layer": "入",
+          "sharedCharacters": 7
+        },
+        {
+          "groupName": "入:入声一屋",
+          "layer": "入",
+          "sharedCharacters": 5
+        },
+        {
+          "groupName": "入:入声六月",
+          "layer": "入",
+          "sharedCharacters": 4
+        },
+        {
+          "groupName": "入:入声八黠",
+          "layer": "入",
+          "sharedCharacters": 2
+        },
+        {
+          "groupName": "入:入声十五合",
+          "layer": "入",
+          "sharedCharacters": 2
+        },
+        {
+          "groupName": "入:入声七曷",
+          "layer": "入",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "入:入声五物",
+          "layer": "入",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "入:入声二沃",
+          "layer": "入",
+          "sharedCharacters": 1
+        }
+      ],
+      "sharedCharacterTotal": 338,
+      "status": "unverified",
+      "basis": null,
+      "note": "词林正韵部次合并关系的权威来源**未取得**。本条仅由「同字在两库共现」统计导出，**不是**已核定的部对部映射，不得被任何快照、报告或消费方当作事实引用；尤其不得据此断言「词林第N部等于平水某部」。"
+    },
+    {
+      "cilinOrdinal": "第十三部",
+      "statement": "第十三部 ⊃ 平水{下平:十二侵、上:二十六寝、去:二十七沁、下平:十四盐、下平:十三覃、去:二十八勘、下平:四豪、下平:十五咸、上:十一轸}",
+      "candidatePingshuiGroups": [
+        {
+          "groupName": "下平:十二侵",
+          "layer": "平",
+          "sharedCharacters": 49
+        },
+        {
+          "groupName": "上:二十六寝",
+          "layer": "仄",
+          "sharedCharacters": 24
+        },
+        {
+          "groupName": "去:二十七沁",
+          "layer": "仄",
+          "sharedCharacters": 20
+        },
+        {
+          "groupName": "下平:十四盐",
+          "layer": "平",
+          "sharedCharacters": 3
+        },
+        {
+          "groupName": "下平:十三覃",
+          "layer": "平",
+          "sharedCharacters": 3
+        },
+        {
+          "groupName": "去:二十八勘",
+          "layer": "仄",
+          "sharedCharacters": 2
+        },
+        {
+          "groupName": "下平:四豪",
+          "layer": "平",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "下平:十五咸",
+          "layer": "平",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上:十一轸",
+          "layer": "仄",
+          "sharedCharacters": 1
+        }
+      ],
+      "sharedCharacterTotal": 80,
+      "status": "unverified",
+      "basis": null,
+      "note": "词林正韵部次合并关系的权威来源**未取得**。本条仅由「同字在两库共现」统计导出，**不是**已核定的部对部映射，不得被任何快照、报告或消费方当作事实引用；尤其不得据此断言「词林第N部等于平水某部」。"
+    },
+    {
+      "cilinOrdinal": "第十九部",
+      "statement": "第十九部 ⊃ 平水{入:入声十五合、入:入声十七洽、入:入声十六叶、入:入声十药、入:入声十一陌、入:入声七曷、入:入声八黠}",
+      "candidatePingshuiGroups": [
+        {
+          "groupName": "入:入声十五合",
+          "layer": "入",
+          "sharedCharacters": 39
+        },
+        {
+          "groupName": "入:入声十七洽",
+          "layer": "入",
+          "sharedCharacters": 28
+        },
+        {
+          "groupName": "入:入声十六叶",
+          "layer": "入",
+          "sharedCharacters": 4
+        },
+        {
+          "groupName": "入:入声十药",
+          "layer": "入",
+          "sharedCharacters": 2
+        },
+        {
+          "groupName": "入:入声十一陌",
+          "layer": "入",
+          "sharedCharacters": 2
+        },
+        {
+          "groupName": "入:入声七曷",
+          "layer": "入",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "入:入声八黠",
+          "layer": "入",
+          "sharedCharacters": 1
+        }
+      ],
+      "sharedCharacterTotal": 62,
+      "status": "unverified",
+      "basis": null,
+      "note": "词林正韵部次合并关系的权威来源**未取得**。本条仅由「同字在两库共现」统计导出，**不是**已核定的部对部映射，不得被任何快照、报告或消费方当作事实引用；尤其不得据此断言「词林第N部等于平水某部」。"
+    },
+    {
+      "cilinOrdinal": "第十二部",
+      "statement": "第十二部 ⊃ 平水{下平:十一尤、去:二十六宥、上:二十五有、上:七麌、去:七遇、上平:七虞、下平:四豪、下平:三肴、上平:十灰、上:四纸、去:十七霰}",
+      "candidatePingshuiGroups": [
+        {
+          "groupName": "下平:十一尤",
+          "layer": "平",
+          "sharedCharacters": 116
+        },
+        {
+          "groupName": "去:二十六宥",
+          "layer": "仄",
+          "sharedCharacters": 90
+        },
+        {
+          "groupName": "上:二十五有",
+          "layer": "仄",
+          "sharedCharacters": 78
+        },
+        {
+          "groupName": "上:七麌",
+          "layer": "仄",
+          "sharedCharacters": 9
+        },
+        {
+          "groupName": "去:七遇",
+          "layer": "仄",
+          "sharedCharacters": 7
+        },
+        {
+          "groupName": "上平:七虞",
+          "layer": "平",
+          "sharedCharacters": 4
+        },
+        {
+          "groupName": "下平:四豪",
+          "layer": "平",
+          "sharedCharacters": 2
+        },
+        {
+          "groupName": "下平:三肴",
+          "layer": "平",
+          "sharedCharacters": 2
+        },
+        {
+          "groupName": "上平:十灰",
+          "layer": "平",
+          "sharedCharacters": 2
+        },
+        {
+          "groupName": "上:四纸",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "去:十七霰",
+          "layer": "仄",
+          "sharedCharacters": 1
+        }
+      ],
+      "sharedCharacterTotal": 262,
+      "status": "unverified",
+      "basis": null,
+      "note": "词林正韵部次合并关系的权威来源**未取得**。本条仅由「同字在两库共现」统计导出，**不是**已核定的部对部映射，不得被任何快照、报告或消费方当作事实引用；尤其不得据此断言「词林第N部等于平水某部」。"
+    },
+    {
+      "cilinOrdinal": "第十五部",
+      "statement": "第十五部 ⊃ 平水{入:入声一屋、入:入声二沃、入:入声十三职、入:入声五物、入:入声十四缉、入:入声三觉、入:入声八黠}",
+      "candidatePingshuiGroups": [
+        {
+          "groupName": "入:入声一屋",
+          "layer": "入",
+          "sharedCharacters": 96
+        },
+        {
+          "groupName": "入:入声二沃",
+          "layer": "入",
+          "sharedCharacters": 43
+        },
+        {
+          "groupName": "入:入声十三职",
+          "layer": "入",
+          "sharedCharacters": 7
+        },
+        {
+          "groupName": "入:入声五物",
+          "layer": "入",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "入:入声十四缉",
+          "layer": "入",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "入:入声三觉",
+          "layer": "入",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "入:入声八黠",
+          "layer": "入",
+          "sharedCharacters": 1
+        }
+      ],
+      "sharedCharacterTotal": 135,
+      "status": "unverified",
+      "basis": null,
+      "note": "词林正韵部次合并关系的权威来源**未取得**。本条仅由「同字在两库共现」统计导出，**不是**已核定的部对部映射，不得被任何快照、报告或消费方当作事实引用；尤其不得据此断言「词林第N部等于平水某部」。"
+    },
+    {
+      "cilinOrdinal": "第十八部",
+      "statement": "第十八部 ⊃ 平水{入:入声九屑、入:入声六月、入:入声十六叶、入:入声七曷、入:入声五物、入:入声八黠、入:入声四质、入:入声十七洽、入:入声十五合、入:入声一屋、入:入声十二锡、入:入声十四缉、入:入声十一陌}",
+      "candidatePingshuiGroups": [
+        {
+          "groupName": "入:入声九屑",
+          "layer": "入",
+          "sharedCharacters": 89
+        },
+        {
+          "groupName": "入:入声六月",
+          "layer": "入",
+          "sharedCharacters": 52
+        },
+        {
+          "groupName": "入:入声十六叶",
+          "layer": "入",
+          "sharedCharacters": 46
+        },
+        {
+          "groupName": "入:入声七曷",
+          "layer": "入",
+          "sharedCharacters": 41
+        },
+        {
+          "groupName": "入:入声五物",
+          "layer": "入",
+          "sharedCharacters": 27
+        },
+        {
+          "groupName": "入:入声八黠",
+          "layer": "入",
+          "sharedCharacters": 27
+        },
+        {
+          "groupName": "入:入声四质",
+          "layer": "入",
+          "sharedCharacters": 9
+        },
+        {
+          "groupName": "入:入声十七洽",
+          "layer": "入",
+          "sharedCharacters": 4
+        },
+        {
+          "groupName": "入:入声十五合",
+          "layer": "入",
+          "sharedCharacters": 3
+        },
+        {
+          "groupName": "入:入声一屋",
+          "layer": "入",
+          "sharedCharacters": 2
+        },
+        {
+          "groupName": "入:入声十二锡",
+          "layer": "入",
+          "sharedCharacters": 2
+        },
+        {
+          "groupName": "入:入声十四缉",
+          "layer": "入",
+          "sharedCharacters": 2
+        },
+        {
+          "groupName": "入:入声十一陌",
+          "layer": "入",
+          "sharedCharacters": 1
+        }
+      ],
+      "sharedCharacterTotal": 260,
+      "status": "unverified",
+      "basis": null,
+      "note": "词林正韵部次合并关系的权威来源**未取得**。本条仅由「同字在两库共现」统计导出，**不是**已核定的部对部映射，不得被任何快照、报告或消费方当作事实引用；尤其不得据此断言「词林第N部等于平水某部」。"
+    },
+    {
+      "cilinOrdinal": "第十六部",
+      "statement": "第十六部 ⊃ 平水{入:入声十药、入:入声三觉、入:入声十一陌、入:入声二沃、入:入声一屋、入:入声十五合、入:入声十二锡}",
+      "candidatePingshuiGroups": [
+        {
+          "groupName": "入:入声十药",
+          "layer": "入",
+          "sharedCharacters": 101
+        },
+        {
+          "groupName": "入:入声三觉",
+          "layer": "入",
+          "sharedCharacters": 36
+        },
+        {
+          "groupName": "入:入声十一陌",
+          "layer": "入",
+          "sharedCharacters": 10
+        },
+        {
+          "groupName": "入:入声二沃",
+          "layer": "入",
+          "sharedCharacters": 3
+        },
+        {
+          "groupName": "入:入声一屋",
+          "layer": "入",
+          "sharedCharacters": 2
+        },
+        {
+          "groupName": "入:入声十五合",
+          "layer": "入",
+          "sharedCharacters": 2
+        },
+        {
+          "groupName": "入:入声十二锡",
+          "layer": "入",
+          "sharedCharacters": 1
+        }
+      ],
+      "sharedCharacterTotal": 135,
+      "status": "unverified",
+      "basis": null,
+      "note": "词林正韵部次合并关系的权威来源**未取得**。本条仅由「同字在两库共现」统计导出，**不是**已核定的部对部映射，不得被任何快照、报告或消费方当作事实引用；尤其不得据此断言「词林第N部等于平水某部」。"
+    },
+    {
+      "cilinOrdinal": "第十四部",
+      "statement": "第十四部 ⊃ 平水{下平:十四盐、下平:十三覃、上:二十八琰、去:二十九艳、上:二十七感、下平:十五咸、去:二十八勘、上:二十九豏、去:三十陷、下平:十二侵、上平:十四寒、下平:四豪、去:十七霰}",
+      "candidatePingshuiGroups": [
+        {
+          "groupName": "下平:十四盐",
+          "layer": "平",
+          "sharedCharacters": 44
+        },
+        {
+          "groupName": "下平:十三覃",
+          "layer": "平",
+          "sharedCharacters": 42
+        },
+        {
+          "groupName": "上:二十八琰",
+          "layer": "仄",
+          "sharedCharacters": 32
+        },
+        {
+          "groupName": "去:二十九艳",
+          "layer": "仄",
+          "sharedCharacters": 25
+        },
+        {
+          "groupName": "上:二十七感",
+          "layer": "仄",
+          "sharedCharacters": 22
+        },
+        {
+          "groupName": "下平:十五咸",
+          "layer": "平",
+          "sharedCharacters": 19
+        },
+        {
+          "groupName": "去:二十八勘",
+          "layer": "仄",
+          "sharedCharacters": 15
+        },
+        {
+          "groupName": "上:二十九豏",
+          "layer": "仄",
+          "sharedCharacters": 13
+        },
+        {
+          "groupName": "去:三十陷",
+          "layer": "仄",
+          "sharedCharacters": 10
+        },
+        {
+          "groupName": "下平:十二侵",
+          "layer": "平",
+          "sharedCharacters": 5
+        },
+        {
+          "groupName": "上平:十四寒",
+          "layer": "平",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "下平:四豪",
+          "layer": "平",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "去:十七霰",
+          "layer": "仄",
+          "sharedCharacters": 1
+        }
+      ],
+      "sharedCharacterTotal": 190,
+      "status": "unverified",
+      "basis": null,
+      "note": "词林正韵部次合并关系的权威来源**未取得**。本条仅由「同字在两库共现」统计导出，**不是**已核定的部对部映射，不得被任何快照、报告或消费方当作事实引用；尤其不得据此断言「词林第N部等于平水某部」。"
+    },
+    {
+      "cilinOrdinal": "第十部",
+      "statement": "第十部 ⊃ 平水{下平:六麻、去:二十二祃、上:二十一马、上平:九佳、去:十卦、上平:四支、下平:五歌、上平:六鱼、上:九蟹、去:八霁、下平:三肴、上平:七虞、上:七麌、上:二十三梗、上:二十哿、去:二十一个、去:二十六宥、去:七遇}",
+      "candidatePingshuiGroups": [
+        {
+          "groupName": "下平:六麻",
+          "layer": "平",
+          "sharedCharacters": 76
+        },
+        {
+          "groupName": "去:二十二祃",
+          "layer": "仄",
+          "sharedCharacters": 51
+        },
+        {
+          "groupName": "上:二十一马",
+          "layer": "仄",
+          "sharedCharacters": 32
+        },
+        {
+          "groupName": "上平:九佳",
+          "layer": "平",
+          "sharedCharacters": 9
+        },
+        {
+          "groupName": "去:十卦",
+          "layer": "仄",
+          "sharedCharacters": 5
+        },
+        {
+          "groupName": "上平:四支",
+          "layer": "平",
+          "sharedCharacters": 4
+        },
+        {
+          "groupName": "下平:五歌",
+          "layer": "平",
+          "sharedCharacters": 4
+        },
+        {
+          "groupName": "上平:六鱼",
+          "layer": "平",
+          "sharedCharacters": 2
+        },
+        {
+          "groupName": "上:九蟹",
+          "layer": "仄",
+          "sharedCharacters": 2
+        },
+        {
+          "groupName": "去:八霁",
+          "layer": "仄",
+          "sharedCharacters": 2
+        },
+        {
+          "groupName": "下平:三肴",
+          "layer": "平",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上平:七虞",
+          "layer": "平",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上:七麌",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上:二十三梗",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上:二十哿",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "去:二十一个",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "去:二十六宥",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "去:七遇",
+          "layer": "仄",
+          "sharedCharacters": 1
+        }
+      ],
+      "sharedCharacterTotal": 153,
+      "status": "unverified",
+      "basis": null,
+      "note": "词林正韵部次合并关系的权威来源**未取得**。本条仅由「同字在两库共现」统计导出，**不是**已核定的部对部映射，不得被任何快照、报告或消费方当作事实引用；尤其不得据此断言「词林第N部等于平水某部」。"
+    },
+    {
+      "cilinOrdinal": "第四部",
+      "statement": "第四部 ⊃ 平水{上平:七虞、上:七麌、去:七遇、上平:六鱼、上:六语、去:六御、上:二十五有、下平:六麻、去:二十六宥、下平:十一尤、上平:四支、上平:二冬、上:二十一马、上:二十二养、上:四纸}",
+      "candidatePingshuiGroups": [
+        {
+          "groupName": "上平:七虞",
+          "layer": "平",
+          "sharedCharacters": 146
+        },
+        {
+          "groupName": "上:七麌",
+          "layer": "仄",
+          "sharedCharacters": 105
+        },
+        {
+          "groupName": "去:七遇",
+          "layer": "仄",
+          "sharedCharacters": 97
+        },
+        {
+          "groupName": "上平:六鱼",
+          "layer": "平",
+          "sharedCharacters": 58
+        },
+        {
+          "groupName": "上:六语",
+          "layer": "仄",
+          "sharedCharacters": 51
+        },
+        {
+          "groupName": "去:六御",
+          "layer": "仄",
+          "sharedCharacters": 36
+        },
+        {
+          "groupName": "上:二十五有",
+          "layer": "仄",
+          "sharedCharacters": 14
+        },
+        {
+          "groupName": "下平:六麻",
+          "layer": "平",
+          "sharedCharacters": 7
+        },
+        {
+          "groupName": "去:二十六宥",
+          "layer": "仄",
+          "sharedCharacters": 5
+        },
+        {
+          "groupName": "下平:十一尤",
+          "layer": "平",
+          "sharedCharacters": 2
+        },
+        {
+          "groupName": "上平:四支",
+          "layer": "平",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上平:二冬",
+          "layer": "平",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上:二十一马",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上:二十二养",
+          "layer": "仄",
+          "sharedCharacters": 1
+        },
+        {
+          "groupName": "上:四纸",
+          "layer": "仄",
+          "sharedCharacters": 1
+        }
+      ],
+      "sharedCharacterTotal": 445,
+      "status": "unverified",
+      "basis": null,
+      "note": "词林正韵部次合并关系的权威来源**未取得**。本条仅由「同字在两库共现」统计导出，**不是**已核定的部对部映射，不得被任何快照、报告或消费方当作事实引用；尤其不得据此断言「词林第N部等于平水某部」。"
+    }
+  ]
+}

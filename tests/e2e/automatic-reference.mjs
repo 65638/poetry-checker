@@ -14,7 +14,7 @@ const app = buildApp({ readingAssistant: { apiKey: 'test-only-controlled-key', a
   if (mode === 'failure') return new Response('controlled unavailable', { status: 500 });
   const data = JSON.parse(JSON.parse(init.body).messages[1].content);
   if (data.task === 'critique') return new Response(JSON.stringify({ choices: [{ finish_reason: 'stop', message: { content: JSON.stringify({ overview: '受控评议，仅验证已有自动辨音流程不受新增工作台影响。', strengths: [], revisions: [] }) } }] }));
-  const suggestions = data.targets.map((target) => ({ tokenId: target.tokenId, candidateId: (target.candidates.find((candidate) => candidate.toneClass === 'qu') ?? target.candidates[0]).id, pronunciation: null, reason: '受控推理，仅验证自动应用链路。' }));
+  const suggestions = data.targets.map((target) => ({ tokenId: target.tokenId, candidateId: (target.candidates.find((candidate) => candidate.toneClass === (target.character === '不' ? 'ru' : 'qu')) ?? target.candidates[0]).id, pronunciation: null, reason: '受控推理，仅验证自动应用链路。' }));
   return new Response(JSON.stringify({ choices: [{ finish_reason: 'stop', message: { content: JSON.stringify({ suggestions }) } }] }));
 } } });
 const baseUrl = await app.listen({ host: '127.0.0.1', port: 0 });
@@ -45,11 +45,23 @@ try {
     await shot('automatic-character');
     await h.key('Escape');
   });
+  await check('missing-dictionary-entry-is-distinct-from-applied-context-choice', async () => {
+    await h.setText('金樽清酒斗十千，停杯投箸不能食。');
+    await h.analyze();
+    assert.equal(await h.evaluate("document.querySelector('[data-token-id=l1c2] .pc-cell__tone').textContent"), '缺录');
+    assert.equal(await h.evaluate("document.querySelector('[data-token-id=l2c5] .pc-cell__tone').textContent"), '仄');
+    assert.equal(await h.evaluate("document.querySelector('.pc-status').textContent.includes('所选韵书缺录1个字位（樽）')"), true);
+    await h.click('[data-token-id=l1c2]');
+    await h.click('.pc-guangyun summary');
+    await waitFor(() => h.evaluate("document.querySelector('.pc-guangyun').textContent.includes('zūn')"));
+    await shot('missing-entry-reference');
+    await h.key('Escape');
+  });
   await check('model-failure-still-produces-usable-report', async () => {
     mode = 'failure';
     await h.setText(POEMS[1].text);
     await h.analyze();
-    assert.equal(await h.evaluate("document.querySelector('.pc-status').textContent.includes('GLM暂不可用')"), true);
+    assert.equal(await h.evaluate("document.querySelector('.pc-status').textContent.includes('GLM本次辨音未完成')"), true);
     assert.equal(await h.evaluate("document.querySelector('.pc-input__submit').disabled"), false);
     mode = 'success';
   });

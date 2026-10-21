@@ -44,6 +44,7 @@ const LANDSCAPES = [
 ];
 
 export interface DictionaryViewProps {
+  characterReference?: ReactNode;
   readingAssistant?: ReactNode;
   text: string;
   book: BookId;
@@ -905,6 +906,7 @@ export function DictionaryView(props: DictionaryViewProps) {
                     当前字形没有收录记录。可另查繁体或异体，系统不会自动合并。
                   </p>
                 )}
+                {props.characterReference}
                 <p className="pc-dictionary__version">
                   数据版本：{result.dataVersion}
                 </p>

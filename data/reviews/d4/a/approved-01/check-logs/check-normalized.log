@@ -1,0 +1,155 @@
+
+=== 扫描 data/normalized ===
+发现 6 个 JSON：cilin.full-d2.json, pingshui.full-d2-patched.json, pingshui.full-d2.json, pingshui.sample-d1.json, works-coverage-d2.json, xinyun.full-d2.json
+非快照 JSON（不参与快照检查，仅列出）：works-coverage-d2.json
+
+=== 落盘快照：data/normalized/cilin.full-d2.json ===
+dataVersion：cilin-cwr-ff0e9c1-d4-candidate-review1
+book：cilin
+reviewStatus：unverified
+门槛：词林正韵（19 部）
+韵部数：33 / 应有 33
+bucketCounts：{"第一部":2,"第二部":2,"第三部":2,"第四部":2,"第五部":2,"第六部":2,"第七部":2,"第八部":2,"第九部":2,"第十部":2,"第十一部":2,"第十二部":2,"第十三部":2,"第十四部":2,"第十五部":1,"第十六部":1,"第十七部":1,"第十八部":1,"第十九部":1}
+expectedBucketCounts：{"第一部":2,"第二部":2,"第三部":2,"第四部":2,"第五部":2,"第六部":2,"第七部":2,"第八部":2,"第九部":2,"第十部":2,"第十一部":2,"第十二部":2,"第十三部":2,"第十四部":2,"第十五部":1,"第十六部":1,"第十七部":1,"第十八部":1,"第十九部":1}
+missingGroups：（无）
+emptyGroups：（无）
+unexpectedGroups：（无）
+候选数：5395
+多归部字形数：352
+证据数：49
+来源 ID：src:chinese_word_rhyme:cilin
+releaseGatePassed：否
+issue 代码：REVIEW_STATUS_NOT_APPROVED
+业务内容摘要：b8a94eeb98afba465cdbd6c92be16cff02b6df44b9836bd417b09d7a9fd28107
+规范化 JSON 摘要：2dde76350a646ae543d867b420bd4042b5094b5e0c06f599236dae9b599f8631
+  OK    data/normalized/cilin.full-d2.json 的 dataVersion 唯一：cilin-cwr-ff0e9c1-d4-candidate-review1
+  OK    data/normalized/cilin.full-d2.json 的 reviewStatus 不是 fixture（实际 unverified）
+  OK    data/normalized/cilin.full-d2.json 四类记录都非空（候选 5395 / 韵部 33 / 证据 49 / 来源 1）
+  OK    data/normalized/cilin.full-d2.json 未 approved 时 releaseGatePassed 必须为 false
+  OK    data/normalized/cilin.full-d2.json 韵部数 33（实际 33）
+  OK    data/normalized/cilin.full-d2.json missingGroups 为 []（实际 []）
+  OK    data/normalized/cilin.full-d2.json emptyGroups 为空（实际 []）
+  OK    data/normalized/cilin.full-d2.json unexpectedGroups 为空（实际 []）
+
+=== 落盘快照：data/normalized/pingshui.full-d2-patched.json ===
+dataVersion：pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4
+book：pingshui
+reviewStatus：unverified
+门槛：平水韵（106 部）
+韵部数：106 / 应有 106
+bucketCounts：{"上平":15,"下平":15,"上":29,"去":30,"入":17}
+expectedBucketCounts：{"上平":15,"下平":15,"上":29,"去":30,"入":17}
+missingGroups：（无）
+emptyGroups：（无）
+unexpectedGroups：（无）
+候选数：10387
+多归部字形数：1824
+证据数：189
+来源 ID：src:chinese_word_rhyme:pingshui, src:wikisource:pingshuiyun
+releaseGatePassed：否
+issue 代码：REVIEW_STATUS_NOT_APPROVED
+业务内容摘要：6d5082eeec8c1e96ec59259fec5c6ca1dd56c1500c3d7c1a48b9bf4567013121
+规范化 JSON 摘要：c9c27f037c1d68a1df2df019a22f6c3802c07383bc55a13994c6126f32301a92
+  OK    data/normalized/pingshui.full-d2-patched.json 的 dataVersion 唯一：pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4
+  OK    data/normalized/pingshui.full-d2-patched.json 的 reviewStatus 不是 fixture（实际 unverified）
+  OK    data/normalized/pingshui.full-d2-patched.json 四类记录都非空（候选 10387 / 韵部 106 / 证据 189 / 来源 2）
+  OK    data/normalized/pingshui.full-d2-patched.json 未 approved 时 releaseGatePassed 必须为 false
+  OK    data/normalized/pingshui.full-d2-patched.json 韵部数 106（实际 106）
+  OK    data/normalized/pingshui.full-d2-patched.json missingGroups 为 []（实际 []）
+  OK    data/normalized/pingshui.full-d2-patched.json emptyGroups 为空（实际 []）
+  OK    data/normalized/pingshui.full-d2-patched.json unexpectedGroups 为空（实际 []）
+  OK    「玤」仍保留上声一董归属
+  OK    「玤」另有上声三讲归属
+  OK    三讲成员 9 条（实际 9）
+
+=== 落盘快照：data/normalized/pingshui.full-d2.json ===
+dataVersion：pingshui-cwr-ff0e9c1-d3-full-review4
+book：pingshui
+reviewStatus：unverified
+门槛：平水韵（106 部）
+韵部数：105 / 应有 106
+bucketCounts：{"上平":15,"下平":15,"上":28,"去":30,"入":17}
+expectedBucketCounts：{"上平":15,"下平":15,"上":29,"去":30,"入":17}
+missingGroups：三讲
+emptyGroups：（无）
+unexpectedGroups：（无）
+候选数：10378
+多归部字形数：1823
+证据数：188
+来源 ID：src:chinese_word_rhyme:pingshui
+releaseGatePassed：否
+issue 代码：GROUP_MISSING,REVIEW_STATUS_NOT_APPROVED
+业务内容摘要：a044f70af6d25ec6b64142a52f75c36b1689109a9ab5e29de2d47369a612d569
+规范化 JSON 摘要：9aa7a763cd8f8b7b35b7848bf219921fea285d1ebbfeb3daf192c45b90d55689
+  OK    data/normalized/pingshui.full-d2.json 的 dataVersion 唯一：pingshui-cwr-ff0e9c1-d3-full-review4
+  OK    data/normalized/pingshui.full-d2.json 的 reviewStatus 不是 fixture（实际 unverified）
+  OK    data/normalized/pingshui.full-d2.json 四类记录都非空（候选 10378 / 韵部 105 / 证据 188 / 来源 1）
+  OK    data/normalized/pingshui.full-d2.json 未 approved 时 releaseGatePassed 必须为 false
+  OK    data/normalized/pingshui.full-d2.json 韵部数 105（实际 105）
+  OK    data/normalized/pingshui.full-d2.json missingGroups 为 [三讲]（实际 [三讲]）
+  OK    data/normalized/pingshui.full-d2.json emptyGroups 为空（实际 []）
+  OK    data/normalized/pingshui.full-d2.json unexpectedGroups 为空（实际 []）
+
+=== 落盘快照：data/normalized/pingshui.sample-d1.json ===
+dataVersion：sample-pingshui-cwr-ff0e9c1-d1-review2
+book：pingshui
+reviewStatus：unverified
+门槛：平水韵（106 部）
+韵部数：7 / 应有 106
+bucketCounts：{"下平":2,"去":1,"入":4}
+expectedBucketCounts：{"上平":15,"下平":15,"上":29,"去":30,"入":17}
+missingGroups：一东,一先,一董,一送,七虞,七遇,七阳,七麌,三十陷,三江,三绛,三肴,三讲,九佳,九泰,九蟹,九青,二冬,二十一个,二十一马,二十七感,二十七沁,二十三梗,二十三漾,二十九艳,二十九豏,二十二养,二十二祃,二十五径,二十五有,二十八勘,二十八琰,二十六宥,二十六寝,二十号,二十哿,二十四迥,二宋,二肿,二萧,五尾,五微,五未,五歌,入声一屋,入声七曷,入声三觉,入声二沃,入声八黠,入声六月,入声十七洽,入声十三职,入声十二锡,入声十五合,入声十六叶,入声十四缉,入声十药,八荠,八霁,八齐,六御,六语,六鱼,六麻,十一真,十一轸,十一队,十七筱,十七霰,十三元,十三覃,十三问,十三阮,十九效,十九皓,十二侵,十二吻,十二文,十二震,十五删,十五咸,十五潸,十五翰,十八啸,十八巧,十六谏,十六铣,十卦,十四寒,十四愿,十四旱,十四盐,十灰,十蒸,十贿,四寘,四支,四纸,四豪
+emptyGroups：（无）
+unexpectedGroups：（无）
+候选数：8
+多归部字形数：1
+证据数：15
+来源 ID：src:chinese_word_rhyme:pingshui
+releaseGatePassed：否
+issue 代码：GROUP_MISSING,REVIEW_STATUS_NOT_APPROVED
+业务内容摘要：6a69795f13e2654b81b6225ed52442174ddfdf0584cca6a8d95dea1fddb3ccd1
+规范化 JSON 摘要：de85b125334c803490c5ce43d29cf2a9b091661ad4e9ed6d582abef6a5186e87
+  OK    data/normalized/pingshui.sample-d1.json 的 dataVersion 唯一：sample-pingshui-cwr-ff0e9c1-d1-review2
+  OK    data/normalized/pingshui.sample-d1.json 的 reviewStatus 不是 fixture（实际 unverified）
+  OK    data/normalized/pingshui.sample-d1.json 四类记录都非空（候选 8 / 韵部 7 / 证据 15 / 来源 1）
+  OK    data/normalized/pingshui.sample-d1.json 未 approved 时 releaseGatePassed 必须为 false
+  （sample-pingshui-cwr-ff0e9c1-d1-review2 不在本批预期清单内，只报告不判门槛）
+
+=== 落盘快照：data/normalized/xinyun.full-d2.json ===
+dataVersion：xinyun-rebuild-d2-full
+book：xinyun
+reviewStatus：unverified
+门槛：中华新韵（十四韵，项目重建表）
+韵部数：56 / 应有 56
+bucketCounts：{"一麻":4,"七尤":4,"三皆":4,"九文":4,"二波":4,"五微":4,"八寒":4,"六豪":4,"十一庚":4,"十三支":4,"十二齐":4,"十唐":4,"十四姑":4,"四开":4}
+expectedBucketCounts：{"一麻":4,"二波":4,"三皆":4,"四开":4,"五微":4,"六豪":4,"七尤":4,"八寒":4,"九文":4,"十唐":4,"十一庚":4,"十二齐":4,"十三支":4,"十四姑":4}
+missingGroups：（无）
+emptyGroups：（无）
+unexpectedGroups：（无）
+候选数：51608
+多归部字形数：7777
+证据数：56
+来源 ID：src:pinyin-data
+releaseGatePassed：否
+issue 代码：REVIEW_STATUS_NOT_APPROVED
+业务内容摘要：4a68bd5782ec6e2de7e0682edca0a38534307f4dd28702db487875815c690ae5
+规范化 JSON 摘要：e245829ae0eb7a5b72647d62cf379920e000f3e7bf6f61bf1735a1830de79af4
+  OK    data/normalized/xinyun.full-d2.json 的 dataVersion 唯一：xinyun-rebuild-d2-full
+  OK    data/normalized/xinyun.full-d2.json 的 reviewStatus 不是 fixture（实际 unverified）
+  OK    data/normalized/xinyun.full-d2.json 四类记录都非空（候选 51608 / 韵部 56 / 证据 56 / 来源 1）
+  OK    data/normalized/xinyun.full-d2.json 未 approved 时 releaseGatePassed 必须为 false
+  OK    data/normalized/xinyun.full-d2.json 韵部数 56（实际 56）
+  OK    data/normalized/xinyun.full-d2.json missingGroups 为 []（实际 []）
+  OK    data/normalized/xinyun.full-d2.json emptyGroups 为空（实际 []）
+  OK    data/normalized/xinyun.full-d2.json unexpectedGroups 为空（实际 []）
+
+=== 汇总 ===
+data/normalized/cilin.full-d2.json | cilin-cwr-ff0e9c1-d4-candidate-review1 | cilin | unverified | 韵部 33/33 | 候选 5395 | 门槛 未通过
+data/normalized/pingshui.full-d2-patched.json | pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4 | pingshui | unverified | 韵部 106/106 | 候选 10387 | 门槛 未通过
+data/normalized/pingshui.full-d2.json | pingshui-cwr-ff0e9c1-d3-full-review4 | pingshui | unverified | 韵部 105/106 | 候选 10378 | 门槛 未通过
+data/normalized/pingshui.sample-d1.json | sample-pingshui-cwr-ff0e9c1-d1-review2 | pingshui | unverified | 韵部 7/106 | 候选 8 | 门槛 未通过
+data/normalized/xinyun.full-d2.json | xinyun-rebuild-d2-full | xinyun | unverified | 韵部 56/56 | 候选 51608 | 门槛 未通过
+  OK    本批 4 份快照均已落盘（缺失：无）
+
+=== 结果 ===
+全部落盘快照通过结构与门槛检查；注意：结构通过不等于内容审核通过，已审仅限三讲整部及审批清单列出的具体候选；快照级 reviewStatus 仍为 unverified，releaseGatePassed 仍为 false。

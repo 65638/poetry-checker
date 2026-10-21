@@ -1,5 +1,5 @@
 import { LibraryWorkSchema, type LibraryWork } from "@poetry/contracts";
-import { EXAMPLES } from "./examples";
+import { EXAMPLES } from "./examples.js";
 
 export const BUILTIN_WORKS: LibraryWork[] = EXAMPLES.map((work) => ({
   ...work,
@@ -76,6 +76,8 @@ export async function parseLibraryImport(
         typeof r.source === "string" ? r.source : (source.name ?? filename),
       sourceUrl: r.sourceUrl ?? r.url ?? source.url ?? null,
       tags: r.tags ?? [],
+      kind: r.kind,
+      collection: r.collection,
     });
     if (
       !parsed.success ||
@@ -106,6 +108,56 @@ export function mergeLibrary(current: LibraryWork[], incoming: LibraryWork[]) {
     works: result,
     added: result.length - current.length,
     duplicates: incoming.length - (result.length - current.length),
+  };
+}
+export function uniqueLibrary(works: LibraryWork[]) {
+  const textOf = (work: LibraryWork) =>
+    work.paragraphs.join("").replace(/[\p{P}\p{Z}\s]/gu, "");
+  const byAuthor = new Map<
+    string,
+    Array<{ work: LibraryWork; text: string }>
+  >();
+  const hidden = new Set<string>();
+  for (const work of works) {
+    const text = textOf(work);
+    const key = `${work.author}\n${work.dynasty}`;
+    const rows = byAuthor.get(key) ?? [];
+    // Anonymous works from different sources may share lines without being one work.
+    if (work.author && rows.some((row) => row.text === text))
+      hidden.add(work.id);
+    else rows.push({ work, text });
+    byAuthor.set(key, rows);
+  }
+  for (const rows of byAuthor.values()) {
+    for (const row of rows) {
+      if (
+        !row.work.author ||
+        !/(?:[二三四五六七八九十两\d]+首|组诗)/u.test(row.work.title)
+      )
+        continue;
+      const parts = rows.filter(
+        (part) => part.text.length >= 20 && part.text.length < row.text.length,
+      );
+      const covered = new Map<number, number>([[0, 0]]);
+      for (let at = 0; at < row.text.length; at++) {
+        const count = covered.get(at);
+        if (count === undefined) continue;
+        for (const part of parts) {
+          if (row.text.startsWith(part.text, at))
+            covered.set(
+              at + part.text.length,
+              Math.max(covered.get(at + part.text.length) ?? 0, count + 1),
+            );
+        }
+      }
+      // Hide a compilation only when complete standalone works cover its entire text.
+      if ((covered.get(row.text.length) ?? 0) >= 2) hidden.add(row.work.id);
+    }
+  }
+  return {
+    works: works.filter((work) => !hidden.has(work.id)),
+    hiddenCount: hidden.size,
+    hiddenIds: hidden,
   };
 }
 const THEMES = [
@@ -149,36 +201,93 @@ export function searchLibrary(
   const themes = scene
     ? THEMES.filter((t) => t.triggers.some((v) => q.includes(v)))
     : [];
-  const score = (value: string) =>
+  const literal = (value: string) =>
     segments.reduce(
       (n, term) =>
         n + (value.toLowerCase().includes(term) ? term.length * 8 : 0),
       0,
-    ) +
-    themes.reduce(
-      (n, t) => n + t.words.filter((w) => value.includes(w)).length * 2,
-      0,
     );
+  const phrases = [...q].slice(0, -1).map((c, i) => c + [...q][i + 1]);
+  const passageScore = (value: string) => {
+    const counts = themes.map(
+      (t) => t.words.filter((w) => value.includes(w)).length,
+    );
+    const coverage = counts.filter(Boolean).length;
+    return (
+      literal(value) +
+      (scene
+        ? coverage * 12 +
+          (themes.length && coverage === themes.length ? 20 : 0) +
+          counts.reduce((n, count) => n + Math.min(count, 3) * 2, 0) +
+          phrases.filter((p) => value.includes(p)).length * 8
+        : 0)
+    );
+  };
   return works
     .map((work) => {
-      const lines = work.paragraphs.map((line) => ({
-        line,
-        score: score(line),
-      }));
-      const best = [...lines].sort((a, b) => b.score - a.score)[0]!;
+      const sentences = work.paragraphs.flatMap(
+        (p) => p.match(/[^。！？\n]+[。！？]?/gu) ?? [p],
+      );
+      const lines = sentences.map((line, i) => {
+        const excerpt =
+          scene && i + 1 < sentences.length ? line + sentences[i + 1] : line;
+        return { line: excerpt, score: passageScore(excerpt) };
+      });
+      const best = lines.reduce(
+        (a, b) => (b.score > a.score ? b : a),
+        lines[0]!,
+      );
       return {
         work,
         score:
-          score(
+          literal(
             `${work.title} ${work.author} ${work.dynasty} ${work.tags.join(" ")}`,
           ) *
             2 +
-          lines.reduce((n, l) => n + l.score, 0),
+          best.score,
         excerpt: best.line,
       };
     })
     .filter((hit) => !q || hit.score > 0)
     .sort((a, b) => b.score - a.score);
+}
+
+export function readingSections(work: LibraryWork): LibraryWork[] {
+  const text = work.paragraphs.join("\n");
+  if (
+    [...text].length <= 2000 &&
+    (text.match(/[，。！？；\n]/gu)?.length ?? 0) <= 80
+  )
+    return [work];
+  const chunks: string[][] = [];
+  let current: string[] = [],
+    length = 0;
+  for (const paragraph of work.paragraphs) {
+    for (const piece of paragraph.match(/[^，。！？；\n]+[，。！？；]?/gu) ?? [
+      paragraph,
+    ]) {
+      const chars = [...piece];
+      for (let i = 0; i < chars.length; i += 1600) {
+        const part = chars.slice(i, i + 1600).join("");
+        if (
+          current.length &&
+          (length + [...part].length + 1 > 1800 || current.length >= 60)
+        ) {
+          chunks.push(current);
+          current = [];
+          length = 0;
+        }
+        current.push(part);
+        length += [...part].length + 1;
+      }
+    }
+  }
+  if (current.length) chunks.push(current);
+  return chunks.map((paragraphs, i) => ({
+    ...work,
+    title: `${work.title}（选段${i + 1}/${chunks.length}）`,
+    paragraphs,
+  }));
 }
 
 export async function libraryStorage(mode: "read"): Promise<LibraryWork[]>;

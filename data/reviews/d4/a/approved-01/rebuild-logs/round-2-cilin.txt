@@ -1,0 +1,65 @@
+
+=== 输入检查 ===
+  OK    原表存在：data/raw/chinese_word_rhyme/Cilin_Rhyme.json
+原表 SHA-256：615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f
+  OK    manifest 已登记该快照摘要（615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f）
+  OK    原表摘要与 manifest 登记值一致（manifest=615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f）
+
+=== 构建快照 ===
+
+=== 词林正韵（19 部 / 33 子卷）：data/normalized/cilin.full-d2.json ===
+dataVersion：cilin-cwr-ff0e9c1-d4-candidate-review1
+book：cilin
+reviewStatus：unverified
+门槛：词林正韵（19 部）
+韵部数：33 / 应有 33
+bucketCounts：{"第一部":2,"第二部":2,"第三部":2,"第四部":2,"第五部":2,"第六部":2,"第七部":2,"第八部":2,"第九部":2,"第十部":2,"第十一部":2,"第十二部":2,"第十三部":2,"第十四部":2,"第十五部":1,"第十六部":1,"第十七部":1,"第十八部":1,"第十九部":1}
+expectedBucketCounts：{"第一部":2,"第二部":2,"第三部":2,"第四部":2,"第五部":2,"第六部":2,"第七部":2,"第八部":2,"第九部":2,"第十部":2,"第十一部":2,"第十二部":2,"第十三部":2,"第十四部":2,"第十五部":1,"第十六部":1,"第十七部":1,"第十八部":1,"第十九部":1}
+missingGroups：（无）
+emptyGroups：（无）
+unexpectedGroups：（无）
+候选数：5395
+多归部字形数：352
+证据数：49
+来源 ID：src:chinese_word_rhyme:cilin
+releaseGatePassed：否
+issue 代码：REVIEW_STATUS_NOT_APPROVED
+业务内容摘要：b8a94eeb98afba465cdbd6c92be16cff02b6df44b9836bd417b09d7a9fd28107
+规范化 JSON 摘要：2dde76350a646ae543d867b420bd4042b5094b5e0c06f599236dae9b599f8631
+
+=== 断言 ===
+  OK    部数 19（实际 19）
+  OK    词林原表非汉字条目 8 条（实际 8）
+  OK    非汉字字形 4 个（实际 4：[(U+5B) ](U+5D) 空格 ，(U+FF0C)）
+  OK    候选数差额 8（实际 8；过滤前 5403 → 过滤后 5395）
+  OK    字形数差额 4（实际 4；过滤前 5037 → 过滤后 5033）
+  OK    droppedNonHan 8 条且每条带 groupName + sourceLocator
+
+  被剔除的非汉字杂项（逐条可审计）：
+    U+005B  「[」  第二部·仄声  ← data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第二部/仄声
+    U+005D  「]」  第二部·仄声  ← data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第二部/仄声
+    U+005B  「[」  第七部·仄声  ← data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第七部/仄声
+    U+005D  「]」  第七部·仄声  ← data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第七部/仄声
+    U+0020  「空格」  第七部·仄声  ← data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第七部/仄声
+    U+005B  「[」  第十八部·入声  ← data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十八部/入声
+    U+FF0C  「，」  第十八部·入声  ← data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十八部/入声
+    U+005D  「]」  第十八部·入声  ← data/raw/chinese_word_rhyme/Cilin_Rhyme.json 第十八部/入声
+  OK    子卷数 33（实际 33）
+  OK    子卷分布 平声 14 / 仄声 14 / 入声 5（实际 平声 14 / 仄声 14 / 入声 5）
+  OK    missingGroups 为空（实际 []）
+  OK    emptyGroups 为空（实际 []）
+  OK    unexpectedGroups 为空（实际 []）
+  OK    reviewStatus 仍为 unverified（未被改动）
+  OK    releaseGatePassed === false（未 approved，不得通过）
+  OK    没有任何候选被臆补成上声/去声（实际 0 条）
+  OK    ze_unspecified 候选一律 tone=Z（共 2232 条）
+  OK    ping 候选一律 tone=P（共 2207 条）
+  OK    ru 候选一律 tone=Z（共 956 条）
+  OK    全部候选 ID 唯一
+  OK    输出路径不是 data/releases：data/normalized/cilin.full-d2.json
+
+=== 写出 ===
+写出 data/normalized/cilin.full-d2.json
+
+=== 结果 ===
+词林快照已落盘；结构达标（19 部 / 33 子卷、无空卷），但 reviewStatus=unverified，16个具体候选证据approved，部级证据保持unverified；releaseGatePassed=false，未进data/releases。

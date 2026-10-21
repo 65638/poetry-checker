@@ -39,10 +39,14 @@ import {
   section,
   sha256Bytes,
 } from "./snapshot-report.js";
+import {
+  applyCandidateApprovals,
+  readCandidateApprovals,
+} from "./candidate-approvals.js";
 
 const RAW_REL = "data/raw/chinese_word_rhyme/Cilin_Rhyme.json";
 const OUT_REL = "data/normalized/cilin.full-d2.json";
-const DATA_VERSION = "cilin-cwr-ff0e9c1-d3-full-clean1";
+const DATA_VERSION = "cilin-cwr-ff0e9c1-d4-candidate-review1";
 const CWR_REVISION = "ff0e9c13fb037c43e0eaa5dc929c0fe4fa2ffb18";
 const SOURCE_ID = "src:chinese_word_rhyme:cilin";
 
@@ -63,7 +67,7 @@ function isRhymeCharacter(character: string): boolean {
 
 /** 生成器戳记：快照 Schema 无版本字段，约定写进 notice，precheck 以正则识别。 */
 const GENERATOR_STAMP =
-  " 生成器：scripts/data/build-cilin.ts@d3-1（数据源 chinese_word_rhyme@ff0e9c13）；" +
+  " 生成器：scripts/data/build-cilin.ts@d4-1（数据源 chinese_word_rhyme@ff0e9c13）；" +
   "快照 Schema 无版本字段，版本以此戳记为据。";
 
 const NOTICE =
@@ -247,7 +251,8 @@ function main(): void {
     evidence,
     sources,
   };
-  const snapshot = defineSnapshot(input);
+  const approvals = readCandidateApprovals(ROOT, "cilin");
+  const snapshot = defineSnapshot(applyCandidateApprovals(input, approvals));
   const report = checkCompleteness(snapshot, CILIN_GATE);
 
   printSnapshotReport("词林正韵（19 部 / 33 子卷）", OUT_REL, snapshot, report);
@@ -379,7 +384,7 @@ function main(): void {
 
   finish(
     "词林快照已落盘；结构达标（19 部 / 33 子卷、无空卷），但 reviewStatus=unverified，" +
-      "evidence 未审核，releaseGatePassed=false，未进 data/releases。",
+      `${approvals.length}个具体候选证据approved，部级证据保持unverified；releaseGatePassed=false，未进data/releases。`,
   );
 }
 

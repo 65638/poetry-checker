@@ -1,0 +1,840 @@
+{
+  "schemaVersion": "d5-b/context-review-ready-1",
+  "generatedBy": "packages/readings/scripts/d5-context-review-ready.ts",
+  "command": "node node_modules/tsx/dist/cli.mjs packages/readings/scripts/d5-context-review-ready.ts",
+  "source": "data/reviews/d4/b/context-drafts.json",
+  "note": "本文件只摆材料，不写 data/context、不产生批准。没有精确人审接受记录的条目一律保持 unverified。",
+  "counts": {
+    "drafts": 13,
+    "notApprovalReady": 13,
+    "byBook": {
+      "cilin": 7,
+      "xinyun": 6
+    },
+    "candidatesWithoutApprovedEvidence": 31
+  },
+  "items": [
+    {
+      "draftId": "draft-cilin-golden-dengguanquelou-ps-v1-l4c1",
+      "book": "cilin",
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "tokenId": "l4c1",
+      "target": "更",
+      "exactPhrases": ["更上一层楼"],
+      "targetOffset": 0,
+      "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
+      "candidateIds": [
+        "cilin:更:ping:第十一部·平声",
+        "cilin:更:ze_unspecified:第十一部·仄声"
+      ],
+      "candidateEvidence": [
+        {
+          "candidateId": "cilin:更:ping:第十一部·平声",
+          "tone": "P",
+          "toneClass": "ping",
+          "groupIds": ["group:cilin:第十一部:第十一部·平声"],
+          "evidenceIds": ["ev:cilin:第十一部:第十一部·平声"],
+          "evidenceApproved": 0,
+          "evidenceTotal": 1
+        },
+        {
+          "candidateId": "cilin:更:ze_unspecified:第十一部·仄声",
+          "tone": "Z",
+          "toneClass": "ze_unspecified",
+          "groupIds": ["group:cilin:第十一部:第十一部·仄声"],
+          "evidenceIds": ["ev:cilin:第十一部:第十一部·仄声"],
+          "evidenceApproved": 0,
+          "evidenceTotal": 1
+        }
+      ],
+      "proposedSelection": null,
+      "proposedSelectionReason": "本书全部候选证据未审核：连候选归属都未确认，谈不上选音",
+      "senseBasis": "副词「再、又、愈加」义（非平声「更改/经历/更次」），裁定取去声二十四敬",
+      "transferCondition": "须先证明该义项在本书可迁移（韵书归部与字形一致），并给出本书候选的可定位依据；不得把平水 candidateId 或平水裁定直接搬到本书",
+      "counterExamples": ["三更", "更改"],
+      "aSideDependency": {
+        "candidateEvidencePending": [
+          "cilin:更:ping:第十一部·平声",
+          "cilin:更:ze_unspecified:第十一部·仄声"
+        ],
+        "requiredEvidence": [
+          "本书（cilin）该候选的归部证据并完成审核",
+          "该语境义项在本书的可定位来源"
+        ]
+      },
+      "pendingPoints": [
+        "本书候选的归部证据需由 A 落库并审核",
+        "该义项在本书的可定位来源（韵书条目/字书义项/反切）",
+        "组长裁定：是否接受平水义项向本书迁移",
+        "裁定后仍需补一条本书反例的安全边界检查"
+      ],
+      "readiness": "not-approval-ready",
+      "readinessReason": "selectCandidateIds 为空且本书候选证据未审，属材料待补，不是待批选项",
+      "sourceRuleRef": "ctx-j03b2-01-deng-geng",
+      "reviewStatus": "unverified"
+    },
+    {
+      "draftId": "draft-cilin-golden-jingyesi-ps-v1-l3c3",
+      "book": "cilin",
+      "caseId": "golden-jingyesi-ps-v1",
+      "tokenId": "l3c3",
+      "target": "望",
+      "exactPhrases": ["望明月"],
+      "targetOffset": 0,
+      "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
+      "candidateIds": [
+        "cilin:望:ping:第二部·平声",
+        "cilin:望:ze_unspecified:第二部·仄声"
+      ],
+      "candidateEvidence": [
+        {
+          "candidateId": "cilin:望:ping:第二部·平声",
+          "tone": "P",
+          "toneClass": "ping",
+          "groupIds": ["group:cilin:第二部:第二部·平声"],
+          "evidenceIds": ["ev:cilin:第二部:第二部·平声"],
+          "evidenceApproved": 0,
+          "evidenceTotal": 1
+        },
+        {
+          "candidateId": "cilin:望:ze_unspecified:第二部·仄声",
+          "tone": "Z",
+          "toneClass": "ze_unspecified",
+          "groupIds": ["group:cilin:第二部:第二部·仄声"],
+          "evidenceIds": ["ev:cilin:第二部:第二部·仄声"],
+          "evidenceApproved": 0,
+          "evidenceTotal": 1
+        }
+      ],
+      "proposedSelection": null,
+      "proposedSelectionReason": "本书全部候选证据未审核：连候选归属都未确认，谈不上选音",
+      "senseBasis": "动词「远看、凝望」义，近体通说取去声二十三漾",
+      "transferCondition": "须先证明该义项在本书可迁移（韵书归部与字形一致），并给出本书候选的可定位依据；不得把平水 candidateId 或平水裁定直接搬到本书",
+      "counterExamples": ["名望", "望山月"],
+      "aSideDependency": {
+        "candidateEvidencePending": [
+          "cilin:望:ping:第二部·平声",
+          "cilin:望:ze_unspecified:第二部·仄声"
+        ],
+        "requiredEvidence": [
+          "本书（cilin）该候选的归部证据并完成审核",
+          "该语境义项在本书的可定位来源"
+        ]
+      },
+      "pendingPoints": [
+        "本书候选的归部证据需由 A 落库并审核",
+        "该义项在本书的可定位来源（韵书条目/字书义项/反切）",
+        "组长裁定：是否接受平水义项向本书迁移",
+        "裁定后仍需补一条本书反例的安全边界检查"
+      ],
+      "readiness": "not-approval-ready",
+      "readinessReason": "selectCandidateIds 为空且本书候选证据未审，属材料待补，不是待批选项",
+      "sourceRuleRef": "ctx-j03b2-02-jing-wang",
+      "reviewStatus": "unverified"
+    },
+    {
+      "draftId": "draft-cilin-golden-jingyesi-ps-v1-l4c3",
+      "book": "cilin",
+      "caseId": "golden-jingyesi-ps-v1",
+      "tokenId": "l4c3",
+      "target": "思",
+      "exactPhrases": ["思故乡"],
+      "targetOffset": 0,
+      "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
+      "candidateIds": [
+        "cilin:思:ping:第三部·平声",
+        "cilin:思:ze_unspecified:第三部·仄声"
+      ],
+      "candidateEvidence": [
+        {
+          "candidateId": "cilin:思:ping:第三部·平声",
+          "tone": "P",
+          "toneClass": "ping",
+          "groupIds": ["group:cilin:第三部:第三部·平声"],
+          "evidenceIds": ["ev:cilin:第三部:第三部·平声"],
+          "evidenceApproved": 0,
+          "evidenceTotal": 1
+        },
+        {
+          "candidateId": "cilin:思:ze_unspecified:第三部·仄声",
+          "tone": "Z",
+          "toneClass": "ze_unspecified",
+          "groupIds": ["group:cilin:第三部:第三部·仄声"],
+          "evidenceIds": ["ev:cilin:第三部:第三部·仄声"],
+          "evidenceApproved": 0,
+          "evidenceTotal": 1
+        }
+      ],
+      "proposedSelection": null,
+      "proposedSelectionReason": "本书全部候选证据未审核：连候选归属都未确认，谈不上选音",
+      "senseBasis": "带宾语「故乡」的动词「思念、怀想」义，取平声四支",
+      "transferCondition": "须先证明该义项在本书可迁移（韵书归部与字形一致），并给出本书候选的可定位依据；不得把平水 candidateId 或平水裁定直接搬到本书",
+      "counterExamples": ["秋思", "乡思"],
+      "aSideDependency": {
+        "candidateEvidencePending": [
+          "cilin:思:ping:第三部·平声",
+          "cilin:思:ze_unspecified:第三部·仄声"
+        ],
+        "requiredEvidence": [
+          "本书（cilin）该候选的归部证据并完成审核",
+          "该语境义项在本书的可定位来源"
+        ]
+      },
+      "pendingPoints": [
+        "本书候选的归部证据需由 A 落库并审核",
+        "该义项在本书的可定位来源（韵书条目/字书义项/反切）",
+        "组长裁定：是否接受平水义项向本书迁移",
+        "裁定后仍需补一条本书反例的安全边界检查"
+      ],
+      "readiness": "not-approval-ready",
+      "readinessReason": "selectCandidateIds 为空且本书候选证据未审，属材料待补，不是待批选项",
+      "sourceRuleRef": "ctx-j03b2-03-jing-si",
+      "reviewStatus": "unverified"
+    },
+    {
+      "draftId": "draft-cilin-golden-huanghelou-ps-v1-l1c4",
+      "book": "cilin",
+      "caseId": "golden-huanghelou-ps-v1",
+      "tokenId": "l1c4",
+      "target": "乘",
+      "exactPhrases": ["乘黄鹤"],
+      "targetOffset": 0,
+      "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
+      "candidateIds": [
+        "cilin:乘:ping:第十一部·平声",
+        "cilin:乘:ze_unspecified:第十一部·仄声"
+      ],
+      "candidateEvidence": [
+        {
+          "candidateId": "cilin:乘:ping:第十一部·平声",
+          "tone": "P",
+          "toneClass": "ping",
+          "groupIds": ["group:cilin:第十一部:第十一部·平声"],
+          "evidenceIds": ["ev:cilin:第十一部:第十一部·平声"],
+          "evidenceApproved": 0,
+          "evidenceTotal": 1
+        },
+        {
+          "candidateId": "cilin:乘:ze_unspecified:第十一部·仄声",
+          "tone": "Z",
+          "toneClass": "ze_unspecified",
+          "groupIds": ["group:cilin:第十一部:第十一部·仄声"],
+          "evidenceIds": ["ev:cilin:第十一部:第十一部·仄声"],
+          "evidenceApproved": 0,
+          "evidenceTotal": 1
+        }
+      ],
+      "proposedSelection": null,
+      "proposedSelectionReason": "本书全部候选证据未审核：连候选归属都未确认，谈不上选音",
+      "senseBasis": "动词「乘坐、骑乘」义（非名词车乘），取平声十蒸",
+      "transferCondition": "须先证明该义项在本书可迁移（韵书归部与字形一致），并给出本书候选的可定位依据；不得把平水 candidateId 或平水裁定直接搬到本书",
+      "counterExamples": ["千乘", "史乘"],
+      "aSideDependency": {
+        "candidateEvidencePending": [
+          "cilin:乘:ping:第十一部·平声",
+          "cilin:乘:ze_unspecified:第十一部·仄声"
+        ],
+        "requiredEvidence": [
+          "本书（cilin）该候选的归部证据并完成审核",
+          "该语境义项在本书的可定位来源"
+        ]
+      },
+      "pendingPoints": [
+        "本书候选的归部证据需由 A 落库并审核",
+        "该义项在本书的可定位来源（韵书条目/字书义项/反切）",
+        "组长裁定：是否接受平水义项向本书迁移",
+        "裁定后仍需补一条本书反例的安全边界检查"
+      ],
+      "readiness": "not-approval-ready",
+      "readinessReason": "selectCandidateIds 为空且本书候选证据未审，属材料待补，不是待批选项",
+      "sourceRuleRef": "ctx-j03b2-05-huang-cheng",
+      "reviewStatus": "unverified"
+    },
+    {
+      "draftId": "draft-cilin-golden-huanghelou-ps-v1-l2c3",
+      "book": "cilin",
+      "caseId": "golden-huanghelou-ps-v1",
+      "tokenId": "l2c3",
+      "target": "空",
+      "exactPhrases": ["空余黄鹤楼"],
+      "targetOffset": 0,
+      "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
+      "candidateIds": [
+        "cilin:空:ping:第一部·平声",
+        "cilin:空:ze_unspecified:第一部·仄声"
+      ],
+      "candidateEvidence": [
+        {
+          "candidateId": "cilin:空:ping:第一部·平声",
+          "tone": "P",
+          "toneClass": "ping",
+          "groupIds": ["group:cilin:第一部:第一部·平声"],
+          "evidenceIds": ["ev:cilin:第一部:第一部·平声"],
+          "evidenceApproved": 0,
+          "evidenceTotal": 1
+        },
+        {
+          "candidateId": "cilin:空:ze_unspecified:第一部·仄声",
+          "tone": "Z",
+          "toneClass": "ze_unspecified",
+          "groupIds": ["group:cilin:第一部:第一部·仄声"],
+          "evidenceIds": ["ev:cilin:第一部:第一部·仄声"],
+          "evidenceApproved": 0,
+          "evidenceTotal": 1
+        }
+      ],
+      "proposedSelection": null,
+      "proposedSelectionReason": "本书全部候选证据未审核：连候选归属都未确认，谈不上选音",
+      "senseBasis": "副词「徒然、空自」义，取平声一东（去声孔隙、上声通孔皆不合句义）",
+      "transferCondition": "须先证明该义项在本书可迁移（韵书归部与字形一致），并给出本书候选的可定位依据；不得把平水 candidateId 或平水裁定直接搬到本书",
+      "counterExamples": ["孔隙", "空洞"],
+      "aSideDependency": {
+        "candidateEvidencePending": [
+          "cilin:空:ping:第一部·平声",
+          "cilin:空:ze_unspecified:第一部·仄声"
+        ],
+        "requiredEvidence": [
+          "本书（cilin）该候选的归部证据并完成审核",
+          "该语境义项在本书的可定位来源"
+        ]
+      },
+      "pendingPoints": [
+        "本书候选的归部证据需由 A 落库并审核",
+        "该义项在本书的可定位来源（韵书条目/字书义项/反切）",
+        "组长裁定：是否接受平水义项向本书迁移",
+        "裁定后仍需补一条本书反例的安全边界检查"
+      ],
+      "readiness": "not-approval-ready",
+      "readinessReason": "selectCandidateIds 为空且本书候选证据未审，属材料待补，不是待批选项",
+      "sourceRuleRef": "ctx-j03b2-06-huang-kong-kongyu",
+      "reviewStatus": "unverified"
+    },
+    {
+      "draftId": "draft-cilin-golden-huanghelou-ps-v1-l3c5",
+      "book": "cilin",
+      "caseId": "golden-huanghelou-ps-v1",
+      "tokenId": "l3c5",
+      "target": "不",
+      "exactPhrases": ["不复返"],
+      "targetOffset": 0,
+      "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
+      "candidateIds": [
+        "cilin:不:ping:第十二部·平声",
+        "cilin:不:ru:第十八部·入声"
+      ],
+      "candidateEvidence": [
+        {
+          "candidateId": "cilin:不:ping:第十二部·平声",
+          "tone": "P",
+          "toneClass": "ping",
+          "groupIds": ["group:cilin:第十二部:第十二部·平声"],
+          "evidenceIds": ["ev:cilin:第十二部:第十二部·平声"],
+          "evidenceApproved": 0,
+          "evidenceTotal": 1
+        },
+        {
+          "candidateId": "cilin:不:ru:第十八部·入声",
+          "tone": "Z",
+          "toneClass": "ru",
+          "groupIds": ["group:cilin:第十八部:第十八部·入声"],
+          "evidenceIds": ["ev:cilin:第十八部:第十八部·入声"],
+          "evidenceApproved": 0,
+          "evidenceTotal": 1
+        }
+      ],
+      "proposedSelection": null,
+      "proposedSelectionReason": "本书全部候选证据未审核：连候选归属都未确认，谈不上选音",
+      "senseBasis": "否定副词义，取入声五物（平声十一尤为「否」之通假，专用于疑问句末）",
+      "transferCondition": "须先证明该义项在本书可迁移（韵书归部与字形一致），并给出本书候选的可定位依据；不得把平水 candidateId 或平水裁定直接搬到本书",
+      "counterExamples": ["当复如此不", "未知从今去"],
+      "aSideDependency": {
+        "candidateEvidencePending": [
+          "cilin:不:ping:第十二部·平声",
+          "cilin:不:ru:第十八部·入声"
+        ],
+        "requiredEvidence": [
+          "本书（cilin）该候选的归部证据并完成审核",
+          "该语境义项在本书的可定位来源"
+        ]
+      },
+      "pendingPoints": [
+        "本书候选的归部证据需由 A 落库并审核",
+        "该义项在本书的可定位来源（韵书条目/字书义项/反切）",
+        "组长裁定：是否接受平水义项向本书迁移",
+        "裁定后仍需补一条本书反例的安全边界检查"
+      ],
+      "readiness": "not-approval-ready",
+      "readinessReason": "selectCandidateIds 为空且本书候选证据未审，属材料待补，不是待批选项",
+      "sourceRuleRef": "ctx-j03b2-07-huang-bu",
+      "reviewStatus": "unverified"
+    },
+    {
+      "draftId": "draft-cilin-golden-huanghelou-ps-v1-l4c5",
+      "book": "cilin",
+      "caseId": "golden-huanghelou-ps-v1",
+      "tokenId": "l4c5",
+      "target": "空",
+      "exactPhrases": ["空悠悠"],
+      "targetOffset": 0,
+      "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
+      "candidateIds": [
+        "cilin:空:ping:第一部·平声",
+        "cilin:空:ze_unspecified:第一部·仄声"
+      ],
+      "candidateEvidence": [
+        {
+          "candidateId": "cilin:空:ping:第一部·平声",
+          "tone": "P",
+          "toneClass": "ping",
+          "groupIds": ["group:cilin:第一部:第一部·平声"],
+          "evidenceIds": ["ev:cilin:第一部:第一部·平声"],
+          "evidenceApproved": 0,
+          "evidenceTotal": 1
+        },
+        {
+          "candidateId": "cilin:空:ze_unspecified:第一部·仄声",
+          "tone": "Z",
+          "toneClass": "ze_unspecified",
+          "groupIds": ["group:cilin:第一部:第一部·仄声"],
+          "evidenceIds": ["ev:cilin:第一部:第一部·仄声"],
+          "evidenceApproved": 0,
+          "evidenceTotal": 1
+        }
+      ],
+      "proposedSelection": null,
+      "proposedSelectionReason": "本书全部候选证据未审核：连候选归属都未确认，谈不上选音",
+      "senseBasis": "副词「徒然」义，取平声一东；尾三字「空悠悠」为三平尾，作古风式律诗特征保留，不判出律",
+      "transferCondition": "须先证明该义项在本书可迁移（韵书归部与字形一致），并给出本书候选的可定位依据；不得把平水 candidateId 或平水裁定直接搬到本书",
+      "counterExamples": ["孔隙", "空洞"],
+      "aSideDependency": {
+        "candidateEvidencePending": [
+          "cilin:空:ping:第一部·平声",
+          "cilin:空:ze_unspecified:第一部·仄声"
+        ],
+        "requiredEvidence": [
+          "本书（cilin）该候选的归部证据并完成审核",
+          "该语境义项在本书的可定位来源"
+        ]
+      },
+      "pendingPoints": [
+        "本书候选的归部证据需由 A 落库并审核",
+        "该义项在本书的可定位来源（韵书条目/字书义项/反切）",
+        "组长裁定：是否接受平水义项向本书迁移",
+        "裁定后仍需补一条本书反例的安全边界检查"
+      ],
+      "readiness": "not-approval-ready",
+      "readinessReason": "selectCandidateIds 为空且本书候选证据未审，属材料待补，不是待批选项",
+      "sourceRuleRef": "ctx-j03b2-08-huang-kong-kongyou",
+      "reviewStatus": "unverified"
+    },
+    {
+      "draftId": "draft-xinyun-golden-dengguanquelou-ps-v1-l4c1",
+      "book": "xinyun",
+      "caseId": "golden-dengguanquelou-ps-v1",
+      "tokenId": "l4c1",
+      "target": "更",
+      "exactPhrases": ["更上一层楼"],
+      "targetOffset": 0,
+      "dataVersion": "xinyun-rebuild-d2-full",
+      "candidateIds": [
+        "xinyun:更:qu:十一庚·去声",
+        "xinyun:更:yinping:十一庚·阴平"
+      ],
+      "candidateEvidence": [
+        {
+          "candidateId": "xinyun:更:qu:十一庚·去声",
+          "tone": "Z",
+          "toneClass": "qu",
+          "groupIds": ["group:xinyun:十一庚:十一庚·去声"],
+          "evidenceIds": ["ev:xinyun:十一庚:十一庚·去声"],
+          "evidenceApproved": 0,
+          "evidenceTotal": 1
+        },
+        {
+          "candidateId": "xinyun:更:yinping:十一庚·阴平",
+          "tone": "P",
+          "toneClass": "yinping",
+          "groupIds": ["group:xinyun:十一庚:十一庚·阴平"],
+          "evidenceIds": ["ev:xinyun:十一庚:十一庚·阴平"],
+          "evidenceApproved": 0,
+          "evidenceTotal": 1
+        }
+      ],
+      "proposedSelection": null,
+      "proposedSelectionReason": "本书全部候选证据未审核：连候选归属都未确认，谈不上选音",
+      "senseBasis": "副词「再、又、愈加」义（非平声「更改/经历/更次」），裁定取去声二十四敬",
+      "transferCondition": "须先证明该义项在本书可迁移（韵书归部与字形一致），并给出本书候选的可定位依据；不得把平水 candidateId 或平水裁定直接搬到本书",
+      "counterExamples": ["三更", "更改"],
+      "aSideDependency": {
+        "candidateEvidencePending": [
+          "xinyun:更:qu:十一庚·去声",
+          "xinyun:更:yinping:十一庚·阴平"
+        ],
+        "requiredEvidence": [
+          "本书（xinyun）该候选的归部证据并完成审核",
+          "该语境义项在本书的可定位来源"
+        ]
+      },
+      "pendingPoints": [
+        "本书候选的归部证据需由 A 落库并审核",
+        "该义项在本书的可定位来源（韵书条目/字书义项/反切）",
+        "组长裁定：是否接受平水义项向本书迁移",
+        "裁定后仍需补一条本书反例的安全边界检查"
+      ],
+      "readiness": "not-approval-ready",
+      "readinessReason": "selectCandidateIds 为空且本书候选证据未审，属材料待补，不是待批选项",
+      "sourceRuleRef": "ctx-j03b2-01-deng-geng",
+      "reviewStatus": "unverified"
+    },
+    {
+      "draftId": "draft-xinyun-golden-jingyesi-ps-v1-l4c3",
+      "book": "xinyun",
+      "caseId": "golden-jingyesi-ps-v1",
+      "tokenId": "l4c3",
+      "target": "思",
+      "exactPhrases": ["思故乡"],
+      "targetOffset": 0,
+      "dataVersion": "xinyun-rebuild-d2-full",
+      "candidateIds": [
+        "xinyun:思:yinping:十三支·阴平",
+        "xinyun:思:yinping:四开·阴平"
+      ],
+      "candidateEvidence": [
+        {
+          "candidateId": "xinyun:思:yinping:十三支·阴平",
+          "tone": "P",
+          "toneClass": "yinping",
+          "groupIds": ["group:xinyun:十三支:十三支·阴平"],
+          "evidenceIds": ["ev:xinyun:十三支:十三支·阴平"],
+          "evidenceApproved": 0,
+          "evidenceTotal": 1
+        },
+        {
+          "candidateId": "xinyun:思:yinping:四开·阴平",
+          "tone": "P",
+          "toneClass": "yinping",
+          "groupIds": ["group:xinyun:四开:四开·阴平"],
+          "evidenceIds": ["ev:xinyun:四开:四开·阴平"],
+          "evidenceApproved": 0,
+          "evidenceTotal": 1
+        }
+      ],
+      "proposedSelection": null,
+      "proposedSelectionReason": "本书全部候选证据未审核：连候选归属都未确认，谈不上选音",
+      "senseBasis": "带宾语「故乡」的动词「思念、怀想」义，取平声四支",
+      "transferCondition": "须先证明该义项在本书可迁移（韵书归部与字形一致），并给出本书候选的可定位依据；不得把平水 candidateId 或平水裁定直接搬到本书",
+      "counterExamples": ["秋思", "乡思"],
+      "aSideDependency": {
+        "candidateEvidencePending": [
+          "xinyun:思:yinping:十三支·阴平",
+          "xinyun:思:yinping:四开·阴平"
+        ],
+        "requiredEvidence": [
+          "本书（xinyun）该候选的归部证据并完成审核",
+          "该语境义项在本书的可定位来源"
+        ]
+      },
+      "pendingPoints": [
+        "本书候选的归部证据需由 A 落库并审核",
+        "该义项在本书的可定位来源（韵书条目/字书义项/反切）",
+        "组长裁定：是否接受平水义项向本书迁移",
+        "裁定后仍需补一条本书反例的安全边界检查"
+      ],
+      "readiness": "not-approval-ready",
+      "readinessReason": "selectCandidateIds 为空且本书候选证据未审，属材料待补，不是待批选项",
+      "sourceRuleRef": "ctx-j03b2-03-jing-si",
+      "reviewStatus": "unverified"
+    },
+    {
+      "draftId": "draft-xinyun-golden-huanghelou-ps-v1-l1c4",
+      "book": "xinyun",
+      "caseId": "golden-huanghelou-ps-v1",
+      "tokenId": "l1c4",
+      "target": "乘",
+      "exactPhrases": ["乘黄鹤"],
+      "targetOffset": 0,
+      "dataVersion": "xinyun-rebuild-d2-full",
+      "candidateIds": [
+        "xinyun:乘:qu:十一庚·去声",
+        "xinyun:乘:yangping:十一庚·阳平"
+      ],
+      "candidateEvidence": [
+        {
+          "candidateId": "xinyun:乘:qu:十一庚·去声",
+          "tone": "Z",
+          "toneClass": "qu",
+          "groupIds": ["group:xinyun:十一庚:十一庚·去声"],
+          "evidenceIds": ["ev:xinyun:十一庚:十一庚·去声"],
+          "evidenceApproved": 0,
+          "evidenceTotal": 1
+        },
+        {
+          "candidateId": "xinyun:乘:yangping:十一庚·阳平",
+          "tone": "P",
+          "toneClass": "yangping",
+          "groupIds": ["group:xinyun:十一庚:十一庚·阳平"],
+          "evidenceIds": ["ev:xinyun:十一庚:十一庚·阳平"],
+          "evidenceApproved": 0,
+          "evidenceTotal": 1
+        }
+      ],
+      "proposedSelection": null,
+      "proposedSelectionReason": "本书全部候选证据未审核：连候选归属都未确认，谈不上选音",
+      "senseBasis": "动词「乘坐、骑乘」义（非名词车乘），取平声十蒸",
+      "transferCondition": "须先证明该义项在本书可迁移（韵书归部与字形一致），并给出本书候选的可定位依据；不得把平水 candidateId 或平水裁定直接搬到本书",
+      "counterExamples": ["千乘", "史乘"],
+      "aSideDependency": {
+        "candidateEvidencePending": [
+          "xinyun:乘:qu:十一庚·去声",
+          "xinyun:乘:yangping:十一庚·阳平"
+        ],
+        "requiredEvidence": [
+          "本书（xinyun）该候选的归部证据并完成审核",
+          "该语境义项在本书的可定位来源"
+        ]
+      },
+      "pendingPoints": [
+        "本书候选的归部证据需由 A 落库并审核",
+        "该义项在本书的可定位来源（韵书条目/字书义项/反切）",
+        "组长裁定：是否接受平水义项向本书迁移",
+        "裁定后仍需补一条本书反例的安全边界检查"
+      ],
+      "readiness": "not-approval-ready",
+      "readinessReason": "selectCandidateIds 为空且本书候选证据未审，属材料待补，不是待批选项",
+      "sourceRuleRef": "ctx-j03b2-05-huang-cheng",
+      "reviewStatus": "unverified"
+    },
+    {
+      "draftId": "draft-xinyun-golden-huanghelou-ps-v1-l2c3",
+      "book": "xinyun",
+      "caseId": "golden-huanghelou-ps-v1",
+      "tokenId": "l2c3",
+      "target": "空",
+      "exactPhrases": ["空余黄鹤楼"],
+      "targetOffset": 0,
+      "dataVersion": "xinyun-rebuild-d2-full",
+      "candidateIds": [
+        "xinyun:空:shang:十一庚·上声",
+        "xinyun:空:qu:十一庚·去声",
+        "xinyun:空:yinping:十一庚·阴平"
+      ],
+      "candidateEvidence": [
+        {
+          "candidateId": "xinyun:空:shang:十一庚·上声",
+          "tone": "Z",
+          "toneClass": "shang",
+          "groupIds": ["group:xinyun:十一庚:十一庚·上声"],
+          "evidenceIds": ["ev:xinyun:十一庚:十一庚·上声"],
+          "evidenceApproved": 0,
+          "evidenceTotal": 1
+        },
+        {
+          "candidateId": "xinyun:空:qu:十一庚·去声",
+          "tone": "Z",
+          "toneClass": "qu",
+          "groupIds": ["group:xinyun:十一庚:十一庚·去声"],
+          "evidenceIds": ["ev:xinyun:十一庚:十一庚·去声"],
+          "evidenceApproved": 0,
+          "evidenceTotal": 1
+        },
+        {
+          "candidateId": "xinyun:空:yinping:十一庚·阴平",
+          "tone": "P",
+          "toneClass": "yinping",
+          "groupIds": ["group:xinyun:十一庚:十一庚·阴平"],
+          "evidenceIds": ["ev:xinyun:十一庚:十一庚·阴平"],
+          "evidenceApproved": 0,
+          "evidenceTotal": 1
+        }
+      ],
+      "proposedSelection": null,
+      "proposedSelectionReason": "本书全部候选证据未审核：连候选归属都未确认，谈不上选音",
+      "senseBasis": "副词「徒然、空自」义，取平声一东（去声孔隙、上声通孔皆不合句义）",
+      "transferCondition": "须先证明该义项在本书可迁移（韵书归部与字形一致），并给出本书候选的可定位依据；不得把平水 candidateId 或平水裁定直接搬到本书",
+      "counterExamples": ["孔隙", "空洞"],
+      "aSideDependency": {
+        "candidateEvidencePending": [
+          "xinyun:空:shang:十一庚·上声",
+          "xinyun:空:qu:十一庚·去声",
+          "xinyun:空:yinping:十一庚·阴平"
+        ],
+        "requiredEvidence": [
+          "本书（xinyun）该候选的归部证据并完成审核",
+          "该语境义项在本书的可定位来源"
+        ]
+      },
+      "pendingPoints": [
+        "本书候选的归部证据需由 A 落库并审核",
+        "该义项在本书的可定位来源（韵书条目/字书义项/反切）",
+        "组长裁定：是否接受平水义项向本书迁移",
+        "裁定后仍需补一条本书反例的安全边界检查"
+      ],
+      "readiness": "not-approval-ready",
+      "readinessReason": "selectCandidateIds 为空且本书候选证据未审，属材料待补，不是待批选项",
+      "sourceRuleRef": "ctx-j03b2-06-huang-kong-kongyu",
+      "reviewStatus": "unverified"
+    },
+    {
+      "draftId": "draft-xinyun-golden-huanghelou-ps-v1-l3c5",
+      "book": "xinyun",
+      "caseId": "golden-huanghelou-ps-v1",
+      "tokenId": "l3c5",
+      "target": "不",
+      "exactPhrases": ["不复返"],
+      "targetOffset": 0,
+      "dataVersion": "xinyun-rebuild-d2-full",
+      "candidateIds": [
+        "xinyun:不:shang:七尤·上声",
+        "xinyun:不:yinping:七尤·阴平",
+        "xinyun:不:qu:十四姑·去声",
+        "xinyun:不:yangping:十四姑·阳平",
+        "xinyun:不:yinping:十四姑·阴平"
+      ],
+      "candidateEvidence": [
+        {
+          "candidateId": "xinyun:不:shang:七尤·上声",
+          "tone": "Z",
+          "toneClass": "shang",
+          "groupIds": ["group:xinyun:七尤:七尤·上声"],
+          "evidenceIds": ["ev:xinyun:七尤:七尤·上声"],
+          "evidenceApproved": 0,
+          "evidenceTotal": 1
+        },
+        {
+          "candidateId": "xinyun:不:yinping:七尤·阴平",
+          "tone": "P",
+          "toneClass": "yinping",
+          "groupIds": ["group:xinyun:七尤:七尤·阴平"],
+          "evidenceIds": ["ev:xinyun:七尤:七尤·阴平"],
+          "evidenceApproved": 0,
+          "evidenceTotal": 1
+        },
+        {
+          "candidateId": "xinyun:不:qu:十四姑·去声",
+          "tone": "Z",
+          "toneClass": "qu",
+          "groupIds": ["group:xinyun:十四姑:十四姑·去声"],
+          "evidenceIds": ["ev:xinyun:十四姑:十四姑·去声"],
+          "evidenceApproved": 0,
+          "evidenceTotal": 1
+        },
+        {
+          "candidateId": "xinyun:不:yangping:十四姑·阳平",
+          "tone": "P",
+          "toneClass": "yangping",
+          "groupIds": ["group:xinyun:十四姑:十四姑·阳平"],
+          "evidenceIds": ["ev:xinyun:十四姑:十四姑·阳平"],
+          "evidenceApproved": 0,
+          "evidenceTotal": 1
+        },
+        {
+          "candidateId": "xinyun:不:yinping:十四姑·阴平",
+          "tone": "P",
+          "toneClass": "yinping",
+          "groupIds": ["group:xinyun:十四姑:十四姑·阴平"],
+          "evidenceIds": ["ev:xinyun:十四姑:十四姑·阴平"],
+          "evidenceApproved": 0,
+          "evidenceTotal": 1
+        }
+      ],
+      "proposedSelection": null,
+      "proposedSelectionReason": "本书全部候选证据未审核：连候选归属都未确认，谈不上选音",
+      "senseBasis": "否定副词义，取入声五物（平声十一尤为「否」之通假，专用于疑问句末）",
+      "transferCondition": "须先证明该义项在本书可迁移（韵书归部与字形一致），并给出本书候选的可定位依据；不得把平水 candidateId 或平水裁定直接搬到本书",
+      "counterExamples": ["当复如此不", "未知从今去"],
+      "aSideDependency": {
+        "candidateEvidencePending": [
+          "xinyun:不:shang:七尤·上声",
+          "xinyun:不:yinping:七尤·阴平",
+          "xinyun:不:qu:十四姑·去声",
+          "xinyun:不:yangping:十四姑·阳平",
+          "xinyun:不:yinping:十四姑·阴平"
+        ],
+        "requiredEvidence": [
+          "本书（xinyun）该候选的归部证据并完成审核",
+          "该语境义项在本书的可定位来源"
+        ]
+      },
+      "pendingPoints": [
+        "本书候选的归部证据需由 A 落库并审核",
+        "该义项在本书的可定位来源（韵书条目/字书义项/反切）",
+        "组长裁定：是否接受平水义项向本书迁移",
+        "裁定后仍需补一条本书反例的安全边界检查"
+      ],
+      "readiness": "not-approval-ready",
+      "readinessReason": "selectCandidateIds 为空且本书候选证据未审，属材料待补，不是待批选项",
+      "sourceRuleRef": "ctx-j03b2-07-huang-bu",
+      "reviewStatus": "unverified"
+    },
+    {
+      "draftId": "draft-xinyun-golden-huanghelou-ps-v1-l4c5",
+      "book": "xinyun",
+      "caseId": "golden-huanghelou-ps-v1",
+      "tokenId": "l4c5",
+      "target": "空",
+      "exactPhrases": ["空悠悠"],
+      "targetOffset": 0,
+      "dataVersion": "xinyun-rebuild-d2-full",
+      "candidateIds": [
+        "xinyun:空:shang:十一庚·上声",
+        "xinyun:空:qu:十一庚·去声",
+        "xinyun:空:yinping:十一庚·阴平"
+      ],
+      "candidateEvidence": [
+        {
+          "candidateId": "xinyun:空:shang:十一庚·上声",
+          "tone": "Z",
+          "toneClass": "shang",
+          "groupIds": ["group:xinyun:十一庚:十一庚·上声"],
+          "evidenceIds": ["ev:xinyun:十一庚:十一庚·上声"],
+          "evidenceApproved": 0,
+          "evidenceTotal": 1
+        },
+        {
+          "candidateId": "xinyun:空:qu:十一庚·去声",
+          "tone": "Z",
+          "toneClass": "qu",
+          "groupIds": ["group:xinyun:十一庚:十一庚·去声"],
+          "evidenceIds": ["ev:xinyun:十一庚:十一庚·去声"],
+          "evidenceApproved": 0,
+          "evidenceTotal": 1
+        },
+        {
+          "candidateId": "xinyun:空:yinping:十一庚·阴平",
+          "tone": "P",
+          "toneClass": "yinping",
+          "groupIds": ["group:xinyun:十一庚:十一庚·阴平"],
+          "evidenceIds": ["ev:xinyun:十一庚:十一庚·阴平"],
+          "evidenceApproved": 0,
+          "evidenceTotal": 1
+        }
+      ],
+      "proposedSelection": null,
+      "proposedSelectionReason": "本书全部候选证据未审核：连候选归属都未确认，谈不上选音",
+      "senseBasis": "副词「徒然」义，取平声一东；尾三字「空悠悠」为三平尾，作古风式律诗特征保留，不判出律",
+      "transferCondition": "须先证明该义项在本书可迁移（韵书归部与字形一致），并给出本书候选的可定位依据；不得把平水 candidateId 或平水裁定直接搬到本书",
+      "counterExamples": ["孔隙", "空洞"],
+      "aSideDependency": {
+        "candidateEvidencePending": [
+          "xinyun:空:shang:十一庚·上声",
+          "xinyun:空:qu:十一庚·去声",
+          "xinyun:空:yinping:十一庚·阴平"
+        ],
+        "requiredEvidence": [
+          "本书（xinyun）该候选的归部证据并完成审核",
+          "该语境义项在本书的可定位来源"
+        ]
+      },
+      "pendingPoints": [
+        "本书候选的归部证据需由 A 落库并审核",
+        "该义项在本书的可定位来源（韵书条目/字书义项/反切）",
+        "组长裁定：是否接受平水义项向本书迁移",
+        "裁定后仍需补一条本书反例的安全边界检查"
+      ],
+      "readiness": "not-approval-ready",
+      "readinessReason": "selectCandidateIds 为空且本书候选证据未审，属材料待补，不是待批选项",
+      "sourceRuleRef": "ctx-j03b2-08-huang-kong-kongyou",
+      "reviewStatus": "unverified"
+    }
+  ]
+}

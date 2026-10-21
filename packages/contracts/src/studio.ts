@@ -15,6 +15,8 @@ export const LibraryWorkSchema = z.object({
     .refine((url) => /^https?:\/\//iu.test(url), "来源须为HTTP(S)网址")
     .nullable(),
   tags: z.array(z.string().min(1).max(80)).max(32),
+  kind: z.enum(["verse", "prose", "unknown"]).optional(),
+  collection: z.string().max(120).optional(),
 });
 export const RevisionSchema = z.strictObject({
   startTokenId: z.string().min(1),

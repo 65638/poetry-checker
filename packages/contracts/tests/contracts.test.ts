@@ -3,9 +3,53 @@ import {
   AnalysisResponseSchema,
   AnalyzeRequestSchema,
   AnnotatedTokenSchema,
+  ProsodyReportSchema,
   createOpenApiDocument,
 } from "../src/index.js";
 import { makeFixture } from "./fixtures.js";
+import {
+  evaluateProsody as evaluateProsodyCore,
+  matchTemplates as matchTemplatesCore,
+} from "@poetry/prosody";
+
+describe("分项格式契约", () => {
+  const poem = makeFixture().poem;
+  const report = () =>
+    evaluateProsodyCore({
+      poem,
+      candidates: matchTemplatesCore({
+        poem,
+        formHint: "auto",
+        ruleSet: "teaching-v1",
+      }),
+      selectedTemplateId: null,
+      applicability: "uncertain",
+      ruleSet: "teaching-v1",
+    });
+  it("兼容旧报告，也接受完整条件检查", () => {
+    expect(AnalysisResponseSchema.safeParse(makeFixture()).success).toBe(true);
+    expect(ProsodyReportSchema.safeParse(report()).success).toBe(true);
+  });
+  it("拒绝悬空格式、条件批注与重复区块", () => {
+    const base = report();
+    const invalid = [
+      structuredClone(base),
+      structuredClone(base),
+      structuredClone(base),
+      structuredClone(base),
+    ];
+    invalid[0]!.format!.referenceTemplateIds = ["missing-template"];
+    invalid[1]!.conditionalChecks![0]!.conditionalFindingIds = [
+      "missing-finding",
+    ];
+    invalid[2]!.conditionalChecks![0]!.checks[0]!.templateId = "wrong-template";
+    invalid[3]!.conditionalChecks!.push(
+      structuredClone(base.conditionalChecks![0]!),
+    );
+    for (const item of invalid)
+      expect(ProsodyReportSchema.safeParse(item).success).toBe(false);
+  });
+});
 
 const request = {
   text: "白日依山尽，黄河入海流。欲穷千里目，更上一层楼。",
@@ -135,7 +179,10 @@ describe("响应契约与原文映射", () => {
     );
     expect(Object.keys(api.paths).sort()).toEqual([
       "/api/v1/analyze",
+      "/api/v1/character-reference/{char}",
       "/api/v1/characters/{char}",
+      "/api/v1/library",
+      "/api/v1/library/{id}/pronunciation",
       "/api/v1/poetry-assistant",
       "/api/v1/reading-suggestions",
       "/api/v1/reading-suggestions/status",

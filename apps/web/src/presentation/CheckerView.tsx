@@ -6,6 +6,7 @@ import { ReportView } from "./components/ReportView";
 import { EvidencePanel } from "./components/EvidencePanel";
 import { MoonlitScene } from "./components/MoonlitScene";
 import { ReadingRail } from "./components/ReadingRail";
+import { PendingPoem } from "./components/PendingPoem";
 import { useMotionPreference } from "./useMotionPreference";
 import { useBusyIndicator } from "./useBusyIndicator";
 import "./styles/tokens.css";
@@ -48,6 +49,10 @@ export function CheckerView(
   } | null>(null);
   const motion = useMotionPreference();
   const showBusy = useBusyIndicator(busy);
+  // A current report already contains this poem. Keep it stable on repeat
+  // analysis; only a new draft needs a separate readable original while waiting.
+  const showPendingPoem =
+    (busy && (report === null || stale)) || (report === null && error !== null);
   const effectsRef = useRef(motion.effects);
   effectsRef.current = motion.effects;
   const [editorCollapsed, setEditorCollapsed] = useState(false);
@@ -80,7 +85,7 @@ export function CheckerView(
   const collapsed = hasReport && editorCollapsed;
 
   const lockedReason = stale
-    ? "报告与当前输入不一致，请重新分析后再选音。"
+    ? "当前显示上次报告，分析更新后可修改选音。"
     : busy
       ? "正在分析，完成后可选音。"
       : null;
@@ -111,6 +116,15 @@ export function CheckerView(
   };
 
   const toggleEditor = () => setEditorCollapsed((c) => !c);
+  const returnToEditor = () => {
+    setEditorCollapsed(false);
+    requestAnimationFrame(() => {
+      const input =
+        rootRef.current?.querySelector<HTMLTextAreaElement>(".pc-input__text");
+      input?.scrollIntoView({ block: "center", behavior: "instant" });
+      input?.focus({ preventScroll: true });
+    });
+  };
 
   // Intent is dropped as soon as the user scrolls on their own while the request is pending.
   useEffect(() => {
@@ -150,7 +164,18 @@ export function CheckerView(
     const intent = revealIntentRef.current;
     if (intent === null) return;
     if (busy) {
+      const firstWait = !intent.sawBusy && report === null;
       intent.sawBusy = true;
+      if (firstWait && window.matchMedia("(max-width: 899px)").matches) {
+        const frame = requestAnimationFrame(() => {
+          if (revealIntentRef.current === intent)
+            manuscriptRef.current?.scrollIntoView({
+              block: "start",
+              behavior: "instant",
+            });
+        });
+        return () => cancelAnimationFrame(frame);
+      }
       return;
     }
     if (!intent.sawBusy && report === intent.from && error === null) return;
@@ -332,7 +357,7 @@ export function CheckerView(
 
           <section
             ref={manuscriptRef}
-            className="pc-manuscript pc-surface"
+            className={`pc-manuscript pc-surface${showPendingPoem ? " pc-manuscript--pending" : ""}`}
             aria-labelledby="pc-report-heading"
             aria-busy={busy}
           >
@@ -363,6 +388,15 @@ export function CheckerView(
               {feedback}
             </div>
 
+            {showPendingPoem && (
+              <PendingPoem
+                text={draft.text}
+                rhymeBook={draft.rhymeBook}
+                active={busy}
+                onEdit={returnToEditor}
+              />
+            )}
+
             {report !== null ? (
               <ReportView
                 report={report}
@@ -375,24 +409,20 @@ export function CheckerView(
                 onCopySummary={props.onCopySummary}
                 onDownloadReport={props.onDownloadReport}
               />
-            ) : (
+            ) : !busy && error === null ? (
               <aside className="pc-intro" aria-label="使用说明">
                 <>
                   <p className="pc-intro__eyebrow">
-                    <span /> {showBusy ? "正在逐字校韵" : "山 亭 听 雨"}
+                    <span /> 山 亭 听 雨
                   </p>
                   <p className="pc-intro__lead">
                     <span className="pc-intro__quote">檐下听微雨，</span>
                     <span className="pc-intro__quote">诗中见平仄。</span>
                   </p>
                   <p className="pc-intro__caption">
-                    {showBusy
-                      ? "正在核对字音、声律与用韵。"
-                      : "一字一音，一句一韵。"}
+                    一字一音，一句一韵。
                     <br />
-                    {showBusy
-                      ? "结果将在此展开。"
-                      : "在古人的声律里，读懂一首诗。"}
+                    在古人的声律里，读懂一首诗。
                   </p>
                   <div className="pc-intro__inscription" aria-hidden="true">
                     微雨 · 远山 <span>听韵</span>
@@ -412,7 +442,7 @@ export function CheckerView(
                   </ol>
                 </>
               </aside>
-            )}
+            ) : null}
             {props.poetryDesk}
           </section>
         </main>

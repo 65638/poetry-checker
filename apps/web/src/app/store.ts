@@ -53,6 +53,8 @@ export interface CheckerState {
 
 export interface StoreOptions {
   transport: Transport;
+  /** 有报告后，编辑停顿多久自动更新；0/未设置表示仅手动提交。 */
+  autoAnalyzeDelayMs?: number;
   /** 复制实现可注入，便于在无 DOM 环境测试。 */
   writeText?: (text: string) => Promise<void>;
   /** 下载实现可注入，便于在无 DOM 环境测试。 */
@@ -70,6 +72,7 @@ export interface StoreOptions {
 
 /** 默认 30 秒：足够慢网络下的真实编排，又不至于让用户干等。 */
 export const DEFAULT_REQUEST_TIMEOUT_MS = 30_000;
+export const AUTO_ANALYZE_DELAY_MS = 1_500;
 
 function initialState(draft: InputDraft): CheckerState {
   return {
@@ -119,6 +122,8 @@ export class CheckerStore {
   /** 请求身份：每次新请求或被编辑失效时递增。 */
   private runId = 0;
   private activeController: AbortController | null = null;
+  private refreshTimer: ReturnType<typeof setTimeout> | null = null;
+  private refreshPaused = false;
 
   constructor(draft: InputDraft, options: StoreOptions) {
     this.state = initialState(draft);
@@ -152,14 +157,40 @@ export class CheckerStore {
     }
   }
 
+  private cancelScheduledRefresh(): void {
+    if (this.refreshTimer !== null) clearTimeout(this.refreshTimer);
+    this.refreshTimer = null;
+  }
+
+  private scheduleRefresh(): void {
+    this.cancelScheduledRefresh();
+    const delay = this.options.autoAnalyzeDelayMs ?? 0;
+    if (
+      this.refreshPaused ||
+      delay <= 0 ||
+      !this.state.stale ||
+      validateDraft(this.state.draft)
+    )
+      return;
+    this.refreshTimer = setTimeout(() => {
+      this.refreshTimer = null;
+      if (this.state.stale && !this.state.busy) void this.analyze();
+    }, delay);
+  }
+
   /**
    * 草稿变化：只表达意图，互斥与失效由这里统一处理。
    * 会改变分析身份的编辑必须让在途请求失效（修复「编辑不重提交也要失效」）。
    */
-  setDraft(next: InputDraft): void {
+  setDraft(next: InputDraft, options?: { autoAnalyze?: boolean }): void {
+    if (options?.autoAnalyze !== undefined) {
+      this.refreshPaused = !options.autoAnalyze;
+      this.cancelScheduledRefresh();
+    }
     const normalized = normalizeDraft(next);
     const previous = this.state.draft;
-    if (draftIdentityChanged(previous, normalized)) {
+    const changed = draftIdentityChanged(previous, normalized);
+    if (changed) {
       this.invalidateInFlight();
     }
 
@@ -186,6 +217,7 @@ export class CheckerStore {
       patch.selectedFindingId = null;
     }
     this.commit(patch);
+    if (changed) this.scheduleRefresh();
   }
 
   loadExample(exampleId: string, text: string, current: InputDraft): void {
@@ -195,7 +227,7 @@ export class CheckerStore {
       });
       return;
     }
-    this.setDraft({ ...current, text });
+    this.setDraft({ ...current, text }, { autoAnalyze: true });
   }
 
   /** 普通提交：沿用已成功报告的选音覆盖。 */
@@ -208,6 +240,8 @@ export class CheckerStore {
    * 成功时才把 report/requestSnapshot/overrides 作为一组原子提交。
    */
   private async runAnalysis(overrides: ReadingOverride[]): Promise<void> {
+    this.cancelScheduledRefresh();
+    this.refreshPaused = false;
     const invalid = validateDraft(this.state.draft);
     if (invalid !== null) {
       this.commit({
@@ -374,9 +408,12 @@ export class CheckerStore {
   selectFinding(findingId: string | null): void {
     const { report } = this.state;
     if (findingId !== null && report !== null) {
-      const exists = report.prosody.checks.some(
-        (check) => check.id === findingId,
-      );
+      const exists = [
+        ...report.prosody.checks,
+        ...(report.prosody.conditionalChecks ?? []).flatMap(
+          (block) => block.checks,
+        ),
+      ].some((check) => check.id === findingId);
       if (!exists) {
         this.commit({ feedback: `诊断 ${findingId} 不在当前报告中。` });
         return;
@@ -480,6 +517,7 @@ export class CheckerStore {
    * 旧响应无论成功或失败都不得写状态，busy 立即结束且不产生错误。
    */
   abort(): void {
+    this.cancelScheduledRefresh();
     this.invalidateInFlight();
   }
 
@@ -496,6 +534,7 @@ export class CheckerStore {
     request: AnalyzeRequest;
     feedback?: string | null;
   }): void {
+    this.cancelScheduledRefresh();
     this.invalidateInFlight();
     this.commit({
       draft: input.draft,

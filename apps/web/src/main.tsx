@@ -1,7 +1,7 @@
 import { lazy, Suspense, useMemo } from "react";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { CheckerStore } from "./app/store";
+import { AUTO_ANALYZE_DELAY_MS, CheckerStore } from "./app/store";
 import { Workspace } from "./app/Workspace";
 import { EXAMPLES } from "./app/examples";
 import { createRuntimeTransport, readWebEnv } from "./app/config";
@@ -30,7 +30,10 @@ function App() {
   // 误开 VITE_DEV_MOCK 会在构建产物里直接抛错，不做静默兜底。
   const store = useMemo(() => {
     const { transport } = createRuntimeTransport(readWebEnv());
-    return new CheckerStore(loadSavedDraft(), { transport });
+    return new CheckerStore(loadSavedDraft(), {
+      transport,
+      autoAnalyzeDelayMs: AUTO_ANALYZE_DELAY_MS,
+    });
   }, []);
   const state = useCheckerStore(store);
 
@@ -44,8 +47,8 @@ function App() {
     selectedTokenId: state.selectedTokenId,
     selectedFindingId: state.selectedFindingId,
     examples: EXAMPLES,
-    onDraftChange: (next) => {
-      store.setDraft(next);
+    onDraftChange: (next, options) => {
+      store.setDraft(next, options);
     },
     onAnalyze: () => {
       void store.analyze();

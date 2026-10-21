@@ -79,7 +79,8 @@ try {
   });
   console.log("[PASS] isolated startup and real proxy");
   const ready = await fetch(`http://127.0.0.1:${webPort}/readyz`);
-  assert.equal(ready.status, 503);
+  assert.equal(ready.status, 200);
+  assert.equal((await ready.json()).status, "ready");
   result.readinessHttp = ready.status;
   browser = await launchBrowser();
   const { cdp, evaluate, click, key } = browser;

@@ -50,6 +50,56 @@ const post = (app: ReturnType<typeof buildApp>, payload = input) =>
   app.inject({ method: "POST", url: "/api/v1/reading-suggestions", payload });
 
 describe("GLM reading suggestions preserve candidate and approval boundaries", () => {
+  it("supplies independent exact-glyph reading clues for otherwise empty historical candidates", async () => {
+    await withApp(
+      {
+        fetcher: async (_url, init) => {
+          const data = JSON.parse(
+            JSON.parse(init!.body as string).messages[1].content,
+          );
+          const target = data.targets[0];
+          expect(target.character).toBe("不");
+          const entering = target.candidates.find(
+            (c: { id: string }) => c.id === "pingshui:不:ru:入声五物",
+          );
+          const level = target.candidates.find(
+            (c: { id: string }) => c.id === "pingshui:不:ping:十一尤",
+          );
+          expect(entering.modernReading).toBeNull();
+          expect(entering.referenceReadings).toContainEqual(
+            expect.objectContaining({
+              pronunciation: "bù",
+              fanqie: "分勿切",
+              tone: "入",
+            }),
+          );
+          expect(level.referenceReadings).toContainEqual(
+            expect.objectContaining({ pronunciation: "fōu", tone: "平" }),
+          );
+          return modelResponse([
+            {
+              ...choice,
+              tokenId: "l1c1",
+              candidateId: entering.id,
+              pronunciation: "bù",
+            },
+          ]);
+        },
+      },
+      async (app) => {
+        const response = await post(app, {
+          ...input,
+          text: "不能食",
+          targetTokenIds: ["l1c1"],
+        });
+        expect(response.statusCode).toBe(200);
+        expect(response.json().suggestions[0].candidate.tone).toBe("Z");
+        expect(
+          response.json().suggestions[0].candidate.modernReading,
+        ).toBeNull();
+      },
+    );
+  });
   const yuId = "xinyun:余:yangping:十二齐·阳平:yu2";
   const xuId = "xinyun:余:yangping:十二齐·阳平";
   const yuInput = {
@@ -189,10 +239,12 @@ describe("GLM reading suggestions preserve candidate and approval boundaries", (
     { rows: [{ ...choice, candidateId: "xinyun:更:fake" }] },
     { rows: [{ ...choice, tokenId: "l9c9" }] },
     { rows: [{ ...choice, candidateId: "pingshui:白:ru:十一陌" }] },
-    { rows: [choice, choice] },
+    { rows: [choice, { ...choice, pronunciation: "gēng" }] },
+    { rows: [choice, { ...choice, candidateId: null, pronunciation: null }] },
+    { rows: [] },
     { rows: [{ ...choice, candidateId: null }] },
   ])(
-    "rejects foreign, fabricated, duplicate or inconsistent choices %#",
+    "rejects foreign, fabricated, conflicting, missing or inconsistent choices %#",
     async ({ rows }) => {
       await withApp(
         { fetcher: async () => modelResponse(rows) },
@@ -204,6 +256,51 @@ describe("GLM reading suggestions preserve candidate and approval boundaries", (
       );
     },
   );
+  it("collapses identical repeated decisions even when their reasons differ", async () => {
+    await withApp(
+      {
+        fetcher: async () =>
+          modelResponse([choice, { ...choice, reason: "更进一步之义。" }]),
+      },
+      async (app) => {
+        const response = await post(app);
+        expect(response.statusCode).toBe(200);
+        expect(response.json().suggestions).toHaveLength(1);
+        expect(response.json().suggestions[0]).toMatchObject(choice);
+      },
+    );
+  });
+  it("accepts a complete 24-position batch with one repeated decision but rejects a missing position", async () => {
+    let omitLast = false;
+    await withApp(
+      {
+        fetcher: async (_url, init) => {
+          const targets = JSON.parse(
+            JSON.parse(init!.body as string).messages[1].content,
+          ).targets as Array<{ tokenId: string }>;
+          const rows = targets.map(({ tokenId }) => ({ ...choice, tokenId }));
+          if (omitLast) rows.pop();
+          return modelResponse([...rows, { ...rows[9]!, reason: "同上。" }]);
+        },
+      },
+      async (app) => {
+        const payload = {
+          ...input,
+          text: "更".repeat(24),
+          targetTokenIds: [] as string[],
+        };
+        payload.targetTokenIds = Array.from(
+          { length: 24 },
+          (_, i) => `l1c${i + 1}`,
+        );
+        const response = await post(app, payload);
+        expect(response.statusCode).toBe(200);
+        expect(response.json().suggestions).toHaveLength(24);
+        omitLast = true;
+        expect((await post(app, payload)).statusCode).toBe(502);
+      },
+    );
+  });
   it("allows explicit uncertainty instead of inventing a reading", async () => {
     await withApp(
       {

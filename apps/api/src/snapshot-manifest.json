@@ -5,7 +5,7 @@
   },
   "cilin": {
     "file": "cilin.full-d2.json",
-    "reason": "词林正韵 19 主部全量（33 声类子卷）；D3 clean1 过滤8条非汉字杂项，仍未批准"
+    "reason": "词林正韵19主部（33声类子卷），D4 candidate-review1保留clean1过滤结果；按acceptance-01真实接受记录批准16条候选，其余审核状态保持原值；当前参考分析不以未审核状态阻断服务"
   },
   "xinyun": {
     "file": "xinyun.full-readings-v2.json",

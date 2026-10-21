@@ -162,26 +162,31 @@ try {
       ),
     );
   });
-  await check("slow-first-analysis-preserves-intro-geometry", async () => {
+  await check("slow-first-analysis-keeps-current-poem-readable", async () => {
     await go("checker");
     await evaluate("scrollTo(0,0)");
     await h.setText("白日依山尽，黄河入海流。欲穷千里目，更上一层楼。");
     await evaluate(
       `window.__nativeFetch=window.fetch;window.fetch=async(...args)=>{if(String(args[0]).includes('/analyze'))await new Promise(r=>setTimeout(r,650));return window.__nativeFetch(...args)};true`,
     );
-    const before = await box(".pc-intro__lead");
     await h.click(".pc-input__submit");
     await sleep(250);
     assert.ok(
       await evaluate(
-        "document.querySelector('.pc-intro__eyebrow').textContent.includes('正在')",
+        "document.querySelector('.pc-pending__status')?.textContent.includes('正在')",
       ),
     );
-    const during = await box(".pc-intro__lead");
-    assert.ok(Math.abs(before.height - during.height) < 1);
     assert.equal(
-      await evaluate("document.querySelectorAll('.pc-intro__quote').length"),
-      2,
+      await evaluate(
+        "[...document.querySelectorAll('.pc-pending__line > span:last-child')].map(el=>el.textContent).join('')",
+      ),
+      "白日依山尽，黄河入海流。欲穷千里目，更上一层楼。",
+    );
+    assert.equal(
+      await evaluate(
+        "document.querySelectorAll('.pc-pending .pc-cell__tone').length",
+      ),
+      0,
     );
     await waitFor(
       () => evaluate("!!document.querySelector('.pc-report')"),
@@ -191,6 +196,14 @@ try {
     await sleep(400);
     await evaluate("window.fetch=window.__nativeFetch;scrollTo(0,0);true");
     await shot("report-desktop");
+  });
+  await check("repeated-analysis-does-not-flash-a-second-poem", async () => {
+    await evaluate(
+      `window.__pendingFlashes=0;window.__pendingObserver=new MutationObserver(records=>{for(const r of records)for(const n of r.addedNodes)if(n instanceof Element&&(n.matches('.pc-pending')||n.querySelector('.pc-pending')))window.__pendingFlashes++});window.__pendingObserver.observe(document.querySelector('.pc-manuscript'),{childList:true,subtree:true});true`,
+    );
+    for (let i = 0; i < 3; i++) await h.analyze();
+    assert.equal(await evaluate("window.__pendingFlashes"), 0);
+    await evaluate("window.__pendingObserver.disconnect();true");
   });
   await check("draft-tools-within-editor-and-paper-palette", async () => {
     const editor = await box(".pc-plinth"),

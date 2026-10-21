@@ -425,7 +425,7 @@ describe("C2-11 未选模板与适用性状态", () => {
     expect(report.selectedTemplateId).toBeNull();
     expect(report.checks.every((check) => check.templateId === null)).toBe(true);
     const pending = report.checks.find(
-      (check) => check.status === "uncertain" && check.message.includes("尚未确定"),
+      (check) => check.status === "uncertain" && check.id.endsWith(":template"),
     );
     expect(pending).toBeDefined();
   });

@@ -1,0 +1,88 @@
+{
+  "batch": "d4-e-02-g05",
+  "generatedAt": "2026-10-21T10:46:40",
+  "task": "G05 干净 clone 独立验收",
+  "cloneDir": "C:\\study\\w1\\g05-clone-cea831b",
+  "cloneHead": "cea831befa70a8842943d240f91f9816c9c55a94",
+  "cloneDirty": false,
+  "mode": "real",
+  "install": "pnpm install --frozen-lockfile → exit 0",
+  "verify": "pnpm verify → exit 0，56 文件 / 763 测试",
+  "e2e": {
+    "passed": 19,
+    "blocked": 0,
+    "failed": 0,
+    "exitCode": 0
+  },
+  "browser": "Edg/155.0.4283.62",
+  "exportParse": {
+    "exportFiles": [
+      {
+        "name": "poetry-report-白日依山尽.json",
+        "bytes": 271883,
+        "inputHash": "4dc6ac3926c8",
+        "summary": "pass",
+        "tokens": 20
+      },
+      {
+        "name": "poetry-report-昔人已乘黄鹤去.json",
+        "bytes": 403690,
+        "inputHash": "b3031b9e603f",
+        "summary": "fail",
+        "tokens": 56
+      },
+      {
+        "name": "poetry-report-昔人已乘黄鹤去.json",
+        "bytes": 403690,
+        "inputHash": "b3031b9e603f",
+        "summary": "fail",
+        "tokens": 56
+      }
+    ],
+    "parseable": 3
+  },
+  "personalPaths": "scripts/tests/package.json 中未发现 C:\\Users / C:\\study 绝对路径",
+  "note": "全新目录 clone、装依赖、构建、起服务、真实点击、退出；未使用个人绝对路径。",
+  "errata": {
+    "about": "generatedAt 无时区偏移；本勘误只追加依据，不改原值",
+    "originalValue": "2026-10-21T10:46:40",
+    "machineTimezone": "China Standard Time (UTC+8)",
+    "machineLocalNowAtCheck": "2026-10-21T19:09:33",
+    "machineUtcNowAtCheck": "2026-10-21T11:09:33+00:00",
+    "interpretation": "原值应按本机本地时间 CST 读取，即 2026-10-21T10:46:40+08:00（对应 UTC 10:46:40 之前 8 小时）；是否早于核对时点取决于核对所用时钟（UTC 或 CST），此处不猜。",
+    "traceability": "生成该字段的脚本用 datetime.now().isoformat()，不含 tzinfo；同批次 api.json/browser.json 的 runnerRevision 记录了运行 SHA 可交叉核对。"
+  },
+  "exportParseCorrected": {
+    "parses": 3,
+    "distinctReports": 2,
+    "files": [
+      {
+        "name": "poetry-report-白日依山尽.json",
+        "bytes": 271883,
+        "sha256": "f6b0d92a6786abd0f1b5f2668a45fa6686327a1297b52ae1f031cfbfad6cdec8",
+        "inputHash": "4dc6ac3926c849d14355b4240df877176062836d39788fc2947abb66339a124d",
+        "summary": "pass",
+        "tokens": 20
+      },
+      {
+        "name": "poetry-report-昔人已乘黄鹤去.json",
+        "bytes": 403690,
+        "sha256": "28a0da12d076b3809604c988969dfbddd944e8368c52a6dfc1485a52bd67e280",
+        "inputHash": "b3031b9e603f3e14016b22adfd361eee631e1f7455743492e4c2a19481d42053",
+        "summary": "fail",
+        "tokens": 56
+      }
+    ],
+    "duplicates": [
+      {
+        "name": "poetry-report-昔人已乘黄鹤去.json",
+        "sha256": "28a0da12d076b3809604c988969dfbddd944e8368c52a6dfc1485a52bd67e280",
+        "sameAs": "poetry-report-昔人已乘黄鹤去.json"
+      }
+    ],
+    "notProven": [
+      "静夜思的导出（这 3 条中不含静夜思）"
+    ],
+    "manifestPath": "exports/exports-manifest.json"
+  }
+}

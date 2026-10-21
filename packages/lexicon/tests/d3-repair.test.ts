@@ -54,7 +54,7 @@ describe("D3 数据修复的审批边界", () => {
     ]) {
       const s = snapshot(name);
       expect(s.reviewStatus).toBe("unverified");
-      if (s.book !== "pingshui")
+      if (s.book === "xinyun")
         expect(s.evidence.every((e) => e.reviewStatus === "unverified")).toBe(
           true,
         );
@@ -81,12 +81,26 @@ describe("D3 数据修复的审批边界", () => {
     expect(record.versions).toHaveLength(3);
     for (const v of record.versions) {
       const bytes = read(v.path);
+      const successor = v.path.includes("cilin")
+        ? (JSON.parse(
+            read(
+              "data/reviews/d4/a/approved-01/version-change.json",
+            ).toString(),
+          ) as {
+            before: { dataVersion: string; sha256: string };
+            after: { dataVersion: string; sha256: string };
+          })
+        : null;
+      if (successor) {
+        expect(successor.before.dataVersion).toBe(v.after.dataVersion);
+        expect(successor.before.sha256).toBe(v.after.sha256);
+      }
       expect(JSON.parse(bytes.toString()).dataVersion).toBe(
-        v.after.dataVersion,
+        successor?.after.dataVersion ?? v.after.dataVersion,
       );
       expect(v.after.dataVersion).not.toBe(v.before.dataVersion);
       expect(createHash("sha256").update(bytes).digest("hex")).toBe(
-        v.after.sha256,
+        successor?.after.sha256 ?? v.after.sha256,
       );
       expect(v.addedCandidateIds).toEqual([]);
       expect(v.removedCandidateIds).toHaveLength(

@@ -1,0 +1,46 @@
+{
+  "approvalId": "d4-a-acceptance-01",
+  "approvalKind": "human_acceptance_of_machine_checked_exact_candidates",
+  "approvedBy": "本会话用户（明确接受机器初审16项，非声称逐字人工校对）",
+  "approvedAt": "2026-10-20",
+  "recordedAt": "2026-10-20T08:35:00.781Z",
+  "actualReply": "接受这16项并落库",
+  "replyTimeNote": "recordedAt为本工具归档时间，不冒充用户消息精确发送时间",
+  "requestFile": "data/reviews/d4/a/approval-request-01.json",
+  "requestSha256": "b040d64121702c0ecda2d59f66d798eb8a34fd3b2d68a9aab92590eadb679334",
+  "sourceBatch": "data/reviews/d4/a/d4-a-dengguanquelou-cilin-2026-10-20.json",
+  "sourceBatchSha256": "a665a9d53ded2eb01741ff624684583d98427f8d5f59bd8fc1a3c721ef982399",
+  "acceptedCandidateIds": [
+    "cilin:白:ru:第十七部·入声",
+    "cilin:日:ru:第十七部·入声",
+    "cilin:依:ping:第三部·平声",
+    "cilin:山:ping:第七部·平声",
+    "cilin:河:ping:第九部·平声",
+    "cilin:入:ru:第十七部·入声",
+    "cilin:海:ze_unspecified:第五部·仄声",
+    "cilin:流:ping:第十二部·平声",
+    "cilin:欲:ru:第十五部·入声",
+    "cilin:千:ping:第七部·平声",
+    "cilin:里:ze_unspecified:第三部·仄声",
+    "cilin:目:ru:第十五部·入声",
+    "cilin:更:ping:第十一部·平声",
+    "cilin:更:ze_unspecified:第十一部·仄声",
+    "cilin:上:ze_unspecified:第二部·仄声",
+    "cilin:一:ru:第十七部·入声"
+  ],
+  "excludedCandidateIds": [
+    "cilin:尽:ze_unspecified:第六部·仄声",
+    "cilin:黄:ping:第二部·平声",
+    "cilin:穷:ping:第一部·平声",
+    "cilin:层:ping:第十一部·平声",
+    "cilin:楼:ping:第十二部·平声"
+  ],
+  "excludedScope": [
+    "其他候选",
+    "所属整部",
+    "整库发布",
+    "语境选择",
+    "简繁异体生效",
+    "转载授权结论"
+  ]
+}

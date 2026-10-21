@@ -10,6 +10,7 @@ import type {
 } from "@poetry/contracts";
 import { checkCommonRhyme, checkTonePossibilities } from "./constraints.js";
 import { getTemplates, type TemplateDefinition } from "./templates.js";
+import { identifyFormat } from "./format.js";
 
 type Token = AnnotatedToken | undefined;
 type Assignment = ReadonlyMap<string, Tone>;
@@ -559,27 +560,29 @@ function pending(
   );
 }
 
+function checkSignature(check: Finding): string {
+  return JSON.stringify([
+    check.ruleId,
+    check.ruleVersion,
+    check.status,
+    check.severity,
+    check.locations,
+    check.expected,
+    check.observed,
+    check.resolvedBy,
+  ]);
+}
+
 /** 未选模板只保留所有候选一致的诊断；不取最高分模板冒充用户/体裁选择。 */
 function consensus(
   reports: ReturnType<typeof evaluateTemplate>[],
 ): ReturnType<typeof evaluateTemplate> {
-  const signature = (check: Finding) =>
-    JSON.stringify([
-      check.ruleId,
-      check.ruleVersion,
-      check.status,
-      check.severity,
-      check.locations,
-      check.expected,
-      check.observed,
-      check.resolvedBy,
-    ]);
   const maps = reports.map(
     (report) =>
-      new Map(report.checks.map((check) => [signature(check), check])),
+      new Map(report.checks.map((check) => [checkSignature(check), check])),
   );
   const common = reports[0]!.checks.filter((check) =>
-    maps.every((map) => map.has(signature(check))),
+    maps.every((map) => map.has(checkSignature(check))),
   );
   const included = common.filter(
     (check) =>
@@ -658,15 +661,29 @@ export function evaluate(input: EvaluateInput): ProsodyReport {
       rhyme: { status: "unsupported", tokenIds: [], commonGroupIds: [] },
       relations: [],
     };
+  const templateReports = selected
+    ? []
+    : definitions.map((t) => ({
+        templateId: t.id,
+        report: evaluateTemplate(input.poem, t),
+      }));
   const report = selected
     ? evaluateTemplate(input.poem, selected)
-    : consensus(definitions.map((t) => evaluateTemplate(input.poem, t)));
+    : consensus(templateReports.map((t) => t.report));
+  const commonSignatures = new Set(report.checks.map(checkSignature));
+  const conditionalChecks = templateReports.map((t) => ({
+    templateId: t.templateId,
+    checks: t.report.checks,
+    conditionalFindingIds: t.report.checks
+      .filter((check) => !commonSignatures.has(checkSignature(check)))
+      .map((check) => check.id),
+  }));
   if (!selected)
     report.checks.push(
       pending(
         input,
         "uncertain",
-        "整诗模板尚未确定，仅返回各候选共有诊断；请确认体式与起式。",
+        "整诗参考格式尚未唯一确定；共同问题直接列出，其余检查按参考格式分别呈现。",
       ),
     );
   if (input.applicability === "uncertain") {
@@ -683,5 +700,11 @@ export function evaluate(input: EvaluateInput): ProsodyReport {
         ),
       );
   }
-  return { candidates, selectedTemplateId: selected?.id ?? null, ...report };
+  return {
+    candidates,
+    selectedTemplateId: selected?.id ?? null,
+    ...report,
+    format: identifyFormat(input.poem, definitions),
+    conditionalChecks,
+  };
 }

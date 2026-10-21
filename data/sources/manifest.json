@@ -1,15 +1,17 @@
 {
-  "manifestVersion": "d2-3",
-  "updatedAt": "2026-10-18T00:00:00.000Z",
-  "updatedAtNote": "d2-2（2026-10-18）改两处：① src:wikisource:pingshuiyun 的 license 改为 workLayer / siteLayer / conclusion 双层结构，不再作单一许可结论；② 该来源 files[0] 的 path 由改名前的拼错路径纠正为 data/raw/wikisource/PingshuiYun-8264804.wikitext，并按落盘文件实测登记 bytes=37073、lines=658、SHA-256。updatedAt 只精确到日期（执行环境取不到当前时刻），时刻部分用 00:00:00Z 承载，不得当作精确时间引用。",
-  "maintainer": "队员 A / DeepSeek（D1 数据批次）",
-  "howToVerify": "node scripts/data/fetch-sources.ts --check 会按本文件登记的 snapshotSha256 重新校验 data/raw 下的字节；不一致即报错退出，不静默替换。",
+  "manifestVersion": "d4-a-source-1",
+  "supplementaryManifests": ["data/raw/deepseek/manifest.json"],
+  "updatedAt": "2026-10-20T08:16:34.168Z",
+  "updatedAtNote": "D4 Codex 接管：仅新增实际获取的词林固定修订与 Wikimedia 条款字节；旧获取失败留在 previousAttempts，历史审批与原有 raw 字节不改。",
+  "maintainer": "A 数据目录，D4 经用户授权由 Codex 接管",
+  "howToVerify": "pnpm exec tsx scripts/data/fetch-sources.ts --check 校验内建8个CDN文件；D4新增词林与条款由 packages/lexicon/tests/d4-batches.test.ts 按本manifest实测字节SHA校验。来源不同不可声称前一个命令覆盖全部。",
   "digestScope": "snapshotSha256 只覆盖原始快照字节；retrievedAt 等时间信息不参与业务内容摘要（见 packages/lexicon/src/digest.ts）。",
   "environmentNotes": [
     "本机到 github.com / raw.githubusercontent.com 的 TLS 证书链被中间人替换（UNABLE_TO_VERIFY_LEAF_SIGNATURE），直连校验失败；schannel 侧报 SEC_E_NO_CREDENTIALS。",
     "因此静态文件改由 jsdelivr CDN 取同一固定提交/标签的文件；CDN 证书链正常，且同一文件在两个不同 ref（提交与标签）取回的 SHA-256 一致。",
     "维基文库（zh.wikisource.org / zh.wikipedia.org）在 D1 的执行环境不可达（连接超时）。D2 批次一改由用户在其本机浏览器按 oldid=8264804 取回 wikitext 并落盘；执行环境本身仍未联网，取回动作与时间均未经机器验证。",
-    "未执行任何上游仓库脚本（crawler/*.py、Makefile 等），只取静态数据与许可文本。"
+    "未执行任何上游仓库脚本（crawler/*.py、Makefile 等），只取静态数据与许可文本。",
+    "D4 本机 Node 24 --use-system-ca 已能以正常 TLS 校验访问 zh.wikisource.org 与 foundation.wikimedia.org；前述不可达描述是历史环境记录。"
   ],
   "sources": [
     {
@@ -155,25 +157,55 @@
           "purpose": "《平水韻》全本 wikitext（繁体，106 韵）；上声三讲正文为「講港棒蚌項缿玤傋耩」",
           "namingNote": "该文件已由用户从旧路径 data/raw/wikisouce/pingshuiyun-8264804.wikitext（少一个 r、小写）**改名**至此规范路径，字节未变。"
         }
-      ]
+      ],
+      "d4SiteTermsEvidence": {
+        "sourceId": "src:wikimedia:terms-of-use",
+        "path": "data/raw/wikimedia/TermsOfUse-554823.wikitext",
+        "sha256": "c96ef93b439ff9b8242dc3233f41ede57c0984ef9153fafa51aa5f8cf0678832",
+        "status": "条款文本已取回；历史 siteLayer 未取得是 D2 实况，适用性与署名仍待确认"
+      }
     },
     {
       "id": "src:wikisource:cilinzhengyun",
       "title": "维基文库《詞林正韻》（拟用于 19 部对照）",
       "repoUrl": "https://zh.wikisource.org/wiki/詞林正韻",
-      "revision": null,
-      "revisionType": "页面修订号未取得",
-      "status": "unreachable",
-      "error": "UND_ERR_CONNECT_TIMEOUT（同上）",
-      "retrievedAt": null,
+      "revision": "2123337",
+      "revisionType": "API 取得页面修订号，再以 oldid 固定取回原始 wikitext，未转换简繁",
+      "status": "snapshot_saved_locally",
+      "retrievedAt": "2026-10-20T08:16:17.965Z",
       "license": {
-        "declared": "页面声明 CC BY-SA 4.0（依任务书记录，本次未能亲自复核）",
-        "verified": "未核实"
+        "workLayer": {
+          "declared": "{{PD-old}}",
+          "verified": "按固定修订原文字节核对页脚模板"
+        },
+        "siteLayer": {
+          "declared": "CC BY-SA 4.0；具体要求见固定 Terms of Use",
+          "sourceId": "src:wikimedia:terms-of-use",
+          "status": "text_retrieved_pending_rights_review"
+        },
+        "conclusion": "来源事实与作品层声明可追溯，署名、适用性与转载义务仍需审核；不作整库可再分发结论"
       },
       "upstreamRightsTodo": [
         "只标仄声的记录必须保留 ze_unspecified，不得擅自补成某个具体古声类。"
       ],
-      "files": []
+      "files": [
+        {
+          "path": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+          "bytes": 27665,
+          "snapshotSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+          "lines": 361,
+          "purpose": "D4 独立底本对照；不替换 cwr 快照、不新增审批"
+        }
+      ],
+      "previousAttempts": [
+        {
+          "status": "unreachable",
+          "error": "UND_ERR_CONNECT_TIMEOUT（同上）",
+          "revision": null,
+          "retrievedAt": null
+        }
+      ],
+      "fixedUrl": "https://zh.wikisource.org/w/index.php?oldid=2123337&action=raw"
     },
     {
       "id": "src:wikisource:work:dengguanquelou",
@@ -232,6 +264,27 @@
           "bytes": 730,
           "snapshotSha256": "e6e66503c45822fa0cf56fa7547866a3c044c411bda16e71db2b8a31e868fe34",
           "purpose": "三首固定版本正文与异文核对"
+        }
+      ]
+    },
+    {
+      "id": "src:wikimedia:terms-of-use",
+      "title": "Wikimedia Terms of Use（D4 条款文本留存）",
+      "fixedUrl": "https://foundation.wikimedia.org/w/index.php?oldid=554823&action=raw",
+      "revision": "554823",
+      "revisionType": "API 核定 revision 后按 oldid 取回原始 wikitext",
+      "retrievedAt": "2026-10-20T08:16:34.168Z",
+      "license": {
+        "declared": "条款第 7 节规定贡献文本 CC BY-SA 4.0/GFDL，导入文本另有条件；不替任何第三方来源作授权结论",
+        "verified": "仅核对保存字节中 Licensing of Content 章节；适用性与署名实施待审核"
+      },
+      "files": [
+        {
+          "path": "data/raw/wikimedia/TermsOfUse-554823.wikitext",
+          "bytes": 54570,
+          "snapshotSha256": "c96ef93b439ff9b8242dc3233f41ede57c0984ef9153fafa51aa5f8cf0678832",
+          "lines": 467,
+          "purpose": "许可条款文本证据；并非数据再分发批准"
         }
       ]
     }

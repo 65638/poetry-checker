@@ -15,6 +15,7 @@ import "../presentation/styles/three-round-polish.css";
 import { LibraryContainer } from "./LibraryContainer";
 import { PoetryDesk } from "./PoetryDesk";
 import { ReadingTools } from "../presentation/components/ReadingTools";
+import { CharacterReference } from "./CharacterReference";
 import {
   NOTEBOOK_KEY,
   NOTEBOOK_LIMIT,
@@ -94,21 +95,19 @@ export function Workspace(props: CheckerViewProps) {
         },
       ].slice(-NOTEBOOK_LIMIT),
     );
-    props.onDraftChange(next);
+    props.onDraftChange(next, { autoAnalyze: false });
   }
   function undo() {
     const previous = undoStack.current.pop();
     if (!previous) return;
     redoStack.current.push(props.draft);
     revise(previous, "撤销上次修改", "undo");
-    props.onAnalyze();
   }
   function redo() {
     const next = redoStack.current.pop();
     if (!next) return;
     undoStack.current.push(props.draft);
     revise(next, "重做修改", "redo");
-    props.onAnalyze();
   }
   useEffect(() => {
     setSaved(false);
@@ -355,10 +354,10 @@ export function Workspace(props: CheckerViewProps) {
         >
           <CheckerView
             {...props}
-            onDraftChange={(next) => {
+            onDraftChange={(next, options) => {
               if (JSON.stringify(next) !== JSON.stringify(props.draft))
                 redoStack.current = [];
-              props.onDraftChange(next);
+              props.onDraftChange(next, options);
             }}
             onLoadExample={(id) => {
               redoStack.current = [];
@@ -385,6 +384,21 @@ export function Workspace(props: CheckerViewProps) {
                 )}
               </div>
             }
+            readingAssistant={(() => {
+              const token = props.report?.poem.tokens.find(
+                (t) => t.tokenId === props.selectedTokenId,
+              );
+              return token ? (
+                <CharacterReference
+                  key={token.tokenId}
+                  character={token.text}
+                  onLookup={(char) => {
+                    window.location.hash = `dictionary?char=${encodeURIComponent(char)}&book=${props.draft.rhymeBook}`;
+                    switchPlace("dictionary");
+                  }}
+                />
+              ) : undefined;
+            })()}
             poetryDesk={
               <PoetryDesk
                 checker={props}
@@ -444,6 +458,7 @@ export function Workspace(props: CheckerViewProps) {
           hidden={place !== "library"}
         >
           <LibraryContainer
+            active={place === "library"}
             onStudy={(work) => {
               revise(
                 {

@@ -1,0 +1,273 @@
+{
+  "baseSha": "cea831befa70a8842943d240f91f9816c9c55a94",
+  "input": "data/reviews/d4/a/precheck/ai-lexicon-precheck-2026-10-20.json",
+  "inputSha256": "22eb6061cef37a7be058e12c7a4e17dde545bcb99c87062fc9ea517b5c722de5",
+  "counts": {
+    "precheckFindings": 12,
+    "designRetained": 6,
+    "historicClosed": 4,
+    "newExplicitFindings": 4
+  },
+  "findings": [
+    {
+      "id": "A-pingshui-001",
+      "class": "A",
+      "book": "pingshui",
+      "dataVersion": "pingshui-cwr-ff0e9c1-d3-full-review4",
+      "severity": "P1",
+      "location": "data/normalized/pingshui.full-d2.json · groups",
+      "fact": "缺失韵目 1 个：三讲；连带结果：韵部 105/106，分部 {\"上平\":15,\"下平\":15,\"上\":28,\"去\":30,\"入\":17}（应有 {\"上平\":15,\"下平\":15,\"上\":29,\"去\":30,\"入\":17}）",
+      "basis": "checkCompleteness(平水韵（106 部）) 逐步比对核定韵目集合",
+      "impact": "该韵部下的字无法归部，按韵部查询会漏；结构门槛不通过",
+      "suggestedAction": "数据缺口，需补来源后重构建；不得新增空韵目凑数",
+      "actionKind": "数据事实需人审",
+      "category": "design_retained",
+      "status": "retained_negative_case",
+      "action": "105部负例故意保留；API运行106部，不新增空部"
+    },
+    {
+      "id": "B-cilin-001",
+      "class": "B",
+      "book": "cilin",
+      "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
+      "severity": "P3",
+      "location": "data/normalized/cilin.full-d2.json · candidates",
+      "fact": "词林 ze_unspecified 共 2232 条，分布于 14 个仄声子卷",
+      "basis": "统计 toneClass=ze_unspecified 的候选及其所在子卷",
+      "impact": "这些是「来源只标仄声」的如实记录：不得臆补成上声或去声；本次核出越界 0 条",
+      "suggestedAction": "保持现状；人审时只需确认来源确实只标仄",
+      "actionKind": "数据事实需人审",
+      "category": "design_retained",
+      "status": "retained",
+      "action": "原表仅标仄，不臆补上/去"
+    },
+    {
+      "id": "C-cross-001",
+      "class": "C",
+      "book": "cross",
+      "dataVersion": "*",
+      "severity": "P1",
+      "location": "scripts/data/inspect.ts:14（相对 import 使用 .js 扩展名）",
+      "fact": "验收命令 `node --conditions=development scripts/data/inspect.ts` 无法运行：ERR_MODULE_NOT_FOUND packages/lexicon/src/adapters/chinese-word-rhyme.js",
+      "basis": "Node 24 原生类型剥离不改写相对 import 的 .js→.ts；A 侧本机外部终端实测 EXIT=1；改用 tsx 入口后 EXIT=0",
+      "impact": "任务书第 5 步的验收命令之一本身不可用，易被误判为数据故障",
+      "suggestedAction": "把验收命令与文档统一为 `node node_modules/tsx/dist/cli.mjs scripts/data/inspect.ts`（只改脚本与文档）",
+      "actionKind": "接线/脚本可修",
+      "category": "legacy_command_defect",
+      "status": "documented_workaround",
+      "action": "本批发布说明改tsx入口；历史任务书与根别名由GLM统一，不改写历史结果"
+    },
+    {
+      "id": "F-cross-002",
+      "class": "F",
+      "book": "cross",
+      "dataVersion": "*",
+      "severity": "P3",
+      "location": "docs/data-quality.md（字形数口径）· scripts/data/inspect.ts（读原表）",
+      "fact": "三处「词林字形数」口径不同，容易互相错位比较：① 原表 `Cilin_Rhyme.json` 去重 = **5,037**（含 4 个非汉字字形：`[` `]` 空格 `，`）；② 导入层已按 D3 过滤后，快照 `cilin.full-d2.json` 去重 = **5,033**（汉字全集）；③ `inspect.ts` 读的是原表，故仍报 5,037。平水侧：D1/handoff 记「8,232」，105 部快照实测 8232（106 部 8240），**与 D1 一致、无漂移**，且平水无此杂项",
+      "basis": "raw / NFC / NFKC 三种去重结果完全相同（平水 106 部 8240、105 部 8232、词林原表 5037），可排除归一化重复；快照侧按 \\p{Script=Han} 过滤后为 5033，与 build-cilin.ts 的 8 条 droppedNonHan 差额吻合",
+      "impact": "同一「字形数」在 原表 / 快照 / inspect 三处数字不同（5037 vs 5033），跨文档直接比较会得出「词林少了 4 个字」的错觉",
+      "suggestedAction": "此后所有字形数必须注明来源（原表含杂项 / 快照已过滤 / inspect 读原表）；D1 的 8232 不需订正；词林 5037 属原表口径、5033 属快照口径，两者都对但不可混用",
+      "actionKind": "接线/脚本可修",
+      "category": "design_retained",
+      "status": "retained",
+      "action": "区分原表含杂项5037与汉字快照5033；不删汉字"
+    },
+    {
+      "id": "F-cross-003",
+      "class": "F",
+      "book": "cross",
+      "dataVersion": "*",
+      "severity": "P2",
+      "location": "data/sources/manifest.json · src:wikisource:pingshuiyun.license",
+      "fact": "该来源的许可为**两层**：作品层 {{PD-old}}（落盘字节第 655-656 行页脚，已核）；站点条款文本已保存且摘要与登记一致：data/raw/wikimedia/TermsOfUse-554823.wikitext；适用性、署名和转载实施仍待审核。manifest 已改为 workLayer / siteLayer / conclusion 三键分别登记，不作单一许可结论",
+      "basis": "页脚与固定修订 Terms of Use 字节留存；历史 pendingReview 不等于本次已完成授权审核",
+      "impact": "若只引任一层都会出错：只引 PD-old 会漏掉站点署名义务；只引 CC BY-SA 会与字节不符。两层均不构成「可商用」证明",
+      "suggestedAction": "保持双层登记，审核条款适用性和署名实施；文本留存不自动解除版权/发布门槛",
+      "actionKind": "数据事实需人审",
+      "category": "source_rights",
+      "status": "partial_text_retrieved",
+      "action": "Terms of Use固定字节已取得；署名实施、适用性、上游转载链仍待核"
+    },
+    {
+      "id": "F-cross-004",
+      "class": "F",
+      "book": "cross",
+      "dataVersion": "*",
+      "severity": "P2",
+      "location": "data/normalized/*.json（快照头）· SnapshotInput 结构",
+      "fact": "新韵的规则版本 xinyun-14-rules-d1 与生成器版本 xinyun-rebuild-gen/0.1.0 只写在快照 notice 文本里（notice 命中：规则=true、生成器=true）；pinyin-data revision=fa9761fff402f8560196b1ba085c437c52b56d7c、SHA-256 与落盘字节一致=true；但快照 Schema **没有** generatorVersion/rulesVersion 字段，机器无法结构化读取。平水两版与词林现已在 notice 增补「生成器：scripts/data/build-*.ts@d3-1」戳记（可 grep），三条 F 类「未登记生成器版本」异常因此关闭；**本条的剩余问题只是「非结构化」**——读者仍须 grep 文案，不能用字段直读",
+      "basis": "读四份快照的 notice 与 sources；SnapshotInput 类型定义无版本字段；pinyin.txt 字节重算比对",
+      "impact": "「同一 dataVersion 对应哪版脚本与规则」只能靠读文案回答，不能机器校验；对方案 §2.1「检查生成器版本、规则版本和 pinyin-data SHA」只能给部分答案",
+      "suggestedAction": "由 GLM 决定是否在快照外围加 descriptor（不改契约字段）；在此之前，版本以 notice 文本 + 本报告为准",
+      "actionKind": "接线/脚本可修",
+      "affectedBooks": [
+        "pingshui-cwr-ff0e9c1-d2-full",
+        "pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4",
+        "cilin-cwr-ff0e9c1-d3-full-clean1",
+        "xinyun-rebuild-d2-full"
+      ],
+      "category": "metadata_limit",
+      "status": "partial_sidecar_descriptor",
+      "action": "本批build-descriptor.json可机读来源/规则/生成器SHA；不改冻结快照Schema，API是否消费由GLM处理"
+    },
+    {
+      "id": "H-cross-005",
+      "class": "H",
+      "book": "cross",
+      "dataVersion": "*",
+      "severity": "P3",
+      "location": "data/patches/pingshui-shang-sanj-jiang.draft.json",
+      "fact": "字段值 status=approved、reviewStatus=approved、review=非 null；审批实况：ev:pingshui:上:三讲 = approved（A 同学 2026-10-18 人审签）；快照 reviewStatus = unverified；releaseGatePassed = false",
+      "basis": "data/reviews/approved-evidence.json 第 10 条 + 三讲快照的 gate 结果；补丁字段与审批清单是两套记录，本报告并列呈现、不改动任一方",
+      "impact": "「三讲已生效」与「三讲仍是草案字段」两种说法都能在仓库里找到凭据，易被引述错",
+      "suggestedAction": "对外统一按「字段值 + 审批实况」两栏表述；补丁字段保持原样",
+      "actionKind": "数据事实需人审",
+      "category": "design_retained",
+      "status": "retained",
+      "action": "三讲补丁approved与快照unverified分层表述"
+    },
+    {
+      "id": "H-cross-006",
+      "class": "H",
+      "book": "cross",
+      "dataVersion": "*",
+      "severity": "P3",
+      "location": "data/patches/pingshui-shang-sanj-jiang.draft.json · diff",
+      "fact": "补丁净增新字形 8 个、新增归属 1 条；「玤」为一字多部（一董 + 三讲）",
+      "basis": "补丁 diff 字段 + 三讲快照 spotCharacters 实测",
+      "impact": "若表述为「9 个新字」会与实测不符",
+      "suggestedAction": "对外统一表述为「8 新字形 + 1 新增归属」",
+      "actionKind": "接线/脚本可修",
+      "category": "design_retained",
+      "status": "retained",
+      "action": "8新字形+1新增归属；玤保留一董/三讲"
+    },
+    {
+      "id": "D-cross-007",
+      "class": "D",
+      "book": "cross",
+      "dataVersion": "*",
+      "severity": "P2",
+      "location": "data/variants/variant-edges-d2.json",
+      "fact": "简繁/异体候选边共 5 条：pending_review 2 条（餘→余、馀→余）、applied_in_patch 2 条、approved 1 条（樓→楼，均已登记 approvalBasis）",
+      "basis": "文件 summary 与 edges[].status 实测",
+      "impact": "未签边不生效：正文若写繁体（如「樓」）仍进 missing；已签边只属查询召回，不等于等价合并",
+      "suggestedAction": "按 0008 方案逐条人审签；签前不得让消费方启用",
+      "actionKind": "数据事实需人审",
+      "category": "human_decision",
+      "status": "pending",
+      "action": "餘/馀→余两边待审；樓→楼原批准不扩散"
+    },
+    {
+      "id": "G-cross-008",
+      "class": "G",
+      "book": "cross",
+      "dataVersion": "*",
+      "severity": "P1",
+      "location": "data/patches/xinyun-rebuild-report.dev.json · coverage",
+      "fact": "新韵重建：读音源字形 41923、读音 53457；未映射 43（FINAL_NOT_IN_RULES 9 / UNKNOWN_LETTER 30 / VOWEL_LESS 4）；轻声丢弃 241；er 等待核实规则影响 104 条",
+      "basis": "取自 data/patches/xinyun-rebuild-report.dev.json（rebuild-xinyun.ts 的产物，可能滞后于 build-xinyun.ts）",
+      "impact": "这些读音不进表：轻声本调不明未默认归平；未映射项是明确不收，不是补齐进度",
+      "suggestedAction": "保持现状（不猜补）；er→十二齐 口径待人审核实；需对齐最新构建可重跑 rebuild-xinyun.ts",
+      "actionKind": "数据事实需人审",
+      "category": "source_limit",
+      "status": "pending",
+      "action": "43未映射、241轻声、104条er影响保留，不猜补；十四韵规则权威出处未取得"
+    },
+    {
+      "id": "E-cross-009",
+      "class": "E",
+      "book": "cross",
+      "dataVersion": "*",
+      "severity": "P2",
+      "location": "data/patches/xinyun-reading-collisions.dev.json",
+      "fact": "同(字形,子卷)多读音 1508 组（条目数 1508）：候选只承载一条 modernReading，其余在此列明",
+      "basis": "文件 count 与 items.length 实测",
+      "impact": "「同归部」不等于「同读音」：把子卷内多读音并成一条会丢真实读音",
+      "suggestedAction": "保留清单；下游需要多读音时按本清单取，不得合并",
+      "actionKind": "接线/脚本可修",
+      "category": "design_retained",
+      "status": "retained_with_companion",
+      "action": "1,508组同子卷多读音在伴随清单保留；本批逐候选引用，不宣称已逐读音扩展候选ID"
+    },
+    {
+      "id": "E-cross-010",
+      "class": "E",
+      "book": "cross",
+      "dataVersion": "*",
+      "severity": "P3",
+      "location": "data/patches/xinyun-yi-conflict.draft.json",
+      "fact": "「一」语流变调冲突：resolution=null（未裁决），target=一",
+      "basis": "冲突登记文件实测；新韵快照中「一」保留全部候选",
+      "impact": "未裁决前不得默认采用任一声调，也不得删除竞争者",
+      "suggestedAction": "保持多候选；裁决需人审并记录依据",
+      "actionKind": "数据事实需人审",
+      "category": "human_decision",
+      "status": "pending",
+      "action": "一的本调/语流争议未裁，不删除竞争候选"
+    },
+    {
+      "id": "D4-A-SOURCE-RIGHTS",
+      "category": "source_rights",
+      "status": "pending",
+      "fact": "cwr/pinyin-data上游授权链及转载义务未全部核实",
+      "action": "许可与事实审核分开；不以仓库MIT直接宣称完整数据可再分发"
+    },
+    {
+      "id": "D4-A-XINYUN-RULE-SOURCE",
+      "category": "source_limit",
+      "status": "pending",
+      "fact": "现有十四韵规则为项目编码；权威规则文本尚未取得",
+      "action": "保留源读音、规则版本与代码SHA，未确认项needs_review"
+    },
+    {
+      "id": "D4-A-CILIN-REFERENCE-GLYPH",
+      "category": "human_decision",
+      "status": "pending",
+      "fact": "部分cwr候选原字在固定繁体底本同部同声未命中",
+      "action": "逐字回查，禁止自动简繁转换；具体候选见各批independentSource"
+    },
+    {
+      "id": "D4-A-CILIN-YU-MISSING",
+      "category": "source_character_gap",
+      "status": "pending",
+      "fact": "黄鹤楼l2c4余缺词林候选；cwr收馀，固定底本收餘",
+      "action": "精确异体/义项审批与版本化补丁，不能无依据补字"
+    }
+  ],
+  "historicClosed": [
+    {
+      "id": "D-cross-002",
+      "status": "historically_closed",
+      "action": "本批检查旧修复保持；不计为D4新增成果，保留旧ID"
+    },
+    {
+      "id": "F-pingshui-001",
+      "status": "historically_closed",
+      "action": "本批检查旧修复保持；不计为D4新增成果，保留旧ID"
+    },
+    {
+      "id": "F-pingshui-002",
+      "status": "historically_closed",
+      "action": "本批检查旧修复保持；不计为D4新增成果，保留旧ID"
+    },
+    {
+      "id": "F-cilin-002",
+      "status": "historically_closed",
+      "action": "本批检查旧修复保持；不计为D4新增成果，保留旧ID"
+    }
+  ],
+  "separateDebt": {
+    "crossBookDifferences": 478,
+    "mappingDrafts": 19,
+    "mappingStatus": "unverified",
+    "contextDrafts": 13,
+    "contextApproval": null,
+    "pendingVariantEdges": [
+      "edge-餘-余",
+      "edge-馀-余"
+    ],
+    "note": "跨库差异和映射草案仍待核，不因异常缺陷数为0自动关闭"
+  }
+}

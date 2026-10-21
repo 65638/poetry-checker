@@ -9,6 +9,7 @@ export function FindingReference({
   onFollow,
   open,
   onOpenChange,
+  conditional = false,
 }: {
   finding: Finding;
   number: number;
@@ -16,6 +17,7 @@ export function FindingReference({
   onFollow: () => void;
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  conditional?: boolean;
 }) {
   const id = useId();
   const trigger = useRef<HTMLButtonElement>(null);
@@ -154,7 +156,7 @@ export function FindingReference({
       .join(" / ") || "无记录";
   return (
     <span
-      className="pc-reference"
+      className={`pc-reference${conditional ? " pc-reference--conditional" : ""}`}
       onMouseEnter={() => {
         cancelClose();
         if (dwell.current) clearTimeout(dwell.current);

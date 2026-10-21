@@ -1,0 +1,66 @@
+{
+  "baseSha": "cea831befa70a8842943d240f91f9816c9c55a94",
+  "scope": "审核侧旁置描述，不改变公开快照Schema，不自动接入API",
+  "dataVersions": {
+    "pingshui": "pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4",
+    "cilin": "cilin-cwr-ff0e9c1-d3-full-clean1",
+    "xinyun": "xinyun-rebuild-d2-full"
+  },
+  "snapshots": [
+    {
+      "book": "pingshui",
+      "snapshotPath": "data/normalized/pingshui.full-d2-patched.json",
+      "sha256": "4b6fc33ea23a4b49cfb70ecc68a31a90ba1e061be1c40219ca3ba35a4ace293f",
+      "generatorPath": "scripts/data/build-pingshui.ts",
+      "generatorSha256": "fad742f7641b2a0d47ae927a630c025ad75ba30c19414924fa15544d511831d0",
+      "sources": [
+        {
+          "sourceId": "src:chinese_word_rhyme:pingshui",
+          "revision": "ff0e9c13fb037c43e0eaa5dc929c0fe4fa2ffb18",
+          "rawSha256": "fd11164ca1b848eb6b777688d5d6628ce772d72d0a25a0efd12d6b58459c6e2e"
+        },
+        {
+          "sourceId": "src:wikisource:pingshuiyun",
+          "revision": "8264804",
+          "rawSha256": "f0297bff7b66cde18bcb2644b5d9c6320ac90253f63a8aa178e489170a810ce2"
+        }
+      ],
+      "rules": null
+    },
+    {
+      "book": "cilin",
+      "snapshotPath": "data/normalized/cilin.full-d2.json",
+      "sha256": "ed7d80315b7cbaff6feef81d8927944b11ae90489bc1da909e251a2958887256",
+      "generatorPath": "scripts/data/build-cilin.ts",
+      "generatorSha256": "c64a3f958c68f49ff5d1ebd2a8228b5926b1af114bfa28805d3116c17147cf70",
+      "sources": [
+        {
+          "sourceId": "src:chinese_word_rhyme:cilin",
+          "revision": "ff0e9c13fb037c43e0eaa5dc929c0fe4fa2ffb18",
+          "rawSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f"
+        }
+      ],
+      "rules": null
+    },
+    {
+      "book": "xinyun",
+      "snapshotPath": "data/normalized/xinyun.full-d2.json",
+      "sha256": "cd0abe60175dd8da963129c09b4cf35878794bb1554958eb9bebd7dfc414f76b",
+      "generatorPath": "scripts/data/build-xinyun.ts",
+      "generatorSha256": "9deceb1939cfe2d0da25aa25e08c3377562e9adaa33cbd0ff0fa7ac97f8086e2",
+      "sources": [
+        {
+          "sourceId": "src:pinyin-data",
+          "revision": "fa9761fff402f8560196b1ba085c437c52b56d7c",
+          "rawSha256": "6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d"
+        }
+      ],
+      "rules": {
+        "version": "xinyun-14-rules-d1",
+        "path": "packages/lexicon/src/xinyun/rules.ts",
+        "sha256": "d38beca65391eb25f00e7ee221ce9e71c34ab70a8e691ae22e5b0fee9abe53d1",
+        "provenance": "unverified"
+      }
+    }
+  ]
+}

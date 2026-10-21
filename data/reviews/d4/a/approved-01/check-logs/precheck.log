@@ -1,0 +1,42 @@
+
+=== 输入核对 ===
+审批清单 approvedEvidenceIds：100 条
+  已审 data/normalized/pingshui.full-d2.json：pingshui-cwr-ff0e9c1-d3-full-review4（候选 10378）
+  已审 data/normalized/pingshui.full-d2-patched.json：pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4（候选 10387）
+  已审 data/normalized/cilin.full-d2.json：cilin-cwr-ff0e9c1-d4-candidate-review1（候选 5395）
+  已审 data/normalized/xinyun.full-d2.json：xinyun-rebuild-d2-full（候选 51608）
+  OK    四份快照全部初审（4/4）
+
+=== 已完成项对账（②③④） ===
+  OK    ② 新韵 modernReading 缺失 0（占 51,608 条候选）：期望 缺失 0 / 51608 / 实测 缺失 0 / 51608
+  OK    ② 同(字,子卷)多读音清单 1,508 组：期望 1508 / 实测 1508
+  OK    ③ 三库来源 ID 两两不同（词林不再与平水同 ID）：期望 互不相交 / 实测 互不相交
+  OK    ④ 平水106部：83条候选级 + 1条部级（部级清单随审批增长动态计算）：期望 84 / 189 / 实测 84 / 189
+  OK    ④ 平水105部：83条候选级 + 0条部级（无三讲部）：期望 83 / 188 / 实测 83 / 188
+  OK    ④ 七字样本：8条候选已审、7条原部级未审：期望 8 / 15 / 实测 8 / 15
+
+=== ① 交叉核对与 §2.1 补全 ===
+  A1 三分层：共比 4946 字；一致 4468；不一致 478
+  A1 全集：平水 raw 8240（非汉字 0）→ 汉字 8240；词林 raw 5033（非汉字 0）→ 汉字 5033；自证等式成立=true
+  A1 缺字：平水独有 3294；词林独有 87；多归部个数差 964
+  A2 待核实映射草案：19 条（status=unverified / basis=null）→ data/reviews/d4/a/approved-01/precheck/cilin-pingshui-mapping-draft-2026-10-20.json
+  B1 重复解析摘要一致：是；登记一致=是；文件名↔dataVersion 对应=一致；未登记=0；悬空登记=0
+  OK    B1 每份已存快照两次解析的业务内容摘要一致（未执行生成器）
+  OK    B1 登记摘要与实际摘要一致（漂移 0 条）
+  OK    B1 登记项的 fileName 与磁盘文件名一致（不符 0 条）
+  OK    B1 没有悬空登记（登记了但磁盘无对应文件：0 条）
+  B2 未经依据合并：0 处（边状态 {"approved":1,"pending_review":2,"applied_in_patch":2}）
+  B3 新韵三项可追溯：规则/生成器仅在 notice 文本、pinyin SHA 一致=true、结构化字段=false
+写出 data/reviews/d4/a/approved-01/precheck/cilin-pingshui-mapping-draft-2026-10-20.json
+
+=== 汇总 ===
+data/normalized/pingshui.full-d2.json：韵部 105/106，候选 10378，多归部字 1823，异常 1，引用闭合 是
+data/normalized/pingshui.full-d2-patched.json：韵部 106/106，候选 10387，多归部字 1824，异常 0，引用闭合 是
+data/normalized/cilin.full-d2.json：韵部 33/33，候选 5395，多归部字 352，异常 1，引用闭合 是
+data/normalized/xinyun.full-d2.json：韵部 56/56，候选 51608，多归部字 7777，异常 0，引用闭合 是
+异常合计 P0=0 P1=3 P2=4 P3=5（共 12）
+写出 data/reviews/d4/a/approved-01/precheck/ai-lexicon-precheck-2026-10-20.json
+写出 data/reviews/d4/a/approved-01/precheck/ai-lexicon-precheck-2026-10-20.md
+
+=== 结果 ===
+初审完成：四份快照，异常 12 条（P0=0）。退出码只表示初审跑通；发现异常本身不是运行失败。

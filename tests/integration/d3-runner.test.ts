@@ -59,13 +59,13 @@ const exported = () => ({
 });
 const summary = () =>
   [
-    `结论：${report.summary.status} — ${report.summary.message}`,
-    `韵书：pingshui（${report.policy.toneBasis}）`,
-    `体式：regulated / qilv（适用性：applicable）`,
-    `规则版本：${report.versions.rules}｜数据版本：${report.versions.data}`,
-    `原文摘要：${report.inputHash}`,
-    `原文：\n${report.poem.originalText}\n`,
-    `请求快照：${JSON.stringify(request)}`,
+    "诗词格律简评",
+    "",
+    report.poem.originalText,
+    "",
+    "依据：平水韵 · 传统四声（入声归仄）",
+    `格式：七律形制 · ${report.prosody.format?.start.value === "ping" ? "平起" : report.prosody.format?.start.value === "ze" ? "仄起" : "起式未定"}`,
+    "评语：按当前参考格式，发现格律问题。",
   ].join("\n");
 
 describe("E06 验收不得把内容缺失或旧报告判成通过", () => {
@@ -86,17 +86,14 @@ describe("E06 验收不得把内容缺失或旧报告判成通过", () => {
   it("体裁大类相同但具体体式错误也拒绝", () => {
     expect(() =>
       assertSummaryExport(
-        summary().replace("/ qilv", "/ wujue"),
+        summary().replace("七律形制", "五绝形制"),
         report,
         request,
       ),
     ).toThrow();
   });
-  it("摘要中正文相同但请求韵书被偷换也拒绝", () => {
-    const changed = summary().replace(
-      JSON.stringify(request),
-      JSON.stringify({ ...request, rhymeBook: "xinyun" }),
-    );
+  it("摘要中正文相同但韵书被偷换也拒绝", () => {
+    const changed = summary().replace("依据：平水韵", "依据：中华新韵");
     expect(() => assertSummaryExport(changed, report, request)).toThrow();
   });
   it("导出字位数相同但某字声调被改也拒绝", () => {

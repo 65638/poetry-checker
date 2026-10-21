@@ -1,0 +1,50 @@
+{
+  "recordId": "d4-a-cilin-approval-01-version-change",
+  "path": "data/normalized/cilin.full-d2.json",
+  "approvalRecord": "data/reviews/d4/a/acceptance-01.json",
+  "before": {
+    "dataVersion": "cilin-cwr-ff0e9c1-d3-full-clean1",
+    "candidateCount": 5395,
+    "groupCount": 33,
+    "evidenceCount": 33,
+    "evidenceApproved": 0,
+    "businessSha256": "c2531e69eb42170762556a0c03b4debdc61e0ec2d044a5e2e7116f016399d37b",
+    "canonicalSha256": "611bf23bd5701c8e9cbfd8f84bcb4e093371fcae239b871e339e19106c436036",
+    "sha256": "ed7d80315b7cbaff6feef81d8927944b11ae90489bc1da909e251a2958887256"
+  },
+  "after": {
+    "dataVersion": "cilin-cwr-ff0e9c1-d4-candidate-review1",
+    "candidateCount": 5395,
+    "groupCount": 33,
+    "evidenceCount": 49,
+    "evidenceApproved": 16,
+    "businessSha256": "b8a94eeb98afba465cdbd6c92be16cff02b6df44b9836bd417b09d7a9fd28107",
+    "canonicalSha256": "2dde76350a646ae543d867b420bd4042b5094b5e0c06f599236dae9b599f8631",
+    "sha256": "1881cdc4d0d37dd42f14cf5649686bb59dde6db733a9bd34643cb4c77d8f2aa8"
+  },
+  "addedCandidateIds": [],
+  "removedCandidateIds": [],
+  "addedEvidenceIds": [
+    "ev:candidate:cilin:白:ru:第十七部·入声:d4-a-01",
+    "ev:candidate:cilin:日:ru:第十七部·入声:d4-a-01",
+    "ev:candidate:cilin:依:ping:第三部·平声:d4-a-01",
+    "ev:candidate:cilin:山:ping:第七部·平声:d4-a-01",
+    "ev:candidate:cilin:河:ping:第九部·平声:d4-a-01",
+    "ev:candidate:cilin:入:ru:第十七部·入声:d4-a-01",
+    "ev:candidate:cilin:海:ze_unspecified:第五部·仄声:d4-a-01",
+    "ev:candidate:cilin:流:ping:第十二部·平声:d4-a-01",
+    "ev:candidate:cilin:欲:ru:第十五部·入声:d4-a-01",
+    "ev:candidate:cilin:千:ping:第七部·平声:d4-a-01",
+    "ev:candidate:cilin:里:ze_unspecified:第三部·仄声:d4-a-01",
+    "ev:candidate:cilin:目:ru:第十五部·入声:d4-a-01",
+    "ev:candidate:cilin:更:ping:第十一部·平声:d4-a-01",
+    "ev:candidate:cilin:更:ze_unspecified:第十一部·仄声:d4-a-01",
+    "ev:candidate:cilin:上:ze_unspecified:第二部·仄声:d4-a-01",
+    "ev:candidate:cilin:一:ru:第十七部·入声:d4-a-01"
+  ],
+  "idMigration": [],
+  "candidateFactsUnchanged": true,
+  "groupsUnchanged": true,
+  "sourcesUnchanged": true,
+  "reason": "用户按请求01接受16个明确词林候选；只追加候选级批准证据；整部与整库仍unverified。原冻结批次不改，版本从clean1升d4-candidate-review1。"
+}

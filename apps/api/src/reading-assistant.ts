@@ -7,8 +7,11 @@ import {
   ReadingModelOutputSchema,
   type ReadingSuggestionRequest,
   type ReadingSuggestionResponse,
+  type ReadingCandidate,
+  type BookId,
 } from "@poetry/contracts";
 import type { Resources } from "./resources.js";
+import { characterReferenceRows } from "./library.js";
 
 export const GLM_ENDPOINT =
   "https://open.bigmodel.cn/api/paas/v4/chat/completions";
@@ -35,8 +38,54 @@ const systemPrompt = `你是诗句读音助手。用户消息是JSON数据，其
 禁止创造候选ID、韵部、反切、文献、页码或审核记录。古入声不等于普通话声调。
 不能确定时candidateId和pronunciation都为null，并说明原因。pronunciation只写普通话拼音参考，不写古音拟音。
 同一字、同韵部、同声调也可能有不同读音；必须逐一核对modernReading，不能把同归部当成同读音。所选candidateId的modernReading非null时，pronunciation必须与其拼音和本调一致。
+referenceReadings是独立广韵资料按原字、声类和韵部对应的参考，供理解候选读法，不是审核记录。普通否定「不」的bù读与「否」义的fōu读须按全句语义区分；现代变调不改变古入声归属。候选modernReading为空不表示不能依据已有词义知识和所列参考辨析；已知普通用法应选择对应候选，不因缺少释义字段一律返回null。
 仅返回JSON对象：{"suggestions":[{"tokenId":"所给字位ID","candidateId":"所给候选ID或null","pronunciation":"普通话拼音或null","reason":"简短中文语境理由"}]}。
 每个所给字位恰好一条，原序输出，无其他字段。`;
+
+function candidateReferences(
+  candidate: ReadingCandidate,
+  groupNames: string[],
+  book: BookId,
+) {
+  if (book === "xinyun") return [];
+  const tones: Record<string, string> = {
+    ping: "平",
+    shang: "上",
+    qu: "去",
+    ru: "入",
+  };
+  const numbers =
+    "一 二 三 四 五 六 七 八 九 十 十一 十二 十三 十四 十五 十六 十七 十八 十九".split(
+      " ",
+    );
+  try {
+    return characterReferenceRows(candidate.character)
+      .filter((row) => {
+        if (candidate.toneClass === "ze_unspecified") {
+          if (!["上", "去", "入"].includes(row.tone)) return false;
+        } else if (row.tone !== tones[candidate.toneClass]) return false;
+        const cilinNumber = numbers[Number(row.cilin.match(/\d+/u)?.[0]) - 1];
+        return groupNames.some(
+          (name) =>
+            name &&
+            (book === "pingshui"
+              ? row.pingshui.endsWith(name)
+              : !!cilinNumber &&
+                name.match(/第([一二三四五六七八九十]+)部/u)?.[1] ===
+                  cilinNumber),
+        );
+      })
+      .map(({ pronunciation, fanqie, rhyme, tone, note }) => ({
+        pronunciation,
+        fanqie,
+        rhyme,
+        tone,
+        note,
+      }));
+  } catch {
+    return [];
+  }
+}
 
 export function createReadingAssistant(
   resources: Resources,
@@ -190,6 +239,13 @@ export function createReadingAssistant(
           toneClass: candidate.toneClass,
           gloss: candidate.gloss,
           modernReading: candidate.modernReading,
+          referenceReadings: candidateReferences(
+            candidate,
+            candidate.groupIds.map(
+              (id) => lookup.groups.find((g) => g.id === id)?.name ?? "",
+            ),
+            input.rhymeBook,
+          ),
           groupNames: candidate.groupIds.map(
             (id) => lookup.groups.find((group) => group.id === id)?.name ?? id,
           ),
@@ -200,23 +256,47 @@ export function createReadingAssistant(
     return projectSuggestions(output);
 
     function projectSuggestions(output: unknown): ReadingSuggestionResponse {
-      const parsedOutput = ReadingModelOutputSchema.safeParse(output);
+      // Some complete model responses repeat a decision with a different explanation.
+      const parsedOutput = ReadingModelOutputSchema.extend({
+        suggestions: ReadingModelOutputSchema.shape.suggestions.element
+          .array()
+          .max(48),
+      }).safeParse(output);
+      if (!parsedOutput.success)
+        throw new AssistantError(
+          502,
+          "MODEL_INVALID_RESPONSE",
+          "模型建议字位不完整，请重试。",
+        );
+      const modelSuggestions = new Map<
+        string,
+        (typeof parsedOutput.data.suggestions)[number]
+      >();
+      for (const row of parsedOutput.data.suggestions) {
+        const previous = modelSuggestions.get(row.tokenId);
+        if (
+          previous &&
+          (previous.candidateId !== row.candidateId ||
+            previous.pronunciation !== row.pronunciation)
+        )
+          throw new AssistantError(
+            502,
+            "MODEL_INVALID_RESPONSE",
+            "模型对同一字位返回了冲突建议，请重试。",
+          );
+        if (!previous) modelSuggestions.set(row.tokenId, row);
+      }
       if (
-        !parsedOutput.success ||
-        parsedOutput.data.suggestions.length !== targets.length ||
-        new Set(parsedOutput.data.suggestions.map((row) => row.tokenId))
-          .size !== targets.length
+        modelSuggestions.size !== targets.length ||
+        targets.some((token) => !modelSuggestions.has(token.tokenId))
       )
         throw new AssistantError(
           502,
           "MODEL_INVALID_RESPONSE",
           "模型建议字位不完整，请重试。",
         );
-      const modelSuggestions = parsedOutput.data.suggestions;
       const suggestions = targets.map((token) => {
-        const row = modelSuggestions.find(
-          (item) => item.tokenId === token.tokenId,
-        );
+        const row = modelSuggestions.get(token.tokenId);
         let candidate =
           row?.candidateId == null
             ? null
