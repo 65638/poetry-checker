@@ -36,6 +36,36 @@ pnpm install --frozen-lockfile
   并在后续 `pnpm` 命令前带上同一参数或设置 `PNPM_CONFIG_NODE_LINKER=hoisted`。
   这是本机环境问题，不影响仓库内容。
 
+### Windows 没有符号链接权限时（G05 干净 clone 实测）
+
+在**未开开发者模式、也非管理员**的 Windows 上，只加 `--config.node-linker=hoisted`
+**不够**。实测依次失败在两处符号链接：
+
+1. 项目注册链到全局 store：
+   `EPERM: symlink '<repo>' -> 'D:\pnpm-store\v11\projects\…'`
+   → 追加 `--config.store-dir=.pnpm-store`（store 落到仓库内，随仓库删除）。
+2. 工作区包链接：
+   `EPERM: symlink '<repo>\packages\prosody' -> '<repo>\node_modules\@poetry\prosody'`
+   → **pnpm 无法绕过**。开 Windows 开发者模式 / 用管理员终端，或手工建 junction：
+
+   ```bat
+   mkdir node_modules\@poetry 2>nul
+   for %p in (contracts genre lexicon prosody readings) do mklink /J "node_modules\@poetry\%p" "packages\%p"
+   ```
+
+   `--config.inject-workspace-packages=true` **不可用**：它会与冻结的 `pnpm-lock.yaml`
+   冲突（`ERR_PNPM_LOCKFILE_CONFIG_MISMATCH`），而锁文件不在个人改动范围内。
+
+另外 `pnpm verify` 默认先做依赖状态检查、会触发一次 `pnpm install`（再撞上述链接）。
+需要这些命令都跑通时，再加：
+
+```sh
+PNPM_CONFIG_VERIFY_DEPS_BEFORE_RUN=false pnpm verify
+```
+
+> 以上**只适用于权限受限的 Windows 本机**。能正常 `pnpm install` 的机器按上一节即可，
+> 不要照搬。G05 实测：干净 clone 按这套步骤后 `pnpm verify` 为 **763 项 / 56 文件，exit 0**。
+
 ## 3. 启动
 
 一条命令同时起 API 与 Web：
@@ -45,13 +75,20 @@ pnpm dev
 ```
 
 - API：`http://127.0.0.1:3000`
-- Web：`http://127.0.0.1:5173`（Vite 默认端口）
+- Web：**`http://localhost:5173`**（默认端口）
+
+**Web 必须用 `localhost` 打开，不要用 `http://127.0.0.1:5173`。** Vite 默认只监听
+IPv6 回环 `::1`（实测监听地址为 `::1:5173`），所以 `127.0.0.1:5173` 会连不上，而
+`http://localhost:5173` 与 `http://[::1]:5173` 正常。API 相反，监听在 `127.0.0.1:3000`。
 
 也可以分两个终端：`pnpm dev:api` 与 `pnpm dev:web`。
 
 **端口以实际输出为准。** 5173 被占用时 Vite 会自动换到 5174 或其它可用端口，
 终端会打印实际的 `Local:` 地址——请打开那一行给出的地址，不要盲目沿用 5173。
 API 端口固定 3000，被占用时启动会直接报错退出。
+
+如果 `pnpm dev` 报 `ENOENT: spawn C:\WINDOWS\system32\cmd.exe`（受限沙箱里常见的
+`node → cmd.exe` 被拦），用上面的两个分启命令代替即可，功能等价。
 
 Web 通过 Vite 代理把 `/api`、`/healthz`、`/readyz` 转到 `127.0.0.1:3000`，
 所以浏览器只需访问 Web 的地址。

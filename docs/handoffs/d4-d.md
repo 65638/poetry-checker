@@ -1,5 +1,115 @@
 # D4 前端业务收口（队员 D）
 
+---
+
+# 第二批：G04 缺口收口 + G05 干净 clone（追加）
+
+## 批次基线
+
+| 项 | 值 |
+| --- | --- |
+| 任务卡 | `docs/team/D4_收口任务书_2026-10-20/04_给D_五态超时与干净启动配合.md` |
+| base | `origin/main` = **`cea831befa70a8842943d240f91f9816c9c55a94`**（含月下江山 V2 UI；任务卡写 `c409d20`，main 已在其后合并 C 的 PR #26，故取最新 main） |
+| 分支 | `feat/d-g04-closeout`（从 `origin/main` 切） |
+| head | 本文件随该提交入库；精确值用 `git rev-parse HEAD` |
+| Node / pnpm | 24.19.0 / 11.25.0 |
+| 环境 | Windows 无符号链接权限（joinded 安装，见下 G05） |
+
+## 本批改动（全在允许范围）
+
+| 路径 | 类型 | 说明 |
+| --- | --- | --- |
+| `apps/web/README.md` | 修改 | 修正 Web 访问地址为 `localhost`（实测 Vite 只绑 `::1`）；补「Windows 无符号链接权限」实测配方；补 `pnpm dev` 被拦时的分启回退 |
+| `docs/ui.md` | 追加 | G04-1 30 秒超时实测、G04-2 五态矩阵、G04-3 键盘流程与结构缺口、G04-4 未运行 |
+| `docs/handoffs/d4-d.md` | 追加 | 本节 |
+
+**未改代码**：三处 G04 缺口经浏览器实测均为**已实现且正确**，未发现需要改 store/api 的缺陷；
+唯一真实缺口是页面结构问题（见「交 Codex」），按任务卡不写 `presentation/`。
+
+未改：`apps/web/src/presentation/**`、`public/design/**`、`view-contract.ts`、公共契约、
+`apps/api`、根配置/CI/lockfile、`tests/e2e`（E 单写）、金标准与审批原件。
+
+## G04 实测结果（浏览器，真实 API）
+
+### 1. 真实 30 秒超时后的恢复与禁导出 — **闭合**
+
+拦截 `/api/v1/analyze` 挂起，真实等待 30s（非假时钟）：`busy` 退出、
+错误条给出「分析超时…请重试…未展示任何旧报告结论」+ `TIMEOUT`、正文保留、
+旧报告仍可查看；复制被阻止（剪贴板未变）且下载目录 0 文件；
+重试成功后错误清除、复制可用（603 字）、下载 0 → 1。
+
+→ 与 `docs/ui.md` D4-1 状态表一致，**不需要业务改动**。
+
+### 2. needs_review / unsupported 受控状态 — **闭合**
+
+DEV 注入：needs_review →「结论：待复核」；unsupported →「结论：暂不支持」；
+两者反馈区均显示「已装载开发合成场景；报告不代表真实格律结论。」且结论区文案含「合成」。
+之后重新走真实 API →「结论：通过」，结论区/反馈区均无「合成」，主路径未被污染。
+
+→ 受控 fixture 有显式测试模式标识，**不需要业务改动**。
+
+### 3. 全键盘主流程 — **业务侧通过，结构缺口交 Codex**
+
+通过项：前 18 次 Tab 命中 18 个控件且 18/18 可见、均带焦点环；折叠区不进入 Tab 序列；
+聚焦字位 + Enter 打开面板且焦点进入；Escape 关闭并**回焦到触发字位**。
+
+结构缺口（黄鹤楼实测）：56 个字位按钮全在 Tab 序列（越过正文需 56 次 Tab）、
+报告区可聚焦元素共 **169 个**、**无跳过链接**、`.pc-grid` 无自身 `aria-label`。
+
+→ 属页面结构，建议 Codex 集中修（跳转链接或 roving tabindex）。**本批未动 presention/。**
+
+## G05 干净 clone 配合 — **仓库可跑，卡在本机权限**
+
+做法：`git clone`（`--depth 1`，main）到独立目录 `g05-clean`，按 `apps/web/README.md` 操作。
+
+| 步骤 | 结果 |
+| --- | --- |
+| 启动相关文件（apps/scripts/package.json/README）个人绝对路径扫描 | **无** |
+| 全仓个人绝对路径 | 仅 `docs/design/CLAUDE-*.md` 历史 brief 含 `C:/Users/21393/…`（文档，不影响运行） |
+| `pnpm install --frozen-lockfile --config.node-linker=hoisted` | **失败** `EPERM: symlink '<repo>' -> 'D:\pnpm-store\v11\projects\…'` |
+| 追加 `--config.store-dir=.pnpm-store` | 进到第二处失败：`EPERM: symlink '<repo>\packages\prosody' -> '<repo>\node_modules\@poetry\prosody'` |
+| `--config.inject-workspace-packages=true` | 不可用：`ERR_PNPM_LOCKFILE_CONFIG_MISMATCH`（与冻结锁文件冲突） |
+| 手工 junction（5 个 `@poetry/*`）+ `PNPM_CONFIG_VERIFY_DEPS_BEFORE_RUN=false` | **`pnpm verify` exit 0，763 项 / 56 文件** |
+| `pnpm dev` | **失败** `ENOENT spawn C:\WINDOWS\system32\cmd.exe`（受限沙箱拦 `node→cmd.exe`） |
+| `pnpm dev:api` + `pnpm dev:web` 分启 | **成功**：API `127.0.0.1:3000` healthz 200 / readyz 503（发布门槛）；Web 监听 `::1:5173` |
+
+关键跨端事实（已写进 `apps/web/README.md`）：
+- **Web 必须用 `http://localhost:5173`**；`http://127.0.0.1:5173` 连不上，因为 Vite 只绑
+  IPv6 回环 `::1`（实测监听地址 `::1:5173`）。API 相反，绑 `127.0.0.1:3000`。
+- 无符号链接权限的 Windows 上，`--config.node-linker=hoisted` **不足以**装成；
+  需 `--config.store-dir=.pnpm-store` + 开发者模式/管理员/手工 junction。
+
+## 命令与结果（本机实跑）
+
+| 命令 | 退出码 | 结果 |
+| --- | --- | --- |
+| `pnpm verify`（base `cea831b`，dirty=false） | 0 | **56 文件 / 763 项**，lint/双 tsconfig/构建/8 生成物通过 |
+| `pnpm test:e2e`（base） | 0 | **通过 19 / 阻断 0 / 失败 0**（E 的 runner，当前 main） |
+| 干净 clone `pnpm verify`（junction + 关依赖检查） | 0 | **56 文件 / 763 项** |
+| G04 浏览器自测（本地 CDP 脚本，未入库） | — | 超时 10/10、五态 5/5、键盘 5/5 通过 + 1 项结构缺口记录 |
+
+计数不重复累加：本批**没有新增单元测试**（三处缺口实测为已实现，硬加用例只会重复既有覆盖）。
+
+## 交 Codex
+
+1. **键盘长区块**（G04-3）：报告区 169 个可聚焦元素、无跳过链接、`.pc-grid` 无 `aria-label`。
+   建议加「跳到批注」链接或把逐字谱改为 roving tabindex。
+2. **G05 安装门槛**：无符号链接权限的 Windows 需要「store-dir + junction/开发者模式」两处补丁，
+   而 `inject-workspace-packages` 与冻结锁文件冲突。建议在根 README 给一条统一口径
+   （或 CI 说明），避免每个新人各自踩。
+3. **Vite 绑定**：`dev:web` 只监听 `::1`，根 README 已提「用 localhost 访问」；前端 README
+   本批已对齐，若根 README 想统一表述可一并改。
+
+## 本批未运行
+
+- 真实触屏/真机手势：无设备，未运行。
+- E 的独立浏览器验收：由 E 用自己的 runner 复跑本批场景，本批不代跑、不合并计数。
+- `/readyz=200` 路径：三库未全量审核，仍 503。
+
+---
+
+# 第一批：D4 收口（已并入 main）
+
 ## 基线与环境
 
 | 项 | 值 |
