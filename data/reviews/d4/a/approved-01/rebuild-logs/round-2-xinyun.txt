@@ -1,0 +1,62 @@
+
+=== 输入检查 ===
+  OK    读音源存在：data/raw/pinyin-data/pinyin.txt
+读音源 SHA-256：6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d
+  OK    读音源摘要与 manifest 登记值一致（manifest=6170ab4ff7c9740fe765b1d35e6d3ad43554dd02874199388db513c44dcddf9d）
+
+=== 重建（规则 + 读音源） ===
+读音源字符 41923；读音 53457；已归部 53414
+未映射 43；轻声丢弃 241（按读音计）；规则待核实影响 104
+覆盖字形 41803；子卷 56
+  未映射原因 FINAL_NOT_IN_RULES：9
+  未映射原因 UNKNOWN_LETTER：30
+  未映射原因 VOWEL_LESS：4
+同(字,子卷)多读音 1508 组，已写入 data\patches\xinyun-reading-collisions.dev.json
+
+=== 中华新韵（十四韵，项目重建表）：data/normalized/xinyun.full-d2.json ===
+dataVersion：xinyun-rebuild-d2-full
+book：xinyun
+reviewStatus：unverified
+门槛：中华新韵（十四韵，项目重建表）
+韵部数：56 / 应有 56
+bucketCounts：{"一麻":4,"七尤":4,"三皆":4,"九文":4,"二波":4,"五微":4,"八寒":4,"六豪":4,"十一庚":4,"十三支":4,"十二齐":4,"十唐":4,"十四姑":4,"四开":4}
+expectedBucketCounts：{"一麻":4,"二波":4,"三皆":4,"四开":4,"五微":4,"六豪":4,"七尤":4,"八寒":4,"九文":4,"十唐":4,"十一庚":4,"十二齐":4,"十三支":4,"十四姑":4}
+missingGroups：（无）
+emptyGroups：（无）
+unexpectedGroups：（无）
+候选数：51608
+多归部字形数：7777
+证据数：56
+来源 ID：src:pinyin-data
+releaseGatePassed：否
+issue 代码：REVIEW_STATUS_NOT_APPROVED
+业务内容摘要：4a68bd5782ec6e2de7e0682edca0a38534307f4dd28702db487875815c690ae5
+规范化 JSON 摘要：e245829ae0eb7a5b72647d62cf379920e000f3e7bf6f61bf1735a1830de79af4
+
+=== 断言 ===
+  OK    子卷数 56（实际 56）
+  OK    missingGroups 为空（实际 []）
+  OK    emptyGroups 为空（实际 []）
+  OK    unexpectedGroups 为空（实际 []）
+  OK    reviewStatus 仍为 unverified（未被改动）
+  OK    releaseGatePassed === false（未 approved，不得通过）
+  OK    子卷名称集合与 XINYUN_GATE 逐字一致
+  OK    没有 tone=null 或 neutral 的候选（轻声已丢弃计数，实际 0 条）
+  OK    本调平仄映射正确（一二声 P、三四声 Z；异常 0 条）
+  OK    「一」保留多候选（实际 3 条：qu/yangping/yinping）
+  OK    「一」的去声候选被保留而非删除（实际 1 条）
+  OK    「一」冲突登记文件存在：data/patches/xinyun-yi-conflict.draft.json
+  OK    冲突登记指向「一」
+  OK    冲突尚未裁决（resolution === null），不得默认采用任一声调
+  OK    全部候选都带 modernReading（缺失 0 条）
+  OK    modernReading.pinyin 为去调号写法（带调号 0 条）
+  OK    modernReading.toneNumber 与声调类一致（异常 0 条）
+  OK    modernReading.pinyin 均非空（不得用同归部代替同读音）
+  OK    全部候选 ID 唯一
+  OK    输出路径不是 data/releases：data/normalized/xinyun.full-d2.json
+
+=== 写出 ===
+写出 data/normalized/xinyun.full-d2.json
+
+=== 结果 ===
+新韵重建快照已落盘；结构达标（14 韵 / 56 子卷、无空卷），但这是项目重建表、规则出处 unverified、reviewStatus=unverified，releaseGatePassed=false，未进 data/releases。

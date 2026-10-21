@@ -1,0 +1,364 @@
+{
+  "schemaVersion": "d4-a-review-index-v1",
+  "baseSha": "cea831befa70a8842943d240f91f9816c9c55a94",
+  "dataVersions": {
+    "pingshui": "pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4",
+    "cilin": "cilin-cwr-ff0e9c1-d3-full-clean1",
+    "xinyun": "xinyun-rebuild-d2-full"
+  },
+  "approvalRecord": null,
+  "batches": [
+    {
+      "batchId": "d4-a-dengguanquelou-cilin-2026-10-20",
+      "file": "data/reviews/d4/a/d4-a-dengguanquelou-cilin-2026-10-20.json",
+      "sha256": "a665a9d53ded2eb01741ff624684583d98427f8d5f59bd8fc1a3c721ef982399",
+      "work": "登鹳雀楼",
+      "book": "cilin",
+      "positions": 20,
+      "entries": 21,
+      "gaps": 0,
+      "needsReview": 5
+    },
+    {
+      "batchId": "d4-a-jingyesi-cilin-2026-10-20",
+      "file": "data/reviews/d4/a/d4-a-jingyesi-cilin-2026-10-20.json",
+      "sha256": "397f0d7d6a8feb7b0d2cf18eb749331e1f91bfdcb875e7997913fdab5c622ffd",
+      "work": "静夜思",
+      "book": "cilin",
+      "positions": 20,
+      "entries": 19,
+      "gaps": 0,
+      "needsReview": 3
+    },
+    {
+      "batchId": "d4-a-huanghelou-cilin-2026-10-20",
+      "file": "data/reviews/d4/a/d4-a-huanghelou-cilin-2026-10-20.json",
+      "sha256": "dd015105ad45a62994344de5fcc3fb2248364fb7e58fccdc2bb791503cf732db",
+      "work": "黄鹤楼",
+      "book": "cilin",
+      "positions": 56,
+      "entries": 49,
+      "gaps": 1,
+      "needsReview": 17
+    },
+    {
+      "batchId": "d4-a-dengguanquelou-xinyun-2026-10-20",
+      "file": "data/reviews/d4/a/d4-a-dengguanquelou-xinyun-2026-10-20.json",
+      "sha256": "08aa50e173f42d502e85a56b3b68216af0ddafb1058a5950039f8845bac494bd",
+      "work": "登鹳雀楼",
+      "book": "xinyun",
+      "positions": 20,
+      "entries": 27,
+      "gaps": 0,
+      "needsReview": 27
+    },
+    {
+      "batchId": "d4-a-jingyesi-xinyun-2026-10-20",
+      "file": "data/reviews/d4/a/d4-a-jingyesi-xinyun-2026-10-20.json",
+      "sha256": "17ef19d139c7bd4de9e860db833b67b0260a46ab5c129afe19c021088a278c32",
+      "work": "静夜思",
+      "book": "xinyun",
+      "positions": 20,
+      "entries": 25,
+      "gaps": 0,
+      "needsReview": 25
+    },
+    {
+      "batchId": "d4-a-huanghelou-xinyun-2026-10-20",
+      "file": "data/reviews/d4/a/d4-a-huanghelou-xinyun-2026-10-20.json",
+      "sha256": "a57bbf45aa559a117cfb82d93e85f9ab4b51e70b29ca3029884ffd95dd975b1d",
+      "work": "黄鹤楼",
+      "book": "xinyun",
+      "positions": 56,
+      "entries": 72,
+      "gaps": 0,
+      "needsReview": 72
+    }
+  ],
+  "counts": {
+    "positions": 192,
+    "coveredPositions": 191,
+    "withinBatchUniqueCandidates": 213,
+    "missingPositions": 1
+  },
+  "historicalApprovalScope": {
+    "candidateCount": 83,
+    "groupEvidenceIds": [
+      "ev:pingshui:上:三讲"
+    ],
+    "newApprovals": 0
+  },
+  "gaps": [
+    {
+      "id": "D4-A-CILIN-YU-MISSING",
+      "book": "cilin",
+      "positions": [
+        "huanghelou/l2c4"
+      ],
+      "character": "余",
+      "status": "needs_review",
+      "sourcePath": "data/raw/chinese_word_rhyme/Cilin_Rhyme.json",
+      "sourceSha256": "615736bb33a3c8657bf7d6a7d27f9698eaa4e82fbc76d19c425cb0d9e416032f",
+      "variantsAtSource": [
+        {
+          "character": "余",
+          "locations": [],
+          "candidateIds": []
+        },
+        {
+          "character": "餘",
+          "locations": [],
+          "candidateIds": []
+        },
+        {
+          "character": "馀",
+          "locations": [
+            "/第四部/平声/11"
+          ],
+          "candidateIds": [
+            "cilin:馀:ping:第四部·平声"
+          ]
+        }
+      ],
+      "variantEdges": [
+        {
+          "id": "edge-餘-余",
+          "from": "餘",
+          "fromCodePoint": "U+9918",
+          "to": "余",
+          "toCodePoint": "U+4F59",
+          "relation": "traditional_to_simplified",
+          "basis": "繁体底本区分「余」（第一人称）与「餘」（剩余）；cwr 简体词林表整表未收「余」，收「馀」(U+9980)。",
+          "locators": [
+            "data/raw/wikisource/PingshuiYun-8264804.wikitext（上平聲六魚含「余予譽輿餘…」）",
+            "data/raw/chinese_word_rhyme/Pingshui_Rhyme.json:848（余）、:852（馀）",
+            "data/raw/chinese_word_rhyme/Cilin_Rhyme.json:1344（馀）"
+          ],
+          "status": "pending_review",
+          "note": "「余」与「餘」在繁体底本中本非同一字，本边仅用于查询召回，**不得**据此认定二者义项相同。"
+        },
+        {
+          "id": "edge-馀-余",
+          "from": "馀",
+          "fromCodePoint": "U+9980",
+          "to": "余",
+          "toCodePoint": "U+4F59",
+          "relation": "variant_form",
+          "basis": "「馀」是 cwr 简体表对「餘」所用的写法；词林表只用此形，导致正文「余」查不到。",
+          "locators": [
+            "data/raw/chinese_word_rhyme/Cilin_Rhyme.json:1344"
+          ],
+          "status": "pending_review",
+          "note": "同上：仅召回用，不等价合并。"
+        }
+      ],
+      "independentReference": [
+        {
+          "character": "余",
+          "sourceId": "src:wikisource:cilinzhengyun",
+          "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+          "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+          "revision": "2123337",
+          "lines": [],
+          "status": "needs_review",
+          "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+        },
+        {
+          "character": "餘",
+          "sourceId": "src:wikisource:cilinzhengyun",
+          "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+          "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+          "revision": "2123337",
+          "lines": [
+            85
+          ],
+          "status": "exact_character_in_same_part_and_tone",
+          "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+        },
+        {
+          "character": "馀",
+          "sourceId": "src:wikisource:cilinzhengyun",
+          "sourcePath": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+          "sourceSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+          "revision": "2123337",
+          "lines": [],
+          "status": "needs_review",
+          "scope": "仅核对原字同部同声；未见原字时不做简繁转换，不把注文当韵字。"
+        }
+      ],
+      "conclusion": "cwr 原表不收余、餘；收馀于第四部/平声。馀→余边仍待审核；不能自动迁移候选或覆盖正文。固定词林底本原字核对见 independentReference。",
+      "nextAction": "按固定底本复核馀/余的本句字义及异体关系，提交精确异体边审批；若采用补丁，保留原文与原候选并另升版本。"
+    }
+  ],
+  "contextReferences": [
+    {
+      "draftId": "draft-cilin-golden-dengguanquelou-ps-v1-l4c1",
+      "candidateIds": [
+        "cilin:更:ping:第十一部·平声",
+        "cilin:更:ze_unspecified:第十一部·仄声"
+      ],
+      "referencesExist": true,
+      "semanticApproval": null
+    },
+    {
+      "draftId": "draft-cilin-golden-jingyesi-ps-v1-l3c3",
+      "candidateIds": [
+        "cilin:望:ping:第二部·平声",
+        "cilin:望:ze_unspecified:第二部·仄声"
+      ],
+      "referencesExist": true,
+      "semanticApproval": null
+    },
+    {
+      "draftId": "draft-cilin-golden-jingyesi-ps-v1-l4c3",
+      "candidateIds": [
+        "cilin:思:ping:第三部·平声",
+        "cilin:思:ze_unspecified:第三部·仄声"
+      ],
+      "referencesExist": true,
+      "semanticApproval": null
+    },
+    {
+      "draftId": "draft-cilin-golden-huanghelou-ps-v1-l1c4",
+      "candidateIds": [
+        "cilin:乘:ping:第十一部·平声",
+        "cilin:乘:ze_unspecified:第十一部·仄声"
+      ],
+      "referencesExist": true,
+      "semanticApproval": null
+    },
+    {
+      "draftId": "draft-cilin-golden-huanghelou-ps-v1-l2c3",
+      "candidateIds": [
+        "cilin:空:ping:第一部·平声",
+        "cilin:空:ze_unspecified:第一部·仄声"
+      ],
+      "referencesExist": true,
+      "semanticApproval": null
+    },
+    {
+      "draftId": "draft-cilin-golden-huanghelou-ps-v1-l3c5",
+      "candidateIds": [
+        "cilin:不:ping:第十二部·平声",
+        "cilin:不:ru:第十八部·入声"
+      ],
+      "referencesExist": true,
+      "semanticApproval": null
+    },
+    {
+      "draftId": "draft-cilin-golden-huanghelou-ps-v1-l4c5",
+      "candidateIds": [
+        "cilin:空:ping:第一部·平声",
+        "cilin:空:ze_unspecified:第一部·仄声"
+      ],
+      "referencesExist": true,
+      "semanticApproval": null
+    },
+    {
+      "draftId": "draft-xinyun-golden-dengguanquelou-ps-v1-l4c1",
+      "candidateIds": [
+        "xinyun:更:qu:十一庚·去声",
+        "xinyun:更:yinping:十一庚·阴平"
+      ],
+      "referencesExist": true,
+      "semanticApproval": null
+    },
+    {
+      "draftId": "draft-xinyun-golden-jingyesi-ps-v1-l4c3",
+      "candidateIds": [
+        "xinyun:思:yinping:十三支·阴平",
+        "xinyun:思:yinping:四开·阴平"
+      ],
+      "referencesExist": true,
+      "semanticApproval": null
+    },
+    {
+      "draftId": "draft-xinyun-golden-huanghelou-ps-v1-l1c4",
+      "candidateIds": [
+        "xinyun:乘:qu:十一庚·去声",
+        "xinyun:乘:yangping:十一庚·阳平"
+      ],
+      "referencesExist": true,
+      "semanticApproval": null
+    },
+    {
+      "draftId": "draft-xinyun-golden-huanghelou-ps-v1-l2c3",
+      "candidateIds": [
+        "xinyun:空:shang:十一庚·上声",
+        "xinyun:空:qu:十一庚·去声",
+        "xinyun:空:yinping:十一庚·阴平"
+      ],
+      "referencesExist": true,
+      "semanticApproval": null
+    },
+    {
+      "draftId": "draft-xinyun-golden-huanghelou-ps-v1-l3c5",
+      "candidateIds": [
+        "xinyun:不:shang:七尤·上声",
+        "xinyun:不:yinping:七尤·阴平",
+        "xinyun:不:qu:十四姑·去声",
+        "xinyun:不:yangping:十四姑·阳平",
+        "xinyun:不:yinping:十四姑·阴平"
+      ],
+      "referencesExist": true,
+      "semanticApproval": null
+    },
+    {
+      "draftId": "draft-xinyun-golden-huanghelou-ps-v1-l4c5",
+      "candidateIds": [
+        "xinyun:空:shang:十一庚·上声",
+        "xinyun:空:qu:十一庚·去声",
+        "xinyun:空:yinping:十一庚·阴平"
+      ],
+      "referencesExist": true,
+      "semanticApproval": null
+    }
+  ],
+  "columns": [
+    {
+      "book": "pingshui",
+      "structure": {
+        "groups": 106,
+        "missing": [],
+        "empty": [],
+        "releaseGatePassed": false
+      },
+      "machineComparison": "本批只读完整性；原批准不变",
+      "actualReview": "本批新增接受记录 0",
+      "approvedEvidence": {
+        "snapshotStatus": "unverified",
+        "count": 84
+      }
+    },
+    {
+      "book": "cilin",
+      "structure": {
+        "groups": 33,
+        "missing": [],
+        "empty": [],
+        "releaseGatePassed": false
+      },
+      "machineComparison": "逐字位对照 B 全部候选、逐候选来源字节与定位",
+      "actualReview": "本批新增接受记录 0",
+      "approvedEvidence": {
+        "snapshotStatus": "unverified",
+        "count": 0
+      }
+    },
+    {
+      "book": "xinyun",
+      "structure": {
+        "groups": 56,
+        "missing": [],
+        "empty": [],
+        "releaseGatePassed": false
+      },
+      "machineComparison": "逐字位对照 B 全部候选、逐候选来源字节与定位",
+      "actualReview": "本批新增接受记录 0",
+      "approvedEvidence": {
+        "snapshotStatus": "unverified",
+        "count": 0
+      }
+    }
+  ]
+}

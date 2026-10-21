@@ -115,7 +115,7 @@ describe("J03 与 D2 批次审批只作用于明确候选", () => {
   });
   it("明确批准的候选均有独立证据，未选竞争候选没有删除", () => {
     const snapshot = load();
-    const approvals = readCandidateApprovals(root);
+    const approvals = readCandidateApprovals(root, "pingshui");
     const approved = new Set(
       snapshot.evidence
         .filter((item) => item.reviewStatus === "approved")

@@ -72,7 +72,7 @@ function main(): void {
       retrievedAt: null,
       license: "MIT（上游转载授权待核实）",
     }),
-    readCandidateApprovals(ROOT),
+    readCandidateApprovals(ROOT, "pingshui"),
   );
 
   const wanted = new Set<string>(SAMPLE_CHARACTERS);

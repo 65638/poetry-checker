@@ -1,0 +1,85 @@
+
+=== 输入检查（落盘字节身份） ===
+  OK    维基文库快照存在：data/raw/wikisource/PingshuiYun-8264804.wikitext
+  OK    字节数 37073 == 登记值 37073
+  OK    SHA-256 与登记值一致
+  OK    行数 658 == 登记值 658
+  OK    第 198 行的韵目标题「上聲三{{++|講}}」可检索到
+  OK    三讲正文摘录「講港棒蚌項缿玤傋耩」可检索到（9 字，不转录全文）
+  OK    三讲正文为 9 字（实际 9）
+
+=== 读取原表 ===
+原表：data/raw/chinese_word_rhyme/Pingshui_Rhyme.json
+原表 SHA-256：fd11164ca1b848eb6b777688d5d6628ce772d72d0a25a0efd12d6b58459c6e2e
+
+=== 快照 A（105 部，缺三讲）：data\normalized\pingshui.full-d2.json ===
+dataVersion：pingshui-cwr-ff0e9c1-d3-full-review4
+reviewStatus：unverified
+门槛：平水韵（106 部）
+韵部数：105 / 应有 106
+bucketCounts：{"上平":15,"下平":15,"上":28,"去":30,"入":17}
+expectedBucketCounts：{"上平":15,"下平":15,"上":29,"去":30,"入":17}
+missingGroups：三讲
+emptyGroups：（无）
+unexpectedGroups：（无）
+候选数：10378
+多归部字形数：1823
+韵部数（groups 数组）：105
+证据数：188
+来源 ID：src:chinese_word_rhyme:pingshui
+releaseGatePassed：否
+业务内容摘要：a044f70af6d25ec6b64142a52f75c36b1689109a9ab5e29de2d47369a612d569
+规范化 JSON 摘要：9aa7a763cd8f8b7b35b7848bf219921fea285d1ebbfeb3daf192c45b90d55689
+
+=== 快照 B（106 部，三讲补丁草案）：data\normalized\pingshui.full-d2-patched.json ===
+dataVersion：pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4
+reviewStatus：unverified
+门槛：平水韵（106 部）
+韵部数：106 / 应有 106
+bucketCounts：{"上平":15,"下平":15,"上":29,"去":30,"入":17}
+expectedBucketCounts：{"上平":15,"下平":15,"上":29,"去":30,"入":17}
+missingGroups：（无）
+emptyGroups：（无）
+unexpectedGroups：（无）
+候选数：10387
+多归部字形数：1824
+韵部数（groups 数组）：106
+证据数：189
+来源 ID：src:chinese_word_rhyme:pingshui, src:wikisource:pingshuiyun
+releaseGatePassed：否
+业务内容摘要：6d5082eeec8c1e96ec59259fec5c6ca1dd56c1500c3d7c1a48b9bf4567013121
+规范化 JSON 摘要：c9c27f037c1d68a1df2df019a22f6c3802c07383bc55a13994c6126f32301a92
+
+=== 断言 ===
+  OK    A 韵部数 105（实际 105）
+  OK    A 缺失韵目含「三讲」（实际 三讲）
+  OK    A releaseGatePassed === false
+  OK    B 韵部数 106（实际 106）
+  OK    B missingGroups 为空（实际 空）
+  OK    B emptyGroups 为空（实际 空）
+  OK    B unexpectedGroups 为空（实际 空）
+  OK    B releaseGatePassed === false（reviewStatus 仍 unverified，未经人审签不得通过）
+  OK    两份 reviewStatus 均为 unverified（整库未批准，未被改动）
+  OK    三讲证据状态与补丁人审签结果一致（补丁=approved，证据=approved）
+  OK    approved 证据数（84）等于审批清单命中数（84）
+  OK    审批清单之外的证据不得为 approved（实际 0 条）
+  OK    仍有 105 条证据为 unverified（部分批准不等于整库批准）
+  OK    三讲 9 字中原表已有的只有「玤」（实际 玤）
+  OK    净增新字形 8 个（实际 8：讲港棒蚌项缿傋耩）
+  OK    归属净增 9 条（实际 9）
+  OK    「玤」保留上声一董归属（实际 group:pingshui:上:一董,group:pingshui:上:三讲）
+  OK    「玤」新增三讲归属（实际 group:pingshui:上:一董,group:pingshui:上:三讲）
+  OK    三讲成员 9 条（实际 9）
+  OK    9 条三讲候选 ID 互不相同
+  OK    B 全部候选 ID 唯一
+  OK    输出路径不是 data/releases：data/normalized/pingshui.full-d2.json
+  OK    输出路径不是 data/releases：data/normalized/pingshui.full-d2-patched.json
+
+=== 写出 ===
+写出 data/normalized/pingshui.full-d2.json
+写出 data/normalized/pingshui.full-d2-patched.json
+
+=== 汇总 ===
+A：105/106，缺三讲，门槛失败 —— 用于复现缺部。
+B：106/106，无空部，但 reviewStatus=unverified → 门槛仍失败。
+结构达标不等于内容审核通过；两份均未进 data/releases，补丁仍未生效。

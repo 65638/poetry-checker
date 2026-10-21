@@ -1,0 +1,41 @@
+$ pnpm lint && pnpm typecheck && pnpm test && pnpm check:generated
+$ eslint .
+$ tsc --noEmit && tsc --noEmit -p apps/web/tsconfig.json
+$ vitest run
+
+ RUN  v5.0.5 C:/Users/21393/Documents/Codex/2026-10-16/6-vibe-coding-ai-ai-web/work/d4-integration
+
+
+ Test Files  58 passed (58)
+      Tests  771 passed (771)
+   Start at  16:40:52
+   Duration  7.58s (import 54%, tests 42%, transform 2%, worker 2%)
+
+    Isolate  58 workers spawned · ~85ms startup each (spawn + environment, per file)
+             at least ~2.38s faster with isolate: false — reuses workers across files instead of one per file
+
+$ pnpm build && tsx scripts/generate-contracts.ts --check
+$ pnpm -r --if-present build
+Scope: 7 of 8 workspace projects
+packages/contracts build$ tsc -p tsconfig.build.json
+packages/contracts build: Done
+apps/web build$ vite build
+packages/genre build$ tsc -p tsconfig.build.json
+packages/prosody build$ tsc -p tsconfig.build.json
+packages/lexicon build$ tsc -p tsconfig.build.json
+apps/web build: vite v8.3.4 building client environment for production...
+apps/web build: transforming...
+apps/web build: ✓ 137 modules transformed.
+apps/web build: rendering chunks...
+apps/web build: computing gzip size...
+apps/web build: dist/index.html                   0.40 kB │ gzip:   0.29 kB
+apps/web build: dist/assets/index-I1M6AO-h.css   54.70 kB │ gzip:  11.35 kB
+apps/web build: dist/assets/index-8iSwerC9.js   376.98 kB │ gzip: 118.39 kB
+apps/web build: ✓ built in 159ms
+apps/web build: Done
+packages/readings build$ tsc -p tsconfig.build.json
+packages/genre build: Done
+packages/lexicon build: Done
+packages/prosody build: Done
+packages/readings build: Done
+已核对 8 个契约/模板文件；fixture 仅用于结构和界面测试。

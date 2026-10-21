@@ -1,0 +1,129 @@
+{
+  "baseSha": "cea831befa70a8842943d240f91f9816c9c55a94",
+  "count": 13,
+  "semanticApproval": null,
+  "entries": [
+    {
+      "draftId": "draft-cilin-golden-dengguanquelou-ps-v1-l4c1",
+      "candidateIds": [
+        "cilin:更:ping:第十一部·平声",
+        "cilin:更:ze_unspecified:第十一部·仄声"
+      ],
+      "referencesExist": true,
+      "semanticApproval": null
+    },
+    {
+      "draftId": "draft-cilin-golden-jingyesi-ps-v1-l3c3",
+      "candidateIds": [
+        "cilin:望:ping:第二部·平声",
+        "cilin:望:ze_unspecified:第二部·仄声"
+      ],
+      "referencesExist": true,
+      "semanticApproval": null
+    },
+    {
+      "draftId": "draft-cilin-golden-jingyesi-ps-v1-l4c3",
+      "candidateIds": [
+        "cilin:思:ping:第三部·平声",
+        "cilin:思:ze_unspecified:第三部·仄声"
+      ],
+      "referencesExist": true,
+      "semanticApproval": null
+    },
+    {
+      "draftId": "draft-cilin-golden-huanghelou-ps-v1-l1c4",
+      "candidateIds": [
+        "cilin:乘:ping:第十一部·平声",
+        "cilin:乘:ze_unspecified:第十一部·仄声"
+      ],
+      "referencesExist": true,
+      "semanticApproval": null
+    },
+    {
+      "draftId": "draft-cilin-golden-huanghelou-ps-v1-l2c3",
+      "candidateIds": [
+        "cilin:空:ping:第一部·平声",
+        "cilin:空:ze_unspecified:第一部·仄声"
+      ],
+      "referencesExist": true,
+      "semanticApproval": null
+    },
+    {
+      "draftId": "draft-cilin-golden-huanghelou-ps-v1-l3c5",
+      "candidateIds": [
+        "cilin:不:ping:第十二部·平声",
+        "cilin:不:ru:第十八部·入声"
+      ],
+      "referencesExist": true,
+      "semanticApproval": null
+    },
+    {
+      "draftId": "draft-cilin-golden-huanghelou-ps-v1-l4c5",
+      "candidateIds": [
+        "cilin:空:ping:第一部·平声",
+        "cilin:空:ze_unspecified:第一部·仄声"
+      ],
+      "referencesExist": true,
+      "semanticApproval": null
+    },
+    {
+      "draftId": "draft-xinyun-golden-dengguanquelou-ps-v1-l4c1",
+      "candidateIds": [
+        "xinyun:更:qu:十一庚·去声",
+        "xinyun:更:yinping:十一庚·阴平"
+      ],
+      "referencesExist": true,
+      "semanticApproval": null
+    },
+    {
+      "draftId": "draft-xinyun-golden-jingyesi-ps-v1-l4c3",
+      "candidateIds": [
+        "xinyun:思:yinping:十三支·阴平",
+        "xinyun:思:yinping:四开·阴平"
+      ],
+      "referencesExist": true,
+      "semanticApproval": null
+    },
+    {
+      "draftId": "draft-xinyun-golden-huanghelou-ps-v1-l1c4",
+      "candidateIds": [
+        "xinyun:乘:qu:十一庚·去声",
+        "xinyun:乘:yangping:十一庚·阳平"
+      ],
+      "referencesExist": true,
+      "semanticApproval": null
+    },
+    {
+      "draftId": "draft-xinyun-golden-huanghelou-ps-v1-l2c3",
+      "candidateIds": [
+        "xinyun:空:shang:十一庚·上声",
+        "xinyun:空:qu:十一庚·去声",
+        "xinyun:空:yinping:十一庚·阴平"
+      ],
+      "referencesExist": true,
+      "semanticApproval": null
+    },
+    {
+      "draftId": "draft-xinyun-golden-huanghelou-ps-v1-l3c5",
+      "candidateIds": [
+        "xinyun:不:shang:七尤·上声",
+        "xinyun:不:yinping:七尤·阴平",
+        "xinyun:不:qu:十四姑·去声",
+        "xinyun:不:yangping:十四姑·阳平",
+        "xinyun:不:yinping:十四姑·阴平"
+      ],
+      "referencesExist": true,
+      "semanticApproval": null
+    },
+    {
+      "draftId": "draft-xinyun-golden-huanghelou-ps-v1-l4c5",
+      "candidateIds": [
+        "xinyun:空:shang:十一庚·上声",
+        "xinyun:空:qu:十一庚·去声",
+        "xinyun:空:yinping:十一庚·阴平"
+      ],
+      "referencesExist": true,
+      "semanticApproval": null
+    }
+  ]
+}

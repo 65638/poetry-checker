@@ -1,9 +1,9 @@
 {
   "approvalsId": "approved-evidence-d2",
   "title": "已获责任人确认的精确范围证据清单（含接受机器初审的批次，不统称逐字人审）",
-  "updatedAt": "2026-10-18",
-  "authority": "组长 J03 第一批人审（引用 12_J03人审记录）+ 三讲人审签（A同学，2026-10-18） + 14号候选批次确认（组长接受AI初审并裁定异常）",
-  "authorityNote": "审批原件已归档到 docs/reviews/12_J03人审记录_第一批.md 和 docs/reviews/13_J03三首核心诗逐字人审_第二批.md。候选审批仅证明所列字音归部，不覆盖所属整韵部。 后续有限批次见 data/reviews/d2-closeout-batch-approval.json，不得改称逐字人工审核。",
+  "updatedAt": "2026-10-20",
+  "authority": "组长 J03 第一批人审（引用 12_J03人审记录）+ 三讲人审签（A同学，2026-10-18） + 14号候选批次确认（组长接受AI初审并裁定异常） + D4审批请求01（本会话用户接受16个词林候选机器初审）",
+  "authorityNote": "审批原件已归档到 docs/reviews/12_J03人审记录_第一批.md 和 docs/reviews/13_J03三首核心诗逐字人审_第二批.md。候选审批仅证明所列字音归部，不覆盖所属整韵部。 后续有限批次见 data/reviews/d2-closeout-batch-approval.json，不得改称逐字人工审核。 D4接受原件：data/reviews/d4/a/acceptance-01.json，严格绑定请求与来源批次SHA；非整部、非全库审核。",
   "note": "部级审批与候选级审批分开；构建脚本为每个已批准候选追加独立证据，原部级证据保持原审核范围。",
   "approved": [
     {
@@ -991,6 +991,198 @@
         "docs/reviews/14_D2收口_候选批次与里字异常.md",
         "data/reviews/d2-closeout-batch-approval.json",
         "data/reviews/d2-closeout-approved-source-batch.json"
+      ]
+    },
+    {
+      "candidateId": "cilin:白:ru:第十七部·入声",
+      "evidenceId": "ev:candidate:cilin:白:ru:第十七部·入声:d4-a-01",
+      "approvedBy": "本会话用户（明确接受机器初审16项，非声称逐字人工校对）",
+      "approvedAt": "2026-10-20",
+      "basis": "用户接受审批请求01明确列出的16项词林候选；cwr原表及词林固定底本同字同部同声机器对照，不裁定语境",
+      "recordFiles": [
+        "data/reviews/d4/a/acceptance-01.json",
+        "data/reviews/d4/a/approval-request-01.json",
+        "data/reviews/d4/a/d4-a-dengguanquelou-cilin-2026-10-20.json"
+      ]
+    },
+    {
+      "candidateId": "cilin:日:ru:第十七部·入声",
+      "evidenceId": "ev:candidate:cilin:日:ru:第十七部·入声:d4-a-01",
+      "approvedBy": "本会话用户（明确接受机器初审16项，非声称逐字人工校对）",
+      "approvedAt": "2026-10-20",
+      "basis": "用户接受审批请求01明确列出的16项词林候选；cwr原表及词林固定底本同字同部同声机器对照，不裁定语境",
+      "recordFiles": [
+        "data/reviews/d4/a/acceptance-01.json",
+        "data/reviews/d4/a/approval-request-01.json",
+        "data/reviews/d4/a/d4-a-dengguanquelou-cilin-2026-10-20.json"
+      ]
+    },
+    {
+      "candidateId": "cilin:依:ping:第三部·平声",
+      "evidenceId": "ev:candidate:cilin:依:ping:第三部·平声:d4-a-01",
+      "approvedBy": "本会话用户（明确接受机器初审16项，非声称逐字人工校对）",
+      "approvedAt": "2026-10-20",
+      "basis": "用户接受审批请求01明确列出的16项词林候选；cwr原表及词林固定底本同字同部同声机器对照，不裁定语境",
+      "recordFiles": [
+        "data/reviews/d4/a/acceptance-01.json",
+        "data/reviews/d4/a/approval-request-01.json",
+        "data/reviews/d4/a/d4-a-dengguanquelou-cilin-2026-10-20.json"
+      ]
+    },
+    {
+      "candidateId": "cilin:山:ping:第七部·平声",
+      "evidenceId": "ev:candidate:cilin:山:ping:第七部·平声:d4-a-01",
+      "approvedBy": "本会话用户（明确接受机器初审16项，非声称逐字人工校对）",
+      "approvedAt": "2026-10-20",
+      "basis": "用户接受审批请求01明确列出的16项词林候选；cwr原表及词林固定底本同字同部同声机器对照，不裁定语境",
+      "recordFiles": [
+        "data/reviews/d4/a/acceptance-01.json",
+        "data/reviews/d4/a/approval-request-01.json",
+        "data/reviews/d4/a/d4-a-dengguanquelou-cilin-2026-10-20.json"
+      ]
+    },
+    {
+      "candidateId": "cilin:河:ping:第九部·平声",
+      "evidenceId": "ev:candidate:cilin:河:ping:第九部·平声:d4-a-01",
+      "approvedBy": "本会话用户（明确接受机器初审16项，非声称逐字人工校对）",
+      "approvedAt": "2026-10-20",
+      "basis": "用户接受审批请求01明确列出的16项词林候选；cwr原表及词林固定底本同字同部同声机器对照，不裁定语境",
+      "recordFiles": [
+        "data/reviews/d4/a/acceptance-01.json",
+        "data/reviews/d4/a/approval-request-01.json",
+        "data/reviews/d4/a/d4-a-dengguanquelou-cilin-2026-10-20.json"
+      ]
+    },
+    {
+      "candidateId": "cilin:入:ru:第十七部·入声",
+      "evidenceId": "ev:candidate:cilin:入:ru:第十七部·入声:d4-a-01",
+      "approvedBy": "本会话用户（明确接受机器初审16项，非声称逐字人工校对）",
+      "approvedAt": "2026-10-20",
+      "basis": "用户接受审批请求01明确列出的16项词林候选；cwr原表及词林固定底本同字同部同声机器对照，不裁定语境",
+      "recordFiles": [
+        "data/reviews/d4/a/acceptance-01.json",
+        "data/reviews/d4/a/approval-request-01.json",
+        "data/reviews/d4/a/d4-a-dengguanquelou-cilin-2026-10-20.json"
+      ]
+    },
+    {
+      "candidateId": "cilin:海:ze_unspecified:第五部·仄声",
+      "evidenceId": "ev:candidate:cilin:海:ze_unspecified:第五部·仄声:d4-a-01",
+      "approvedBy": "本会话用户（明确接受机器初审16项，非声称逐字人工校对）",
+      "approvedAt": "2026-10-20",
+      "basis": "用户接受审批请求01明确列出的16项词林候选；cwr原表及词林固定底本同字同部同声机器对照，不裁定语境",
+      "recordFiles": [
+        "data/reviews/d4/a/acceptance-01.json",
+        "data/reviews/d4/a/approval-request-01.json",
+        "data/reviews/d4/a/d4-a-dengguanquelou-cilin-2026-10-20.json"
+      ]
+    },
+    {
+      "candidateId": "cilin:流:ping:第十二部·平声",
+      "evidenceId": "ev:candidate:cilin:流:ping:第十二部·平声:d4-a-01",
+      "approvedBy": "本会话用户（明确接受机器初审16项，非声称逐字人工校对）",
+      "approvedAt": "2026-10-20",
+      "basis": "用户接受审批请求01明确列出的16项词林候选；cwr原表及词林固定底本同字同部同声机器对照，不裁定语境",
+      "recordFiles": [
+        "data/reviews/d4/a/acceptance-01.json",
+        "data/reviews/d4/a/approval-request-01.json",
+        "data/reviews/d4/a/d4-a-dengguanquelou-cilin-2026-10-20.json"
+      ]
+    },
+    {
+      "candidateId": "cilin:欲:ru:第十五部·入声",
+      "evidenceId": "ev:candidate:cilin:欲:ru:第十五部·入声:d4-a-01",
+      "approvedBy": "本会话用户（明确接受机器初审16项，非声称逐字人工校对）",
+      "approvedAt": "2026-10-20",
+      "basis": "用户接受审批请求01明确列出的16项词林候选；cwr原表及词林固定底本同字同部同声机器对照，不裁定语境",
+      "recordFiles": [
+        "data/reviews/d4/a/acceptance-01.json",
+        "data/reviews/d4/a/approval-request-01.json",
+        "data/reviews/d4/a/d4-a-dengguanquelou-cilin-2026-10-20.json"
+      ]
+    },
+    {
+      "candidateId": "cilin:千:ping:第七部·平声",
+      "evidenceId": "ev:candidate:cilin:千:ping:第七部·平声:d4-a-01",
+      "approvedBy": "本会话用户（明确接受机器初审16项，非声称逐字人工校对）",
+      "approvedAt": "2026-10-20",
+      "basis": "用户接受审批请求01明确列出的16项词林候选；cwr原表及词林固定底本同字同部同声机器对照，不裁定语境",
+      "recordFiles": [
+        "data/reviews/d4/a/acceptance-01.json",
+        "data/reviews/d4/a/approval-request-01.json",
+        "data/reviews/d4/a/d4-a-dengguanquelou-cilin-2026-10-20.json"
+      ]
+    },
+    {
+      "candidateId": "cilin:里:ze_unspecified:第三部·仄声",
+      "evidenceId": "ev:candidate:cilin:里:ze_unspecified:第三部·仄声:d4-a-01",
+      "approvedBy": "本会话用户（明确接受机器初审16项，非声称逐字人工校对）",
+      "approvedAt": "2026-10-20",
+      "basis": "用户接受审批请求01明确列出的16项词林候选；cwr原表及词林固定底本同字同部同声机器对照，不裁定语境",
+      "recordFiles": [
+        "data/reviews/d4/a/acceptance-01.json",
+        "data/reviews/d4/a/approval-request-01.json",
+        "data/reviews/d4/a/d4-a-dengguanquelou-cilin-2026-10-20.json"
+      ]
+    },
+    {
+      "candidateId": "cilin:目:ru:第十五部·入声",
+      "evidenceId": "ev:candidate:cilin:目:ru:第十五部·入声:d4-a-01",
+      "approvedBy": "本会话用户（明确接受机器初审16项，非声称逐字人工校对）",
+      "approvedAt": "2026-10-20",
+      "basis": "用户接受审批请求01明确列出的16项词林候选；cwr原表及词林固定底本同字同部同声机器对照，不裁定语境",
+      "recordFiles": [
+        "data/reviews/d4/a/acceptance-01.json",
+        "data/reviews/d4/a/approval-request-01.json",
+        "data/reviews/d4/a/d4-a-dengguanquelou-cilin-2026-10-20.json"
+      ]
+    },
+    {
+      "candidateId": "cilin:更:ping:第十一部·平声",
+      "evidenceId": "ev:candidate:cilin:更:ping:第十一部·平声:d4-a-01",
+      "approvedBy": "本会话用户（明确接受机器初审16项，非声称逐字人工校对）",
+      "approvedAt": "2026-10-20",
+      "basis": "用户接受审批请求01明确列出的16项词林候选；cwr原表及词林固定底本同字同部同声机器对照，不裁定语境",
+      "recordFiles": [
+        "data/reviews/d4/a/acceptance-01.json",
+        "data/reviews/d4/a/approval-request-01.json",
+        "data/reviews/d4/a/d4-a-dengguanquelou-cilin-2026-10-20.json"
+      ]
+    },
+    {
+      "candidateId": "cilin:更:ze_unspecified:第十一部·仄声",
+      "evidenceId": "ev:candidate:cilin:更:ze_unspecified:第十一部·仄声:d4-a-01",
+      "approvedBy": "本会话用户（明确接受机器初审16项，非声称逐字人工校对）",
+      "approvedAt": "2026-10-20",
+      "basis": "用户接受审批请求01明确列出的16项词林候选；cwr原表及词林固定底本同字同部同声机器对照，不裁定语境",
+      "recordFiles": [
+        "data/reviews/d4/a/acceptance-01.json",
+        "data/reviews/d4/a/approval-request-01.json",
+        "data/reviews/d4/a/d4-a-dengguanquelou-cilin-2026-10-20.json"
+      ]
+    },
+    {
+      "candidateId": "cilin:上:ze_unspecified:第二部·仄声",
+      "evidenceId": "ev:candidate:cilin:上:ze_unspecified:第二部·仄声:d4-a-01",
+      "approvedBy": "本会话用户（明确接受机器初审16项，非声称逐字人工校对）",
+      "approvedAt": "2026-10-20",
+      "basis": "用户接受审批请求01明确列出的16项词林候选；cwr原表及词林固定底本同字同部同声机器对照，不裁定语境",
+      "recordFiles": [
+        "data/reviews/d4/a/acceptance-01.json",
+        "data/reviews/d4/a/approval-request-01.json",
+        "data/reviews/d4/a/d4-a-dengguanquelou-cilin-2026-10-20.json"
+      ]
+    },
+    {
+      "candidateId": "cilin:一:ru:第十七部·入声",
+      "evidenceId": "ev:candidate:cilin:一:ru:第十七部·入声:d4-a-01",
+      "approvedBy": "本会话用户（明确接受机器初审16项，非声称逐字人工校对）",
+      "approvedAt": "2026-10-20",
+      "basis": "用户接受审批请求01明确列出的16项词林候选；cwr原表及词林固定底本同字同部同声机器对照，不裁定语境",
+      "recordFiles": [
+        "data/reviews/d4/a/acceptance-01.json",
+        "data/reviews/d4/a/approval-request-01.json",
+        "data/reviews/d4/a/d4-a-dengguanquelou-cilin-2026-10-20.json"
       ]
     }
   ]

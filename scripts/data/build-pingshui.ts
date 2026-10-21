@@ -106,7 +106,7 @@ function readApprovedEvidenceIds(): readonly string[] {
 }
 const SANJ_JIANG_EVIDENCE_REVIEW_STATUS = readSanJiangEvidenceReviewStatus();
 const APPROVED_EVIDENCE_IDS = readApprovedEvidenceIds();
-const CANDIDATE_APPROVALS = readCandidateApprovals(ROOT);
+const CANDIDATE_APPROVALS = readCandidateApprovals(ROOT, "pingshui");
 const ALL_APPROVED_IDS = [
   ...APPROVED_EVIDENCE_IDS,
   ...CANDIDATE_APPROVALS.map((item) => item.evidenceId),

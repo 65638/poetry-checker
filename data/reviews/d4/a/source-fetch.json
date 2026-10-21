@@ -1,0 +1,85 @@
+{
+  "retrievalMethod": "Node 24 fetch --use-system-ca；正常证书校验；未执行上游脚本",
+  "attempts": [
+    {
+      "url": "https://zh.wikisource.org/w/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&titles=%E8%A9%9E%E6%9E%97%E6%AD%A3%E9%9F%BB&format=json",
+      "startedAt": "2026-10-20T08:15:26.833Z",
+      "status": 200,
+      "bytes": 55139,
+      "contentType": "application/json; charset=utf-8",
+      "saved": "response-0.bin"
+    },
+    {
+      "url": "https://zh.wikisource.org/w/index.php?title=%E8%A9%9E%E6%9E%97%E6%AD%A3%E9%9F%BB&action=raw",
+      "startedAt": "2026-10-20T08:15:26.865Z",
+      "status": 200,
+      "bytes": 27665,
+      "contentType": "text/x-wiki; charset=UTF-8",
+      "saved": "response-1.bin"
+    },
+    {
+      "url": "https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use",
+      "startedAt": "2026-10-20T08:15:26.866Z",
+      "status": 200,
+      "bytes": 152859,
+      "contentType": "text/html; charset=UTF-8",
+      "saved": "response-2.bin"
+    },
+    {
+      "url": "https://zh.wikisource.org/w/index.php?oldid=2123337&action=raw",
+      "status": 200,
+      "bytes": 27665,
+      "retrievedAt": "2026-10-20T08:16:17.965Z"
+    },
+    {
+      "url": "https://foundation.wikimedia.org/w/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp&titles=Policy%3ATerms_of_Use&format=json",
+      "status": 200,
+      "bytes": 261,
+      "retrievedAt": "2026-10-20T08:16:16.402Z"
+    },
+    {
+      "url": "https://foundation.wikimedia.org/w/index.php?oldid=554823&action=raw",
+      "status": 200,
+      "bytes": 54570,
+      "retrievedAt": "2026-10-20T08:16:34.168Z"
+    },
+    {
+      "url": "https://zh.wikisource.org/w/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&titles=%E4%B8%AD%E8%8F%AF%E6%96%B0%E9%9F%BB%7C%E4%B8%AD%E5%8D%8E%E6%96%B0%E9%9F%B5&redirects=1&format=json",
+      "status": 200,
+      "bytes": 164,
+      "retrievedAt": "2026-10-20T08:16:34.000Z"
+    }
+  ],
+  "saved": [
+    {
+      "path": "data/raw/wikisource/CilinZhengyun-2123337.wikitext",
+      "bytes": 27665,
+      "snapshotSha256": "8ebf6c275f59e612e8ce61762b7adea24399de3a97023689d88647c2e9a8737a",
+      "lines": 361
+    },
+    {
+      "path": "data/raw/wikimedia/TermsOfUse-554823.wikitext",
+      "bytes": 54570,
+      "snapshotSha256": "c96ef93b439ff9b8242dc3233f41ede57c0984ef9153fafa51aa5f8cf0678832",
+      "lines": 467
+    }
+  ],
+  "unavailableXinyunPage": {
+    "batchcomplete": "",
+    "query": {
+      "pages": {
+        "-1": {
+          "ns": 0,
+          "title": "中華新韻",
+          "missing": ""
+        },
+        "-2": {
+          "ns": 0,
+          "title": "中华新韵",
+          "missing": ""
+        }
+      }
+    }
+  },
+  "scope": "词林固定底本与站点条款新增字节，不代替内容/语境/版权审批"
+}

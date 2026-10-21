@@ -44,7 +44,7 @@ const EXPECTED: Readonly<
     groupCount: 106,
     missingGroups: [],
   },
-  "cilin-cwr-ff0e9c1-d3-full-clean1": { groupCount: 33, missingGroups: [] },
+  "cilin-cwr-ff0e9c1-d4-candidate-review1": { groupCount: 33, missingGroups: [] },
   "xinyun-rebuild-d2-full": { groupCount: 56, missingGroups: [] },
 };
 

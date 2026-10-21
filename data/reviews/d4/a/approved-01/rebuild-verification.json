@@ -1,0 +1,116 @@
+{
+  "runSha": "44e48e448eee92c952d17870a1048090f80e1bf1",
+  "dirty": false,
+  "startedAt": "2026-10-20T08:40:22.289Z",
+  "mode": "real-local-data-build",
+  "node": "v24.19.0",
+  "before": {
+    "data/normalized/pingshui.full-d2.json": "199151ab01f876b7be39504e8ea67a6d1fcadc5ead423644448c635286424215",
+    "data/normalized/pingshui.full-d2-patched.json": "4b6fc33ea23a4b49cfb70ecc68a31a90ba1e061be1c40219ca3ba35a4ace293f",
+    "data/normalized/cilin.full-d2.json": "1881cdc4d0d37dd42f14cf5649686bb59dde6db733a9bd34643cb4c77d8f2aa8",
+    "data/normalized/xinyun.full-d2.json": "cd0abe60175dd8da963129c09b4cf35878794bb1554958eb9bebd7dfc414f76b",
+    "data/patches/xinyun-reading-collisions.dev.json": "7871bdc1730afddb084e468105c694bafddf9b64c3670d59e30e825e780de14b"
+  },
+  "rounds": [
+    {
+      "round": 1,
+      "commands": [
+        {
+          "command": [
+            "node",
+            "node_modules/tsx/dist/cli.mjs",
+            "scripts/data/build-pingshui.ts"
+          ],
+          "generatorSha256": "f29418d5b19b69151a5d6805758dd80b731f5e5315bbeb19d9c0d88462655e83",
+          "exitCode": 0,
+          "error": null,
+          "log": "data/reviews/d4/a/approved-01/rebuild-logs/round-1-pingshui.txt",
+          "logSha256": "6d1320016275809381a0846415d2a532c6e9708bb41cc3a905cf632333fee662"
+        },
+        {
+          "command": [
+            "node",
+            "node_modules/tsx/dist/cli.mjs",
+            "scripts/data/build-cilin.ts"
+          ],
+          "generatorSha256": "8f7aea74829a8e77a94da64eefdcc20a664957ffb4544ef4f60710b0d8bf9686",
+          "exitCode": 0,
+          "error": null,
+          "log": "data/reviews/d4/a/approved-01/rebuild-logs/round-1-cilin.txt",
+          "logSha256": "8e01fcfd478ad68c0dd666d425bc51be9936020225fa5c6430a58bf50fd60938"
+        },
+        {
+          "command": [
+            "node",
+            "node_modules/tsx/dist/cli.mjs",
+            "scripts/data/build-xinyun.ts"
+          ],
+          "generatorSha256": "9deceb1939cfe2d0da25aa25e08c3377562e9adaa33cbd0ff0fa7ac97f8086e2",
+          "exitCode": 0,
+          "error": null,
+          "log": "data/reviews/d4/a/approved-01/rebuild-logs/round-1-xinyun.txt",
+          "logSha256": "4e6f978690f3fa2f6644e5bff2dd7bbb4d6aeff0723bf8b8ec5788fa9953ec82"
+        }
+      ],
+      "hashes": {
+        "data/normalized/pingshui.full-d2.json": "199151ab01f876b7be39504e8ea67a6d1fcadc5ead423644448c635286424215",
+        "data/normalized/pingshui.full-d2-patched.json": "4b6fc33ea23a4b49cfb70ecc68a31a90ba1e061be1c40219ca3ba35a4ace293f",
+        "data/normalized/cilin.full-d2.json": "1881cdc4d0d37dd42f14cf5649686bb59dde6db733a9bd34643cb4c77d8f2aa8",
+        "data/normalized/xinyun.full-d2.json": "cd0abe60175dd8da963129c09b4cf35878794bb1554958eb9bebd7dfc414f76b",
+        "data/patches/xinyun-reading-collisions.dev.json": "7871bdc1730afddb084e468105c694bafddf9b64c3670d59e30e825e780de14b"
+      }
+    },
+    {
+      "round": 2,
+      "commands": [
+        {
+          "command": [
+            "node",
+            "node_modules/tsx/dist/cli.mjs",
+            "scripts/data/build-pingshui.ts"
+          ],
+          "generatorSha256": "f29418d5b19b69151a5d6805758dd80b731f5e5315bbeb19d9c0d88462655e83",
+          "exitCode": 0,
+          "error": null,
+          "log": "data/reviews/d4/a/approved-01/rebuild-logs/round-2-pingshui.txt",
+          "logSha256": "6d1320016275809381a0846415d2a532c6e9708bb41cc3a905cf632333fee662"
+        },
+        {
+          "command": [
+            "node",
+            "node_modules/tsx/dist/cli.mjs",
+            "scripts/data/build-cilin.ts"
+          ],
+          "generatorSha256": "8f7aea74829a8e77a94da64eefdcc20a664957ffb4544ef4f60710b0d8bf9686",
+          "exitCode": 0,
+          "error": null,
+          "log": "data/reviews/d4/a/approved-01/rebuild-logs/round-2-cilin.txt",
+          "logSha256": "8e01fcfd478ad68c0dd666d425bc51be9936020225fa5c6430a58bf50fd60938"
+        },
+        {
+          "command": [
+            "node",
+            "node_modules/tsx/dist/cli.mjs",
+            "scripts/data/build-xinyun.ts"
+          ],
+          "generatorSha256": "9deceb1939cfe2d0da25aa25e08c3377562e9adaa33cbd0ff0fa7ac97f8086e2",
+          "exitCode": 0,
+          "error": null,
+          "log": "data/reviews/d4/a/approved-01/rebuild-logs/round-2-xinyun.txt",
+          "logSha256": "4e6f978690f3fa2f6644e5bff2dd7bbb4d6aeff0723bf8b8ec5788fa9953ec82"
+        }
+      ],
+      "hashes": {
+        "data/normalized/pingshui.full-d2.json": "199151ab01f876b7be39504e8ea67a6d1fcadc5ead423644448c635286424215",
+        "data/normalized/pingshui.full-d2-patched.json": "4b6fc33ea23a4b49cfb70ecc68a31a90ba1e061be1c40219ca3ba35a4ace293f",
+        "data/normalized/cilin.full-d2.json": "1881cdc4d0d37dd42f14cf5649686bb59dde6db733a9bd34643cb4c77d8f2aa8",
+        "data/normalized/xinyun.full-d2.json": "cd0abe60175dd8da963129c09b4cf35878794bb1554958eb9bebd7dfc414f76b",
+        "data/patches/xinyun-reading-collisions.dev.json": "7871bdc1730afddb084e468105c694bafddf9b64c3670d59e30e825e780de14b"
+      }
+    }
+  ],
+  "completedAt": "2026-10-20T08:40:26.471Z",
+  "byteIdenticalToBefore": true,
+  "allCommandsSucceeded": true,
+  "scope": "两轮实际生成器进程；四份快照与多读音伴随清单字节逐轮比较。不新增审批、不把JSON.parse当重建。"
+}
