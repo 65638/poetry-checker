@@ -101,14 +101,44 @@ try {
   await viewport(1440);
   await cdp.send("Page.navigate", { url: report.url });
   await waitFor(() => evaluate("!!document.querySelector('.pc-input__text')"));
+
+  // 点击前先等元素存在且未被禁用：消除“元素缺失或禁用”竞态（不改任何断言）
+  const clickReady = async (selector, ms = 30000) => {
+    await waitFor(
+      () =>
+        evaluate(
+          `(() => { const el = document.querySelector(${JSON.stringify(selector)}); return !!el && !el.disabled; })()`,
+        ),
+      ms,
+    );
+    await click(selector);
+  };
+
+
+  // 通用点击重试：元素暂缺或短暂禁用时重试，而不是直接抛“元素缺失或禁用”。
+  // 只影响点击时机，不改任何断言与预期。
+  const clickStable = async (selector, ms = 25000) => {
+    const deadline = Date.now() + ms;
+    let lastError;
+    while (Date.now() < deadline) {
+      try {
+        return await click(selector);
+      } catch (error) {
+        lastError = error;
+        await new Promise((resolve) => setTimeout(resolve, 250));
+      }
+    }
+    throw lastError;
+  };
+
   await scenario("navigation-keeps-draft-and-reloads-locally", async () => {
     const text = "明月松间照，清泉石上流。";
     await input(".pc-input__text", text);
-    await click('[aria-controls="dictionary-space"]');
+    await clickStable('[aria-controls="dictionary-space"]');
     await waitFor(() =>
       evaluate("!document.querySelector('#dictionary-space').hidden"),
     );
-    await click('[aria-controls="checker-space"]');
+    await clickStable('[aria-controls="checker-space"]');
     await waitFor(() =>
       evaluate("!document.querySelector('#checker-space').hidden"),
     );
@@ -135,14 +165,14 @@ try {
     );
     return { textRestored: true };
   });
-  await click('[aria-controls="dictionary-space"]');
+  await clickStable('[aria-controls="dictionary-space"]');
   await scenario("real-single-character-all-three-books", async () => {
     await input(".pc-dictionary__input", "更");
-    await click(".pc-dictionary__searchline button");
+    await clickStable(".pc-dictionary__searchline button");
     await glyph("更");
     const detail = [];
     for (const book of ["pingshui", "cilin", "xinyun"]) {
-      await click(`.pc-dictionary__book input[value="${book}"]`);
+      await clickStable(`.pc-dictionary__book input[value="${book}"]`);
       await waitFor(() =>
         evaluate(
           `document.querySelector('.pc-dictionary__version')?.textContent.includes(${JSON.stringify(book === "xinyun" ? "xinyun" : book)}) && document.querySelector('.pc-dictionary__glyph')?.textContent === '更'`,
@@ -167,7 +197,7 @@ try {
         dataVersion: actual.dataVersion,
       });
     }
-    await click(".pc-dictionary__source summary");
+    await clickStable(".pc-dictionary__source summary");
     await waitFor(() =>
       evaluate(
         "document.querySelector('.pc-dictionary__source[open]')?.innerText.includes('定位')",
@@ -182,28 +212,28 @@ try {
     return detail;
   });
   await scenario("favorites-history-and-poem-character-picker", async () => {
-    await click(".pc-dictionary__actions button");
+    await clickStable(".pc-dictionary__actions button");
     assert.equal(
       await evaluate(
         "document.querySelector('.pc-dictionary__actions button').getAttribute('aria-pressed')",
       ),
       "true",
     );
-    await click(".pc-dictionary__passage summary");
+    await clickStable(".pc-dictionary__passage summary");
     await waitFor(() =>
       evaluate(
         "getComputedStyle(document.querySelector('.pc-dictionary__passage'), '::details-content').opacity === '1'",
       ),
     );
-    await click(".pc-dictionary__passage .pc-button");
+    await clickStable(".pc-dictionary__passage .pc-button");
     await waitFor(() =>
       evaluate(
         "document.querySelectorAll('.pc-dictionary__character-list button').length === 10",
       ),
     );
-    await click(".pc-dictionary__character-list button");
+    await clickStable(".pc-dictionary__character-list button");
     await glyph("明");
-    await click(".pc-dictionary__shelf summary");
+    await clickStable(".pc-dictionary__shelf summary");
     const stored = await evaluate(
       "JSON.parse(localStorage.getItem('pc-dictionary-shelf-v1'))",
     );
@@ -217,7 +247,7 @@ try {
   });
   await scenario("invalid-and-missing-characters-stay-distinct", async () => {
     await input(".pc-dictionary__input", "明月");
-    await click(".pc-dictionary__searchline button");
+    await clickStable(".pc-dictionary__searchline button");
     await waitFor(() =>
       evaluate("!!document.querySelector('.pc-dictionary__error')"),
     );
@@ -228,11 +258,11 @@ try {
       /一个汉字/,
     );
     await input(".pc-dictionary__input", "𠀀");
-    await click(".pc-dictionary__searchline button");
+    await clickStable(".pc-dictionary__searchline button");
     await glyph("𠀀");
-    await click('.pc-dictionary__book input[value="cilin"]');
+    await clickStable('.pc-dictionary__book input[value="cilin"]');
     await input(".pc-dictionary__input", "余");
-    await click(".pc-dictionary__searchline button");
+    await clickStable(".pc-dictionary__searchline button");
     await glyph("余");
     assert.match(
       await evaluate(
@@ -282,7 +312,7 @@ try {
   });
   await scenario("three-book-comparison-and-passage-overview", async () => {
     await viewport(1440);
-    await click(".pc-dictionary__compare-button");
+    await clickStable(".pc-dictionary__compare-button");
     await waitFor(() =>
       evaluate(
         "document.querySelectorAll('.pc-dictionary__comparison-row').length === 3",
@@ -305,13 +335,13 @@ try {
         "document.querySelector('.pc-dictionary__passage').open",
       ))
     )
-      await click(".pc-dictionary__passage summary");
+      await clickStable(".pc-dictionary__passage summary");
     await waitFor(() =>
       evaluate(
         "getComputedStyle(document.querySelector('.pc-dictionary__passage'),'::details-content').opacity === '1'",
       ),
     );
-    await click(".pc-dictionary__lookup-passage");
+    await clickStable(".pc-dictionary__lookup-passage");
     await waitFor(() =>
       evaluate(
         "document.querySelectorAll('.pc-dictionary__overview-grid button').length === 10",
@@ -379,12 +409,12 @@ try {
       ],
     });
     await input(".pc-dictionary__input", "白");
-    await click(".pc-dictionary__searchline button");
+    await clickStable(".pc-dictionary__searchline button");
     await waitFor(() => paused.length);
     const old = paused[0];
     interception = "continue";
     await input(".pc-dictionary__input", "山");
-    await click(".pc-dictionary__searchline button");
+    await clickStable(".pc-dictionary__searchline button");
     await glyph("山");
     let oldCompletion = "released-late";
     try {
@@ -410,7 +440,7 @@ try {
       ],
     });
     await input(".pc-dictionary__input", "白");
-    await click(".pc-dictionary__searchline button");
+    await clickStable(".pc-dictionary__searchline button");
     await waitFor(() =>
       evaluate(
         "document.querySelector('.pc-dictionary__error')?.innerText.includes('受控503')",
@@ -427,7 +457,7 @@ try {
       false,
     );
     await cdp.send("Fetch.disable");
-    await click(".pc-dictionary__error button");
+    await clickStable(".pc-dictionary__error button");
     await glyph("白");
     return {
       mode: "controlled-http-503",
@@ -445,7 +475,7 @@ try {
     });
     await input(".pc-dictionary__input", "月");
     const started = Date.now();
-    await click(".pc-dictionary__searchline button");
+    await clickStable(".pc-dictionary__searchline button");
     await waitFor(
       () =>
         evaluate(
@@ -462,7 +492,7 @@ try {
       false,
     );
     await cdp.send("Fetch.disable");
-    await click(".pc-dictionary__error button");
+    await clickStable(".pc-dictionary__error button");
     await glyph("月");
     return {
       mode: "controlled-hang-real-clock",
@@ -481,16 +511,16 @@ try {
       await evaluate(
         "window.__sharedRain = document.querySelector('.pc-rain');true",
       );
-      await click('[aria-controls="checker-space"]');
-      await click(".pc-examples__item");
-      await click(".pc-input__submit");
+      await clickStable('[aria-controls="checker-space"]');
+      await clickStable(".pc-examples__item");
+      await clickStable(".pc-input__submit");
       await waitFor(() =>
         evaluate("!!document.querySelector('[data-token-id]')"),
       );
       const reportText = await evaluate(
         "document.querySelector('.pc-manuscript').innerText",
       );
-      await click('[aria-controls="dictionary-space"]');
+      await clickStable('[aria-controls="dictionary-space"]');
       await waitFor(() =>
         evaluate(
           "Boolean(document.querySelector('.pc-continuous .pc-rain')) && document.querySelector('.pc-rain').width > 0",
@@ -502,12 +532,12 @@ try {
         ),
         true,
       );
-      await click('[aria-controls="checker-space"]');
+      await clickStable('[aria-controls="checker-space"]');
       assert.equal(
         await evaluate("document.querySelector('.pc-manuscript').innerText"),
         reportText,
       );
-      await click(".pc-explore-current button");
+      await clickStable(".pc-explore-current button");
       await waitFor(() =>
         evaluate(
           "document.querySelector('.pc-dictionary__passage').open && document.querySelector('.pc-dictionary__passage textarea').value.includes('白日依山尽')",
@@ -524,8 +554,8 @@ try {
     await cdp.send("Emulation.setEmulatedMedia", {
       features: [{ name: "prefers-reduced-motion", value: "reduce" }],
     });
-    await click('[aria-controls="checker-space"]');
-    await click('[aria-controls="dictionary-space"]');
+    await clickStable('[aria-controls="checker-space"]');
+    await clickStable('[aria-controls="dictionary-space"]');
     await waitFor(() =>
       evaluate(
         "document.querySelector('.pc-workspace').dataset.motion === 'off'",
@@ -551,7 +581,7 @@ try {
     async () => {
       await viewport(375);
       await input(".pc-dictionary__input", "月");
-      await click(".pc-dictionary__searchline button");
+      await clickStable(".pc-dictionary__searchline button");
       await glyph("月");
       await waitFor(() =>
         evaluate(
@@ -559,7 +589,7 @@ try {
         ),
       );
       await screenshot("dictionary-mobile-auto-result.png");
-      await click(".pc-dictionary__return");
+      await clickStable(".pc-dictionary__return");
       await waitFor(() =>
         evaluate(
           "document.activeElement === document.querySelector('.pc-dictionary__input') && document.activeElement.getBoundingClientRect().top >= 0 && document.activeElement.getBoundingClientRect().top < innerHeight",
@@ -625,13 +655,13 @@ try {
         origin: report.url.slice(0, -1),
         permissions: ["clipboardReadWrite", "clipboardSanitizedWrite"],
       });
-      await click(".pc-dictionary__actions button:nth-child(2)");
+      await clickStable(".pc-dictionary__actions button:nth-child(2)");
       const text = await evaluate("navigator.clipboard.readText()");
       assert.match(text, /山 · 平水韵/);
       assert.match(text, /归部已核|待核/);
       assert.match(text, /数据版本：/);
       assert.match(text, /不替代诗中读音选择/);
-      await click(".pc-dictionary__actions button:nth-child(3)");
+      await clickStable(".pc-dictionary__actions button:nth-child(3)");
       const link = new URL(await evaluate("navigator.clipboard.readText()"));
       const params = new URLSearchParams(link.hash.split("?")[1]);
       assert.equal(params.get("char"), "山");
@@ -658,9 +688,9 @@ try {
         evaluate("!!document.querySelector('.pc-dictionary__input')"),
       );
       await input(".pc-dictionary__input", "月");
-      await click(".pc-dictionary__searchline button");
+      await clickStable(".pc-dictionary__searchline button");
       await glyph("月");
-      await click(".pc-dictionary__actions button");
+      await clickStable(".pc-dictionary__actions button");
       await waitFor(() =>
         evaluate(
           "document.querySelector('.pc-dictionary__feedback')?.textContent.includes('已收满 24')",
@@ -688,7 +718,7 @@ try {
   await scenario(
     "portable-shelf-file-export-import-and-invalid-file-protection",
     async () => {
-      await click(".pc-dictionary__shelf summary");
+      await clickStable(".pc-dictionary__shelf summary");
       await waitFor(() =>
         evaluate(
           "getComputedStyle(document.querySelector('.pc-dictionary__shelf'),'::details-content').opacity === '1'",
@@ -701,7 +731,7 @@ try {
         downloadPath: downloads,
         eventsEnabled: true,
       });
-      await click(".pc-dictionary__shelf-tools button");
+      await clickStable(".pc-dictionary__shelf-tools button");
       const file = join(downloads, "藏韵阁-我的字笺.json");
       await waitFor(() => {
         try {
@@ -723,7 +753,7 @@ try {
       await waitFor(() =>
         evaluate("!!document.querySelector('.pc-dictionary__shelf')"),
       );
-      await click(".pc-dictionary__shelf summary");
+      await clickStable(".pc-dictionary__shelf summary");
       const chooseFile = async (path) => {
         const doc = await cdp.send("DOM.getDocument");
         const inputNode = await cdp.send("DOM.querySelector", {
@@ -779,12 +809,12 @@ try {
   await scenario(
     "analysis-real-30-second-timeout-blocks-copy-export-and-recovers",
     async () => {
-      await click('[aria-controls="checker-space"]');
-      await click(".pc-examples__item");
+      await clickStable('[aria-controls="checker-space"]');
+      await clickStable(".pc-examples__item");
       const originalText = await evaluate(
         "document.querySelector('.pc-input__text').value",
       );
-      await click(".pc-input__submit");
+      await clickStable(".pc-input__submit");
       await waitFor(() =>
         evaluate("!!document.querySelector('.pc-status--pass')"),
       );
@@ -793,7 +823,7 @@ try {
           "document.querySelector('.pc-plinth__toggle')?.getAttribute('aria-expanded') === 'false'",
         )
       )
-        await click(".pc-plinth__toggle");
+        await clickStable(".pc-plinth__toggle");
       await waitFor(() =>
         evaluate("!document.querySelector('#pc-editor-body').inert"),
       );
@@ -814,7 +844,7 @@ try {
         patterns: [{ urlPattern: "*/api/v1/analyze", requestStage: "Request" }],
       });
       const started = Date.now();
-      await click(".pc-input__submit");
+      await clickStable(".pc-input__submit");
       await waitFor(
         () =>
           paused.length > 0 &&
@@ -854,7 +884,7 @@ try {
       assert.equal(await evaluate("navigator.clipboard.readText()"), sentinel);
       assert.deepEqual(readdirSync(downloads), []);
       await cdp.send("Fetch.disable");
-      await click(".pc-input__submit");
+      await clickStable(".pc-input__submit");
       await waitFor(() =>
         evaluate(
           "!document.querySelector('#checker-space [role=alert]') && !!document.querySelector('.pc-status--pass') && !document.querySelector('.pc-report--stale')",
