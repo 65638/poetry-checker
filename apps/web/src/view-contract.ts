@@ -32,7 +32,10 @@ export interface CheckerViewProps {
   selectedTokenId: string | null;
   selectedFindingId: string | null;
   examples: Array<{ id: string; title: string; text: string }>;
-  onDraftChange: (next: InputDraft) => void;
+  onDraftChange: (
+    next: InputDraft,
+    options?: { autoAnalyze?: boolean },
+  ) => void;
   onAnalyze: () => void;
   onLoadExample: (exampleId: string) => void;
   onSelectToken: (tokenId: string) => void;

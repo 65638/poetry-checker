@@ -151,6 +151,12 @@
   font: 500 26px/1.6 var(--pc-font-serif);
   margin: 0;
 }
+.pc-poetry-desk-heading {
+  flex-wrap: wrap;
+}
+.pc-poetry-desk-heading > :first-child {
+  flex-shrink: 0;
+}
 .pc-poetry-desk :is(h3, h4) {
   font-size: 17px;
   margin: 14px 0 8px;

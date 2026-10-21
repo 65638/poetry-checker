@@ -123,6 +123,7 @@ export class CheckerStore {
   private runId = 0;
   private activeController: AbortController | null = null;
   private refreshTimer: ReturnType<typeof setTimeout> | null = null;
+  private refreshPaused = false;
 
   constructor(draft: InputDraft, options: StoreOptions) {
     this.state = initialState(draft);
@@ -164,7 +165,12 @@ export class CheckerStore {
   private scheduleRefresh(): void {
     this.cancelScheduledRefresh();
     const delay = this.options.autoAnalyzeDelayMs ?? 0;
-    if (delay <= 0 || !this.state.stale || validateDraft(this.state.draft))
+    if (
+      this.refreshPaused ||
+      delay <= 0 ||
+      !this.state.stale ||
+      validateDraft(this.state.draft)
+    )
       return;
     this.refreshTimer = setTimeout(() => {
       this.refreshTimer = null;
@@ -176,7 +182,11 @@ export class CheckerStore {
    * 草稿变化：只表达意图，互斥与失效由这里统一处理。
    * 会改变分析身份的编辑必须让在途请求失效（修复「编辑不重提交也要失效」）。
    */
-  setDraft(next: InputDraft): void {
+  setDraft(next: InputDraft, options?: { autoAnalyze?: boolean }): void {
+    if (options?.autoAnalyze !== undefined) {
+      this.refreshPaused = !options.autoAnalyze;
+      this.cancelScheduledRefresh();
+    }
     const normalized = normalizeDraft(next);
     const previous = this.state.draft;
     const changed = draftIdentityChanged(previous, normalized);
@@ -217,7 +227,7 @@ export class CheckerStore {
       });
       return;
     }
-    this.setDraft({ ...current, text });
+    this.setDraft({ ...current, text }, { autoAnalyze: true });
   }
 
   /** 普通提交：沿用已成功报告的选音覆盖。 */
@@ -231,6 +241,7 @@ export class CheckerStore {
    */
   private async runAnalysis(overrides: ReadingOverride[]): Promise<void> {
     this.cancelScheduledRefresh();
+    this.refreshPaused = false;
     const invalid = validateDraft(this.state.draft);
     if (invalid !== null) {
       this.commit({

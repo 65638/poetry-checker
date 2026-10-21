@@ -95,6 +95,30 @@ export function applyRevision(
     text.slice(end.endUtf16)
   );
 }
+/** Apply original-report spans from right to left so earlier length changes cannot move later edits. */
+export function applyRevisions(
+  original: string,
+  edits: Revision[],
+  tokens: AnnotatedToken[],
+): string {
+  const spans = edits
+    .map((edit) => {
+      applyRevision(original, edit, tokens);
+      return {
+        edit,
+        start: tokens.find((t) => t.tokenId === edit.startTokenId)!.startUtf16,
+        end: tokens.find((t) => t.tokenId === edit.endTokenId)!.endUtf16,
+      };
+    })
+    .sort((a, b) => a.start - b.start);
+  if (spans.some((span, i) => i > 0 && spans[i - 1]!.end > span.start))
+    throw new Error("这条建议与已采纳的修改重叠，请先撤销冲突修改。");
+  return spans.reduceRight(
+    (text, { edit }) => applyRevision(text, edit, tokens),
+    original,
+  );
+}
+
 export function changedSpan(before: string, after: string) {
   const a = [...before],
     b = [...after];

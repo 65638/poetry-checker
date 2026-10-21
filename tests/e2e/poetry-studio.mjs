@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { buildApp } from '../../apps/api/src/server.ts';
-import { startHarness, waitFor, revision } from '../../docs/design/moonlit-ui/harness.mjs';
+import { startHarness, waitFor, sleep, revision } from '../../docs/design/moonlit-ui/harness.mjs';
 
 const out = resolve(process.argv[2] ?? 'artifacts/poetry-studio');
 mkdirSync(out, { recursive: true });
@@ -12,13 +12,18 @@ const fetcher = async (_url, init) => {
   calls.push(data.task ?? 'reading');
   let output;
   if (!data.task) output = { suggestions: data.targets.map((target) => ({ tokenId: target.tokenId, candidateId: target.candidates[0].id, pronunciation: null, reason: '受控浏览器测试，不是语言学判定。' })) };
-  if (data.task === 'critique') output = { overview: '受控全诗评议：结合全文讨论山水。', strengths: ['受控优点说明。'], revisions: data.mode === 'writing' && data.text === '山高水远。' ? [{ startTokenId: 'l1c4', endTokenId: 'l1c4', original: '远', replacement: '长', reason: '受控改字场景。', tradeoff: '受控取舍说明。' }] : [] };
+  if (data.task === 'critique') output = { overview: '受控全诗评议：结合全文讨论山水。', strengths: ['受控优点说明。'], revisions: data.mode === 'writing' && data.text === '山高水远。' ? [
+    { startTokenId: 'l1c1', endTokenId: 'l1c1', original: '山', replacement: '群山', reason: '受控长度变化场景。', tradeoff: '受控取舍说明。' },
+    { startTokenId: 'l1c4', endTokenId: 'l1c4', original: '远', replacement: '长', reason: '受控改字场景。', tradeoff: '受控取舍说明。' },
+  ] : [] };
   if (data.task === 'search') { const poem = data.poems.find((p) => p.title === '夜雨寄北'); assert(poem, '夜雨寄北 must be recalled for this scene'); output = { matches: [{ id: poem.id, quote: poem.paragraphs[0].slice(0, 5), reason: '受控意境排序，非真实推理。' }] }; }
   if (data.task === 'compare') output = { overview: '受控对读总评。', aspects: [{ name: '意象', left: '受控左诗分析。', right: '受控右诗分析。' }] };
   if (data.task === 'rhyme') output = { matches: [{ id: data.candidates[0].id, reason: '受控同韵语义推荐。' }] };
   return new Response(JSON.stringify({ choices: [{ finish_reason: 'stop', message: { content: JSON.stringify(output) } }] }));
 };
 const app = buildApp({ readingAssistant: { apiKey: 'controlled-test-key', fetcher } });
+let analyses = 0;
+app.addHook('preHandler', async request => { if (request.url === '/api/v1/analyze') analyses++; });
 const baseUrl = await app.listen({ host: '127.0.0.1', port: 0 });
 const h = await startHarness({ production: true, api: { baseUrl, stop: () => app.close() } });
 const result = { revision: revision(), mode: 'controlled-upstream-real-api-lexicon-browser-indexeddb', realModelInference: false, checks: [], errors: [] };
@@ -86,29 +91,57 @@ try {
     await waitFor(() => h.evaluate("document.querySelector('.pc-poetry-review')?.textContent.includes('受控全诗评议')"));
     assert.equal(await h.evaluate("[...document.querySelectorAll('.pc-poetry-critique [role=tab]')].find(el=>el.textContent==='原诗赏读').getAttribute('aria-selected')"), 'true');
   });
-  await check('adopt-revision-reanalyze-undo-redo-notebook', async () => {
+  await check('batch-adoptions-undo-redo-keep-advice-and-analyze-once', async () => {
     await h.setText('山高水远。');
     await clickText('.pc-poetry-critique [role="tab"]', '写作推敲');
     await h.analyze();
     await waitFor(() => h.evaluate("!!document.querySelector('.pc-poetry-edit ins')"));
-    await clickText('.pc-poetry-edit button', '采纳并复查');
+    const before = analyses;
+    const critiques = calls.filter(task => task === 'critique').length;
+    await clickText('.pc-poetry-edit:nth-of-type(1) button', '采纳');
     await h.idle();
-    assert.equal(await h.evaluate("document.querySelector('.pc-input__text').value"), '山高水长。');
+    assert.equal(await h.evaluate("document.querySelector('.pc-input__text').value"), '群山高水远。');
+    assert.equal(await h.evaluate("document.querySelectorAll('.pc-poetry-edit').length"), 2);
+    await clickText('.pc-poetry-edit:nth-of-type(2) button', '采纳');
+    await sleep(1900);
+    assert.equal(await h.evaluate("document.querySelector('.pc-input__text').value"), '群山高水长。');
+    assert.equal(analyses, before);
+    assert.equal(calls.filter(task => task === 'critique').length, critiques);
+    assert.equal(await h.evaluate("!!document.querySelector('.pc-report--stale')"), true);
     await h.click('[aria-label="撤销上次修改"]');
     await h.idle();
-    assert.equal(await h.evaluate("document.querySelector('.pc-input__text').value"), '山高水远。');
+    assert.equal(await h.evaluate("document.querySelector('.pc-input__text').value"), '群山高水远。');
     await h.click('[aria-label="重做修改"]');
     await h.idle();
-    assert.equal(await h.evaluate("document.querySelector('.pc-input__text').value"), '山高水长。');
+    assert.equal(await h.evaluate("document.querySelector('.pc-input__text').value"), '群山高水长。');
+    await sleep(1800);
+    assert.equal(analyses, before);
+    await h.evaluate("document.querySelector('.pc-poetry-desk').scrollIntoView({block:'start',behavior:'instant'}); true");
+    await shot('batch-edits-1440');
+    for (const width of [375, 320]) {
+      await h.viewport(width, 812, true);
+      assert.equal(await h.evaluate('document.documentElement.scrollWidth <= innerWidth + 1'), true);
+      const heading = await h.evaluate("(() => {const e=document.querySelector('.pc-poetry-desk-heading');const title=e.querySelector('h2').getBoundingClientRect();const controls=e.querySelector('.pc-studio-actions').getBoundingClientRect();return {overlap:title.right>controls.left && title.bottom>controls.top && controls.bottom>title.top};})()");
+      assert.equal(heading.overlap, false);
+      assert.equal(await h.evaluate("document.querySelector('.pc-poetry-desk-heading h2').getBoundingClientRect().height <= 45"), true);
+      await h.evaluate("document.querySelector('.pc-poetry-desk').scrollIntoView({block:'start',behavior:'instant'}); true");
+      await shot('batch-edits-' + width);
+    }
+    await h.viewport(1440, 1000);
+    await clickText('.pc-poetry-desk-heading button', '分析修改');
+    await waitFor(() => h.evaluate("!!document.querySelector('.pc-report:not(.pc-report--stale)') && !document.querySelector('.pc-root--busy')"));
+    assert.equal(analyses, before + 1);
+    await sleep(1800);
+    assert.equal(analyses, before + 1);
     await clickText('.pc-poetry-desk > [role="tablist"] [role="tab"]', '推敲笺');
     await waitFor(() => h.evaluate("document.querySelectorAll('.pc-notebook-entry').length>=4"));
     const saved = await h.evaluate("JSON.parse(localStorage.getItem('poetry-notebook-v1')).entries");
-    assert(saved.some((entry) => entry.note.includes('GLM炼字') && entry.before.text==='山高水远。' && entry.after.text==='山高水长。'));
+    assert(saved.some((entry) => entry.note.includes('GLM炼字') && entry.before.text==='群山高水远。' && entry.after.text==='群山高水长。'));
     await h.click('.pc-notebook-entry:nth-of-type(2) button');
     await h.idle();
-    assert.equal(await h.evaluate("document.querySelector('.pc-input__text').value"), '山高水远。');
+    assert.equal(await h.evaluate("document.querySelector('.pc-input__text').value"), '群山高水远。');
     await h.cdp.send('Page.reload');
-    await waitFor(() => h.evaluate("document.querySelector('.pc-input__text')?.value==='山高水远。'"));
+    await waitFor(() => h.evaluate("document.querySelector('.pc-input__text')?.value==='群山高水远。'"));
     await h.analyze();
     await clickText('.pc-poetry-desk > [role="tablist"] [role="tab"]', '推敲笺');
     await waitFor(() => h.evaluate("document.querySelectorAll('.pc-notebook-entry').length>=5"));
@@ -127,6 +160,17 @@ try {
     await waitFor(() => h.evaluate("document.querySelectorAll('.pc-rhyme-characters button').length>0"));
     await clickText('.pc-poetry-desk button', '结合全诗荐字');
     await waitFor(() => h.evaluate("[...document.querySelectorAll('.pc-poetry-edit')].some(el=>el.textContent.includes('受控同韵语义推荐'))"));
+    const beforeTrial = analyses;
+    const beforeText = await h.evaluate("document.querySelector('.pc-input__text').value");
+    await clickText('.pc-poetry-edit button', '试用');
+    await sleep(1900);
+    assert.equal(analyses, beforeTrial);
+    assert.notEqual(await h.evaluate("document.querySelector('.pc-input__text').value"), beforeText);
+    assert.equal(await h.evaluate("!!document.querySelector('.pc-poetry-edit')"), true);
+    await h.click('[aria-label="撤销上次修改"]');
+    await sleep(1800);
+    assert.equal(analyses, beforeTrial);
+    assert.equal(await h.evaluate("document.querySelector('.pc-input__text').value"), beforeText);
     await h.evaluate("document.querySelector('.pc-poetry-desk').scrollIntoView({block:'start',behavior:'instant'})");
     await shot('rhyme-1440');
     for (const width of [375, 320]) {

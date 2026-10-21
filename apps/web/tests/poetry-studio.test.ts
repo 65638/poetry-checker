@@ -7,7 +7,12 @@ import {
   searchLibrary,
   uniqueLibrary,
 } from "../src/app/library";
-import { applyRevision, changedSpan, parseNotebook } from "../src/app/notebook";
+import {
+  applyRevision,
+  applyRevisions,
+  changedSpan,
+  parseNotebook,
+} from "../src/app/notebook";
 
 const raw = {
   title: "导入测试",
@@ -188,5 +193,38 @@ describe("local classical corpus and revision notebook", () => {
       added: "江",
       suffix: "",
     });
+  });
+  it("applies multiple original spans despite earlier length changes and rejects overlap", () => {
+    const tokens = [
+      { tokenId: "l1c1", startUtf16: 2, endUtf16: 3, line: 1 },
+      { tokenId: "l1c2", startUtf16: 3, endUtf16: 4, line: 1 },
+    ] as AnnotatedToken[];
+    const edit = {
+      startTokenId: "l1c1",
+      endTokenId: "l1c1",
+      original: "山",
+      replacement: "群山",
+      reason: "test",
+      tradeoff: "test",
+    };
+    const later = {
+      ...edit,
+      startTokenId: "l1c2",
+      endTokenId: "l1c2",
+      original: "月",
+      replacement: "江",
+    };
+    expect(applyRevisions("😀山月。", [edit, later], tokens)).toBe(
+      "😀群山江。",
+    );
+    expect(applyRevisions("😀山月。", [later, edit], tokens)).toBe(
+      "😀群山江。",
+    );
+    expect(() => applyRevisions("😀山月。", [edit, edit], tokens)).toThrow(
+      "重叠",
+    );
+    expect(() =>
+      applyRevisions("😀山月。", [edit, { ...later, original: "海" }], tokens),
+    ).toThrow();
   });
 });

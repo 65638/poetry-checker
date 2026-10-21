@@ -89,21 +89,19 @@ export function Workspace(props: CheckerViewProps) {
         },
       ].slice(-NOTEBOOK_LIMIT),
     );
-    props.onDraftChange(next);
+    props.onDraftChange(next, { autoAnalyze: false });
   }
   function undo() {
     const previous = undoStack.current.pop();
     if (!previous) return;
     redoStack.current.push(props.draft);
     revise(previous, "撤销上次修改", "undo");
-    props.onAnalyze();
   }
   function redo() {
     const next = redoStack.current.pop();
     if (!next) return;
     undoStack.current.push(props.draft);
     revise(next, "重做修改", "redo");
-    props.onAnalyze();
   }
   useEffect(() => {
     setSaved(false);

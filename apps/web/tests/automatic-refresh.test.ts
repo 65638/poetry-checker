@@ -33,6 +33,41 @@ afterEach(() => {
 });
 
 describe("editing an existing analysis updates after a pause", () => {
+  it("holds adopted edits and further typing until one manual analysis", async () => {
+    const { store, transport } = setup([
+      okResponse(loadMockScenario("pass")),
+      okResponse(loadMockScenario("fail")),
+      okResponse(loadMockScenario("pass")),
+    ]);
+    await store.analyze();
+    store.setDraft({ ...original, text: original.text + "字" });
+    store.setDraft(revised, { autoAnalyze: false });
+    await vi.advanceTimersByTimeAsync(delay * 2);
+    expect(transport.calls).toHaveLength(1);
+    expect(store.getState().stale).toBe(true);
+    expect(store.getState().report?.poem.originalText).toBe(original.text);
+    store.setDraft({ ...revised, text: revised.text + "字" });
+    await vi.advanceTimersByTimeAsync(delay * 2);
+    expect(transport.calls).toHaveLength(1);
+    store.setDraft(revised, { autoAnalyze: false });
+    await store.analyze();
+    await vi.advanceTimersByTimeAsync(delay * 2);
+    expect(transport.calls).toHaveLength(2);
+    expect(store.getState().stale).toBe(false);
+    store.setDraft(original);
+    await vi.advanceTimersByTimeAsync(delay);
+    expect(transport.calls).toHaveLength(3);
+  });
+
+  it("cancels a pending refresh even when adoption leaves the draft unchanged", async () => {
+    const { store, transport } = setup([okResponse(loadMockScenario("pass"))]);
+    await store.analyze();
+    store.setDraft(revised);
+    store.setDraft(revised, { autoAnalyze: false });
+    await vi.advanceTimersByTimeAsync(delay * 2);
+    expect(transport.calls).toHaveLength(1);
+  });
+
   it("does not analyze initial typing until the first manual submission", async () => {
     const { store, transport } = setup([]);
     store.setDraft(revised);
@@ -65,7 +100,9 @@ describe("editing an existing analysis updates after a pause", () => {
     expect(store.getState().report?.poem.originalText).toBe(revised.text);
     store.downloadReport();
     expect(download).toHaveBeenCalledOnce();
-    expect(JSON.parse(download.mock.calls[0]![1]).request.text).toBe(revised.text);
+    expect(JSON.parse(download.mock.calls[0]![1]).request.text).toBe(
+      revised.text,
+    );
   });
 
   it("reading selections and unchanged draft notifications do not trigger or postpone requests", async () => {

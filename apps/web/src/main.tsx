@@ -47,8 +47,8 @@ function App() {
     selectedTokenId: state.selectedTokenId,
     selectedFindingId: state.selectedFindingId,
     examples: EXAMPLES,
-    onDraftChange: (next) => {
-      store.setDraft(next);
+    onDraftChange: (next, options) => {
+      store.setDraft(next, options);
     },
     onAnalyze: () => {
       void store.analyze();
