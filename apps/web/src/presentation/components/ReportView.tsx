@@ -338,7 +338,9 @@ export function ReportView(props: ReportViewProps) {
       {stale && (
         <p className="pc-stale" role="status">
           <span aria-hidden="true">⟳</span>{" "}
-          此报告对应修改前的输入，结论可能已失效；请重新分析。
+          {props.busy
+            ? "正在更新分析，当前仍可查阅上次结果。"
+            : "输入已修改，当前展示上次分析结果。"}
         </p>
       )}
 

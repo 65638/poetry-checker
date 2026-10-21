@@ -255,7 +255,7 @@ export function PoetryDesk({
           {!usable && (
             <p className="pc-studio-empty">
               {stale
-                ? "原文已修改，请先重新分析。"
+                ? "当前展示上次分析，更新后可继续推敲。"
                 : "整诗分析完成后，在此研读与推敲。"}
             </p>
           )}

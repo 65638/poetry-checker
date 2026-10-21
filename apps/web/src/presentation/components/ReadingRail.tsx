@@ -201,7 +201,7 @@ export function ReadingRail({
         </ul>
 
         <p className="pc-rail__kicker" id="pc-rail-lines">
-          诗句{stale ? "（报告已过期，目录暂停）" : ""}
+          诗句{stale ? "（上次分析）" : ""}
         </p>
         <ol className="pc-rail__lines" aria-labelledby="pc-rail-lines">
           {lines.map((l) => {
@@ -215,7 +215,6 @@ export function ReadingRail({
                   type="button"
                   className={`pc-rail__line${current ? " pc-rail__line--active" : ""}`}
                   aria-current={current ? "location" : undefined}
-                  disabled={stale}
                   onClick={(event) => jump(l.line, event)}
                 >
                   <span className="pc-rail__no">{l.line}</span>

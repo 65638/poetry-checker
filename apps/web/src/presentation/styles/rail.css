@@ -168,10 +168,6 @@
   font-size: 12px;
 }
 
-.pc-rail--stale .pc-rail__lines {
-  opacity: 0.7;
-}
-
 /* One-shot highlight on the destination line after an explicit jump. */
 .pc-line--flash {
   animation: pc-line-flash 1100ms var(--pc-ease-out);

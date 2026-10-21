@@ -79,7 +79,7 @@ export function CheckerView(
   const collapsed = hasReport && editorCollapsed;
 
   const lockedReason = stale
-    ? "报告与当前输入不一致，请重新分析后再选音。"
+    ? "当前显示上次报告，分析更新后可修改选音。"
     : busy
       ? "正在分析，完成后可选音。"
       : null;

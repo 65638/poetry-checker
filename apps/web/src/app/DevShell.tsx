@@ -4,7 +4,7 @@ import { DevScenarioSelector } from "./DevScenarioSelector";
 import { useCheckerStore } from "../hooks/useCheckerStore";
 import { EXAMPLES } from "./examples";
 import { createRuntimeTransport, readWebEnv } from "./config";
-import { CheckerStore } from "./store";
+import { AUTO_ANALYZE_DELAY_MS, CheckerStore } from "./store";
 import type { CheckerViewProps } from "../view-contract";
 import type { DevScenarioId } from "./devScenarios";
 import { loadSavedDraft } from "./draftPersistence";
@@ -23,10 +23,10 @@ import { loadSavedDraft } from "./draftPersistence";
 export function DevShell() {
   const store = useMemo(() => {
     const { transport } = createRuntimeTransport(readWebEnv());
-    return new CheckerStore(
-      loadSavedDraft(),
-      { transport },
-    );
+    return new CheckerStore(loadSavedDraft(), {
+      transport,
+      autoAnalyzeDelayMs: AUTO_ANALYZE_DELAY_MS,
+    });
   }, []);
   const state = useCheckerStore(store);
 
