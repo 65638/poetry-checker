@@ -2,7 +2,8 @@
 
 - 分支：`feat/b-d5-context`
 - base：本地 `274ce7d`（PR #23 内容，已并入 main）。**远端 main 实际 SHA 与 PR #28 数据未取到**：本机到 GitHub 的 `git fetch` 反复挂起/`early EOF`，按「不空等」先交最小可核材料，基线待网络恢复后补核。
-- head：见 PR（建好后回填）
+- head：`29b2a9c`（PR #33，目标 `main`，Draft）；本记录提交后 head 会前移，以 PR 实际 head 为准
+- PR：#33（https://github.com/65638/poetry-checker/pull/33）
 - 未改：`data/context`、A 快照、API、核心、公共 Schema
 
 ## 1. 命令与结果（本轮实际输出）
