@@ -1,0 +1,51 @@
+{
+  "startedAt": "2026-10-21T13:44:20.799Z",
+  "revision": {
+    "commit": "67a3cd485f1a4502e91f19b96a91d863665484c4",
+    "dirty": true
+  },
+  "mode": "fixture (DevShell dev scenario)",
+  "note": "受控 fixture：needs_review / unsupported 真实数据不可达，本脚本只用开发场景选择器装载 fixtures/contracts/*.json，不作为真实金标准。",
+  "scenarios": [
+    {
+      "name": "five-states-needs_review",
+      "status": "fail",
+      "error": "Error: 等待超时（25000ms）\n    at waitFor (file:///C:/study/w1/poetry-checker/scripts/acceptance-runtime.mjs:82:9)\n    at async file:///C:/study/w1/poetry-checker/tests/e2e/five-states.mjs:134:7\n    at async scenario (file:///C:/study/w1/poetry-checker/tests/e2e/five-states.mjs:35:20)\n    at async file:///C:/study/w1/poetry-checker/tests/e2e/five-states.mjs:130:5"
+    },
+    {
+      "name": "five-states-unsupported",
+      "status": "fail",
+      "error": "Error: 等待超时（25000ms）\n    at waitFor (file:///C:/study/w1/poetry-checker/scripts/acceptance-runtime.mjs:82:9)\n    at async file:///C:/study/w1/poetry-checker/tests/e2e/five-states.mjs:134:7\n    at async scenario (file:///C:/study/w1/poetry-checker/tests/e2e/five-states.mjs:35:20)\n    at async file:///C:/study/w1/poetry-checker/tests/e2e/five-states.mjs:130:5"
+    }
+  ],
+  "screenshots": [],
+  "readiness": {
+    "http": 503,
+    "mode": "real",
+    "versions": {
+      "data": "pingshui=pingshui-cwr-ff0e9c1-d3-full-sanj-jiang-review4,cilin=cilin-cwr-ff0e9c1-d3-full-clean1,xinyun=xinyun-rebuild-d2-full",
+      "rules": "teaching-v1+reviewed-works-v1",
+      "context": "context-rules:11",
+      "works": "works:3"
+    },
+    "body": {
+      "error": {
+        "code": "DATA_NOT_READY",
+        "message": "快照未审核：pingshui、cilin、xinyun（开发联调可分析，发布门槛不放行）；资源或审核尚未就绪，详见 apps/api/README.md",
+        "fieldErrors": []
+      }
+    }
+  },
+  "url": "http://127.0.0.1:58471/",
+  "browser": {
+    "protocolVersion": "1.3",
+    "product": "Edg/155.0.4283.62",
+    "revision": "@aa3a7406ba8c53a83536df539f07124d73c899bd",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+    "jsVersion": "15.5.9.7"
+  },
+  "pageErrors": [],
+  "passed": 0,
+  "failed": 2,
+  "exitCode": 1
+}

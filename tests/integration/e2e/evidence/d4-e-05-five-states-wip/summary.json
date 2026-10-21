@@ -1,0 +1,13 @@
+{
+  "batch": "d4-e-05-five-states-wip",
+  "generatedAt": "2026-10-21T21:45:32+08:00",
+  "timezone": "China Standard Time (UTC+8)",
+  "version": {
+    "sha": "e8370913688c764099db2b8bd29062a91dfae0c6"
+  },
+  "status": "WIP / 未通过",
+  "symptom": "DevShell 面板存在（[data-testid=dev-shell-panel]），选 needs_review / unsupported 后报告区未出现 [class*=pc-status--]，两次运行均 25s 超时",
+  "evidence": "result.json + 同目录截图（若已生成）",
+  "next": "确认 DevShell 装载 fixture 后是否挂载 CheckerView（可能需要切到 dev 路由或先点分析），再决定断言锚点；未确认前不接入 pnpm test:e2e",
+  "note": "本目录是失败证据，不是通过记录。"
+}
