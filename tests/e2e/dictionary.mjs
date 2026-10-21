@@ -475,7 +475,7 @@ try {
     async () => {
       await waitFor(() =>
         evaluate(
-          "document.querySelector('.pc-continuous .pc-rain')?.dataset.running === 'true'",
+          "Boolean(document.querySelector('.pc-continuous .pc-rain')) && document.querySelector('.pc-rain').width > 0",
         ),
       );
       await evaluate(
@@ -493,7 +493,7 @@ try {
       await click('[aria-controls="dictionary-space"]');
       await waitFor(() =>
         evaluate(
-          "document.querySelector('.pc-continuous .pc-rain')?.dataset.running === 'true'",
+          "Boolean(document.querySelector('.pc-continuous .pc-rain')) && document.querySelector('.pc-rain').width > 0",
         ),
       );
       assert.equal(
@@ -819,7 +819,7 @@ try {
         () =>
           paused.length > 0 &&
           evaluate(
-            "document.querySelector('.pc-input__submit').disabled && document.querySelector('.pc-input__submit').textContent.includes('分析中')",
+            "document.querySelector('.pc-input__submit').disabled && Boolean(document.querySelector('.pc-busy'))",
           ),
       );
       const action = async (text) => {

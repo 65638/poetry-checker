@@ -97,9 +97,10 @@
     }
   ],
   "verdict": {
-    "shared-rain": "产品行为正常（探针证明同节点共享）；脚本判据待重写，不记为产品缺陷。",
-    "30s-timeout": "锚点修正后可过，但 3 次里有 1 次失败 → 判定为**不稳定（flaky）**，不能记通过",
-    "note": "两个都不再是'等待上限不足'；等待已提到 45s"
+    "shared-rain": "判据修正后 3 次运行均无该场景失败 → 功能正常、脚本已对，不再列为失败项。",
+    "30s-timeout": "判据修正后 2/3 通过、1/3 因'元素缺失或禁用'失败 → 仍为 flaky，不记稳定通过；下一批把等待条件绑到 Fetch.requestPaused 已到达再点按钮。",
+    "note": "两个都不再是'等待上限不足'；等待已提到 45s",
+    "portable-shelf": "1/3 出现'元素缺失或禁用'，与本批改动无关的既有竞态，记 flaky。"
   },
   "nextStep": "在 dictionary 空间导航前后 dump：.pc-rain 数量、父链 class、是否同一节点、可见性；据结果改脚本或按产品缺陷交 D（附最小复现）",
   "probeFindings": {
@@ -122,5 +123,34 @@
     "conclusion": "雨幕跨导航是同一节点、单一画布、父容器仍为 pc-continuous → **产品行为正常**；早前失败是我用可见高度(height=0)作判据所致。",
     "remainingWork": "按探针结论重写该场景判据（身份+父容器+canvas.width>0），我的一次性改动引入了 JS 语法错误，已整文件回退，未提交错误版本。"
   },
-  "scriptState": "tests/e2e/dictionary.mjs 已回退到 e837091 原版（干净）；两处锚点改写待下一批重做。"
+  "scriptState": "tests/e2e/dictionary.mjs 已包含上述两处判据修正（node --check 通过）。",
+  "finalFix": {
+    "what": "雨幕判据改为 Boolean('.pc-continuous .pc-rain') + canvas.width>0（原用已移除的 data-running、以及误用的可见高度）；busy 判据改为 Boolean('.pc-busy')（原读 button.textContent，而新版 busy 文案是 CSS ::after）",
+    "syntaxCheck": "node --check tests/e2e/dictionary.mjs → exit 0"
+  },
+  "runsAfterFinalFix": [
+    {
+      "run": 1,
+      "passed": 16,
+      "failed": 2,
+      "exitCode": 1,
+      "failures": [
+        "portable-shelf-file-export-import-and-invalid-file-protection",
+        "analysis-real-30-second-timeout-blocks-copy-export-and-recovers"
+      ],
+      "note": "均为 Uncaught: Error: 元素缺失或禁用（按钮处于禁用/元素未就绪的竞态）"
+    },
+    {
+      "run": 2,
+      "passed": 18,
+      "failed": 0,
+      "exitCode": 0
+    },
+    {
+      "run": 3,
+      "passed": 18,
+      "failed": 0,
+      "exitCode": 0
+    }
+  ]
 }
