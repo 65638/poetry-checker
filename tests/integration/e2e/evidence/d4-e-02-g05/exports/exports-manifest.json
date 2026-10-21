@@ -1,0 +1,39 @@
+{
+  "generatedAt": "2026-10-21T19:09:33+08:00",
+  "timezone": "China Standard Time (UTC+8)",
+  "sourceRun": "g05-clone-cea831b / test:e2e / E06 下载",
+  "parses": 3,
+  "distinct": 2,
+  "files": [
+    {
+      "name": "poetry-report-白日依山尽.json",
+      "bytes": 271883,
+      "sha256": "f6b0d92a6786abd0f1b5f2668a45fa6686327a1297b52ae1f031cfbfad6cdec8",
+      "inputHash": "4dc6ac3926c849d14355b4240df877176062836d39788fc2947abb66339a124d",
+      "summary": "pass",
+      "formFamily": "regulated",
+      "formId": "wujue",
+      "tokens": 20,
+      "originalText": "白日依山尽，黄河入海流。欲穷千里目，更上一层楼。"
+    },
+    {
+      "name": "poetry-report-昔人已乘黄鹤去.json",
+      "bytes": 403690,
+      "sha256": "28a0da12d076b3809604c988969dfbddd944e8368c52a6dfc1485a52bd67e280",
+      "inputHash": "b3031b9e603f3e14016b22adfd361eee631e1f7455743492e4c2a19481d42053",
+      "summary": "fail",
+      "formFamily": "regulated",
+      "formId": "qilv",
+      "tokens": 56,
+      "originalText": "昔人已乘黄鹤去，此地空余黄鹤楼。黄鹤一去不复返，白云千载空悠悠。晴川历历汉阳树，芳草萋萋鹦鹉洲。日暮乡关何处是，烟波江上使人愁。"
+    }
+  ],
+  "duplicates": [
+    {
+      "name": "poetry-report-昔人已乘黄鹤去.json",
+      "sha256": "28a0da12d076b3809604c988969dfbddd944e8368c52a6dfc1485a52bd67e280",
+      "sameAs": "poetry-report-昔人已乘黄鹤去.json"
+    }
+  ],
+  "note": "3 次解析、2 种不同报告（SHA256 去重）：登鹳雀楼 pass；黄鹤楼 fail 出现两次且字节完全相同。静夜思的导出未被这 3 条证明。"
+}
