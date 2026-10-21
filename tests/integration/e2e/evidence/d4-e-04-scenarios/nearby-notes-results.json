@@ -1,0 +1,45 @@
+{
+  "revision": {
+    "commit": "aecce120d8941a568555c43c6b9aca6bd181bf23",
+    "dirty": false
+  },
+  "checks": [
+    {
+      "name": "dictionary-picker-beside-result-in-first-viewport",
+      "status": "pass"
+    },
+    {
+      "name": "poem-characters-before-secondary-actions-and-beside-entry",
+      "status": "pass"
+    },
+    {
+      "name": "report-notes-start-beside-poem",
+      "status": "pass"
+    },
+    {
+      "name": "hover-reason-at-mark-and-dismiss-with-escape",
+      "status": "pass"
+    },
+    {
+      "name": "keyboard-follows-exact-number-without-extra-link",
+      "status": "pass"
+    },
+    {
+      "name": "pointer-and-click-follow-1-6-without-page-scroll-or-obstruction",
+      "status": "pass"
+    },
+    {
+      "name": "one-note-at-a-time-and-outside-click-dismissal",
+      "status": "pass"
+    },
+    {
+      "name": "small-screens-keep-notes-above-poem-and-popover-on-screen",
+      "status": "pass"
+    },
+    {
+      "name": "dictionary-mobile-header-and-character-picker",
+      "status": "pass"
+    }
+  ],
+  "errors": []
+}

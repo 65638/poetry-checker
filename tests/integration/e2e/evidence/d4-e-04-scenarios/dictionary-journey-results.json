@@ -1,0 +1,33 @@
+{
+  "revision": {
+    "commit": "aecce120d8941a568555c43c6b9aca6bd181bf23",
+    "dirty": false
+  },
+  "checks": [
+    {
+      "name": "paired-horizontal-snapshots",
+      "status": "pass"
+    },
+    {
+      "name": "rapid-reversal-preserves-input-and-one-visible-panel",
+      "status": "pass"
+    },
+    {
+      "name": "wordslips-query-and-centered-input",
+      "status": "pass"
+    },
+    {
+      "name": "hash-navigation-restores-each-scroll-position",
+      "status": "pass"
+    },
+    {
+      "name": "mobile-wordslips-and-folio-fit",
+      "status": "pass"
+    },
+    {
+      "name": "reduced-motion-and-api-fallback",
+      "status": "pass"
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,84 @@
+{
+  "batch": "d4-e-04-scenarios",
+  "generatedAt": "2026-10-21T21:36:48+08:00",
+  "timezone": "China Standard Time (UTC+8)",
+  "version": {
+    "sha": "e8370913688c764099db2b8bd29062a91dfae0c6",
+    "subject": "Follow the precise poem annotation under the pointer"
+  },
+  "branch": "feat/e-d4-final",
+  "results": [
+    {
+      "script": "tests/e2e/nearby-notes.mjs",
+      "outDir": "artifacts/acceptance/d4f-nearby",
+      "passed": 9,
+      "failed": 0,
+      "exitCode": 0,
+      "artifacts": [
+        "dictionary-320.png",
+        "dictionary-375.png",
+        "dictionary-entry.png",
+        "dictionary-poem.png",
+        "dictionary.png",
+        "follow-six.png",
+        "reason.png",
+        "report-320.png",
+        "report-375.png",
+        "report-768.png"
+      ]
+    },
+    {
+      "script": "tests/e2e/continuous-garden.mjs",
+      "outDir": "artifacts/acceptance/d4f-garden",
+      "passed": 4,
+      "failed": 0,
+      "exitCode": 0,
+      "artifacts": [
+        "library-result.png",
+        "library.png",
+        "mobile.png",
+        "pavilion.png",
+        "scene.json",
+        "walk-120.png",
+        "walk-380.png",
+        "walk-640.png"
+      ]
+    },
+    {
+      "script": "tests/e2e/dictionary-journey.mjs",
+      "outDir": "artifacts/acceptance/d4f-djourney",
+      "passed": 6,
+      "failed": 0,
+      "exitCode": 0,
+      "artifacts": [
+        "dictionary-result.png",
+        "dictionary.png",
+        "mobile-slips.png",
+        "mobile.png",
+        "results.json",
+        "transition-middle.png"
+      ]
+    },
+    {
+      "script": "tests/e2e/dictionary-polish.mjs",
+      "outDir": "artifacts/acceptance/d4f-dpolish",
+      "passed": 8,
+      "failed": 0,
+      "exitCode": 0,
+      "artifacts": [
+        "after-comparison.png",
+        "after-desktop.png",
+        "after-empty.png",
+        "after-mobile-result.png",
+        "after-mobile.png",
+        "polish.json"
+      ]
+    }
+  ],
+  "note": "按各脚本自身参数（argv[2]=输出目录）分别运行，未统一套参数；数字来自控制台 [PASS]/[FAIL] 计数。",
+  "notRun": [
+    "五态受控 needs_review/unsupported",
+    "最终 main 新目录复验",
+    "演示包实物（三首 JSON/截图/哈希）"
+  ]
+}

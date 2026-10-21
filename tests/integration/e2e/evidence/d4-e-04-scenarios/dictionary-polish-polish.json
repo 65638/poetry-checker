@@ -1,0 +1,41 @@
+{
+  "revision": {
+    "commit": "aecce120d8941a568555c43c6b9aca6bd181bf23",
+    "dirty": false
+  },
+  "mode": "production + real API",
+  "checks": [
+    {
+      "name": "folio-text-selection-and-surface-cursor",
+      "status": "pass"
+    },
+    {
+      "name": "delayed-repeat-retains-result-and-button-geometry",
+      "status": "pass"
+    },
+    {
+      "name": "fast-repeat-has-no-loading-flash",
+      "status": "pass"
+    },
+    {
+      "name": "comparison-reveals-and-repeat-preserves-height",
+      "status": "pass"
+    },
+    {
+      "name": "mobile-320-375-768-no-overflow",
+      "status": "pass"
+    },
+    {
+      "name": "garden-rain-persists-across-navigation",
+      "status": "pass"
+    },
+    {
+      "name": "effects-off-and-system-reduced-motion",
+      "status": "pass"
+    },
+    {
+      "name": "failed-refresh-does-not-announce-old-success",
+      "status": "pass"
+    }
+  ]
+}

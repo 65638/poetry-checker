@@ -1,0 +1,38 @@
+{
+  "revision": {
+    "commit": "aecce120d8941a568555c43c6b9aca6bd181bf23",
+    "dirty": false
+  },
+  "checks": [
+    {
+      "name": "moon-stays-fixed-and-world-is-not-duplicated",
+      "status": "pass",
+      "detail": {
+        "moon": {
+          "x": 1108.7421875,
+          "y": 179.4453125,
+          "width": 119.515625,
+          "height": 127.109375
+        },
+        "checkpoints": [
+          120,
+          380,
+          640
+        ],
+        "persistentCanvas": true
+      }
+    },
+    {
+      "name": "pointer-reacts-over-water-not-over-paper",
+      "status": "pass"
+    },
+    {
+      "name": "ambient-effects-stop-on-blur-and-motion-off",
+      "status": "pass"
+    },
+    {
+      "name": "mobile-scene-and-result-layout",
+      "status": "pass"
+    }
+  ]
+}
