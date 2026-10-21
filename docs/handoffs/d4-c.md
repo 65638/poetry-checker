@@ -114,6 +114,7 @@
 # D5 复核（2026-10-21，基线 main @ cea831b）
 
 > 任务卡：`D5_最后一轮任务书_2026-10-21/03_给C_独立复核与规则口径收口.md`
+> PR：**#32** https://github.com/65638/poetry-checker/pull/32 （`feat/c-d5-review` → `main`；创建时 head `4c33806`，已用 `git ls-remote refs/pull/32/head` 核对）
 > 分支：`feat/c-d5-review`（从 `origin/main @ cea831b` 建）；本批**只审不重写**：不改核心、不改 B/E 数据与台账。
 
 ## 1. G34–G36 逐组复核（结论：35/36）
