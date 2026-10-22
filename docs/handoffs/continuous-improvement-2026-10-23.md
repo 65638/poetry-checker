@@ -11,7 +11,8 @@
 - 05:19：开始；已设置至09:19的本会话跟进。
 - 05:29批次01完成，功能提交 `6514af6`：多条件/限定字段/排除词检索、WeakMap缓存、折叠用法入口、资料错误文案。984项测试、3浏览器场景通过。性能实测详见UI_SYNC，原始记录在忽略目录 `artifacts/continuous-improvement/`。
 - 05:40批次02完成，功能提交 `4de5102`：统一备份/合并恢复，本机资料先校验与预览，默认保留草稿，支持撤销恢复草稿；冲突/超限拒绝，IDB失败回退本次localStorage修改。996项测试、4个新浏览器场景通过，含320px。原始证据在 `artifacts/continuous-improvement/local-backup/`。
-- 批次03开始：桌面发布快照。当前Vite preview直接读dist，开发build会立即改变线上本机页面；改为显式发布后使用独立静态快照，并校验API源码指纹使纯后端更新也能正确重启。
+- 05:54批次03完成，功能提交 `3319cfa`：桌面页面独立发布快照，显式运行脚本再发布；API/规则/数据/配置变化触发重启；快照损坏自动重建。修正桌面PowerShell无Get-FileHash的问题（改.NET）。5个Windows启动场景与lint通过，证据 `artifacts/continuous-improvement/launcher-snapshot/results.json`；996单元测试为批次02验证，未冒充本批重复执行。
+- 批次04开始：摘句收集与回原诗、检索和随手笔记，纳入统一本机备份。主要新模块，LibraryContainer中少量接入。
 
 ## 可选后续方向
 
