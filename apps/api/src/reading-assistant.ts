@@ -15,6 +15,7 @@ import type { Resources } from "./resources.js";
 import { characterReferenceRows } from "./library.js";
 import { modelResearch } from "./research.js";
 import { requestModel } from "./model-request.js";
+import { ModelQueueFullError, ModelRequestQueue } from "./model-queue.js";
 import {
   DEFAULT_ANALYSIS_TIMEOUT_MS,
   DEFAULT_MODEL_TIMEOUT_MS,
@@ -106,7 +107,7 @@ export function createReadingAssistant(
     resolveModelConfig(options);
   const configured = apiKey.trim().length > 0;
   const fetcher = options.fetcher ?? fetch;
-  let active = 0;
+  const queue = new ModelRequestQueue();
   async function runRequest<T>(
     run: (signal: AbortSignal) => Promise<T>,
     signal?: AbortSignal,
@@ -129,13 +130,6 @@ export function createReadingAssistant(
         "DATA_NOT_READY",
         "韵书资源装载异常，暂不提供模型建议。",
       );
-    if (active >= 2)
-      throw new AssistantError(
-        429,
-        "MODEL_RATE_LIMITED",
-        "读音建议请求较多，请稍后再试。",
-      );
-    active++;
     const controller = new AbortController();
     const combinedSignal = signal
       ? AbortSignal.any([signal, controller.signal])
@@ -144,7 +138,10 @@ export function createReadingAssistant(
       () => controller.abort(),
       options.timeoutMs ?? DEFAULT_MODEL_TIMEOUT_MS[provider],
     );
+    let release: (() => void) | undefined;
     try {
+      release = await queue.acquire(combinedSignal);
+      combinedSignal.throwIfAborted();
       return await run(combinedSignal);
     } catch (cause) {
       if (combinedSignal.aborted)
@@ -152,6 +149,12 @@ export function createReadingAssistant(
           504,
           "MODEL_TIMEOUT",
           `${name}等候较久，请重试；原查阅结果已保留。`,
+        );
+      if (cause instanceof ModelQueueFullError)
+        throw new AssistantError(
+          429,
+          "MODEL_RATE_LIMITED",
+          "当前等候的AI任务较多，请稍后再试；原查阅结果已保留。",
         );
       if (cause instanceof AssistantError) throw cause;
       throw new AssistantError(
@@ -161,7 +164,7 @@ export function createReadingAssistant(
       );
     } finally {
       clearTimeout(timer);
-      active--;
+      release?.();
     }
   }
 
