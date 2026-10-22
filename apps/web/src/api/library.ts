@@ -12,16 +12,33 @@ export async function libraryGet(
   signal?: AbortSignal,
 ): Promise<unknown> {
   const { baseUrl } = resolveApiConfig(readWebEnv());
-  const response = await fetch(`${baseUrl}/api/v1/${path}`, {
-    signal: AbortSignal.any([
-      ...(signal ? [signal] : []),
-      AbortSignal.timeout(15000),
-    ]),
-  });
-  const value = await response.json();
-  if (!response.ok)
-    throw new Error(value?.error?.message ?? "参考资料暂不可用，请稍后重试。");
-  return value;
+  const combined = AbortSignal.any([
+    ...(signal ? [signal] : []),
+    AbortSignal.timeout(15000),
+  ]);
+  try {
+    const response = await fetch(`${baseUrl}/api/v1/${path}`, {
+      signal: combined,
+    });
+    const value = await response.json().catch(() => null);
+    if (!response.ok)
+      throw new Error(
+        value?.error?.message ??
+          `参考资料暂不可用（${response.status}），请稍后重试。`,
+      );
+    if (value === null)
+      throw new Error("资料未完整返回，请重新查阅。原文仍在。");
+    return value;
+  } catch (cause) {
+    if (signal?.aborted) throw cause;
+    if (combined.aborted)
+      throw new Error("查阅资料等候较久，请稍后重试。", { cause });
+    if (cause instanceof TypeError)
+      throw new Error("暂时连接不上资料服务，请检查网站是否已启动。", {
+        cause,
+      });
+    throw cause;
+  }
 }
 export async function loadCatalog(signal?: AbortSignal) {
   return LibraryCatalogSchema.parse(await libraryGet("library", signal));
