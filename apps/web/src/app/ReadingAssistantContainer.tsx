@@ -6,6 +6,7 @@ import type {
   ReadingSuggestionResponse,
 } from "@poetry/contracts";
 import { createReadingAssistant } from "../api/reading-assistant";
+import { AI_CLIENT_TIMEOUT_MS } from "../api/timeouts";
 import { readWebEnv, resolveApiConfig } from "./config";
 import { ReadingAssistantView } from "../presentation/components/ReadingAssistantView";
 
@@ -83,8 +84,10 @@ export function ReadingAssistantContainer(props: {
     pending.current = controller;
     setBusy(true);
     setError(null);
-    // 与服务端 DeepSeek 默认单次请求窗口一致，避免浏览器提前中止。
-    const timer = window.setTimeout(() => controller.abort(), 90000);
+    const timer = window.setTimeout(
+      () => controller.abort(),
+      AI_CLIENT_TIMEOUT_MS,
+    );
     try {
       const response = await client.suggest(
         {

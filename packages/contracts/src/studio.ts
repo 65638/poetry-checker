@@ -43,8 +43,17 @@ const ProsodyIssueSchema = z.strictObject({
   status: z.enum(["fail", "uncertain"]),
   locations: z.array(ProsodyLocationSchema).max(12),
   message: z.string().min(1).max(600),
+  expected: z.array(z.string().max(200)).max(200).optional(),
+  observed: z.array(z.string().max(200)).max(200).optional(),
+  severity: z.enum(["error", "warning", "info"]).optional(),
 });
 export const ProsodyContextSchema = z.strictObject({
+  // Omitted conditions from older clients do not establish applicability.
+  rhymeBook: book.optional(),
+  toneBasis: z.enum(["historical", "mandarin_base"]).optional(),
+  applicability: z
+    .enum(["applicable", "not_applicable", "uncertain", "unsupported"])
+    .optional(),
   format: z.string().min(1).max(160),
   templateId: z.string().max(160).nullable(),
   issues: z.array(ProsodyIssueSchema).max(120),

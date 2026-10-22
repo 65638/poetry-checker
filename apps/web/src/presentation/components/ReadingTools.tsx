@@ -4,13 +4,41 @@ import { useMotionPreference } from "../useMotionPreference";
 /** Keep scroll updates inside this small tool; the poem never rerenders on scroll. */
 export function ReadingTools({ place }: { place: string }) {
   const host = useRef<HTMLElement>(null);
-  const [quiet, setQuiet] = useState(false);
+  const [quiet, setQuiet] = useState(() => {
+    try {
+      return localStorage.getItem("poetry-reading-quiet") === "true";
+    } catch {
+      return false;
+    }
+  });
+  const [size, setSize] = useState(() => {
+    try {
+      const saved = Number(localStorage.getItem("poetry-reading-size"));
+      return [0, 1, 2].includes(saved) ? saved : 0;
+    } catch {
+      return 0;
+    }
+  });
   const [progress, setProgress] = useState(0);
   const [showReturn, setShowReturn] = useState(false);
   const motion = useMotionPreference();
   useEffect(() => {
     const root = host.current?.closest<HTMLElement>(".pc-workspace");
+    if (root) root.dataset.readingSize = String(size);
+    try {
+      localStorage.setItem("poetry-reading-size", String(size));
+    } catch {
+      /* Preference remains usable this session. */
+    }
+  }, [size]);
+  useEffect(() => {
+    const root = host.current?.closest<HTMLElement>(".pc-workspace");
     root?.style.setProperty("--pc-reading-shade", quiet ? ".32" : "0");
+    try {
+      localStorage.setItem("poetry-reading-quiet", String(quiet));
+    } catch {
+      /* Session-only preference. */
+    }
     return () => {
       root?.style.removeProperty("--pc-reading-shade");
     };
@@ -45,6 +73,15 @@ export function ReadingTools({ place }: { place: string }) {
   return (
     <aside ref={host} className="pc-reading-tools" aria-label="阅读小笺">
       <span className="pc-reading-tools__caption">灯下静读 · 卷中有景</span>
+      <button
+        type="button"
+        className="pc-reading-light"
+        aria-label={`诗文字号：${["标准", "较大", "大字"][size]}，点击切换`}
+        title="调整原诗、对读与推敲笺字号"
+        onClick={() => setSize((size + 1) % 3)}
+      >
+        字号 · {["标准", "较大", "大字"][size]}
+      </button>
       <button
         type="button"
         className="pc-reading-light"

@@ -79,7 +79,16 @@ describe("poetry studio with real lexicon and controlled model", () => {
           .update(JSON.stringify(PoetryAssistantRequestSchema.parse(critique)))
           .digest("hex"),
       );
-      expect(body).toMatchObject({ task: "critique", result });
+      expect(body).toMatchObject({
+        task: "critique",
+        result: {
+          ...result,
+          overview: expect.stringContaining(result.overview),
+        },
+      });
+      expect(body.task === "critique" && body.result.overview).toContain(
+        "不作合律判断",
+      );
       const request = JSON.parse(fetcher.mock.calls[0]![1]!.body as string);
       expect(JSON.parse(request.messages[1].content).text).toBe(critique.text);
       expect(JSON.parse(request.messages[1].content).tokens).toHaveLength(4);
@@ -94,19 +103,19 @@ describe("poetry studio with real lexicon and controlled model", () => {
         {
           ruleId: "METER.POSITION",
           status: "fail" as const,
-          locations: [{ tokenId: "l5c2", line: 5, column: 2, text: "十" }],
+          locations: [{ tokenId: "l1c2", line: 1, column: 2, text: "高" }],
           message: "此字平仄与允许集合不符",
         },
         {
           ruleId: "RELATION.NIAN",
           status: "fail" as const,
-          locations: [{ tokenId: "l6c2", line: 6, column: 2, text: "更" }],
+          locations: [{ tokenId: "l1c4", line: 1, column: 4, text: "远" }],
           message: "失粘；由同字位平仄偏离造成的派生关系问题",
         },
         {
           ruleId: "METER.POSITION",
           status: "fail" as const,
-          locations: [{ tokenId: "l6c2", line: 6, column: 2, text: "更" }],
+          locations: [{ tokenId: "l1c4", line: 1, column: 4, text: "远" }],
           message: "此字平仄与允许集合不符",
         },
       ],
@@ -119,8 +128,88 @@ describe("poetry studio with real lexicon and controlled model", () => {
         prosodyContext,
       );
       expect(payload.messages[0].content).toContain("派生影响");
-      expect(response.json().result.overview).toContain("第5句第2字「十」");
-      expect(response.json().result.overview).toContain("独立问题2处");
+      expect(response.json().result.overview).toContain("第1句第2字「高」");
+      expect(response.json().result.overview).toContain("列出2项检查");
+    });
+  });
+  it.each([
+    "uncertain",
+    "applicable",
+    "not_applicable",
+    "unsupported",
+  ] as const)(
+    "preserves %s applicability instead of relabelling every fail as 出律",
+    async (applicability) => {
+      const prosodyContext = {
+        rhymeBook: "xinyun",
+        toneBasis: "mandarin_base",
+        applicability,
+        format: "七言参考",
+        templateId: null,
+        issues: [
+          {
+            ruleId: "METER.POSITION",
+            status: "fail",
+            severity: "error",
+            locations: [{ tokenId: "l1c7", line: 1, column: 7, text: "局" }],
+            message: "参考句式仄，按新韵读平",
+            expected: ["Z"],
+            observed: ["P"],
+          },
+        ],
+      };
+      await withApp({ ...result, revisions: [] }, async (app, fetcher) => {
+        const response = await post(app, {
+          ...critique,
+          text: "三区并峙开新局。",
+          rhymeBook: "xinyun",
+          prosodyContext,
+        });
+        expect(response.statusCode).toBe(200);
+        const sent = JSON.parse(fetcher.mock.calls[0]![1]!.body as string);
+        expect(JSON.parse(sent.messages[1].content)).toMatchObject({
+          evaluationBasis: {
+            rhymeBook: "xinyun",
+            toneBasis: "mandarin_base",
+            applicability,
+          },
+          prosodyContext,
+        });
+        expect(sent.messages[0].content).toContain("expected是参考句式的要求");
+        const overview = response.json().result.overview;
+        expect(overview).not.toContain("「局」出律");
+        if (applicability === "uncertain")
+          expect(overview).toContain("条件比较");
+        if (applicability === "not_applicable")
+          expect(overview).toContain("不适用近体格律");
+        if (applicability === "unsupported")
+          expect(overview).toContain("不作合律判断");
+      });
+    },
+  );
+  it("rejects stale text, contradictory rhyme books and tone bases before invoking the model", async () => {
+    await withApp(result, async (app, fetcher) => {
+      const base = { format: "参考", templateId: null, issues: [] };
+      for (const prosodyContext of [
+        { ...base, rhymeBook: "xinyun" },
+        { ...base, toneBasis: "mandarin_base" },
+        {
+          ...base,
+          issues: [
+            {
+              ruleId: "METER.POSITION",
+              status: "fail",
+              message: "旧诗字位",
+              locations: [{ tokenId: "l1c4", line: 1, column: 4, text: "局" }],
+            },
+          ],
+        },
+      ]) {
+        expect(
+          (await post(app, { ...critique, prosodyContext })).statusCode,
+        ).toBe(422);
+      }
+      expect(fetcher).not.toHaveBeenCalled();
     });
   });
   it.each([

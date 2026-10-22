@@ -23,17 +23,19 @@ import {
   StudioTabs,
   StudioTaskState,
 } from "../presentation/components/StudioControls";
+import { buildProsodyContext } from "../features/critique";
 import { requestRhymeWords } from "../api/poetry-studio";
 import { createCharacterLookup } from "../api/characters";
 import { readWebEnv, resolveApiConfig } from "./config";
 import { downloadJson } from "./library";
 import {
   applyRevisions,
-  changedSpan,
   currentLineEnd,
   parseNotebook,
   type NotebookEntry,
 } from "./notebook";
+
+import { NotebookArchive } from "../presentation/components/NotebookArchive";
 
 type CritiqueInput = Extract<PoetryAssistantRequest, { task: "critique" }>;
 export function PoetryDesk({
@@ -106,9 +108,21 @@ export function PoetryDesk({
   const notebookFile = useRef<HTMLInputElement>(null);
   const { report, draft, stale, busy } = checker;
   const usable =
-    !!report && !stale && !busy && report.poem.originalText === draft.text;
+    !!report &&
+    !stale &&
+    !busy &&
+    report.poem.originalText === draft.text &&
+    report.policy.rhymeBook === draft.rhymeBook;
+  // Keep advice visible while adopting edits; usable gates sending a new request.
+  const prosodyContext = report ? buildProsodyContext(report) : undefined;
   const critique = usePoetryTask(
-    JSON.stringify([report?.inputHash, draft.rhymeBook, direction, mode]),
+    JSON.stringify([
+      report?.inputHash,
+      draft.rhymeBook,
+      direction,
+      mode,
+      prosodyContext,
+    ]),
   );
   const pendingEdits =
     report?.poem.originalText === draft.text
@@ -233,41 +247,6 @@ export function PoetryDesk({
       });
     return () => controller.abort();
   }, [canUseSuggestions, rhymeIdentity, page, tab]);
-  const prosodyContext = report
-    ? {
-        format: report.prosody.format
-          ? `${report.prosody.format.shape.width}言${report.prosody.format.shape.lineCount}句；起式${report.prosody.format.start.value ?? "待确认"}；首句用韵${report.prosody.format.firstLineRhyme.value}`
-          : "格式待确认",
-        templateId: report.prosody.selectedTemplateId,
-        issues: report.prosody.checks
-          .filter(
-            (check) =>
-              (check.status === "fail" || check.status === "uncertain") &&
-              check.resolvedBy === null,
-          )
-          .slice(0, 120)
-          .map((check) => ({
-            ruleId: check.ruleId,
-            status: check.status as "fail" | "uncertain",
-            locations: check.locations.flatMap((location) => {
-              const token = report.poem.tokens.find(
-                (item) => item.tokenId === location.tokenId,
-              );
-              return token
-                ? [
-                    {
-                      tokenId: token.tokenId,
-                      line: token.line,
-                      column: token.column,
-                      text: token.text,
-                    },
-                  ]
-                : [];
-            }),
-            message: check.message,
-          })),
-      }
-    : undefined;
   const critiqueInput: CritiqueInput = {
     task: "critique",
     text: draft.text,
@@ -277,7 +256,8 @@ export function PoetryDesk({
     ...(prosodyContext ? { prosodyContext } : {}),
   };
   const reviewIdentity = JSON.stringify([
-    report?.poem.inputHash,
+    report?.inputHash,
+    prosodyContext,
     draft.rhymeBook,
     direction,
     mode,
@@ -846,55 +826,7 @@ export function PoetryDesk({
               }}
             />
           </div>
-          <p className="pc-studio-meta">{entries.length}笺 · 保留最近80笺</p>
-          {!entries.length && (
-            <p className="pc-studio-empty">此处尚无推敲记录。</p>
-          )}
-          {[...entries].reverse().map((entry) => {
-            const diff = changedSpan(entry.before.text, entry.after.text);
-            return (
-              <article className="pc-notebook-entry" key={entry.id}>
-                <header>
-                  <time dateTime={entry.at}>
-                    {new Date(entry.at).toLocaleString("zh-CN", {
-                      hour12: false,
-                    })}
-                  </time>
-                  <button
-                    className="pc-studio-action"
-                    disabled={busy}
-                    onClick={() =>
-                      revise(entry.after, `恢复推敲笺：${entry.note}`)
-                    }
-                  >
-                    <RotateCcw size={16} />
-                    恢复此版
-                  </button>
-                </header>
-                <p>{entry.note}</p>
-                {entry.before.text !== entry.after.text && (
-                  <p className="pc-poetry-substitution">
-                    <del>{diff.removed || "（无）"}</del>
-                    <ArrowRight size={16} aria-hidden="true" />
-                    <ins>{diff.added || "（无）"}</ins>
-                  </p>
-                )}
-                <details>
-                  <summary>原稿与此版</summary>
-                  <div className="pc-notebook-diff">
-                    <div>
-                      <h4>原稿</h4>
-                      <p>{entry.before.text || "（空稿）"}</p>
-                    </div>
-                    <div>
-                      <h4>此版</h4>
-                      <p>{entry.after.text}</p>
-                    </div>
-                  </div>
-                </details>
-              </article>
-            );
-          })}
+          <NotebookArchive entries={entries} busy={busy} onRestore={revise} />
         </div>
       )}
     </section>

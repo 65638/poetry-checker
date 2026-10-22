@@ -2035,6 +2035,30 @@
               "prosodyContext": {
                 "type": "object",
                 "properties": {
+                  "rhymeBook": {
+                    "type": "string",
+                    "enum": [
+                      "pingshui",
+                      "cilin",
+                      "xinyun"
+                    ]
+                  },
+                  "toneBasis": {
+                    "type": "string",
+                    "enum": [
+                      "historical",
+                      "mandarin_base"
+                    ]
+                  },
+                  "applicability": {
+                    "type": "string",
+                    "enum": [
+                      "applicable",
+                      "not_applicable",
+                      "uncertain",
+                      "unsupported"
+                    ]
+                  },
                   "format": {
                     "type": "string",
                     "minLength": 1,
@@ -2109,6 +2133,30 @@
                           "type": "string",
                           "minLength": 1,
                           "maxLength": 600
+                        },
+                        "expected": {
+                          "maxItems": 200,
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "maxLength": 200
+                          }
+                        },
+                        "observed": {
+                          "maxItems": 200,
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "maxLength": 200
+                          }
+                        },
+                        "severity": {
+                          "type": "string",
+                          "enum": [
+                            "error",
+                            "warning",
+                            "info"
+                          ]
                         }
                       },
                       "required": [

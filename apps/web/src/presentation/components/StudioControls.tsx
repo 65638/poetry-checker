@@ -1,4 +1,5 @@
 import { X, LoaderCircle } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useBusyIndicator } from "../useBusyIndicator";
 
 export function StudioTabs<T extends string>({
@@ -53,14 +54,34 @@ export function StudioTaskState({
   busy,
   error,
   cancel,
+  retry,
+  cancelled = false,
+  result,
 }: {
   busy: boolean;
   error: string | null;
   cancel: () => void;
+  retry?: () => void;
+  cancelled?: boolean;
+  result?: unknown;
 }) {
   const visible = useBusyIndicator(busy);
+  const [seconds, setSeconds] = useState(0);
+  useEffect(() => {
+    setSeconds(0);
+    if (!busy) return;
+    const started = Date.now();
+    const timer = window.setInterval(
+      () => setSeconds(Math.floor((Date.now() - started) / 1000)),
+      1000,
+    );
+    return () => window.clearInterval(timer);
+  }, [busy]);
   return (
     <>
+      {!!result && (busy || !!error || cancelled) && (
+        <p className="pc-studio-meta">上次研读结果仍在，新结果返回后更新。</p>
+      )}
       {visible && (
         <div className="pc-studio-status" role="status">
           <LoaderCircle
@@ -68,7 +89,14 @@ export function StudioTaskState({
             className={busy ? "pc-studio-spin" : undefined}
             aria-hidden="true"
           />{" "}
-          {busy ? "正在研读…" : "研读已结束"}{" "}
+          <span>
+            {busy
+              ? seconds >= 25
+                ? "还在研读，可先继续看诗"
+                : "正在研读…"
+              : "研读已结束"}
+          </span>{" "}
+          {busy && <small aria-hidden="true">{seconds} 秒</small>}
           <button
             type="button"
             className="pc-studio-icon"
@@ -81,10 +109,18 @@ export function StudioTaskState({
           </button>
         </div>
       )}
-      {error && (
-        <p className="pc-studio-error" role="alert">
-          {error}
-        </p>
+      {(error || cancelled) && !busy && (
+        <div
+          className={error ? "pc-studio-error" : "pc-studio-notice"}
+          role={error ? "alert" : "status"}
+        >
+          <p>{error || "已停止本次研读，诗文仍保留。"}</p>
+          {retry && (
+            <button type="button" className="pc-studio-action" onClick={retry}>
+              {cancelled ? "重新研读" : "重试本次研读"}
+            </button>
+          )}
+        </div>
       )}
     </>
   );

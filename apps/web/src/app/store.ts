@@ -10,6 +10,7 @@ import {
   type Transport,
 } from "../api/analyze";
 import { ApiError } from "../api/errors";
+import { AI_CLIENT_TIMEOUT_MS } from "../api/timeouts";
 import {
   buildReportJson,
   buildSummaryText,
@@ -70,8 +71,8 @@ export interface StoreOptions {
   requestTimeoutMs?: number;
 }
 
-/** 默认 90 秒：覆盖 DeepSeek 的慢速推理，同时仍保留可重试的有限等待。 */
-export const DEFAULT_REQUEST_TIMEOUT_MS = 90_000;
+/** Allow the server's 90s inference deadline to return its fallback report. */
+export const DEFAULT_REQUEST_TIMEOUT_MS = AI_CLIENT_TIMEOUT_MS;
 export const AUTO_ANALYZE_DELAY_MS = 1_500;
 
 function initialState(draft: InputDraft): CheckerState {

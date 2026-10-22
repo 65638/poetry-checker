@@ -379,7 +379,17 @@ export function CheckerView(
                 <div className="pc-banner__body">
                   <strong className="pc-banner__title">分析未完成</strong>
                   <p className="pc-banner__text">{error.message}</p>
-                  <p className="pc-banner__meta">错误代码：{error.code}</p>
+                  <button
+                    type="button"
+                    className="pc-studio-action"
+                    disabled={busy}
+                    onClick={props.onAnalyze}
+                  >
+                    重新分析
+                  </button>
+                  <details className="pc-banner__meta">
+                    <summary>查看错误详情</summary>错误代码：{error.code}
+                  </details>
                 </div>
               </div>
             )}

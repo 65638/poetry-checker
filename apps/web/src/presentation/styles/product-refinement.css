@@ -1,0 +1,83 @@
+.pc-reading-journal {
+  border-block: 1px solid #8d94734d;
+  padding: 12px 0;
+  margin-block: 16px;
+}
+.pc-reading-journal summary {
+  cursor: pointer;
+  font-size: 14px;
+}
+.pc-reading-journal .pc-studio-actions {
+  margin-top: 12px;
+}
+.pc-reading-journal small {
+  opacity: 0.75;
+}
+.pc-poem-share {
+  margin-block: 12px;
+}
+.pc-notebook-archive {
+  margin-top: 20px;
+}
+.pc-notebook-lines {
+  padding: 12px;
+  border: 1px solid #8d94734d;
+  margin-block: 12px;
+}
+.pc-notebook-lines p {
+  margin: 4px 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.pc-notebook-lines [data-change="removed"] {
+  background: #aa423418;
+}
+.pc-notebook-lines [data-change="added"] {
+  background: #43806c20;
+}
+.pc-notebook-lines ins {
+  text-decoration: none;
+}
+.pc-studio-status small {
+  font-variant-numeric: tabular-nums;
+}
+.pc-studio-error p,
+.pc-studio-notice p {
+  margin: 0 0 8px;
+}
+.pc-reading-tools {
+  flex-wrap: wrap;
+}
+.pc-workspace[data-reading-size="1"] .pc-library-verses {
+  font-size: 28px;
+}
+.pc-workspace[data-reading-size="2"] .pc-library-verses {
+  font-size: 32px;
+}
+.pc-workspace[data-reading-size="1"]
+  :is(.pc-notebook-diff p, .pc-notebook-lines p, .pc-pending__verses) {
+  font-size: 20px;
+}
+.pc-workspace[data-reading-size="2"]
+  :is(.pc-notebook-diff p, .pc-notebook-lines p, .pc-pending__verses) {
+  font-size: 24px;
+}
+@media (max-width: 599px) {
+  .pc-reading-tools__caption {
+    display: none;
+  }
+  .pc-reading-tools {
+    justify-content: center;
+  }
+  .pc-reading-journal .pc-studio-action {
+    max-width: 100%;
+    white-space: normal;
+    text-align: left;
+  }
+  .pc-workspace[data-reading-size="1"] .pc-library-verses {
+    font-size: 23px;
+  }
+  .pc-workspace[data-reading-size="2"] .pc-library-verses {
+    font-size: 26px;
+  }
+}

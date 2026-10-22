@@ -4,6 +4,7 @@ import {
   ArrowRight,
   ArrowLeftRight,
   BookOpen,
+  Copy,
   Download,
   Search,
   Star,
@@ -12,6 +13,13 @@ import {
 } from "lucide-react";
 import type { LibraryWork, PoemPronunciation } from "@poetry/contracts";
 import { loadCatalog, loadPronunciation } from "../api/library";
+import {
+  downloadPoem,
+  parseReadingJournal,
+  poemText,
+  READING_JOURNAL_KEY,
+  recordReading,
+} from "./readingJournal";
 import { AnnotatedVerses } from "../presentation/components/AnnotatedVerses";
 import { ResearchNotes } from "../presentation/components/ResearchNotes";
 import {
@@ -62,6 +70,18 @@ export function LibraryContainer({
   const [mode, setMode] = useState<"literal" | "scene">("literal");
   const [view, setView] = useState<"library" | "compare">("library");
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [visits, setVisits] = useState(() => {
+    try {
+      return parseReadingJournal(localStorage.getItem(READING_JOURNAL_KEY));
+    } catch {
+      return [];
+    }
+  });
+  const [shareFeedback, setShareFeedback] = useState<{
+    id: string;
+    message: string;
+  } | null>(null);
+  const shareRequest = useRef(0);
   const [leftId, setLeftId] = useState(BUILTIN_WORKS[0]!.id);
   const [rightId, setRightId] = useState(BUILTIN_WORKS[1]!.id);
   const [dynasty, setDynasty] = useState("");
@@ -334,6 +354,14 @@ export function LibraryContainer({
         ? document.activeElement
         : null;
     setSelectedId(work.id);
+    const nextVisits = recordReading(visits, work.id);
+    setVisits(nextVisits);
+    try {
+      localStorage.setItem(READING_JOURNAL_KEY, JSON.stringify(nextVisits));
+    } catch {
+      setFeedback("本次阅读记录仅在当前页面保留。");
+    }
+    setShareFeedback(null);
     setLookupChar("");
     window.requestAnimationFrame(() => {
       reader.current?.focus({ preventScroll: true });
@@ -553,6 +581,30 @@ export function LibraryContainer({
         <p className="pc-studio-notice" role="status">
           {feedback}
         </p>
+      )}
+      {ready && visits.some((v) => works.some((w) => w.id === v.id)) && (
+        <details className="pc-reading-journal">
+          <summary>最近读过 · 继续上次的阅读</summary>
+          <div className="pc-studio-actions">
+            {visits.flatMap((visit) => {
+              const work = works.find((w) => w.id === visit.id);
+              return work
+                ? [
+                    <button
+                      key={visit.id}
+                      className="pc-studio-action"
+                      onClick={() => {
+                        setView("library");
+                        openWork(work);
+                      }}
+                    >
+                      《{work.title}》<small>{work.author}</small>
+                    </button>,
+                  ]
+                : [];
+            })}
+          </div>
+        </details>
       )}
       <StudioTabs
         label="典籍馆视图"
@@ -987,6 +1039,65 @@ export function LibraryContainer({
               </button>
             </div>
             <h2>{selected.title}</h2>
+            <div className="pc-studio-actions pc-poem-share">
+              <button
+                className="pc-studio-action"
+                onClick={() => {
+                  const id = ++shareRequest.current;
+                  const work = selected;
+                  void navigator.clipboard
+                    .writeText(poemText(work))
+                    .then(() => {
+                      if (
+                        id === shareRequest.current &&
+                        selectedRef.current === work.id
+                      )
+                        setShareFeedback({
+                          id: work.id,
+                          message: "整首已复制，附诗题、作者与来源。",
+                        });
+                    })
+                    .catch(() => {
+                      if (
+                        id === shareRequest.current &&
+                        selectedRef.current === work.id
+                      )
+                        setShareFeedback({
+                          id: work.id,
+                          message: "复制未成功，可下载文本或选中诗句复制。",
+                        });
+                    });
+                }}
+              >
+                <Copy size={16} />
+                复制整首
+              </button>
+              <button
+                className="pc-studio-action"
+                onClick={() => {
+                  try {
+                    downloadPoem(selected);
+                    setShareFeedback({
+                      id: selected.id,
+                      message: "已生成诗文文本，可在浏览器下载中查看。",
+                    });
+                  } catch {
+                    setShareFeedback({
+                      id: selected.id,
+                      message: "下载未成功，可尝试复制整首。",
+                    });
+                  }
+                }}
+              >
+                <Download size={16} />
+                下载诗文
+              </button>
+            </div>
+            {shareFeedback?.id === selected.id && (
+              <p className="pc-studio-notice" role="status">
+                {shareFeedback.message}
+              </p>
+            )}
             <p className="pc-studio-meta pc-library-byline">
               {selected.dynasty || "朝代未载"} · {selected.author || "作者未载"}
               {selected.kind === "prose" ? " · 散文" : ""}

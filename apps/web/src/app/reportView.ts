@@ -96,7 +96,12 @@ export function incompleteSummary(report: AnalysisResponse): {
       const problems = rootCauseChecks(report).filter(
         (c) => c.status === "fail",
       ).length;
-      if (problems) reasons.push(`共同检查已发现${problems}处问题`);
+      if (problems)
+        reasons.push(
+          report.genre.applicability === "uncertain"
+            ? `若按近体规则比较，有${problems}项检查不符，不据此认定原诗出律`
+            : `共同检查有${problems}项不符`,
+        );
     }
     labels.push("格律格式未确定");
   }

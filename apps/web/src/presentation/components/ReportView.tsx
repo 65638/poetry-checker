@@ -280,7 +280,11 @@ export function ReportView(props: ReportViewProps) {
     n: number;
     conditional?: string;
   }) => {
-    const st = CHECK[f.status];
+    const conditionalScope = report.genre.applicability !== "applicable";
+    const st =
+      f.status === "fail" && (conditionalScope || conditional)
+        ? { label: "参考不符", icon: "△" }
+        : CHECK[f.status];
     const rule = report.provenance.rules.find((r) => r.id === f.ruleId);
     const templatePending =
       f.status === "uncertain" &&
@@ -311,13 +315,19 @@ export function ReportView(props: ReportViewProps) {
         </span>
         <div className="pc-finding__body">
           <div className="pc-finding__head">
-            {conditional && (
-              <span className="pc-tag pc-tag--quiet">条件批注</span>
+            {(conditional || conditionalScope) && (
+              <span className="pc-tag pc-tag--quiet">
+                {conditional ? "条件批注" : "条件比较"}
+              </span>
             )}
             <span className="pc-tag">
               <span aria-hidden="true">{st.icon}</span> {st.label}
             </span>
-            <span className="pc-tag pc-tag--quiet">{SEVERITY[f.severity]}</span>
+            <span className="pc-tag pc-tag--quiet">
+              {conditionalScope && f.severity === "error"
+                ? "参考差异"
+                : SEVERITY[f.severity]}
+            </span>
             <span className="pc-finding__rule">
               {templatePending
                 ? "整诗参考格式未唯一确定"
@@ -336,11 +346,11 @@ export function ReportView(props: ReportViewProps) {
           {!templatePending && (
             <dl className="pc-finding__compare">
               <div>
-                <dt>应为</dt>
+                <dt>参考要求</dt>
                 <dd>{f.expected.map(toneText).join(" / ") || "无记录"}</dd>
               </div>
               <div>
-                <dt>实际</dt>
+                <dt>本次判读</dt>
                 <dd>{f.observed.map(toneText).join(" / ") || "无记录"}</dd>
               </div>
             </dl>
@@ -500,7 +510,10 @@ export function ReportView(props: ReportViewProps) {
               批注诗文
             </h3>
             <p className="pc-legend">
-              红线 = 违规 · 悬停或点编号看原因 ·「韵」= 韵脚 ·「?」= 读音待定
+              {report.genre.applicability === "applicable"
+                ? "红线 = 规则偏离"
+                : "红线 = 近体参考差异，不代表原诗出律"}{" "}
+              · 悬停或点编号看原因 ·「韵」= 韵脚 ·「?」= 读音待定
             </p>
           </div>
           <ol ref={gridRef} className="pc-grid">
@@ -697,7 +710,10 @@ export function ReportView(props: ReportViewProps) {
                   {TALLY_ORDER.filter((s) => tally[s] > 0).map((s) => (
                     <li key={s} className={`pc-tally__item pc-finding--${s}`}>
                       <span aria-hidden="true">{CHECK[s].icon}</span>{" "}
-                      {CHECK[s].label}
+                      {s === "fail" &&
+                      report.genre.applicability !== "applicable"
+                        ? "参考不符"
+                        : CHECK[s].label}
                       <strong className="pc-tally__count">{tally[s]}</strong>
                     </li>
                   ))}

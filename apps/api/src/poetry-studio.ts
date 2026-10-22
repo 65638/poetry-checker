@@ -25,6 +25,8 @@ const instructions = `你是古典诗歌阅读和写作助手。用户消息是J
 不得编造诗库作品、引文、出处、韵部或候选ID；只能引用所给资料。JSON外不要输出任何文字。
 阅读模式讲解古人作品，不擅自改写原文；写作模式允许没有修改建议，须说明每处修改的得失。
 critique请求中的prosodyContext是规则引擎对当前原文的正式格律依据。它存在时，必须逐项覆盖其中status=fail的字位问题，不自行重算或用常识替换；status=uncertain只能标为待确认。若同一字位同时出现METER.POSITION与RELATION.DUI/RELATION.NIAN，后者是前者的派生影响，只计一个根因，可在同一条中说明失对/失粘后果，不要重复计数。不能把未列入prosodyContext的格律问题当作已核实结论；没有该字段时不要声称完成正式格律审计。
+先读evaluationBasis和prosodyContext.applicability。韵系由本次请求确定，不能因体式未确认就说韵系未定，不能混用其他韵书的声调。expected是参考句式的要求，observed才是按所选韵系得到的实际声调；两者不符不等于混用韵系。例如局在新韵读平，在平水韵入声归仄，三平尾必须按当前韵系的实际声调判断。
+只有applicability=applicable才按近体格律讨论规则偏离。uncertain或未提供时，所有fail只表示“若按所列近体参考格式”的条件检查，不称原诗出律、硬伤或确定诗病，也不承诺全诗合律；不得凭不合模板将作品认定为古体或拗体。not_applicable不套近体规则，unsupported说明暂不支持。warning只作提醒，不等同于错误。条件检查项数不是独立错误字数。
 contextReferences为补采资料，关联字形版本不是同一底本；只引用所给证据。分歧并列说明，字典义项不冒充诗句专注，整理释义不冒充原文引句，未取得的证据不补造。体裁争议不能据模板不合自行裁定。`;
 const formats = {
   critique:
@@ -43,7 +45,17 @@ function formalProsodyNote(
     { task: "critique" }
   >["prosodyContext"],
 ) {
-  if (!context || context.issues.length === 0) return null;
+  if (!context)
+    return "尚无对应原文的格律报告，本次仅作文学参考，不作合律判断。";
+  if (context.applicability === "not_applicable")
+    return "当前体式不适用近体格律，不以近体句式认定原诗出律。";
+  if (context.applicability === "unsupported")
+    return "当前体式尚未获完整规则支持，不作合律判断。";
+  const conditional = context.applicability !== "applicable";
+  const scope = conditional
+    ? "体式尚未确认，以下仅为近体参考格式的条件比较，不认定原诗出律。"
+    : "以下按已选近体规则核对，仍以所列读音和参考格式为前提。";
+  if (context.issues.length === 0) return scope;
   const meterTokens = new Set(
     context.issues
       .filter((issue) => issue.ruleId === "METER.POSITION")
@@ -54,7 +66,7 @@ function formalProsodyNote(
       !["RELATION.DUI", "RELATION.NIAN"].includes(issue.ruleId) ||
       !issue.locations.some((location) => meterTokens.has(location.tokenId)),
   );
-  if (roots.length === 0) return null;
+  if (roots.length === 0) return scope;
   const rows = roots.map((issue) => {
     const places = issue.locations
       .map(
@@ -62,9 +74,17 @@ function formalProsodyNote(
           `第${location.line}句第${location.column}字「${location.text}」`,
       )
       .join("、");
-    return `${places}${issue.status === "uncertain" ? "待确认" : "出律"}`;
+    const result =
+      issue.status === "uncertain"
+        ? "待确认"
+        : issue.severity === "warning" || issue.severity === "info"
+          ? "参考提醒"
+          : conditional
+            ? "与近体参考规则不符（条件比较）"
+            : "与所选规则不符";
+    return `${places}：${result}`;
   });
-  return `规则复核（${context.format}）：独立问题${roots.length}处——${rows.join("；")}。同字位的失对/失粘仅作派生后果说明。`;
+  return `${scope}规则复核（${context.format}）：列出${roots.length}项检查，包含待确认项或提醒，不等同于${roots.length}处独立诗病。${rows.join("；")}。同字位的失对/失粘仅作派生后果说明。`;
 }
 
 export function registerPoetryStudio(
@@ -260,8 +280,42 @@ export function registerPoetryStudio(
   async function prepare(input: PoetryAssistantRequest): Promise<unknown> {
     if (input.task === "critique") {
       const poem = parsePoem(input.text);
+      const toneBasis =
+        input.rhymeBook === "xinyun" ? "mandarin_base" : "historical";
+      const context = input.prosodyContext;
+      if (
+        context &&
+        ((context.rhymeBook !== undefined &&
+          context.rhymeBook !== input.rhymeBook) ||
+          (context.toneBasis !== undefined &&
+            context.toneBasis !== toneBasis) ||
+          context.issues.some((issue) =>
+            issue.locations.some(
+              (location) =>
+                !poem.tokens.some(
+                  (token) =>
+                    token.tokenId === location.tokenId &&
+                    token.text === location.text &&
+                    token.line === location.line &&
+                    token.column === location.column,
+                ),
+            ),
+          ))
+      )
+        throw new AssistantError(
+          422,
+          "VALIDATION_ERROR",
+          "格律报告与当前诗文或韵系不一致，请重新分析后再评议。",
+        );
       return {
         ...input,
+        evaluationBasis: {
+          rhymeBook: input.rhymeBook,
+          toneBasis,
+          applicability: context?.applicability ?? "uncertain",
+          comparison:
+            "expected是参考句式要求；observed是所选韵系下的实际声调。",
+        },
         contextReferences: modelResearch(input.text),
         tokens: poem.tokens.map(({ tokenId, text, line }) => ({
           tokenId,

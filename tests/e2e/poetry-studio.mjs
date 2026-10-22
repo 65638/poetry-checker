@@ -270,8 +270,9 @@ try {
       assert.equal(await h.evaluate('document.documentElement.scrollWidth<=innerWidth+1'), true);
       const lookups = rhymeLookups;
       while (await h.evaluate("!document.querySelector('[aria-label=\"上一页韵字\"]').disabled")) {
+        const previousPage = await h.evaluate("document.querySelector('.pc-library-pagination span').textContent");
         await h.click('[aria-label="上一页韵字"]');
-        await h.idle();
+        await waitFor(() => h.evaluate(`document.querySelector('.pc-rhyme-characters').getAttribute('aria-busy')==='false' && document.querySelector('.pc-library-pagination span').textContent!==${JSON.stringify(previousPage)}`));
       }
       assert.equal(rhymeLookups, lookups, 'Cached pages must not refetch');
     }
@@ -280,6 +281,7 @@ try {
   });
   await check('empty-rhyme-recommendations-have-visible-feedback', async () => {
     emptyRhyme = true;
+    await waitFor(() => h.evaluate("[...document.querySelectorAll('.pc-poetry-desk button')].some(el=>el.textContent.trim()==='结合全诗荐字' && !el.disabled)"));
     await clickText('.pc-poetry-desk button', '结合全诗荐字');
     await waitFor(() => h.evaluate("document.querySelector('.pc-poetry-desk').textContent.includes('本页未找到值得替换的字')"));
     assert.equal(await h.evaluate("document.querySelectorAll('.pc-poetry-edit').length"), 0);

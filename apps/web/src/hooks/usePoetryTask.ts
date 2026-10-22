@@ -14,15 +14,26 @@ export function usePoetryTask(identity: string) {
   const currentIdentity = useRef(identity);
   currentIdentity.current = identity;
   const resultIdentity = useRef<string | null>(null);
+  const lastRequest = useRef<{
+    identity: string;
+    input: PoetryAssistantRequest;
+  } | null>(null);
+  const resultRequest = useRef<string | null>(null);
+  const [cancelled, setCancelled] = useState(false);
   const cancel = useCallback(() => {
     sequence.current++;
     controller.current?.abort();
     setBusy(false);
+    setError(null);
+    setCancelled(true);
   }, []);
   useEffect(() => {
     cancel();
     setResult(null);
     setError(null);
+    setCancelled(false);
+    lastRequest.current = null;
+    resultRequest.current = null;
     return () => {
       sequence.current++;
       controller.current?.abort();
@@ -31,12 +42,15 @@ export function usePoetryTask(identity: string) {
   const run = useCallback(async (input: PoetryAssistantRequest) => {
     const id = ++sequence.current;
     const requestIdentity = currentIdentity.current;
+    const requestKey = JSON.stringify(input);
+    lastRequest.current = { identity: requestIdentity, input };
     controller.current?.abort();
     const own = new AbortController();
     controller.current = own;
     setBusy(true);
-    setResult(null);
+    if (resultRequest.current !== requestKey) setResult(null);
     setError(null);
+    setCancelled(false);
     try {
       const value = await requestPoetry(input, own.signal);
       if (
@@ -44,6 +58,7 @@ export function usePoetryTask(identity: string) {
         requestIdentity === currentIdentity.current
       ) {
         resultIdentity.current = requestIdentity;
+        resultRequest.current = requestKey;
         setResult(value);
       }
     } catch (cause) {
@@ -53,11 +68,18 @@ export function usePoetryTask(identity: string) {
       if (id === sequence.current) setBusy(false);
     }
   }, []);
+  const retry = useCallback(() => {
+    const request = lastRequest.current;
+    if (request && request.identity === currentIdentity.current)
+      void run(request.input);
+  }, [run]);
   return {
     result: resultIdentity.current === identity ? result : null,
     busy,
     error,
     run,
     cancel,
+    cancelled,
+    retry,
   };
 }

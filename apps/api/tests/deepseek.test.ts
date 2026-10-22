@@ -24,6 +24,7 @@ describe("DeepSeek shares the validated server model paths", () => {
       const payload = JSON.parse(init!.body as string);
       expect(payload).toMatchObject({
         model: "deepseek-flash",
+        max_tokens: 16384,
         stream: false,
         response_format: { type: "json_object" },
         thinking: { type: "enabled" },
@@ -119,6 +120,50 @@ describe("DeepSeek shares the validated server model paths", () => {
       expect(
         [readings.body, analysis.body, critique.body].join(""),
       ).not.toContain("test-private-deepseek");
+    } finally {
+      await app.close();
+    }
+  });
+  it("rejects length-truncated output even when its JSON parses", async () => {
+    const app = buildApp({
+      resources,
+      readingAssistant: {
+        provider: "deepseek",
+        apiKey: "test-only",
+        fetcher: async () =>
+          new Response(
+            JSON.stringify({
+              choices: [
+                {
+                  finish_reason: "length",
+                  message: {
+                    content: JSON.stringify({
+                      overview: "不可采用的截断结论",
+                      strengths: [],
+                      revisions: [],
+                    }),
+                  },
+                },
+              ],
+            }),
+          ),
+      },
+    });
+    try {
+      const response = await app.inject({
+        method: "POST",
+        url: "/api/v1/poetry-assistant",
+        payload: {
+          task: "critique",
+          text: "山高水远。",
+          rhymeBook: "pingshui",
+          mode: "reading",
+          direction: "meaning",
+        },
+      });
+      expect(response.statusCode).toBe(502);
+      expect(response.json().error.message).toContain("达到长度上限");
+      expect(response.body).not.toContain("不可采用的截断结论");
     } finally {
       await app.close();
     }

@@ -17,6 +17,7 @@ import { modelResearch } from "./research.js";
 import {
   DEFAULT_ANALYSIS_TIMEOUT_MS,
   DEFAULT_MODEL_TIMEOUT_MS,
+  DEFAULT_MODEL_MAX_TOKENS,
   resolveModelConfig,
 } from "./model-config.js";
 export { GLM_ENDPOINT, DEEPSEEK_ENDPOINT } from "./model-config.js";
@@ -413,7 +414,7 @@ export function createReadingAssistant(
       body: JSON.stringify({
         model,
         stream: false,
-        max_tokens: 4096,
+        max_tokens: DEFAULT_MODEL_MAX_TOKENS[provider],
         thinking: { type: "enabled" },
         ...(provider === "deepseek" || /^glm-5\.3(?:-|$)/iu.test(model)
           ? { reasoning_effort: "low" }
@@ -452,11 +453,13 @@ export function createReadingAssistant(
       }>;
     };
     const content = envelope.choices?.[0]?.message?.content;
-    if (
-      typeof content !== "string" ||
-      content.length > 40000 ||
-      envelope.choices?.[0]?.finish_reason === "length"
-    )
+    if (envelope.choices?.[0]?.finish_reason === "length")
+      throw new AssistantError(
+        502,
+        "MODEL_INVALID_RESPONSE",
+        `${name}本次生成达到长度上限，建议尚未完成，请重试。`,
+      );
+    if (typeof content !== "string" || content.length > 40000)
       throw new AssistantError(
         502,
         "MODEL_INVALID_RESPONSE",

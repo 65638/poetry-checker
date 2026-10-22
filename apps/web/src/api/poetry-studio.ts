@@ -7,6 +7,7 @@ import {
 } from "@poetry/contracts";
 import { digest } from "../app/library";
 import { readWebEnv, resolveApiConfig } from "../app/config";
+import { AI_CLIENT_TIMEOUT_MS } from "./timeouts";
 
 export async function studioPost(
   path: string,
@@ -16,18 +17,36 @@ export async function studioPost(
   const { baseUrl } = resolveApiConfig(readWebEnv());
   const combined = AbortSignal.any([
     ...(signal ? [signal] : []),
-    AbortSignal.timeout(90000),
+    AbortSignal.timeout(AI_CLIENT_TIMEOUT_MS),
   ]);
-  const response = await fetch(`${baseUrl}/api/v1/${path}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(value),
-    signal: combined,
-  });
-  const data = await response.json();
-  if (!response.ok)
-    throw new Error(data?.error?.message ?? `请求失败（${response.status}）`);
-  return data;
+  try {
+    const response = await fetch(`${baseUrl}/api/v1/${path}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(value),
+      signal: combined,
+    });
+    const data = await response.json().catch(() => null);
+    if (!response.ok)
+      throw new Error(
+        data?.error?.message ??
+          `服务暂时未能完成请求（${response.status}），可稍后重试。`,
+      );
+    if (data === null) throw new Error("未收到完整结果，请重试。原文仍在。");
+    return data;
+  } catch (error) {
+    if (signal?.aborted) throw error;
+    if (combined.aborted)
+      throw new Error(
+        "这次研读等候较久，请稍后重试。原文和已保存的推敲笺仍在。",
+        { cause: error },
+      );
+    if (error instanceof TypeError)
+      throw new Error("暂时连接不上服务，请检查网络或启动窗口后重试。", {
+        cause: error,
+      });
+    throw error;
+  }
 }
 export async function requestPoetry(
   input: PoetryAssistantRequest,

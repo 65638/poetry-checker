@@ -4,6 +4,13 @@ export const GLM_ENDPOINT =
   "https://open.bigmodel.cn/api/paas/v4/chat/completions";
 export const DEEPSEEK_ENDPOINT = "https://api.deepseek.com/chat/completions";
 
+// DeepSeek counts reasoning against the same completion budget as the JSON answer.
+// A real critique exhausted all 4096 tokens in reasoning before producing content.
+export const DEFAULT_MODEL_MAX_TOKENS = {
+  zhipu: 4096,
+  deepseek: 16384,
+} as const;
+
 // DeepSeek 的推理响应通常比 GLM 更慢；保留 GLM 的既有口径，按供应商只放宽默认值。
 export const DEFAULT_MODEL_TIMEOUT_MS = {
   zhipu: 45_000,

@@ -189,7 +189,7 @@ try {
       await h.click(".pc-library-reading .pc-research > summary");
       await waitFor(() =>
         h.evaluate(
-          "document.querySelector('.pc-research__body').textContent.includes('重新查阅出处')",
+          "document.querySelector('.pc-research__body')?.textContent.includes('重新查阅出处')",
         ),
       );
       await sleep(200);

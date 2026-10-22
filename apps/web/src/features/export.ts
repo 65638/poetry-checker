@@ -99,7 +99,7 @@ function describeIssue(report: AnalysisResponse, check: Finding) {
     check.expected.length > 0 &&
     check.observed.length > 0 &&
     [...check.expected, ...check.observed].every((t) => t === "P" || t === "Z")
-      ? `（应为${tones(check.expected)}，实际为${tones(check.observed)}）`
+      ? `（参考句式要求${tones(check.expected)}；按${BOOK_LABEL[report.policy.rhymeBook]}，此字读作${tones(check.observed)}声）`
       : "";
   return `${position ? position + "：" : ""}${name}${comparison}。`;
 }
@@ -112,6 +112,7 @@ export function buildSummaryText({ report }: ExportState): string {
     report.poem.originalText,
     "",
     `依据：${BOOK_LABEL[report.policy.rhymeBook]} · ${report.policy.toneBasis === "historical" ? "传统四声（入声归仄）" : "普通话声调"}`,
+    "本次只按所选韵系判读；更换韵系须重新分析，不能沿用本次结论。",
   ];
   const format = report.prosody.format;
   const evenFeet = report.poem.lines
@@ -151,7 +152,7 @@ export function buildSummaryText({ report }: ExportState): string {
   if (problems.length && !outsideBasicRhyme) {
     lines.push(
       report.genre.applicability === "uncertain"
-        ? `按近体规则比对有${problems.length}处偏离；体式尚未确认，不据此认定原诗出律：`
+        ? `若按近体规则比对，有${problems.length}项检查不符；体式尚未确认，以下均为条件比较，不据此认定原诗出律：`
         : `按${report.prosody.selectedTemplateId === null ? "各候选共有的" : "当前参考格式的"}检查，发现${problems.length}项问题：`,
     );
     for (const check of problems.slice(0, 5))
