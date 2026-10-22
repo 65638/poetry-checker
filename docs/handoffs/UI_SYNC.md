@@ -4,9 +4,9 @@
 
 ## 最新可用版本
 
-- 功能提交：`6514af6`（四小时迭代批次01：精确检索与缓存）。
-- main 随本同步记录一起推送；最新CI请查看 [Actions](https://github.com/65638/poetry-checker/actions)。上一版 `b2b1c53` 的CI已通过，本批本地验证如下。
-- 本地验证：984测试、lint/类型/构建/生成物检查通过；新增真实诗库浏览器3场景通过。2022篇、6组词各30次，本机检索函数P95由5.66ms降至0.69ms（不含网络/AI）。
+- 功能提交：`4de5102`（四小时迭代批次02：本机备份与合并恢复），包含批次01 `6514af6`。
+- main 随本同步记录一起推送；最新CI请查看 [Actions](https://github.com/65638/poetry-checker/actions)。批次01的[CI已通过](https://github.com/65638/poetry-checker/actions/runs/39906047813)。
+- 本地验证：996测试、lint/类型/构建/生成物检查通过；备份新增浏览器4场景通过（真实下载/IndexedDB/localStorage、默认合并、草稿恢复后撤销、损坏文件拒绝、320px无溢出）。
 - 本机预览：`http://127.0.0.1:56106/`。桌面入口指向 `work/main-closeout`，Codex维护此预览。
 
 ## 拉取更新
@@ -52,4 +52,11 @@ pnpm dev
 
 ## 正在进行的批次
 
-Codex批次02：统一本机备份与合并恢复，计划新增独立模块和小入口；涉及 `Workspace.tsx` 的接入会在下一次完成时列出。此段不代表已经交付。
+Codex批次03：改进桌面版本发布，让网站使用明确发布的构建快照，开发中的build不直接影响正在使用的页面。主要修改scripts，不涉及UI设计。
+
+## 批次02接入点（已交付）
+
+- `src/app/LocalBackupPanel.tsx` + `localBackup.ts` + `local-backup.css`：独立备份功能。CSS仅使用自身 `.pc-backup-*` 前缀，UI协作者可调整展示。
+- `Workspace.tsx` 在阅读工具前接入该组件，并以 `restoredVersion` key重新装载字典、诗库和阅读工具；恢复草稿进入撤销栈，保留现有业务行为。移动入口可调整，但请保留 `getDraft/onRestored/disabled` 与证据弹层打开时的 `inert`。
+- 导入先校验SHA-256及白名单结构，再预览和确认；默认保留当前输入。已有笺记、作品或收藏合并去重，冲突/超限拒绝，失败回退本次写入。请保留两个独立的“预览合并/确认合并”步骤与明确的草稿替换选项。
+- 浏览器回归：`node --import tsx tests/e2e/local-backup.mjs`。新增功能不改变HTTP契约和韵书数据。
