@@ -80,7 +80,13 @@ export function StudioTaskState({
   return (
     <>
       {!!result && (busy || !!error || cancelled) && (
-        <p className="pc-studio-meta">上次研读结果仍在，新结果返回后更新。</p>
+        <p className="pc-studio-meta">
+          {busy
+            ? "上次研读结果仍在，完成本次研读后更新。"
+            : cancelled
+              ? "本次已停止，下面保留上次研读结果。"
+              : "本次未完成，下面保留上次研读结果。"}
+        </p>
       )}
       {visible && (
         <div className="pc-studio-status" role="status">
@@ -99,13 +105,14 @@ export function StudioTaskState({
           {busy && <small aria-hidden="true">{seconds} 秒</small>}
           <button
             type="button"
-            className="pc-studio-icon"
+            className="pc-studio-icon pc-studio-cancel"
             aria-label="取消请求"
             title="取消请求"
             onClick={cancel}
             disabled={!busy}
           >
-            <X size={17} />
+            <X size={17} aria-hidden="true" />
+            <span>停止等待</span>
           </button>
         </div>
       )}

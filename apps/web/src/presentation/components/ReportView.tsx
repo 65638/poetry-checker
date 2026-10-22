@@ -84,7 +84,8 @@ const BOOK: Record<BookId, string> = {
   cilin: "词林正韵",
   xinyun: "中华新韵",
 };
-const toneText = (t: string) => (t === "P" ? "平" : t === "Z" ? "仄" : t);
+const toneText = (t: string) =>
+  t === "P" ? "平" : t === "Z" ? "仄" : t === "P/Z" ? "平或仄" : t;
 
 function toneOf(t: AnnotatedToken) {
   if (t.toneStatus === "resolved" && t.tone !== null) {
@@ -725,6 +726,7 @@ export function ReportView(props: ReportViewProps) {
           <div
             ref={notesRef}
             className="pc-notes__body"
+            role="region"
             tabIndex={0}
             aria-label="批注列表"
           >

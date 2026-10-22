@@ -152,7 +152,15 @@ export function FindingReference({
   }, [open]);
   const tone = (values: string[]) =>
     values
-      .map((value) => (value === "P" ? "平" : value === "Z" ? "仄" : value))
+      .map((value) =>
+        value === "P"
+          ? "平"
+          : value === "Z"
+            ? "仄"
+            : value === "P/Z"
+              ? "平或仄"
+              : value,
+      )
       .join(" / ") || "无记录";
   return (
     <span
