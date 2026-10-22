@@ -304,8 +304,17 @@
   }
 }
 @media (max-width: 599px) {
+  .pc-workspace .pc-places button {
+    gap: 5px;
+    padding-inline: 4px;
+  }
+  .pc-workspace .pc-places button > span {
+    font-size: 18px;
+    flex: none;
+  }
   .pc-workspace .pc-places button b {
     font-size: 17px;
+    white-space: nowrap;
   }
   .pc-workspace .pc-places button small {
     font-size: 10px;
@@ -329,6 +338,8 @@
   .pc-workspace .pc-reader-navigation .pc-studio-icon {
     min-width: 38px;
     width: 38px;
+    box-sizing: border-box;
+    padding-inline: 4px;
   }
   .pc-workspace .pc-reader-lookup .pc-studio-action:last-child {
     margin-left: 0;
@@ -341,6 +352,15 @@
     font-size: 12px;
   }
   .pc-workspace .pc-library-filters .pc-library-filter {
+    gap: 6px;
+  }
+}
+@media (max-width: 359px) {
+  .pc-workspace .pc-reader-navigation > .pc-studio-action:first-child svg {
+    display: none;
+  }
+  .pc-workspace .pc-reader-navigation .pc-studio-action {
+    padding-inline: 8px;
     gap: 6px;
   }
 }

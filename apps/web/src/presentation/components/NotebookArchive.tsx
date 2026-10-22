@@ -100,29 +100,32 @@ export function NotebookArchive({
                   <p>{entry.after.text || "（空稿）"}</p>
                 </div>
               </div>
-              <div
-                className="pc-notebook-lines"
-                role="region"
-                aria-label="逐行改动"
-              >
-                {changes.map((row, i) => (
-                  <p key={i} data-change={row.kind}>
-                    {row.kind === "removed" ? (
-                      <del>
-                        <span aria-label="删除">− </span>
-                        {row.text || "（空行）"}
-                      </del>
-                    ) : row.kind === "added" ? (
-                      <ins>
-                        <span aria-label="新增">+ </span>
-                        {row.text || "（空行）"}
-                      </ins>
-                    ) : (
-                      <span>{row.text || "（空行）"}</span>
-                    )}
-                  </p>
-                ))}
-              </div>
+              <details className="pc-notebook-line-diff">
+                <summary>查看逐行改动</summary>
+                <div
+                  className="pc-notebook-lines"
+                  role="region"
+                  aria-label="逐行改动"
+                >
+                  {changes.map((row, i) => (
+                    <p key={i} data-change={row.kind}>
+                      {row.kind === "removed" ? (
+                        <del>
+                          <span aria-label="删除">− </span>
+                          {row.text || "（空行）"}
+                        </del>
+                      ) : row.kind === "added" ? (
+                        <ins>
+                          <span aria-label="新增">+ </span>
+                          {row.text || "（空行）"}
+                        </ins>
+                      ) : (
+                        <span>{row.text || "（空行）"}</span>
+                      )}
+                    </p>
+                  ))}
+                </div>
+              </details>
               {entry.before.rhymeBook !== entry.after.rhymeBook && (
                 <p className="pc-studio-meta">
                   韵书已更换；各版格律需按各自设置检查。
