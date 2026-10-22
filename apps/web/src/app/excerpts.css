@@ -1,0 +1,57 @@
+.pc-excerpt-notebook {
+  padding: 24px;
+  background: #102a32e6;
+  border: 1px solid #8d94734d;
+  color: #e2e1ca;
+}
+.pc-excerpt-notebook header h2 {
+  font-size: 22px;
+  font-weight: 500;
+}
+.pc-excerpt-notebook input {
+  max-width: 100%;
+  min-width: 0;
+}
+.pc-excerpt-entry {
+  border-top: 1px solid #8d94734d;
+  padding-block: 20px;
+  margin-top: 20px;
+}
+.pc-excerpt-notebook .pc-studio-meta {
+  color: #aebdb5;
+}
+.pc-excerpt-notebook a {
+  color: #e4c88c;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+}
+.pc-excerpt-entry blockquote {
+  margin: 0 0 12px;
+  font-size: 23px;
+  line-height: 1.9;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.pc-excerpt-note {
+  display: grid;
+  gap: 8px;
+  margin-block: 16px;
+}
+.pc-excerpt-note textarea {
+  width: 100%;
+  min-height: 85px;
+  resize: vertical;
+  background: #142f37;
+  color: inherit;
+  border: 1px solid #8d947380;
+  padding: 10px;
+  box-sizing: border-box;
+}
+@media (max-width: 599px) {
+  .pc-excerpt-notebook {
+    padding: 16px;
+  }
+  .pc-excerpt-entry blockquote {
+    font-size: 20px;
+  }
+}
