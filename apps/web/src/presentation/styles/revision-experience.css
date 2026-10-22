@@ -1,0 +1,128 @@
+/* Advice is a choice: distinguish the proposal without marking the original wrong. */
+.pc-workspace .pc-poetry-edit {
+  padding: 20px;
+  margin-block: 16px;
+  border: 1px solid #8c9d7d66;
+  border-left: 3px solid #8a9e7c;
+  border-radius: 3px;
+  background: #f7f5e966;
+}
+.pc-workspace .pc-poetry-edit > p {
+  margin-block: 14px;
+  font-size: 15px;
+  line-height: 1.9;
+  overflow-wrap: anywhere;
+}
+.pc-workspace .pc-poetry-edit > .pc-studio-meta {
+  padding: 10px 12px;
+  border-left: 2px solid #b6a574;
+  background: #b8aa7a14;
+  color: #53604b;
+  font-size: 13px;
+}
+.pc-workspace .pc-poetry-substitution {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 20px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  max-width: 620px;
+}
+.pc-workspace .pc-revision-word {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 5px;
+  padding: 10px 14px;
+  border-radius: 3px;
+  background: #6679690c;
+}
+.pc-workspace .pc-revision-word > span {
+  color: #5b6859;
+  font: 12px/1.6 var(--pc-font-sans);
+}
+.pc-workspace .pc-poetry-substitution :is(del, ins) {
+  display: block;
+  margin: 0;
+  padding: 0;
+  font: 500 27px/1.6 var(--pc-font-serif);
+  text-decoration: none;
+  background: transparent;
+  color: #42544a;
+  overflow-wrap: anywhere;
+}
+.pc-workspace .pc-revision-word--proposed {
+  background: #dce5cd;
+}
+.pc-workspace .pc-revision-word--proposed ins {
+  color: #2c5138;
+}
+.pc-workspace .pc-poetry-edit > .pc-studio-action {
+  min-height: 44px;
+  background: #e1e7d4;
+  color: #2d4f3b;
+  border-color: #7a9272;
+}
+.pc-workspace .pc-poetry-edit > .pc-studio-action:hover:not(:disabled) {
+  background: #d3dfc3;
+  border-color: #4d7153;
+}
+.pc-workspace .pc-poetry-edit > h3 {
+  margin: 0 0 10px;
+  font: 500 30px/1.5 var(--pc-font-serif);
+  color: #34513d;
+}
+.pc-workspace .pc-poetry-edit > h3 small {
+  font: 14px/1.7 var(--pc-font-sans);
+  color: #536951;
+}
+.pc-workspace .pc-rhyme-grid-hint {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--pc-divider);
+}
+.pc-workspace .pc-rhyme-characters {
+  margin-top: 12px;
+  gap: 8px;
+}
+.pc-workspace .pc-rhyme-characters button {
+  background: #fbf9ed50;
+  border-color: #9ba98b88;
+  border-radius: 3px;
+  color: #354b3e;
+}
+.pc-workspace .pc-rhyme-characters button:hover:not(:disabled) {
+  background: #dce5cd;
+  border-color: #667f5f;
+}
+.pc-workspace .pc-rhyme-loading:empty {
+  min-height: 0;
+}
+@media (max-width: 599px) {
+  .pc-workspace .pc-poetry-edit {
+    padding: 16px 12px;
+  }
+  .pc-workspace .pc-poetry-substitution {
+    gap: 8px;
+    grid-template-columns: minmax(0, 1fr) 16px minmax(0, 1fr);
+  }
+  .pc-workspace .pc-poetry-substitution > svg {
+    width: 16px;
+  }
+  .pc-workspace .pc-revision-word {
+    padding: 8px;
+  }
+  .pc-workspace .pc-poetry-substitution :is(del, ins) {
+    font-size: 24px;
+  }
+  .pc-workspace .pc-poetry-edit > .pc-studio-action {
+    width: 100%;
+    justify-content: center;
+  }
+}
+@media (forced-colors: active) {
+  .pc-workspace .pc-poetry-edit,
+  .pc-workspace .pc-revision-word,
+  .pc-workspace .pc-rhyme-characters button {
+    border: 1px solid CanvasText;
+  }
+}

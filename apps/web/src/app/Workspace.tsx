@@ -27,6 +27,7 @@ import "../presentation/styles/draft-experience.css";
 import "../presentation/styles/comparison-experience.css";
 import "../presentation/styles/ai-experience.css";
 import "../presentation/styles/study-experience.css";
+import "../presentation/styles/revision-experience.css";
 import "../presentation/styles/accessibility-experience.css";
 import { PoetryDesk } from "./PoetryDesk";
 import { ReadingTools } from "../presentation/components/ReadingTools";
