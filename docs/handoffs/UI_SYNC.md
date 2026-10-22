@@ -4,9 +4,9 @@
 
 ## 最新可用版本
 
-- 功能提交：`2858054`（四小时迭代批次05：稿匣），包含前四批。
+- 功能提交：`a49d342`（四小时迭代批次06：分区按需加载），包含前五批。
 - main 随本同步记录一起推送；最新CI请查看 [Actions](https://github.com/65638/poetry-checker/actions)。批次01的[CI已通过](https://github.com/65638/poetry-checker/actions/runs/39906047813)。
-- 业务基线：1011测试 / 85文件，全量verify通过；稿匣浏览器4场景通过、备份4场景复跑通过，320px已检查。前三批CI均成功；最近确认的[批次03 CI](https://github.com/65638/poetry-checker/actions/runs/39908442968)。
+- 业务基线：1011测试 / 85文件，全量verify通过；按需加载4场景、游园导航6场景、连续场景4项通过。初始JS实测573345→512910字节（decoded，约减10.5%，同机无缓存production浏览器；不是模型或整页加载时间）。
 - 本机预览：`http://127.0.0.1:56106/`。桌面入口指向 `work/main-closeout`，Codex维护此预览。
 
 ## 拉取更新
@@ -52,7 +52,14 @@ pnpm dev
 
 ## 正在进行的批次
 
-Codex批次06：按需加载字典与典籍馆代码，打开后保持状态；验证导航、直达链接、加载失败与实测资源体积。仅改Workspace的模块装载和独立加载组件，不接管presentation整体视觉。
+Codex批次07：补强桌面更新后旧标签页的资源兼容，再检查API错误恢复与请求稳定性。主要脚本/业务逻辑，不接管presentation整体视觉。
+
+## 批次06接入点（已交付）
+
+- `Workspace.tsx` 对字典/典籍馆使用独立 `DeferredSection.tsx` 的lazy组件；第一次访问才装载，访问过后保留实例。导航hover/focus仅预载代码，不挂载或发起诗库查询。保留 `visited`、容器key与active语义。
+- `section-loading.css` 仅控制加载提示；代码加载失败时有独立重试说明，不清空校诗台。首次打开某分区需要网络；实际失败恢复场景通过。
+- 回归：`node --import tsx tests/e2e/section-loading.mjs`；`node tests/e2e/dictionary-journey.mjs`；`node tests/e2e/continuous-garden.mjs`。
+- `tests/e2e/cdp.mjs` 仅修正Windows浏览器启动时DevToolsActivePort文件短暂EBUSY/ENOENT重试，仍使用原有等待上限。首次连续场景运行因EBUSY中断，修复后4项均通过，未把第一次中断计为通过。
 
 ## 批次05接入点（已交付）
 
