@@ -48,7 +48,7 @@ export function LocalBackupPanel({
     <details className="pc-backup-panel">
       <summary>本机备份与恢复</summary>
       <p>
-        带走当前草稿、稿匣、导入诗库、收藏、摘句、字笺、推敲笺和阅读偏好。换电脑或换网站地址后，可在这里合并恢复。
+        带走当前草稿、稿匣、导入诗库、收藏、摘句、字笺、推敲笺、研读收藏和阅读偏好。换电脑或换网站地址后，可在这里合并恢复。
       </p>
       <div className="pc-studio-actions">
         <button
@@ -166,7 +166,7 @@ export function LocalBackupPanel({
                 将新增 {plan.added.works} 篇本机诗文、{plan.added.notes}{" "}
                 条笺记、{plan.added.favorites} 首收藏、{plan.added.characters}{" "}
                 个收藏字、{plan.added.excerpts} 条摘句、{plan.added.drafts}{" "}
-                篇存稿。
+                篇存稿、{plan.added.studies} 份研读。
               </p>
               <p>
                 {plan.draft

@@ -36,6 +36,7 @@ import {
 } from "./notebook";
 
 import { NotebookArchive } from "../presentation/components/NotebookArchive";
+import { StudyResultActions } from "./StudyResultActions";
 
 type CritiqueInput = Extract<PoetryAssistantRequest, { task: "critique" }>;
 export function PoetryDesk({
@@ -461,6 +462,10 @@ export function PoetryDesk({
           )}
           {currentCritique && (
             <div className="pc-poetry-review">
+              <StudyResultActions
+                input={critique.resultInput}
+                result={critique.result}
+              />
               <h3>通篇观照</h3>
               <p>{currentCritique.overview}</p>
               {currentCritique.strengths.length > 0 && (
