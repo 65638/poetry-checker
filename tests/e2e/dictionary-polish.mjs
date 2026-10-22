@@ -63,7 +63,7 @@ try {
       window.__samples = [];
       window.__sampling = true;
       const sample = () => {
-        const button = document.querySelector('.pc-dictionary__searchline button');
+        const button = document.querySelector('.pc-dictionary__searchline button[type=submit]');
         window.__samples.push({
           at: performance.now(),
           width: button.getBoundingClientRect().width,
@@ -75,7 +75,7 @@ try {
       };
       requestAnimationFrame(sample);
     })()`);
-    await click(".pc-dictionary__searchline button");
+    await click(".pc-dictionary__searchline button[type=submit]");
     await sleep(850);
     const samples = await evaluate(
       "window.__sampling = false; window.__samples",
@@ -107,11 +107,11 @@ try {
         ? Promise.resolve(response.clone()) : window.__originalFetch(...args);
       window.__labels = [];
       window.__labelObserver = new MutationObserver(() => {
-        window.__labels.push(document.querySelector('.pc-dictionary__searchline button').textContent);
+        window.__labels.push(document.querySelector('.pc-dictionary__searchline button[type=submit]').textContent);
       });
       window.__labelObserver.observe(document.querySelector('.pc-dictionary__searchline'), {subtree:true,childList:true,characterData:true});
     })()`);
-    await click(".pc-dictionary__searchline button");
+    await click(".pc-dictionary__searchline button[type=submit]");
     await sleep(550);
     assert.ok(
       (await evaluate("window.__labels")).every((s) => !s.includes("查阅中")),
@@ -208,12 +208,10 @@ try {
       ),
       "false",
     );
-    assert.equal(
-      await evaluate(
-        "getComputedStyle(document.querySelector('.pc-dictionary__reveal')).transitionDuration",
-      ),
-      "0s, 0s, 0s",
+    const durations = await evaluate(
+      "getComputedStyle(document.querySelector('.pc-dictionary__reveal')).transitionDuration",
     );
+    assert.ok(durations.split(',').every((duration) => parseFloat(duration) === 0));
   });
   await check("failed-refresh-does-not-announce-old-success", async () => {
     await evaluate(`(() => {
@@ -221,7 +219,7 @@ try {
       window.fetch = (...args) => String(args[0]).includes('/characters/')
         ? Promise.reject(new TypeError('Test connection failure')) : window.__originalFetch(...args);
     })()`);
-    await click(".pc-dictionary__searchline button");
+    await click(".pc-dictionary__searchline button[type=submit]");
     await waitFor(() =>
       evaluate("!!document.querySelector('.pc-dictionary__error')"),
     );
