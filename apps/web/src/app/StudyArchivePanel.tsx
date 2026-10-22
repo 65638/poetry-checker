@@ -95,83 +95,107 @@ export function StudyArchivePanel() {
             : "完成全诗评议或两诗对读后，点“收藏评议”收入这里。"}
         </p>
       )}
-      <ul className="pc-study-archive__list">
-        {matches.map((row) => (
-          <li key={row.id}>
-            <button
-              type="button"
-              aria-expanded={selected === row.id}
-              onClick={() => {
-                setSelected(selected === row.id ? null : row.id);
-                setNotice("");
-              }}
-            >
-              <strong>{row.title}</strong>
-              <small>
-                {row.input.task === "compare"
-                  ? "两诗对读"
-                  : row.input.mode === "reading"
-                    ? "原诗赏读"
-                    : "写作推敲"}{" "}
-                · {new Date(row.createdAt).toLocaleDateString("zh-CN")}
-              </small>
-            </button>
-          </li>
-        ))}
-      </ul>
-      {entry && (
-        <article className="pc-study-archive__reader" aria-label="已收藏的研读">
-          <h3>{entry.title}</h3>
-          <p>
-            保存于 {new Date(entry.createdAt).toLocaleString("zh-CN")} ·{" "}
-            {entry.response.provider === "deepseek" ? "DeepSeek" : "GLM"}
-          </p>
-          <div className="pc-study-archive__actions">
-            <button
-              type="button"
-              onClick={() => {
-                void copyStudy(entry).then(
-                  () => setNotice("原诗与评议已复制。"),
-                  () => setNotice("剪贴板暂不可用，可下载文本。"),
-                );
-              }}
-            >
-              复制这份研读
-            </button>
-            <button
-              type="button"
-              onClick={() => action(() => downloadStudy(entry))}
-            >
-              下载这份研读
-            </button>
-            <button
-              type="button"
-              onClick={() =>
-                action(() => {
-                  const current = parseStudyArchive(
-                    localStorage.getItem(STUDY_ARCHIVE_KEY),
-                  );
-                  const existing = current.find((row) => row.id === entry.id);
-                  if (!existing) {
-                    setNotice("这份研读已在另一页面移除。");
-                    setState(readArchive());
-                    return;
+      <div className="pc-study-archive__layout" data-reading={!!entry}>
+        <div
+          className="pc-study-archive__index"
+          role="region"
+          aria-label="研读收藏列表"
+          tabIndex={matches.length ? 0 : undefined}
+        >
+          <ul className="pc-study-archive__list">
+            {matches.map((row) => (
+              <li key={row.id}>
+                <button
+                  type="button"
+                  aria-expanded={selected === row.id}
+                  aria-controls={
+                    selected === row.id ? "pc-saved-study-reader" : undefined
                   }
-                  writeStudyEntries(
-                    current.filter((row) => row.id !== entry.id),
+                  onClick={() => {
+                    setSelected(selected === row.id ? null : row.id);
+                    setNotice("");
+                  }}
+                >
+                  <strong>{row.title}</strong>
+                  <small>
+                    {row.input.task === "compare"
+                      ? "两诗对读"
+                      : row.input.mode === "reading"
+                        ? "原诗赏读"
+                        : "写作推敲"}{" "}
+                    ·{" "}
+                    {new Date(row.createdAt).toLocaleString("zh-CN", {
+                      month: "numeric",
+                      day: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </small>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+        {entry && (
+          <article
+            id="pc-saved-study-reader"
+            className="pc-study-archive__reader"
+            aria-label="已收藏的研读"
+          >
+            <h3>{entry.title}</h3>
+            <p>
+              保存于 {new Date(entry.createdAt).toLocaleString("zh-CN")} ·{" "}
+              {entry.response.provider === "deepseek" ? "DeepSeek" : "GLM"}
+            </p>
+            <div className="pc-study-archive__actions">
+              <button
+                type="button"
+                onClick={() => {
+                  void copyStudy(entry).then(
+                    () => setNotice("原诗与评议已复制。"),
+                    () => setNotice("剪贴板暂不可用，可下载文本。"),
                   );
-                  setRemoved(existing);
-                  setSelected(null);
-                  setNotice("已移除，可撤销。");
-                })
-              }
-            >
-              移除这份研读
-            </button>
-          </div>
-          <pre tabIndex={0}>{studyText(entry)}</pre>
-        </article>
-      )}
+                }}
+              >
+                复制这份研读
+              </button>
+              <button
+                type="button"
+                onClick={() => action(() => downloadStudy(entry))}
+              >
+                下载这份研读
+              </button>
+              <button
+                type="button"
+                onClick={() =>
+                  action(() => {
+                    const current = parseStudyArchive(
+                      localStorage.getItem(STUDY_ARCHIVE_KEY),
+                    );
+                    const existing = current.find((row) => row.id === entry.id);
+                    if (!existing) {
+                      setNotice("这份研读已在另一页面移除。");
+                      setState(readArchive());
+                      return;
+                    }
+                    writeStudyEntries(
+                      current.filter((row) => row.id !== entry.id),
+                    );
+                    setRemoved(existing);
+                    setSelected(null);
+                    setNotice("已移除，可撤销。");
+                  })
+                }
+              >
+                移除这份研读
+              </button>
+            </div>
+            <pre tabIndex={0} role="region" aria-label="已保存的原诗与评议正文">
+              {studyText(entry)}
+            </pre>
+          </article>
+        )}
+      </div>
     </details>
   );
 }
