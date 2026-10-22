@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import type { LibraryWork, PoemPronunciation } from "@poetry/contracts";
 import { loadCatalog, loadPronunciation } from "../api/library";
+import { LibraryQueryHelp } from "./LibraryQueryHelp";
 import {
   downloadPoem,
   parseReadingJournal,
@@ -815,6 +816,14 @@ export function LibraryContainer({
                 寻诗
               </button>
             </div>
+            {mode === "literal" && (
+              <LibraryQueryHelp
+                onApply={(value) => {
+                  setQuery(value);
+                  queryInput.current?.focus();
+                }}
+              />
+            )}
             <div className="pc-library-filters">
               <label className="pc-library-filter pc-library-filter--collection">
                 选集

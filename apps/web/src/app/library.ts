@@ -1,5 +1,6 @@
 import { LibraryWorkSchema, type LibraryWork } from "@poetry/contracts";
 import { EXAMPLES } from "./examples.js";
+import { literalLibrarySearch } from "./librarySearch.js";
 
 export const BUILTIN_WORKS: LibraryWork[] = EXAMPLES.map((work) => ({
   ...work,
@@ -196,6 +197,7 @@ export function searchLibrary(
   query: string,
   scene = false,
 ): LibraryHit[] {
+  if (!scene) return literalLibrarySearch(works, query);
   const q = query.trim().toLowerCase();
   const segments = q.split(/\s+/u).filter(Boolean);
   const themes = scene
