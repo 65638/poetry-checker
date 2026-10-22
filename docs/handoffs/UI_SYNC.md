@@ -4,8 +4,8 @@
 
 ## 最新可用版本
 
-- 功能提交：`a49d342`（四小时迭代批次06：分区按需加载），包含前五批。
-- main 随本同步记录一起推送；最新CI请查看 [Actions](https://github.com/65638/poetry-checker/actions)。批次01的[CI已通过](https://github.com/65638/poetry-checker/actions/runs/39906047813)。
+- 功能提交：`1eadd70`（四小时迭代批次07：旧标签页资源兼容），包含前六批。
+- main 随本同步记录一起推送；最新CI请查看 [Actions](https://github.com/65638/poetry-checker/actions)。前六批CI均已成功，最近确认[批次06](https://github.com/65638/poetry-checker/actions/runs/39910971764)。
 - 业务基线：1011测试 / 85文件，全量verify通过；按需加载4场景、游园导航6场景、连续场景4项通过。初始JS实测573345→512910字节（decoded，约减10.5%，同机无缓存production浏览器；不是模型或整页加载时间）。
 - 本机预览：`http://127.0.0.1:56106/`。桌面入口指向 `work/main-closeout`，Codex维护此预览。
 
@@ -52,7 +52,14 @@ pnpm dev
 
 ## 正在进行的批次
 
-Codex批次07：补强桌面更新后旧标签页的资源兼容，再检查API错误恢复与请求稳定性。主要脚本/业务逻辑，不接管presentation整体视觉。
+Codex批次08：检查资料/AI响应异常、重试与面向用户的中文提示；主要API客户端与测试，不接管presentation整体视觉。
+
+## 批次07运行变更（已交付）
+
+- `scripts/preview-assets.mjs` 为桌面preview补充旧版hash资源回退；`desktop-start.ps1` 将已发布的hash JS/CSS/字体/图片保留在StateDirectory/asset-cache。当前版本资源优先由Vite处理，旧页面可继续加载原有模块。
+- 缓存不含index、配置、源码或密钥；只接受带hash的公开资源文件名。没有自动清理这些小型旧资源，避免打断仍开着的标签页。UI自己的开发服务器不受影响。
+- 5个Node HTTP测试通过，纳入 `.github/workflows/ci.yml`（本批由Codex接管增加该单行检查，完成后归还配置维护）。6个Windows真实启动场景通过，新增旧资源跨发布仍可加载。
+- 复现：`node --test tests/desktop/preview-assets.test.mjs` 与 `powershell.exe -NoProfile -ExecutionPolicy Bypass -File tests/desktop/launcher-smoke.ps1`。业务1011测试为上一批完整结果，本批脚本未冒充重复全测。
 
 ## 批次06接入点（已交付）
 
