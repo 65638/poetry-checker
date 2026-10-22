@@ -14,6 +14,7 @@ import {
 import type { Resources } from "./resources.js";
 import { characterReferenceRows } from "./library.js";
 import { modelResearch } from "./research.js";
+import { requestModel } from "./model-request.js";
 import {
   DEFAULT_ANALYSIS_TIMEOUT_MS,
   DEFAULT_MODEL_TIMEOUT_MS,
@@ -403,7 +404,7 @@ export function createReadingAssistant(
     signal: AbortSignal,
   ): Promise<unknown> {
     signal.throwIfAborted();
-    const response = await fetcher(endpoint, {
+    const response = await requestModel(fetcher, endpoint, {
       method: "POST",
       redirect: "error",
       signal,
@@ -443,7 +444,9 @@ export function createReadingAssistant(
       throw new AssistantError(
         502,
         "MODEL_UNAVAILABLE",
-        `${name}调用未成功，请检查模型权限和账户额度。`,
+        response.status >= 500
+          ? `${name}服务暂时繁忙或连接中断，请稍后重试；诗文仍保留。`
+          : `${name}未接受这次请求，请检查模型配置或缩短诗文后重试。`,
       );
     }
     const envelope = (await response.json()) as {
