@@ -3,13 +3,16 @@ import { spawn } from "node:child_process";
 import { existsSync } from "node:fs";
 import { createServer as createNetServer } from "node:net";
 import { createRequire } from "node:module";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const apiPort = Number(process.env.PORT ?? 3000);
 const webPort = Number(process.env.WEB_PORT ?? 5173);
 const previewMode = process.argv.includes("--preview");
+const previewDirectory = process.env.POETRY_PREVIEW_DIST
+  ? resolve(process.env.POETRY_PREVIEW_DIST)
+  : join(root, "apps/web/dist");
 let api, web;
 let closing;
 async function stop(code = 0) {
@@ -37,7 +40,7 @@ if (process.send)
 try {
   if (process.argv.slice(2).some((arg) => arg !== "--preview"))
     throw new Error("用法：node scripts/dev.mjs [--preview]");
-  if (previewMode && !existsSync(join(root, "apps/web/dist/index.html")))
+  if (previewMode && !existsSync(join(previewDirectory, "index.html")))
     throw new Error(
       "缺少页面构建，请先运行 pnpm build，再运行 node scripts/dev.mjs --preview",
     );
@@ -86,6 +89,7 @@ try {
   const config = {
     root: join(root, "apps/web"),
     configFile: join(root, "apps/web/vite.config.ts"),
+    ...(previewMode ? { build: { outDir: previewDirectory } } : {}),
     server: connection,
     preview: connection,
   };
