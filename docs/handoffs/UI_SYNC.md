@@ -4,9 +4,9 @@
 
 ## 最新可用版本
 
-- 功能提交：`476fdd6`（四小时迭代批次04：摘句与随手记），包含前三批。
+- 功能提交：`2858054`（四小时迭代批次05：稿匣），包含前四批。
 - main 随本同步记录一起推送；最新CI请查看 [Actions](https://github.com/65638/poetry-checker/actions)。批次01的[CI已通过](https://github.com/65638/poetry-checker/actions/runs/39906047813)。
-- 业务基线：1004测试 / 84文件，全量verify通过；摘句浏览器4场景通过、备份4场景复跑通过，320px已检查。前三批CI均成功；最近确认的[批次03 CI](https://github.com/65638/poetry-checker/actions/runs/39908442968)。
+- 业务基线：1011测试 / 85文件，全量verify通过；稿匣浏览器4场景通过、备份4场景复跑通过，320px已检查。前三批CI均成功；最近确认的[批次03 CI](https://github.com/65638/poetry-checker/actions/runs/39908442968)。
 - 本机预览：`http://127.0.0.1:56106/`。桌面入口指向 `work/main-closeout`，Codex维护此预览。
 
 ## 拉取更新
@@ -52,7 +52,14 @@ pnpm dev
 
 ## 正在进行的批次
 
-Codex下一批优先检查加载性能与写作资料管理；不接管presentation整体视觉。实施接入点随验证结果更新。
+Codex批次06：按需加载字典与典籍馆代码，打开后保持状态；验证导航、直达链接、加载失败与实测资源体积。仅改Workspace的模块装载和独立加载组件，不接管presentation整体视觉。
+
+## 批次05接入点（已交付）
+
+- `DraftCollectionPanel.tsx` / `draftCollection.ts` / 专用 `draft-collection.css`：命名保存当前诗稿，最多50篇；查找、预览、切换、移除/撤销。
+- `Workspace.tsx` 的 `draftTools` 插槽增加稿匣。打开另一稿前先把当前尚未存档的非空稿写入稿匣，保存失败则不替换；切换进入推敲笺及撤销栈，不自动发分析或模型请求。相同正文+检查设置不重复存稿。
+- 完整备份增加 `poetry-draft-collection-v1` 白名单和新增存稿计数，默认仍不替换当前输入。跨页storage事件刷新稿匣。
+- 回归：`node --import tsx tests/e2e/draft-collection.mjs`。实测包括刷新保留、无自动分析、模拟浏览器存储满时不丢稿、320px。存储失败为明确受控测试，其余本机浏览器实际运行。
 
 ## 批次04接入点（已交付）
 

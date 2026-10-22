@@ -12,7 +12,9 @@
 - 05:29批次01完成，功能提交 `6514af6`：多条件/限定字段/排除词检索、WeakMap缓存、折叠用法入口、资料错误文案。984项测试、3浏览器场景通过。性能实测详见UI_SYNC，原始记录在忽略目录 `artifacts/continuous-improvement/`。
 - 05:40批次02完成，功能提交 `4de5102`：统一备份/合并恢复，本机资料先校验与预览，默认保留草稿，支持撤销恢复草稿；冲突/超限拒绝，IDB失败回退本次localStorage修改。996项测试、4个新浏览器场景通过，含320px。原始证据在 `artifacts/continuous-improvement/local-backup/`。
 - 05:54批次03完成，功能提交 `3319cfa`：桌面页面独立发布快照，显式运行脚本再发布；API/规则/数据/配置变化触发重启；快照损坏自动重建。修正桌面PowerShell无Get-FileHash的问题（改.NET）。5个Windows启动场景与lint通过，证据 `artifacts/continuous-improvement/launcher-snapshot/results.json`；996单元测试为批次02验证，未冒充本批重复执行。
-- 06:09批次04完成，功能提交 `476fdd6`：摘句收集/原作定位、检索/笔记、移除撤销、私密笔记不进入分享、TXT与完整备份包含笔记。1004测试 / 84文件，全量verify通过；摘句浏览器4场景、备份复跑4场景通过。320px截图检查后提高出处/链接对比，页签切换保留未保存笔记。证据 `artifacts/continuous-improvement/excerpts/`。
+- 06:08批次04完成，功能提交 `476fdd6`：摘句收集/原作定位、检索/笔记、移除撤销、私密笔记不进入分享、TXT与完整备份包含笔记。1004测试 / 84文件，全量verify通过；摘句浏览器4场景、备份复跑4场景通过。320px截图检查后提高出处/链接对比，页签切换保留未保存笔记。证据 `artifacts/continuous-improvement/excerpts/`。
+- 06:13批次05完成，功能提交 `2858054`：命名稿匣，保存/检索/预览/移除撤销；切换先保存当前稿，失败不换稿，默认不触发分析；纳入统一备份。1011测试 / 85文件，全量verify通过；稿匣浏览器4场景、备份复跑4场景通过，320px检查。证据 `artifacts/continuous-improvement/draft-collection/`。
+- 批次06开始：字典/诗库按需装载与状态保留，独立加载失败恢复入口，实测初始资源量。
 
 ## 可选后续方向
 
