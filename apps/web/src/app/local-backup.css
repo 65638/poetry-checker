@@ -1,0 +1,28 @@
+.pc-backup-panel {
+  position: relative;
+  z-index: 1;
+  max-width: 1040px;
+  margin: 24px auto 90px;
+  padding: 16px 20px;
+  border: 1px solid #8d94734d;
+  background: #102a32ed;
+  color: #e2e1ca;
+  font-size: 14px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+.pc-backup-panel summary {
+  cursor: pointer;
+}
+.pc-backup-preview {
+  margin-top: 16px;
+}
+.pc-backup-panel [role="alert"] {
+  color: #ffb8a6;
+}
+@media (max-width: 599px) {
+  .pc-backup-panel {
+    margin-inline: 16px;
+    padding: 14px;
+  }
+}

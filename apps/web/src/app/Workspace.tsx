@@ -25,6 +25,7 @@ import {
   type NotebookEntry,
 } from "./notebook";
 import type { InputDraft } from "../view-contract";
+import { LocalBackupPanel } from "./LocalBackupPanel";
 
 type Place = "checker" | "dictionary" | "library";
 const places: Place[] = ["checker", "dictionary", "library"];
@@ -54,6 +55,7 @@ export function Workspace(props: CheckerViewProps) {
   const [notebook, setNotebook] = useState(readNotebook);
   const [notebookNotice, setNotebookNotice] = useState<string | null>(null);
   const [workMode, setWorkMode] = useState<"writing" | "reading">("writing");
+  const [restoredVersion, setRestoredVersion] = useState(0);
   const undoStack = useRef<InputDraft[]>([]);
   const redoStack = useRef<InputDraft[]>([]);
   const draft = useRef(props.draft);
@@ -447,6 +449,7 @@ export function Workspace(props: CheckerViewProps) {
           hidden={place !== "dictionary"}
         >
           <DictionaryContainer
+            key={restoredVersion}
             poemText={props.draft.text}
             passageRequest={passageRequest}
           />
@@ -460,6 +463,7 @@ export function Workspace(props: CheckerViewProps) {
           hidden={place !== "library"}
         >
           <LibraryContainer
+            key={restoredVersion}
             active={place === "library"}
             onStudy={(work) => {
               revise(
@@ -482,7 +486,24 @@ export function Workspace(props: CheckerViewProps) {
           />
         </div>
       </div>
-      <ReadingTools place={place} />
+      <div inert={place === "checker" && props.selectedTokenId !== null}>
+        <LocalBackupPanel
+          getDraft={() => draft.current}
+          disabled={props.busy}
+          onRestored={(restoredDraft) => {
+            setNotebook(readNotebook());
+            setNotebookNotice("已合并备份中的推敲笺。");
+            if (restoredDraft) {
+              undoStack.current.push(props.draft);
+              redoStack.current = [];
+              props.onDraftChange(restoredDraft, { autoAnalyze: false });
+            }
+            setRestoredVersion((n) => n + 1);
+            window.dispatchEvent(new Event("storage"));
+          }}
+        />
+      </div>
+      <ReadingTools key={restoredVersion} place={place} />
     </div>
   );
 }
