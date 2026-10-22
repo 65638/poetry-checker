@@ -257,6 +257,11 @@
 .pc-workspace .pc-library-reading .pc-library-copy-feedback {
   font: 13px/1.8 var(--pc-font-sans);
 }
+.pc-workspace .pc-library-character {
+  display: inline-block;
+  min-width: 28px;
+  min-height: 44px;
+}
 
 /* A compact tool tray leaves the manuscript visible on narrow screens. */
 .pc-workspace .pc-reading-tools {

@@ -100,7 +100,11 @@ export function NotebookArchive({
                   <p>{entry.after.text || "（空稿）"}</p>
                 </div>
               </div>
-              <div className="pc-notebook-lines" aria-label="逐行改动">
+              <div
+                className="pc-notebook-lines"
+                role="region"
+                aria-label="逐行改动"
+              >
                 {changes.map((row, i) => (
                   <p key={i} data-change={row.kind}>
                     {row.kind === "removed" ? (

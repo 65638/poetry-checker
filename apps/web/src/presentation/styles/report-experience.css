@@ -52,6 +52,9 @@
 .pc-workspace .pc-format__items dt {
   margin-bottom: 5px;
 }
+.pc-workspace .pc-format__items dd p {
+  font-weight: 400;
+}
 .pc-workspace .pc-format__basis summary,
 .pc-workspace .pc-ev__details > summary,
 .pc-workspace .pc-evidence__reason > summary {

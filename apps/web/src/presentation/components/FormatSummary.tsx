@@ -34,12 +34,13 @@ export function FormatSummary({ report }: { report: AnalysisResponse }) {
               : start.value === "ping"
                 ? "平起"
                 : "仄起"}
+            {start.value && second && (
+              <p>
+                第二字「{second.text}」为{start.value === "ping" ? "平" : "仄"}
+                声
+              </p>
+            )}
           </dd>
-          {start.value && second && (
-            <p>
-              第二字「{second.text}」为{start.value === "ping" ? "平" : "仄"}声
-            </p>
-          )}
         </div>
         <div>
           <dt>首句用韵</dt>
@@ -49,18 +50,18 @@ export function FormatSummary({ report }: { report: AnalysisResponse }) {
               : rhyme.value === "unrhymed"
                 ? "不入韵参考"
                 : "待确认"}
+            <p>
+              偶数句韵部：
+              {groupNames.length
+                ? groupNames.join("、")
+                : rhyme.evenLineStatus === "different"
+                  ? "不一致"
+                  : "未定"}
+              {groupNames.length > 0 && rhyme.evenLineStatus === "unknown"
+                ? "（候选）"
+                : ""}
+            </p>
           </dd>
-          <p>
-            偶数句韵部：
-            {groupNames.length
-              ? groupNames.join("、")
-              : rhyme.evenLineStatus === "different"
-                ? "不一致"
-                : "未定"}
-            {groupNames.length > 0 && rhyme.evenLineStatus === "unknown"
-              ? "（候选）"
-              : ""}
-          </p>
         </div>
         <div>
           <dt>共同检查</dt>

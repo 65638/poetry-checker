@@ -1,0 +1,152 @@
+/* Query help and local data tools use the same quiet hierarchy as the catalogue. */
+.pc-workspace .pc-library-query-help {
+  border-bottom: 1px solid var(--pc-night-divider);
+  margin: 4px 0 16px;
+  padding-bottom: 6px;
+  font-size: 13px;
+  color: #c7d4c8;
+}
+.pc-workspace .pc-library-query-help summary {
+  padding-block: 10px;
+  min-height: 44px;
+  box-sizing: border-box;
+  cursor: pointer;
+  line-height: 1.8;
+  color: #dfd6b9;
+}
+.pc-workspace .pc-library-query-help .pc-studio-meta {
+  font-size: 13px;
+  margin-block: 4px 12px;
+  color: #bccbc2;
+}
+.pc-workspace .pc-library-query-help .pc-studio-actions {
+  margin-bottom: 12px;
+  gap: 7px;
+}
+.pc-workspace .pc-library-query-help .pc-studio-action {
+  padding: 7px 10px;
+  font-size: 12px;
+  background: #b6cbb30c;
+  color: #dfd6b9;
+  border-color: #a6b89c4a;
+}
+.pc-workspace .pc-backup-panel {
+  --pc-focus: #e5d3aa;
+  box-sizing: border-box;
+  max-width: min(1040px, calc(100% - 48px));
+  border: 1px solid #8ba09445;
+  border-radius: 5px;
+  background: #172f33f5;
+  padding: 4px 22px;
+  margin-bottom: 56px;
+  color: #d2ddce;
+}
+.pc-workspace .pc-backup-panel > summary {
+  min-height: 56px;
+  box-sizing: border-box;
+  padding-block: 15px;
+  font: 15px/1.8 var(--pc-font-sans);
+  color: #e7d9b5;
+}
+.pc-workspace .pc-backup-panel[open] {
+  padding-bottom: 22px;
+}
+.pc-workspace .pc-backup-panel[open] > summary {
+  border-bottom: 1px solid var(--pc-night-divider);
+}
+.pc-workspace .pc-backup-panel > p {
+  max-width: 76ch;
+  margin-block: 16px;
+  font-size: 14px;
+  line-height: 1.9;
+}
+.pc-workspace .pc-backup-panel .pc-studio-action {
+  border-color: #a6b89c66;
+  background: #b6cbb30c;
+  color: #e5dbc0;
+  font-size: 14px;
+}
+.pc-workspace .pc-backup-panel .pc-studio-action:hover:not(:disabled) {
+  background: #b6cbb324;
+  border-color: #d5c49b;
+}
+.pc-workspace .pc-backup-preview {
+  border-top: 1px solid var(--pc-night-divider);
+  padding-top: 14px;
+  margin-top: 22px;
+}
+.pc-workspace .pc-backup-preview > p {
+  font-size: 13px;
+  color: #becdc1;
+}
+.pc-workspace .pc-backup-preview > .pc-studio-actions {
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 10px;
+}
+.pc-workspace .pc-backup-preview label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  line-height: 1.7;
+}
+.pc-workspace .pc-backup-preview input[type="checkbox"] {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+}
+.pc-workspace .pc-backup-preview [aria-label="备份合并预览"] {
+  border: 1px solid #b5ad7159;
+  border-left: 3px solid #c5b387;
+  border-radius: 4px;
+  padding: 16px 18px;
+  margin-top: 20px;
+  background: #b5ad710c;
+}
+.pc-workspace .pc-backup-preview [aria-label="备份合并预览"] > p:first-child {
+  margin-top: 0;
+  color: #f0e3be;
+}
+.pc-workspace .pc-backup-preview [aria-label="备份合并预览"] > button {
+  background: #b8c5a9;
+  color: #15342c;
+  border-color: #b8c5a9;
+}
+.pc-workspace
+  .pc-backup-preview
+  [aria-label="备份合并预览"]
+  > button:hover:not(:disabled) {
+  background: #c8d2ba;
+  color: #15342c;
+}
+.pc-workspace .pc-backup-panel > :is([role="status"], [role="alert"]) {
+  padding: 12px 14px;
+  background: #a9c29b12;
+  border-left: 2px solid #a6bd9a;
+  border-radius: 3px;
+  margin-bottom: 0;
+}
+.pc-workspace .pc-backup-panel > [role="alert"] {
+  border-left-color: #cf8e78;
+  background: #b46f5814;
+  color: #ffd1bf;
+}
+@media (max-width: 599px) {
+  .pc-workspace .pc-backup-panel {
+    max-width: none;
+    margin-inline: 16px;
+    padding-inline: 16px;
+  }
+  .pc-workspace .pc-backup-panel .pc-studio-actions {
+    gap: 8px;
+  }
+  .pc-workspace .pc-backup-panel .pc-studio-action {
+    padding-inline: 10px;
+    font-size: 13px;
+  }
+  .pc-workspace .pc-backup-preview [aria-label="备份合并预览"] {
+    padding-inline: 12px;
+  }
+}
