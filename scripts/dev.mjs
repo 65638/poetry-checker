@@ -5,6 +5,7 @@ import { createServer as createNetServer } from "node:net";
 import { createRequire } from "node:module";
 import { join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { archivedAssetMiddleware } from "./preview-assets.mjs";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const apiPort = Number(process.env.PORT ?? 3000);
@@ -90,6 +91,23 @@ try {
     root: join(root, "apps/web"),
     configFile: join(root, "apps/web/vite.config.ts"),
     ...(previewMode ? { build: { outDir: previewDirectory } } : {}),
+    ...(previewMode && process.env.POETRY_PREVIEW_ASSET_ARCHIVE
+      ? {
+          plugins: [
+            {
+              name: "poetry-previous-release-assets",
+              configurePreviewServer(server) {
+                server.middlewares.use(
+                  archivedAssetMiddleware(
+                    previewDirectory,
+                    resolve(process.env.POETRY_PREVIEW_ASSET_ARCHIVE),
+                  ),
+                );
+              },
+            },
+          ],
+        }
+      : {}),
     server: connection,
     preview: connection,
   };
