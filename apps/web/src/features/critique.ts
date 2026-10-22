@@ -12,7 +12,7 @@ export function buildProsodyContext(
     toneBasis: report.policy.toneBasis,
     applicability: report.genre.applicability,
     format: report.prosody.format
-      ? `${report.prosody.format.shape.width}言${report.prosody.format.shape.lineCount}句；起式${report.prosody.format.start.value ?? "待确认"}；首句用韵${report.prosody.format.firstLineRhyme.value}`
+      ? `${report.prosody.format.shape.width}言${report.prosody.format.shape.lineCount}句；${report.prosody.format.start.value === "ping" ? "平起" : report.prosody.format.start.value === "ze" ? "仄起" : "起式待确认"}；首句${report.prosody.format.firstLineRhyme.value === "rhymed" ? "入韵" : report.prosody.format.firstLineRhyme.value === "unrhymed" ? "不入韵" : "用韵待确认"}`
       : "格式待确认",
     templateId: report.prosody.selectedTemplateId,
     issues: report.prosody.checks

@@ -12,6 +12,7 @@ import {
   RankedItemsSchema,
   SearchMatchesSchema,
   type PoetryAssistantRequest,
+  type Critique,
 } from "@poetry/contracts";
 import {
   AssistantError,
@@ -44,18 +45,23 @@ function formalProsodyNote(
     PoetryAssistantRequest,
     { task: "critique" }
   >["prosodyContext"],
-) {
+): NonNullable<Critique["ruleReview"]> {
+  const note = (summary: string) => ({
+    summary,
+    reference: context?.format ?? null,
+    checks: [],
+  });
   if (!context)
-    return "尚无对应原文的格律报告，本次仅作文学参考，不作合律判断。";
+    return note("尚无对应原文的格律报告，本次仅作文学参考，不作合律判断。");
   if (context.applicability === "not_applicable")
-    return "当前体式不适用近体格律，不以近体句式认定原诗出律。";
+    return note("当前体式不适用近体格律，不以近体句式认定原诗出律。");
   if (context.applicability === "unsupported")
-    return "当前体式尚未获完整规则支持，不作合律判断。";
+    return note("当前体式尚未获完整规则支持，不作合律判断。");
   const conditional = context.applicability !== "applicable";
   const scope = conditional
-    ? "体式尚未确认，以下仅为近体参考格式的条件比较，不认定原诗出律。"
-    : "以下按已选近体规则核对，仍以所列读音和参考格式为前提。";
-  if (context.issues.length === 0) return scope;
+    ? "体式尚未确认，格律依据仅作条件比较。"
+    : "格律依据按本次选择的读音和近体格式核对。";
+  if (context.issues.length === 0) return note(scope);
   const meterTokens = new Set(
     context.issues
       .filter((issue) => issue.ruleId === "METER.POSITION")
@@ -66,7 +72,7 @@ function formalProsodyNote(
       !["RELATION.DUI", "RELATION.NIAN"].includes(issue.ruleId) ||
       !issue.locations.some((location) => meterTokens.has(location.tokenId)),
   );
-  if (roots.length === 0) return scope;
+  if (roots.length === 0) return note(scope);
   const rows = roots.map((issue) => {
     const places = issue.locations
       .map(
@@ -82,9 +88,21 @@ function formalProsodyNote(
           : conditional
             ? "与近体参考规则不符（条件比较）"
             : "与所选规则不符";
-    return `${places}：${result}`;
+    if (
+      !places &&
+      issue.ruleId === "METER.POSITION" &&
+      issue.status === "uncertain"
+    )
+      return "参考格式尚未确定；目前只列出候选格式共同支持的检查结果。";
+    return places
+      ? `${places}：${result}`
+      : `全诗：${result}。${issue.message}`;
   });
-  return `${scope}规则复核（${context.format}）：列出${roots.length}项检查，包含待确认项或提醒，不等同于${roots.length}处独立诗病。${rows.join("；")}。同字位的失对/失粘仅作派生后果说明。`;
+  return {
+    summary: `${scope}列出${roots.length}项检查（含待确认项或提醒），不等同于${roots.length}处独立诗病；同字位的失对、失粘不重复计数。`,
+    reference: context.format,
+    checks: rows,
+  };
 }
 
 export function registerPoetryStudio(
@@ -156,7 +174,7 @@ export function registerPoetryStudio(
       );
       const schema =
         input.task === "critique"
-          ? CritiqueSchema
+          ? CritiqueSchema.omit({ ruleReview: true })
           : input.task === "compare"
             ? ComparisonSchema
             : input.task === "search"
@@ -239,15 +257,31 @@ export function registerPoetryStudio(
         input.task === "critique"
           ? (() => {
               const critique = CritiqueSchema.parse(parsed.data);
+              const ruleReview = formalProsodyNote(input.prosodyContext);
+              const structured = String(
+                request.headers["x-poetry-features"] ?? "",
+              )
+                .split(",")
+                .some((feature) => feature.trim() === "structured-rule-review");
+              // Older open tabs validate a strict result schema; negotiate the new field.
+              if (!structured)
+                return {
+                  ...critique,
+                  overview: [
+                    ruleReview.summary,
+                    ruleReview.reference
+                      ? `参考格式：${ruleReview.reference}`
+                      : "",
+                    ...ruleReview.checks,
+                    critique.overview,
+                  ]
+                    .filter(Boolean)
+                    .join(" ")
+                    .slice(0, 1600),
+                };
               return {
                 ...critique,
-                overview: [
-                  formalProsodyNote(input.prosodyContext),
-                  critique.overview,
-                ]
-                  .filter(Boolean)
-                  .join(" ")
-                  .slice(0, 1600),
+                ruleReview,
               };
             })()
           : parsed.data;

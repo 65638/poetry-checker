@@ -31,6 +31,14 @@ export const CritiqueSchema = z.strictObject({
   overview: note,
   strengths: z.array(note).max(5),
   revisions: z.array(RevisionSchema).max(6),
+  /** Server-generated rule context, separate from the model's literary overview. */
+  ruleReview: z
+    .strictObject({
+      summary: z.string().min(1).max(600),
+      reference: z.string().max(160).nullable(),
+      checks: z.array(z.string().min(1).max(1200)).max(120),
+    })
+    .optional(),
 });
 const ProsodyLocationSchema = z.strictObject({
   tokenId: z.string().min(1).max(100),

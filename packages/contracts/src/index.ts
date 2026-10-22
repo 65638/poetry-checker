@@ -779,6 +779,16 @@ export function createOpenApiDocument() {
       "/api/v1/poetry-assistant": {
         post: {
           operationId: "assistPoetry",
+          parameters: [
+            {
+              name: "X-Poetry-Features",
+              in: "header",
+              required: false,
+              description:
+                "发送structured-rule-review可将服务端格律依据放入可选ruleReview字段，保留完整overview；省略时兼容旧客户端。",
+              schema: { type: "string", example: "structured-rule-review" },
+            },
+          ],
           requestBody: {
             required: true,
             content: content("PoetryAssistantRequest"),

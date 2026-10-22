@@ -30,6 +30,8 @@ try{
   await h.cdp.send('Browser.grantPermissions',{origin:new URL(h.url).origin,permissions:['clipboardReadWrite','clipboardSanitizedWrite']});
   await h.setText(poem);await h.analyze();
   await waitFor(()=>h.evaluate("document.querySelector('.pc-poetry-review')?.textContent.includes('受控研读收藏示例')"));
+  assert.equal(await h.evaluate("document.querySelector('.pc-poetry-review > p').textContent"),'受控研读收藏示例。');
+  assert.equal(await h.evaluate("!!document.querySelector('.pc-rule-review-note')"),true);
   await check('adopting-edit-does-not-relabel-the-original-analysis-when-saving-or-sharing',async()=>{
     await clickText('.pc-poetry-edit button','采纳');
     await waitFor(()=>h.evaluate("document.querySelector('.pc-input__text').value.startsWith('晓')"));
@@ -88,6 +90,21 @@ try{
     await h.evaluate("document.querySelector('.pc-study-archive__reader').scrollIntoView({block:'start',behavior:'instant'})");
     assert.equal(await h.evaluate("(()=>{const el=document.querySelector('.pc-study-archive__reader h3'),r=el.getBoundingClientRect();return el.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2));})()"),true,'saved study is above the background scenery');
     writeFileSync(join(out,'study-320.png'),Buffer.from((await h.cdp.send('Page.captureScreenshot',{format:'png'})).data,'base64'));
+  });
+  await check('formal-checks-expand-separately-without-truncating-the-literary-overview',async()=>{
+    await h.viewport(1440,1000);
+    await h.setText(poem.replace('一层楼','一层山'));await h.analyze();
+    await waitFor(()=>h.evaluate("!!document.querySelector('.pc-rule-review-note details')"));
+    assert.equal(await h.evaluate("document.querySelector('.pc-poetry-review > p').textContent"),'受控研读收藏示例。');
+    assert.equal(await h.evaluate("document.querySelector('.pc-rule-review-note details').open"),false);
+    await h.click('.pc-rule-review-note summary');
+    assert.equal(await h.evaluate("document.querySelector('.pc-rule-review-note details').open"),true);
+    assert(await h.evaluate("document.querySelectorAll('.pc-rule-review-note li').length")>0);
+    assert.equal(await h.evaluate("[...document.querySelectorAll('.pc-rule-review-note li')].every(el=>!el.textContent.trim().startsWith('：'))"),true);
+    await h.viewport(320,900,true);
+    assert.equal(await h.evaluate('document.documentElement.scrollWidth<=innerWidth+1'),true);
+    await h.evaluate("document.querySelector('.pc-poetry-review').scrollIntoView({block:'start',behavior:'instant'})");
+    writeFileSync(join(out,'rule-review-320.png'),Buffer.from((await h.cdp.send('Page.captureScreenshot',{format:'png'})).data,'base64'));
   });
   assert.deepEqual(results.errors,[]);
 }catch(error){results.failure=error.stack;console.error(error);process.exitCode=1;}
