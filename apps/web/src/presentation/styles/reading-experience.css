@@ -264,6 +264,12 @@
 }
 
 /* A compact tool tray leaves the manuscript visible on narrow screens. */
+html:has(.pc-workspace) {
+  scroll-padding-block: 24px 88px;
+}
+.pc-workspace :is(button, a, input, select, textarea, summary, [tabindex]) {
+  scroll-margin-block: 24px 88px;
+}
 .pc-workspace .pc-reading-tools {
   left: auto;
   width: auto;
@@ -301,6 +307,28 @@
   .pc-workspace .pc-library-worktable {
     grid-template-columns: minmax(0, 1fr);
     gap: 24px;
+  }
+  .pc-workspace .pc-library-catalogue {
+    position: static;
+  }
+}
+@media (min-width: 1000px) {
+  .pc-workspace .pc-library-catalogue {
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100dvh - 48px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #8fa58a transparent;
+  }
+  .pc-workspace .pc-library-catalogue > * {
+    flex-shrink: 0;
+  }
+  .pc-workspace .pc-library-catalogue > .pc-library-list {
+    flex: 1 1 410px;
+    min-height: min(180px, 30dvh);
+    max-height: 410px;
   }
 }
 @media (max-width: 599px) {
