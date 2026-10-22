@@ -75,6 +75,37 @@ const post = (
     headers: { "x-poetry-features": "structured-rule-review" },
   });
 describe("poetry studio with real lexicon and controlled model", () => {
+  it("binds a focused question into the input hash and model payload without changing reading safeguards", async () => {
+    await withApp({ ...result, revisions: [] }, async (app, fetcher) => {
+      const payload = {
+        ...critique,
+        mode: "reading",
+        question: "转折是否自然？",
+      };
+      const response = await post(app, payload);
+      expect(response.statusCode).toBe(200);
+      expect(response.json().inputHash).toBe(
+        createHash("sha256")
+          .update(JSON.stringify(PoetryAssistantRequestSchema.parse(payload)))
+          .digest("hex"),
+      );
+      const request = JSON.parse(fetcher.mock.calls[0]![1]!.body as string);
+      expect(JSON.parse(request.messages[1].content)).toMatchObject({
+        question: payload.question,
+        text: critique.text,
+        mode: "reading",
+      });
+      expect(request.messages[0].content).toContain("overview先直接回应该问题");
+      expect(request.messages[0].content).toContain(
+        "阅读模式即使问改字也只讨论表达取舍",
+      );
+      for (const question of [" ", "问".repeat(241)])
+        expect((await post(app, { ...payload, question })).statusCode).toBe(
+          422,
+        );
+      expect(fetcher).toHaveBeenCalledTimes(1);
+    });
+  });
   it("preserves the entire AI overview when 120 rule checks would exceed its text budget", async () => {
     const overview = "完整文学评价。".repeat(190);
     await withApp({ ...result, overview }, async (app) => {

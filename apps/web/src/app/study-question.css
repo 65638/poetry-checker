@@ -1,0 +1,67 @@
+.pc-study-question {
+  margin-block: 16px;
+  padding-block: 12px;
+  border-block: 1px solid currentColor;
+}
+.pc-study-question summary {
+  cursor: pointer;
+  line-height: 1.8;
+}
+.pc-study-question form {
+  display: grid;
+  gap: 12px;
+  padding-top: 12px;
+}
+.pc-study-question label {
+  display: grid;
+  gap: 8px;
+}
+.pc-study-question textarea {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  padding: 10px;
+  resize: vertical;
+  background: transparent;
+  border: 1px solid currentColor;
+  color: inherit;
+  font: inherit;
+  line-height: 1.8;
+}
+.pc-study-question__examples {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.pc-study-question__examples button {
+  background: transparent;
+  border: 1px solid currentColor;
+  padding: 6px 8px;
+  font: inherit;
+  color: inherit;
+  font-size: 12px;
+  text-align: left;
+  line-height: 1.8;
+  cursor: pointer;
+}
+.pc-study-question__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+.pc-study-question__actions span {
+  font-size: 12px;
+}
+.pc-study-question :is(summary, textarea, button):focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+.pc-study-question-asked {
+  padding: 10px 12px;
+  border-left: 2px solid currentColor;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.8;
+}

@@ -43,6 +43,27 @@ const response: PoetryAssistantResponse = {
 const entry = () =>
   createStudyEntry(input, response, "暮色一篇", "2026-10-23T00:00:00Z");
 describe("durable study snapshots and reader-facing sharing", () => {
+  it("preserves the exact reader question in saved evidence and share text", () => {
+    const asked = PoetryAssistantRequestSchema.parse({
+      ...input,
+      question: "转折是否自然？",
+    });
+    const answer = { ...response, inputHash: sha256Hex(JSON.stringify(asked)) };
+    const saved = createStudyEntry(asked, answer);
+    expect(studyText(saved)).toContain("研读问题\n转折是否自然？");
+    expect(
+      parseStudyArchive(JSON.stringify(studyArchive([saved])))[0]!.input,
+    ).toEqual(asked);
+    expect(() =>
+      createStudyEntry(
+        PoetryAssistantRequestSchema.parse({
+          ...asked,
+          question: "另外一个问题",
+        }),
+        answer,
+      ),
+    ).toThrow("不对应");
+  });
   it("keeps formal rule context in a separate share section without swallowing literary advice", () => {
     const saved = createStudyEntry(input, {
       ...response,

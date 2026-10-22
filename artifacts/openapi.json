@@ -2194,6 +2194,11 @@
                   "issues"
                 ],
                 "additionalProperties": false
+              },
+              "question": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 240
               }
             },
             "required": [

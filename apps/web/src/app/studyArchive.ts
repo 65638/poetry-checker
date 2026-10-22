@@ -147,6 +147,7 @@ export function studyText(entry: StudyEntry): string {
   const { input, response } = entry;
   const rows = [entry.title, ""];
   if (input.task === "critique" && response.task === "critique") {
+    if (input.question) rows.push("研读问题", input.question, "");
     rows.push(
       `${input.mode === "reading" ? "原诗赏读" : "写作推敲"} · ${directionNames[input.direction]} · ${bookNames[input.rhymeBook]}`,
       "",
