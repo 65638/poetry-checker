@@ -1,0 +1,71 @@
+.pc-draft-collection {
+  width: 100%;
+  margin-block: 12px;
+  padding: 12px 16px;
+  box-sizing: border-box;
+  border: 1px solid #b5a67b66;
+  color: inherit;
+}
+.pc-draft-collection > summary {
+  cursor: pointer;
+  font-size: 15px;
+}
+.pc-draft-collection p {
+  font-size: 13px;
+  line-height: 1.8;
+}
+.pc-draft-collection label {
+  display: grid;
+  gap: 6px;
+  font-size: 13px;
+  min-width: 0;
+  max-width: 100%;
+}
+.pc-draft-collection input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  color: inherit;
+  background: transparent;
+  border: 1px solid #b5a67b80;
+  min-width: 0;
+}
+.pc-draft-collection button {
+  padding: 7px 10px;
+  border: 1px solid #b5a67b80;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.pc-draft-collection button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.pc-draft-collection-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: end;
+  margin-block: 12px;
+}
+.pc-draft-collection article {
+  padding-block: 12px;
+  border-top: 1px solid #b5a67b40;
+  margin-top: 12px;
+  overflow-wrap: anywhere;
+}
+.pc-draft-collection time {
+  display: block;
+  font-size: 12px;
+  opacity: 0.8;
+  margin-block: 4px 10px;
+}
+.pc-draft-collection blockquote {
+  margin: 10px 0;
+  white-space: pre-wrap;
+  font-size: 16px;
+  line-height: 1.9;
+}
+.pc-draft-collection [role="alert"] {
+  color: #e4a28b;
+}

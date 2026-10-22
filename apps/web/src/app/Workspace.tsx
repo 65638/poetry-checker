@@ -26,6 +26,7 @@ import {
 } from "./notebook";
 import type { InputDraft } from "../view-contract";
 import { LocalBackupPanel } from "./LocalBackupPanel";
+import { DraftCollectionPanel } from "./DraftCollectionPanel";
 
 type Place = "checker" | "dictionary" | "library";
 const places: Place[] = ["checker", "dictionary", "library"];
@@ -369,24 +370,34 @@ export function Workspace(props: CheckerViewProps) {
             }}
             sharedScene
             draftTools={
-              <div className="pc-draft-tools">
-                <span className="pc-draft-save" role="status">
-                  {saved ? "草稿已存于此设备" : ""}
-                </span>
-                {props.draft.text.trim() && (
-                  <div className="pc-explore-current">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setPassageRequest((n) => n + 1);
-                        navigate("dictionary");
-                      }}
-                    >
-                      带此诗查字 <span aria-hidden="true">→</span>
-                    </button>
-                  </div>
-                )}
-              </div>
+              <>
+                <div className="pc-draft-tools">
+                  <span className="pc-draft-save" role="status">
+                    {saved ? "草稿已存于此设备" : ""}
+                  </span>
+                  {props.draft.text.trim() && (
+                    <div className="pc-explore-current">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setPassageRequest((n) => n + 1);
+                          navigate("dictionary");
+                        }}
+                      >
+                        带此诗查字 <span aria-hidden="true">→</span>
+                      </button>
+                    </div>
+                  )}
+                </div>
+                <DraftCollectionPanel
+                  draft={props.draft}
+                  disabled={props.busy}
+                  onLoad={(next, title) => {
+                    revise(next, `从稿匣打开《${title}》`);
+                    setWorkMode("writing");
+                  }}
+                />
+              </>
             }
             readingAssistant={(() => {
               const token = props.report?.poem.tokens.find(

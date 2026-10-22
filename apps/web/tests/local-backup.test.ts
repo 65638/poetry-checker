@@ -13,6 +13,12 @@ import { NOTEBOOK_KEY } from "../src/app/notebook";
 import { SHELF_KEY } from "../src/app/dictionaryShelf";
 import { READING_JOURNAL_KEY } from "../src/app/readingJournal";
 import {
+  DRAFT_COLLECTION_KEY,
+  draftCollectionArchive,
+  parseDraftCollection,
+  savePoemDraft,
+} from "../src/app/draftCollection";
+import {
   EXCERPTS_KEY,
   addExcerpt,
   excerptArchive,
@@ -61,6 +67,27 @@ function memory(
   return { local, port };
 }
 describe("portable local backups", () => {
+  it("merges named drafts while preserving the current unsaved input by default", async () => {
+    const entries = savePoemDraft([], draft, "出门前的诗", "saved-poem");
+    const source = memory({
+      [DRAFT_COLLECTION_KEY]: JSON.stringify(draftCollectionArchive(entries)),
+      [DRAFT_KEY]: JSON.stringify(draft),
+    });
+    const target = memory({ [DRAFT_KEY]: JSON.stringify(EMPTY_DRAFT) });
+    const incoming = await parseLocalBackup(
+      JSON.stringify(await makeLocalBackup(source.port)),
+    );
+    const plan = await planLocalRestore(target.port, incoming, options);
+    expect(plan.added.drafts).toBe(1);
+    await applyLocalRestore(target.port, plan);
+    expect(
+      parseDraftCollection(target.local.get(DRAFT_COLLECTION_KEY)!),
+    ).toEqual(entries);
+    expect(target.local.get(DRAFT_KEY)).toBe(JSON.stringify(EMPTY_DRAFT));
+    expect(
+      (await planLocalRestore(target.port, incoming, options)).added.drafts,
+    ).toBe(0);
+  });
   it("roundtrips excerpts with notes and merges repeated restores without duplication", async () => {
     const saved = addExcerpt([], work, 0, "excerpt-one").map((e) => ({
       ...e,
@@ -167,6 +194,7 @@ describe("portable local backups", () => {
       favorites: 1,
       characters: 1,
       excerpts: 0,
+      drafts: 0,
     });
     expect(target.local.get(FAVORITE_POEMS_KEY)).toBe('["existing"]');
     await applyLocalRestore(target.port, plan);
@@ -186,6 +214,7 @@ describe("portable local backups", () => {
       favorites: 0,
       characters: 0,
       excerpts: 0,
+      drafts: 0,
     });
   });
   it("keeps the draft/preferences unless explicitly selected", async () => {
