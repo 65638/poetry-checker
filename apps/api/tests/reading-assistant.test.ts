@@ -52,6 +52,90 @@ const post = (app: ReturnType<typeof buildApp>, payload = input) =>
   app.inject({ method: "POST", url: "/api/v1/reading-suggestions", payload });
 
 describe("GLM reading suggestions preserve candidate and approval boundaries", () => {
+  it("queues concurrent tasks, cancels waiting work without contacting the model, and recovers slots", async () => {
+    const started: string[] = [];
+    const releases = new Map<string, () => void>();
+    const assistant = createReadingAssistant(resources, {
+      apiKey: "test-only-key",
+      fetcher: async (_url, init) => {
+        const id = JSON.parse(
+          JSON.parse(init!.body as string).messages[1].content,
+        ).id;
+        started.push(id);
+        await new Promise<void>((resolve) => releases.set(id, resolve));
+        return modelResponse();
+      },
+    });
+    const a = assistant.complete("test", { id: "a" }),
+      b = assistant.complete("test", { id: "b" });
+    const abort = new AbortController();
+    const cancelled = assistant.complete(
+      "test",
+      { id: "cancel" },
+      abort.signal,
+    );
+    const reject = expect(cancelled).rejects.toMatchObject({
+      code: "MODEL_TIMEOUT",
+    });
+    const c = assistant.complete("test", { id: "c" });
+    await vi.waitFor(() => expect(started).toEqual(["a", "b"]));
+    abort.abort();
+    await reject;
+    releases.get("a")!();
+    await a;
+    await vi.waitFor(() => expect(started).toEqual(["a", "b", "c"]));
+    releases.get("b")!();
+    releases.get("c")!();
+    await Promise.all([b, c]);
+    expect(started).not.toContain("cancel");
+  });
+  it("counts queued time against the original deadline instead of granting a fresh timeout", async () => {
+    vi.useFakeTimers();
+    try {
+      const started: string[] = [];
+      const releases = new Map<string, () => void>();
+      const assistant = createReadingAssistant(resources, {
+        apiKey: "test-only-key",
+        timeoutMs: 100,
+        fetcher: async (_url, init) => {
+          const id = JSON.parse(
+            JSON.parse(init!.body as string).messages[1].content,
+          ).id;
+          started.push(id);
+          await new Promise<void>((resolve, reject) => {
+            releases.set(id, resolve);
+            init!.signal!.addEventListener(
+              "abort",
+              () => reject(init!.signal!.reason),
+              { once: true },
+            );
+          });
+          return modelResponse();
+        },
+      });
+      const a = assistant.complete("test", { id: "a" }),
+        b = assistant.complete("test", { id: "b" });
+      const rejectedB = expect(b).rejects.toMatchObject({
+        code: "MODEL_TIMEOUT",
+      });
+      await vi.advanceTimersByTimeAsync(10);
+      const c = assistant.complete("test", { id: "c" });
+      const rejectedC = expect(c).rejects.toMatchObject({
+        code: "MODEL_TIMEOUT",
+      });
+      await vi.advanceTimersByTimeAsync(80);
+      expect(started).toEqual(["a", "b"]);
+      releases.get("a")!();
+      await a;
+      await vi.advanceTimersByTimeAsync(0);
+      expect(started).toEqual(["a", "b", "c"]);
+      await vi.advanceTimersByTimeAsync(20);
+      await Promise.all([rejectedB, rejectedC]);
+      expect(started).toEqual(["a", "b", "c"]);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
   it("uses the longer DeepSeek defaults while preserving explicit test windows", () => {
     const deepseek = createReadingAssistant(resources, {
       provider: "deepseek",

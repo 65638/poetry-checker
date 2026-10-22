@@ -28,17 +28,14 @@ import { requestRhymeWords } from "../api/poetry-studio";
 import { createCharacterLookup } from "../api/characters";
 import { readWebEnv, resolveApiConfig } from "./config";
 import { downloadJson } from "./library";
-import {
-  applyRevisions,
-  currentLineEnd,
-  parseNotebook,
-  type NotebookEntry,
-} from "./notebook";
+import { currentLineEnd, parseNotebook, type NotebookEntry } from "./notebook";
 
 import { NotebookArchive } from "../presentation/components/NotebookArchive";
 import { RevisionSubstitution } from "../presentation/components/RevisionSubstitution";
 import { StudyResultActions } from "./StudyResultActions";
 import { RuleReviewNote } from "./RuleReviewNote";
+import { planRevision } from "./revisionPlan";
+import { RevisionPreview } from "./RevisionPreview";
 
 type CritiqueInput = Extract<PoetryAssistantRequest, { task: "critique" }>;
 export function PoetryDesk({
@@ -288,18 +285,11 @@ export function PoetryDesk({
   function adopt(edit: Revision, reason: string) {
     if (!report || !canUseSuggestions || !pendingEdits) return;
     try {
-      const edits = [
-        ...pendingEdits.filter(
-          (previous) =>
-            previous.startTokenId !== edit.startTokenId ||
-            previous.endTokenId !== edit.endTokenId,
-        ),
+      const { text, edits } = planRevision(
+        report.poem,
+        draft.text,
+        pendingEdits,
         edit,
-      ];
-      const text = applyRevisions(
-        report.poem.originalText,
-        edits,
-        report.poem.tokens,
       );
       if (text === draft.text) return;
       setRevisionDrafts((previous) => ({
@@ -489,6 +479,14 @@ export function PoetryDesk({
                   />
                   <p>{edit.reason}</p>
                   <p className="pc-studio-meta">取舍：{edit.tradeoff}</p>
+                  {canApply && pendingEdits && report && (
+                    <RevisionPreview
+                      poem={report.poem}
+                      currentText={draft.text}
+                      accepted={pendingEdits}
+                      edit={edit}
+                    />
+                  )}
                   <button
                     className="pc-studio-action"
                     disabled={
@@ -680,6 +678,21 @@ export function PoetryDesk({
                             )}
                           </h3>
                           <p>{match.reason}</p>
+                          {canApply && pendingEdits && (
+                            <RevisionPreview
+                              poem={report.poem}
+                              currentText={draft.text}
+                              accepted={pendingEdits}
+                              edit={{
+                                startTokenId: originalSeed!.tokenId,
+                                endTokenId: originalSeed!.tokenId,
+                                original: originalSeed!.text,
+                                replacement: c.character,
+                                reason: match.reason,
+                                tradeoff: "同韵不等于同义或整诗合律。",
+                              }}
+                            />
+                          )}
                           <button
                             className="pc-studio-action"
                             disabled={!canApply}
