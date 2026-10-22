@@ -24,6 +24,7 @@ import "../presentation/styles/product-refinement.css";
 import "../presentation/styles/reading-experience.css";
 import "../presentation/styles/local-data-experience.css";
 import "../presentation/styles/draft-experience.css";
+import "../presentation/styles/comparison-experience.css";
 import { PoetryDesk } from "./PoetryDesk";
 import { ReadingTools } from "../presentation/components/ReadingTools";
 import { CharacterReference } from "./CharacterReference";

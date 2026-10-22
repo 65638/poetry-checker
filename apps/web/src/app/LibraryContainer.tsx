@@ -711,10 +711,10 @@ export function LibraryContainer({
                     {aspect.name}
                   </h3>
                   <p>
-                    <strong>左卷</strong> {aspect.left}
+                    <strong>左卷 ·《{left?.title}》</strong> {aspect.left}
                   </p>
                   <p>
-                    <strong>右卷</strong> {aspect.right}
+                    <strong>右卷 ·《{right?.title}》</strong> {aspect.right}
                   </p>
                 </div>
               ))}

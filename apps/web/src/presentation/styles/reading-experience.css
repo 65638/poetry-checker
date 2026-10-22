@@ -185,7 +185,7 @@
   margin-top: 8px;
   font-size: 13px;
 }
-.pc-workspace .pc-library-reading {
+.pc-workspace .pc-library-reading:not(.pc-library-comparison) {
   background-color: #f1eddf;
   border-top: 2px solid #c4b48f;
   border-radius: 4px;
@@ -322,7 +322,7 @@
   .pc-workspace .pc-library-catalogue {
     padding: 16px 16px 6px;
   }
-  .pc-workspace .pc-library-reading {
+  .pc-workspace .pc-library-reading:not(.pc-library-comparison) {
     padding: 20px 18px 28px;
   }
   .pc-workspace .pc-library-reading > h2 {
