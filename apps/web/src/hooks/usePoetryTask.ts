@@ -4,11 +4,14 @@ import type {
   PoetryAssistantResponse,
 } from "@poetry/contracts";
 import { requestPoetry } from "../api/poetry-studio";
+import { PoetryResultCache } from "../app/poetryResultCache";
 
 export function usePoetryTask(identity: string) {
   const [result, setResult] = useState<PoetryAssistantResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [reused, setReused] = useState(false);
+  const cache = useRef(new PoetryResultCache());
   const sequence = useRef(0);
   const controller = useRef<AbortController | null>(null);
   const currentIdentity = useRef(identity);
@@ -32,6 +35,7 @@ export function usePoetryTask(identity: string) {
     setResult(null);
     setError(null);
     setCancelled(false);
+    setReused(false);
     lastRequest.current = null;
     resultRequest.current = null;
     return () => {
@@ -39,35 +43,54 @@ export function usePoetryTask(identity: string) {
       controller.current?.abort();
     };
   }, [identity, cancel]);
-  const run = useCallback(async (input: PoetryAssistantRequest) => {
-    const id = ++sequence.current;
-    const requestIdentity = currentIdentity.current;
-    const requestKey = JSON.stringify(input);
-    lastRequest.current = { identity: requestIdentity, input };
-    controller.current?.abort();
-    const own = new AbortController();
-    controller.current = own;
-    setBusy(true);
-    if (resultRequest.current !== requestKey) setResult(null);
-    setError(null);
-    setCancelled(false);
-    try {
-      const value = await requestPoetry(input, own.signal);
-      if (
-        id === sequence.current &&
-        requestIdentity === currentIdentity.current
-      ) {
+  const run = useCallback(
+    async (
+      input: PoetryAssistantRequest,
+      options: { reuse?: boolean } = {},
+    ) => {
+      const id = ++sequence.current;
+      const requestIdentity = currentIdentity.current;
+      const requestKey = JSON.stringify(input);
+      lastRequest.current = { identity: requestIdentity, input };
+      controller.current?.abort();
+      setReused(false);
+      const cached = options.reuse ? cache.current.get(input) : null;
+      if (cached) {
         resultIdentity.current = requestIdentity;
         resultRequest.current = requestKey;
-        setResult(value);
+        setResult(cached);
+        setBusy(false);
+        setError(null);
+        setCancelled(false);
+        setReused(true);
+        return;
       }
-    } catch (cause) {
-      if (id === sequence.current && !own.signal.aborted)
-        setError(cause instanceof Error ? cause.message : "建议暂不可用。");
-    } finally {
-      if (id === sequence.current) setBusy(false);
-    }
-  }, []);
+      const own = new AbortController();
+      controller.current = own;
+      setBusy(true);
+      if (resultRequest.current !== requestKey) setResult(null);
+      setError(null);
+      setCancelled(false);
+      try {
+        const value = await requestPoetry(input, own.signal);
+        if (
+          id === sequence.current &&
+          requestIdentity === currentIdentity.current
+        ) {
+          resultIdentity.current = requestIdentity;
+          resultRequest.current = requestKey;
+          cache.current.set(input, value);
+          setResult(value);
+        }
+      } catch (cause) {
+        if (id === sequence.current && !own.signal.aborted)
+          setError(cause instanceof Error ? cause.message : "建议暂不可用。");
+      } finally {
+        if (id === sequence.current) setBusy(false);
+      }
+    },
+    [],
+  );
   const retry = useCallback(() => {
     const request = lastRequest.current;
     if (request && request.identity === currentIdentity.current)
@@ -81,5 +104,6 @@ export function usePoetryTask(identity: string) {
     cancel,
     cancelled,
     retry,
+    reused,
   };
 }
