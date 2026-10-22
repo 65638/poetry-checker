@@ -3,6 +3,7 @@ import {
   type BookId,
   type LookupResult,
 } from "@poetry/contracts";
+import { responseMessage } from "./responseMessages";
 
 export type CharacterLookup = (
   character: string,
@@ -21,20 +22,25 @@ export function createCharacterLookup(
   fetcher: typeof fetch = fetch,
 ): CharacterLookup {
   return async (character, book, signal) => {
-    const response = await fetcher(
-      `${baseUrl}/api/v1/characters/${encodeURIComponent(character)}?book=${book}`,
-      { signal },
-    );
+    let response: Response;
+    try {
+      response = await fetcher(
+        `${baseUrl}/api/v1/characters/${encodeURIComponent(character)}?book=${book}`,
+        { signal },
+      );
+    } catch (cause) {
+      if (signal.aborted) throw cause;
+      throw new Error("暂时连接不上查字服务，请检查网络或启动窗口后重试。", {
+        cause,
+      });
+    }
     const body: unknown = await response.json().catch(() => null);
     if (!response.ok) {
-      const message =
-        body !== null && typeof body === "object" && "error" in body
-          ? (body as { error?: { message?: unknown } }).error?.message
-          : null;
       throw new Error(
-        typeof message === "string"
-          ? message
-          : `查字服务暂不可用（${response.status}），请稍后重试。`,
+        responseMessage(
+          body,
+          `查字服务暂不可用（${response.status}），请稍后重试。`,
+        ),
       );
     }
     const parsed = LookupResultSchema.safeParse(body);

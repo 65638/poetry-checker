@@ -21,6 +21,7 @@ const app = buildApp({ readingAssistant: {
 app.addHook('preHandler', async (request, reply) => {
   if (request.url !== '/api/v1/poetry-assistant' || request.body.task !== 'critique') return;
   critiques++;
+  if (behavior === 'malformed') return reply.send({ task: 'critique', result: {} });
   if (behavior === 'failure') return reply.code(503).send({ error: { message: '受控暂时不可用，请重试。' } });
   if (behavior === 'slow') await sleep(3500);
 });
@@ -39,12 +40,13 @@ async function clickText(scope, label) {
 try {
   await check('recent-reading-persists-and-reopens-original', async () => {
     await h.load({ path: '#library', reduce: true });
-    await waitFor(() => h.evaluate("!!document.querySelector('.pc-library-title')"));
+    await waitFor(() => h.evaluate("document.querySelector('.pc-library-heading')?.textContent.includes('2022首入藏')"));
     await h.click('.pc-library-title');
     await waitFor(() => h.evaluate("!!document.querySelector('.pc-library-reading')"));
     const title = await h.evaluate("document.querySelector('.pc-library-reading > h2').textContent");
     const visit = await h.evaluate("JSON.parse(localStorage.getItem('poetry-reading-journal-v1'))[0].id");
     await h.cdp.send('Page.reload');
+    await waitFor(() => h.evaluate("document.querySelector('.pc-library-heading')?.textContent.includes('2022首入藏')"));
     await waitFor(() => h.evaluate("!!document.querySelector('.pc-reading-journal')"));
     await h.click('.pc-reading-journal summary');
     await h.click('.pc-reading-journal button');
@@ -106,6 +108,17 @@ try {
     await clickText('.pc-poetry-critique button', '重试本次研读');
     await waitFor(() => h.evaluate("!document.querySelector('.pc-poetry-critique .pc-studio-error') && [...document.querySelectorAll('.pc-poetry-critique button')].some(e=>e.textContent.trim()==='重新评议' && !e.disabled)"));
     assert.equal(critiques, before + 1);
+  });
+  await check('incomplete-ai-result-has-readable-retry-and-keeps-last-result', async () => {
+    behavior = 'malformed';
+    await clickText('.pc-poetry-critique button', '重新评议');
+    await waitFor(() => h.evaluate("document.querySelector('.pc-poetry-critique .pc-studio-error')?.textContent.includes('研读结果不完整')"));
+    const message = await h.evaluate("document.querySelector('.pc-poetry-critique .pc-studio-error').textContent");
+    assert(!message.includes('invalid_type') && !message.includes('expected') && !message.includes('path'));
+    assert.equal(await h.evaluate("document.querySelector('.pc-poetry-review').textContent.includes('浏览器受控赏读结果')"), true);
+    behavior = 'success';
+    await clickText('.pc-poetry-critique button', '重试本次研读');
+    await waitFor(() => h.evaluate("!document.querySelector('.pc-poetry-critique .pc-studio-error') && [...document.querySelectorAll('.pc-poetry-critique button')].some(e=>e.textContent.trim()==='重新评议' && !e.disabled)"));
   });
   await check('cancel-suppresses-late-response-and-resume-keeps-input', async () => {
     behavior = 'slow';
