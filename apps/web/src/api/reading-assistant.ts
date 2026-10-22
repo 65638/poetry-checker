@@ -5,45 +5,61 @@ import {
   type ReadingSuggestionRequest,
 } from "@poetry/contracts";
 import { sha256Hex } from "../utils/sha256";
+import { parseApiResponse, responseMessage } from "./responseMessages";
 
 export function createReadingAssistant(
   baseUrl = "",
   fetcher: typeof fetch = fetch,
 ) {
   async function request(path: string, init: RequestInit) {
-    const response = await fetcher(
-      `${baseUrl}/api/v1/reading-suggestions${path}`,
-      init,
-    );
+    let response: Response;
+    try {
+      response = await fetcher(
+        `${baseUrl}/api/v1/reading-suggestions${path}`,
+        init,
+      );
+    } catch (cause) {
+      if (init.signal?.aborted) throw cause;
+      throw new Error("暂时连接不上读音服务，请检查网络或启动窗口后重试。", {
+        cause,
+      });
+    }
     const body: unknown = await response.json().catch(() => null);
     if (!response.ok) {
-      const message =
-        body && typeof body === "object" && "error" in body
-          ? (body as { error?: { message?: unknown } }).error?.message
-          : null;
       throw new Error(
-        typeof message === "string"
-          ? message
-          : `读音建议暂不可用（${response.status}）。`,
+        responseMessage(
+          body,
+          `读音建议暂不可用（${response.status}），请稍后重试。`,
+        ),
       );
     }
     return body;
   }
   return {
     async status(signal: AbortSignal) {
-      return ReadingAssistantStatusSchema.parse(
+      return parseApiResponse(
+        ReadingAssistantStatusSchema,
         await request("/status", { signal }),
+        "暂时无法读取AI服务状态，请稍后重试。",
       );
     },
     async suggest(input: ReadingSuggestionRequest, signal: AbortSignal) {
-      const checked = ReadingSuggestionRequestSchema.parse(input);
+      const checked = parseApiResponse(
+        ReadingSuggestionRequestSchema,
+        input,
+        "请检查诗文和韵书选择后，再试一次辨音。",
+      );
       const body = await request("", {
         method: "POST",
         signal,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(checked),
       });
-      const result = ReadingSuggestionResponseSchema.parse(body);
+      const result = parseApiResponse(
+        ReadingSuggestionResponseSchema,
+        body,
+        "本次读音建议不完整，尚未应用；请重新辨音。",
+      );
       const seen = new Set<string>();
       if (
         result.inputHash !== sha256Hex(input.text) ||

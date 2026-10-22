@@ -71,15 +71,15 @@ export class ApiError extends Error {
       case "HTTP_500":
         return withDetail("分析服务内部错误，请稍后重试。");
       case "BAD_JSON":
-        return "服务返回的内容无法解析，已按失败处理，未展示为正常报告。";
+        return "这次未收到完整分析，请重试。原文仍保留。";
       case "BAD_SCHEMA":
-        return "服务返回的报告不符合公共契约，已拒绝展示。";
+        return "这次分析结果不完整，暂未显示；请重新分析。原文仍保留。";
       case "RESPONSE_INPUT_MISMATCH":
         return "服务返回的报告与本次提交的原文不一致，已拒绝展示。";
       case "RESPONSE_BOOK_MISMATCH":
         return "服务返回的报告与本次请求的韵书不一致，已拒绝展示。";
       case "CONTRACT_ERROR":
-        return "本地请求构造不符合公共契约，未发送请求。";
+        return "诗文或检查选项不完整，请检查后重新分析。";
       default:
         return "请求失败，请重试。";
     }
@@ -90,7 +90,8 @@ export class ApiError extends Error {
 export function parseErrorResponse(body: unknown): ErrorResponse | null {
   if (typeof body !== "object" || body === null) return null;
   const candidate = body as { error?: unknown };
-  if (typeof candidate.error !== "object" || candidate.error === null) return null;
+  if (typeof candidate.error !== "object" || candidate.error === null)
+    return null;
   const error = candidate.error as {
     code?: unknown;
     message?: unknown;
