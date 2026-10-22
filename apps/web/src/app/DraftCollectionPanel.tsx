@@ -161,75 +161,85 @@ export function DraftCollectionPanel({
             : "这里还没有诗稿；写下几句，再点击保存。"}
         </p>
       )}
-      {visible.map((entry) => (
-        <article key={entry.id}>
-          <strong>{entry.title}</strong>
-          <time dateTime={entry.createdAt}>
-            {new Date(entry.createdAt).toLocaleString("zh-CN", {
-              month: "numeric",
-              day: "numeric",
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
-          </time>
-          <details>
-            <summary>预览诗文 · {[...entry.draft.text].length}字</summary>
-            <blockquote>{entry.draft.text}</blockquote>
-          </details>
-          <div className="pc-draft-collection-actions">
-            <button
-              type="button"
-              disabled={
-                disabled || draftIdentity(entry.draft) === draftIdentity(draft)
-              }
-              onClick={() => {
-                let selected: SavedPoemDraft | undefined;
-                let retained = false;
-                if (
-                  !change((entries) => {
-                    selected = entries.find((e) => e.id === entry.id);
-                    if (!selected)
-                      throw new Error(
-                        "这篇诗稿已在其他页面移除，请刷新稿匣后再试。",
-                      );
-                    const next = draft.text.trim()
-                      ? savePoemDraft(entries, draft)
-                      : entries;
-                    retained = next.length > entries.length;
-                    return next;
-                  }) ||
-                  !selected
-                )
-                  return;
-                onLoad(selected.draft, selected.title);
-                setNotice(
-                  `已打开《${selected.title}》。${retained ? "切换前的诗已收入稿匣。" : ""}需要检查时再点分析。`,
-                );
-              }}
-            >
-              打开诗稿
-            </button>
-            <button
-              type="button"
-              disabled={disabled}
-              onClick={() => {
-                let old: SavedPoemDraft | undefined;
-                if (
-                  change((entries) => {
-                    old = entries.find((e) => e.id === entry.id);
-                    return entries.filter((e) => e.id !== entry.id);
-                  })
-                ) {
-                  setRemoved(old ?? null);
-                  setNotice("");
-                }
-              }}
-            >
-              移除
-            </button>
-          </div>
-        </article>
-      ))}
+      {visible.length > 0 && (
+        <div
+          className="pc-draft-collection-list"
+          role="region"
+          aria-label="已存诗稿"
+          tabIndex={0}
+        >
+          {visible.map((entry) => (
+            <article key={entry.id}>
+              <strong>{entry.title}</strong>
+              <time dateTime={entry.createdAt}>
+                {new Date(entry.createdAt).toLocaleString("zh-CN", {
+                  month: "numeric",
+                  day: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </time>
+              <details>
+                <summary>预览诗文 · {[...entry.draft.text].length}字</summary>
+                <blockquote>{entry.draft.text}</blockquote>
+              </details>
+              <div className="pc-draft-collection-actions">
+                <button
+                  type="button"
+                  disabled={
+                    disabled ||
+                    draftIdentity(entry.draft) === draftIdentity(draft)
+                  }
+                  onClick={() => {
+                    let selected: SavedPoemDraft | undefined;
+                    let retained = false;
+                    if (
+                      !change((entries) => {
+                        selected = entries.find((e) => e.id === entry.id);
+                        if (!selected)
+                          throw new Error(
+                            "这篇诗稿已在其他页面移除，请刷新稿匣后再试。",
+                          );
+                        const next = draft.text.trim()
+                          ? savePoemDraft(entries, draft)
+                          : entries;
+                        retained = next.length > entries.length;
+                        return next;
+                      }) ||
+                      !selected
+                    )
+                      return;
+                    onLoad(selected.draft, selected.title);
+                    setNotice(
+                      `已打开《${selected.title}》。${retained ? "切换前的诗已收入稿匣。" : ""}需要检查时再点分析。`,
+                    );
+                  }}
+                >
+                  打开诗稿
+                </button>
+                <button
+                  type="button"
+                  disabled={disabled}
+                  onClick={() => {
+                    let old: SavedPoemDraft | undefined;
+                    if (
+                      change((entries) => {
+                        old = entries.find((e) => e.id === entry.id);
+                        return entries.filter((e) => e.id !== entry.id);
+                      })
+                    ) {
+                      setRemoved(old ?? null);
+                      setNotice("");
+                    }
+                  }}
+                >
+                  移除
+                </button>
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
       <p>最多50篇，仅存于此设备；换电脑前请用页面底部的完整备份。</p>
     </details>
   );
