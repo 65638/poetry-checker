@@ -4,9 +4,9 @@
 
 ## 最新可用版本
 
-- 功能提交：`ad0e988`（持续迭代批次14：研读收藏与分享），包含前十三批。
-- main 随本同步记录一起推送；最新CI请查看 [Actions](https://github.com/65638/poetry-checker/actions)。前十批CI均已成功，最近确认[批次10](https://github.com/65638/poetry-checker/actions/runs/39913729529)。
-- 业务基线：1073测试 / 91文件，全量verify通过；研读收藏4、推敲/对读10、备份4个浏览器场景通过（受控模型上游、真实HTTP/浏览器），含320px。
+- 功能提交：`e5b1344`（持续迭代批次15：总评与格律依据分层），包含前十四批。
+- main 随本同步记录一起推送；最新CI请查看 [Actions](https://github.com/65638/poetry-checker/actions)。前十四批CI均已成功，最近确认[批次14](https://github.com/65638/poetry-checker/actions/runs/39918224055)。
+- 业务基线：1077测试 / 91文件，全量verify通过；研读收藏与分层评议5个浏览器场景通过（受控模型上游、真实HTTP/浏览器），含320px。
 - 本机预览：`http://127.0.0.1:56106/`。桌面入口指向 `work/main-closeout`，Codex维护此预览。
 
 ## 拉取更新
@@ -52,7 +52,15 @@ pnpm dev
 
 ## 正在进行的批次
 
-后续继续优先AI使用体验。下一批简化全诗评议的阅读层次：检查依据与文学评议分开显示，保留原文、规则条件与全部有效建议，避免长规则说明挤掉AI正文。UI可调整等待组件外观，不重做业务状态。
+后续继续优先AI使用体验。下一批改善改字体验：采纳前先试读整句与整首，让建议放回原诗语境；预览不改原稿、不发AI请求。UI可调整等待组件外观，不重做业务状态。
+
+## 批次15评议分层（已交付）
+
+- 修复系统把规则说明拼在overview前再截1600字的问题：新客户端保留完整AI总评，服务端格律依据放到可选 `Critique.ruleReview`（summary/reference/checks）。120条检查仍不会挤掉文学正文。
+- `RuleReviewNote.tsx` 独立组件：先显示总评，再给简短检查口径；详细字位默认折叠。没有字位的模板待确认项改成完整中文说明，不出现空冒号。起式/首句用韵在上下文中用中文，不输出ping/ze/unrhymed。
+- 请求头 `X-Poetry-Features: structured-rule-review` 协商新字段；旧标签页未发送时保持旧严格JSON结构，避免升级后解析失败。模型本身不得填写ruleReview冒充规则引擎依据。
+- 分享/研读收藏将格律依据另列一节，保留全部有效说明；旧收藏仍可读。OpenAPI已生成。
+- 1077项verify通过；最终无字位文案修正后相关API测试与5个浏览器场景再过，含折叠展开/320px可见截图。证据 `artifacts/continuous-improvement/batch15-study/`。
 
 ## 批次14研读收藏（已交付）
 
