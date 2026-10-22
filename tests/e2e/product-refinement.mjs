@@ -16,7 +16,7 @@ const app = buildApp({ readingAssistant: {
     if (behavior === 'transient-provider' && input.task === 'critique' && ++transientAttempts === 1)
       return new Response('controlled temporary provider outage', { status: 503 });
     const output = input.task === 'critique'
-      ? { overview: '浏览器受控赏读结果。', strengths: ['此内容只验证交互，不代表模型文学判断。'], revisions: [] }
+      ? { overview: '浏览器受控赏读结果。' + input.direction, strengths: ['此内容只验证交互，不代表模型文学判断。'], revisions: [] }
       : { suggestions: input.targets.map(t => ({ tokenId: t.tokenId, candidateId: t.candidates[0].id, pronunciation: null, reason: '受控交互测试。' })) };
     return new Response(JSON.stringify({ choices: [{ finish_reason: 'stop', message: { content: JSON.stringify(output) } }] }));
   },
@@ -145,6 +145,33 @@ try {
     await clickText('.pc-poetry-critique button', '重新研读');
     await waitFor(() => h.evaluate("!document.querySelector('.pc-poetry-critique').textContent.includes('已停止本次研读') && !!document.querySelector('.pc-poetry-review')"));
     assert.equal(await h.evaluate("document.querySelector('.pc-input__text').value"), '白日依山尽，黄河入海流。欲穷千里目，更上一层楼。');
+  });
+  await check('returning-to-analyzed-direction-reuses-result-and-explicit-rerun-still-requests-ai', async () => {
+    const direction=async value=>h.evaluate(`(() => {const e=document.querySelector('[aria-label="评议侧重"]');e.value=${JSON.stringify(value)};e.dispatchEvent(new Event('change',{bubbles:true}));})()`);
+    behavior='success';
+    const before=critiques;
+    await direction('imagery');
+    await waitFor(()=>h.evaluate("document.querySelector('.pc-poetry-review')?.textContent.includes('imagery')"));
+    assert.equal(critiques,before+1);
+    behavior='failure';
+    await direction('meaning');
+    await waitFor(()=>h.evaluate("document.querySelector('.pc-poetry-critique').textContent.includes('已取回本次会话')"));
+    assert.equal(await h.evaluate("document.querySelector('.pc-poetry-review').textContent.includes('meaning')"),true);
+    await sleep(250);
+    assert.equal(critiques,before+1,'returning reuses a completed exact request');
+    await clickText('.pc-poetry-critique button','重新评议');
+    await waitFor(()=>h.evaluate("!!document.querySelector('.pc-poetry-critique .pc-studio-error')"));
+    assert.equal(critiques,before+2,'explicit rerun bypasses cache');
+    assert.equal(await h.evaluate("document.querySelector('.pc-poetry-review').textContent.includes('meaning')"),true);
+    behavior='slow';
+    await direction('sound');
+    await waitFor(()=>critiques===before+3);
+    await direction('meaning');
+    await waitFor(()=>h.evaluate("document.querySelector('.pc-poetry-review')?.textContent.includes('meaning')"));
+    await sleep(3800);
+    assert.equal(await h.evaluate("document.querySelector('.pc-poetry-review').textContent.includes('meaning')"),true,'late sound response cannot overwrite cached meaning result');
+    assert.equal(critiques,before+3);
+    behavior='success';
   });
   await check('new-poem-does-not-show-old-ai-result', async () => {
     behavior = 'failure';

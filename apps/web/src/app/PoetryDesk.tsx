@@ -265,14 +265,17 @@ export function PoetryDesk({
   useEffect(() => {
     if (usable && automatic && lastAutoReview.current !== reviewIdentity) {
       lastAutoReview.current = reviewIdentity;
-      void critique.run({
-        task: "critique",
-        text: draft.text,
-        rhymeBook: draft.rhymeBook,
-        direction,
-        mode,
-        ...(prosodyContext ? { prosodyContext } : {}),
-      });
+      void critique.run(
+        {
+          task: "critique",
+          text: draft.text,
+          rhymeBook: draft.rhymeBook,
+          direction,
+          mode,
+          ...(prosodyContext ? { prosodyContext } : {}),
+        },
+        { reuse: true },
+      );
     }
   }, [reviewIdentity, usable, automatic, critique.run]);
   function revise(next: InputDraft, reason: string) {
@@ -444,6 +447,11 @@ export function PoetryDesk({
             </button>
           </div>
           <StudioTaskState {...critique} />
+          {critique.reused && (
+            <p className="pc-studio-meta" role="status">
+              已取回本次会话的评议；点“重新评议”可获取新建议。
+            </p>
+          )}
           {!usable && (
             <p className="pc-studio-empty">
               {stale
