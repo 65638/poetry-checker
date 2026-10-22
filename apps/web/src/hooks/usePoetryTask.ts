@@ -8,6 +8,9 @@ import { PoetryResultCache } from "../app/poetryResultCache";
 
 export function usePoetryTask(identity: string) {
   const [result, setResult] = useState<PoetryAssistantResponse | null>(null);
+  const [resultInput, setResultInput] = useState<PoetryAssistantRequest | null>(
+    null,
+  );
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [reused, setReused] = useState(false);
@@ -33,6 +36,7 @@ export function usePoetryTask(identity: string) {
   useEffect(() => {
     cancel();
     setResult(null);
+    setResultInput(null);
     setError(null);
     setCancelled(false);
     setReused(false);
@@ -59,6 +63,7 @@ export function usePoetryTask(identity: string) {
         resultIdentity.current = requestIdentity;
         resultRequest.current = requestKey;
         setResult(cached);
+        setResultInput(input);
         setBusy(false);
         setError(null);
         setCancelled(false);
@@ -81,6 +86,7 @@ export function usePoetryTask(identity: string) {
           resultRequest.current = requestKey;
           cache.current.set(input, value);
           setResult(value);
+          setResultInput(input);
         }
       } catch (cause) {
         if (id === sequence.current && !own.signal.aborted)
@@ -98,6 +104,7 @@ export function usePoetryTask(identity: string) {
   }, [run]);
   return {
     result: resultIdentity.current === identity ? result : null,
+    resultInput: resultIdentity.current === identity ? resultInput : null,
     busy,
     error,
     run,

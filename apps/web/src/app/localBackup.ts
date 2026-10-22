@@ -1,4 +1,10 @@
 import { LibraryWorkSchema, type LibraryWork } from "@poetry/contracts";
+import {
+  STUDY_ARCHIVE_KEY,
+  studyArchive,
+  parseStudyArchive,
+  mergeStudyEntries,
+} from "./studyArchive";
 import type { InputDraft } from "../view-contract";
 import { DRAFT_KEY, parseSavedDraft } from "./draftPersistence";
 import { NOTEBOOK_KEY, NOTEBOOK_LIMIT, parseNotebook } from "./notebook";
@@ -35,6 +41,7 @@ export const BACKUP_KEYS = [
   NOTEBOOK_KEY,
   EXCERPTS_KEY,
   SHELF_KEY,
+  STUDY_ARCHIVE_KEY,
   READING_JOURNAL_KEY,
   FAVORITE_POEMS_KEY,
   "poetry-reading-size",
@@ -82,6 +89,8 @@ function favoriteIds(raw: string): string[] {
   return [...new Set(value as string[])];
 }
 function validateRecord(key: BackupKey, raw: string): string {
+  if (key === STUDY_ARCHIVE_KEY)
+    return JSON.stringify(studyArchive(parseStudyArchive(raw)));
   if (key === DRAFT_COLLECTION_KEY)
     return JSON.stringify(draftCollectionArchive(parseDraftCollection(raw)));
   if (key === "poetry-reading-size") {
@@ -235,6 +244,7 @@ export interface RestorePlan {
     characters: number;
     excerpts: number;
     drafts: number;
+    studies: number;
   };
 }
 export async function planLocalRestore(
@@ -263,6 +273,7 @@ export async function planLocalRestore(
     characters: 0,
     excerpts: 0,
     drafts: 0,
+    studies: 0,
   };
   let restoredDraft: InputDraft | undefined;
   for (const key of BACKUP_KEYS) {
@@ -301,6 +312,11 @@ export async function planLocalRestore(
       const next = mergeDraftCollections(old, parseDraftCollection(valid));
       added.drafts = next.length - old.length;
       local[key] = JSON.stringify(draftCollectionArchive(next));
+    } else if (key === STUDY_ARCHIVE_KEY) {
+      const old = parseStudyArchive(current ?? null);
+      const next = mergeStudyEntries(old, parseStudyArchive(valid));
+      added.studies = next.length - old.length;
+      local[key] = JSON.stringify(studyArchive(next));
     } else if (key === EXCERPTS_KEY) {
       const old = parseExcerpts(current ?? null);
       const next = mergeExcerpts(old, parseExcerpts(valid));

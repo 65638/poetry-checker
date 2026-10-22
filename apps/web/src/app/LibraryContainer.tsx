@@ -38,6 +38,7 @@ import {
 } from "./library";
 import { useMotionPreference } from "../presentation/useMotionPreference";
 import { usePoetryTask } from "../hooks/usePoetryTask";
+import { StudyResultActions } from "./StudyResultActions";
 import {
   StudioTabs,
   StudioTaskState,
@@ -692,6 +693,11 @@ export function LibraryContainer({
           </div>
           {comparison.result?.task === "compare" && (
             <div className="pc-library-comparison-notes">
+              <StudyResultActions
+                input={comparison.resultInput}
+                result={comparison.result}
+                title={`《${left?.title}》与《${right?.title}》`}
+              />
               <header className="pc-compare-notes-heading">
                 <span aria-hidden="true">评</span>
                 <div>
@@ -1157,6 +1163,11 @@ export function LibraryContainer({
             <StudioTaskState {...literary} />
             {literary.result?.task === "critique" && (
               <section aria-label="文章赏读" className="pc-library-literary">
+                <StudyResultActions
+                  input={literary.resultInput}
+                  result={literary.result}
+                  title={selected.title}
+                />
                 <p>{literary.result.result.overview}</p>
                 {literary.result.result.strengths.map((value, i) => (
                   <p key={i}>{value}</p>

@@ -35,6 +35,7 @@ import { LocalBackupPanel } from "./LocalBackupPanel";
 import { DraftCollectionPanel } from "./DraftCollectionPanel";
 import { AnalysisWaitPanel } from "./AnalysisWaitPanel";
 import type { AnnotatedPoem } from "@poetry/contracts";
+import { StudyArchivePanel } from "./StudyArchivePanel";
 
 type Place = "checker" | "dictionary" | "library";
 const places: Place[] = ["checker", "dictionary", "library"];
@@ -545,6 +546,7 @@ export function Workspace({
         </div>
       </div>
       <div inert={place === "checker" && props.selectedTokenId !== null}>
+        <StudyArchivePanel />
         <LocalBackupPanel
           getDraft={() => draft.current}
           disabled={props.busy}

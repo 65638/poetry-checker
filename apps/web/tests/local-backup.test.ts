@@ -1,4 +1,12 @@
 import { describe, expect, it } from "vitest";
+import { PoetryAssistantRequestSchema } from "@poetry/contracts";
+import { sha256Hex } from "../src/utils/sha256";
+import {
+  STUDY_ARCHIVE_KEY,
+  createStudyEntry,
+  studyArchive,
+  parseStudyArchive,
+} from "../src/app/studyArchive";
 import type { LibraryWork } from "@poetry/contracts";
 import {
   applyLocalRestore,
@@ -67,6 +75,40 @@ function memory(
   return { local, port };
 }
 describe("portable local backups", () => {
+  it("backs up and merges saved AI studies without applying them to the current draft", async () => {
+    const input = PoetryAssistantRequestSchema.parse({
+      task: "critique",
+      text: "白日依山尽",
+      rhymeBook: "pingshui",
+      direction: "meaning",
+      mode: "reading",
+    });
+    const entry = createStudyEntry(input, {
+      task: "critique",
+      provider: "deepseek",
+      model: "controlled",
+      inputHash: sha256Hex(JSON.stringify(input)),
+      notice: "参考",
+      result: { overview: "受控评议", strengths: [], revisions: [] },
+    });
+    const source = memory({
+      [STUDY_ARCHIVE_KEY]: JSON.stringify(studyArchive([entry])),
+    });
+    const target = memory({ [DRAFT_KEY]: JSON.stringify(draft) });
+    const incoming = await parseLocalBackup(
+      JSON.stringify(await makeLocalBackup(source.port)),
+    );
+    const plan = await planLocalRestore(target.port, incoming, options);
+    expect(plan.added.studies).toBe(1);
+    await applyLocalRestore(target.port, plan);
+    expect(parseStudyArchive(target.local.get(STUDY_ARCHIVE_KEY)!)).toEqual([
+      entry,
+    ]);
+    expect(target.local.get(DRAFT_KEY)).toBe(JSON.stringify(draft));
+    expect(
+      (await planLocalRestore(target.port, incoming, options)).added.studies,
+    ).toBe(0);
+  });
   it("merges named drafts while preserving the current unsaved input by default", async () => {
     const entries = savePoemDraft([], draft, "出门前的诗", "saved-poem");
     const source = memory({
@@ -195,6 +237,7 @@ describe("portable local backups", () => {
       characters: 1,
       excerpts: 0,
       drafts: 0,
+      studies: 0,
     });
     expect(target.local.get(FAVORITE_POEMS_KEY)).toBe('["existing"]');
     await applyLocalRestore(target.port, plan);
@@ -215,6 +258,7 @@ describe("portable local backups", () => {
       characters: 0,
       excerpts: 0,
       drafts: 0,
+      studies: 0,
     });
   });
   it("keeps the draft/preferences unless explicitly selected", async () => {
