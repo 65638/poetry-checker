@@ -522,6 +522,20 @@ export class CheckerStore {
     this.invalidateInFlight();
   }
 
+  /** User-initiated stop keeps successful snapshots and restores the committed reading selection. */
+  cancelAnalysis(): void {
+    if (!this.state.busy) return;
+    this.refreshPaused = true;
+    this.abort();
+    this.commit({
+      pendingOverrides: this.state.overrides,
+      error: null,
+      feedback: this.state.report
+        ? "已停止本次分析，上次结果未更新。诗文仍保留，可修改后重新分析。"
+        : "已停止本次分析。诗文仍保留，可继续修改或重新分析。",
+    });
+  }
+
   /**
    * 用一个「已完成的计算结果」替换当前状态（不经 HTTP）。
    *

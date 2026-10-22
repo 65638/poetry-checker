@@ -1,0 +1,53 @@
+import { useEffect, useState } from "react";
+import { useBusyIndicator } from "../presentation/useBusyIndicator";
+import "./analysis-wait.css";
+
+export function AnalysisWaitPanel({
+  busy,
+  text,
+  onCancel,
+}: {
+  busy: boolean;
+  text: string;
+  onCancel?: () => void;
+}) {
+  const visible = useBusyIndicator(busy);
+  const [seconds, setSeconds] = useState(0);
+  useEffect(() => {
+    setSeconds(0);
+    if (!busy) return;
+    const start = Date.now();
+    const timer = window.setInterval(
+      () => setSeconds(Math.floor((Date.now() - start) / 1000)),
+      1000,
+    );
+    return () => window.clearInterval(timer);
+  }, [busy]);
+  if (!busy || !visible) return null;
+  return (
+    <section className="pc-analysis-wait" aria-label="本次分析进度">
+      <header>
+        <strong>正在分析这首诗</strong>
+        <span aria-hidden="true">已等候 {seconds} 秒</span>
+      </header>
+      <p role="status" aria-live="polite">
+        {seconds >= 60
+          ? "仍在等待分析服务返回，尚未生成新结果。"
+          : seconds >= 20
+            ? "这次用时较久，可以先读诗，也可以停止等待。"
+            : "正在结合全诗查对读音与格律，原文留在这里。"}
+      </p>
+      <details>
+        <summary>查看本次提交的原诗</summary>
+        <blockquote aria-label="正在分析的原诗" tabIndex={0}>
+          {text}
+        </blockquote>
+      </details>
+      {onCancel && (
+        <button type="button" onClick={onCancel}>
+          停止等待
+        </button>
+      )}
+    </section>
+  );
+}

@@ -1,0 +1,41 @@
+.pc-analysis-wait {
+  margin-block: 12px;
+  padding: 16px;
+  border: 1px solid #c4ba9270;
+  background: #183a42e6;
+  color: #e7e0c8;
+}
+.pc-analysis-wait header {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.pc-analysis-wait header span,
+.pc-analysis-wait p {
+  font-size: 13px;
+  line-height: 1.8;
+}
+.pc-analysis-wait blockquote {
+  margin: 12px 0;
+  max-height: 220px;
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.9;
+  font-size: 18px;
+}
+.pc-analysis-wait button {
+  color: inherit;
+  background: transparent;
+  border: 1px solid #c4ba92a0;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+.pc-analysis-wait details {
+  margin-block: 12px;
+  font-size: 13px;
+}
+.pc-analysis-wait summary {
+  cursor: pointer;
+}

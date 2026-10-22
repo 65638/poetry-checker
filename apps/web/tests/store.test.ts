@@ -31,6 +31,49 @@ function makeStore(
 }
 
 describe("首次提交（D-D1-01 的状态层）", () => {
+  it("用户停止等待后保留原文，迟到的成功不显示，随后可重新提交", async () => {
+    const late = deferred<Response>();
+    const transport = unabortableTransport([
+      late.promise,
+      okResponse(loadMockScenario("pass")),
+    ]);
+    const store = new CheckerStore(draftOf("pass"), { transport });
+    const running = store.analyze();
+    store.cancelAnalysis();
+    expect(store.getState().busy).toBe(false);
+    expect(store.getState().feedback).toContain("已停止本次分析");
+    expect(store.getState().error).toBeNull();
+    expect(store.getState().draft).toEqual(draftOf("pass"));
+    late.resolve(okResponse(loadMockScenario("pass")));
+    await running;
+    expect(store.getState().report).toBeNull();
+    expect(store.getState().feedback).toContain("已停止");
+    await store.analyze();
+    expect(store.getState().report).not.toBeNull();
+    expect(store.getState().feedback).toBeNull();
+  });
+  it("停止选音重检时退回已提交的选音，保留同一份旧报告与快照", async () => {
+    const report = loadMockScenario("pass");
+    const late = deferred<Response>();
+    const transport = unabortableTransport([okResponse(report), late.promise]);
+    const store = new CheckerStore(draftOf("pass"), { transport });
+    await store.analyze();
+    const previous = store.getState();
+    const token = report.poem.tokens.find((t) => t.candidates.length > 0)!;
+    const pending = store.chooseReading({
+      tokenId: token.tokenId,
+      readingId: token.candidates[0]!.id,
+    });
+    expect(store.getState().pendingOverrides).toHaveLength(1);
+    store.cancelAnalysis();
+    expect(store.getState().pendingOverrides).toEqual(previous.overrides);
+    expect(store.getState().requestSnapshot).toBe(previous.requestSnapshot);
+    expect(store.getState().report).toBe(previous.report);
+    expect(store.getState().feedback).toContain("上次结果未更新");
+    late.resolve(okResponse(report));
+    await pending;
+    expect(store.getState().requestSnapshot).toBe(previous.requestSnapshot);
+  });
   it("成功时写入 report/busy=false，并记录请求快照", async () => {
     const { store, transport } = makeStore([
       okResponse(loadMockScenario("pass")),
