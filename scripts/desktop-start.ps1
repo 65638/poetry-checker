@@ -8,6 +8,8 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 $project = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
+$StateDirectory = [IO.Path]::GetFullPath($StateDirectory)
+$buildDirectory = Join-Path $project 'apps\web\dist'
 $runtime = Join-Path $env:USERPROFILE '.cache\codex-runtimes\codex-primary-runtime\dependencies'
 $node = Join-Path $runtime 'node\bin\node.exe'
 if (-not (Test-Path -LiteralPath $node)) { $node = (Get-Command node -ErrorAction Stop).Source }
@@ -35,7 +37,8 @@ function Test-Service([string]$url, [string]$asset) {
         $page = Invoke-WebRequest -UseBasicParsing -Uri $url -TimeoutSec 3
         $ready = Invoke-RestMethod -Uri ($url + 'readyz') -TimeoutSec 3
         $model = Invoke-RestMethod -Uri ($url + 'api/v1/reading-suggestions/status') -TimeoutSec 3
-        return ($page.StatusCode -eq 200 -and $page.Content.Contains($asset) -and $ready.status -eq 'ready' -and $null -ne $model.configured)
+        $scriptResponse = Invoke-WebRequest -UseBasicParsing -Uri ($url + $asset.TrimStart('/')) -TimeoutSec 3
+        return ($page.StatusCode -eq 200 -and $page.Content.Contains($asset) -and $scriptResponse.StatusCode -eq 200 -and $scriptResponse.Headers['Content-Type'] -like '*javascript*' -and $ready.status -eq 'ready' -and $null -ne $model.configured)
     } catch { return $false }
 }
 function Stop-OwnedService($owned) {
@@ -45,6 +48,55 @@ function Stop-OwnedService($owned) {
     } | ForEach-Object { Stop-Process -Id $_.ProcessId -ErrorAction SilentlyContinue }
     Stop-Process -Id $owned.Id -ErrorAction SilentlyContinue
     $owned.WaitForExit(5000) | Out-Null
+}
+function Get-ContentHash([string]$file) {
+    $stream = [IO.File]::OpenRead($file)
+    $sha = [Security.Cryptography.SHA256]::Create()
+    try { return ([BitConverter]::ToString($sha.ComputeHash($stream))).Replace('-','') }
+    finally { $stream.Dispose(); $sha.Dispose() }
+}
+function Get-SourceFingerprint {
+    # Only the aggregate hash is persisted. Environment values are never printed or copied into the site.
+    $directories = @('apps\api\src','apps\web\dist','rules','data','fixtures\contracts') | ForEach-Object { Join-Path $project $_ }
+    $directories += Get-ChildItem -LiteralPath (Join-Path $project 'packages') -Directory | ForEach-Object { Join-Path $_.FullName 'dist' }
+    $records = New-Object 'System.Collections.Generic.List[string]'
+    foreach ($directory in $directories) {
+        if ($StateDirectory -eq $directory -or $StateDirectory.StartsWith($directory + [IO.Path]::DirectorySeparatorChar, [StringComparison]::OrdinalIgnoreCase)) { throw 'Choose a state folder outside application, build, rule and data directories.' }
+        if (Test-Path -LiteralPath $directory) {
+            Get-ChildItem -LiteralPath $directory -File -Recurse | Sort-Object FullName | ForEach-Object {
+                $records.Add($_.FullName.Substring($project.Length) + ':' + (Get-ContentHash $_.FullName))
+            }
+        }
+    }
+    foreach ($relative in @('scripts\dev.mjs','scripts\desktop-start.ps1','apps\web\vite.config.ts','pnpm-lock.yaml','package.json','.env.local')) {
+        $file = Join-Path $project $relative
+        if (Test-Path -LiteralPath $file) { $records.Add($relative + ':' + (Get-ContentHash $file)) }
+    }
+    $runtimeFile = Get-Item -LiteralPath $node
+    $records.Add($node + ':' + $runtimeFile.LastWriteTimeUtc.Ticks + ':' + $runtimeFile.Length)
+    $sha = [Security.Cryptography.SHA256]::Create()
+    try { return ([BitConverter]::ToString($sha.ComputeHash([Text.Encoding]::UTF8.GetBytes(($records -join "`n"))))).Replace('-','').ToLowerInvariant() }
+    finally { $sha.Dispose() }
+}
+function Test-SiteSnapshot([string]$site) {
+    if (-not $site -or -not (Test-Path -LiteralPath $site)) { return $false }
+    foreach ($file in (Get-ChildItem -LiteralPath $buildDirectory -File -Recurse)) {
+        $relative = $file.FullName.Substring($buildDirectory.Length).TrimStart([IO.Path]::DirectorySeparatorChar)
+        $copy = Join-Path $site $relative
+        if (-not (Test-Path -LiteralPath $copy) -or (Get-ContentHash $file.FullName) -ne (Get-ContentHash $copy)) { return $false }
+    }
+    return $true
+}
+function Prepare-Site([string]$fingerprint) {
+    $site = Join-Path $StateDirectory "sites\$fingerprint"
+    $stamp = "$site.ready"
+    if (-not (Test-Path -LiteralPath $stamp) -or -not (Test-SiteSnapshot $site)) {
+        New-Item -ItemType Directory -Path $site -Force | Out-Null
+        Get-ChildItem -LiteralPath $buildDirectory -Force | Copy-Item -Destination $site -Recurse -Force
+        if ((Get-SourceFingerprint) -ne $fingerprint) { throw 'Source changed while preparing the website. Finish the build and launch again.' }
+        $fingerprint | Set-Content -LiteralPath $stamp -Encoding ASCII
+    }
+    return $site
 }
 try {
     try { $locked = $mutex.WaitOne(0) } catch [System.Threading.AbandonedMutexException] { $locked = $true }
@@ -67,23 +119,31 @@ try {
         $html = Get-Content -LiteralPath "$project\apps\web\dist\index.html" -Raw
         $asset = [regex]::Match($html, 'src="(/assets/[^" ]+\.js)"').Groups[1].Value
         if (-not $asset) { throw 'Frontend build is incomplete. Run pnpm build first.' }
-        if ($service -and (Test-Service $state.url $asset)) {
+        $fingerprint = Get-SourceFingerprint
+        if ($service -and $state.fingerprint -eq $fingerprint -and (Test-SiteSnapshot $state.siteDirectory) -and (Test-Service $state.url $asset)) {
             $url = $state.url
             Write-Host 'Reusing the running website.'
         } else {
+            # Copy and verify the new static site before stopping the currently running version.
+            $siteDirectory = Prepare-Site $fingerprint
+            $targetWebPort = $PreferredWebPort
+            $targetApiPort = $PreferredApiPort
+            if ($service -and $state.requestedWebPort -eq $PreferredWebPort) { $targetWebPort = ([Uri]$state.url).Port }
+            if ($service -and $state.requestedApiPort -eq $PreferredApiPort) { $targetApiPort = $state.apiPort }
             if ($service) { Stop-OwnedService $service }
-            $webPort = Get-FreePort $PreferredWebPort
-            $apiPort = Get-FreePort $PreferredApiPort
+            $webPort = Get-FreePort $targetWebPort
+            $apiPort = Get-FreePort $targetApiPort
             while ($apiPort -eq $webPort) { $apiPort = Get-FreePort 0 }
             $url = "http://127.0.0.1:$webPort/"
             $env:PORT = [string]$apiPort
             $env:WEB_PORT = [string]$webPort
             $env:POETRY_DEV_MOCK = '0'
             $env:NODE_USE_SYSTEM_CA = '1'
+            $env:POETRY_PREVIEW_DIST = $siteDirectory
             if ($webPort -ne $PreferredWebPort) { Write-Host "Preferred web port is busy. Using $webPort; browser data remains at the original address." }
             $service = Start-Process -FilePath $node -ArgumentList @('scripts/dev.mjs','--preview') -WorkingDirectory $project -WindowStyle Hidden -RedirectStandardOutput $stdout -RedirectStandardError $stderr -PassThru
             $started = $true
-            @{processId=$service.Id;startTicks=$service.StartTime.ToUniversalTime().Ticks.ToString();project=$project;url=$url;apiPort=$apiPort} | ConvertTo-Json | Set-Content -LiteralPath $statePath -Encoding UTF8
+            @{processId=$service.Id;startTicks=$service.StartTime.ToUniversalTime().Ticks.ToString();project=$project;url=$url;apiPort=$apiPort;fingerprint=$fingerprint;siteDirectory=$siteDirectory;requestedWebPort=$PreferredWebPort;requestedApiPort=$PreferredApiPort} | ConvertTo-Json | Set-Content -LiteralPath $statePath -Encoding UTF8
             $deadline = (Get-Date).AddSeconds(60)
             $ready = $false
             do {

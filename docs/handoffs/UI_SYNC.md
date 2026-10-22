@@ -4,9 +4,9 @@
 
 ## 最新可用版本
 
-- 功能提交：`4de5102`（四小时迭代批次02：本机备份与合并恢复），包含批次01 `6514af6`。
+- 功能提交：`3319cfa`（四小时迭代批次03：桌面发布快照），包含批次02 `4de5102`、批次01 `6514af6`。
 - main 随本同步记录一起推送；最新CI请查看 [Actions](https://github.com/65638/poetry-checker/actions)。批次01的[CI已通过](https://github.com/65638/poetry-checker/actions/runs/39906047813)。
-- 本地验证：996测试、lint/类型/构建/生成物检查通过；备份新增浏览器4场景通过（真实下载/IndexedDB/localStorage、默认合并、草稿恢复后撤销、损坏文件拒绝、320px无溢出）。
+- 业务基线：996测试、备份浏览器4场景通过。批次03改运行脚本，lint通过、Windows真实启动5场景通过（复用、未发布build隔离、同地址发布、后端变化重启、损坏快照修复）。桌面实际cmd入口成功；脚本使用.NET哈希，兼容桌面PowerShell环境。
 - 本机预览：`http://127.0.0.1:56106/`。桌面入口指向 `work/main-closeout`，Codex维护此预览。
 
 ## 拉取更新
@@ -52,7 +52,13 @@ pnpm dev
 
 ## 正在进行的批次
 
-Codex批次03：改进桌面版本发布，让网站使用明确发布的构建快照，开发中的build不直接影响正在使用的页面。主要修改scripts，不涉及UI设计。
+Codex批次04：本机摘句收集，保存所摘诗句及原作出处，支持检索、笔记和回原诗，接入统一备份。将改 `LibraryContainer.tsx` 的摘句事件和增加独立页签，UI协作者合并时保留这些业务接点。
+
+## 批次03运行变更（已交付）
+
+`scripts/desktop-start.ps1` 发布到 `%LOCALAPPDATA%/PoetryChecker/sites/` 后运行；`scripts/dev.mjs --preview` 支持 `POETRY_PREVIEW_DIST`。UI自己的 `pnpm dev` 用法不变。`pnpm build` 不会直接改变56106；本机验证后由Codex调用桌面脚本发布。后端源码、数据/规则、依赖清单、`.env.local`变更会改变整体指纹并重启API；只记录整体摘要，不复制或输出密钥。
+
+Windows回归：`powershell.exe -NoProfile -ExecutionPolicy Bypass -File tests/desktop/launcher-smoke.ps1`。它使用56226/56227并在结束时停止自己的测试服务，不操作56106。
 
 ## 批次02接入点（已交付）
 
