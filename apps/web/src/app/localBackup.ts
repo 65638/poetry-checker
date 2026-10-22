@@ -15,6 +15,12 @@ import {
 } from "./readingJournal";
 import { digest, libraryStorage, LIBRARY_LIMIT, mergeLibrary } from "./library";
 import {
+  DRAFT_COLLECTION_KEY,
+  draftCollectionArchive,
+  mergeDraftCollections,
+  parseDraftCollection,
+} from "./draftCollection";
+import {
   EXCERPTS_KEY,
   excerptArchive,
   mergeExcerpts,
@@ -25,6 +31,7 @@ export const FAVORITE_POEMS_KEY = "poetry-library-favorites-v1";
 export const BACKUP_BYTES = 20 * 1024 * 1024;
 export const BACKUP_KEYS = [
   DRAFT_KEY,
+  DRAFT_COLLECTION_KEY,
   NOTEBOOK_KEY,
   EXCERPTS_KEY,
   SHELF_KEY,
@@ -75,6 +82,8 @@ function favoriteIds(raw: string): string[] {
   return [...new Set(value as string[])];
 }
 function validateRecord(key: BackupKey, raw: string): string {
+  if (key === DRAFT_COLLECTION_KEY)
+    return JSON.stringify(draftCollectionArchive(parseDraftCollection(raw)));
   if (key === "poetry-reading-size") {
     if (!["0", "1", "2"].includes(raw)) throw invalid();
     return raw;
@@ -225,6 +234,7 @@ export interface RestorePlan {
     favorites: number;
     characters: number;
     excerpts: number;
+    drafts: number;
   };
 }
 export async function planLocalRestore(
@@ -252,6 +262,7 @@ export async function planLocalRestore(
     favorites: 0,
     characters: 0,
     excerpts: 0,
+    drafts: 0,
   };
   let restoredDraft: InputDraft | undefined;
   for (const key of BACKUP_KEYS) {
@@ -285,6 +296,11 @@ export async function planLocalRestore(
         throw new Error("合并后超过80笺，请先分别备份并整理笺记。");
       added.notes = next.length - old.length;
       local[key] = JSON.stringify({ version: 1, entries: next });
+    } else if (key === DRAFT_COLLECTION_KEY) {
+      const old = parseDraftCollection(current ?? null);
+      const next = mergeDraftCollections(old, parseDraftCollection(valid));
+      added.drafts = next.length - old.length;
+      local[key] = JSON.stringify(draftCollectionArchive(next));
     } else if (key === EXCERPTS_KEY) {
       const old = parseExcerpts(current ?? null);
       const next = mergeExcerpts(old, parseExcerpts(valid));

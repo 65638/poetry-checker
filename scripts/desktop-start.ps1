@@ -68,7 +68,7 @@ function Get-SourceFingerprint {
             }
         }
     }
-    foreach ($relative in @('scripts\dev.mjs','scripts\desktop-start.ps1','apps\web\vite.config.ts','pnpm-lock.yaml','package.json','.env.local')) {
+    foreach ($relative in @('scripts\dev.mjs','scripts\preview-assets.mjs','scripts\desktop-start.ps1','apps\web\vite.config.ts','pnpm-lock.yaml','package.json','.env.local')) {
         $file = Join-Path $project $relative
         if (Test-Path -LiteralPath $file) { $records.Add($relative + ':' + (Get-ContentHash $file)) }
     }
@@ -98,6 +98,20 @@ function Prepare-Site([string]$fingerprint) {
     }
     return $site
 }
+function Archive-PublicAssets([string]$sourceSite) {
+    $assets = Join-Path $sourceSite 'assets'
+    if (-not (Test-Path -LiteralPath $assets)) { return }
+    $archive = Join-Path $StateDirectory 'asset-cache'
+    New-Item -ItemType Directory -Path $archive -Force | Out-Null
+    Get-ChildItem -LiteralPath $assets -File | Where-Object {
+        $_.Name -cmatch '^[A-Za-z0-9_.-]+-[A-Za-z0-9_-]{8,}\.(js|css|woff2?|ttf|otf|png|jpe?g|webp|svg|avif)$'
+    } | ForEach-Object {
+        $copy = Join-Path $archive $_.Name
+        if (-not (Test-Path -LiteralPath $copy) -or (Get-ContentHash $_.FullName) -ne (Get-ContentHash $copy)) {
+            Copy-Item -LiteralPath $_.FullName -Destination $copy -Force
+        }
+    }
+}
 try {
     try { $locked = $mutex.WaitOne(0) } catch [System.Threading.AbandonedMutexException] { $locked = $true }
     if (-not $locked) { throw 'Startup is already in progress. Try again in a moment.' }
@@ -126,6 +140,13 @@ try {
         } else {
             # Copy and verify the new static site before stopping the currently running version.
             $siteDirectory = Prepare-Site $fingerprint
+            # Keep hashed assets for already-open tabs; never archive config, source, or index.html.
+            if ($state -and $state.project -eq $project -and $state.siteDirectory) {
+                $previousSite = [IO.Path]::GetFullPath($state.siteDirectory)
+                $sitesRoot = [IO.Path]::GetFullPath((Join-Path $StateDirectory 'sites')) + [IO.Path]::DirectorySeparatorChar
+                if ($previousSite.StartsWith($sitesRoot, [StringComparison]::OrdinalIgnoreCase)) { Archive-PublicAssets $previousSite }
+            }
+            Archive-PublicAssets $siteDirectory
             $targetWebPort = $PreferredWebPort
             $targetApiPort = $PreferredApiPort
             if ($service -and $state.requestedWebPort -eq $PreferredWebPort) { $targetWebPort = ([Uri]$state.url).Port }
@@ -140,6 +161,7 @@ try {
             $env:POETRY_DEV_MOCK = '0'
             $env:NODE_USE_SYSTEM_CA = '1'
             $env:POETRY_PREVIEW_DIST = $siteDirectory
+            $env:POETRY_PREVIEW_ASSET_ARCHIVE = Join-Path $StateDirectory 'asset-cache'
             if ($webPort -ne $PreferredWebPort) { Write-Host "Preferred web port is busy. Using $webPort; browser data remains at the original address." }
             $service = Start-Process -FilePath $node -ArgumentList @('scripts/dev.mjs','--preview') -WorkingDirectory $project -WindowStyle Hidden -RedirectStandardOutput $stdout -RedirectStandardError $stderr -PassThru
             $started = $true

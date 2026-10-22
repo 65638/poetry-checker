@@ -3,7 +3,14 @@ import { flushSync } from "react-dom";
 import type { CheckerViewProps } from "../view-contract";
 import { CheckerView } from "../presentation/CheckerView";
 import { useMotionPreference } from "../presentation/useMotionPreference";
-import { DictionaryContainer } from "./DictionaryContainer";
+import {
+  DeferredSection,
+  LazyDictionary,
+  LazyLibrary,
+  loadDictionarySection,
+  loadLibrarySection,
+} from "./DeferredSection";
+import "./section-loading.css";
 import "../presentation/styles/dictionary.css";
 import { DRAFT_KEY } from "./draftPersistence";
 import { ContinuousGarden } from "../presentation/components/ContinuousGarden";
@@ -16,7 +23,6 @@ import "../presentation/styles/final-frontend.css";
 import "../presentation/styles/product-refinement.css";
 import "../presentation/styles/reading-experience.css";
 import "../presentation/styles/local-data-experience.css";
-import { LibraryContainer } from "./LibraryContainer";
 import { PoetryDesk } from "./PoetryDesk";
 import { ReadingTools } from "../presentation/components/ReadingTools";
 import { CharacterReference } from "./CharacterReference";
@@ -28,6 +34,7 @@ import {
 } from "./notebook";
 import type { InputDraft } from "../view-contract";
 import { LocalBackupPanel } from "./LocalBackupPanel";
+import { DraftCollectionPanel } from "./DraftCollectionPanel";
 
 type Place = "checker" | "dictionary" | "library";
 const places: Place[] = ["checker", "dictionary", "library"];
@@ -40,6 +47,9 @@ const initialPlace = (): Place =>
 
 export function Workspace(props: CheckerViewProps) {
   const [place, setPlace] = useState<Place>(initialPlace);
+  const [visited, setVisited] = useState(
+    () => new Set<Place>([initialPlace()]),
+  );
   const [sceneryPlace, setSceneryPlace] = useState<Place>(initialPlace);
   const [direction, setDirection] = useState("forward");
   const motion = useMotionPreference();
@@ -161,6 +171,9 @@ export function Workspace(props: CheckerViewProps) {
         setDirection(heading);
         props.onCloseEvidence();
         setPlace(next);
+        setVisited((previous) =>
+          previous.has(next) ? previous : new Set([...previous, next]),
+        );
       });
       document.documentElement.style.setProperty(
         "--pc-journey-scroll-shift",
@@ -340,6 +353,12 @@ export function Workspace(props: CheckerViewProps) {
               requestedPlace === "dictionary" && place !== "dictionary"
             }
             onClick={() => navigate("dictionary")}
+            onPointerEnter={() => {
+              void loadDictionarySection().catch(() => {});
+            }}
+            onFocus={() => {
+              void loadDictionarySection().catch(() => {});
+            }}
           >
             <span aria-hidden="true">贰</span>
             <b>
@@ -352,6 +371,12 @@ export function Workspace(props: CheckerViewProps) {
             aria-controls="library-space"
             data-requested={requestedPlace === "library" && place !== "library"}
             onClick={() => navigate("library")}
+            onPointerEnter={() => {
+              void loadLibrarySection().catch(() => {});
+            }}
+            onFocus={() => {
+              void loadLibrarySection().catch(() => {});
+            }}
           >
             <span aria-hidden="true">叁</span>
             <b>
@@ -382,24 +407,34 @@ export function Workspace(props: CheckerViewProps) {
             }}
             sharedScene
             draftTools={
-              <div className="pc-draft-tools">
-                <span className="pc-draft-save" role="status">
-                  {saved ? "草稿已存于此设备" : ""}
-                </span>
-                {props.draft.text.trim() && (
-                  <div className="pc-explore-current">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setPassageRequest((n) => n + 1);
-                        navigate("dictionary");
-                      }}
-                    >
-                      带此诗查字 <span aria-hidden="true">→</span>
-                    </button>
-                  </div>
-                )}
-              </div>
+              <>
+                <div className="pc-draft-tools">
+                  <span className="pc-draft-save" role="status">
+                    {saved ? "草稿已存于此设备" : ""}
+                  </span>
+                  {props.draft.text.trim() && (
+                    <div className="pc-explore-current">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setPassageRequest((n) => n + 1);
+                          navigate("dictionary");
+                        }}
+                      >
+                        带此诗查字 <span aria-hidden="true">→</span>
+                      </button>
+                    </div>
+                  )}
+                </div>
+                <DraftCollectionPanel
+                  draft={props.draft}
+                  disabled={props.busy}
+                  onLoad={(next, title) => {
+                    revise(next, `从稿匣打开《${title}》`);
+                    setWorkMode("writing");
+                  }}
+                />
+              </>
             }
             readingAssistant={(() => {
               const token = props.report?.poem.tokens.find(
@@ -461,11 +496,15 @@ export function Workspace(props: CheckerViewProps) {
           tabIndex={-1}
           hidden={place !== "dictionary"}
         >
-          <DictionaryContainer
-            key={restoredVersion}
-            poemText={props.draft.text}
-            passageRequest={passageRequest}
-          />
+          {visited.has("dictionary") && (
+            <DeferredSection name="藏韵阁">
+              <LazyDictionary
+                key={restoredVersion}
+                poemText={props.draft.text}
+                passageRequest={passageRequest}
+              />
+            </DeferredSection>
+          )}
         </div>
         <div
           id="library-space"
@@ -475,28 +514,32 @@ export function Workspace(props: CheckerViewProps) {
           tabIndex={-1}
           hidden={place !== "library"}
         >
-          <LibraryContainer
-            key={restoredVersion}
-            active={place === "library"}
-            onStudy={(work) => {
-              revise(
-                {
-                  ...props.draft,
-                  text: work.paragraphs.join("\n"),
-                  genreHint: "auto",
-                  formHint: "auto",
-                },
-                `研读《${work.title}》·${work.author}；来源：${work.source}`,
-              );
-              setWorkMode("reading");
-              navigate("checker");
-              props.onAnalyze();
-            }}
-            onLookup={(char) => {
-              window.location.hash = `dictionary?char=${encodeURIComponent(char)}&book=${props.draft.rhymeBook}`;
-              switchPlace("dictionary");
-            }}
-          />
+          {visited.has("library") && (
+            <DeferredSection name="典籍馆">
+              <LazyLibrary
+                key={restoredVersion}
+                active={place === "library"}
+                onStudy={(work) => {
+                  revise(
+                    {
+                      ...props.draft,
+                      text: work.paragraphs.join("\n"),
+                      genreHint: "auto",
+                      formHint: "auto",
+                    },
+                    `研读《${work.title}》·${work.author}；来源：${work.source}`,
+                  );
+                  setWorkMode("reading");
+                  navigate("checker");
+                  props.onAnalyze();
+                }}
+                onLookup={(char) => {
+                  window.location.hash = `dictionary?char=${encodeURIComponent(char)}&book=${props.draft.rhymeBook}`;
+                  switchPlace("dictionary");
+                }}
+              />
+            </DeferredSection>
+          )}
         </div>
       </div>
       <div inert={place === "checker" && props.selectedTokenId !== null}>

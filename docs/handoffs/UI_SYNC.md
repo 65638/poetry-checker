@@ -4,9 +4,9 @@
 
 ## 最新可用版本
 
-- 功能提交：`476fdd6`（四小时迭代批次04：摘句与随手记），包含前三批。
-- main 随本同步记录一起推送；最新CI请查看 [Actions](https://github.com/65638/poetry-checker/actions)。批次01的[CI已通过](https://github.com/65638/poetry-checker/actions/runs/39906047813)。
-- 业务基线：1004测试 / 84文件，全量verify通过；摘句浏览器4场景通过、备份4场景复跑通过，320px已检查。前三批CI均成功；最近确认的[批次03 CI](https://github.com/65638/poetry-checker/actions/runs/39908442968)。
+- 功能提交：`1eadd70`（四小时迭代批次07：旧标签页资源兼容），包含前六批。
+- main 随本同步记录一起推送；最新CI请查看 [Actions](https://github.com/65638/poetry-checker/actions)。前六批CI均已成功，最近确认[批次06](https://github.com/65638/poetry-checker/actions/runs/39910971764)。
+- 业务基线：1011测试 / 85文件，全量verify通过；按需加载4场景、游园导航6场景、连续场景4项通过。初始JS实测573345→512910字节（decoded，约减10.5%，同机无缓存production浏览器；不是模型或整页加载时间）。
 - 本机预览：`http://127.0.0.1:56106/`。桌面入口指向 `work/main-closeout`，Codex维护此预览。
 
 ## 拉取更新
@@ -52,7 +52,28 @@ pnpm dev
 
 ## 正在进行的批次
 
-Codex下一批优先检查加载性能与写作资料管理；不接管presentation整体视觉。实施接入点随验证结果更新。
+Codex批次08：检查资料/AI响应异常、重试与面向用户的中文提示；主要API客户端与测试，不接管presentation整体视觉。
+
+## 批次07运行变更（已交付）
+
+- `scripts/preview-assets.mjs` 为桌面preview补充旧版hash资源回退；`desktop-start.ps1` 将已发布的hash JS/CSS/字体/图片保留在StateDirectory/asset-cache。当前版本资源优先由Vite处理，旧页面可继续加载原有模块。
+- 缓存不含index、配置、源码或密钥；只接受带hash的公开资源文件名。没有自动清理这些小型旧资源，避免打断仍开着的标签页。UI自己的开发服务器不受影响。
+- 5个Node HTTP测试通过，纳入 `.github/workflows/ci.yml`（本批由Codex接管增加该单行检查，完成后归还配置维护）。6个Windows真实启动场景通过，新增旧资源跨发布仍可加载。
+- 复现：`node --test tests/desktop/preview-assets.test.mjs` 与 `powershell.exe -NoProfile -ExecutionPolicy Bypass -File tests/desktop/launcher-smoke.ps1`。业务1011测试为上一批完整结果，本批脚本未冒充重复全测。
+
+## 批次06接入点（已交付）
+
+- `Workspace.tsx` 对字典/典籍馆使用独立 `DeferredSection.tsx` 的lazy组件；第一次访问才装载，访问过后保留实例。导航hover/focus仅预载代码，不挂载或发起诗库查询。保留 `visited`、容器key与active语义。
+- `section-loading.css` 仅控制加载提示；代码加载失败时有独立重试说明，不清空校诗台。首次打开某分区需要网络；实际失败恢复场景通过。
+- 回归：`node --import tsx tests/e2e/section-loading.mjs`；`node tests/e2e/dictionary-journey.mjs`；`node tests/e2e/continuous-garden.mjs`。
+- `tests/e2e/cdp.mjs` 仅修正Windows浏览器启动时DevToolsActivePort文件短暂EBUSY/ENOENT重试，仍使用原有等待上限。首次连续场景运行因EBUSY中断，修复后4项均通过，未把第一次中断计为通过。
+
+## 批次05接入点（已交付）
+
+- `DraftCollectionPanel.tsx` / `draftCollection.ts` / 专用 `draft-collection.css`：命名保存当前诗稿，最多50篇；查找、预览、切换、移除/撤销。
+- `Workspace.tsx` 的 `draftTools` 插槽增加稿匣。打开另一稿前先把当前尚未存档的非空稿写入稿匣，保存失败则不替换；切换进入推敲笺及撤销栈，不自动发分析或模型请求。相同正文+检查设置不重复存稿。
+- 完整备份增加 `poetry-draft-collection-v1` 白名单和新增存稿计数，默认仍不替换当前输入。跨页storage事件刷新稿匣。
+- 回归：`node --import tsx tests/e2e/draft-collection.mjs`。实测包括刷新保留、无自动分析、模拟浏览器存储满时不丢稿、320px。存储失败为明确受控测试，其余本机浏览器实际运行。
 
 ## 批次04接入点（已交付）
 

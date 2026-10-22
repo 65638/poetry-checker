@@ -119,9 +119,16 @@ export async function launchBrowser(executable) {
     const port = await waitFor(() => {
       proc.check();
       const file = join(profile, "DevToolsActivePort");
-      return (
-        existsSync(file) && Number(readFileSync(file, "utf8").split("\n")[0])
-      );
+      // Chromium may still hold the newly created file open on Windows.
+      // Retry that startup race within waitFor's existing deadline.
+      try {
+        if (!existsSync(file)) return false;
+        const value = Number(readFileSync(file, "utf8").split("\n")[0]);
+        return Number.isInteger(value) && value > 0 && value <= 65535 && value;
+      } catch (error) {
+        if (["EBUSY", "ENOENT"].includes(error.code)) return false;
+        throw error;
+      }
     });
     const target = await waitFor(async () => {
       const list = await (

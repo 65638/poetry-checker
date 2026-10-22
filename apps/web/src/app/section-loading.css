@@ -1,0 +1,18 @@
+.pc-section-loading {
+  margin: 32px auto;
+  padding: 28px;
+  max-width: 680px;
+  min-height: 180px;
+  box-sizing: border-box;
+  color: #e5dfc8;
+  background: #12313ae6;
+  border: 1px solid #a9a47c66;
+  line-height: 1.8;
+}
+.pc-section-loading button {
+  color: inherit;
+  border: 1px solid #a9a47c;
+  background: transparent;
+  padding: 8px 16px;
+  cursor: pointer;
+}
