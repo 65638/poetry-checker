@@ -5,6 +5,7 @@ import {
   type Evidence,
   type SourceRecord,
   type ReadingSuggestion,
+  type AnnotatedPoem,
 } from "@poetry/contracts";
 import { lookupCharacters } from "@poetry/lexicon";
 import { parseText, resolveReadings } from "@poetry/readings";
@@ -67,6 +68,7 @@ export async function analyze(
   options: {
     readingAssistant?: ReadingAssistantService;
     signal?: AbortSignal;
+    onReadings?: (poem: AnnotatedPoem) => void;
   } = {},
 ): Promise<OrchestrationResult> {
   if (resources.loadErrors.length > 0)
@@ -141,6 +143,8 @@ export async function analyze(
       evidencePolicy: "advisory" as const,
     };
     let annotated = resolveReadings(readingInput);
+    options.signal?.throwIfAborted();
+    options.onReadings?.(annotated);
     let assistant: AnalysisResponse["readingAssistant"];
     const service = options.readingAssistant;
     if (service) {

@@ -84,7 +84,11 @@ export function DevShell() {
 
   return (
     <>
-      <Workspace {...props} onCancelAnalysis={() => store.cancelAnalysis()} />
+      <Workspace
+        {...props}
+        preliminaryPoem={state.preliminaryPoem}
+        onCancelAnalysis={() => store.cancelAnalysis()}
+      />
       {/*
         开发场景面板：默认收起，避免在 375px 下遮挡正式输入区。
         只在 DEV 构建渲染（DevShell 本身由 main.tsx 的 DEV 分支引入）。

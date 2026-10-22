@@ -2,6 +2,7 @@ import type {
   AnalysisResponse,
   AnalyzeRequest,
   ReadingOverride,
+  AnnotatedPoem,
 } from "@poetry/contracts";
 import type { InputDraft } from "../view-contract";
 import {
@@ -36,6 +37,8 @@ import {
 export interface CheckerState {
   draft: InputDraft;
   report: AnalysisResponse | null;
+  /** Local readings while AI is pending; never a completed report or export source. */
+  preliminaryPoem: AnnotatedPoem | null;
   /** 产生当前报告的请求快照；null 表示尚无报告。 */
   requestSnapshot: AnalyzeRequest | null;
   snapshotDraft: InputDraft | null;
@@ -79,6 +82,7 @@ function initialState(draft: InputDraft): CheckerState {
   return {
     draft,
     report: null,
+    preliminaryPoem: null,
     requestSnapshot: null,
     snapshotDraft: null,
     busy: false,
@@ -143,6 +147,7 @@ export class CheckerStore {
   /** 提交状态变更；stale 永远由 deriveStale 重算。 */
   private commit(patch: Partial<CheckerState>): void {
     const next: CheckerState = { ...this.state, ...patch };
+    if (!next.busy) next.preliminaryPoem = null;
     next.stale = deriveStale(next);
     this.state = next;
     for (const listener of this.listeners) listener();
@@ -262,6 +267,7 @@ export class CheckerStore {
 
     this.commit({
       busy: true,
+      preliminaryPoem: null,
       error: null,
       feedback: null,
       pendingOverrides: requestOverrides,
@@ -286,6 +292,10 @@ export class CheckerStore {
         this.options.transport,
         requestOverrides,
         controller.signal,
+        (poem) => {
+          if (runId === this.runId && !controller.signal.aborted)
+            this.commit({ preliminaryPoem: poem });
+        },
       );
     } catch (cause) {
       outcome = {
