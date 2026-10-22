@@ -14,6 +14,7 @@ import "../presentation/styles/final-polish.css";
 import "../presentation/styles/three-round-polish.css";
 import "../presentation/styles/final-frontend.css";
 import "../presentation/styles/product-refinement.css";
+import "../presentation/styles/reading-experience.css";
 import { LibraryContainer } from "./LibraryContainer";
 import { PoetryDesk } from "./PoetryDesk";
 import { ReadingTools } from "../presentation/components/ReadingTools";
@@ -281,6 +282,16 @@ export function Workspace(props: CheckerViewProps) {
       data-direction={direction}
       data-motion={motion.effects ? "on" : "off"}
     >
+      <a
+        className="pc-skip-link"
+        href={`#${place}-space`}
+        onClick={(event) => {
+          event.preventDefault();
+          document.getElementById(`${place}-space`)?.focus();
+        }}
+      >
+        跳到主要内容
+      </a>
       <ContinuousGarden
         place={sceneryPlace}
         active={motion.effects}
