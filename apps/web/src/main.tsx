@@ -87,7 +87,9 @@ function App() {
     );
   }
 
-  return <Workspace {...props} />;
+  return (
+    <Workspace {...props} onCancelAnalysis={() => store.cancelAnalysis()} />
+  );
 }
 
 const root = document.getElementById("root");

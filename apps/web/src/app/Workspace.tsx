@@ -33,6 +33,7 @@ import {
 import type { InputDraft } from "../view-contract";
 import { LocalBackupPanel } from "./LocalBackupPanel";
 import { DraftCollectionPanel } from "./DraftCollectionPanel";
+import { AnalysisWaitPanel } from "./AnalysisWaitPanel";
 
 type Place = "checker" | "dictionary" | "library";
 const places: Place[] = ["checker", "dictionary", "library"];
@@ -43,7 +44,10 @@ const initialPlace = (): Place =>
       ? "dictionary"
       : "checker";
 
-export function Workspace(props: CheckerViewProps) {
+export function Workspace({
+  onCancelAnalysis,
+  ...props
+}: CheckerViewProps & { onCancelAnalysis?: () => void }) {
   const [place, setPlace] = useState<Place>(initialPlace);
   const [visited, setVisited] = useState(
     () => new Set<Place>([initialPlace()]),
@@ -395,6 +399,11 @@ export function Workspace(props: CheckerViewProps) {
             sharedScene
             draftTools={
               <>
+                <AnalysisWaitPanel
+                  busy={props.busy}
+                  text={props.draft.text}
+                  onCancel={onCancelAnalysis}
+                />
                 <div className="pc-draft-tools">
                   <span className="pc-draft-save" role="status">
                     {saved ? "草稿已存于此设备" : ""}
