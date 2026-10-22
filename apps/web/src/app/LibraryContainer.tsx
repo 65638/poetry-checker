@@ -14,6 +14,8 @@ import {
 import type { LibraryWork, PoemPronunciation } from "@poetry/contracts";
 import { loadCatalog, loadPronunciation } from "../api/library";
 import { LibraryQueryHelp } from "./LibraryQueryHelp";
+import { useExcerpts } from "../hooks/useExcerpts";
+import { ExcerptsPanel } from "./ExcerptsPanel";
 import {
   downloadPoem,
   parseReadingJournal,
@@ -69,7 +71,10 @@ export function LibraryContainer({
   const [catalogFailed, setCatalogFailed] = useState(false);
   const [query, setQuery] = useState("");
   const [mode, setMode] = useState<"literal" | "scene">("literal");
-  const [view, setView] = useState<"library" | "compare">("library");
+  const [view, setView] = useState<"library" | "compare" | "excerpts">(
+    "library",
+  );
+  const excerpts = useExcerpts();
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [visits, setVisits] = useState(() => {
     try {
@@ -116,6 +121,7 @@ export function LibraryContainer({
   selectedRef.current = selectedId;
   async function copyExcerpt(work: LibraryWork, line: number) {
     const request = ++excerptRequest.current;
+    const saved = excerpts.add(work, line);
     try {
       await navigator.clipboard.writeText(
         `${work.paragraphs[line]}\n——${work.author || "作者未载"}《${work.title}》`,
@@ -124,14 +130,18 @@ export function LibraryContainer({
         setExcerptFeedback({
           id: work.id,
           line,
-          message: "此句已摘录，诗题与作者一同带走。",
+          message: saved.saved
+            ? "此句已收入摘句，诗题与作者也已复制。"
+            : `此句已复制，摘句未能保存：${saved.message}`,
         });
     } catch {
       if (request === excerptRequest.current && selectedRef.current === work.id)
         setExcerptFeedback({
           id: work.id,
           line,
-          message: "暂不能访问剪贴板，可选中诗句手动复制。",
+          message: saved.saved
+            ? "此句已收入摘句；剪贴板暂不可用，可在摘句页查看。"
+            : saved.message,
         });
     }
   }
@@ -614,6 +624,7 @@ export function LibraryContainer({
         tabs={[
           { id: "library", label: "诗库" },
           { id: "compare", label: "对读" },
+          { id: "excerpts", label: "摘句" },
         ]}
       />
       {view === "compare" && (
@@ -711,7 +722,22 @@ export function LibraryContainer({
           )}
         </section>
       )}
-      <div className="pc-library-worktable" hidden={view === "compare"}>
+      <div hidden={view !== "excerpts"}>
+        <ExcerptsPanel
+          shelf={excerpts}
+          works={works}
+          onOpen={(work, quote) => {
+            setView("library");
+            openWork(work);
+            setExcerptFeedback({
+              id: work.id,
+              line: work.paragraphs.indexOf(quote.text),
+              message: "此句来自你的摘句，可以接着阅读全文。",
+            });
+          }}
+        />
+      </div>
+      <div className="pc-library-worktable" hidden={view !== "library"}>
         <section
           ref={catalogue}
           role="tabpanel"

@@ -14,12 +14,19 @@ import {
   parseReadingJournal,
 } from "./readingJournal";
 import { digest, libraryStorage, LIBRARY_LIMIT, mergeLibrary } from "./library";
+import {
+  EXCERPTS_KEY,
+  excerptArchive,
+  mergeExcerpts,
+  parseExcerpts,
+} from "./excerpts";
 
 export const FAVORITE_POEMS_KEY = "poetry-library-favorites-v1";
 export const BACKUP_BYTES = 20 * 1024 * 1024;
 export const BACKUP_KEYS = [
   DRAFT_KEY,
   NOTEBOOK_KEY,
+  EXCERPTS_KEY,
   SHELF_KEY,
   READING_JOURNAL_KEY,
   FAVORITE_POEMS_KEY,
@@ -98,6 +105,8 @@ function validateRecord(key: BackupKey, raw: string): string {
       entries: parseNotebook(JSON.parse(raw)),
     });
   if (key === FAVORITE_POEMS_KEY) return JSON.stringify(favoriteIds(raw));
+  if (key === EXCERPTS_KEY)
+    return JSON.stringify(excerptArchive(parseExcerpts(raw)));
   if (key === SHELF_KEY) {
     const value = object(JSON.parse(raw));
     const shelf = readShelf(raw);
@@ -215,6 +224,7 @@ export interface RestorePlan {
     notes: number;
     favorites: number;
     characters: number;
+    excerpts: number;
   };
 }
 export async function planLocalRestore(
@@ -236,7 +246,13 @@ export async function planLocalRestore(
       );
   }
   const merged = mergeLibrary(before.works, incoming.works);
-  const added = { works: merged.added, notes: 0, favorites: 0, characters: 0 };
+  const added = {
+    works: merged.added,
+    notes: 0,
+    favorites: 0,
+    characters: 0,
+    excerpts: 0,
+  };
   let restoredDraft: InputDraft | undefined;
   for (const key of BACKUP_KEYS) {
     const raw = incoming.local[key];
@@ -269,6 +285,11 @@ export async function planLocalRestore(
         throw new Error("合并后超过80笺，请先分别备份并整理笺记。");
       added.notes = next.length - old.length;
       local[key] = JSON.stringify({ version: 1, entries: next });
+    } else if (key === EXCERPTS_KEY) {
+      const old = parseExcerpts(current ?? null);
+      const next = mergeExcerpts(old, parseExcerpts(valid));
+      added.excerpts = next.length - old.length;
+      local[key] = JSON.stringify(excerptArchive(next));
     } else if (key === FAVORITE_POEMS_KEY) {
       const old = favoriteIds(current ?? "[]");
       const next = [...new Set([...old, ...favoriteIds(valid)])];

@@ -12,6 +12,12 @@ import { DRAFT_KEY, EMPTY_DRAFT } from "../src/app/draftPersistence";
 import { NOTEBOOK_KEY } from "../src/app/notebook";
 import { SHELF_KEY } from "../src/app/dictionaryShelf";
 import { READING_JOURNAL_KEY } from "../src/app/readingJournal";
+import {
+  EXCERPTS_KEY,
+  addExcerpt,
+  excerptArchive,
+  parseExcerpts,
+} from "../src/app/excerpts";
 const work: LibraryWork = {
   id: "mine",
   title: "测试自存稿",
@@ -55,6 +61,37 @@ function memory(
   return { local, port };
 }
 describe("portable local backups", () => {
+  it("roundtrips excerpts with notes and merges repeated restores without duplication", async () => {
+    const saved = addExcerpt([], work, 0, "excerpt-one").map((e) => ({
+      ...e,
+      note: "带到新电脑的感想",
+    }));
+    const source = memory({
+      [EXCERPTS_KEY]: JSON.stringify(excerptArchive(saved)),
+    });
+    const target = memory();
+    const incoming = await parseLocalBackup(
+      JSON.stringify(await makeLocalBackup(source.port)),
+    );
+    const plan = await planLocalRestore(target.port, incoming, options);
+    expect(plan.added.excerpts).toBe(1);
+    await applyLocalRestore(target.port, plan);
+    expect(parseExcerpts(target.local.get(EXCERPTS_KEY)!)).toEqual(saved);
+    expect(
+      (await planLocalRestore(target.port, incoming, options)).added.excerpts,
+    ).toBe(0);
+    const conflict = memory({
+      [EXCERPTS_KEY]: JSON.stringify(
+        excerptArchive(saved.map((e) => ({ ...e, note: "另一份笔记" }))),
+      ),
+    });
+    await expect(
+      planLocalRestore(conflict.port, incoming, options),
+    ).rejects.toThrow("笔记或内容不同");
+    expect(parseExcerpts(conflict.local.get(EXCERPTS_KEY)!)[0]?.note).toBe(
+      "另一份笔记",
+    );
+  });
   it("exports only known app records and preserves imported work IDs", async () => {
     const { port } = memory(
       {
@@ -129,6 +166,7 @@ describe("portable local backups", () => {
       notes: 1,
       favorites: 1,
       characters: 1,
+      excerpts: 0,
     });
     expect(target.local.get(FAVORITE_POEMS_KEY)).toBe('["existing"]');
     await applyLocalRestore(target.port, plan);
@@ -147,6 +185,7 @@ describe("portable local backups", () => {
       notes: 0,
       favorites: 0,
       characters: 0,
+      excerpts: 0,
     });
   });
   it("keeps the draft/preferences unless explicitly selected", async () => {
