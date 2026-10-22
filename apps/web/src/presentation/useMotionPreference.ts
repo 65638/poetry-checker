@@ -45,6 +45,9 @@ export function useMotionPreference(): MotionPreference {
     const query = window.matchMedia(QUERY);
     const onChange = () => setReduced(query.matches);
     query.addEventListener("change", onChange);
+    // The preference can change between the first render and this effect.
+    // Reconcile after subscribing so that initial transitions are not missed.
+    onChange();
     return () => query.removeEventListener("change", onChange);
   }, []);
 

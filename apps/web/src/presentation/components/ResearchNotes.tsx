@@ -6,6 +6,7 @@ import {
 import { readWebEnv, resolveApiConfig } from "../../app/config";
 import { digest } from "../../app/library";
 import "../styles/research.css";
+import "../styles/research-experience.css";
 import { CorpusNotes } from "./CorpusNotes";
 
 const scope: Record<string, string> = {
@@ -77,9 +78,32 @@ export function ResearchNotes({
       <span>来源暂缺</span>
     );
   };
-  const count = current
-    ? `${current.readings.length + (current.corpus ?? []).reduce((n, w) => n + w.coverage.directContextCount, 0)}条参考 · ${current.works.length}个底本`
-    : "查看出处与异文";
+  const readingCount = current
+    ? current.readings.length +
+      (current.corpus ?? []).reduce(
+        (n, work) => n + work.coverage.directContextCount,
+        0,
+      )
+    : 0;
+  const count = !current
+    ? error
+      ? "暂未取得资料，可重试"
+      : "查看出处与异文"
+    : current.state === "unavailable"
+      ? "资料暂不可用"
+      : !current.readings.length &&
+          !current.works.length &&
+          !current.corpus?.length
+        ? "暂无本诗专门资料，可查通用依据"
+        : [
+            readingCount > 0 ? `${readingCount}条参考` : null,
+            current.works.length > 0 ? `${current.works.length}个底本` : null,
+            current.corpus?.length
+              ? `${current.corpus.length}篇逐字资料`
+              : null,
+          ]
+            .filter(Boolean)
+            .join(" · ");
   return (
     <details
       className="pc-research"
@@ -90,6 +114,11 @@ export function ResearchNotes({
       </summary>
       {open && (
         <div className="pc-research__body">
+          {current?.state === "available" && (
+            <p className="pc-research__intro">
+              对照来源原文与注音；“异文”指不同版本之间的文字差异。
+            </p>
+          )}
           {!current && <p role="status">{error ?? "正在查阅…"}</p>}
           {!current && error && (
             <button

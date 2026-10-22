@@ -78,3 +78,46 @@
   scrollbar-width: thin;
   scrollbar-color: #8a9b83 transparent;
 }
+.pc-workspace .pc-preliminary-readings {
+  padding-block: 12px;
+  border-block: 1px solid #8a9b834d;
+}
+.pc-workspace .pc-preliminary-readings > p:first-child {
+  color: #e5d3aa;
+}
+.pc-workspace .pc-preliminary-readings > p:nth-child(2) {
+  margin-bottom: 12px;
+  color: #bdccbe;
+  font-size: 12px;
+}
+.pc-workspace .pc-preliminary-readings__poem {
+  padding-inline: 6px;
+  background: #0e2529;
+  border-radius: 3px;
+  scrollbar-width: thin;
+  scrollbar-color: #8a9b83 transparent;
+  overscroll-behavior: contain;
+}
+.pc-workspace .pc-preliminary-readings__poem > p {
+  margin: 0;
+  padding-block: 12px;
+  gap: 6px;
+  border-bottom: 1px solid #8a9b832e;
+}
+.pc-workspace .pc-preliminary-readings__poem > p:last-child {
+  border-bottom: 0;
+}
+.pc-workspace .pc-preliminary-readings__poem > p > span {
+  min-width: 24px;
+}
+.pc-workspace .pc-preliminary-readings__poem small {
+  color: #bfd1be;
+}
+.pc-workspace .pc-preliminary-readings__poem [data-tone="unknown"] small {
+  color: #e3c585;
+}
+@media (max-width: 359px) {
+  .pc-workspace .pc-preliminary-readings__poem > p {
+    gap: 4px;
+  }
+}

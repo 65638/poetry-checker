@@ -41,7 +41,7 @@ export function CorpusNotes({
         </span>
       </summary>
       <p>
-        原文第{r.paragraphNumber}段 · 第{r.codepointColumn}字位 ·{" "}
+        原文第{r.paragraphNumber}段 · 第{r.codepointColumn}个字符 ·{" "}
         {label[r.status]}
       </p>
       {r.candidates.map((c, i) => (
@@ -57,9 +57,12 @@ export function CorpusNotes({
             ))}
           </p>
           <small>
-            {where(c.locator)} ·{" "}
             {c.evidenceScope === "direct_context" ? "本诗注音" : "字义参考"}
           </small>
+          <details className="pc-corpus__locator">
+            <summary>来源定位信息</summary>
+            <p>{where(c.locator)}</p>
+          </details>
         </div>
       ))}
       {!r.candidates.length && <p>本次未取得可绑定到该字位的注音出处。</p>}
@@ -75,7 +78,7 @@ export function CorpusNotes({
         {missing.length > 0 ? ` · ${missing.length}字待补` : ""}
       </p>
       <small>
-        网页注音供参考，独立注本尚待补充；现代读音不直接决定古平仄。
+        网页注音供参考，独立注本尚待补充；现代读音不直接决定古平仄。字符位置包含标点。
       </small>
       {conflicts.length > 0 && (
         <details>
