@@ -51,7 +51,7 @@ referenceReadings是独立广韵资料按原字、声类和韵部对应的参考
 仅返回JSON对象：{"suggestions":[{"tokenId":"所给字位ID","candidateId":"所给候选ID或null","pronunciation":"普通话拼音或null","reason":"简短中文语境理由"}]}。
 contextReferences是独立补采参考。match=exact表示全文汉字相同（标点可不同），related_glyphs只表示关联字形版本；保留原字，不能据此直接覆盖当前字位。hanOffset是底本全文汉字从0计的位置，line/column是原来源编号，未必与当前分句相同；line=null表示标题用字，不能用于正文。direct_context才是诗句直接注音，dictionary_sense_only等仅是词义参考。conflicting/disputed及同组竞争解释必须保留，不能把某一条当成定论；unavailable表示尚无依据。现代读音不得直接映射古音或韵部；明确为协韵作的读音主张不得成为你按格律选音的理由。
 corpusReferences是全库网页逐字资料，按全文汉字序列绑定；hanOffset为该底本汉字从0开始的位置，不能把paragraphNumber当作当前分句。新来源主要属于同一聚合站，直接注音仍可能有误；来源分歧位置必须保留各说，不因网页有拼音就忽略语义。缺失读音为null，不凭格律补。来源的体式相关摘录可能谈他篇，不能用它直接判定当前诗体。omittedReadings/omittedNotes说明未附上的资料条数，不代表这些字没有证据。
-每个所给字位恰好一条，原序输出，无其他字段。`;
+每个所给字位恰好一条，原序输出，无其他字段。输出前对照requestedTokenIds逐项检查：不漏项，不增加目标外字位；无法判断也必须保留该tokenId并将candidateId和pronunciation置null。`;
 
 function candidateReferences(
   candidate: ReadingCandidate,
@@ -242,6 +242,7 @@ export function createReadingAssistant(
     // The server supplies candidates; the browser and model cannot register new readings.
     const payload = {
       text: poem.originalText,
+      requestedTokenIds: targets.map((token) => token.tokenId),
       rhymeBook: input.rhymeBook,
       contextReferences: modelResearch(
         poem.originalText,
@@ -289,7 +290,7 @@ export function createReadingAssistant(
         throw new AssistantError(
           502,
           "MODEL_INVALID_RESPONSE",
-          "模型建议字位不完整，请重试。",
+          "模型返回的读音字段不完整，请重试。",
         );
       const modelSuggestions = new Map<
         string,
@@ -310,15 +311,24 @@ export function createReadingAssistant(
         if (!previous) modelSuggestions.set(row.tokenId, row);
       }
       if (
-        modelSuggestions.size !== targets.length ||
-        targets.some((token) => !modelSuggestions.has(token.tokenId))
+        modelSuggestions.size === 0 ||
+        [...modelSuggestions.keys()].some(
+          (id) => !targets.some((token) => token.tokenId === id),
+        )
       )
         throw new AssistantError(
           502,
           "MODEL_INVALID_RESPONSE",
-          "模型建议字位不完整，请重试。",
+          "模型未返回本次目标字位的有效建议，请重试。",
         );
-      const suggestions = targets.map((token) => {
+      // Omitted positions retain local analysis; valid, independently checked decisions survive.
+      const answered = targets.filter((token) =>
+        modelSuggestions.has(token.tokenId),
+      );
+      const omitted = targets.filter(
+        (token) => !modelSuggestions.has(token.tokenId),
+      );
+      const suggestions = answered.map((token) => {
         const row = modelSuggestions.get(token.tokenId);
         let candidate =
           row?.candidateId == null
@@ -394,7 +404,13 @@ export function createReadingAssistant(
             ),
         };
       });
-      return ReadingSuggestionResponseSchema.parse({ ...base, suggestions });
+      return ReadingSuggestionResponseSchema.parse({
+        ...base,
+        suggestions,
+        notice: omitted.length
+          ? `${notice} 本次AI漏回${omitted.length}个字位（${omitted.map((token) => `第${token.line}句第${token.column}字「${token.text}」`).join("、")}），这些位置保留本地判断；已返回的有效建议仍可使用。`
+          : notice,
+      });
     }
   }
 

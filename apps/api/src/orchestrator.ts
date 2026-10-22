@@ -154,6 +154,7 @@ export async function analyze(
       );
       const suggestions: ReadingSuggestion[] = [];
       let processed = 0;
+      const omittedTokenIds: string[] = [];
       let failure: string | undefined;
       if (service.configured && targets.length) {
         const deadline = AbortSignal.timeout(service.analysisTimeoutMs);
@@ -175,6 +176,15 @@ export async function analyze(
             );
             suggestions.push(...result.suggestions);
             processed += result.suggestions.length;
+            const returnedIds = new Set(
+              result.suggestions.map((row) => row.tokenId),
+            );
+            omittedTokenIds.push(
+              ...targets
+                .slice(offset, offset + 24)
+                .filter((token) => !returnedIds.has(token.tokenId))
+                .map((token) => token.tokenId),
+            );
           } catch (cause) {
             failure = `${service.name}本次辨音未完成：${cause instanceof AssistantError ? cause.message : "服务暂不可用或等候超时"}其余字位保留本地韵书与语境判断。`;
             break;
@@ -221,6 +231,17 @@ export async function analyze(
       const missing = annotated.tokens.filter(
         (token) => !token.candidates.length,
       );
+      if (omittedTokenIds.length) {
+        const omitted = annotated.tokens.filter((token) =>
+          omittedTokenIds.includes(token.tokenId),
+        );
+        assistant.message += ` 本次AI漏回${omitted.length}个字位（${omitted
+          .slice(0, 6)
+          .map((token) => `第${token.line}句「${token.text}」`)
+          .join(
+            "、",
+          )}${omitted.length > 6 ? "等" : ""}），已保留这些位置的本地判断。`;
+      }
       if (missing.length) {
         const glyphs = [...new Set(missing.map((token) => token.text))]
           .slice(0, 8)

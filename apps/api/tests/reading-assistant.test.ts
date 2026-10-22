@@ -288,7 +288,7 @@ describe("GLM reading suggestions preserve candidate and approval boundaries", (
       },
     );
   });
-  it("accepts a complete 24-position batch with one repeated decision but rejects a missing position", async () => {
+  it("keeps valid decisions in a 24-position batch when one position is omitted", async () => {
     let omitLast = false;
     await withApp(
       {
@@ -315,7 +315,18 @@ describe("GLM reading suggestions preserve candidate and approval boundaries", (
         expect(response.statusCode).toBe(200);
         expect(response.json().suggestions).toHaveLength(24);
         omitLast = true;
-        expect((await post(app, payload)).statusCode).toBe(502);
+        const partial = await post(app, payload);
+        expect(partial.statusCode).toBe(200);
+        expect(partial.json().suggestions).toHaveLength(23);
+        expect(
+          partial
+            .json()
+            .suggestions.some(
+              (row: { tokenId: string }) => row.tokenId === "l1c24",
+            ),
+        ).toBe(false);
+        expect(partial.json().notice).toContain("AI漏回1个字位");
+        expect(partial.json().missingTokenIds).toEqual([]);
       },
     );
   });
