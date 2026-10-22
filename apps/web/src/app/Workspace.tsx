@@ -287,6 +287,7 @@ export function Workspace(props: CheckerViewProps) {
       <a
         className="pc-skip-link"
         href={`#${place}-space`}
+        inert={place === "checker" && props.selectedTokenId !== null}
         onClick={(event) => {
           event.preventDefault();
           document.getElementById(`${place}-space`)?.focus();

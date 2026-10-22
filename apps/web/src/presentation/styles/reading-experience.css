@@ -12,7 +12,6 @@
   z-index: 200;
   left: 16px;
   top: 12px;
-  transform: translateY(-160%);
   padding: 12px 18px;
   border: 2px solid #e4c98c;
   border-radius: 4px;
@@ -20,8 +19,13 @@
   color: #fff3d7;
   font: 15px/1.5 var(--pc-font-sans);
 }
-.pc-skip-link:focus {
-  transform: none;
+.pc-skip-link:not(:focus) {
+  clip-path: inset(50%);
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  white-space: nowrap;
 }
 .pc-workspace .pc-places {
   border-bottom: 1px solid var(--pc-night-divider);
