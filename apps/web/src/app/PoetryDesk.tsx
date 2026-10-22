@@ -38,6 +38,7 @@ import {
 import { NotebookArchive } from "../presentation/components/NotebookArchive";
 import { RevisionSubstitution } from "../presentation/components/RevisionSubstitution";
 import { StudyResultActions } from "./StudyResultActions";
+import { RuleReviewNote } from "./RuleReviewNote";
 
 type CritiqueInput = Extract<PoetryAssistantRequest, { task: "critique" }>;
 export function PoetryDesk({
@@ -469,6 +470,7 @@ export function PoetryDesk({
               />
               <h3>通篇观照</h3>
               <p>{currentCritique.overview}</p>
+              <RuleReviewNote review={currentCritique.ruleReview} />
               {currentCritique.strengths.length > 0 && (
                 <>
                   <h3>可取之处</h3>

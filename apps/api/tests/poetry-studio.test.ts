@@ -67,8 +67,69 @@ const post = (
   app: ReturnType<typeof buildApp>,
   payload: Record<string, unknown>,
   path = "poetry-assistant",
-) => app.inject({ method: "POST", url: `/api/v1/${path}`, payload });
+) =>
+  app.inject({
+    method: "POST",
+    url: `/api/v1/${path}`,
+    payload,
+    headers: { "x-poetry-features": "structured-rule-review" },
+  });
 describe("poetry studio with real lexicon and controlled model", () => {
+  it("preserves the entire AI overview when 120 rule checks would exceed its text budget", async () => {
+    const overview = "完整文学评价。".repeat(190);
+    await withApp({ ...result, overview }, async (app) => {
+      const response = await post(app, {
+        ...critique,
+        prosodyContext: {
+          applicability: "uncertain",
+          format: "五言参考",
+          templateId: null,
+          issues: Array.from({ length: 120 }, () => ({
+            ruleId: "METER.POSITION",
+            status: "fail",
+            locations: [{ tokenId: "l1c2", line: 1, column: 2, text: "高" }],
+            message: "仅验证长依据不会挤掉文学正文。",
+          })),
+        },
+      });
+      expect(response.statusCode).toBe(200);
+      expect(response.json().result.overview).toBe(overview);
+      expect(response.json().result.ruleReview.checks).toHaveLength(120);
+      expect(response.json().result.ruleReview.summary).toContain("条件比较");
+    });
+  });
+  it("keeps the old strict JSON shape when an older tab does not request structured notes", async () => {
+    await withApp(result, async (app) => {
+      const response = await app.inject({
+        method: "POST",
+        url: "/api/v1/poetry-assistant",
+        payload: critique,
+      });
+      expect(response.statusCode).toBe(200);
+      expect(Object.keys(response.json().result).sort()).toEqual([
+        "overview",
+        "revisions",
+        "strengths",
+      ]);
+      expect(response.json().result.overview).toContain("不作合律判断");
+      expect(response.json().result.overview).toContain(result.overview);
+    });
+  });
+  it("does not accept model-authored ruleReview as engine evidence", async () => {
+    await withApp(
+      {
+        ...result,
+        ruleReview: {
+          summary: "模型自称全篇合律",
+          reference: null,
+          checks: [],
+        },
+      },
+      async (app) => {
+        expect((await post(app, critique)).statusCode).toBe(502);
+      },
+    );
+  });
   it("binds whole-poem revisions to exact token spans and input hash", async () => {
     await withApp(result, async (app, fetcher) => {
       const response = await post(app, critique);
@@ -86,9 +147,9 @@ describe("poetry studio with real lexicon and controlled model", () => {
           overview: expect.stringContaining(result.overview),
         },
       });
-      expect(body.task === "critique" && body.result.overview).toContain(
-        "不作合律判断",
-      );
+      expect(
+        body.task === "critique" && body.result.ruleReview?.summary,
+      ).toContain("不作合律判断");
       const request = JSON.parse(fetcher.mock.calls[0]![1]!.body as string);
       expect(JSON.parse(request.messages[1].content).text).toBe(critique.text);
       expect(JSON.parse(request.messages[1].content).tokens).toHaveLength(4);
@@ -128,8 +189,13 @@ describe("poetry studio with real lexicon and controlled model", () => {
         prosodyContext,
       );
       expect(payload.messages[0].content).toContain("派生影响");
-      expect(response.json().result.overview).toContain("第1句第2字「高」");
-      expect(response.json().result.overview).toContain("列出2项检查");
+      expect(response.json().result.ruleReview.checks.join("；")).toContain(
+        "第1句第2字「高」",
+      );
+      expect(response.json().result.ruleReview.summary).toContain(
+        "列出2项检查",
+      );
+      expect(response.json().result.overview).toBe(result.overview);
     });
   });
   it.each([
@@ -176,7 +242,7 @@ describe("poetry studio with real lexicon and controlled model", () => {
           prosodyContext,
         });
         expect(sent.messages[0].content).toContain("expected是参考句式的要求");
-        const overview = response.json().result.overview;
+        const overview = response.json().result.ruleReview.summary;
         expect(overview).not.toContain("「局」出律");
         if (applicability === "uncertain")
           expect(overview).toContain("条件比较");

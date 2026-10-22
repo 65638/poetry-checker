@@ -23,7 +23,12 @@ export async function studioPost(
   try {
     const response = await fetch(`${baseUrl}/api/v1/${path}`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        ...(path === "poetry-assistant"
+          ? { "X-Poetry-Features": "structured-rule-review" }
+          : {}),
+      },
       body: JSON.stringify(value),
       signal: combined,
     });

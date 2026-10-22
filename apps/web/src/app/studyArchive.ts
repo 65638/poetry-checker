@@ -174,6 +174,12 @@ export function studyText(entry: StudyEntry): string {
         );
       }
     }
+    if (response.result.ruleReview) {
+      const review = response.result.ruleReview;
+      rows.push("", "格律依据", review.summary);
+      if (review.reference) rows.push(`参考格式：${review.reference}`);
+      rows.push(...review.checks.map((check) => `• ${check}`));
+    }
   } else if (input.task === "compare" && response.task === "compare") {
     rows.push(
       "两诗对读",

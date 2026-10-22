@@ -39,6 +39,7 @@ import {
 import { useMotionPreference } from "../presentation/useMotionPreference";
 import { usePoetryTask } from "../hooks/usePoetryTask";
 import { StudyResultActions } from "./StudyResultActions";
+import { RuleReviewNote } from "./RuleReviewNote";
 import {
   StudioTabs,
   StudioTaskState,
@@ -1169,6 +1170,7 @@ export function LibraryContainer({
                   title={selected.title}
                 />
                 <p>{literary.result.result.overview}</p>
+                <RuleReviewNote review={literary.result.result.ruleReview} />
                 {literary.result.result.strengths.map((value, i) => (
                   <p key={i}>{value}</p>
                 ))}

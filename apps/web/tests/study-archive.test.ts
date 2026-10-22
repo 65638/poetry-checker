@@ -43,6 +43,24 @@ const response: PoetryAssistantResponse = {
 const entry = () =>
   createStudyEntry(input, response, "暮色一篇", "2026-10-23T00:00:00Z");
 describe("durable study snapshots and reader-facing sharing", () => {
+  it("keeps formal rule context in a separate share section without swallowing literary advice", () => {
+    const saved = createStudyEntry(input, {
+      ...response,
+      result: {
+        ...response.result,
+        ruleReview: {
+          summary: "格律依据仅作条件比较。",
+          reference: "五言四句；平起；首句入韵",
+          checks: ["第1句第1字「白」：待确认"],
+        },
+      },
+    });
+    const text = studyText(saved);
+    expect(text).toContain(`通篇观照\n${response.result.overview}`);
+    expect(text).toContain("格律依据\n格律依据仅作条件比较。");
+    expect(text).toContain("• 第1句第1字「白」：待确认");
+    expect(text).not.toContain("ruleReview");
+  });
   it("round-trips the original request and successful response without reinterpreting the poem", () => {
     const saved = entry();
     expect(parseStudyArchive(JSON.stringify(studyArchive([saved])))).toEqual([
