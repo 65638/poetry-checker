@@ -4,9 +4,9 @@
 
 ## 最新可用版本
 
-- 功能提交：`3319cfa`（四小时迭代批次03：桌面发布快照），包含批次02 `4de5102`、批次01 `6514af6`。
+- 功能提交：`476fdd6`（四小时迭代批次04：摘句与随手记），包含前三批。
 - main 随本同步记录一起推送；最新CI请查看 [Actions](https://github.com/65638/poetry-checker/actions)。批次01的[CI已通过](https://github.com/65638/poetry-checker/actions/runs/39906047813)。
-- 业务基线：996测试、备份浏览器4场景通过。批次03改运行脚本，lint通过、Windows真实启动5场景通过（复用、未发布build隔离、同地址发布、后端变化重启、损坏快照修复）。桌面实际cmd入口成功；脚本使用.NET哈希，兼容桌面PowerShell环境。
+- 业务基线：1004测试 / 84文件，全量verify通过；摘句浏览器4场景通过、备份4场景复跑通过，320px已检查。前三批CI均成功；最近确认的[批次03 CI](https://github.com/65638/poetry-checker/actions/runs/39908442968)。
 - 本机预览：`http://127.0.0.1:56106/`。桌面入口指向 `work/main-closeout`，Codex维护此预览。
 
 ## 拉取更新
@@ -52,7 +52,14 @@ pnpm dev
 
 ## 正在进行的批次
 
-Codex批次04：本机摘句收集，保存所摘诗句及原作出处，支持检索、笔记和回原诗，接入统一备份。将改 `LibraryContainer.tsx` 的摘句事件和增加独立页签，UI协作者合并时保留这些业务接点。
+Codex下一批优先检查加载性能与写作资料管理；不接管presentation整体视觉。实施接入点随验证结果更新。
+
+## 批次04接入点（已交付）
+
+- `src/app/excerpts.ts`、`ExcerptsPanel.tsx`、`src/hooks/useExcerpts.ts` 与专用 `excerpts.css`：保留原段正文/出处，200条上限，重复摘录不覆盖笔记；检索、回原诗、复制、TXT导出、移除/撤销。分享不包含私人笔记，TXT与完整备份包含笔记。
+- `LibraryContainer.tsx` 增加“摘句”tab，原有摘句按钮同时收藏与复制；页签切换保留尚未保存的随手记。异版正文/来源不匹配时禁止错误跳回原诗。可调整组件布局，保留保存/撤销和原作定位行为。
+- `localBackup.ts` 将 `poetry-excerpts-v1` 纳入白名单，恢复预览增加摘句计数；兼容没有摘句的旧备份。同ID不同笔记拒绝覆盖。
+- 回归入口：`node --import tsx tests/e2e/excerpts.mjs`，包含真实本机诗库与320px。模型调用为0；没有宣称文学判断质量。
 
 ## 批次03运行变更（已交付）
 
