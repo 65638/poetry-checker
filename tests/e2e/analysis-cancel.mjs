@@ -6,6 +6,7 @@ import {startHarness, waitFor, revision} from '../../docs/design/moonlit-ui/harn
 const out=resolve(process.argv[2] ?? 'artifacts/continuous-improvement/analysis-cancel');
 mkdirSync(out,{recursive:true});
 let hold=true, modelCalls=0, modelAborts=0;
+let omitLast=false;
 const app=buildApp({readingAssistant:{provider:'deepseek',apiKey:'controlled-test-key',fetcher:async(_url,init)=>{
   modelCalls++;
   if(hold) await new Promise((resolve,reject)=>{
@@ -14,6 +15,7 @@ const app=buildApp({readingAssistant:{provider:'deepseek',apiKey:'controlled-tes
   });
   const payload=JSON.parse(JSON.parse(init.body).messages[1].content);
   const output=payload.task==='critique' ? {overview:'受控浏览器验证，非文学判断。',strengths:[],revisions:[]} : {suggestions:payload.targets.map(t=>({tokenId:t.tokenId,candidateId:t.candidates[0]?.id ?? null,pronunciation:null,reason:'受控候选归属验证。'}))};
+  if(omitLast && output.suggestions?.length>1) output.suggestions.pop();
   return new Response(JSON.stringify({choices:[{finish_reason:'stop',message:{content:JSON.stringify(output)}}]}));
 }}});
 const baseUrl=await app.listen({host:'127.0.0.1',port:0});
@@ -29,6 +31,10 @@ try{
     await h.click('.pc-input__submit');
     await waitFor(()=>modelCalls>0);
     await waitFor(()=>h.evaluate("!!document.querySelector('.pc-analysis-wait')"));
+    await waitFor(()=>h.evaluate("!!document.querySelector('.pc-preliminary-readings')"));
+    assert.equal(await h.evaluate("document.querySelector('.pc-preliminary-readings').textContent.includes('AI 仍在结合全诗核对')"),true);
+    assert.equal(await h.evaluate("!!document.querySelector('.pc-report')"),false);
+    assert.equal(await h.evaluate("document.querySelectorAll('.pc-preliminary-readings__poem > p > span').length"),20);
     await h.click('.pc-analysis-wait summary');
     assert.equal(await h.evaluate("document.querySelector('.pc-analysis-wait blockquote').textContent"),poem);
     await h.click('.pc-analysis-wait summary');
@@ -44,6 +50,7 @@ try{
     assert.equal(await h.evaluate("document.querySelector('.pc-input__text').value"),poem);
     assert.equal(await h.evaluate("document.body.textContent.includes('已停止本次分析')"),true);
     assert.equal(await h.evaluate("!!document.querySelector('.pc-report')"),false);
+    assert.equal(await h.evaluate("!!document.querySelector('.pc-preliminary-readings')"),false);
   });
   await check('retry-finishes-and-cancelling-rerun-preserves-completed-report',async()=>{
     hold=false;
@@ -58,6 +65,15 @@ try{
     await waitFor(()=>modelAborts>=2);
     assert.equal(await h.evaluate("document.querySelector('.pc-report').textContent"),text);
     assert.equal(await h.evaluate("document.body.textContent.includes('上次结果未更新')"),true);
+    assert.equal(await h.evaluate("document.querySelector('.pc-input__text').value"),poem);
+  });
+  await check('partial-model-answer-keeps-valid-readings-and-explains-omission',async()=>{
+    hold=false;
+    omitLast=true;
+    await h.analyze();
+    await waitFor(()=>h.evaluate("document.querySelector('.pc-report')?.textContent.includes('AI漏回1个字位')"));
+    assert.equal(await h.evaluate("document.querySelector('.pc-report').textContent.includes('已自动应用')"),true);
+    assert.equal(await h.evaluate("!!document.querySelector('.pc-preliminary-readings')"),false);
     assert.equal(await h.evaluate("document.querySelector('.pc-input__text').value"),poem);
   });
   assert.deepEqual(results.errors,[]);

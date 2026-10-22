@@ -415,6 +415,7 @@
     "/api/v1/analyze": {
       "post": {
         "operationId": "analyze",
+        "description": "默认返回JSON。Accept: application/x-ndjson 时可先返回readings事件，再以result或error事件结束；初步读音不是完成报告。每行一个AnalysisEvent。",
         "requestBody": {
           "required": true,
           "content": {
@@ -433,6 +434,12 @@
                 "schema": {
                   "$ref": "#/components/schemas/AnalysisResponse"
                 }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "每行一个AnalysisEvent JSON，使用UTF-8与换行分隔。"
               }
             }
           },
@@ -6218,6 +6225,3108 @@
           "summary"
         ],
         "additionalProperties": false
+      },
+      "AnalysisEvent": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "readings"
+              },
+              "poem": {
+                "type": "object",
+                "properties": {
+                  "originalText": {
+                    "type": "string"
+                  },
+                  "inputHash": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  "lines": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "line": {
+                          "type": "integer",
+                          "exclusiveMinimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "text": {
+                          "type": "string"
+                        },
+                        "tokenIds": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        }
+                      },
+                      "required": [
+                        "line",
+                        "text",
+                        "tokenIds"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "tokens": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "tokenId": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "text": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "line": {
+                          "type": "integer",
+                          "exclusiveMinimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "column": {
+                          "type": "integer",
+                          "exclusiveMinimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "startUtf16": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "endUtf16": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "candidates": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "character": {
+                                "type": "string"
+                              },
+                              "book": {
+                                "type": "string",
+                                "enum": [
+                                  "pingshui",
+                                  "cilin",
+                                  "xinyun"
+                                ]
+                              },
+                              "toneClass": {
+                                "type": "string",
+                                "enum": [
+                                  "ping",
+                                  "shang",
+                                  "qu",
+                                  "ru",
+                                  "yinping",
+                                  "yangping",
+                                  "neutral",
+                                  "ze_unspecified"
+                                ]
+                              },
+                              "tone": {
+                                "anyOf": [
+                                  {
+                                    "type": "string",
+                                    "enum": [
+                                      "P",
+                                      "Z"
+                                    ]
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              },
+                              "groupIds": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "minLength": 1
+                                }
+                              },
+                              "gloss": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "modernReading": {
+                                "anyOf": [
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "pinyin": {
+                                        "type": "string",
+                                        "minLength": 1
+                                      },
+                                      "toneNumber": {
+                                        "anyOf": [
+                                          {
+                                            "type": "number",
+                                            "const": 1
+                                          },
+                                          {
+                                            "type": "number",
+                                            "const": 2
+                                          },
+                                          {
+                                            "type": "number",
+                                            "const": 3
+                                          },
+                                          {
+                                            "type": "number",
+                                            "const": 4
+                                          },
+                                          {
+                                            "type": "number",
+                                            "const": 5
+                                          }
+                                        ]
+                                      },
+                                      "evidenceIds": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string",
+                                          "minLength": 1
+                                        }
+                                      }
+                                    },
+                                    "required": [
+                                      "pinyin",
+                                      "toneNumber",
+                                      "evidenceIds"
+                                    ],
+                                    "additionalProperties": false
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              },
+                              "fanqie": {
+                                "anyOf": [
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "text": {
+                                        "type": "string",
+                                        "minLength": 1
+                                      },
+                                      "evidenceIds": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string",
+                                          "minLength": 1
+                                        }
+                                      }
+                                    },
+                                    "required": [
+                                      "text",
+                                      "evidenceIds"
+                                    ],
+                                    "additionalProperties": false
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              },
+                              "evidenceIds": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "minLength": 1
+                                }
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "character",
+                              "book",
+                              "toneClass",
+                              "tone",
+                              "groupIds",
+                              "gloss",
+                              "modernReading",
+                              "fanqie",
+                              "evidenceIds"
+                            ],
+                            "additionalProperties": false
+                          }
+                        },
+                        "effectiveCandidateIds": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "readingStatus": {
+                          "type": "string",
+                          "enum": [
+                            "resolved",
+                            "ambiguous",
+                            "unknown"
+                          ]
+                        },
+                        "selectedReadingId": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "selectionMethod": {
+                          "type": "string",
+                          "enum": [
+                            "unique",
+                            "context_rule",
+                            "model",
+                            "user",
+                            "unresolved"
+                          ]
+                        },
+                        "possibleTones": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "enum": [
+                              "P",
+                              "Z"
+                            ]
+                          }
+                        },
+                        "toneStatus": {
+                          "type": "string",
+                          "enum": [
+                            "resolved",
+                            "ambiguous",
+                            "unknown"
+                          ]
+                        },
+                        "tone": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "P",
+                                "Z"
+                              ]
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "reason": {
+                          "type": "string"
+                        },
+                        "evidenceIds": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        }
+                      },
+                      "required": [
+                        "tokenId",
+                        "text",
+                        "line",
+                        "column",
+                        "startUtf16",
+                        "endUtf16",
+                        "candidates",
+                        "effectiveCandidateIds",
+                        "readingStatus",
+                        "selectedReadingId",
+                        "selectionMethod",
+                        "possibleTones",
+                        "toneStatus",
+                        "tone",
+                        "reason",
+                        "evidenceIds"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "quality": {
+                    "type": "string",
+                    "enum": [
+                      "ok",
+                      "needs_review"
+                    ]
+                  },
+                  "notices": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "message": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "startUtf16": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "endUtf16": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message",
+                        "startUtf16",
+                        "endUtf16"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "book": {
+                    "type": "string",
+                    "enum": [
+                      "pingshui",
+                      "cilin",
+                      "xinyun"
+                    ]
+                  }
+                },
+                "required": [
+                  "originalText",
+                  "inputHash",
+                  "lines",
+                  "tokens",
+                  "quality",
+                  "notices",
+                  "book"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "type",
+              "poem"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "result"
+              },
+              "report": {
+                "type": "object",
+                "properties": {
+                  "schemaVersion": {
+                    "type": "string",
+                    "const": "1.0"
+                  },
+                  "inputHash": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  "versions": {
+                    "type": "object",
+                    "properties": {
+                      "data": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "rules": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "context": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "works": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "data",
+                      "rules",
+                      "context",
+                      "works"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "policy": {
+                    "type": "object",
+                    "properties": {
+                      "rhymeBook": {
+                        "type": "string",
+                        "enum": [
+                          "pingshui",
+                          "cilin",
+                          "xinyun"
+                        ]
+                      },
+                      "toneBasis": {
+                        "type": "string",
+                        "enum": [
+                          "historical",
+                          "mandarin_base"
+                        ]
+                      },
+                      "notice": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "rhymeBook",
+                      "toneBasis",
+                      "notice"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "poem": {
+                    "type": "object",
+                    "properties": {
+                      "originalText": {
+                        "type": "string"
+                      },
+                      "inputHash": {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      "lines": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "line": {
+                              "type": "integer",
+                              "exclusiveMinimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "text": {
+                              "type": "string"
+                            },
+                            "tokenIds": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            }
+                          },
+                          "required": [
+                            "line",
+                            "text",
+                            "tokenIds"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "tokens": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "tokenId": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "text": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "line": {
+                              "type": "integer",
+                              "exclusiveMinimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "column": {
+                              "type": "integer",
+                              "exclusiveMinimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "startUtf16": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "endUtf16": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "candidates": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  },
+                                  "character": {
+                                    "type": "string"
+                                  },
+                                  "book": {
+                                    "type": "string",
+                                    "enum": [
+                                      "pingshui",
+                                      "cilin",
+                                      "xinyun"
+                                    ]
+                                  },
+                                  "toneClass": {
+                                    "type": "string",
+                                    "enum": [
+                                      "ping",
+                                      "shang",
+                                      "qu",
+                                      "ru",
+                                      "yinping",
+                                      "yangping",
+                                      "neutral",
+                                      "ze_unspecified"
+                                    ]
+                                  },
+                                  "tone": {
+                                    "anyOf": [
+                                      {
+                                        "type": "string",
+                                        "enum": [
+                                          "P",
+                                          "Z"
+                                        ]
+                                      },
+                                      {
+                                        "type": "null"
+                                      }
+                                    ]
+                                  },
+                                  "groupIds": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    }
+                                  },
+                                  "gloss": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "modernReading": {
+                                    "anyOf": [
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "pinyin": {
+                                            "type": "string",
+                                            "minLength": 1
+                                          },
+                                          "toneNumber": {
+                                            "anyOf": [
+                                              {
+                                                "type": "number",
+                                                "const": 1
+                                              },
+                                              {
+                                                "type": "number",
+                                                "const": 2
+                                              },
+                                              {
+                                                "type": "number",
+                                                "const": 3
+                                              },
+                                              {
+                                                "type": "number",
+                                                "const": 4
+                                              },
+                                              {
+                                                "type": "number",
+                                                "const": 5
+                                              }
+                                            ]
+                                          },
+                                          "evidenceIds": {
+                                            "type": "array",
+                                            "items": {
+                                              "type": "string",
+                                              "minLength": 1
+                                            }
+                                          }
+                                        },
+                                        "required": [
+                                          "pinyin",
+                                          "toneNumber",
+                                          "evidenceIds"
+                                        ],
+                                        "additionalProperties": false
+                                      },
+                                      {
+                                        "type": "null"
+                                      }
+                                    ]
+                                  },
+                                  "fanqie": {
+                                    "anyOf": [
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "text": {
+                                            "type": "string",
+                                            "minLength": 1
+                                          },
+                                          "evidenceIds": {
+                                            "type": "array",
+                                            "items": {
+                                              "type": "string",
+                                              "minLength": 1
+                                            }
+                                          }
+                                        },
+                                        "required": [
+                                          "text",
+                                          "evidenceIds"
+                                        ],
+                                        "additionalProperties": false
+                                      },
+                                      {
+                                        "type": "null"
+                                      }
+                                    ]
+                                  },
+                                  "evidenceIds": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "id",
+                                  "character",
+                                  "book",
+                                  "toneClass",
+                                  "tone",
+                                  "groupIds",
+                                  "gloss",
+                                  "modernReading",
+                                  "fanqie",
+                                  "evidenceIds"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "effectiveCandidateIds": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            },
+                            "readingStatus": {
+                              "type": "string",
+                              "enum": [
+                                "resolved",
+                                "ambiguous",
+                                "unknown"
+                              ]
+                            },
+                            "selectedReadingId": {
+                              "anyOf": [
+                                {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
+                            "selectionMethod": {
+                              "type": "string",
+                              "enum": [
+                                "unique",
+                                "context_rule",
+                                "model",
+                                "user",
+                                "unresolved"
+                              ]
+                            },
+                            "possibleTones": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "enum": [
+                                  "P",
+                                  "Z"
+                                ]
+                              }
+                            },
+                            "toneStatus": {
+                              "type": "string",
+                              "enum": [
+                                "resolved",
+                                "ambiguous",
+                                "unknown"
+                              ]
+                            },
+                            "tone": {
+                              "anyOf": [
+                                {
+                                  "type": "string",
+                                  "enum": [
+                                    "P",
+                                    "Z"
+                                  ]
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
+                            "reason": {
+                              "type": "string"
+                            },
+                            "evidenceIds": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            }
+                          },
+                          "required": [
+                            "tokenId",
+                            "text",
+                            "line",
+                            "column",
+                            "startUtf16",
+                            "endUtf16",
+                            "candidates",
+                            "effectiveCandidateIds",
+                            "readingStatus",
+                            "selectedReadingId",
+                            "selectionMethod",
+                            "possibleTones",
+                            "toneStatus",
+                            "tone",
+                            "reason",
+                            "evidenceIds"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "quality": {
+                        "type": "string",
+                        "enum": [
+                          "ok",
+                          "needs_review"
+                        ]
+                      },
+                      "notices": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "code": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "message": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "startUtf16": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "endUtf16": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            }
+                          },
+                          "required": [
+                            "code",
+                            "message",
+                            "startUtf16",
+                            "endUtf16"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "book": {
+                        "type": "string",
+                        "enum": [
+                          "pingshui",
+                          "cilin",
+                          "xinyun"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "originalText",
+                      "inputHash",
+                      "lines",
+                      "tokens",
+                      "quality",
+                      "notices",
+                      "book"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "genre": {
+                    "type": "object",
+                    "properties": {
+                      "formFamily": {
+                        "type": "string",
+                        "enum": [
+                          "regulated",
+                          "ancient",
+                          "undetermined",
+                          "unsupported"
+                        ]
+                      },
+                      "formId": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "enum": [
+                              "wujue",
+                              "qijue",
+                              "wulv",
+                              "qilv"
+                            ]
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "historicalTags": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "applicability": {
+                        "type": "string",
+                        "enum": [
+                          "applicable",
+                          "not_applicable",
+                          "uncertain",
+                          "unsupported"
+                        ]
+                      },
+                      "basisType": {
+                        "type": "string",
+                        "enum": [
+                          "user",
+                          "reviewed_metadata",
+                          "heuristic"
+                        ]
+                      },
+                      "candidateTemplateIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "selectedTemplateId": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "reasons": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "evidenceIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      }
+                    },
+                    "required": [
+                      "formFamily",
+                      "formId",
+                      "historicalTags",
+                      "applicability",
+                      "basisType",
+                      "candidateTemplateIds",
+                      "selectedTemplateId",
+                      "reasons",
+                      "evidenceIds"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "prosody": {
+                    "type": "object",
+                    "properties": {
+                      "candidates": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "formId": {
+                              "type": "string",
+                              "enum": [
+                                "wujue",
+                                "qijue",
+                                "wulv",
+                                "qilv"
+                              ]
+                            },
+                            "lineTypes": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "enum": [
+                                  "A",
+                                  "B",
+                                  "C",
+                                  "D"
+                                ]
+                              }
+                            },
+                            "expectedTones": {
+                              "type": "array",
+                              "items": {
+                                "type": "array",
+                                "items": {
+                                  "minItems": 1,
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string",
+                                    "enum": [
+                                      "P",
+                                      "Z"
+                                    ]
+                                  }
+                                }
+                              }
+                            },
+                            "requiredRhymeLines": {
+                              "type": "array",
+                              "items": {
+                                "type": "integer",
+                                "exclusiveMinimum": 0,
+                                "maximum": 9007199254740991
+                              }
+                            },
+                            "evaluatedKeyRate": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 1
+                            },
+                            "features": {
+                              "type": "object",
+                              "properties": {
+                                "toneFit": {
+                                  "anyOf": [
+                                    {
+                                      "type": "number",
+                                      "minimum": 0,
+                                      "maximum": 1
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
+                                "relationFit": {
+                                  "anyOf": [
+                                    {
+                                      "type": "number",
+                                      "minimum": 0,
+                                      "maximum": 1
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
+                                "rhymeFit": {
+                                  "anyOf": [
+                                    {
+                                      "type": "number",
+                                      "minimum": 0,
+                                      "maximum": 1
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
+                                "parallelismFit": {
+                                  "anyOf": [
+                                    {
+                                      "type": "number",
+                                      "minimum": 0,
+                                      "maximum": 1
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "toneFit",
+                                "relationFit",
+                                "rhymeFit",
+                                "parallelismFit"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "score": {
+                              "anyOf": [
+                                {
+                                  "type": "number",
+                                  "minimum": 0,
+                                  "maximum": 1
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "formId",
+                            "lineTypes",
+                            "expectedTones",
+                            "requiredRhymeLines",
+                            "evaluatedKeyRate",
+                            "features",
+                            "score"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "selectedTemplateId": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "checks": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "ruleId": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "ruleVersion": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "status": {
+                              "type": "string",
+                              "enum": [
+                                "pass",
+                                "fail",
+                                "uncertain",
+                                "not_applicable",
+                                "unsupported"
+                              ]
+                            },
+                            "severity": {
+                              "type": "string",
+                              "enum": [
+                                "error",
+                                "warning",
+                                "info"
+                              ]
+                            },
+                            "locations": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "tokenId": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  },
+                                  "line": {
+                                    "type": "integer",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 9007199254740991
+                                  },
+                                  "column": {
+                                    "type": "integer",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 9007199254740991
+                                  }
+                                },
+                                "required": [
+                                  "tokenId",
+                                  "line",
+                                  "column"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "expected": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "observed": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "message": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "templateId": {
+                              "anyOf": [
+                                {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
+                            "evidenceIds": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            },
+                            "resolvedBy": {
+                              "anyOf": [
+                                {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
+                            "relatedFindingIds": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "ruleId",
+                            "ruleVersion",
+                            "status",
+                            "severity",
+                            "locations",
+                            "expected",
+                            "observed",
+                            "message",
+                            "templateId",
+                            "evidenceIds",
+                            "resolvedBy",
+                            "relatedFindingIds"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "format": {
+                        "type": "object",
+                        "properties": {
+                          "shape": {
+                            "type": "object",
+                            "properties": {
+                              "formId": {
+                                "type": "string",
+                                "enum": [
+                                  "wujue",
+                                  "qijue",
+                                  "wulv",
+                                  "qilv"
+                                ]
+                              },
+                              "lineCount": {
+                                "type": "integer",
+                                "exclusiveMinimum": 0,
+                                "maximum": 9007199254740991
+                              },
+                              "width": {
+                                "anyOf": [
+                                  {
+                                    "type": "number",
+                                    "const": 5
+                                  },
+                                  {
+                                    "type": "number",
+                                    "const": 7
+                                  }
+                                ]
+                              },
+                              "description": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            },
+                            "required": [
+                              "formId",
+                              "lineCount",
+                              "width",
+                              "description"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "start": {
+                            "type": "object",
+                            "properties": {
+                              "value": {
+                                "anyOf": [
+                                  {
+                                    "type": "string",
+                                    "enum": [
+                                      "ping",
+                                      "ze"
+                                    ]
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              },
+                              "tokenId": {
+                                "anyOf": [
+                                  {
+                                    "type": "string",
+                                    "minLength": 1
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              },
+                              "reason": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "evidenceIds": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "minLength": 1
+                                }
+                              },
+                              "alternative": {
+                                "anyOf": [
+                                  {
+                                    "type": "string",
+                                    "enum": [
+                                      "ping",
+                                      "ze"
+                                    ]
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              },
+                              "alternativeReason": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "value",
+                              "tokenId",
+                              "reason",
+                              "evidenceIds",
+                              "alternative",
+                              "alternativeReason"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "firstLineRhyme": {
+                            "type": "object",
+                            "properties": {
+                              "value": {
+                                "type": "string",
+                                "enum": [
+                                  "rhymed",
+                                  "unrhymed",
+                                  "uncertain"
+                                ]
+                              },
+                              "observed": {
+                                "type": "string",
+                                "enum": [
+                                  "shared",
+                                  "different",
+                                  "unknown"
+                                ]
+                              },
+                              "evenLineStatus": {
+                                "type": "string",
+                                "enum": [
+                                  "shared",
+                                  "different",
+                                  "unknown"
+                                ]
+                              },
+                              "evenLineGroupIds": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "minLength": 1
+                                }
+                              },
+                              "firstLineGroupIds": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "minLength": 1
+                                }
+                              },
+                              "reason": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "evidenceIds": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "minLength": 1
+                                }
+                              }
+                            },
+                            "required": [
+                              "value",
+                              "observed",
+                              "evenLineStatus",
+                              "evenLineGroupIds",
+                              "firstLineGroupIds",
+                              "reason",
+                              "evidenceIds"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "referenceTemplateIds": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          }
+                        },
+                        "required": [
+                          "shape",
+                          "start",
+                          "firstLineRhyme",
+                          "referenceTemplateIds"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "conditionalChecks": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "templateId": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "checks": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  },
+                                  "ruleId": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  },
+                                  "ruleVersion": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  },
+                                  "status": {
+                                    "type": "string",
+                                    "enum": [
+                                      "pass",
+                                      "fail",
+                                      "uncertain",
+                                      "not_applicable",
+                                      "unsupported"
+                                    ]
+                                  },
+                                  "severity": {
+                                    "type": "string",
+                                    "enum": [
+                                      "error",
+                                      "warning",
+                                      "info"
+                                    ]
+                                  },
+                                  "locations": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "tokenId": {
+                                          "type": "string",
+                                          "minLength": 1
+                                        },
+                                        "line": {
+                                          "type": "integer",
+                                          "exclusiveMinimum": 0,
+                                          "maximum": 9007199254740991
+                                        },
+                                        "column": {
+                                          "type": "integer",
+                                          "exclusiveMinimum": 0,
+                                          "maximum": 9007199254740991
+                                        }
+                                      },
+                                      "required": [
+                                        "tokenId",
+                                        "line",
+                                        "column"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "expected": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "observed": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "message": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  },
+                                  "templateId": {
+                                    "anyOf": [
+                                      {
+                                        "type": "string",
+                                        "minLength": 1
+                                      },
+                                      {
+                                        "type": "null"
+                                      }
+                                    ]
+                                  },
+                                  "evidenceIds": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    }
+                                  },
+                                  "resolvedBy": {
+                                    "anyOf": [
+                                      {
+                                        "type": "string",
+                                        "minLength": 1
+                                      },
+                                      {
+                                        "type": "null"
+                                      }
+                                    ]
+                                  },
+                                  "relatedFindingIds": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "id",
+                                  "ruleId",
+                                  "ruleVersion",
+                                  "status",
+                                  "severity",
+                                  "locations",
+                                  "expected",
+                                  "observed",
+                                  "message",
+                                  "templateId",
+                                  "evidenceIds",
+                                  "resolvedBy",
+                                  "relatedFindingIds"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "conditionalFindingIds": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            }
+                          },
+                          "required": [
+                            "templateId",
+                            "checks",
+                            "conditionalFindingIds"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "rhyme": {
+                        "type": "object",
+                        "properties": {
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "pass",
+                              "fail",
+                              "uncertain",
+                              "not_applicable",
+                              "unsupported"
+                            ]
+                          },
+                          "tokenIds": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "commonGroupIds": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          }
+                        },
+                        "required": [
+                          "status",
+                          "tokenIds",
+                          "commonGroupIds"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "relations": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "nian",
+                                "dui"
+                              ]
+                            },
+                            "tokenIds": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            },
+                            "status": {
+                              "type": "string",
+                              "enum": [
+                                "pass",
+                                "fail",
+                                "uncertain",
+                                "not_applicable",
+                                "unsupported"
+                              ]
+                            },
+                            "findingIds": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "tokenIds",
+                            "status",
+                            "findingIds"
+                          ],
+                          "additionalProperties": false
+                        }
+                      }
+                    },
+                    "required": [
+                      "candidates",
+                      "selectedTemplateId",
+                      "checks",
+                      "rhyme",
+                      "relations"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "provenance": {
+                    "type": "object",
+                    "properties": {
+                      "groups": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "book": {
+                              "type": "string",
+                              "enum": [
+                                "pingshui",
+                                "cilin",
+                                "xinyun"
+                              ]
+                            },
+                            "name": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "toneClass": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "evidenceIds": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "book",
+                            "name",
+                            "toneClass",
+                            "evidenceIds"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "sources": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "title": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "edition": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "url": {
+                              "anyOf": [
+                                {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
+                            "license": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "snapshotSha256": {
+                              "anyOf": [
+                                {
+                                  "type": "string",
+                                  "pattern": "^[a-f0-9]{64}$"
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
+                            "revision": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "retrievedAt": {
+                              "anyOf": [
+                                {
+                                  "type": "string",
+                                  "format": "date-time",
+                                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "title",
+                            "edition",
+                            "url",
+                            "license",
+                            "snapshotSha256",
+                            "revision",
+                            "retrievedAt"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "evidence": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "sourceId": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "rhyme_entry",
+                                "dictionary",
+                                "fanqie",
+                                "context",
+                                "work_metadata"
+                              ]
+                            },
+                            "locator": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "assertion": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "excerpt": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "reviewStatus": {
+                              "type": "string",
+                              "enum": [
+                                "approved",
+                                "unverified"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "sourceId",
+                            "kind",
+                            "locator",
+                            "assertion",
+                            "excerpt",
+                            "reviewStatus"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "rules": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "version": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "name": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "scope": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "statement": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "limitations": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "evidenceIds": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "version",
+                            "name",
+                            "scope",
+                            "statement",
+                            "limitations",
+                            "evidenceIds"
+                          ],
+                          "additionalProperties": false
+                        }
+                      }
+                    },
+                    "required": [
+                      "groups",
+                      "sources",
+                      "evidence",
+                      "rules"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "summary": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "string",
+                        "enum": [
+                          "pass",
+                          "fail",
+                          "needs_review",
+                          "not_applicable",
+                          "unsupported"
+                        ]
+                      },
+                      "message": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "status",
+                      "message"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "research": {
+                    "type": "object",
+                    "properties": {
+                      "version": {
+                        "type": "string"
+                      },
+                      "state": {
+                        "type": "string",
+                        "enum": [
+                          "available",
+                          "unavailable"
+                        ]
+                      },
+                      "inputHash": {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      "readings": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "sourceId": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "quote": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "locator": {
+                              "type": "string"
+                            },
+                            "id": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "title": {
+                              "type": "string"
+                            },
+                            "author": {
+                              "type": "string"
+                            },
+                            "text": {
+                              "type": "string"
+                            },
+                            "lineText": {
+                              "type": "string"
+                            },
+                            "target": {
+                              "type": "string"
+                            },
+                            "line": {
+                              "anyOf": [
+                                {
+                                  "type": "integer",
+                                  "exclusiveMinimum": 0,
+                                  "maximum": 9007199254740991
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
+                            "column": {
+                              "anyOf": [
+                                {
+                                  "type": "integer",
+                                  "exclusiveMinimum": 0,
+                                  "maximum": 9007199254740991
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
+                            "hanOffset": {
+                              "anyOf": [
+                                {
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 9007199254740991
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
+                            "modernReading": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "historicalTone": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "meaning": {
+                              "type": "string"
+                            },
+                            "status": {
+                              "type": "string",
+                              "enum": [
+                                "source_attested",
+                                "conflicting",
+                                "disputed",
+                                "unavailable"
+                              ]
+                            },
+                            "scope": {
+                              "type": "string"
+                            },
+                            "conflictGroup": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "match": {
+                              "type": "string",
+                              "enum": [
+                                "exact",
+                                "related_glyphs"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "sourceId",
+                            "quote",
+                            "locator",
+                            "id",
+                            "title",
+                            "author",
+                            "text",
+                            "lineText",
+                            "target",
+                            "line",
+                            "column",
+                            "hanOffset",
+                            "modernReading",
+                            "historicalTone",
+                            "meaning",
+                            "status",
+                            "scope",
+                            "conflictGroup",
+                            "match"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "works": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "title": {
+                              "type": "string"
+                            },
+                            "author": {
+                              "type": "string"
+                            },
+                            "text": {
+                              "type": "string"
+                            },
+                            "edition": {
+                              "type": "string"
+                            },
+                            "collection": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "genre": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "status": {
+                              "type": "string",
+                              "enum": [
+                                "source_attested",
+                                "conflicting",
+                                "disputed",
+                                "unavailable"
+                              ]
+                            },
+                            "compilation": {
+                              "type": "boolean"
+                            },
+                            "children": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            },
+                            "limitations": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "sourceIds": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            },
+                            "notes": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "sourceId": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  },
+                                  "quote": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "locator": {
+                                    "type": "string"
+                                  },
+                                  "term": {
+                                    "type": "string"
+                                  },
+                                  "lineText": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "meaning": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "sourceId",
+                                  "quote",
+                                  "locator",
+                                  "term",
+                                  "lineText",
+                                  "meaning"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "variants": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "sourceId": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  },
+                                  "quote": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "locator": {
+                                    "type": "string"
+                                  },
+                                  "original": {
+                                    "type": "string"
+                                  },
+                                  "variant": {
+                                    "type": "string"
+                                  },
+                                  "lineText": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "sourceId",
+                                  "quote",
+                                  "locator",
+                                  "original",
+                                  "variant",
+                                  "lineText"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "match": {
+                              "type": "string",
+                              "enum": [
+                                "exact",
+                                "related_glyphs"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "title",
+                            "author",
+                            "text",
+                            "edition",
+                            "collection",
+                            "genre",
+                            "status",
+                            "compilation",
+                            "children",
+                            "limitations",
+                            "sourceIds",
+                            "notes",
+                            "variants",
+                            "match"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "rules": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "topic": {
+                              "type": "string"
+                            },
+                            "claim": {
+                              "type": "string"
+                            },
+                            "status": {
+                              "type": "string",
+                              "enum": [
+                                "source_attested",
+                                "conflicting",
+                                "disputed",
+                                "unavailable"
+                              ]
+                            },
+                            "appliesTo": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "doesNotApplyTo": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "preconditions": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "disagreements": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "examples": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "title": {
+                                    "type": "string"
+                                  },
+                                  "text": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "title",
+                                  "text"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "sourceIds": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            },
+                            "quotes": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "sourceId": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  },
+                                  "quote": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "locator": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "sourceId",
+                                  "quote",
+                                  "locator"
+                                ],
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "topic",
+                            "claim",
+                            "status",
+                            "appliesTo",
+                            "doesNotApplyTo",
+                            "preconditions",
+                            "disagreements",
+                            "examples",
+                            "sourceIds",
+                            "quotes"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "sources": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "title": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string",
+                              "format": "uri"
+                            },
+                            "credit": {
+                              "type": "string"
+                            },
+                            "license": {
+                              "type": "string"
+                            },
+                            "limitations": {
+                              "type": "string"
+                            },
+                            "rawSha256": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "accessedAt": {
+                              "type": "string"
+                            },
+                            "rawPath": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "evidenceLevel": {
+                              "type": "string"
+                            },
+                            "independenceGroup": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "title",
+                            "url",
+                            "credit",
+                            "license",
+                            "limitations",
+                            "rawSha256"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "corpus": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "title": {
+                              "type": "string"
+                            },
+                            "author": {
+                              "type": "string"
+                            },
+                            "textHash": {
+                              "type": "string",
+                              "pattern": "^[a-f0-9]{64}$"
+                            },
+                            "paragraphs": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "sourceIds": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            },
+                            "coverage": {
+                              "type": "object",
+                              "properties": {
+                                "attemptStatus": {
+                                  "type": "string",
+                                  "enum": [
+                                    "checked",
+                                    "partial",
+                                    "not_started"
+                                  ]
+                                },
+                                "hanCount": {
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 9007199254740991
+                                },
+                                "directContextCount": {
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 9007199254740991
+                                },
+                                "unavailableCount": {
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 9007199254740991
+                                },
+                                "conflictingCount": {
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 9007199254740991
+                                },
+                                "unresolved": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                }
+                              },
+                              "required": [
+                                "attemptStatus",
+                                "hanCount",
+                                "directContextCount",
+                                "unavailableCount",
+                                "conflictingCount",
+                                "unresolved"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "readings": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "paragraphNumber": {
+                                    "type": "integer",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 9007199254740991
+                                  },
+                                  "codepointColumn": {
+                                    "type": "integer",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 9007199254740991
+                                  },
+                                  "character": {
+                                    "type": "string"
+                                  },
+                                  "hanOffset": {
+                                    "type": "integer",
+                                    "minimum": 0,
+                                    "maximum": 9007199254740991
+                                  },
+                                  "status": {
+                                    "type": "string",
+                                    "enum": [
+                                      "source_attested",
+                                      "conflicting",
+                                      "unavailable",
+                                      "inferred"
+                                    ]
+                                  },
+                                  "evidenceScope": {
+                                    "type": "string"
+                                  },
+                                  "modernReading": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "historicalTone": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "rhymeGroup": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "sourceIds": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    }
+                                  },
+                                  "candidates": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "modernReading": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "historicalTone": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "rhymeGroup": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "evidenceScope": {
+                                          "type": "string"
+                                        },
+                                        "sourceIds": {
+                                          "type": "array",
+                                          "items": {
+                                            "type": "string",
+                                            "minLength": 1
+                                          }
+                                        },
+                                        "quote": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "locator": {
+                                          "anyOf": [
+                                            {
+                                              "anyOf": [
+                                                {
+                                                  "type": "string"
+                                                },
+                                                {
+                                                  "type": "object",
+                                                  "propertyNames": {
+                                                    "type": "string"
+                                                  },
+                                                  "additionalProperties": {}
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "type": "null"
+                                            }
+                                          ]
+                                        },
+                                        "reason": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": [
+                                        "modernReading",
+                                        "historicalTone",
+                                        "rhymeGroup",
+                                        "evidenceScope",
+                                        "sourceIds",
+                                        "quote",
+                                        "locator"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "quote": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "locator": {
+                                    "anyOf": [
+                                      {
+                                        "anyOf": [
+                                          {
+                                            "type": "string"
+                                          },
+                                          {
+                                            "type": "object",
+                                            "propertyNames": {
+                                              "type": "string"
+                                            },
+                                            "additionalProperties": {}
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "type": "null"
+                                      }
+                                    ]
+                                  },
+                                  "reason": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "paragraphNumber",
+                                  "codepointColumn",
+                                  "character",
+                                  "hanOffset",
+                                  "status",
+                                  "evidenceScope",
+                                  "modernReading",
+                                  "historicalTone",
+                                  "rhymeGroup",
+                                  "sourceIds",
+                                  "candidates",
+                                  "quote",
+                                  "locator",
+                                  "reason"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "notes": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "term": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "quote": {
+                                    "type": "string"
+                                  },
+                                  "sourceIds": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    }
+                                  },
+                                  "locator": {
+                                    "anyOf": [
+                                      {
+                                        "anyOf": [
+                                          {
+                                            "type": "string"
+                                          },
+                                          {
+                                            "type": "object",
+                                            "propertyNames": {
+                                              "type": "string"
+                                            },
+                                            "additionalProperties": {}
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "type": "null"
+                                      }
+                                    ]
+                                  },
+                                  "inputOccurrences": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "paragraphNumber": {
+                                          "type": "integer",
+                                          "exclusiveMinimum": 0,
+                                          "maximum": 9007199254740991
+                                        },
+                                        "codepointColumn": {
+                                          "type": "integer",
+                                          "exclusiveMinimum": 0,
+                                          "maximum": 9007199254740991
+                                        }
+                                      },
+                                      "required": [
+                                        "paragraphNumber",
+                                        "codepointColumn"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "term",
+                                  "quote",
+                                  "sourceIds",
+                                  "locator",
+                                  "inputOccurrences"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "formClaims": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "claim": {
+                                    "type": "string"
+                                  },
+                                  "quote": {
+                                    "type": "string"
+                                  },
+                                  "sourceIds": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    }
+                                  },
+                                  "locator": {
+                                    "anyOf": [
+                                      {
+                                        "anyOf": [
+                                          {
+                                            "type": "string"
+                                          },
+                                          {
+                                            "type": "object",
+                                            "propertyNames": {
+                                              "type": "string"
+                                            },
+                                            "additionalProperties": {}
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "type": "null"
+                                      }
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "claim",
+                                  "quote",
+                                  "sourceIds",
+                                  "locator"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "variants": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "variantId": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  },
+                                  "sourceText": {
+                                    "type": "string"
+                                  },
+                                  "sourceIds": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    }
+                                  },
+                                  "relation": {
+                                    "type": "string"
+                                  },
+                                  "note": {
+                                    "type": "string"
+                                  },
+                                  "differences": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "propertyNames": {
+                                        "type": "string"
+                                      },
+                                      "additionalProperties": {}
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "variantId",
+                                  "sourceText",
+                                  "sourceIds",
+                                  "relation",
+                                  "note",
+                                  "differences"
+                                ],
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "title",
+                            "author",
+                            "textHash",
+                            "paragraphs",
+                            "sourceIds",
+                            "coverage",
+                            "readings",
+                            "notes",
+                            "formClaims",
+                            "variants"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "notice": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "version",
+                      "state",
+                      "inputHash",
+                      "readings",
+                      "works",
+                      "rules",
+                      "sources",
+                      "notice"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "readingAssistant": {
+                    "type": "object",
+                    "properties": {
+                      "provider": {
+                        "type": "string",
+                        "enum": [
+                          "zhipu",
+                          "deepseek"
+                        ]
+                      },
+                      "model": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "state": {
+                        "type": "string",
+                        "enum": [
+                          "applied",
+                          "partial",
+                          "unavailable",
+                          "not_needed"
+                        ]
+                      },
+                      "appliedTokenIds": {
+                        "maxItems": 2000,
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "message": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "provider",
+                      "model",
+                      "state",
+                      "appliedTokenIds",
+                      "message"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "inputHash",
+                  "versions",
+                  "policy",
+                  "poem",
+                  "genre",
+                  "prosody",
+                  "provenance",
+                  "summary"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "type",
+              "report"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "error"
+              },
+              "status": {
+                "type": "integer",
+                "minimum": 400,
+                "maximum": 599
+              },
+              "body": {
+                "type": "object",
+                "properties": {
+                  "error": {
+                    "type": "object",
+                    "properties": {
+                      "code": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "message": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "fieldErrors": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "path": {
+                              "type": "string"
+                            },
+                            "message": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "required": [
+                            "path",
+                            "message"
+                          ],
+                          "additionalProperties": false
+                        }
+                      }
+                    },
+                    "required": [
+                      "code",
+                      "message",
+                      "fieldErrors"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "error"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "type",
+              "status",
+              "body"
+            ],
+            "additionalProperties": false
+          }
+        ]
       },
       "ErrorResponse": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",

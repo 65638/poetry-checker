@@ -3,8 +3,10 @@ import {
   AnalyzeRequestSchema,
   type AnalysisResponse,
   type AnalyzeRequest,
+  type AnnotatedPoem,
 } from "@poetry/contracts";
 import { ApiError } from "./errors";
+import { readAnalysisStream } from "./analysisStream";
 import { sha256Hex, toAnalyzeRequest } from "../utils/sha256";
 import type { InputDraft } from "../view-contract";
 
@@ -75,10 +77,17 @@ export function findInternalMismatch(report: {
   poem: {
     originalText: string;
     lines: Array<{ line: number; text: string; tokenIds: string[] }>;
-    tokens: Array<{ tokenId: string; text: string; startUtf16: number; endUtf16: number }>;
+    tokens: Array<{
+      tokenId: string;
+      text: string;
+      startUtf16: number;
+      endUtf16: number;
+    }>;
   };
 }): string | null {
-  const byTokenId = new Map(report.poem.tokens.map((token) => [token.tokenId, token]));
+  const byTokenId = new Map(
+    report.poem.tokens.map((token) => [token.tokenId, token]),
+  );
   for (const token of report.poem.tokens) {
     // 单个字位必须恰好是一个 Unicode 码点（不能是半个代理对，也不能是多字）。
     if ([...token.text].length !== 1) {
@@ -111,6 +120,7 @@ export async function analyze(
   transport: Transport,
   overrides: Array<{ tokenId: string; readingId: string }> = [],
   signal?: AbortSignal,
+  onReadings?: (poem: AnnotatedPoem) => void,
 ): Promise<AnalyzeOutcome> {
   let built: BuiltRequest;
   try {
@@ -130,7 +140,10 @@ export async function analyze(
     response = await transport.post("/api/v1/analyze", built.request, signal);
   } catch (cause) {
     if (signal?.aborted) {
-      return { ok: false, error: new ApiError("ABORTED", "请求已取消", { cause }) };
+      return {
+        ok: false,
+        error: new ApiError("ABORTED", "请求已取消", { cause }),
+      };
     }
     return {
       ok: false,
@@ -138,18 +151,64 @@ export async function analyze(
     };
   }
 
+  if (
+    response.ok &&
+    response.headers.get("content-type")?.split(";")[0]?.trim() ===
+      "application/x-ndjson"
+  ) {
+    try {
+      response = await readAnalysisStream(
+        response,
+        (poem) => {
+          if (
+            poem.inputHash !== built.expectedInputHash ||
+            poem.originalText !== draft.text ||
+            poem.book !== draft.rhymeBook ||
+            findInternalMismatch({ poem }) !== null ||
+            poem.tokens.some(
+              (token) =>
+                poem.originalText.slice(token.startUtf16, token.endUtf16) !==
+                token.text,
+            )
+          ) {
+            throw new ApiError(
+              "RESPONSE_INPUT_MISMATCH",
+              "初步读音与本次提交不一致，已停止展示。",
+            );
+          }
+          if (!signal?.aborted) onReadings?.(poem);
+        },
+        signal,
+      );
+    } catch (cause) {
+      return {
+        ok: false,
+        error: signal?.aborted
+          ? new ApiError("ABORTED", "请求已取消", { cause })
+          : cause instanceof ApiError
+            ? cause
+            : new ApiError(
+                "BAD_JSON",
+                "分析结果传输中断，请重试。原文已保留。",
+                { cause },
+              ),
+      };
+    }
+  }
   const body: unknown = await response.json().catch(() => undefined);
 
   if (!response.ok) {
     const contractError =
       typeof body === "object" && body !== null
-        ? (body as {
-            error?: {
-              code?: unknown;
-              message?: unknown;
-              fieldErrors?: unknown;
-            };
-          }).error
+        ? (
+            body as {
+              error?: {
+                code?: unknown;
+                message?: unknown;
+                fieldErrors?: unknown;
+              };
+            }
+          ).error
         : undefined;
     const message =
       typeof contractError?.message === "string"
@@ -235,13 +294,18 @@ export async function analyze(
 }
 
 /** 真实浏览器传输层；开发经 Vite 代理，生产用同源 baseUrl。 */
-export function createHttpTransport(options: AnalyzeClientOptions = {}): Transport {
+export function createHttpTransport(
+  options: AnalyzeClientOptions = {},
+): Transport {
   const baseUrl = options.baseUrl ?? "";
   return {
     async post(path, body, signal) {
       return fetch(`${baseUrl}${path}`, {
         method: "POST",
-        headers: { "content-type": "application/json" },
+        headers: {
+          "content-type": "application/json",
+          accept: "application/x-ndjson, application/json",
+        },
         body: JSON.stringify(body),
         signal,
       });

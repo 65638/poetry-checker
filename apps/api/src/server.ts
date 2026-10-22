@@ -19,6 +19,7 @@ import { registerPoetryStudio } from "./poetry-studio.js";
 import { registerLibrary } from "./library.js";
 import { registerResearch } from "./research.js";
 import { analyze } from "./orchestrator.js";
+import { streamAnalysis } from "./analysis-stream.js";
 import {
   registerReadingAssistant,
   type ReadingAssistantOptions,
@@ -282,6 +283,17 @@ export function buildApp(options?: {
           },
         });
       }
+      if (
+        request.headers.accept
+          ?.split(",")
+          .some((value) => value.trim() === "application/x-ndjson")
+      )
+        return streamAnalysis(
+          reply,
+          parsedReq.data,
+          resources,
+          readingAssistant,
+        );
       const controller = new AbortController();
       const onClose = () => {
         if (!reply.raw.writableEnded) controller.abort();

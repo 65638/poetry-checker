@@ -559,6 +559,17 @@ export const ErrorResponseSchema = z.strictObject({
     fieldErrors: z.array(z.strictObject({ path: z.string(), message: id })),
   }),
 });
+/** Optional NDJSON response: local readings first, then one terminal result/error. */
+export const AnalysisEventSchema = z.discriminatedUnion("type", [
+  z.strictObject({ type: z.literal("readings"), poem: AnnotatedPoemSchema }),
+  z.strictObject({ type: z.literal("result"), report: AnalysisResponseSchema }),
+  z.strictObject({
+    type: z.literal("error"),
+    status: z.number().int().min(400).max(599),
+    body: ErrorResponseSchema,
+  }),
+]);
+export type AnalysisEvent = z.infer<typeof AnalysisEventSchema>;
 export const RhymeBooksResponseSchema = z.strictObject({
   books: z.array(
     z.strictObject({
@@ -657,6 +668,7 @@ export const schemaRegistry = {
   ReadingSuggestionResponse: ReadingSuggestionResponseSchema,
   AnalyzeRequest: AnalyzeRequestSchema,
   AnalysisResponse: AnalysisResponseSchema,
+  AnalysisEvent: AnalysisEventSchema,
   ErrorResponse: ErrorResponseSchema,
   LookupResult: LookupResultSchema,
   RuleCard: RuleCardSchema,
@@ -834,11 +846,20 @@ export function createOpenApiDocument() {
       "/api/v1/analyze": {
         post: {
           operationId: "analyze",
+          description:
+            "默认返回JSON。Accept: application/x-ndjson 时可先返回readings事件，再以result或error事件结束；初步读音不是完成报告。每行一个AnalysisEvent。",
           requestBody: { required: true, content: content("AnalyzeRequest") },
           responses: {
             "200": {
               description: "含明确结果或不确定项的完整报告",
-              content: content("AnalysisResponse"),
+              content: {
+                ...content("AnalysisResponse"),
+                "application/x-ndjson": {
+                  schema: { type: "string" },
+                  description:
+                    "每行一个AnalysisEvent JSON，使用UTF-8与换行分隔。",
+                },
+              },
             },
             ...errors,
           },

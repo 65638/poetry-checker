@@ -4,9 +4,9 @@
 
 ## 最新可用版本
 
-- 功能提交：`e46866a`（四小时迭代批次10：模型临时故障恢复），包含前九批。
-- main 随本同步记录一起推送；最新CI请查看 [Actions](https://github.com/65638/poetry-checker/actions)。前六批CI均已成功，最近确认[批次06](https://github.com/65638/poetry-checker/actions/runs/39910971764)。
-- 业务基线：1045测试 / 87文件，全量verify通过；恢复流程浏览器9场景通过（受控模型上游、真实HTTP/浏览器）。一份浏览器请求遇上游503后服务端有限重试成功，无需手动重提。
+- 功能提交：`2e359ea`（四小时迭代批次12：保留部分有效辨音），包含前十一批。
+- main 随本同步记录一起推送；最新CI请查看 [Actions](https://github.com/65638/poetry-checker/actions)。前十批CI均已成功，最近确认[批次10](https://github.com/65638/poetry-checker/actions/runs/39913729529)。
+- 业务基线：1061测试 / 89文件，全量verify通过；分阶段等待/取消/部分辨音浏览器4场景通过（受控模型上游、真实HTTP/浏览器），含320px。
 - 本机预览：`http://127.0.0.1:56106/`。桌面入口指向 `work/main-closeout`，Codex维护此预览。
 
 ## 拉取更新
@@ -52,7 +52,22 @@ pnpm dev
 
 ## 正在进行的批次
 
-用户新指示：后续优先AI使用体验。Codex接下来检查“先显示规则初检、后补全AI辨音”的分阶段反馈；首先测量实际请求耗时，保持已完成报告与未完成结果分开。UI可调整等待组件外观，不重做业务状态。
+后续继续优先AI使用体验。下一批减少切换评议侧重后的重复等待，相同完整请求可复用本会话已完成结果，手动重新评议仍取得新建议。UI可调整等待组件外观，不重做业务状态。
+
+## 批次12部分辨音（已交付）
+
+- 模型只漏回部分目标字位时，保留其他逐项校验通过的建议；漏回位置不伪造AI建议，沿用原本地语境与候选，完整报告标partial并说明位置。查无候选的missingTokenIds仍只表示韵书缺录，与漏答分开。
+- 零有效目标、目标外字位、冲突、错误候选仍拒绝；读音/拼音一致性校验不变。提示词增加requestedTokenIds核对清单，不额外生成或延长总预算。
+- 1061项测试verify通过；浏览器4场景通过；25字位受控测试证明漏回1项仍保留24项、后续批次照常、漏回位置与本地分析完全相同。
+- 发布后真实DeepSeek单次观察：本地读音396ms，最终24404ms，applied=3；只是一首真实冒烟，不是P95或文学准确率。证据 `artifacts/continuous-improvement/batch12-real-progressive.json`，浏览器证据 `batch12-partial/`。
+
+## 批次11分阶段等待（已交付）
+
+- 浏览器主分析请求以Accept协商NDJSON，默认JSON接口仍兼容。先返回本地标注readings，再返回result/error；服务端使用同一次查字/同一次AI任务，无重复推理。
+- 新增 `PreliminaryReadings.tsx`，通过 `AnalysisWaitPanel` 展示原诗逐字平仄，明确“AI仍在核对，可能调整”。`Workspace`、main与DevShell接入可选 `preliminaryPoem`，不改展示契约或全局CSS。
+- store的初步读音与成功report/requestSnapshot严格分开；取消、换诗、失败、完成时清除，禁止导出初步结果。客户端检查UTF-8分块、事件顺序、截断、大小和原文/韵书归属，旧服务返回JSON仍可用。
+- 全量1060项通过。`tests/e2e/analysis-cancel.mjs` 增补慢模型期间先看平仄、没有正式报告、停止后清除的验证，3场景通过。证据 `artifacts/continuous-improvement/batch11-progressive/`。
+- 真实DeepSeek单次观察：《登鹳雀楼》本地读音 **251ms** 返回，最终 **25401ms** 返回。该次模型字位返回不完整，最终使用本地分析回退，助手状态unavailable；不是AI成功样本或P95。证据 `batch11-real-progressive.json`。页面不再为了这次模型失败空等25秒。
 
 ## 批次10模型恢复（已交付）
 

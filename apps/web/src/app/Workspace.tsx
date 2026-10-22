@@ -40,6 +40,7 @@ import type { InputDraft } from "../view-contract";
 import { LocalBackupPanel } from "./LocalBackupPanel";
 import { DraftCollectionPanel } from "./DraftCollectionPanel";
 import { AnalysisWaitPanel } from "./AnalysisWaitPanel";
+import type { AnnotatedPoem } from "@poetry/contracts";
 
 type Place = "checker" | "dictionary" | "library";
 const places: Place[] = ["checker", "dictionary", "library"];
@@ -52,8 +53,12 @@ const initialPlace = (): Place =>
 
 export function Workspace({
   onCancelAnalysis,
+  preliminaryPoem,
   ...props
-}: CheckerViewProps & { onCancelAnalysis?: () => void }) {
+}: CheckerViewProps & {
+  onCancelAnalysis?: () => void;
+  preliminaryPoem?: AnnotatedPoem | null;
+}) {
   const [place, setPlace] = useState<Place>(initialPlace);
   const [visited, setVisited] = useState(
     () => new Set<Place>([initialPlace()]),
@@ -420,6 +425,7 @@ export function Workspace({
                   busy={props.busy}
                   text={props.draft.text}
                   onCancel={onCancelAnalysis}
+                  preliminaryPoem={preliminaryPoem}
                 />
                 <div className="pc-draft-tools">
                   <span className="pc-draft-save" role="status">

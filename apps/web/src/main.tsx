@@ -88,7 +88,11 @@ function App() {
   }
 
   return (
-    <Workspace {...props} onCancelAnalysis={() => store.cancelAnalysis()} />
+    <Workspace
+      {...props}
+      preliminaryPoem={state.preliminaryPoem}
+      onCancelAnalysis={() => store.cancelAnalysis()}
+    />
   );
 }
 
