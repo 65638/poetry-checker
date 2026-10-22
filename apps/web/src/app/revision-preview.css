@@ -1,0 +1,42 @@
+.pc-revision-preview {
+  margin-block: 12px;
+  padding: 10px 12px;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+}
+.pc-revision-preview summary {
+  cursor: pointer;
+  line-height: 1.8;
+}
+.pc-revision-preview p {
+  font-size: 13px;
+  line-height: 1.8;
+}
+.pc-revision-preview dl {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: baseline;
+  gap: 8px 14px;
+  margin-block: 12px;
+}
+.pc-revision-preview dt {
+  font-size: 12px;
+}
+.pc-revision-preview dd {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+.pc-revision-preview blockquote {
+  max-height: 260px;
+  margin: 12px 0;
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 2;
+}
+.pc-revision-preview summary:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
