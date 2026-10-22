@@ -406,6 +406,30 @@ describe("GLM reading suggestions preserve candidate and approval boundaries", (
       );
     },
   );
+  it("recovers from a temporary provider outage and returns a validated reading result", async () => {
+    let calls = 0;
+    await withApp(
+      {
+        fetcher: async () =>
+          ++calls === 1
+            ? new Response("private temporary failure", {
+                status: 503,
+                headers: { "Retry-After": "0" },
+              })
+            : modelResponse(),
+      },
+      async (app) => {
+        const response = await post(app);
+        expect(response.statusCode).toBe(200);
+        expect(
+          ReadingSuggestionResponseSchema.parse(response.json()).suggestions[0]
+            ?.candidateId,
+        ).toBe(candidateId);
+        expect(calls).toBe(2);
+        expect(response.body).not.toContain("private temporary failure");
+      },
+    );
+  });
   it("aborts slow inference and recovers on the next call", async () => {
     let count = 0;
     const fetcher: typeof fetch = async (_url, init) => {

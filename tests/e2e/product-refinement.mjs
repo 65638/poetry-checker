@@ -8,10 +8,13 @@ const out = resolve(process.argv[2] ?? 'artifacts/product-refinement/new-flows')
 mkdirSync(out, { recursive: true });
 let behavior = 'success';
 let critiques = 0;
+let transientAttempts = 0;
 const app = buildApp({ readingAssistant: {
   provider: 'deepseek', apiKey: 'controlled-test-key',
   fetcher: async (_url, init) => {
     const input = JSON.parse(JSON.parse(init.body).messages[1].content);
+    if (behavior === 'transient-provider' && input.task === 'critique' && ++transientAttempts === 1)
+      return new Response('controlled temporary provider outage', { status: 503 });
     const output = input.task === 'critique'
       ? { overview: '浏览器受控赏读结果。', strengths: ['此内容只验证交互，不代表模型文学判断。'], revisions: [] }
       : { suggestions: input.targets.map(t => ({ tokenId: t.tokenId, candidateId: t.candidates[0].id, pronunciation: null, reason: '受控交互测试。' })) };
@@ -119,6 +122,15 @@ try {
     behavior = 'success';
     await clickText('.pc-poetry-critique button', '重试本次研读');
     await waitFor(() => h.evaluate("!document.querySelector('.pc-poetry-critique .pc-studio-error') && [...document.querySelectorAll('.pc-poetry-critique button')].some(e=>e.textContent.trim()==='重新评议' && !e.disabled)"));
+  });
+  await check('one-transient-provider-failure-recovers-without-manual-resubmission', async () => {
+    behavior = 'transient-provider';
+    transientAttempts = 0;
+    const before = critiques;
+    await clickText('.pc-poetry-critique button', '重新评议');
+    await waitFor(() => transientAttempts === 2);
+    await waitFor(() => h.evaluate("!document.querySelector('.pc-poetry-critique .pc-studio-error') && [...document.querySelectorAll('.pc-poetry-critique button')].some(e=>e.textContent.trim()==='重新评议' && !e.disabled)"));
+    assert.equal(critiques, before + 1, 'one browser request with a bounded server recovery');
   });
   await check('cancel-suppresses-late-response-and-resume-keeps-input', async () => {
     behavior = 'slow';
