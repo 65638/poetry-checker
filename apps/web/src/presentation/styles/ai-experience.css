@@ -194,6 +194,7 @@
 .pc-workspace .pc-study-question__actions > span {
   color: #586651;
   line-height: 1.8;
+  text-wrap: pretty;
 }
 .pc-workspace .pc-study-question__actions > button {
   min-height: 44px;
