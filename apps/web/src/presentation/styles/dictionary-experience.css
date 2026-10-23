@@ -19,12 +19,106 @@
   border-color: #c6cba9;
   box-shadow: inset 0 -2px #c6cba9;
 }
-.pc-workspace .pc-dictionary__folio {
+.pc-workspace .pc-dictionary__folio:not([data-empty="true"]) {
   --pc-surface-sheet: #f1eddf;
   background-color: #f1eddf;
   border-radius: 4px;
   --pc-focus: #356959;
   --pc-text-muted: #526359;
+}
+.pc-workspace .pc-dictionary__folio[data-empty="true"] {
+  background: #18343ae6;
+  border: 1px solid #8ba09445;
+  border-radius: 4px;
+  --pc-text-muted: #becdc1;
+}
+.pc-workspace .pc-dictionary__picker .pc-reading-assistant {
+  padding-top: 20px;
+  border-color: #9eb39e66;
+}
+.pc-workspace .pc-dictionary__picker .pc-reading-assistant__head h3 {
+  color: #ecdab4;
+  font: 20px/1.6 var(--pc-font-serif);
+}
+.pc-workspace .pc-dictionary__picker .pc-reading-assistant__head > span {
+  color: #b8cbbb;
+  font: 11px/1.8 var(--pc-font-sans);
+}
+.pc-workspace
+  .pc-reading-assistant__result
+  > nav.pc-reading-assistant__actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-block: 16px;
+  padding: 12px 0;
+  border-block: 1px solid #9eb39e44;
+}
+.pc-workspace .pc-reading-assistant__result > nav > span {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  text-align: center;
+  color: #d8dfc7;
+  font: 13px/1.8 var(--pc-font-sans);
+  font-variant-numeric: tabular-nums;
+}
+.pc-workspace .pc-reading-assistant__result > nav > button {
+  grid-row: 2;
+  width: 100%;
+  min-width: 0;
+  padding-inline: 6px;
+  font: 12px/1.7 var(--pc-font-sans);
+}
+.pc-workspace .pc-reading-assistant__list {
+  max-height: min(540px, 65dvh);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: #8fa58a transparent;
+  padding: 2px 7px 2px 2px;
+  margin-top: 16px;
+}
+.pc-workspace .pc-reading-assistant__list:focus-visible {
+  outline: 2px solid #d6c49b;
+  outline-offset: 2px;
+}
+.pc-workspace .pc-reading-assistant__list ol {
+  margin: 0;
+}
+.pc-workspace .pc-reading-assistant__list li {
+  padding: 14px 12px;
+  margin-bottom: 10px;
+  border: 1px solid #9eb39e44;
+  border-radius: 3px;
+  background: #b7cdb509;
+}
+.pc-workspace .pc-reading-assistant__entry {
+  align-items: baseline;
+  gap: 6px 10px;
+  margin-bottom: 10px;
+}
+.pc-workspace .pc-reading-assistant__entry strong {
+  color: #eee2c4;
+  font: 19px/1.7 var(--pc-font-serif);
+}
+.pc-workspace .pc-reading-assistant__entry > span {
+  color: #b6c9b9;
+  font-size: 12px;
+}
+.pc-workspace .pc-reading-assistant__list .pc-reading-assistant__notice {
+  color: #c0cdb9;
+  font-size: 12px;
+}
+.pc-workspace .pc-reading-assistant__list .pc-button {
+  font: 13px/1.7 var(--pc-font-sans);
+  min-height: 44px;
+  border-radius: 3px;
+}
+.pc-workspace .pc-reading-assistant [role="alert"] {
+  padding: 10px 12px;
+  border-left: 2px solid #e5a892;
+  background: #b76f4c16;
 }
 .pc-workspace
   .pc-dictionary__folio:has(.pc-dictionary__result):not([data-loading="true"])

@@ -34,6 +34,19 @@ const check = async (name, run) => {
 };
 try {
   await h.load({ path: "#dictionary" });
+  await check("empty-state-text-retains-contrast-on-its-own-surface", async () => {
+    await waitFor(()=>evaluate("!!document.querySelector('.pc-dictionary__empty h2')"));
+    const ratios=await evaluate(`(() => {
+      const rgb=value=>value.match(/[\\d.]+/g).map(Number);
+      const luminance=values=>values.slice(0,3).map(v=>v/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4).reduce((sum,v,i)=>sum+v*[.2126,.7152,.0722][i],0);
+      const background=rgb(getComputedStyle(document.querySelector('.pc-dictionary__folio')).backgroundColor),alpha=background[3]??1;
+      return [...document.querySelectorAll('.pc-dictionary__empty h2,.pc-dictionary__empty p')].map(e=>{
+        const ink=luminance(rgb(getComputedStyle(e).color));
+        return Math.min(...[0,255].map(under=>{const paper=luminance(background.slice(0,3).map(v=>v*alpha+under*(1-alpha)));return (Math.max(ink,paper)+.05)/(Math.min(ink,paper)+.05);}));
+      });
+    })()`);
+    assert(ratios.every(ratio=>ratio>=4.5),`Empty prompt contrast: ${ratios.join(', ')}`);
+  });
   await shot("after-empty");
   await click(".pc-dictionary__examples button");
   await ready();

@@ -260,6 +260,10 @@ try {
   await check('long-passage-pages-cover-all-positions-and-cache-return-visits', async () => {
     await fillPassage('更'.repeat(50));
     await waitFor(()=>evaluate("document.querySelectorAll('.pc-reading-assistant__result li').length===24"));
+    await evaluate("document.querySelector('.pc-reading-assistant__list').focus()");
+    await cdp.send('Input.dispatchKeyEvent',{type:'keyDown',key:'End',code:'End',windowsVirtualKeyCode:35});
+    await cdp.send('Input.dispatchKeyEvent',{type:'keyUp',key:'End',code:'End',windowsVirtualKeyCode:35});
+    await waitFor(()=>evaluate("document.querySelector('.pc-reading-assistant__list').scrollTop>100"));
     const firstPosts=posts;
     const next='[aria-label="辨音批次"] button:last-child', previous='[aria-label="辨音批次"] button:first-child';
     nextMode='failure';

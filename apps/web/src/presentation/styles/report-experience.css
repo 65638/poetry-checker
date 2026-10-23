@@ -221,3 +221,13 @@
     gap: 14px;
   }
 }
+.pc-workspace .pc-rail__counts {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px 16px;
+}
+.pc-workspace .pc-rail__scope {
+  margin: 0;
+  font: 12px/1.8 var(--pc-font-sans);
+  color: #c0cec1;
+  letter-spacing: 0;
+}
