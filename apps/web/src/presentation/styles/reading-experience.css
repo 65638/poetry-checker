@@ -194,24 +194,24 @@
   --pc-text-muted: #526359;
 }
 .pc-workspace .pc-library-reading > h2 {
-  margin: 30px 0 8px;
+  margin: 20px 0 6px;
   font-size: clamp(28px, 2.4vw, 38px);
   letter-spacing: 0.12em;
   line-height: 1.5;
 }
 .pc-workspace .pc-library-reading > .pc-library-byline {
-  margin: 0 0 22px;
+  margin: 0 0 12px;
   font: 14px/1.8 var(--pc-font-sans);
   letter-spacing: 0.08em;
 }
 .pc-workspace .pc-library-reading .pc-poem-share {
   justify-content: center;
-  margin: 0 0 24px;
-  padding: 0 0 22px;
-  border-bottom: 1px solid #a0a58f4d;
+  margin: 0 0 14px;
+  padding: 0;
+  border-bottom: 0;
 }
 .pc-workspace .pc-library-reading .pc-poem-share .pc-studio-action {
-  min-height: 36px;
+  min-height: 44px;
   padding: 6px 12px;
   border-color: transparent;
   background: #657f6510;
@@ -220,7 +220,7 @@
 }
 .pc-workspace .pc-library-reading .pc-reader-navigation {
   border-bottom: 1px solid #a0a58f4d;
-  padding-bottom: 16px;
+  padding-bottom: 12px;
   gap: 10px;
 }
 .pc-workspace .pc-reader-navigation > .pc-studio-action:last-child {
@@ -237,7 +237,8 @@
 }
 .pc-workspace .pc-library-reading .pc-reader-lookup {
   gap: 10px;
-  padding: 10px 12px;
+  padding: 6px 10px;
+  margin-block: 8px;
   background: #7d957711;
   border: 1px solid #9ca78e40;
   border-radius: 4px;
@@ -247,8 +248,20 @@
 }
 .pc-workspace .pc-library-pinyin-toggle {
   font: 13px/1.8 var(--pc-font-sans);
-  min-height: 40px;
+  min-height: 44px;
+  margin-top: 4px;
   align-items: center;
+}
+.pc-workspace
+  .pc-library-reading:not(.pc-library-comparison)
+  > .pc-library-questions {
+  margin-block: 12px;
+}
+.pc-workspace
+  .pc-library-reading:not(.pc-library-comparison)
+  > .pc-library-verses {
+  margin-block: 12px 24px;
+  padding-top: 12px;
 }
 .pc-workspace .pc-library-reading-hint {
   font: 12px/1.8 var(--pc-font-sans);
@@ -354,7 +367,7 @@ html:has(.pc-workspace) {
     padding: 20px 18px 28px;
   }
   .pc-workspace .pc-library-reading > h2 {
-    margin-top: 24px;
+    margin-top: 18px;
   }
   .pc-workspace .pc-reader-navigation {
     gap: 7px;

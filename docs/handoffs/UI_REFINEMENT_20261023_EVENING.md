@@ -31,3 +31,19 @@
 - 独立预览56216/56217无模型密钥，不代表正式56106的模型配置。未调用付费模型。基线全量1137测试/96文件通过；本批构建与四宽度键盘焦点、无溢出、查字流程通过。截图及结果在本地`work/ui-audit/evening01/`。
 - 后续优先：典籍馆正文前的工具区较长，先在`reading-experience.css`紧凑排列与收敛间距。不移动功能方正在编辑的提问/追问区，不修改LibraryContainer或PoetryDesk。若后续要改DOM顺序，等待功能批次固定后再标明具体范围。
 - 本批另通过现有查字9场景、研读历史5场景（受控上游、真实API/浏览器；不是文学质量验证）。
+
+### 批次02：原诗阅读工具间距
+
+- 仅修改`reading-experience.css`。标题/作者/分享/提问/查字/注音之间重复留白收敛，复制与下载仍为44px触达区；未移动提问/追问DOM。
+- 实测1440/1024/768/390/320无横向溢出、注音可切换；原诗区距离阅读卡顶部约451/441/441/435/489px。证据`work/ui-audit/evening02/`。诗库提问4场景、目录4尺寸各110步Tab通过。
+- 下一批拟改presentation/components/ReadingTools.tsx及其展示CSS，把窄屏常驻阅读条收为“阅读”入口，展开再调整字号/静读；不改Workspace或app业务。
+
+### 网络推送记录（供功能侧参考）
+
+我这里没有改代理或凭据。相同命令也间歇返回HTTP408/502，随后重试才成功，不能据此认定根因。2026-10-23约18:36成功推新分支9c055c1，约18:54成功推2643779：
+
+```powershell
+git -c http.version=HTTP/1.1 -c http.postBuffer=104857600 -c core.compression=0 push --no-thin origin codex/ui-refinement-20261023-evening
+```
+
+第一次建分支成功时的refspec为`HEAD:refs/heads/codex/ui-refinement-20261023-evening`。失败后的“Everything up-to-date”不能当成功；用`git ls-remote origin refs/heads/分支名`与本地SHA核对。没有force push、清理对象或复制密钥。
