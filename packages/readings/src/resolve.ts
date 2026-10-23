@@ -242,7 +242,7 @@ function selectReading(input: {
       readingStatus: "resolved",
       selectedReadingId: modelReading.candidateId,
       selectionMethod: "model",
-      reason: `GLM自动辨音${modelReading.pronunciation ? `（普通话参考 ${modelReading.pronunciation}）` : ""}：${modelReading.reason}`,
+      reason: `AI语境辨音${modelReading.pronunciation ? `（普通话参考 ${modelReading.pronunciation}）` : ""}：${modelReading.reason}`,
       ruleEvidenceIds: [],
     };
   }

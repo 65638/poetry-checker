@@ -114,7 +114,7 @@ describe("global automatic reference analysis", () => {
         selectionMethod: "model",
         selectedReadingId: "pingshui:更:qu:二十四敬",
       });
-      expect(report.poem.tokens[0]!.reason).toContain("GLM自动辨音");
+      expect(report.poem.tokens[0]!.reason).toContain("AI语境辨音");
       expect(fetcher).toHaveBeenCalledTimes(1);
       expect(JSON.stringify(resources)).toBe(before);
       expect(
