@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { StudyShareOptions } from "./StudyShareOptions";
+import { SavedStudyDiscussion } from "./SavedStudyDiscussion";
 import {
   STUDY_ARCHIVE_KEY,
   STUDY_ARCHIVE_EVENT,
@@ -205,6 +206,7 @@ export function StudyArchivePanel() {
             <pre tabIndex={0} role="region" aria-label="已保存的原诗与评议正文">
               {studyText(entry)}
             </pre>
+            <SavedStudyDiscussion key={entry.id} entry={entry} />
           </article>
         )}
       </div>
