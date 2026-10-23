@@ -12,7 +12,11 @@ const result = {revision:revision(), checks:[], errors:[]};
 h.cdp.on('Runtime.exceptionThrown', e => result.errors.push(e.exceptionDetails.exception?.description ?? e.exceptionDetails.text));
 const check = async (name, run) => { await run(); result.checks.push(name); console.log('[PASS]',name); };
 const shot = async name => writeFileSync(join(out,name+'.png'), Buffer.from((await h.cdp.send('Page.captureScreenshot',{format:'png'})).data,'base64'));
-const go = async place => { await h.evaluate('location.hash='+JSON.stringify(place)); await waitFor(()=>h.evaluate(`document.querySelector('.pc-workspace').dataset.place===${JSON.stringify(place)} && !document.documentElement.dataset.journey`)); };
+const go = async place => {
+  await h.evaluate('location.hash='+JSON.stringify(place));
+  const ready = {checker:'.pc-input__text',dictionary:'.pc-dictionary__examples button',library:'.pc-library-heading'}[place];
+  await waitFor(()=>h.evaluate(`document.querySelector('.pc-workspace').dataset.place===${JSON.stringify(place)} && !document.documentElement.dataset.journey && !!document.querySelector(${JSON.stringify(ready)})`));
+};
 const fill = async (selector,value) => h.evaluate(`(()=>{const el=document.querySelector(${JSON.stringify(selector)});Object.getOwnPropertyDescriptor(el instanceof HTMLTextAreaElement?HTMLTextAreaElement.prototype:HTMLInputElement.prototype,'value').set.call(el,${JSON.stringify(value)});el.dispatchEvent(new Event('input',{bubbles:true}));})()`);
 const clickText = async (scope,label) => { await h.evaluate(`(()=>{const b=[...document.querySelectorAll(${JSON.stringify(scope)})].find(el=>el.textContent.trim()===${JSON.stringify(label)});if(!b)throw Error('Missing '+${JSON.stringify(label)}); b.click();})()`); };
 const upload = async path => {const {root}=await h.cdp.send('DOM.getDocument');const {nodeId}=await h.cdp.send('DOM.querySelector',{nodeId:root.nodeId,selector:'.pc-library input[type=file]'});await h.cdp.send('DOM.setFileInputFiles',{nodeId,files:[path]});};
@@ -105,7 +109,7 @@ try {
     await h.click('.pc-library-discover button');
     await h.evaluate("Object.defineProperty(navigator,'clipboard',{configurable:true,value:{writeText:async text=>{window.__copied=text;}}});true");
     await h.click('[aria-label="摘录第1段诗句"]');
-    await waitFor(()=>h.evaluate("document.querySelector('.pc-library-copy-feedback').textContent.includes('此句已摘录')"));
+    await waitFor(()=>h.evaluate("document.querySelector('.pc-library-copy-feedback').textContent.includes('诗题与作者也已复制')"));
     assert.equal(await h.evaluate("window.__copied.includes('——') && window.__copied.includes(document.querySelector('[aria-label=\"原诗阅读\"] h2').textContent)"),true);
     await shot('r2-library');
   });
@@ -121,8 +125,8 @@ try {
     await waitFor(()=>h.evaluate("document.querySelector('.pc-dictionary__character-list').textContent.includes('山')"));
   });
   await check('r3-reading-light-and-page-bookmark-work-in-every-region',async()=>{
-    await h.click('.pc-reading-light');
-    assert.equal(await h.evaluate("document.querySelector('.pc-reading-light').getAttribute('aria-pressed')"),'true');
+    await h.click('.pc-reading-light[aria-pressed]');
+    assert.equal(await h.evaluate("document.querySelector('.pc-reading-light[aria-pressed]').getAttribute('aria-pressed')"),'true');
     assert.equal(await h.evaluate("getComputedStyle(document.querySelector('.pc-reading-shade')).opacity"),'0.32');
     for(const place of ['checker','dictionary','library']) {
       await go(place);
@@ -137,8 +141,8 @@ try {
       await waitFor(()=>h.evaluate('scrollY===0'));
       await shot('r3-'+place+'-mobile');
     }
-    await h.click('.pc-reading-light');
     await h.viewport(1440,900);
+    await h.click('.pc-reading-light[aria-pressed]');
     await shot('r3-library-desktop');
   });
   await check('r3-no-op-resize-does-not-reseed-the-weather',async()=>{

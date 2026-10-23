@@ -62,6 +62,13 @@ const open = async (title) => {
       `document.querySelector('.pc-library-reading > h2')?.textContent===${JSON.stringify(title)}`,
     ),
   );
+  assert.equal(
+    await h.evaluate(
+      "document.querySelectorAll('.pc-library-reading > .pc-research').length",
+    ),
+    1,
+    "Switching poems must leave exactly one current research panel",
+  );
 };
 const shot = async (name) =>
   writeFileSync(

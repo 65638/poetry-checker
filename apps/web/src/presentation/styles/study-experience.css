@@ -94,6 +94,45 @@
   color: #bccdbb;
   font-variant-numeric: tabular-nums;
 }
+.pc-workspace .pc-study-archive__list .pc-study-archive__question {
+  display: -webkit-box;
+  margin-top: 2px;
+  color: #d5dfd0;
+  font: 13px/1.75 var(--pc-font-sans);
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+.pc-workspace .pc-study-archive select {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  padding: 8px 12px;
+  border: 1px solid #a4b49b88;
+  border-radius: 4px;
+  background: #102a31;
+  color: #e2e5d7;
+  font: 14px/1.6 var(--pc-font-sans);
+}
+.pc-workspace .pc-study-archive__rename {
+  display: grid;
+  gap: 12px;
+  margin-block: 14px 18px;
+  padding: 14px;
+  border: 1px solid #a6b39a88;
+  border-radius: 3px;
+  background: #e7eadc;
+}
+.pc-workspace .pc-study-archive__rename label {
+  color: #49604c;
+}
+.pc-workspace .pc-study-archive__rename input {
+  margin-top: 5px;
+  background: #fbf9ef;
+  color: #263e3d;
+}
 .pc-workspace .pc-study-archive__list [aria-expanded="true"] {
   border-color: #dcc698;
   border-left-width: 4px;
@@ -119,16 +158,19 @@
   font: 12px/1.8 var(--pc-font-sans);
   margin: 0 0 16px;
 }
-.pc-workspace .pc-study-archive__reader button {
+.pc-workspace .pc-study-archive__actions > button {
   color: #2c4943;
   border-color: #788c7b;
   background: transparent;
 }
-.pc-workspace .pc-study-archive__reader button:hover {
+.pc-workspace .pc-study-archive__actions > button:hover {
   background: #dce1ce;
   border-color: #526d59;
 }
-.pc-workspace .pc-study-archive__reader button:last-child {
+.pc-workspace
+  .pc-study-archive__reader
+  > .pc-study-archive__actions
+  > button:last-child {
   color: #8a4939;
   border-color: #b59380;
 }
@@ -150,11 +192,13 @@
 }
 .pc-workspace
   .pc-study-archive
-  :is(button, input, summary, [tabindex]):focus-visible {
+  :is(button, input, select, textarea, summary, [tabindex]):focus-visible {
   outline: 2px solid #e5d0a2;
   outline-offset: 2px;
 }
-.pc-workspace .pc-study-archive__reader :is(button, pre):focus-visible {
+.pc-workspace
+  .pc-study-archive__reader
+  :is(button, input, textarea, summary, [tabindex]):focus-visible {
   outline-color: #486e56;
 }
 .pc-workspace .pc-study-result-actions {
@@ -169,6 +213,104 @@
   border-color: #57755e;
   background: #e0e6d1;
   color: #274a36;
+}
+
+/* A new discussion follows the saved sheet without looking like a replacement. */
+.pc-workspace .pc-saved-discussion {
+  margin-top: 24px;
+  padding: 20px 16px 16px;
+  border-color: #8c9e7b88;
+  border-top: 3px solid #829575;
+  background: #f7f5e9;
+  font: 15px/1.95 var(--pc-font-sans);
+}
+.pc-workspace .pc-saved-discussion > h4 {
+  margin: 0 0 10px;
+  color: #2e4c3b;
+  font: 500 22px/1.6 var(--pc-font-serif);
+}
+.pc-workspace .pc-saved-discussion > p {
+  margin: 0 0 18px;
+  color: #586651;
+  font-size: 14px;
+}
+.pc-workspace .pc-saved-discussion__answer {
+  padding-top: 4px;
+}
+.pc-workspace .pc-saved-discussion__answer > .pc-study-prose {
+  margin-block: 18px;
+  font-size: 16px;
+  line-height: 2;
+}
+.pc-workspace .pc-saved-discussion__answer > ul {
+  padding-left: 1.4em;
+}
+.pc-workspace .pc-saved-discussion__revisions {
+  margin-block: 18px;
+  padding: 0 12px;
+  border: 1px solid #a6b39a88;
+  border-radius: 3px;
+  background: #edf0e2;
+}
+.pc-workspace .pc-saved-discussion__revisions > summary {
+  min-height: 44px;
+  padding-block: 10px;
+  box-sizing: border-box;
+}
+.pc-workspace .pc-saved-discussion__revisions ul {
+  padding-left: 1.3em;
+}
+.pc-workspace .pc-saved-discussion__revisions li + li {
+  margin-top: 16px;
+  padding-top: 10px;
+  border-top: 1px solid #8c9e7b55;
+}
+.pc-workspace .pc-saved-discussion__revisions p {
+  margin-block: 6px;
+}
+.pc-workspace .pc-study-share-options {
+  min-height: 44px;
+  box-sizing: border-box;
+  gap: 10px;
+  padding-block: 8px;
+  align-items: flex-start;
+  color: #52624d;
+  cursor: pointer;
+}
+.pc-workspace .pc-study-share-options input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  min-height: 18px;
+  margin-top: 3px;
+  accent-color: #42664b;
+}
+.pc-workspace .pc-saved-discussion .pc-study-result-actions {
+  margin-bottom: 18px;
+}
+.pc-workspace .pc-saved-discussion .pc-study-result-actions .pc-studio-actions {
+  gap: 8px;
+}
+/* The reading preference follows the text into saved and continued readings. */
+.pc-workspace[data-reading-size="1"] {
+  --pc-study-reading-size: 18px;
+}
+.pc-workspace[data-reading-size="2"] {
+  --pc-study-reading-size: 20px;
+}
+.pc-workspace:is([data-reading-size="1"], [data-reading-size="2"])
+  :is(
+    .pc-study-prose,
+    .pc-study-archive__reader pre,
+    .pc-saved-discussion__answer > .pc-study-prose,
+    .pc-saved-discussion__answer > ul,
+    .pc-saved-discussion__revisions p,
+    .pc-poetry-review > ul,
+    .pc-poetry-edit > p,
+    .pc-library-literary > p,
+    .pc-library-aspect p,
+    .pc-draft-comparison__result .pc-draft-comparison__versions > p
+  ) {
+  font-size: var(--pc-study-reading-size);
 }
 @media (max-width: 1099px) {
   .pc-workspace .pc-study-archive {
@@ -199,6 +341,22 @@
   }
   .pc-workspace .pc-study-archive__actions > button {
     flex: 1 1 120px;
+  }
+  .pc-workspace .pc-saved-discussion {
+    padding: 18px 0 0;
+    border-inline: 0;
+    border-bottom: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+  .pc-workspace .pc-saved-discussion > h4 {
+    font-size: 21px;
+  }
+  .pc-workspace .pc-saved-discussion__answer > .pc-study-prose {
+    font-size: 15px;
+  }
+  .pc-workspace .pc-saved-discussion .pc-study-follow-up__examples {
+    gap: 8px;
   }
 }
 @media (forced-colors: active) {
