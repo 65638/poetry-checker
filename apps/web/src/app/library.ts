@@ -257,7 +257,7 @@ export function searchLibrary(
 export function readingSections(work: LibraryWork): LibraryWork[] {
   const text = work.paragraphs.join("\n");
   if (
-    [...text].length <= 2000 &&
+    text.length <= 2000 &&
     (text.match(/[，。！？；\n]/gu)?.length ?? 0) <= 80
   )
     return [work];
@@ -265,22 +265,24 @@ export function readingSections(work: LibraryWork): LibraryWork[] {
   let current: string[] = [],
     length = 0;
   for (const paragraph of work.paragraphs) {
-    for (const piece of paragraph.match(/[^，。！？；\n]+[，。！？；]?/gu) ?? [
-      paragraph,
-    ]) {
+    for (const piece of paragraph.match(
+      /[^，。！？；\n]+[，。！？；]?|[，。！？；]/gu,
+    ) ?? [paragraph]) {
       const chars = [...piece];
-      for (let i = 0; i < chars.length; i += 1600) {
-        const part = chars.slice(i, i + 1600).join("");
+      for (let i = 0; i < chars.length; ) {
+        let part = "";
+        while (i < chars.length && part.length + chars[i]!.length <= 1600)
+          part += chars[i++]!;
         if (
           current.length &&
-          (length + [...part].length + 1 > 1800 || current.length >= 60)
+          (length + part.length + 1 > 1800 || current.length >= 60)
         ) {
           chunks.push(current);
           current = [];
           length = 0;
         }
         current.push(part);
-        length += [...part].length + 1;
+        length += part.length + 1;
       }
     }
   }
