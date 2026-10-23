@@ -33,6 +33,10 @@ export function SavedComparisonDiscussion({ entry }: { entry: StudyEntry }) {
       <StudyQuestion
         heading={revision ? "向这两版稿件提问" : "向收藏原文提问"}
         comparison={revision ? "revision" : true}
+        excerpt={
+          !!original.scope &&
+          (original.scope.left.parts > 1 || original.scope.right.parts > 1)
+        }
         mode="reading"
         disabled={task.busy}
         onAsk={(question) => {

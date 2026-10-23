@@ -1,4 +1,4 @@
-import { useId, useState } from "react";
+import { useId, useLayoutEffect, useRef, useState } from "react";
 import type {
   PoetryAssistantRequest,
   PoetryAssistantResponse,
@@ -6,6 +6,8 @@ import type {
 import { buildStudyFollowUp, studyAnswerDetails } from "./followUpRequest";
 import { StudyProse } from "./StudyProse";
 import "./study-follow-up.css";
+import { submitQuestionShortcut } from "./questionKeyboard";
+import { sha256Hex } from "../utils/sha256";
 
 export function StudyFollowUp({
   input,
@@ -20,6 +22,35 @@ export function StudyFollowUp({
 }) {
   const [question, setQuestion] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const editVersion = useRef(0);
+  const submitted = useRef<{ hash: string; version: number } | null>(null);
+  const identity =
+    input?.task === "critique"
+      ? JSON.stringify([
+          input.text,
+          input.rhymeBook,
+          input.mode,
+          input.direction,
+          input.prosodyContext,
+        ])
+      : null;
+  useLayoutEffect(() => {
+    setQuestion("");
+    setError(null);
+    submitted.current = null;
+    editVersion.current = 0;
+  }, [identity]);
+  useLayoutEffect(() => {
+    const sent = submitted.current;
+    if (!sent || response?.inputHash !== sent.hash) return;
+    if (editVersion.current === sent.version) setQuestion("");
+    submitted.current = null;
+    setError(null);
+  }, [response]);
+  function editQuestion(next: string) {
+    editVersion.current++;
+    setQuestion(next);
+  }
   const hintId = useId();
   if (input?.task !== "critique" || response?.task !== "critique") return null;
   const context = studyAnswerDetails(response.result);
@@ -42,7 +73,12 @@ export function StudyFollowUp({
           if (disabled || !question.trim()) return;
           try {
             setError(null);
-            onAsk(buildStudyFollowUp(input, response, question.trim()));
+            const next = buildStudyFollowUp(input, response, question.trim());
+            submitted.current = {
+              hash: sha256Hex(JSON.stringify(next)),
+              version: editVersion.current,
+            };
+            onAsk(next);
           } catch (cause) {
             setError(
               cause instanceof Error ? cause.message : "追问暂未发送，请重试。",
@@ -58,7 +94,8 @@ export function StudyFollowUp({
             rows={3}
             maxLength={240}
             value={question}
-            onChange={(event) => setQuestion(event.target.value)}
+            onChange={(event) => editQuestion(event.target.value)}
+            onKeyDown={(event) => submitQuestionShortcut(event, disabled)}
             placeholder="例如：你说的层次感，具体体现在哪两句？"
           />
         </label>
@@ -75,14 +112,14 @@ export function StudyFollowUp({
             <button
               type="button"
               key={example}
-              onClick={() => setQuestion(example)}
+              onClick={() => editQuestion(example)}
             >
               {example}
             </button>
           ))}
         </div>
         <div className="pc-study-follow-up__actions">
-          <small>{question.length} / 240</small>
+          <small>{question.length} / 240 · Ctrl / ⌘ + Enter 发送</small>
           <button
             type="submit"
             disabled={disabled || !question.trim()}

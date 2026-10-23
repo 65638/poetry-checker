@@ -526,10 +526,6 @@ export function PoetryDesk({
               <StudyProse text={currentCritique.overview} />
               <StudyFollowUpContext input={critique.resultInput} />
               <StudyFollowUp
-                key={JSON.stringify([
-                  critique.resultInput,
-                  currentCritique.overview,
-                ])}
                 input={critique.resultInput}
                 response={critique.result}
                 disabled={!usable || critique.busy}

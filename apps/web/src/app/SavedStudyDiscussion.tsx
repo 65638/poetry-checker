@@ -89,7 +89,6 @@ export function SavedStudyDiscussion({ entry }: { entry: StudyEntry }) {
         </div>
       )}
       <StudyFollowUp
-        key={response.inputHash}
         input={input}
         response={response}
         disabled={task.busy}
