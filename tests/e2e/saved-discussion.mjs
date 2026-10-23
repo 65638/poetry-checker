@@ -28,6 +28,7 @@ try{
    assert.equal(requests.length,0);await ask('请继续解释声音与光。');assert.equal(requests.length,1);assert.equal(requests[0].text,original);assert.equal(requests[0].mode,'reading');assert.deepEqual(requests[0].followUp.turns,[{question:saved.input.question,answer:saved.response.result.overview}]);
    assert.equal(await h.evaluate("document.querySelector('.pc-input__text').value"),draft);
    assert.deepEqual(await h.evaluate("JSON.parse(localStorage.getItem('poetry-study-archive-v1')).entries"),[saved,other]);
+   await waitFor(()=>h.evaluate("document.activeElement?.matches('.pc-saved-discussion__answer')"));
  });
  await check('new-answer-saves-separately-and-can-resume-after-refresh',async()=>{
    await clickText('.pc-saved-discussion button','收藏评议');await waitFor(()=>h.evaluate("JSON.parse(localStorage.getItem('poetry-study-archive-v1')).entries.length===3"));
@@ -45,6 +46,13 @@ try{
    behavior='slow';const count=requests.length;await ask('不能覆盖另一份收藏。',false);await waitFor(()=>requests.length===count+1);await choose(other.title);await sleep(2800);
    assert.equal(await h.evaluate("!!document.querySelector('.pc-saved-discussion__answer')"),false);behavior='success';await ask('这次使用哪首诗？');assert.equal(requests.at(-1).text,other.input.text);assert.equal(requests.at(-1).followUp.turns.length,1);
  });
+ await check('answer-does-not-steal-focus-after-reader-moves-elsewhere',async()=>{
+   behavior='slow';await ask('等待时我去看收藏目录。',false);
+   await h.evaluate("document.querySelector('[aria-label=查找研读收藏]').focus()");
+   await waitFor(()=>h.evaluate("document.querySelector('.pc-saved-discussion__answer .pc-study-prose')?.textContent==='受控收藏续问：等待时我去看收藏目录。'"));
+   assert.equal(await h.evaluate("document.activeElement?.getAttribute('aria-label')"),'查找研读收藏');
+   behavior='success';
+ });
  await check('archive-continuation-fits-320px-and-keeps-answers-readable',async()=>{
    await h.viewport(320,900,true);await h.evaluate("document.querySelector('.pc-saved-discussion').scrollIntoView({block:'start',behavior:'instant'})");assert.equal(await h.evaluate('document.documentElement.scrollWidth<=innerWidth+1'),true);await shot('saved-discussion-320');
  });
@@ -55,14 +63,22 @@ try{
    await h.evaluate("(()=>{const e=document.querySelector('[aria-label=研读类型]');e.value='reading';e.dispatchEvent(new Event('change',{bubbles:true}));})()");
    assert.equal(await h.evaluate("[...document.querySelectorAll('.pc-study-archive__question')].some(e=>e.textContent.includes('请继续解释声音与光。'))"),true);
    await clickText('.pc-study-archive__actions > button','改标题');
+   await waitFor(()=>h.evaluate("document.activeElement?.getAttribute('aria-label')==='收藏标题'"));
+   assert.equal(await h.evaluate("document.activeElement.selectionEnd-document.activeElement.selectionStart"),other.title.length);
    await h.evaluate("(()=>{const e=document.querySelector('[aria-label=收藏标题]');Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(e,'月下的提问');e.dispatchEvent(new Event('input',{bubbles:true}));})()");
    await clickText('.pc-study-archive__rename button','保存标题');await waitFor(()=>h.evaluate("document.querySelector('.pc-study-archive__reader > h3')?.textContent==='月下的提问'"));
    const renamed=await h.evaluate(`JSON.parse(localStorage.getItem('poetry-study-archive-v1')).entries.find(entry=>entry.id===${JSON.stringify(other.id)})`);assert.deepEqual(renamed,{...other,title:'月下的提问'});
+   assert.equal(await h.evaluate("document.activeElement?.textContent.trim()"),'改标题');
    await clickText('.pc-study-archive > button','撤销改标题');await waitFor(()=>h.evaluate("document.querySelector('.pc-study-archive__reader > h3')?.textContent==='静夜思收藏'"));
    await clickText('.pc-study-archive__actions > button','改标题');
    await h.evaluate(`(()=>{const v=JSON.parse(localStorage.getItem('poetry-study-archive-v1'));v.entries.find(entry=>entry.id===${JSON.stringify(other.id)}).title='别处的新标题';localStorage.setItem('poetry-study-archive-v1',JSON.stringify(v));})()`);
    await clickText('.pc-study-archive__rename button','保存标题');await waitFor(()=>h.evaluate("document.querySelector('.pc-study-archive > [role=status]')?.textContent.includes('另一处更新')"));
    assert.equal(await h.evaluate(`JSON.parse(localStorage.getItem('poetry-study-archive-v1')).entries.find(entry=>entry.id===${JSON.stringify(other.id)}).title`),'别处的新标题');
+   assert.equal(await h.evaluate("document.activeElement?.getAttribute('aria-label')"),'收藏标题');
+   await h.cdp.send('Input.dispatchKeyEvent',{type:'keyDown',key:'Escape',code:'Escape',windowsVirtualKeyCode:27});
+   await h.cdp.send('Input.dispatchKeyEvent',{type:'keyUp',key:'Escape',code:'Escape',windowsVirtualKeyCode:27});
+   assert.equal(await h.evaluate("!!document.querySelector('.pc-study-archive__rename')"),false);
+   assert.equal(await h.evaluate("document.activeElement?.textContent.trim()"),'改标题');
    assert.equal(requests.length,count);
  });
  assert.deepEqual(result.errors,[]);

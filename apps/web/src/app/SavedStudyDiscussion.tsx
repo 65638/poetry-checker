@@ -1,5 +1,6 @@
 import type { StudyEntry } from "./studyArchive";
 import { usePoetryTask } from "../hooks/usePoetryTask";
+import { useStudyAnswerFocus } from "../hooks/useStudyAnswerFocus";
 import { StudioTaskState } from "../presentation/components/StudioControls";
 import { StudyFollowUp, StudyFollowUpContext } from "./StudyFollowUp";
 import { StudyProse } from "./StudyProse";
@@ -17,6 +18,7 @@ export function SavedStudyDiscussion({ entry }: { entry: StudyEntry }) {
     ) ?? task.history.at(-1);
   const input = task.result ? task.resultInput : (last?.input ?? entry.input);
   const response = task.result ?? last?.result ?? entry.response;
+  const answerFocus = useStudyAnswerFocus<HTMLDivElement>(response);
   if (entry.input.task !== "critique" || response.task !== "critique")
     return null;
   return (
@@ -34,14 +36,20 @@ export function SavedStudyDiscussion({ entry }: { entry: StudyEntry }) {
       />
       <StudioTaskState {...task} result={last ? response : null} />
       {last && (
-        <div className="pc-saved-discussion__answer">
+        <div
+          className="pc-saved-discussion__answer"
+          ref={answerFocus.target}
+          tabIndex={-1}
+          role="region"
+          aria-label="收藏追问的回答"
+        >
           <p>
             本次回答：{response.provider === "deepseek" ? "DeepSeek" : "GLM"} ·{" "}
             {response.model}
           </p>
           {input?.task === "critique" && input.question && (
             <p className="pc-study-question-asked">
-              本次提问：{input.question}
+              这份回答的问题：{input.question}
             </p>
           )}
           <StudyProse text={response.result.overview} />
@@ -85,7 +93,10 @@ export function SavedStudyDiscussion({ entry }: { entry: StudyEntry }) {
         input={input}
         response={response}
         disabled={task.busy}
-        onAsk={(next) => void task.run(next, { reuse: true })}
+        onAsk={(next) => {
+          answerFocus.begin();
+          void task.run(next, { reuse: true });
+        }}
       />
     </section>
   );

@@ -19,6 +19,7 @@ import type {
 } from "@poetry/contracts";
 import type { CheckerViewProps, InputDraft } from "../view-contract";
 import { usePoetryTask } from "../hooks/usePoetryTask";
+import { useStudyAnswerFocus } from "../hooks/useStudyAnswerFocus";
 import {
   StudioTabs,
   StudioTaskState,
@@ -322,6 +323,7 @@ export function PoetryDesk({
   }
   const currentCritique =
     critique.result?.task === "critique" ? critique.result.result : null;
+  const answerFocus = useStudyAnswerFocus<HTMLHeadingElement>(critique.result);
   const recommendationScope = JSON.stringify([
     report?.inputHash,
     draft.rhymeBook,
@@ -512,10 +514,10 @@ export function PoetryDesk({
               {critique.resultInput?.task === "critique" &&
                 critique.resultInput.question && (
                   <p className="pc-study-question-asked">
-                    本次提问：{critique.resultInput.question}
+                    这份回答的问题：{critique.resultInput.question}
                   </p>
                 )}
-              <h3>
+              <h3 ref={answerFocus.target} tabIndex={-1}>
                 {critique.resultInput?.task === "critique" &&
                 critique.resultInput.question
                   ? "回应你的问题"
@@ -531,7 +533,10 @@ export function PoetryDesk({
                 input={critique.resultInput}
                 response={critique.result}
                 disabled={!usable || critique.busy}
-                onAsk={(input) => void critique.run(input)}
+                onAsk={(input) => {
+                  answerFocus.begin();
+                  void critique.run(input);
+                }}
               />
               {currentCritique.revisionNotice && (
                 <p className="pc-studio-notice" role="status">
@@ -569,6 +574,7 @@ export function PoetryDesk({
                     className="pc-studio-action"
                     disabled={
                       !canApply ||
+                      critique.busy ||
                       pendingEdits?.some(
                         (e) =>
                           e.startTokenId === edit.startTokenId &&

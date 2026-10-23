@@ -5,6 +5,7 @@ import type {
 } from "@poetry/contracts";
 import { requestPoetry } from "../api/poetry-studio";
 import { PoetryResultCache } from "../app/poetryResultCache";
+import { canKeepStudyAnswer } from "../app/studyContinuity";
 
 export type PoetryTaskRecord = {
   key: string;
@@ -48,6 +49,7 @@ export function usePoetryTask(identity: string) {
     input: PoetryAssistantRequest;
   } | null>(null);
   const resultRequest = useRef<string | null>(null);
+  const successfulInput = useRef<PoetryAssistantRequest | null>(null);
   const [cancelled, setCancelled] = useState(false);
   const cancel = useCallback(() => {
     sequence.current++;
@@ -67,6 +69,7 @@ export function usePoetryTask(identity: string) {
     setHistory({ identity, entries: [] });
     lastRequest.current = null;
     resultRequest.current = null;
+    successfulInput.current = null;
     return () => {
       sequence.current++;
       controller.current?.abort();
@@ -88,6 +91,7 @@ export function usePoetryTask(identity: string) {
       if (cached) {
         resultIdentity.current = requestIdentity;
         resultRequest.current = requestKey;
+        successfulInput.current = input;
         setResult(cached);
         setResultInput(input);
         setBusy(false);
@@ -101,7 +105,14 @@ export function usePoetryTask(identity: string) {
       const own = new AbortController();
       controller.current = own;
       setBusy(true);
-      if (resultRequest.current !== requestKey) setResult(null);
+      if (
+        resultRequest.current !== requestKey &&
+        !(
+          resultIdentity.current === requestIdentity &&
+          canKeepStudyAnswer(successfulInput.current, input)
+        )
+      )
+        setResult(null);
       setError(null);
       setCancelled(false);
       try {
@@ -112,6 +123,7 @@ export function usePoetryTask(identity: string) {
         ) {
           resultIdentity.current = requestIdentity;
           resultRequest.current = requestKey;
+          successfulInput.current = input;
           cache.current.set(input, value);
           setResult(value);
           setResultInput(input);
@@ -138,6 +150,7 @@ export function usePoetryTask(identity: string) {
       controller.current?.abort();
       resultIdentity.current = currentIdentity.current;
       resultRequest.current = entry.key;
+      successfulInput.current = entry.input;
       lastRequest.current = {
         identity: currentIdentity.current,
         input: entry.input,
