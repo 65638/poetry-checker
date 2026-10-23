@@ -274,6 +274,61 @@
   .pc-workspace .pc-dictionary__book {
     min-height: 52px;
   }
+  .pc-workspace .pc-dictionary__folio[data-empty="true"] {
+    min-height: 0;
+    padding-block: 20px;
+  }
+  .pc-workspace
+    .pc-dictionary__folio[data-empty="true"]
+    :is(.pc-dictionary__status, .pc-dictionary__feedback):empty {
+    min-height: 0;
+    margin: 0;
+  }
+  .pc-workspace
+    .pc-dictionary__folio[data-empty="true"]
+    :is(.pc-dictionary__folio-head, .pc-dictionary__folio-foot) {
+    padding-block: 12px;
+  }
+  .pc-workspace .pc-dictionary__folio[data-empty="true"] .pc-dictionary__empty {
+    min-height: 0;
+    padding: 26px 0;
+    align-items: flex-start;
+    text-align: left;
+  }
+  .pc-workspace
+    .pc-dictionary__folio[data-empty="true"]
+    .pc-dictionary__empty
+    h2 {
+    margin-block: 0 12px;
+    font-size: 30px;
+    letter-spacing: 0.08em;
+  }
+  .pc-workspace
+    .pc-dictionary__folio[data-empty="true"]
+    .pc-dictionary__empty
+    p {
+    margin-block: 0;
+    font-size: 16px;
+    line-height: 1.9;
+    text-align: left;
+  }
+  .pc-workspace
+    .pc-dictionary__folio[data-empty="true"]
+    .pc-dictionary__empty-glyph {
+    top: 0;
+    right: 0;
+    font-size: 130px;
+  }
+  .pc-workspace
+    .pc-dictionary__folio[data-empty="true"]
+    .pc-dictionary__empty-mark {
+    margin-top: 20px;
+  }
+  .pc-workspace
+    .pc-dictionary__folio[data-empty="true"]
+    .pc-dictionary__folio-foot {
+    margin-top: 0;
+  }
 }
 @media (max-width: 599px) {
   .pc-workspace .pc-dictionary__folio {
