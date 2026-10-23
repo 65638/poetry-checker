@@ -4,11 +4,18 @@
 
 ## 最新可用版本
 
-- 功能提交：`7ce391a`（晚间批次01：围绕回答继续追问），基于含PR#34的`a200a37`。
-- 业务基线：1141测试 / 97文件，全量verify通过；追问6、历史回看5个浏览器场景通过（受控模型、真实API和浏览器，非真实模型质量评价），含320px。
+- 功能提交：`a9ff5b0`（晚间批次02：改稿对照）；整合提交`291202c`包含PR#35截至d3587ec的展示优化。
+- 业务基线：1144测试 / 98文件，全量verify通过；UI整合后追问6、改稿6浏览器场景通过，含320px。均使用受控模型、真实API和浏览器，不代表真实模型质量。
 - 本机预览：`http://127.0.0.1:56106/`，已由桌面发布脚本启动。保留本机数据和模型配置。
-- main随同步记录推送；CI以[Actions](https://github.com/65638/poetry-checker/actions)实际状态为准。
+- main随同步记录推送；晚间批次01的218f0ed CI已成功，最新以[Actions](https://github.com/65638/poetry-checker/actions)实际状态为准。
 
+## 晚间批次02接入点
+
+- `DraftComparison.tsx` / `draftComparisonRequest.ts` / `draft-comparison.css`位于推敲笺的NotebookArchive之前；`.pc-draft-comparison`及`__selectors`/`__versions`/`__changes`/`__result`供展示适配。
+- 选择当前稿或已存版本，去除相同正文，展示逐行增删；点击后才请求AI，失败可原样重试、切换两版/意图取消在途请求，重复请求可复用本次缓存。查看不会改写草稿。
+- compare请求可选revision（beforeLabel/afterLabel/intention），独立于两诗对读；比较表达得失不冒称正式格律检查。保存/分享带实际两版和意图，旧收藏兼容。
+- 全量verify1144/98，末次分享文案调整后相关单元测试通过；UI整合后Web构建、追问6/改稿6通过。证据`artifacts/continuous-improvement/evening02-ui-follow-up/`、`evening02-ui-revision/`。桌面发布脚本已更新56106。
+- Git推送曾HTTP408；本机成功命令为`git -c http.version=HTTP/1.1 -c http.postBuffer=104857600 -c core.compression=0 push --no-thin origin HEAD:refs/heads/main`。这只是实测成功配置，不认定网络根因；失败提示Everything up-to-date不能当成功，须核对远端SHA。
 ## 晚间批次01接入点
 
 - `StudyFollowUp.tsx` / `followUpRequest.ts` / `study-follow-up.css`：显式发送，最近最多三轮正文，校诗台及诗库可用；选择示例不请求模型。`.pc-study-follow-up`与`.pc-study-follow-up-context`可用于展示适配。
