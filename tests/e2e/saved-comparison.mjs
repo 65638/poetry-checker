@@ -9,7 +9,7 @@ import {startHarness,waitFor,sleep,revision} from '../../docs/design/moonlit-ui/
 const out=resolve(process.argv[2]??'artifacts/saved-comparison');mkdirSync(out,{recursive:true});
 let behavior='ok';const requests=[];
 const app=buildApp({readingAssistant:{provider:'deepseek',apiKey:'controlled',fetcher:async(_url,init)=>{const input=JSON.parse(JSON.parse(init.body).messages[1].content);return new Response(JSON.stringify({choices:[{finish_reason:'stop',message:{content:JSON.stringify({overview:'受控收藏比较：'+input.question,aspects:[{name:'表达',left:'受控左卷说明',right:'受控右卷说明'}]})}}]}));}}});
-app.addHook('preHandler',async(request,reply)=>{if(request.url!=='/api/v1/poetry-assistant')return;requests.push(structuredClone(request.body));if(behavior==='slow')await sleep(2500);if(behavior==='fail')return reply.code(503).send({error:{message:'受控失败，请重试。'}});});
+app.addHook('preHandler',async(request,reply)=>{if(request.url!=='/api/v1/poetry-assistant')return;requests.push(structuredClone(request.body));if(behavior==='slow')await sleep(2500);if(behavior==='fail'){await sleep(220);return reply.code(503).send({error:{message:'受控失败，请重试。'}});}});
 const entryFor=(payload,title)=>{const input=PoetryAssistantRequestSchema.parse(payload);return createStudyEntry(input,{task:'compare',provider:'zhipu',model:'controlled-old-model',notice:'受控收藏',inputHash:createHash('sha256').update(JSON.stringify(input)).digest('hex'),result:{overview:'已保存的受控比较',aspects:[{name:'表达',left:'原左卷',right:'原右卷'}]}},title,'2026-10-23T10:00:00Z');};
 const saved=entryFor({task:'compare',left:'山高水远。',right:'白日依山尽，黄河入海流。',question:'原有问题',scope:{left:{title:'受控选段作品',part:2,parts:3},right:{title:'登鹳雀楼片句',part:1,parts:1}}},'保存的选段对读');
 const version=entryFor({task:'compare',left:'山高水远。',right:'山高水长。',revision:{beforeLabel:'初稿',afterLabel:'二稿',intention:'强调水路绵延'}},'保存的两版稿件');
@@ -36,6 +36,7 @@ try{
  });
  await check('failure-keeps-previous-answer-and-retries-snapshot-not-unsent-question',async()=>{
    behavior='fail';await ask('请再比较语气。',false);await waitFor(()=>h.evaluate("!!document.querySelector('.pc-saved-comparison .pc-studio-error')"));await answer('景物与情绪怎样相连？');
+   assert.equal(await h.evaluate("!!document.querySelector('.pc-saved-comparison .pc-studio-status')"),false,'Failure must replace the settling spinner so retry does not move');
    const failed=structuredClone(requests.at(-1));await fill('尚未发送的草稿');behavior='ok';await clickText('.pc-saved-comparison button','重试本次研读');await answer(failed.question);assert.deepEqual(requests.at(-1),failed);
    assert.equal(await h.evaluate("document.querySelector('.pc-saved-comparison textarea').value"),'尚未发送的草稿');
  });

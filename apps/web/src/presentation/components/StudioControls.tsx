@@ -95,7 +95,7 @@ export function StudioTaskState({
               : "本次未完成，下面保留上次研读结果。"}
         </p>
       )}
-      {visible && (
+      {visible && (busy || (!error && !cancelled)) && (
         <div className="pc-studio-status" role="status">
           <LoaderCircle
             size={17}
