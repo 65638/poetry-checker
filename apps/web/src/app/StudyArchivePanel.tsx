@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { StudyShareOptions } from "./StudyShareOptions";
+import { SavedStudyDiscussion } from "./SavedStudyDiscussion";
 import {
   STUDY_ARCHIVE_KEY,
   STUDY_ARCHIVE_EVENT,
@@ -31,6 +33,7 @@ export function StudyArchivePanel() {
   const [selected, setSelected] = useState<string | null>(null);
   const [removed, setRemoved] = useState<StudyEntry | null>(null);
   const [notice, setNotice] = useState("");
+  const [includeHistory, setIncludeHistory] = useState(false);
   useEffect(() => {
     const refresh = () => setState(readArchive());
     window.addEventListener(STUDY_ARCHIVE_EVENT, refresh);
@@ -153,7 +156,7 @@ export function StudyArchivePanel() {
               <button
                 type="button"
                 onClick={() => {
-                  void copyStudy(entry).then(
+                  void copyStudy(entry, includeHistory).then(
                     () => setNotice("原诗与评议已复制。"),
                     () => setNotice("剪贴板暂不可用，可下载文本。"),
                   );
@@ -163,7 +166,9 @@ export function StudyArchivePanel() {
               </button>
               <button
                 type="button"
-                onClick={() => action(() => downloadStudy(entry))}
+                onClick={() =>
+                  action(() => downloadStudy(entry, includeHistory))
+                }
               >
                 下载这份研读
               </button>
@@ -192,9 +197,16 @@ export function StudyArchivePanel() {
                 移除这份研读
               </button>
             </div>
+            {entry.input.task === "critique" && entry.input.followUp && (
+              <StudyShareOptions
+                includeHistory={includeHistory}
+                onChange={setIncludeHistory}
+              />
+            )}
             <pre tabIndex={0} role="region" aria-label="已保存的原诗与评议正文">
               {studyText(entry)}
             </pre>
+            <SavedStudyDiscussion key={entry.id} entry={entry} />
           </article>
         )}
       </div>

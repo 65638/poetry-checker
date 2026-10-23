@@ -1,0 +1,33 @@
+.pc-saved-discussion {
+  padding: 16px;
+  margin-top: 20px;
+  color: #30483a;
+  background: #f4f1e5;
+  border: 1px solid #8c9e7b;
+  border-radius: 5px;
+  line-height: 1.85;
+  overflow-wrap: anywhere;
+  --pc-text: #30483a;
+  --pc-text-muted: #586651;
+  --pc-surface-sheet: #fbf9ef;
+  --pc-focus: #356959;
+}
+.pc-saved-discussion > h4 {
+  margin-top: 0;
+  font-size: 17px;
+}
+.pc-saved-discussion__answer > .pc-study-prose {
+  font-size: 15px;
+}
+.pc-saved-discussion .pc-study-follow-up-context {
+  max-height: 300px;
+  overflow: auto;
+}
+.pc-saved-discussion .pc-studio-meta {
+  color: #52645e;
+}
+@media (max-width: 600px) {
+  .pc-saved-discussion {
+    padding: 12px;
+  }
+}

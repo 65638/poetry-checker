@@ -45,6 +45,7 @@ import { StudyQuestion } from "./StudyQuestion";
 import { StudyHistory } from "./StudyHistory";
 import { StudyFollowUp, StudyFollowUpContext } from "./StudyFollowUp";
 import { RelatedReading } from "./RelatedReading";
+import { StudyProse } from "./StudyProse";
 import {
   StudioTabs,
   StudioTaskState,
@@ -707,9 +708,10 @@ export function LibraryContainer({
                   </p>
                 </div>
               </header>
-              <p className="pc-compare-overview">
-                {comparison.result.result.overview}
-              </p>
+              <StudyProse
+                className="pc-compare-overview"
+                text={comparison.result.result.overview}
+              />
               {comparison.result.result.aspects.map((aspect, i) => (
                 <div key={i} className="pc-library-aspect">
                   <h3>
@@ -1231,7 +1233,7 @@ export function LibraryContainer({
                       本次提问：{literary.resultInput.question}
                     </p>
                   )}
-                <p>{literary.result.result.overview}</p>
+                <StudyProse text={literary.result.result.overview} />
                 <StudyFollowUpContext input={literary.resultInput} />
                 <StudyFollowUp
                   key={JSON.stringify([

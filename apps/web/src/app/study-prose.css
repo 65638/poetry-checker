@@ -1,0 +1,18 @@
+.pc-study-prose {
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+  line-height: 1.95;
+}
+.pc-study-share-options {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-block: 12px;
+  font-size: 13px;
+  line-height: 1.8;
+}
+.pc-workspace .pc-study-share-options input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+  flex: 0 0 auto;
+}

@@ -4,6 +4,7 @@ import type { NotebookEntry } from "./notebook";
 import { usePoetryTask } from "../hooks/usePoetryTask";
 import { StudioTaskState } from "../presentation/components/StudioControls";
 import { StudyResultActions } from "./StudyResultActions";
+import { StudyProse } from "./StudyProse";
 import {
   buildDraftComparison,
   draftComparisonChoices,
@@ -160,7 +161,7 @@ export function DraftComparison({
           {result && input && (
             <article className="pc-draft-comparison__result">
               <h3>修改得失</h3>
-              <p>{result.result.overview}</p>
+              <StudyProse text={result.result.overview} />
               <p className="pc-studio-meta">
                 比较表达得失，不作合律判断；新稿也可能不如旧稿贴切。
               </p>
