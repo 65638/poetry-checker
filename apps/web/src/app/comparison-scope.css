@@ -1,32 +1,96 @@
-.pc-comparison-scope {
-  margin-block: 1rem;
-  padding: 1rem;
-  border: 1px solid currentColor;
-  border-radius: 4px;
+/* The chosen passage is a reading scope, separate from the full original below. */
+.pc-workspace .pc-comparison-scope {
+  margin-block: 18px 24px;
+  padding: 16px;
+  border: 1px solid #9caa8a;
+  border-left: 3px solid #738665;
+  border-radius: 3px;
+  background: #e7eadb;
+  color: #304936;
+  --pc-focus: #396b50;
 }
-.pc-comparison-scope label {
+.pc-workspace .pc-comparison-scope label {
   display: grid;
-  gap: 0.5rem;
+  gap: 8px;
+  font: 600 14px/1.8 var(--pc-font-sans);
 }
-.pc-comparison-scope select {
+.pc-workspace .pc-comparison-scope select {
   width: 100%;
   min-width: 0;
   max-width: 100%;
-  padding: 0.5rem;
-  font: inherit;
-  color: inherit;
-  background: transparent;
+  min-height: 46px;
+  margin: 0;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border: 1px solid #829375;
+  border-radius: 3px;
+  font: 14px/1.7 var(--pc-font-sans);
+  color: #304936;
+  background: #faf8ed;
 }
-.pc-comparison-scope p {
-  font-size: 0.85rem;
-  line-height: 1.7;
+.pc-workspace .pc-comparison-scope > p {
+  margin: 12px 0 0;
+  color: #52634b;
+  font: 13px/1.85 var(--pc-font-sans);
 }
-.pc-comparison-scope blockquote {
+.pc-workspace .pc-comparison-scope details {
+  margin-top: 12px;
+  border-top: 1px solid #9caa8a77;
+}
+.pc-workspace .pc-comparison-scope summary {
+  min-height: 44px;
+  padding-block: 11px;
+  box-sizing: border-box;
+  cursor: pointer;
+  font: 14px/1.6 var(--pc-font-sans);
+}
+.pc-workspace .pc-comparison-scope blockquote {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
-  max-height: 15rem;
+  max-height: min(280px, 45dvh);
   overflow-y: auto;
-  margin: 0.75rem 0 0;
-  padding: 0.5rem;
-  line-height: 1.9;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: #788c6c transparent;
+  margin: 4px 0 0;
+  padding: 12px;
+  border-left: 2px solid #a7b495;
+  background: #f9f7ec;
+  color: #304936;
+  font: var(--pc-study-reading-size, 16px)/1.95 var(--pc-font-sans);
+}
+@media (max-width: 599px) {
+  .pc-workspace .pc-comparison-scope {
+    padding: 12px;
+  }
+  .pc-workspace .pc-comparison-scope blockquote {
+    padding: 10px 8px;
+  }
+}
+@media (forced-colors: active) {
+  .pc-workspace .pc-comparison-scope {
+    border-color: CanvasText;
+  }
+  .pc-workspace .pc-comparison-scope :focus-visible {
+    outline-color: Highlight;
+  }
+}
+@media print {
+  .pc-workspace .pc-comparison-scope {
+    padding: 12px 0;
+    border-inline: 0;
+    break-inside: auto;
+  }
+  .pc-workspace .pc-comparison-scope select {
+    appearance: none;
+    padding: 0;
+    min-height: 0;
+    border: 0;
+  }
+  .pc-workspace .pc-comparison-scope blockquote {
+    max-height: none;
+    overflow: visible;
+    scrollbar-gutter: auto;
+  }
 }

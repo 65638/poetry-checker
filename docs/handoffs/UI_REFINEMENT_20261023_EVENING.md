@@ -159,3 +159,11 @@ git -c http.version=HTTP/1.1 -c http.postBuffer=104857600 -c core.compression=0 
 - 1440/768短屏/390/320，大字、键盘Tab/Enter发送、等待后不抢已移开的输入焦点、失败保留原问题标签、高对比与打印媒体检查通过。打印隐藏输入表单、保留已显示回答。axe无确定违规，颜色纹理仍有incomplete项。证据evening20-comparison/results.json及实际截图；受控模型仅验证界面。
 - eaf29af全量verify1158/102通过（evening19-verify.log）；da66ca7整合后的局部浏览器结果单列，未称其为相同版本的全量验证。
 - 功能侧正在处理长篇两诗选段，暂避LibraryContainer与新范围组件，等待固定SHA。
+
+### 批次21–22：对比度抽样与长篇选段展示
+
+- 7ea33b8已整合；按功能侧明确委派接管新`apps/web/src/app/comparison-scope.css`展示，不改ComparisonScope.tsx或LibraryContainer业务。
+- 选段范围独立浅色纸面，标签/提示/预览层级明确，选择与展开入口至少44px。原预览未响应字号，现16/18/20px；原打印保留240px滚动限制，现完整展开（本次《离骚》519字符，大字打印实测4700px全部显示）。切回screen仍限制预览高度，原文不变，无新增模型调用。
+- 1440/768短屏/390/320、真实键盘选段/Tab/正文PageDown/Tab离开、高对比、打印媒体均通过；既有长篇选段4场景通过。证据evening22-scope、evening22-passages；基线问题在evening22-scope-baseline保留。
+- **留给当前业务写入方的语义小修正**：ComparisonScope.tsx的可滚动blockquote带aria-label但没有role。axe列aria-prohibited-attr为incomplete，和此前DraftComparison问题相同；建议加`role="region"`使命名的滚动原文区域有明确语义，本侧未抢写TSX。当前不能把此项称作已修。
+- 14处实际背景对比度抽样通过：暂时隐藏字形，对截图背景采样，与原计算文字色核对（排除边框），覆盖诗文提示/问这段/作者、提问示例、对读问题标签/正文/左右卷标记、收藏入口/元数据/移除。字体小于24px按4.5:1检查；例如诗文作者最低4.69:1、段落按钮4.96:1。证据evening21-contrast/results.json；这是指定区域的保守采样，不代表全站无障碍认证。初脚本误选含输入框的整个label，把控件边框当文字背景，已改为只采独立文本/按钮，未改产品颜色以迎合脚本。
