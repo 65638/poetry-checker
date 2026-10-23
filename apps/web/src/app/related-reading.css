@@ -1,0 +1,82 @@
+.pc-related-reading {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid #a3aba0;
+  color: #30483a;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+.pc-related-reading summary {
+  cursor: pointer;
+}
+.pc-related-reading__controls,
+.pc-related-reading__actions,
+.pc-related-reading__pages {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+.pc-related-reading__controls label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pc-related-reading__list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+}
+.pc-related-reading__list li {
+  padding: 12px;
+  background: #e5e9da;
+  border: 1px solid #a3aba0;
+  border-radius: 6px;
+  min-width: 0;
+}
+.pc-related-reading__list :is(h4, p) {
+  margin: 6px 0;
+}
+.pc-related-reading__list blockquote {
+  margin: 12px 0;
+  white-space: pre-wrap;
+  max-height: 200px;
+  overflow: auto;
+}
+.pc-related-reading__reason,
+.pc-related-reading small {
+  font-size: 13px;
+  color: #52645e;
+}
+.pc-workspace .pc-related-reading :is(button, select) {
+  color: #30483a;
+  background: #f7f5e9;
+  font: inherit;
+  border: 1px solid #7b8984;
+  padding: 8px 10px;
+  border-radius: 4px;
+  min-height: 44px;
+  max-width: 100%;
+  cursor: pointer;
+}
+.pc-related-reading button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.pc-related-reading :is(button, select, input, summary):focus-visible {
+  outline: 2px solid #315a60;
+  outline-offset: 3px;
+}
+.pc-related-reading__pages {
+  margin-block: 16px;
+}
+.pc-related-reading__pages span {
+  font-size: 12px;
+}
+@media (max-width: 600px) {
+  .pc-related-reading__controls {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

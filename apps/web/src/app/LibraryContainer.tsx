@@ -44,6 +44,7 @@ import { RuleReviewNote } from "./RuleReviewNote";
 import { StudyQuestion } from "./StudyQuestion";
 import { StudyHistory } from "./StudyHistory";
 import { StudyFollowUp, StudyFollowUpContext } from "./StudyFollowUp";
+import { RelatedReading } from "./RelatedReading";
 import {
   StudioTabs,
   StudioTaskState,
@@ -82,6 +83,7 @@ export function LibraryContainer({
   );
   const excerpts = useExcerpts();
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [relatedTrail, setRelatedTrail] = useState<string[]>([]);
   const [visits, setVisits] = useState(() => {
     try {
       return parseReadingJournal(localStorage.getItem(READING_JOURNAL_KEY));
@@ -156,6 +158,7 @@ export function LibraryContainer({
   const queryComposing = useRef(false);
   const catalogueList = useRef<HTMLDivElement>(null);
   const reader = useRef<HTMLElement>(null);
+  const compareReader = useRef<HTMLElement>(null);
   const catalogue = useRef<HTMLElement>(null);
   const returnTitle = useRef<HTMLButtonElement | null>(null);
   const searchTask = usePoetryTask(
@@ -365,7 +368,8 @@ export function LibraryContainer({
       setImporting(false);
     }
   }
-  function openWork(work: LibraryWork) {
+  function openWork(work: LibraryWork, keepTrail = false) {
+    if (!keepTrail) setRelatedTrail([]);
     returnTitle.current =
       document.activeElement instanceof HTMLButtonElement
         ? document.activeElement
@@ -390,6 +394,7 @@ export function LibraryContainer({
     });
   }
   function closeWork() {
+    setRelatedTrail([]);
     setSelectedId(null);
     if (window.matchMedia("(max-width: 799px)").matches)
       catalogue.current?.scrollIntoView({
@@ -624,6 +629,8 @@ export function LibraryContainer({
       {view === "compare" && (
         <section
           className="pc-library-reading pc-library-comparison"
+          ref={compareReader}
+          tabIndex={-1}
           role="tabpanel"
           aria-label="对读"
         >
@@ -1076,6 +1083,23 @@ export function LibraryContainer({
               </button>
             </div>
             <h2>{selected.title}</h2>
+            {!!relatedTrail.length && (
+              <button
+                className="pc-studio-action pc-related-return"
+                onClick={() => {
+                  const previous = works.find(
+                    (work) => work.id === relatedTrail.at(-1),
+                  );
+                  setRelatedTrail((trail) => trail.slice(0, -1));
+                  if (previous) openWork(previous, true);
+                }}
+              >
+                返回上一首《
+                {works.find((work) => work.id === relatedTrail.at(-1))?.title ??
+                  "原诗"}
+                》
+              </button>
+            )}
             <p className="pc-studio-meta pc-library-byline">
               {selected.dynasty || "朝代未载"} · {selected.author || "作者未载"}
               {selected.kind === "prose" ? " · 散文" : ""}
@@ -1314,6 +1338,34 @@ export function LibraryContainer({
               key={selected.id}
               text={selected.paragraphs.join("\n")}
             />
+            {selected.kind !== "prose" && (
+              <RelatedReading
+                key={selected.id}
+                selected={selected}
+                works={unique.works}
+                favorites={favorites}
+                onRead={(work) => {
+                  setRelatedTrail((trail) =>
+                    [...trail, selected.id].slice(-12),
+                  );
+                  openWork(work, true);
+                }}
+                onFavorite={toggleFavorite}
+                onCompare={(work) => {
+                  setLeftId(selected.id);
+                  setRightId(work.id);
+                  setCompareLine(null);
+                  setView("compare");
+                  window.requestAnimationFrame(() => {
+                    compareReader.current?.focus({ preventScroll: true });
+                    compareReader.current?.scrollIntoView({
+                      block: "start",
+                      behavior: motion.effects ? "smooth" : "instant",
+                    });
+                  });
+                }}
+              />
+            )}
             {selected.paragraphs.join("\n").length > 2000 && (
               <p className="pc-studio-notice">
                 长篇原文完整保留；研读按所选段落进行，选段结论不代表整篇。
