@@ -53,6 +53,8 @@ export interface CheckerState {
   pendingOverrides: ReadingOverride[];
   /** 由 deriveStale 派生，不可手动设置。 */
   stale: boolean;
+  restoredFromSession: boolean;
+  analysisSessionId: string | null;
 }
 
 export interface StoreOptions {
@@ -93,6 +95,8 @@ function initialState(draft: InputDraft): CheckerState {
     overrides: [],
     pendingOverrides: [],
     stale: false,
+    restoredFromSession: false,
+    analysisSessionId: null,
   };
 }
 
@@ -136,6 +140,36 @@ export class CheckerStore {
   }
 
   getState = (): CheckerState => this.state;
+
+  /** Restore only into the untouched initial view; never race a user's edit or request. */
+  restoreCompletedAnalysis(
+    outcome: Extract<AnalyzeOutcome, { ok: true }>,
+    expectedState: CheckerState,
+  ): boolean {
+    if (this.state !== expectedState || this.state.report || this.state.busy)
+      return false;
+    const request = outcome.request;
+    const snapshotDraft: InputDraft = {
+      text: request.text,
+      rhymeBook: request.rhymeBook,
+      genreHint: request.genreHint,
+      formHint: request.formHint,
+    };
+    if (!sameInput(this.state.draft, snapshotDraft)) return false;
+    this.cancelScheduledRefresh();
+    this.refreshPaused = true;
+    this.commit({
+      report: outcome.report,
+      requestSnapshot: request,
+      snapshotDraft,
+      overrides: request.readingOverrides,
+      pendingOverrides: request.readingOverrides,
+      restoredFromSession: true,
+      analysisSessionId: outcome.serverSession ?? null,
+      feedback: "已恢复此标签页上次完成的分析。点“分析”可获取新结果。",
+    });
+    return true;
+  }
 
   subscribe = (listener: () => void): (() => void) => {
     this.listeners.add(listener);
@@ -314,6 +348,8 @@ export class CheckerStore {
       this.commit({
         busy: false,
         report: outcome.report,
+        restoredFromSession: false,
+        analysisSessionId: outcome.serverSession ?? null,
         requestSnapshot: outcome.request,
         snapshotDraft: draftAtRequest,
         overrides: requestOverrides,
@@ -564,6 +600,8 @@ export class CheckerStore {
     this.commit({
       draft: input.draft,
       report: input.report,
+      restoredFromSession: false,
+      analysisSessionId: null,
       requestSnapshot: input.request,
       snapshotDraft: input.draft,
       busy: false,

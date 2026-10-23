@@ -16,7 +16,12 @@ export interface Transport {
 }
 
 export type AnalyzeOutcome =
-  | { ok: true; report: AnalysisResponse; request: AnalyzeRequest }
+  | {
+      ok: true;
+      report: AnalysisResponse;
+      request: AnalyzeRequest;
+      serverSession?: string;
+    }
   | { ok: false; error: ApiError };
 
 export interface AnalyzeClientOptions {
@@ -151,6 +156,7 @@ export async function analyze(
     };
   }
 
+  const serverSession = response.headers.get("X-Poetry-Analysis-Session");
   if (
     response.ok &&
     response.headers.get("content-type")?.split(";")[0]?.trim() ===
@@ -245,6 +251,32 @@ export async function analyze(
     return { ok: false, error: new ApiError("BAD_JSON", "响应不是合法 JSON") };
   }
 
+  const outcome = validateAnalysisResult(body, built.request);
+  return outcome.ok && serverSession && /^[a-f0-9-]{36}$/u.test(serverSession)
+    ? { ...outcome, serverSession }
+    : outcome;
+}
+
+/** Network and session-restored results use the same content and ownership checks. */
+export function validateAnalysisResult(
+  body: unknown,
+  request: AnalyzeRequest,
+): AnalyzeOutcome {
+  const draft = {
+    text: request.text,
+    rhymeBook: request.rhymeBook,
+    genreHint: request.genreHint,
+    formHint: request.formHint,
+  };
+  const built = buildAnalyzeRequest(draft, request.readingOverrides);
+  if (
+    request.inputHash !== undefined &&
+    request.inputHash !== built.expectedInputHash
+  )
+    return {
+      ok: false,
+      error: new ApiError("RESPONSE_INPUT_MISMATCH", "请求摘要与原文不符"),
+    };
   const parsed = AnalysisResponseSchema.safeParse(body);
   if (!parsed.success) {
     return {
