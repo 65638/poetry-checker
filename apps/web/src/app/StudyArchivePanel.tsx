@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { OPEN_STUDY_EVENT } from "./studyNavigation";
 import { StudyShareOptions } from "./StudyShareOptions";
 import { SavedStudyDiscussion } from "./SavedStudyDiscussion";
+import { SavedComparisonDiscussion } from "./SavedComparisonDiscussion";
 import {
   STUDY_ARCHIVE_KEY,
   STUDY_ARCHIVE_EVENT,
@@ -407,7 +408,11 @@ export function StudyArchivePanel() {
             <pre tabIndex={0} role="region" aria-label="已保存的原诗与评议正文">
               {studyText(entry)}
             </pre>
-            <SavedStudyDiscussion key={entry.id} entry={entry} />
+            {entry.input.task === "compare" ? (
+              <SavedComparisonDiscussion key={entry.id} entry={entry} />
+            ) : (
+              <SavedStudyDiscussion key={entry.id} entry={entry} />
+            )}
           </article>
         )}
       </div>

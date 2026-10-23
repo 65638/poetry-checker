@@ -46,7 +46,11 @@ export function ComparisonScope({
           <summary>
             本次选段原文 · {current.paragraphs.join("\n").length} 字符
           </summary>
-          <blockquote tabIndex={0} aria-label={`${label}本次选段原文`}>
+          <blockquote
+            tabIndex={0}
+            role="region"
+            aria-label={`${label}本次选段原文`}
+          >
             {current.paragraphs.join("\n")}
           </blockquote>
         </details>

@@ -16,7 +16,7 @@ export function StudyQuestion({
   heading?: string;
   prose?: boolean;
   seed?: { question: string; revision: number };
-  comparison?: boolean;
+  comparison?: boolean | "revision";
 }) {
   const [question, setQuestion] = useState("");
   const limitId = useId();
@@ -29,23 +29,30 @@ export function StudyQuestion({
     field.current?.focus({ preventScroll: true });
     field.current?.scrollIntoView({ block: "center", behavior: "instant" });
   }, [seed]);
-  const examples = comparison
-    ? [
-        "两首诗怎样用景物表达不同的情绪？请引用左右原句。",
-        "两首诗的结尾各有什么作用？请比较与前文的联系。",
-        "两首诗在结构与表达方式上，有哪些值得借鉴的不同？",
-      ]
-    : mode === "reading"
+  const examples =
+    comparison === "revision"
       ? [
-          "这首诗的情绪是怎样层层展开的？",
-          "哪些字最能体现这首诗的意境？",
-          "请结合原句解释虚写和实写的关系。",
+          "这次修改是否更贴近原定意图？请比较具体改动。",
+          "哪些旧稿表达值得保留？请说明两版的取舍。",
+          "改动是否影响前后衔接和情绪？请引用两版原句。",
         ]
-      : [
-          "哪些词最值得推敲，又不损害原意？",
-          "转折和结尾是否自然？请结合前文说明。",
-          "画面有没有重复或不连贯的地方？",
-        ];
+      : comparison
+        ? [
+            "两首诗怎样用景物表达不同的情绪？请引用左右原句。",
+            "两首诗的结尾各有什么作用？请比较与前文的联系。",
+            "两首诗在结构与表达方式上，有哪些值得借鉴的不同？",
+          ]
+        : mode === "reading"
+          ? [
+              "这首诗的情绪是怎样层层展开的？",
+              "哪些字最能体现这首诗的意境？",
+              "请结合原句解释虚写和实写的关系。",
+            ]
+          : [
+              "哪些词最值得推敲，又不损害原意？",
+              "转折和结尾是否自然？请结合前文说明。",
+              "画面有没有重复或不连贯的地方？",
+            ];
   return (
     <details className="pc-study-question" ref={root}>
       <summary>{heading}</summary>
@@ -56,18 +63,30 @@ export function StudyQuestion({
         }}
       >
         <label>
-          {comparison ? "想请 AI 比较什么？" : "想请 AI 留意什么？"}
+          {comparison === "revision"
+            ? "想请 AI 看哪些改动？"
+            : comparison
+              ? "想请 AI 比较什么？"
+              : "想请 AI 留意什么？"}
           <textarea
             ref={field}
-            aria-label={comparison ? "两诗对读问题" : "本诗研读问题"}
+            aria-label={
+              comparison === "revision"
+                ? "改稿对照问题"
+                : comparison
+                  ? "两诗对读问题"
+                  : "本诗研读问题"
+            }
             aria-describedby={limitId}
             value={question}
             maxLength={240}
             rows={3}
             placeholder={
-              comparison
-                ? "例如：两首诗都写月亮，情绪有什么不同？"
-                : "例如：最后一句的情绪，和前面的景物衔接自然吗？"
+              comparison === "revision"
+                ? "例如：改后的结尾更好吗，还是旧稿更贴合前文？"
+                : comparison
+                  ? "例如：两首诗都写月亮，情绪有什么不同？"
+                  : "例如：最后一句的情绪，和前面的景物衔接自然吗？"
             }
             onChange={(event) => setQuestion(event.target.value)}
           />
