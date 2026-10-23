@@ -41,6 +41,7 @@ import { formatModernReading } from "./readingLabels";
 import { StudyHistory } from "./StudyHistory";
 import { StudyFollowUp, StudyFollowUpContext } from "./StudyFollowUp";
 import { DraftComparison } from "./DraftComparison";
+import { StudyProse } from "./StudyProse";
 
 type CritiqueInput = Extract<PoetryAssistantRequest, { task: "critique" }>;
 export function PoetryDesk({
@@ -520,7 +521,7 @@ export function PoetryDesk({
                   ? "回应你的问题"
                   : "通篇观照"}
               </h3>
-              <p>{currentCritique.overview}</p>
+              <StudyProse text={currentCritique.overview} />
               <StudyFollowUpContext input={critique.resultInput} />
               <StudyFollowUp
                 key={JSON.stringify([

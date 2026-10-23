@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { StudyShareOptions } from "./StudyShareOptions";
 import type {
   PoetryAssistantRequest,
   PoetryAssistantResponse,
@@ -19,6 +20,7 @@ export function StudyResultActions({
   result: PoetryAssistantResponse | null;
   title?: string;
 }) {
+  const [includeHistory, setIncludeHistory] = useState(false);
   const [notice, setNotice] = useState<{
     result: PoetryAssistantResponse;
     text: string;
@@ -38,10 +40,10 @@ export function StudyResultActions({
             : "这份评议已收藏。",
         });
       } else if (action === "copy") {
-        await copyStudy(entry);
+        await copyStudy(entry, includeHistory);
         setNotice({ result, text: "原诗与评议已复制，可直接分享。" });
       } else {
-        downloadStudy(entry);
+        downloadStudy(entry, includeHistory);
         setNotice({ result, text: "研读文本已生成，请在浏览器下载中查看。" });
       }
     } catch (cause) {
@@ -58,6 +60,12 @@ export function StudyResultActions({
   }
   return (
     <div className="pc-study-result-actions">
+      {input.task === "critique" && input.followUp && (
+        <StudyShareOptions
+          includeHistory={includeHistory}
+          onChange={setIncludeHistory}
+        />
+      )}
       <div
         className="pc-studio-actions"
         role="group"

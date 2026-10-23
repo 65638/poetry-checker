@@ -5,6 +5,7 @@ import {
   type PoetryAssistantResponse,
 } from "@poetry/contracts";
 import { sha256Hex } from "../utils/sha256";
+import { studyProse } from "./studyProseText";
 
 export const STUDY_ARCHIVE_KEY = "poetry-study-archive-v1";
 export const STUDY_ARCHIVE_EVENT = "poetry-study-archive-changed";
@@ -145,12 +146,15 @@ const directionNames = {
   imagery: "加强画面",
   sound: "节奏声律",
 };
-export function studyText(entry: StudyEntry): string {
+export function studyText(
+  entry: StudyEntry,
+  options: { includeHistory?: boolean } = {},
+): string {
   const { input, response } = entry;
   const rows = [entry.title, ""];
   if (input.task === "critique" && response.task === "critique") {
     if (input.question) rows.push("研读问题", input.question, "");
-    if (input.followUp) {
+    if (input.followUp && options.includeHistory !== false) {
       rows.push("追问背景（此前的 AI 回答，仅供参考）");
       for (const turn of input.followUp.turns)
         rows.push(turn.question ?? "通篇观照", turn.answer, "");
@@ -162,7 +166,7 @@ export function studyText(entry: StudyEntry): string {
       input.text,
       "",
       input.question ? "回应你的问题" : "通篇观照",
-      response.result.overview,
+      studyProse(response.result.overview),
     );
     if (response.result.revisionNotice)
       rows.push("", "建议校验说明", response.result.revisionNotice);
@@ -210,7 +214,7 @@ export function studyText(entry: StudyEntry): string {
         ? ["修改意图", input.revision.intention, ""]
         : []),
       input.revision ? "修改得失" : "合卷细读",
-      response.result.overview,
+      studyProse(response.result.overview),
     );
     for (const aspect of response.result.aspects)
       rows.push(
@@ -227,12 +231,14 @@ export function studyText(entry: StudyEntry): string {
     .replace(/\n{3,}/gu, "\n\n")
     .trim();
 }
-export async function copyStudy(entry: StudyEntry) {
-  await navigator.clipboard.writeText(studyText(entry));
+export async function copyStudy(entry: StudyEntry, includeHistory = false) {
+  await navigator.clipboard.writeText(studyText(entry, { includeHistory }));
 }
-export function downloadStudy(entry: StudyEntry) {
+export function downloadStudy(entry: StudyEntry, includeHistory = false) {
   const url = URL.createObjectURL(
-    new Blob([studyText(entry)], { type: "text/plain;charset=utf-8" }),
+    new Blob([studyText(entry, { includeHistory })], {
+      type: "text/plain;charset=utf-8",
+    }),
   );
   const link = document.createElement("a");
   link.href = url;

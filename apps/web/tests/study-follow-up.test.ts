@@ -92,5 +92,15 @@ describe("follow-up ownership and durable discussion context", () => {
     expect(studyText(entry)).toContain("不同理解甲");
     expect(studyText(entry)).toContain("回应你的问题");
     expect(studyText(entry)).not.toMatch(/textHash|followUp|pingshui/);
+    const concise = studyText(entry, { includeHistory: false });
+    expect(concise).toContain("有什么依据？");
+    expect(concise).toContain(
+      answer.task === "critique" ? answer.result.overview : "",
+    );
+    expect(concise).not.toContain("不同理解甲");
+    expect(concise).not.toContain("追问背景");
+    expect(
+      parseStudyArchive(JSON.stringify(studyArchive([entry])))[0]!.input,
+    ).toEqual(first);
   });
 });

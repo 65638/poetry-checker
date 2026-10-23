@@ -8,12 +8,13 @@ const out = resolve(process.argv[2] ?? 'artifacts/study-follow-up');
 mkdirSync(out, { recursive: true });
 let behavior = 'success';
 const requests = [];
+const longAnswer = '山林的安静不等于没有声音，原诗让人语从看不见的地方传来。光落在青苔上，给幽深的树林留下一个具体而可感的落点。'.repeat(7);
 const app = buildApp({ readingAssistant: {
   provider: 'deepseek', apiKey: 'controlled-test-key',
   fetcher: async (_url, init) => {
     const input = JSON.parse(JSON.parse(init.body).messages[1].content);
     const output = input.task === 'critique'
-      ? { overview: '受控回答：' + (input.question ?? '通篇观照'), strengths: ['仅验证交互'], revisions: [] }
+      ? { overview: input.question === '长文排版检查。' ? longAnswer : '受控回答：' + (input.question ?? '通篇观照'), strengths: ['仅验证交互'], revisions: [] }
       : { suggestions: input.targets.map(target => ({ tokenId: target.tokenId, candidateId: target.candidates[0].id, pronunciation: null, reason: '受控测试。' })) };
     return new Response(JSON.stringify({ choices: [{ finish_reason: 'stop', message: { content: JSON.stringify(output) } }] }));
   },
@@ -68,6 +69,10 @@ try {
     assert.equal(requests.at(-1).followUp.turns[0].question,'请解释空间层次。');
     await clickText('.pc-poetry-review .pc-study-result-actions button','收藏评议');
     await waitFor(()=>h.evaluate("JSON.parse(localStorage.getItem('poetry-study-archive-v1')??'{\"entries\":[]}').entries.some(entry=>entry.input.followUp?.turns.length===3)"));
+    await clickText('.pc-poetry-review .pc-study-result-actions button','复制评议');
+    const concise=await h.evaluate('navigator.clipboard.readText()');
+    assert(concise.includes('哪些说法需要核实？') && !concise.includes('追问背景') && !concise.includes('还有别的理解吗？'));
+    await h.click('.pc-poetry-review .pc-study-share-options input');
     await clickText('.pc-poetry-review .pc-study-result-actions button','复制评议');
     const copied=await h.evaluate('navigator.clipboard.readText()');
     assert(copied.includes('追问背景')&&copied.includes('还有别的理解吗？'));
@@ -129,6 +134,19 @@ try {
     assert.equal(requests.at(-1).text,previous.text);
     assert.equal(requests.at(-1).followUp.turns[0].question,previous.question);
     assert.equal(requests.at(-1).mode,'reading');
+  });
+  await check('long-answer-is-readable-without-changing-the-stored-answer',async()=>{
+    await h.evaluate("(()=>{document.querySelector('.pc-library-literary .pc-study-follow-up').open=true;const e=document.querySelector('.pc-library-literary [aria-label=围绕回答追问]');Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype,'value').set.call(e,'长文排版检查。');e.dispatchEvent(new Event('input',{bubbles:true}));})()");
+    await h.click('.pc-library-literary .pc-study-follow-up button[type=submit]');
+    await waitFor(()=>h.evaluate("document.querySelector('.pc-library-literary .pc-study-prose')?.textContent.includes('山林的安静')"));
+    const shown=await h.evaluate("document.querySelector('.pc-library-literary .pc-study-prose').textContent");
+    assert(shown.includes('\n\n'));assert.equal(shown.replace(/\n/g,''),longAnswer);
+    assert.equal(await h.evaluate("getComputedStyle(document.querySelector('.pc-library-literary .pc-study-prose')).whiteSpace"),'pre-line');
+    await clickText('.pc-library-literary .pc-study-result-actions button','收藏评议');
+    const stored=await h.evaluate("JSON.parse(localStorage.getItem('poetry-study-archive-v1')).entries.find(entry=>entry.input.question==='长文排版检查。').response.result.overview");
+    assert.equal(stored,longAnswer);
+    await h.viewport(320,900,true);await h.evaluate("document.querySelector('.pc-library-literary .pc-study-prose').scrollIntoView({block:'start',behavior:'instant'})");
+    assert.equal(await h.evaluate('document.documentElement.scrollWidth<=innerWidth+1'),true);await shot('long-answer-320');
   });
   assert.deepEqual(result.errors,[]);
 } catch(error) { result.failure=error.stack; process.exitCode=1; await shot('failure').catch(()=>{}); }
