@@ -4,9 +4,9 @@
 
 ## 最新可用版本
 
-- 功能提交：`6f87c20`（持续迭代批次21：单条无效改字不丢整份评议），包含前二十批。
+- 功能提交：`f7b146d`（持续迭代批次22：刷新恢复已完成分析），包含前二十一批。
 - main 随本同步记录一起推送；最新CI请查看 [Actions](https://github.com/65638/poetry-checker/actions)。前十九批CI均已成功，最近确认[批次19](https://github.com/65638/poetry-checker/actions/runs/39922384851)。
-- 业务基线：1113测试 / 94文件，全量verify通过；故障恢复/取消/缓存/收藏11浏览器场景通过（受控模型、真实API和浏览器）。批次18真实DeepSeek单次提问8544ms完成，不是P95或内容正确率测评。
+- 业务基线：1119测试 / 95文件，全量verify通过；刷新/主动作业/缓存损坏/服务变更/存储失败5浏览器场景通过（受控模型、真实API和浏览器），含320px。批次18真实DeepSeek单次提问8544ms完成，不是P95或内容正确率测评。
 - 本机预览：`http://127.0.0.1:56106/`。桌面入口指向 `work/main-closeout`，Codex维护此预览。
 
 ## 拉取更新
@@ -83,6 +83,14 @@ pnpm dev
 - 新客户端协商`validated-partial-advice`，服务端以可选`revisionNotice`说明隐藏条数和限制；旧标签页维持原拒绝行为与响应字段。模型不能自行填写该说明。OpenAPI已更新。
 - `PoetryDesk.tsx` 使用现有notice样式显示说明；收藏/中文分享保留说明，不把校验通过当文学正确。替换字使用与解析器一致的表意汉字判据，排除部首等虚假字位。
 - 1113测试verify通过，`tests/e2e/product-refinement.mjs` 11场景通过，含错误改字不提供采纳、原稿不变、收藏带隐藏说明；证据 `artifacts/continuous-improvement/batch21-recovery/`。
+
+## 批次22接入点（已交付）
+
+- `analysisSession.ts` 在sessionStorage暂存本标签页最近一份完整分析（最长2小时），刷新时校验完整契约/原文/hash/韵书/选音覆盖及内容校验和。只在当前草稿和选项完全一致、用户尚未操作时恢复；过大或存储受限则跳过，不影响原稿和正式报告。
+- API为readyz和分析响应增加实例标识header；缓存绑定实际分析响应的实例，重启/更新服务即不恢复旧缓存。没有修改正文HTTP契约；旧服务缺header时自然跳过。初步读音/失败请求不当完整分析保存。
+- `CheckerStore.restoreCompletedAnalysis` 以原子快照恢复；手动分析照常请求，并清除恢复标志。导出仍使用原请求与已生效覆盖。`main.tsx` 在正式页面接入，开发合成入口不启用。
+- `Workspace.tsx` 增加可选`restoredAnalysis`传给PoetryDesk：恢复本身不自动触发新文学评议，明确提示可手动研读；随后主动分析仍自动评议。展示设计可调整提示位置，保留避免重复请求与竞态守卫。
+- 1119测试verify通过；浏览器5场景通过：刷新0新增模型请求、主动重算、改稿/损坏缓存拒绝、模拟服务实例变化拒绝、sessionStorage配额失败仍可分析。证据 `artifacts/continuous-improvement/batch22-session/`。这是临时会话缓存，持久收藏/备份继续用原有功能。
 
 ## 批次01接入点（已交付）
 
