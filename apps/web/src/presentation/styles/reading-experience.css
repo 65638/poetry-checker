@@ -275,6 +275,46 @@
   min-width: 28px;
   min-height: 44px;
 }
+.pc-workspace .pc-library-verse-row[data-ask-line="true"] {
+  padding-inline: 0;
+}
+.pc-workspace .pc-verse-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin-top: 4px;
+  letter-spacing: normal;
+}
+.pc-workspace .pc-library .pc-verse-actions > button {
+  position: static;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  translate: none;
+  margin: 0;
+  min-width: 48px;
+  min-height: 44px;
+  box-sizing: border-box;
+  padding: 6px 10px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  background: transparent;
+  color: #4b6652;
+  opacity: 1;
+  font: 13px/1.6 var(--pc-font-sans);
+}
+.pc-workspace .pc-library .pc-verse-actions > button:hover:not(:disabled) {
+  border-color: #8f9f7f77;
+  background: #dde5d2;
+  color: #2d503b;
+}
+.pc-workspace .pc-library .pc-verse-actions > button:disabled {
+  color: #6c7668;
+  border-color: #8f9f7f55;
+  cursor: default;
+}
 
 /* A compact tool tray leaves the manuscript visible on narrow screens. */
 html:has(.pc-workspace) {
