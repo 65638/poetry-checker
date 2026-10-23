@@ -6,6 +6,7 @@ import {
 } from "@poetry/contracts";
 import { sha256Hex } from "../utils/sha256";
 import { studyProse } from "./studyProseText";
+import { comparisonSourceLabel } from "./comparisonPassages";
 
 export const STUDY_ARCHIVE_KEY = "poetry-study-archive-v1";
 export const STUDY_ARCHIVE_EVENT = "poetry-study-archive-changed";
@@ -224,6 +225,13 @@ export function studyText(
     }
   } else if (input.task === "compare" && response.task === "compare") {
     if (input.question) rows.push("对读问题", input.question, "");
+    if (input.scope)
+      rows.push(
+        "对读范围（仅按所选文字比较，不据选段评定整篇）",
+        `左卷：${comparisonSourceLabel(input.scope.left)}`,
+        `右卷：${comparisonSourceLabel(input.scope.right)}`,
+        "",
+      );
     const leftLabel = input.revision ? "旧稿" : "左诗";
     const rightLabel = input.revision ? "新稿" : "右诗";
     rows.push(
