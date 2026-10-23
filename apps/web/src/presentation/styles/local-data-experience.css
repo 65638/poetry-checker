@@ -172,6 +172,12 @@
   font: 400 26px/1.9 var(--pc-font-serif);
   letter-spacing: 0.04em;
 }
+.pc-workspace[data-reading-size="1"] .pc-excerpt-entry blockquote {
+  font-size: 28px;
+}
+.pc-workspace[data-reading-size="2"] .pc-excerpt-entry blockquote {
+  font-size: 32px;
+}
 .pc-workspace .pc-excerpt-entry > p {
   margin-block: 4px 10px;
   font-size: 14px;
@@ -265,6 +271,12 @@
   .pc-workspace .pc-excerpt-entry blockquote {
     padding-left: 12px;
     font-size: 23px;
+  }
+  .pc-workspace[data-reading-size="1"] .pc-excerpt-entry blockquote {
+    font-size: 25px;
+  }
+  .pc-workspace[data-reading-size="2"] .pc-excerpt-entry blockquote {
+    font-size: 28px;
   }
   .pc-workspace .pc-excerpt-notebook > .pc-studio-actions {
     gap: 12px;
