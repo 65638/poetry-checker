@@ -4,10 +4,27 @@
 
 ## 最新可用版本
 
-- 功能提交/本机发布：`159ed41`（晚间批次16整合），业务dfe24ac，UI含644f167。
-- 业务基线：1168测试 / 103文件，整合全量verify通过；整合后长篇4、收藏对读5、段落提问4通过；此前本批旧收藏7、完整备份4通过。
+- 最终功能/本机发布：`5591bc7`，UI含f1badfc；验收脚本更新d70ed84，未改产品运行逻辑。
+- 最终全仓verify：1170测试 / 103文件通过；基础浏览器19通过/0失败，完整键盘旅程4通过。各新增功能回归及真实模型样本见下方与晚间交接。
 - 本机预览：`http://127.0.0.1:56106/`，已由桌面发布脚本启动。保留本机数据和模型配置。
-- main随同步记录推送；已确认ef6befd CI成功，最新以[Actions](https://github.com/65638/poetry-checker/actions)实际状态为准。
+- 功能5591bc7已推main，[该版CI成功](https://github.com/65638/poetry-checker/actions/runs/40045723175)。验收与本文随最终收尾推送，后续CI以[Actions](https://github.com/65638/poetry-checker/actions)实际状态为准。
+
+## 最终同步与收尾
+
+```sh
+git fetch origin
+git merge origin/main
+pnpm install --frozen-lockfile
+pnpm verify
+```
+
+成员分支先提交自己的改动再合并；不reset/clean。运行站点的56106已由主会话更新，保留原数据和DeepSeek配置；用户刷新即可查看新功能。使用方法见[阅读与推敲](../features/reading-and-revision.md)。
+
+- 2eca9c0：提问/追问Ctrl或⌘+Enter发送，普通Enter换行，IME和长按不误发；选段问题示例明确只讨论所选文字。
+- ec3956c：复现并修复新回答清掉等待期间下一题草稿；只清理成功且未再编辑的已发问题，新草稿继续引用最新回答。快捷键4、追问8、旧收藏7通过，基线失败保留在evening18-draft-baseline。
+- b735d54：失败/取消立即替换最短停留等待条，避免重试按钮随后移动。220ms受控失败基线已复现，修复后收藏对读5/产品12通过。展示已整合a0f1541/f1badfc，修复收藏发送按钮对比度、大字与手机提示断行。
+- d70ed84：旧基础浏览器脚本此前把NDJSON分段响应整份JSON.parse导致12项失败；现独立读取唯一最终result事件，拒绝初步/错误/重复/终态后事件，不导入产品解析器，保留全部原验收断言。最终19通过，新增2项验收器单测；verify1170/103。证据evening19-browser-smoke（失败）、evening20-browser-smoke（通过）、evening20-final-verify.log。
+- 00:52截止后停止扩展，仅完成安全提交和本轮自动跟进暂停。展示目录归还UI协作者；后续工作另行授权启动。
 
 ## 晚间批次16接入点
 
