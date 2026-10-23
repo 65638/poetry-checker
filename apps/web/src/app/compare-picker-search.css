@@ -1,0 +1,41 @@
+.pc-compare-search {
+  display: grid;
+  gap: 6px;
+  margin-top: 12px;
+  min-width: 0;
+}
+.pc-compare-search > span {
+  font-size: 12px;
+}
+.pc-compare-search input {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  padding: 9px 10px;
+  color: inherit;
+  background: transparent;
+  border: 1px solid currentColor;
+  font: inherit;
+  font-size: 14px;
+}
+.pc-compare-favorites {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  font-size: 12px;
+}
+.pc-compare-favorites input {
+  width: auto;
+  accent-color: var(--pc-seal, #416e5f);
+}
+.pc-compare-match-count {
+  font-size: 12px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+  margin: 8px 0 0;
+}
+.pc-compare-search input:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}

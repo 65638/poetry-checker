@@ -123,6 +123,29 @@ try {
     await h.evaluate("document.querySelector('.pc-library-comparison').scrollIntoView({block:'start',behavior:'instant'})");
     await shot('compare-desk-1440');
   });
+  await check('compare-pickers-search-independently-without-changing-poems-or-calling-ai', async () => {
+    const before=calls.filter(task=>task==='compare').length;
+    const initial=await h.evaluate("[...document.querySelectorAll('.pc-compare-picker select')].map(el=>el.value)");
+    assert.equal(await h.evaluate("[...document.querySelectorAll('.pc-compare-picker select')].every(el=>el.options.length<=86)"),true);
+    await fill('[aria-label="检索左卷诗作"]','题名:静夜思');
+    assert.deepEqual(await h.evaluate("[...document.querySelectorAll('.pc-compare-picker select')].map(el=>el.value)"),initial,'Typing only filters options');
+    await h.evaluate("(() => {const e=document.querySelector('[aria-label=\"选择左卷诗作\"]');const option=[...e.options].find(row=>row.textContent.startsWith('静夜思 ·'));if(!option)throw new Error('Missing matching poem');e.value=option.value;e.dispatchEvent(new Event('change',{bubbles:true}));})()");
+    await waitFor(()=>h.evaluate("document.querySelector('.pc-library-poem h2')?.textContent==='静夜思'"));
+    const selected=await h.evaluate("document.querySelector('[aria-label=\"选择左卷诗作\"]').value");
+    await fill('[aria-label="检索左卷诗作"]','完全没有这种诗题');
+    assert.equal(await h.evaluate("document.querySelector('[aria-label=\"选择左卷诗作\"]').value"),selected);
+    assert.equal(await h.evaluate("document.querySelector('.pc-compare-match-count').textContent.includes('当前所选仍保留')"),true);
+    await fill('[aria-label="检索右卷诗作"]','');
+    await h.click('.pc-library-poem:nth-child(2) .pc-compare-favorites input');
+    assert.equal(await h.evaluate("document.querySelector('[aria-label=\"选择右卷诗作\"]').value"),initial[1]);
+    assert.equal(await h.evaluate("document.querySelectorAll('[aria-label=\"选择右卷诗作\"] > option').length"),1,'Only the previously starred poem appears as a match');
+    assert.equal(calls.filter(task=>task==='compare').length,before);
+    await h.viewport(320,900,true);
+    await h.evaluate("document.querySelector('.pc-compare-picker').scrollIntoView({block:'start',behavior:'instant'})");
+    assert.equal(await h.evaluate('document.documentElement.scrollWidth<=innerWidth+1'),true);
+    await shot('compare-search-320');
+    await h.viewport(1440,1000);
+  });
   await check('library-study-opens-checker-in-reading-mode', async () => {
     await clickText('.pc-library > [role="tablist"] [role="tab"]', '诗库');
     await clickText('.pc-library-reading button', '研读此诗');

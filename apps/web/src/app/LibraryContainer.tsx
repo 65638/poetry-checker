@@ -14,6 +14,7 @@ import {
 import type { LibraryWork, PoemPronunciation } from "@poetry/contracts";
 import { loadCatalog, loadPronunciation } from "../api/library";
 import { LibraryQueryHelp } from "./LibraryQueryHelp";
+import { ComparePoemPicker } from "./ComparePoemPicker";
 import { useExcerpts } from "../hooks/useExcerpts";
 import { ExcerptsPanel } from "./ExcerptsPanel";
 import {
@@ -412,24 +413,17 @@ export function LibraryContainer({
       setFeedback("收藏只保留到本次会话，设备存储不可用。");
     }
   }
-  const workOptions = useMemo(
+  const comparisonWorks = useMemo(
     () =>
       view !== "compare"
         ? []
-        : works
-            .filter(
-              (w) =>
-                showDuplicates ||
-                !unique.hiddenIds.has(w.id) ||
-                w.id === leftId ||
-                w.id === rightId,
-            )
-            .map((w) => (
-              <option key={w.id} value={w.id}>
-                {w.title} · {w.author || "作者未载"}
-                {w.sourceUrl ? ` · ${new URL(w.sourceUrl).hostname}` : ""}
-              </option>
-            )),
+        : works.filter(
+            (w) =>
+              showDuplicates ||
+              !unique.hiddenIds.has(w.id) ||
+              w.id === leftId ||
+              w.id === rightId,
+          ),
     [view, works, showDuplicates, unique.hiddenIds, leftId, rightId],
   );
   const poemColumn = (
@@ -440,23 +434,18 @@ export function LibraryContainer({
       className="pc-library-poem"
       aria-label={side === "left" ? "左诗" : "右诗"}
     >
-      <label className="pc-compare-picker">
-        <span>
-          <b aria-hidden="true">{side === "left" ? "壹" : "贰"}</b>
-          {side === "left" ? "左卷" : "右卷"}
-          <small>选一首诗</small>
-        </span>
-        <select
-          value={side === "left" ? leftId : rightId}
-          onChange={(e) => {
-            setCompareLine(null);
-            if (side === "left") setLeftId(e.target.value);
-            else setRightId(e.target.value);
-          }}
-        >
-          {workOptions}
-        </select>
-      </label>
+      <ComparePoemPicker
+        works={comparisonWorks}
+        selected={side === "left" ? leftId : rightId}
+        otherSelected={side === "left" ? rightId : leftId}
+        favorites={favorites}
+        side={side}
+        onSelect={(id) => {
+          setCompareLine(null);
+          if (side === "left") setLeftId(id);
+          else setRightId(id);
+        }}
+      />
       {work && (
         <div className="pc-compare-leaf" key={work.id}>
           <header className="pc-compare-title">
