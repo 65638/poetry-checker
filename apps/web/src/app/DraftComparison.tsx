@@ -91,13 +91,13 @@ export function DraftComparison({
           <div className="pc-draft-comparison__versions">
             <div>
               <h4>旧稿</h4>
-              <blockquote tabIndex={0} aria-label="旧稿全文">
+              <blockquote role="region" tabIndex={0} aria-label="旧稿全文">
                 {before?.text}
               </blockquote>
             </div>
             <div>
               <h4>新稿</h4>
-              <blockquote tabIndex={0} aria-label="新稿全文">
+              <blockquote role="region" tabIndex={0} aria-label="新稿全文">
                 {after?.text}
               </blockquote>
             </div>

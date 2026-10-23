@@ -90,7 +90,11 @@ export function RelatedReading({
             <p>
               {hit.work.dynasty || "朝代未载"} · {hit.work.author || "作者未载"}
             </p>
-            <blockquote tabIndex={0} aria-label={`《${hit.work.title}》原句`}>
+            <blockquote
+              role="region"
+              tabIndex={0}
+              aria-label={`《${hit.work.title}》原句`}
+            >
               {hit.excerpt}
             </blockquote>
             <p className="pc-related-reading__reason">
@@ -118,7 +122,11 @@ export function RelatedReading({
         ))}
       </ul>
       {!!hits.length && (
-        <div className="pc-related-reading__pages" aria-label="串读分页">
+        <div
+          className="pc-related-reading__pages"
+          role="group"
+          aria-label="串读分页"
+        >
           <button
             type="button"
             disabled={visiblePage === 0}
