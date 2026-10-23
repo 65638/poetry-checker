@@ -103,6 +103,7 @@ export const PoetryAssistantRequestSchema = z.discriminatedUnion("task", [
     direction: z.enum(["meaning", "imagery", "sound"]),
     mode: z.enum(["writing", "reading"]),
     prosodyContext: ProsodyContextSchema.optional(),
+    question: z.string().trim().min(1).max(240).optional(),
   }),
   z.strictObject({ task: z.literal("compare"), left: text, right: text }),
   z.strictObject({

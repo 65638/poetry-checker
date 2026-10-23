@@ -7,6 +7,7 @@ import { startHarness, waitFor, sleep, revision } from '../../docs/design/moonli
 const out = resolve(process.argv[2] ?? 'artifacts/poetry-studio');
 mkdirSync(out, { recursive: true });
 const calls = [];
+const critiqueInputs = [];
 const rhymeInputs = [];
 let emptyRhyme = false;
 let slowPages = false;
@@ -16,7 +17,7 @@ const fetcher = async (_url, init) => {
   calls.push(data.task ?? 'reading');
   let output;
   if (!data.task) output = { suggestions: data.targets.map((target) => ({ tokenId: target.tokenId, candidateId: target.candidates[0].id, pronunciation: null, reason: '受控浏览器测试，不是语言学判定。' })) };
-  if (data.task === 'critique') { assert(data.prosodyContext && Array.isArray(data.prosodyContext.issues), 'critique must receive formal prosody context'); output = { overview: '受控全诗评议：结合全文讨论山水。', strengths: ['受控优点说明。'], revisions: data.mode === 'writing' && data.text === '山高水远。' ? [
+  if (data.task === 'critique') { critiqueInputs.push(data); assert(data.prosodyContext && Array.isArray(data.prosodyContext.issues), 'critique must receive formal prosody context'); output = { overview: data.question ? '受控定向回答：' + data.question : '受控全诗评议：结合全文讨论山水。', strengths: ['受控优点说明。'], revisions: data.mode === 'writing' && data.text === '山高水远。' ? [
     { startTokenId: 'l1c1', endTokenId: 'l1c1', original: '山', replacement: '群山', reason: '受控长度变化场景。', tradeoff: '受控取舍说明。' },
     { startTokenId: 'l1c4', endTokenId: 'l1c4', original: '远', replacement: '长', reason: '受控改字场景。', tradeoff: '受控取舍说明。' },
   ] : [] }; }
@@ -128,6 +129,29 @@ try {
     await waitFor(() => h.evaluate("location.hash==='#checker' && !!document.querySelector('.pc-report')"));
     await waitFor(() => h.evaluate("document.querySelector('.pc-poetry-review')?.textContent.includes('受控全诗评议')"));
     assert.equal(await h.evaluate("[...document.querySelectorAll('.pc-poetry-critique [role=tab]')].find(el=>el.textContent==='原诗赏读').getAttribute('aria-selected')"), 'true');
+  });
+  await check('focused-question-sends-only-on-submit-and-saves-exact-question', async () => {
+    const count=critiqueInputs.length, before=analyses;
+    await clickText('.pc-study-question > summary','带着问题读诗');
+    await clickText('.pc-study-question__examples button','哪些字最能体现这首诗的意境？');
+    await fill('[aria-label="本诗研读问题"]','转折和结尾是否自然？');
+    await sleep(1400);
+    assert.equal(critiqueInputs.length,count);
+    await clickText('.pc-study-question button','就此提问');
+    await waitFor(()=>h.evaluate("document.querySelector('.pc-poetry-review')?.textContent.includes('受控定向回答：转折和结尾是否自然？')"));
+    assert.equal(critiqueInputs.length,count+1);
+    assert.equal(critiqueInputs.at(-1).question,'转折和结尾是否自然？');
+    assert.equal(critiqueInputs.at(-1).mode,'reading');
+    assert.equal(analyses,before);
+    await fill('[aria-label="本诗研读问题"]','尚未发送的另一个问题');
+    assert.equal(await h.evaluate("document.querySelector('.pc-study-question-asked').textContent"),'本次提问：转折和结尾是否自然？');
+    await clickText('.pc-poetry-review .pc-study-result-actions button','收藏评议');
+    await waitFor(()=>h.evaluate("JSON.parse(localStorage.getItem('poetry-study-archive-v1')).entries.some(e=>e.input.question==='转折和结尾是否自然？')"));
+    await h.viewport(320,900,true);
+    await h.evaluate("document.querySelector('.pc-study-question').scrollIntoView({block:'start',behavior:'instant'})");
+    assert.equal(await h.evaluate('document.documentElement.scrollWidth<=innerWidth+1'),true);
+    await shot('focused-question-320');
+    await h.viewport(1440,1000);
   });
   await check('batch-adoptions-undo-redo-keep-advice-and-analyze-once', async () => {
     await h.setText('山高水远。');

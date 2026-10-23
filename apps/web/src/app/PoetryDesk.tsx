@@ -36,6 +36,7 @@ import { StudyResultActions } from "./StudyResultActions";
 import { RuleReviewNote } from "./RuleReviewNote";
 import { planRevision } from "./revisionPlan";
 import { RevisionPreview } from "./RevisionPreview";
+import { StudyQuestion } from "./StudyQuestion";
 
 type CritiqueInput = Extract<PoetryAssistantRequest, { task: "critique" }>;
 export function PoetryDesk({
@@ -439,6 +440,14 @@ export function PoetryDesk({
               {currentCritique ? "重新评议" : "研读全诗"}
             </button>
           </div>
+          <StudyQuestion
+            key={report?.inputHash ?? "empty"}
+            disabled={!usable || critique.busy}
+            mode={mode}
+            onAsk={(question) =>
+              void critique.run({ ...critiqueInput, question })
+            }
+          />
           <StudioTaskState {...critique} />
           {critique.reused && (
             <p className="pc-studio-meta" role="status">
@@ -458,7 +467,18 @@ export function PoetryDesk({
                 input={critique.resultInput}
                 result={critique.result}
               />
-              <h3>通篇观照</h3>
+              {critique.resultInput?.task === "critique" &&
+                critique.resultInput.question && (
+                  <p className="pc-study-question-asked">
+                    本次提问：{critique.resultInput.question}
+                  </p>
+                )}
+              <h3>
+                {critique.resultInput?.task === "critique" &&
+                critique.resultInput.question
+                  ? "回应你的问题"
+                  : "通篇观照"}
+              </h3>
               <p>{currentCritique.overview}</p>
               <RuleReviewNote review={currentCritique.ruleReview} />
               {currentCritique.strengths.length > 0 && (
