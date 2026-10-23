@@ -4,9 +4,9 @@
 
 ## 最新可用版本
 
-- 功能提交：`6edebc6`（持续迭代批次19：长诗辨音继续分批），包含前十八批。
-- main 随本同步记录一起推送；最新CI请查看 [Actions](https://github.com/65638/poetry-checker/actions)。前十五批CI均已成功，最近确认[批次15](https://github.com/65638/poetry-checker/actions/runs/39919256708)。
-- 业务基线：1090测试 / 93文件，全量verify通过；字典辨音7个浏览器场景通过（受控辨音响应、真实其他API/浏览器），含320px。批次18真实DeepSeek单次提问8544ms完成，不是P95或内容正确率测评。
+- 功能提交：`08be818`（持续迭代批次20：模型完整JSON格式容错），包含前十九批。
+- main 随本同步记录一起推送；最新CI请查看 [Actions](https://github.com/65638/poetry-checker/actions)。前十九批CI均已成功，最近确认[批次19](https://github.com/65638/poetry-checker/actions/runs/39922384851)。
+- 业务基线：1110测试 / 94文件，全量verify通过。本批仅后端解析变更；字典辨音7浏览器场景为批次19结果，未冒充重复运行。批次18真实DeepSeek单次提问8544ms完成，不是P95或内容正确率测评。
 - 本机预览：`http://127.0.0.1:56106/`。桌面入口指向 `work/main-closeout`，Codex维护此预览。
 
 ## 拉取更新
@@ -70,6 +70,12 @@ pnpm dev
 - `ReadingAssistantView.tsx` 由Codex临时接管增加分页props与控件，完成后归还展示设计；保留`page/onPage`、按钮disabled和批次标签。仅小范围功能改动，没有全局样式改动。
 - 请求新增可选`offset`；响应仅在请求提供offset时回显，客户端核对分页归属，旧标签页继续得到原严格字段。OpenAPI已更新。
 - 1090测试verify通过，浏览器7场景通过，含50字位分24/24/2、故障后重试、缓存回看及320px。最后按钮文案/禁用条件调整后lint与build通过。证据 `artifacts/continuous-improvement/batch19-reading/`。
+
+## 批次20运行变更（已交付）
+
+- `apps/api/src/model-output.ts` 统一读取完整模型JSON：允许仅包在单一json/无语言代码框中的完整值，保留正文原样；不猜取混合说明、多段输出、不补标点、不恢复截断内容。
+- 截断/内容过滤/空消息/非JSON上游响应提供具体中文错误；解码后继续执行原有Schema、字位、候选与出处校验。带代码框的虚构候选仍拒绝。
+- 1110测试verify通过，含20项新增格式/服务联调检查。本批没有UI或契约变更，没有额外重试或增加模型调用。
 
 ## 批次01接入点（已交付）
 
