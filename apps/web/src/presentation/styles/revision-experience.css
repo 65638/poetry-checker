@@ -306,6 +306,12 @@
   scrollbar-color: #8a9c7c transparent;
   overscroll-behavior: contain;
 }
+.pc-workspace[data-reading-size="1"] .pc-draft-comparison__versions blockquote {
+  font-size: 21px;
+}
+.pc-workspace[data-reading-size="2"] .pc-draft-comparison__versions blockquote {
+  font-size: 24px;
+}
 .pc-workspace .pc-draft-comparison__changes {
   padding: 0 12px;
   margin-bottom: 20px;

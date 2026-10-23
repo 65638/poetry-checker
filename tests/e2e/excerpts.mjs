@@ -21,7 +21,7 @@ const stored=()=>h.evaluate("JSON.parse(localStorage.getItem('poetry-excerpts-v1
 let entry;
 try{
   await h.load({path:'#library',reduce:true});
-  await waitFor(()=>h.evaluate("!!document.querySelector('.pc-library-title')"));
+  await waitFor(()=>h.evaluate("document.querySelector('.pc-library-heading')?.textContent.includes('2022首入藏')"));
   await h.cdp.send('Browser.grantPermissions',{origin:new URL(h.url).origin,permissions:['clipboardReadWrite','clipboardSanitizedWrite']});
   await check('collect-exact-paragraph-and-deduplicate',async()=>{
     await h.click('.pc-library-title');
@@ -45,7 +45,7 @@ try{
     await clickText('.pc-excerpt-entry button','保存随手记');
     assert.equal((await stored())[0].note,'我的私人随手记');
     await h.cdp.send('Page.reload');
-    await waitFor(()=>h.evaluate("!!document.querySelector('.pc-library-title')"));
+    await waitFor(()=>h.evaluate("document.querySelector('.pc-library-heading')?.textContent.includes('2022首入藏')"));
     await clickText('[role=tab]','摘句');
     assert.equal(await h.evaluate("document.querySelector('.pc-excerpt-entry textarea').value"),'我的私人随手记');
     await fill('[aria-label="查找摘句"]','私人');

@@ -436,10 +436,54 @@
   font-size: 14px;
   font-weight: 600;
 }
+.pc-workspace .pc-study-follow-up__details {
+  margin-block: 12px;
+  padding: 10px 12px;
+  border: 1px solid #a7b19a88;
+  border-radius: 3px;
+  background: #edf0e2;
+  color: #405643;
+}
+.pc-workspace .pc-study-follow-up__details > .pc-study-prose {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.95;
+}
+.pc-workspace .pc-study-follow-up__details > p:not(.pc-study-prose) {
+  margin: 0 0 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #a7b19a88;
+  color: #665b39;
+  font: 13px/1.8 var(--pc-font-sans);
+}
 @media (max-width: 599px) {
   .pc-workspace .pc-study-follow-up,
   .pc-workspace .pc-study-follow-up-context {
     padding-inline: 12px;
+  }
+  .pc-workspace .pc-library-literary {
+    padding: 16px 0;
+    border-inline: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+  .pc-workspace .pc-study-follow-up__reference {
+    padding-inline: 8px;
+  }
+  .pc-workspace
+    :is(.pc-study-follow-up, .pc-study-follow-up-context)
+    blockquote {
+    padding-inline: 8px;
+  }
+  .pc-workspace .pc-study-follow-up__details {
+    padding: 10px 0;
+    border-inline: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+  .pc-workspace .pc-study-follow-up-context ol {
+    padding-left: 20px;
+    padding-right: 0;
   }
   .pc-workspace .pc-study-follow-up__examples {
     grid-template-columns: minmax(0, 1fr);
