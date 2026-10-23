@@ -75,6 +75,51 @@ const post = (
     headers: { "x-poetry-features": "structured-rule-review" },
   });
 describe("poetry studio with real lexicon and controlled model", () => {
+  it("preserves complete literary advice while withholding invalid edits only for capable clients", async () => {
+    const wrong = { ...edit, startTokenId: "l99c1" };
+    await withApp(
+      { ...result, revisions: [edit, wrong, { ...edit, replacement: "⼀" }] },
+      async (app) => {
+        const response = await app.inject({
+          method: "POST",
+          url: "/api/v1/poetry-assistant",
+          payload: critique,
+          headers: {
+            "x-poetry-features":
+              "structured-rule-review, validated-partial-advice",
+          },
+        });
+        expect(response.statusCode).toBe(200);
+        expect(response.json().result.overview).toBe(result.overview);
+        expect(response.json().result.revisions).toEqual([edit]);
+        expect(response.json().result.revisionNotice).toContain("已隐藏2条");
+        expect((await post(app, critique)).statusCode).toBe(502);
+      },
+    );
+  });
+  it("keeps a reading overview without offering model rewrites and does not trust a model-authored validation notice", async () => {
+    await withApp(result, async (app) => {
+      const response = await app.inject({
+        method: "POST",
+        url: "/api/v1/poetry-assistant",
+        payload: { ...critique, mode: "reading" },
+        headers: {
+          "x-poetry-features":
+            "structured-rule-review, validated-partial-advice",
+        },
+      });
+      expect(response.statusCode).toBe(200);
+      expect(response.json().result.revisions).toEqual([]);
+      expect(response.json().result.revisionNotice).toContain("保留原作");
+      expect(response.json().result.overview).toBe(result.overview);
+    });
+    await withApp(
+      { ...result, revisionNotice: "模型声称已经核对" },
+      async (app) => {
+        expect((await post(app, critique)).statusCode).toBe(502);
+      },
+    );
+  });
   it("binds a focused question into the input hash and model payload without changing reading safeguards", async () => {
     await withApp({ ...result, revisions: [] }, async (app, fetcher) => {
       const payload = {

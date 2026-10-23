@@ -31,6 +31,8 @@ export const CritiqueSchema = z.strictObject({
   overview: note,
   strengths: z.array(note).max(5),
   revisions: z.array(RevisionSchema).max(6),
+  /** Server-generated explanation when invalid rewrite suggestions were withheld. */
+  revisionNotice: z.string().min(1).max(400).optional(),
   /** Server-generated rule context, separate from the model's literary overview. */
   ruleReview: z
     .strictObject({

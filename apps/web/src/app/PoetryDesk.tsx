@@ -479,6 +479,11 @@ export function PoetryDesk({
                   : "通篇观照"}
               </h3>
               <p>{currentCritique.overview}</p>
+              {currentCritique.revisionNotice && (
+                <p className="pc-studio-notice" role="status">
+                  {currentCritique.revisionNotice}
+                </p>
+              )}
               <RuleReviewNote review={currentCritique.ruleReview} />
               {currentCritique.strengths.length > 0 && (
                 <>

@@ -157,6 +157,8 @@ export function studyText(entry: StudyEntry): string {
       "通篇观照",
       response.result.overview,
     );
+    if (response.result.revisionNotice)
+      rows.push("", "建议校验说明", response.result.revisionNotice);
     if (response.result.strengths.length)
       rows.push(
         "",

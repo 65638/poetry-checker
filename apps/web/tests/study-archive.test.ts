@@ -43,6 +43,16 @@ const response: PoetryAssistantResponse = {
 const entry = () =>
   createStudyEntry(input, response, "暮色一篇", "2026-10-23T00:00:00Z");
 describe("durable study snapshots and reader-facing sharing", () => {
+  it("retains the server's withheld-advice explanation in sharing and backup", () => {
+    const saved = createStudyEntry(input, {
+      ...response,
+      result: { ...response.result, revisionNotice: "已隐藏1条无效改字建议。" },
+    });
+    expect(studyText(saved)).toContain("建议校验说明\n已隐藏1条无效改字建议。");
+    expect(parseStudyArchive(JSON.stringify(studyArchive([saved])))[0]).toEqual(
+      saved,
+    );
+  });
   it("preserves the exact reader question in saved evidence and share text", () => {
     const asked = PoetryAssistantRequestSchema.parse({
       ...input,

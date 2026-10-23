@@ -787,7 +787,7 @@ export function createOpenApiDocument() {
               in: "header",
               required: false,
               description:
-                "发送structured-rule-review可将服务端格律依据放入可选ruleReview字段，保留完整overview；省略时兼容旧客户端。",
+                "发送structured-rule-review可将服务端格律依据放入可选ruleReview字段；增加validated-partial-advice可隐藏无效改字并以revisionNotice说明，保留完整评议。省略时兼容旧客户端。",
               schema: { type: "string", example: "structured-rule-review" },
             },
           ],

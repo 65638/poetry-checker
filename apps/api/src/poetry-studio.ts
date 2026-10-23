@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import type { FastifyInstance } from "fastify";
-import { parseText } from "@poetry/readings";
+import { isHanCharacter, parseText } from "@poetry/readings";
 import { findRhymeWords, lookupCharacters } from "@poetry/lexicon";
 import {
   PoetryAssistantRequestSchema,
@@ -167,6 +167,11 @@ export function registerPoetryStudio(
     reply.raw.on("close", close);
     try {
       const input = checked.data;
+      const features = new Set(
+        String(request.headers["x-poetry-features"] ?? "")
+          .split(",")
+          .map((value) => value.trim()),
+      );
       const payload = await prepare(input);
       const output = await assistant.complete(
         instructions + "\n" + formats[input.task],
@@ -175,7 +180,7 @@ export function registerPoetryStudio(
       );
       const schema =
         input.task === "critique"
-          ? CritiqueSchema.omit({ ruleReview: true })
+          ? CritiqueSchema.omit({ ruleReview: true, revisionNotice: true })
           : input.task === "compare"
             ? ComparisonSchema
             : input.task === "search"
@@ -188,36 +193,55 @@ export function registerPoetryStudio(
           "MODEL_INVALID_RESPONSE",
           "模型返回内容不完整，请重试。",
         );
+      let checkedCritique: Critique | undefined;
       if (input.task === "critique") {
         const result = CritiqueSchema.parse(parsed.data);
-        if (input.mode === "reading" && result.revisions.length)
+        const partial = features.has("validated-partial-advice");
+        if (input.mode === "reading" && result.revisions.length && !partial)
           throw new AssistantError(
             502,
             "MODEL_INVALID_RESPONSE",
             "阅读赏析不应修改作品原文，请重试。",
           );
         const poem = parseText({ text: input.text });
+        const revisions: Critique["revisions"] = [];
         for (const edit of result.revisions) {
           const start = poem.tokens.find(
             (t) => t.tokenId === edit.startTokenId,
           );
           const end = poem.tokens.find((t) => t.tokenId === edit.endTokenId);
           if (
+            input.mode === "reading" ||
             !start ||
             !end ||
             start.line !== end.line ||
             start.startUtf16 > end.startUtf16 ||
             input.text.slice(start.startUtf16, end.endUtf16) !==
               edit.original ||
-            !/^\p{Script=Han}+$/u.test(edit.replacement) ||
+            ![...edit.replacement].every(isHanCharacter) ||
             edit.original === edit.replacement
-          )
-            throw new AssistantError(
-              502,
-              "MODEL_INVALID_RESPONSE",
-              "改字建议与原文位置不符，已拒绝采用。",
-            );
+          ) {
+            if (!partial)
+              throw new AssistantError(
+                502,
+                "MODEL_INVALID_RESPONSE",
+                "改字建议与原文位置不符，已拒绝采用。",
+              );
+          } else revisions.push(edit);
         }
+        const omitted = result.revisions.length - revisions.length;
+        checkedCritique = {
+          ...result,
+          revisions,
+          ...(omitted
+            ? {
+                revisionNotice:
+                  input.mode === "reading"
+                    ? `AI还给出了${omitted}条改写建议，已隐藏以保留原作；以下评议仅供赏读参考。`
+                    : `已隐藏${omitted}条与原文位置或用字要求不符的改字建议；保留通篇评议和通过字位核对的建议，采纳前仍请斟酌原意。`,
+              }
+            : {}),
+        };
       }
       if (input.task === "search" || input.task === "rhyme") {
         const matches =
@@ -257,13 +281,9 @@ export function registerPoetryStudio(
       const critiqueResult =
         input.task === "critique"
           ? (() => {
-              const critique = CritiqueSchema.parse(parsed.data);
+              const critique = checkedCritique!;
               const ruleReview = formalProsodyNote(input.prosodyContext);
-              const structured = String(
-                request.headers["x-poetry-features"] ?? "",
-              )
-                .split(",")
-                .some((feature) => feature.trim() === "structured-rule-review");
+              const structured = features.has("structured-rule-review");
               // Older open tabs validate a strict result schema; negotiate the new field.
               if (!structured)
                 return {

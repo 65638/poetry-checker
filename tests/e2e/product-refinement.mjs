@@ -18,6 +18,7 @@ const app = buildApp({ readingAssistant: {
     const output = input.task === 'critique'
       ? { overview: '浏览器受控赏读结果。' + input.direction, strengths: ['此内容只验证交互，不代表模型文学判断。'], revisions: [] }
       : { suggestions: input.targets.map(t => ({ tokenId: t.tokenId, candidateId: t.candidates[0].id, pronunciation: null, reason: '受控交互测试。' })) };
+    if (behavior === 'invalid-edit' && input.task === 'critique') output.revisions = [{ startTokenId:'l99c1',endTokenId:'l99c1',original:'山',replacement:'水',reason:'受控错误位置',tradeoff:'不应展示或采纳' }];
     return new Response(JSON.stringify({ choices: [{ finish_reason: 'stop', message: { content: JSON.stringify(output) } }] }));
   },
 } });
@@ -131,6 +132,19 @@ try {
     await waitFor(() => transientAttempts === 2);
     await waitFor(() => h.evaluate("!document.querySelector('.pc-poetry-critique .pc-studio-error') && [...document.querySelectorAll('.pc-poetry-critique button')].some(e=>e.textContent.trim()==='重新评议' && !e.disabled)"));
     assert.equal(critiques, before + 1, 'one browser request with a bounded server recovery');
+  });
+  await check('invalid-edit-is-withheld-without-losing-overview-or-original', async () => {
+    behavior='invalid-edit';
+    const original=await h.evaluate("document.querySelector('.pc-input__text').value");
+    await clickText('.pc-poetry-critique button','重新评议');
+    await waitFor(()=>h.evaluate("document.querySelector('.pc-poetry-review')?.textContent.includes('已隐藏1条')"));
+    assert.equal(await h.evaluate("document.querySelector('.pc-poetry-review').textContent.includes('浏览器受控赏读结果')"),true);
+    assert.equal(await h.evaluate("document.querySelectorAll('.pc-poetry-edit').length"),0);
+    assert.equal(await h.evaluate("document.querySelector('.pc-input__text').value"),original);
+    assert.equal(await h.evaluate("!!document.querySelector('.pc-poetry-critique .pc-studio-error')"),false);
+    await clickText('.pc-poetry-review .pc-study-result-actions button','收藏评议');
+    await waitFor(()=>h.evaluate("JSON.parse(localStorage.getItem('poetry-study-archive-v1')).entries.some(e=>e.response.result.revisionNotice?.includes('已隐藏1条'))"));
+    behavior='success';
   });
   await check('cancel-suppresses-late-response-and-resume-keeps-input', async () => {
     behavior = 'slow';

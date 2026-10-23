@@ -26,7 +26,10 @@ export async function studioPost(
       headers: {
         "Content-Type": "application/json",
         ...(path === "poetry-assistant"
-          ? { "X-Poetry-Features": "structured-rule-review" }
+          ? {
+              "X-Poetry-Features":
+                "structured-rule-review, validated-partial-advice",
+            }
           : {}),
       },
       body: JSON.stringify(value),
