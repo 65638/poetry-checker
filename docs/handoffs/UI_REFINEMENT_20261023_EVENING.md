@@ -20,6 +20,8 @@
 
 ## 当前进度
 
+23:55更新：PR #35已随主线d5ca6a6合并（其头为1bad4ac），不是仍待审批的PR；后续UI截至644f167已由功能侧整合为159ed41。本分支已快进159ed41。新收藏对读展示补丁将单列提交及后续PR，不在已合并PR上冒称仍可审查完整增量。
+
 18:24已确认旧UI工作树干净，从a200a37建立新分支。服务端口56106/56216/56217当前未监听；将只启动自己的隔离预览。模型受控测试与真实模型请求分别记账，不以fixture或CSS截图宣称文学准确率。
 
 ### 18:50 现状审查与第一批修正
@@ -167,3 +169,11 @@ git -c http.version=HTTP/1.1 -c http.postBuffer=104857600 -c core.compression=0 
 - 1440/768短屏/390/320、真实键盘选段/Tab/正文PageDown/Tab离开、高对比、打印媒体均通过；既有长篇选段4场景通过。证据evening22-scope、evening22-passages；基线问题在evening22-scope-baseline保留。
 - **留给当前业务写入方的语义小修正**：ComparisonScope.tsx的可滚动blockquote带aria-label但没有role。axe列aria-prohibited-attr为incomplete，和此前DraftComparison问题相同；建议加`role="region"`使命名的滚动原文区域有明确语义，本侧未抢写TSX。当前不能把此项称作已修。
 - 14处实际背景对比度抽样通过：暂时隐藏字形，对截图背景采样，与原计算文字色核对（排除边框），覆盖诗文提示/问这段/作者、提问示例、对读问题标签/正文/左右卷标记、收藏入口/元数据/移除。字体小于24px按4.5:1检查；例如诗文作者最低4.69:1、段落按钮4.96:1。证据evening21-contrast/results.json；这是指定区域的保守采样，不代表全站无障碍认证。初脚本误选含输入框的整个label，把控件边框当文字背景，已改为只采独立文本/按钮，未改产品颜色以迎合脚本。
+
+### 批次23：收藏对读/改稿新问题的展示修正
+
+- dfe24ac业务与前批UI已通过159ed41整合。前述blockquote的role=region由功能侧补齐；本侧复验四宽度后aria-prohibited-attr项已消除，仍只剩纹理颜色contrast人工项。证据evening23-scope-semantic。
+- 新收藏提问的发送按钮被study-archive通用按钮背景覆盖，浅底浅字实测1.06:1，已增加精确选择器修正正常/悬停/禁用。分项正文此前13/13/13px不跟随字号，现16/18/20px；标题19px、左右卷/旧新稿标签独立，段间分隔保持长答案可扫读。
+- 仅修改study-experience.css，未动业务组件。真实API受控回答在1440/768短屏/390/320、大字、键盘发送回焦、高对比均通过；原收藏字节不变、改稿题目不误称“两首诗”、打印保持原有收藏隐藏策略。相关收藏比较5浏览器场景通过。
+- evidence：evening23-saved-pair-baseline保留浅字/字号问题；evening23-saved-pair修正后axe无确定违规；evening23-regression为业务回归。模型文本为受控样例，不表示文学正确性。
+- 644f167阶段全量verify1168/103通过，见evening22-verify.log。最终阶段将针对交付SHA核对。
