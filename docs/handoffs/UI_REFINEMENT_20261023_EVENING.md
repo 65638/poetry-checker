@@ -47,3 +47,10 @@ git -c http.version=HTTP/1.1 -c http.postBuffer=104857600 -c core.compression=0 
 ```
 
 第一次建分支成功时的refspec为`HEAD:refs/heads/codex/ui-refinement-20261023-evening`。失败后的“Everything up-to-date”不能当成功；用`git ls-remote origin refs/heads/分支名`与本地SHA核对。没有force push、清理对象或复制密钥。
+
+### 批次03：窄屏阅读设置收纳
+
+- 改动`presentation/components/ReadingTools.tsx`及`reading-experience.css`。799px及以下常驻收为“阅读”按钮，按需展开字号/静读，保留回页首独立入口；桌面仍直接显示原控件。
+- 支持Esc关闭并回焦入口、点击外部/焦点离开关闭、切页收起；偏好继续使用原localStorage键。输入框聚焦时仍按原规则隐藏浮条。浮条使用独立亮色焦点环，避免继承纸面焦点色。
+- 类型检查/构建通过；390/320/768/812横屏/1440实际浏览器验证：键盘Tab/Enter/Esc、设置保存、刷新恢复、外部关闭、无溢出。强制颜色模式截图已人工看过。既有product-refinement 11场景通过（含偏好、复制导出、失败/取消/恢复、推敲笺）。证据`work/ui-audit/evening03/`与`evening03-product.log`。
+- 测试脚本最初错误地把aria-hidden的装饰“◐”算进可访问名称，修正选择器后通过；未把脚本超时记作产品通过。

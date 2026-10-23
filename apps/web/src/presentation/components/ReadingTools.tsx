@@ -1,9 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { useMotionPreference } from "../useMotionPreference";
 
 /** Keep scroll updates inside this small tool; the poem never rerenders on scroll. */
 export function ReadingTools({ place }: { place: string }) {
   const host = useRef<HTMLElement>(null);
+  const toggle = useRef<HTMLButtonElement>(null);
+  const preferencesId = useId();
+  const [expanded, setExpanded] = useState(false);
   const [quiet, setQuiet] = useState(() => {
     try {
       return localStorage.getItem("poetry-reading-quiet") === "true";
@@ -22,6 +25,20 @@ export function ReadingTools({ place }: { place: string }) {
   const [progress, setProgress] = useState(0);
   const [showReturn, setShowReturn] = useState(false);
   const motion = useMotionPreference();
+  useEffect(() => setExpanded(false), [place]);
+  useEffect(() => {
+    if (!expanded) return;
+    const dismiss = (event: PointerEvent) => {
+      if (
+        event.target instanceof Node &&
+        !host.current?.contains(event.target)
+      ) {
+        setExpanded(false);
+      }
+    };
+    document.addEventListener("pointerdown", dismiss);
+    return () => document.removeEventListener("pointerdown", dismiss);
+  }, [expanded]);
   useEffect(() => {
     const root = host.current?.closest<HTMLElement>(".pc-workspace");
     if (root) root.dataset.readingSize = String(size);
@@ -71,27 +88,59 @@ export function ReadingTools({ place }: { place: string }) {
     };
   }, [place]);
   return (
-    <aside ref={host} className="pc-reading-tools" aria-label="阅读小笺">
+    <aside
+      ref={host}
+      className="pc-reading-tools"
+      aria-label="阅读小笺"
+      data-expanded={expanded}
+      onKeyDown={(event) => {
+        if (event.key === "Escape" && expanded) {
+          event.preventDefault();
+          setExpanded(false);
+          toggle.current?.focus();
+        }
+      }}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) {
+          setExpanded(false);
+        }
+      }}
+    >
       <span className="pc-reading-tools__caption">灯下静读 · 卷中有景</span>
       <button
+        ref={toggle}
         type="button"
-        className="pc-reading-light"
-        aria-label={`诗文字号：${["标准", "较大", "大字"][size]}，点击切换`}
-        title="调整原诗、对读与推敲笺字号"
-        onClick={() => setSize((size + 1) % 3)}
+        className="pc-reading-tools__toggle"
+        aria-label="阅读设置"
+        aria-expanded={expanded}
+        aria-controls={preferencesId}
+        onClick={() => setExpanded((open) => !open)}
       >
-        字号 · {["标准", "较大", "大字"][size]}
+        <span aria-hidden="true">Aa</span>
+        阅读
+        <span aria-hidden="true">{expanded ? "−" : "+"}</span>
       </button>
-      <button
-        type="button"
-        className="pc-reading-light"
-        aria-pressed={quiet}
-        onClick={() => setQuiet(!quiet)}
-        title="调暗景物，让诗文更醒目"
-      >
-        <span aria-hidden="true">◐</span>
-        {quiet ? "还景" : "静读"}
-      </button>
+      <div id={preferencesId} className="pc-reading-tools__preferences">
+        <button
+          type="button"
+          className="pc-reading-light"
+          aria-label={`诗文字号：${["标准", "较大", "大字"][size]}，点击切换`}
+          title="调整原诗、对读与推敲笺字号"
+          onClick={() => setSize((size + 1) % 3)}
+        >
+          字号 · {["标准", "较大", "大字"][size]}
+        </button>
+        <button
+          type="button"
+          className="pc-reading-light"
+          aria-pressed={quiet}
+          onClick={() => setQuiet(!quiet)}
+          title="调暗景物，让诗文更醒目"
+        >
+          <span aria-hidden="true">◐</span>
+          {quiet ? "还景" : "静读"}
+        </button>
+      </div>
       <button
         type="button"
         className="pc-page-return"
