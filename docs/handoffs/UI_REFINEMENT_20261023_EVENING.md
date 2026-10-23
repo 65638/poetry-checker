@@ -129,3 +129,10 @@ git -c http.version=HTTP/1.1 -c http.postBuffer=104857600 -c core.compression=0 
 - 仅local-data-experience.css/revision-experience.css：阅读字号此前未覆盖摘句册和改稿原文，现补齐。摘句桌面26/28/32px、手机23/25/28px；两稿原文各尺寸标准保留，较大21px/大字24px。原诗/元数据/存储不变。
 - 真实《长恨歌》摘句与受控旧新稿在1440/390/320及812横屏三档递增、无横向溢出、原文逐字相同；没有模型调用。截图evening13-reading-size。
 - 摘句回归首轮在初始诗库异步装载时点击未稳定条目失败；把初始和刷新就绪条件改为完整2022目录加载完成，未改点击命中保护。4场景通过，含去重、私人笔记不随分享、刷新/返回原诗/撤销、缺失版本。证据evening13-excerpts/results.json。
+
+### 批次14：业务回焦修复整合验收
+
+- e93e090已整合为f40ff06并推UI分支；包含同诗同条件等待/失败保留上答，以及业务侧条件回焦与改标题焦点修复。UI不再改业务实现。
+- 原21:20发现已闭环：320/1440真实Enter发送后焦点为收藏回答region；先移到搜索框则回答不抢焦；改标题Enter打开自动全选，保存/取消/Esc回入口。纸面焦点环实测2px、rgb(72,110,86)，截图可见。
+- 追问8/收藏7浏览器场景通过，含失败/迟到/移焦/并发改名保护；证据evening14-followup、evening14-saved。独立焦点脚本最初误把search输入按textbox定位超时，改用searchbox后通过，未修改产品以迎合测试。
+- even­ing14-focus/results.json与320px截图保留。手机回答region顶部约-73px（模型标识在屏外），问题和回答正文在当前视口可见；当前实现明确preventScroll，未额外强制滚动。
