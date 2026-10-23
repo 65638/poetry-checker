@@ -46,10 +46,24 @@ try{
     await clickText('.pc-poetry-review .pc-study-result-actions button','收藏评议');
     assert.equal(await h.evaluate("JSON.parse(localStorage.getItem('poetry-study-archive-v1')).entries.length"),1);
   });
+  await check('saved-result-opens-its-exact-archive-with-focus-and-without-model-calls',async()=>{
+    const before=modelCalls;
+    const stored=await h.evaluate("localStorage.getItem('poetry-study-archive-v1')");
+    await h.evaluate("(()=>{const e=document.querySelector('[aria-label=研读类型]');e.value='compare';e.dispatchEvent(new Event('change',{bubbles:true}));})()");
+    await clickText('.pc-poetry-review .pc-study-result-actions button','查看这份收藏');
+    await waitFor(()=>h.evaluate("document.activeElement?.matches('.pc-study-archive__reader > h3')"));
+    assert.equal(await h.evaluate("document.querySelector('.pc-study-archive').open"),true);
+    assert.equal(await h.evaluate("document.querySelector('[aria-label=研读类型]').value"),'all');
+    assert.equal(await h.evaluate("document.querySelector('.pc-study-archive__reader pre').textContent.includes('白日依山尽')"),true);
+    assert.equal(await h.evaluate("document.querySelector('.pc-input__text').value.startsWith('晓')"),true);
+    assert.equal(await h.evaluate("localStorage.getItem('poetry-study-archive-v1')"),stored);
+    assert.equal(modelCalls,before);
+  });
   await check('storage-failure-keeps-the-existing-archive-and-leaves-copy-available',async()=>{
     await h.evaluate("window.__studySetItem=Storage.prototype.setItem;Storage.prototype.setItem=function(k,v){if(k==='poetry-study-archive-v1')throw new DOMException('controlled quota','QuotaExceededError');return window.__studySetItem.call(this,k,v)}");
     // Remove with a failed write must preserve the already saved snapshot.
-    await h.click('.pc-study-archive summary');await h.click('.pc-study-archive__list button');
+    await h.evaluate("document.querySelector('.pc-study-archive').open=true");
+    if(!await h.evaluate("!!document.querySelector('.pc-study-archive__reader')"))await h.click('.pc-study-archive__list button');
     await clickText('.pc-study-archive__reader button','移除这份研读');
     await waitFor(()=>h.evaluate("document.querySelector('.pc-study-archive').textContent.includes('空间不足')"));
     assert.equal(await h.evaluate("JSON.parse(localStorage.getItem('poetry-study-archive-v1')).entries.length"),1);

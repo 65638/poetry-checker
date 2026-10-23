@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { StudyShareOptions } from "./StudyShareOptions";
+import { openSavedStudy } from "./studyNavigation";
 import type {
   PoetryAssistantRequest,
   PoetryAssistantResponse,
@@ -24,6 +25,7 @@ export function StudyResultActions({
   const [notice, setNotice] = useState<{
     result: PoetryAssistantResponse;
     text: string;
+    savedId?: string;
   } | null>(null);
   if (!input || !result || !["critique", "compare"].includes(result.task))
     return null;
@@ -35,6 +37,7 @@ export function StudyResultActions({
         const added = saveStudyEntry(entry);
         setNotice({
           result,
+          savedId: entry.id,
           text: added
             ? "已收入本机研读收藏，刷新后也能查看。"
             : "这份评议已收藏。",
@@ -97,6 +100,15 @@ export function StudyResultActions({
         <p className="pc-studio-meta" role="status">
           {notice.text}
         </p>
+      )}
+      {notice?.result === result && notice.savedId && (
+        <button
+          type="button"
+          className="pc-studio-action pc-study-open-saved"
+          onClick={() => openSavedStudy(notice.savedId!)}
+        >
+          查看这份收藏
+        </button>
       )}
     </div>
   );
