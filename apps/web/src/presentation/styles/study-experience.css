@@ -167,7 +167,10 @@
   background: #dce1ce;
   border-color: #526d59;
 }
-.pc-workspace .pc-study-archive__actions > button:last-child {
+.pc-workspace
+  .pc-study-archive__reader
+  > .pc-study-archive__actions
+  > button:last-child {
   color: #8a4939;
   border-color: #b59380;
 }
