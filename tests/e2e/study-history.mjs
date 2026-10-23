@@ -52,7 +52,7 @@ try {
     await h.click('.pc-study-history summary');
     await clickText('.pc-study-history button', '画面如何变化？');
     await waitFor(() => reviewContains('受控回答：画面如何变化？'));
-    assert.equal(await reviewContains('本次提问：画面如何变化？'), true);
+    assert.equal(await reviewContains('这份回答的问题：画面如何变化？'), true);
     await sleep(200);
     assert.equal(requests.length, count);
     assert.equal(await h.evaluate("document.querySelector('.pc-study-history [aria-pressed=true]').textContent"), '画面如何变化？当前显示');

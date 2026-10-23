@@ -91,10 +91,30 @@ try {
     await clickText('.pc-study-follow-up button','发送追问');
     await waitFor(()=>h.evaluate("!!document.querySelector('.pc-poetry-critique .pc-studio-error')"));
     const failed=requests.at(-1);
+    assert.equal(await h.evaluate("document.querySelector('.pc-poetry-review > h3 + p').textContent"),'受控回答：哪些说法需要核实？');
+    assert.equal(await h.evaluate("document.querySelector('[aria-label=围绕回答追问]').value"),'请进一步解释。');
+    await clickText('.pc-poetry-review .pc-study-result-actions button','复制评议');
+    const afterFailure=await h.evaluate('navigator.clipboard.readText()');
+    assert(afterFailure.includes('哪些说法需要核实？')&&!afterFailure.includes('请进一步解释。'));
     behavior='success';
     await clickText('.pc-poetry-critique button','重试本次研读');
     await waitFor(()=>h.evaluate("document.querySelector('.pc-poetry-review > h3 + p')?.textContent==='受控回答：请进一步解释。'"));
     assert.deepEqual(requests.at(-1),failed);
+  });
+  await check('waiting-and-cancelling-keep-the-visible-answer-and-editable-follow-up',async()=>{
+    behavior='slow';
+    await fillQuestion('还在等待的追问。');
+    await clickText('.pc-study-follow-up button','发送追问');
+    await waitFor(()=>h.evaluate("!!document.querySelector('.pc-poetry-critique .pc-task-request-preview')"));
+    assert.equal(await h.evaluate("document.querySelector('.pc-poetry-review > h3 + p').textContent"),'受控回答：请进一步解释。');
+    assert.equal(await h.evaluate("document.querySelector('.pc-poetry-critique').textContent.includes('上次研读结果仍在')"),true);
+    assert.equal(await h.evaluate("document.querySelector('.pc-study-follow-up button[type=submit]').disabled"),true);
+    await h.click('.pc-poetry-critique button[aria-label=取消请求]');
+    await sleep(2800);
+    assert.equal(await h.evaluate("document.querySelector('.pc-poetry-review > h3 + p').textContent"),'受控回答：请进一步解释。');
+    assert.equal(await h.evaluate("document.querySelector('[aria-label=围绕回答追问]').value"),'还在等待的追问。');
+    assert.equal(await h.evaluate("document.querySelector('.pc-study-follow-up button[type=submit]').disabled"),false);
+    behavior='success';
   });
   await check('modified-draft-cannot-send-a-follow-up-about-the-old-poem',async()=>{
     const count=requests.length;

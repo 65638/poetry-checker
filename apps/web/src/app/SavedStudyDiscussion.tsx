@@ -41,7 +41,7 @@ export function SavedStudyDiscussion({ entry }: { entry: StudyEntry }) {
           </p>
           {input?.task === "critique" && input.question && (
             <p className="pc-study-question-asked">
-              本次提问：{input.question}
+              这份回答的问题：{input.question}
             </p>
           )}
           <StudyProse text={response.result.overview} />

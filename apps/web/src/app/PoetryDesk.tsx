@@ -512,7 +512,7 @@ export function PoetryDesk({
               {critique.resultInput?.task === "critique" &&
                 critique.resultInput.question && (
                   <p className="pc-study-question-asked">
-                    本次提问：{critique.resultInput.question}
+                    这份回答的问题：{critique.resultInput.question}
                   </p>
                 )}
               <h3>
@@ -569,6 +569,7 @@ export function PoetryDesk({
                     className="pc-studio-action"
                     disabled={
                       !canApply ||
+                      critique.busy ||
                       pendingEdits?.some(
                         (e) =>
                           e.startTokenId === edit.startTokenId &&

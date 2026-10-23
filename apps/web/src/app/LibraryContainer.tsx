@@ -1230,7 +1230,7 @@ export function LibraryContainer({
                 {literary.resultInput?.task === "critique" &&
                   literary.resultInput.question && (
                     <p className="pc-study-question-asked">
-                      本次提问：{literary.resultInput.question}
+                      这份回答的问题：{literary.resultInput.question}
                     </p>
                   )}
                 <StudyProse text={literary.result.result.overview} />
