@@ -13,7 +13,7 @@ export function StudyShareOptions({
         checked={includeHistory}
         onChange={(event) => onChange(event.target.checked)}
       />
-      分享时附上此前问答（收藏始终保留完整记录）
+      分享时附上此前问答（收藏保留本次问答与引用背景）
     </label>
   );
 }

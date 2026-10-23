@@ -117,6 +117,8 @@ export const PoetryAssistantRequestSchema = z.discriminatedUnion("task", [
             z.strictObject({
               question: z.string().trim().min(1).max(240).optional(),
               answer: note,
+              details: z.string().min(1).max(6400).optional(),
+              detailsTruncated: z.boolean().optional(),
             }),
           )
           .min(1)

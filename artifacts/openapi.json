@@ -2246,6 +2246,14 @@
                           "type": "string",
                           "minLength": 1,
                           "maxLength": 1600
+                        },
+                        "details": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 6400
+                        },
+                        "detailsTruncated": {
+                          "type": "boolean"
                         }
                       },
                       "required": [

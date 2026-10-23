@@ -131,7 +131,14 @@ describe("poetry studio with real lexicon and controlled model", () => {
       rhymeBook: "pingshui",
       mode: "writing",
       direction: "meaning",
-      turns: [{ question: "画面如何？", answer: "此前的AI理解，可能有误。" }],
+      turns: [
+        {
+          question: "画面如何？",
+          answer: "此前的AI理解，可能有误。",
+          details: "推敲建议\n“空” → “幽”\n原因：加强幽深感…（摘录）",
+          detailsTruncated: true,
+        },
+      ],
     };
     const payload = { ...critique, question: "请解释刚才的说法。", followUp };
     await withApp(result, async (app, fetcher) => {
@@ -163,6 +170,13 @@ describe("poetry studio with real lexicon and controlled model", () => {
         {
           ...payload,
           followUp: { ...followUp, turns: [{ answer: "字".repeat(1601) }] },
+        },
+        {
+          ...payload,
+          followUp: {
+            ...followUp,
+            turns: [{ answer: "总评", details: "字".repeat(6401) }],
+          },
         },
       ])
         expect((await post(app, invalid)).statusCode).toBe(422);
