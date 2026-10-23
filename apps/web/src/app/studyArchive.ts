@@ -177,8 +177,15 @@ export function studyText(
     if (input.question) rows.push("研读问题", input.question, "");
     if (input.followUp && options.includeHistory !== false) {
       rows.push("追问背景（此前的 AI 回答，仅供参考）");
-      for (const turn of input.followUp.turns)
+      for (const turn of input.followUp.turns) {
         rows.push(turn.question ?? "通篇观照", turn.answer, "");
+        if (turn.details)
+          rows.push(
+            ...(turn.detailsTruncated ? ["建议摘录（较长理由有所省略）"] : []),
+            turn.details,
+            "",
+          );
+      }
     }
     rows.push(
       `${input.mode === "reading" ? "原诗赏读" : "写作推敲"} · ${directionNames[input.direction]} · ${bookNames[input.rhymeBook]}`,

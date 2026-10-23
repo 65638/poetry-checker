@@ -3,8 +3,49 @@ import {
   PoetryAssistantResponseSchema,
   type PoetryAssistantRequest,
   type PoetryAssistantResponse,
+  type Critique,
 } from "@poetry/contracts";
 import { sha256Hex } from "../utils/sha256";
+
+/** Bounded context for pronouns such as "that replacement", without treating advice as evidence. */
+export function studyAnswerDetails(result: Critique): {
+  details?: string;
+  detailsTruncated?: boolean;
+} {
+  let truncated = false;
+  const excerpt = (value: string, limit: number) => {
+    if (value.length <= limit) return value;
+    truncated = true;
+    let prefix = "";
+    for (const character of value) {
+      if (prefix.length + character.length > limit) break;
+      prefix += character;
+    }
+    return `${prefix}…（摘录）`;
+  };
+  const rows: string[] = [];
+  if (result.strengths.length)
+    rows.push(
+      "可取之处",
+      ...result.strengths.map((value) => `• ${excerpt(value, 200)}`),
+    );
+  if (result.revisions.length) {
+    rows.push("推敲建议");
+    for (const edit of result.revisions)
+      rows.push(
+        `“${edit.original}” → “${edit.replacement}”`,
+        `原因：${excerpt(edit.reason, 300)}`,
+        `取舍：${excerpt(edit.tradeoff, 300)}`,
+      );
+  }
+  if (result.revisionNotice) rows.push("建议校验说明", result.revisionNotice);
+  return rows.length
+    ? {
+        details: rows.join("\n"),
+        ...(truncated ? { detailsTruncated: true } : {}),
+      }
+    : {};
+}
 
 export function buildStudyFollowUp(
   input: PoetryAssistantRequest,
@@ -32,6 +73,7 @@ export function buildStudyFollowUp(
         {
           ...(original.question ? { question: original.question } : {}),
           answer: answer.result.overview,
+          ...studyAnswerDetails(answer.result),
         },
       ],
     },

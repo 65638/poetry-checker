@@ -60,7 +60,8 @@ try {
     await follow('请解释空间层次。');
     assert.equal(requests.length,count+1);
     assert.equal(requests.at(-1).text,poem);
-    assert.deepEqual(requests.at(-1).followUp.turns,[{answer:'受控回答：通篇观照'}]);
+    assert.deepEqual(requests.at(-1).followUp.turns,[{answer:'受控回答：通篇观照',details:'可取之处\n• 仅验证交互'}]);
+    assert.equal(await h.evaluate("document.querySelector('.pc-study-follow-up-context .pc-study-follow-up__details').textContent.includes('仅验证交互')"),true);
     assert.equal(await h.evaluate("document.querySelector('.pc-study-follow-up-context').textContent.includes('参考了 1 轮')"),true);
   });
   await check('follow-up-keeps-only-three-turns-and-saves-context-with-answer',async()=>{

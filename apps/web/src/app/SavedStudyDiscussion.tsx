@@ -35,6 +35,10 @@ export function SavedStudyDiscussion({ entry }: { entry: StudyEntry }) {
       <StudioTaskState {...task} result={last ? response : null} />
       {last && (
         <div className="pc-saved-discussion__answer">
+          <p>
+            本次回答：{response.provider === "deepseek" ? "DeepSeek" : "GLM"} ·{" "}
+            {response.model}
+          </p>
           {input?.task === "critique" && input.question && (
             <p className="pc-study-question-asked">
               本次提问：{input.question}

@@ -3,7 +3,8 @@ import type {
   PoetryAssistantRequest,
   PoetryAssistantResponse,
 } from "@poetry/contracts";
-import { buildStudyFollowUp } from "./followUpRequest";
+import { buildStudyFollowUp, studyAnswerDetails } from "./followUpRequest";
+import { StudyProse } from "./StudyProse";
 import "./study-follow-up.css";
 
 export function StudyFollowUp({
@@ -21,16 +22,19 @@ export function StudyFollowUp({
   const [error, setError] = useState<string | null>(null);
   const hintId = useId();
   if (input?.task !== "critique" || response?.task !== "critique") return null;
+  const context = studyAnswerDetails(response.result);
   return (
     <details className="pc-study-follow-up">
       <summary>围绕这份回答继续追问</summary>
       <p id={hintId}>
-        连同原文与最近最多 3 轮回答正文一起发送；选示例不会自动请求。
+        连同原文与最近最多 3
+        轮总评、可取之处和改字建议一起发送；较长理由仅带摘录。选示例不会自动请求。
       </p>
       <details className="pc-study-follow-up__reference">
         <summary>追问所依据的回答</summary>
         {input.question && <p>上次问题：{input.question}</p>}
         <blockquote>{response.result.overview}</blockquote>
+        <StudyDetailsExcerpt {...context} />
       </details>
       <form
         onSubmit={(event) => {
@@ -107,9 +111,26 @@ export function StudyFollowUpContext({
           <li key={index}>
             <p>{turn.question ?? "通篇观照"}</p>
             <blockquote>{turn.answer}</blockquote>
+            <StudyDetailsExcerpt {...turn} />
           </li>
         ))}
       </ol>
     </details>
+  );
+}
+
+function StudyDetailsExcerpt({
+  details,
+  detailsTruncated,
+}: {
+  details?: string;
+  detailsTruncated?: boolean;
+}) {
+  if (!details) return null;
+  return (
+    <div className="pc-study-follow-up__details">
+      {detailsTruncated && <p>以下为建议摘录，较长的理由有所省略。</p>}
+      <StudyProse text={details} />
+    </div>
   );
 }
