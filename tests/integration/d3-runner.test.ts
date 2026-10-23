@@ -7,6 +7,7 @@ import {
 } from "./e2e/d3-acceptance-api.mjs";
 import type { AnalysisResponse } from "@poetry/contracts";
 import { passedScenario } from "../e2e/scenario-result.mjs";
+import { analysisBody } from "../e2e/analysis-body.mjs";
 import {
   assertReportExport,
   assertSummaryExport,
@@ -43,6 +44,50 @@ beforeAll(async () => {
   });
   expect(res.statusCode).toBe(200);
   report = res.json();
+});
+
+describe("浏览器验收读取最终分段报告", () => {
+  it("读取普通JSON及base64编码分段流中的真实最终报告", () => {
+    expect(analysisBody({ body: JSON.stringify(report) })).toEqual(report);
+    const body =
+      [
+        { type: "readings", poem: report.poem },
+        { type: "result", report },
+      ]
+        .map((event) => JSON.stringify(event))
+        .join("\n") + "\n";
+    expect(
+      analysisBody({
+        body: Buffer.from(body).toString("base64"),
+        base64Encoded: true,
+      }),
+    ).toEqual(report);
+  });
+  it("拒绝初步读音、错误结束、重复终态及终态后的事件", () => {
+    for (const events of [
+      [{ type: "readings", poem: report.poem }],
+      [
+        {
+          type: "error",
+          status: 503,
+          body: { error: { message: "受控失败" } },
+        },
+      ],
+      [
+        { type: "result", report },
+        { type: "result", report },
+      ],
+      [
+        { type: "result", report },
+        { type: "readings", poem: report.poem },
+      ],
+    ])
+      expect(() =>
+        analysisBody({
+          body: events.map((event) => JSON.stringify(event)).join("\n"),
+        }),
+      ).toThrow();
+  });
 });
 
 // Mutate actual API output to prove the acceptance runner cannot hide a broken export.

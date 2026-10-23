@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { analysisBody } from "./analysis-body.mjs";
 import { createHash } from "node:crypto";
 import { mkdtempSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
@@ -46,9 +47,7 @@ export async function runLiveFlowScenarios({
     const raw = await cdp.send("Network.getResponseBody", {
       requestId: res.requestId,
     });
-    const body = JSON.parse(
-      raw.base64Encoded ? Buffer.from(raw.body, "base64").toString() : raw.body,
-    );
+    const body = analysisBody(raw);
     const { postData } = await cdp.send("Network.getRequestPostData", {
       requestId: res.requestId,
     });

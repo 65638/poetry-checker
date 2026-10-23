@@ -22,6 +22,7 @@ import {
 import { launchBrowser } from "./cdp.mjs";
 import { assertReportExport, assertSummaryExport } from "./export-checks.mjs";
 import { passedScenario } from "./scenario-result.mjs";
+import { analysisBody } from "./analysis-body.mjs";
 import { runLiveFlowScenarios } from "./live-flow-scenarios.mjs";
 import { POEMS, checkCell } from "../integration/e2e/d3-acceptance-api.mjs";
 
@@ -142,11 +143,7 @@ try {
       const raw = await cdp.send("Network.getResponseBody", {
         requestId: response.requestId,
       });
-      const body = JSON.parse(
-        raw.base64Encoded
-          ? Buffer.from(raw.body, "base64").toString()
-          : raw.body,
-      );
+      const body = analysisBody(raw);
       const result = checkCell(poem, "pingshui", {
         status: response.response.status,
         body,
@@ -251,7 +248,7 @@ try {
     const raw = await cdp.send("Network.getResponseBody", {
       requestId: response.requestId,
     });
-    const report = JSON.parse(raw.body);
+    const report = analysisBody(raw);
     assert.equal(report.policy.rhymeBook, "cilin");
     assert(report.provenance.evidence.some((item) => item.reviewStatus === "unverified"));
     await waitFor(() =>
@@ -299,9 +296,7 @@ try {
     const raw = await cdp.send("Network.getResponseBody", {
       requestId: response.requestId,
     });
-    const report = JSON.parse(
-      raw.base64Encoded ? Buffer.from(raw.body, "base64").toString() : raw.body,
-    );
+    const report = analysisBody(raw);
     const checked = checkCell(poem, "pingshui", {
       status: response.response.status,
       body: report,
@@ -631,9 +626,7 @@ try {
     const bRaw = await cdp.send("Network.getResponseBody", {
       requestId: bResponse.requestId,
     });
-    const bBody = JSON.parse(
-      bRaw.base64Encoded ? Buffer.from(bRaw.body, "base64").toString() : bRaw.body,
-    );
+    const bBody = analysisBody(bRaw);
     assert.equal(bBody.summary.status, "fail", "B 应为黄鹤楼 fail");
     await waitFor(() => evaluate("!document.querySelector('.pc-report--stale')"));
 
