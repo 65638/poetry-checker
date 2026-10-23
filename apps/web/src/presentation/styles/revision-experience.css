@@ -237,3 +237,185 @@
     border: 1px solid CanvasText;
   }
 }
+
+/* Compare drafts on two clearly labelled paper leaves, including in writing mode. */
+.pc-workspace .pc-draft-comparison {
+  --pc-text: #30483a;
+  --pc-text-muted: #586651;
+  --pc-surface-sheet: #fbf9ef;
+  --pc-focus: #356959;
+  --pc-divider: #8c9e7b55;
+  --pc-cursor-action: url("/design/cursor-rain-action-ink.svg") 12 12, pointer;
+  padding: 0 20px;
+  border-radius: 4px;
+  border-color: #8c9e7b66;
+  background: #f1eddf;
+  color: #30483a;
+  font: 14px/1.85 var(--pc-font-sans);
+}
+.pc-workspace .pc-draft-comparison[open] {
+  padding-bottom: 20px;
+}
+.pc-workspace .pc-draft-comparison > summary {
+  min-height: 56px;
+  box-sizing: border-box;
+  padding-block: 14px;
+  font: 17px/1.6 var(--pc-font-serif);
+}
+.pc-workspace .pc-draft-comparison[open] > summary {
+  border-bottom: 1px solid #8c9e7b55;
+}
+.pc-workspace .pc-draft-comparison > p {
+  margin-block: 16px;
+  color: #586651;
+}
+.pc-workspace .pc-draft-comparison__selectors label {
+  gap: 8px;
+  color: #4b604b;
+  font-size: 13px;
+}
+.pc-workspace .pc-draft-comparison select {
+  min-height: 44px;
+  padding: 10px;
+  font: 14px/1.6 var(--pc-font-sans);
+}
+.pc-workspace .pc-draft-comparison__versions {
+  margin-block: 20px;
+  gap: 14px;
+}
+.pc-workspace .pc-draft-comparison__versions > div {
+  padding: 16px;
+  border: 1px solid #b2b49d66;
+  border-top: 2px solid #b38d7c;
+  border-radius: 3px;
+  background: #fbf9ef;
+}
+.pc-workspace .pc-draft-comparison__versions > div + div {
+  border-top-color: #75937b;
+}
+.pc-workspace .pc-draft-comparison__versions h4 {
+  margin: 0 0 12px;
+  color: #5c6452;
+  font: 13px/1.7 var(--pc-font-sans);
+}
+.pc-workspace .pc-draft-comparison__versions blockquote {
+  padding-right: 6px;
+  font: 19px/1.95 var(--pc-font-serif);
+  text-wrap: balance;
+  scrollbar-width: thin;
+  scrollbar-color: #8a9c7c transparent;
+  overscroll-behavior: contain;
+}
+.pc-workspace .pc-draft-comparison__changes {
+  padding: 0 12px;
+  margin-bottom: 20px;
+  border: 1px solid #9ba78c66;
+  border-radius: 3px;
+  background: #e6e8db;
+}
+.pc-workspace .pc-draft-comparison__changes > summary {
+  min-height: 44px;
+  padding-block: 10px;
+  box-sizing: border-box;
+}
+.pc-workspace .pc-draft-comparison__changes ul {
+  padding-right: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: #8a9c7c transparent;
+  overscroll-behavior: contain;
+}
+.pc-workspace .pc-draft-comparison__changes li + li {
+  margin-top: 10px;
+}
+.pc-workspace .pc-draft-comparison textarea {
+  min-height: 100px;
+  padding: 12px;
+  font: 15px/1.9 var(--pc-font-sans);
+}
+.pc-workspace .pc-draft-comparison textarea::placeholder {
+  color: #677160;
+}
+.pc-workspace .pc-draft-comparison form > button {
+  min-height: 44px;
+  padding-inline: 18px;
+  background: #42664b;
+  border-color: #42664b;
+  color: #fbf7e9;
+  font: 14px/1.7 var(--pc-font-sans);
+}
+.pc-workspace .pc-draft-comparison form > button:hover:not(:disabled) {
+  background: #34583d;
+}
+.pc-workspace .pc-draft-comparison form > button:disabled {
+  opacity: 1;
+  background: #e0e3d4;
+  border-color: #a2ac95;
+  color: #65705b;
+}
+.pc-workspace .pc-draft-comparison__result {
+  padding-top: 20px;
+  font: 16px/1.95 var(--pc-font-sans);
+}
+.pc-workspace .pc-draft-comparison__result h3 {
+  margin-top: 0;
+  color: #30483a;
+  font: 25px/1.6 var(--pc-font-serif);
+}
+.pc-workspace .pc-draft-comparison__result section {
+  padding-block: 16px;
+  border-top: 1px solid #8c9e7b55;
+}
+.pc-workspace .pc-draft-comparison__result section h4 {
+  margin: 0;
+  font: 18px/1.7 var(--pc-font-serif);
+  color: #30483a;
+}
+.pc-workspace .pc-draft-comparison__result .pc-draft-comparison__versions {
+  margin-bottom: 0;
+}
+.pc-workspace .pc-draft-comparison__result .pc-draft-comparison__versions > p {
+  margin: 0;
+  padding: 12px;
+  border-left: 2px solid #b38d7c;
+  background: #fbf9ef;
+}
+.pc-workspace
+  .pc-draft-comparison__result
+  .pc-draft-comparison__versions
+  > p
+  + p {
+  border-left-color: #75937b;
+}
+@media (max-width: 599px) {
+  .pc-workspace .pc-draft-comparison {
+    padding-inline: 12px;
+  }
+  .pc-workspace .pc-draft-comparison__versions > div {
+    padding: 12px 6px 12px 10px;
+    border-width: 0 0 0 2px;
+    border-left-color: #b38d7c;
+  }
+  .pc-workspace .pc-draft-comparison__versions > div + div {
+    border-left-color: #75937b;
+  }
+  .pc-workspace .pc-draft-comparison__versions blockquote {
+    font-size: 18px;
+    padding-right: 0;
+  }
+  .pc-workspace .pc-draft-comparison form > button {
+    width: 100%;
+    justify-content: center;
+  }
+  .pc-workspace .pc-hall--writing .pc-poetry-desk {
+    padding-inline: 12px;
+  }
+  .pc-workspace .pc-hall--writing .pc-manuscript:not(.pc-manuscript--pending) {
+    padding-inline: 0;
+  }
+}
+@media (max-width: 359px) {
+  .pc-workspace .pc-draft-comparison__versions blockquote {
+    font-size: 16px;
+    line-height: 2;
+  }
+}
