@@ -127,6 +127,27 @@ export function saveStudyEntry(entry: StudyEntry): boolean {
   writeStudyEntries(next);
   return true;
 }
+export function renameStudyEntry(
+  entries: StudyEntry[],
+  id: string,
+  title: string,
+  expectedTitle: string,
+): StudyEntry[] {
+  const label = title.trim();
+  if (!label || [...label].length > 120)
+    throw new Error("标题请填写1至120个字。");
+  const current = entries.find((entry) => entry.id === id);
+  if (!current) throw new Error("这份收藏已被移除，请重新选择。");
+  if (current.title !== expectedTitle)
+    throw new Error("标题已在另一处更新，请重新打开修改。");
+  const renamed = createStudyEntry(
+    current.input,
+    current.response,
+    label,
+    current.createdAt,
+  );
+  return entries.map((entry) => (entry.id === id ? renamed : entry));
+}
 export function writeStudyEntries(entries: StudyEntry[]) {
   const raw = JSON.stringify(studyArchive(entries));
   parseStudyArchive(raw);

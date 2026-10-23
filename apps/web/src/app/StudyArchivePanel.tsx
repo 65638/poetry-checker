@@ -10,6 +10,7 @@ import {
   downloadStudy,
   copyStudy,
   studyText,
+  renameStudyEntry,
   type StudyEntry,
 } from "./studyArchive";
 import "./study-archive.css";
@@ -34,6 +35,17 @@ export function StudyArchivePanel() {
   const [removed, setRemoved] = useState<StudyEntry | null>(null);
   const [notice, setNotice] = useState("");
   const [includeHistory, setIncludeHistory] = useState(false);
+  const [kind, setKind] = useState("all");
+  const [renaming, setRenaming] = useState<{
+    id: string;
+    before: string;
+    title: string;
+  } | null>(null);
+  const [renamed, setRenamed] = useState<{
+    id: string;
+    before: string;
+    after: string;
+  } | null>(null);
   useEffect(() => {
     const refresh = () => setState(readArchive());
     window.addEventListener(STUDY_ARCHIVE_EVENT, refresh);
@@ -45,7 +57,17 @@ export function StudyArchivePanel() {
   }, []);
   const matches = [...state.entries]
     .reverse()
-    .filter((entry) => studyText(entry).includes(query.trim()));
+    .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt))
+    .filter(
+      (entry) =>
+        (kind === "all" ||
+          (entry.input.task === "critique"
+            ? entry.input.mode
+            : entry.input.revision
+              ? "revision"
+              : "compare") === kind) &&
+        studyText(entry).includes(query.trim()),
+    );
   const entry = state.entries.find((row) => row.id === selected);
   function action(run: () => void) {
     try {
@@ -73,7 +95,45 @@ export function StudyArchivePanel() {
           placeholder="诗句、标题或评议内容"
         />
       </label>
+      <label>
+        研读类型
+        <select
+          aria-label="研读类型"
+          value={kind}
+          onChange={(event) => setKind(event.target.value)}
+        >
+          <option value="all">全部研读</option>
+          <option value="reading">原诗赏读</option>
+          <option value="writing">写作推敲</option>
+          <option value="compare">两诗对读</option>
+          <option value="revision">改稿对照</option>
+        </select>
+      </label>
       {notice && <p role="status">{notice}</p>}
+      {renamed && (
+        <button
+          type="button"
+          onClick={() =>
+            action(() => {
+              const current = parseStudyArchive(
+                localStorage.getItem(STUDY_ARCHIVE_KEY),
+              );
+              writeStudyEntries(
+                renameStudyEntry(
+                  current,
+                  renamed.id,
+                  renamed.before,
+                  renamed.after,
+                ),
+              );
+              setRenamed(null);
+              setNotice("已撤销标题修改。");
+            })
+          }
+        >
+          撤销改标题
+        </button>
+      )}
       {removed && (
         <button
           type="button"
@@ -116,10 +176,20 @@ export function StudyArchivePanel() {
                   }
                   onClick={() => {
                     setSelected(selected === row.id ? null : row.id);
+                    setRenaming(null);
                     setNotice("");
                   }}
                 >
                   <strong>{row.title}</strong>
+                  <span className="pc-study-archive__question">
+                    {row.input.task === "critique"
+                      ? row.input.question
+                        ? `问：${row.input.question}`
+                        : "通篇评议"
+                      : row.input.revision
+                        ? `${row.input.revision.beforeLabel} → ${row.input.revision.afterLabel}`
+                        : "两首原诗并读"}
+                  </span>
                   <small>
                     {row.input.task === "compare"
                       ? row.input.revision
@@ -148,11 +218,70 @@ export function StudyArchivePanel() {
             aria-label="已收藏的研读"
           >
             <h3>{entry.title}</h3>
+            {renaming?.id === entry.id && (
+              <form
+                className="pc-study-archive__rename"
+                onSubmit={(event) => {
+                  event.preventDefault();
+                  action(() => {
+                    const current = parseStudyArchive(
+                      localStorage.getItem(STUDY_ARCHIVE_KEY),
+                    );
+                    writeStudyEntries(
+                      renameStudyEntry(
+                        current,
+                        entry.id,
+                        renaming.title,
+                        renaming.before,
+                      ),
+                    );
+                    setRenamed({
+                      id: entry.id,
+                      before: renaming.before,
+                      after: renaming.title.trim(),
+                    });
+                    setRenaming(null);
+                    setNotice("标题已保存，原文与回答仍完整保留。");
+                  });
+                }}
+              >
+                <label>
+                  收藏标题
+                  <input
+                    aria-label="收藏标题"
+                    value={renaming.title}
+                    maxLength={120}
+                    onChange={(event) =>
+                      setRenaming({ ...renaming, title: event.target.value })
+                    }
+                  />
+                </label>
+                <div className="pc-study-archive__actions">
+                  <button type="submit">保存标题</button>
+                  <button type="button" onClick={() => setRenaming(null)}>
+                    取消改标题
+                  </button>
+                </div>
+              </form>
+            )}
             <p>
               保存于 {new Date(entry.createdAt).toLocaleString("zh-CN")} ·{" "}
               {entry.response.provider === "deepseek" ? "DeepSeek" : "GLM"}
             </p>
             <div className="pc-study-archive__actions">
+              <button
+                type="button"
+                onClick={() => {
+                  setRenaming({
+                    id: entry.id,
+                    before: entry.title,
+                    title: entry.title,
+                  });
+                  setNotice("");
+                }}
+              >
+                改标题
+              </button>
               <button
                 type="button"
                 onClick={() => {

@@ -49,7 +49,7 @@ try{
   await check('read-related-original-and-return-to-source-with-keyboard-focus',async()=>{
     const chosen=await first();await clickText('.pc-related-reading__list > li:first-child button','读原诗');
     await waitFor(()=>h.evaluate(`document.querySelector('.pc-library-reading > h2')?.textContent===${JSON.stringify(chosen.title)}`));
-    assert.equal(await h.evaluate("document.activeElement.getAttribute('aria-label')"),'原诗阅读');
+    await waitFor(()=>h.evaluate("document.activeElement.getAttribute('aria-label')==='原诗阅读'"));
     assert.equal(await h.evaluate("document.querySelector('.pc-related-return').textContent"),'返回上一首《鹿柴》');
     await h.click('.pc-related-return');await waitFor(()=>h.evaluate("document.querySelector('.pc-library-reading > h2')?.textContent==='鹿柴'"));
     assert.equal(requests.length,0);await openRelated();
@@ -60,7 +60,7 @@ try{
     await h.viewport(1440,1000);const chosen=await first();const target=works.find(work=>work.id===chosen.id);
     await clickText('.pc-related-reading__list > li:first-child button','与本诗对读');
     await waitFor(()=>h.evaluate("!!document.querySelector('.pc-library-comparison')"));
-    assert.equal(await h.evaluate("document.activeElement.getAttribute('aria-label')"),'对读');
+    await waitFor(()=>h.evaluate("document.activeElement.getAttribute('aria-label')==='对读'"));
     assert.deepEqual(await h.evaluate("[...document.querySelectorAll('.pc-compare-title h2')].map(e=>e.textContent)"),['鹿柴',target.title]);
     await sleep(250);assert.equal(requests.length,0);
     await h.click('.pc-compare-submit');await waitFor(()=>h.evaluate("!!document.querySelector('.pc-library-comparison-notes')"));

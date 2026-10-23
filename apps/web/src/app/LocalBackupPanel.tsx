@@ -184,9 +184,10 @@ export function LocalBackupPanel({
                       setPlan(null);
                       throw new Error("当前草稿已变化，请重新预览后再合并。");
                     }
+                    // A failed or conflicting restore must be previewed again against current data.
+                    setPlan(null);
                     await applyLocalRestore(browserBackupPort(), plan);
                     onRestored(plan.draft);
-                    setPlan(null);
                     setBackup(null);
                     setMessage("合并完成，收藏与笺记已在本页更新。");
                   })

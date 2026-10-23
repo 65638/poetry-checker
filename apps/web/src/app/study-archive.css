@@ -55,6 +55,32 @@
 .pc-study-archive__list small {
   color: #c5c0aa;
 }
+.pc-study-archive__question {
+  font-size: 13px;
+  line-height: 1.7;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.pc-study-archive select {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin-block: 6px 12px;
+  padding: 10px;
+  background: #102a31;
+  color: #e5dec5;
+  border: 1px solid #b7b09388;
+  font: inherit;
+}
+.pc-study-archive select:focus-visible {
+  outline: 2px solid #ead9a3;
+  outline-offset: 3px;
+}
+.pc-study-archive__rename {
+  margin-block: 12px 18px;
+}
 .pc-study-archive__list [aria-expanded="true"] {
   border-color: #ead9a3;
 }

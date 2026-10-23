@@ -48,6 +48,23 @@ try{
  await check('archive-continuation-fits-320px-and-keeps-answers-readable',async()=>{
    await h.viewport(320,900,true);await h.evaluate("document.querySelector('.pc-saved-discussion').scrollIntoView({block:'start',behavior:'instant'})");assert.equal(await h.evaluate('document.documentElement.scrollWidth<=innerWidth+1'),true);await shot('saved-discussion-320');
  });
+ await check('organize-saved-answers-with-filters-and-reversible-concurrency-safe-titles',async()=>{
+   await h.viewport(1440,1000);const count=requests.length;
+   await h.evaluate("(()=>{const e=document.querySelector('[aria-label=研读类型]');e.value='compare';e.dispatchEvent(new Event('change',{bubbles:true}));})()");
+   assert.equal(await h.evaluate("document.querySelectorAll('.pc-study-archive__list li').length"),0);
+   await h.evaluate("(()=>{const e=document.querySelector('[aria-label=研读类型]');e.value='reading';e.dispatchEvent(new Event('change',{bubbles:true}));})()");
+   assert.equal(await h.evaluate("[...document.querySelectorAll('.pc-study-archive__question')].some(e=>e.textContent.includes('请继续解释声音与光。'))"),true);
+   await clickText('.pc-study-archive__actions > button','改标题');
+   await h.evaluate("(()=>{const e=document.querySelector('[aria-label=收藏标题]');Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(e,'月下的提问');e.dispatchEvent(new Event('input',{bubbles:true}));})()");
+   await clickText('.pc-study-archive__rename button','保存标题');await waitFor(()=>h.evaluate("document.querySelector('.pc-study-archive__reader > h3')?.textContent==='月下的提问'"));
+   const renamed=await h.evaluate(`JSON.parse(localStorage.getItem('poetry-study-archive-v1')).entries.find(entry=>entry.id===${JSON.stringify(other.id)})`);assert.deepEqual(renamed,{...other,title:'月下的提问'});
+   await clickText('.pc-study-archive > button','撤销改标题');await waitFor(()=>h.evaluate("document.querySelector('.pc-study-archive__reader > h3')?.textContent==='静夜思收藏'"));
+   await clickText('.pc-study-archive__actions > button','改标题');
+   await h.evaluate(`(()=>{const v=JSON.parse(localStorage.getItem('poetry-study-archive-v1'));v.entries.find(entry=>entry.id===${JSON.stringify(other.id)}).title='别处的新标题';localStorage.setItem('poetry-study-archive-v1',JSON.stringify(v));})()`);
+   await clickText('.pc-study-archive__rename button','保存标题');await waitFor(()=>h.evaluate("document.querySelector('.pc-study-archive > [role=status]')?.textContent.includes('另一处更新')"));
+   assert.equal(await h.evaluate(`JSON.parse(localStorage.getItem('poetry-study-archive-v1')).entries.find(entry=>entry.id===${JSON.stringify(other.id)}).title`),'别处的新标题');
+   assert.equal(requests.length,count);
+ });
  assert.deepEqual(result.errors,[]);
 }catch(error){result.failure=error.stack;process.exitCode=1;await shot('failure').catch(()=>{});}
 finally{await h.stop();writeFileSync(join(out,'results.json'),JSON.stringify(result,null,2)+'\n');}
