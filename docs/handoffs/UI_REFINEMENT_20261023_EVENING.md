@@ -151,3 +151,11 @@ git -c http.version=HTTP/1.1 -c http.postBuffer=104857600 -c core.compression=0 
 - 展示组件新增pc-verse-text包装；宽度至少760px的非注音诗文纸面，将摘句/问这段放入右侧工具栏。较窄纸面和注音仍置于段后，不遮挡诗字、不压缩44px触达区；规则仅screen生效。1440px大字模式实测单段122.39→74.39px，长诗可连续阅读。没有修改段落内容/回调/业务状态。
 - 本批typecheck、Web构建、组件eslint通过；语料11、段落提问4、慢目录2浏览器场景通过。axe没有确定违规，纹理背景颜色对比仍是人工检查项。
 - 功能侧批次13正在开发两诗独立问题；本侧不修改StudyQuestion/StudyHistory/studyArchive或比较容器，待固定SHA后接入展示。
+
+### 批次20：两诗定向提问展示接入
+
+- 已合固定da66ca7为0ae91ab。完整构建后定向对读6场景通过；首次仅重建Web遗漏新契约dist导致请求失败，已重建全工作区解决，没有把该次失败记为通过。
+- 展示只改comparison-experience.css：提问/等待与回答纸面最大1080px对齐，总评最大44em，保留两卷原诗并排宽度；手机自然单列，不修改请求或历史。
+- 1440/768短屏/390/320，大字、键盘Tab/Enter发送、等待后不抢已移开的输入焦点、失败保留原问题标签、高对比与打印媒体检查通过。打印隐藏输入表单、保留已显示回答。axe无确定违规，颜色纹理仍有incomplete项。证据evening20-comparison/results.json及实际截图；受控模型仅验证界面。
+- eaf29af全量verify1158/102通过（evening19-verify.log）；da66ca7整合后的局部浏览器结果单列，未称其为相同版本的全量验证。
+- 功能侧正在处理长篇两诗选段，暂避LibraryContainer与新范围组件，等待固定SHA。

@@ -80,6 +80,16 @@
 .pc-workspace .pc-compare-task:empty {
   min-height: 0;
 }
+.pc-workspace .pc-compare-task,
+.pc-workspace .pc-library-comparison-notes {
+  width: 100%;
+  max-width: 1080px;
+  margin-inline: auto;
+  box-sizing: border-box;
+}
+.pc-workspace .pc-comparison-questions {
+  min-width: 0;
+}
 .pc-workspace .pc-compare-task:not(:empty) {
   padding-block: 18px;
 }
@@ -89,6 +99,8 @@
   border-top: 2px solid #b4a27d;
 }
 .pc-workspace .pc-compare-overview {
+  max-width: 44em;
+  margin-inline: auto;
   padding-bottom: 20px;
   border-bottom: 1px solid #a2ad9545;
 }
