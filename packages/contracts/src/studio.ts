@@ -4,6 +4,7 @@ import { ModelProviderSchema } from "./model.js";
 const text = z.string().min(1).max(2000);
 const book = z.enum(["pingshui", "cilin", "xinyun"]);
 const note = z.string().min(1).max(1600);
+export const MAX_REVISION_SUGGESTIONS = 6;
 export const LibraryWorkSchema = z.object({
   id: z.string().min(1).max(160),
   title: z.string().min(1).max(200),
@@ -30,7 +31,7 @@ export const RevisionSchema = z.strictObject({
 export const CritiqueSchema = z.strictObject({
   overview: note,
   strengths: z.array(note).max(5),
-  revisions: z.array(RevisionSchema).max(6),
+  revisions: z.array(RevisionSchema).max(MAX_REVISION_SUGGESTIONS),
   /** Server-generated explanation when invalid rewrite suggestions were withheld. */
   revisionNotice: z.string().min(1).max(400).optional(),
   /** Server-generated rule context, separate from the model's literary overview. */

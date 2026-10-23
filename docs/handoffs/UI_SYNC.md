@@ -4,10 +4,18 @@
 
 ## 最新可用版本
 
-- 功能提交/本机发布：`ef6befd`（晚间批次12：问这段与目录加载连续性），业务79c6e19，UI含868a275。
-- 业务基线：1158测试 / 102文件，全量verify通过；段落问答4、目录慢加载/恢复2、全库阅读11浏览器通过。
+- 功能提交/本机发布：`da66ca7`（晚间批次13：定向两诗对读），UI含868a275。
+- 业务基线：1161测试 / 102文件，全量verify通过；定向对读6、综合诗词工作台12浏览器通过，末次等待预览补充后lint/typecheck/build通过。
 - 本机预览：`http://127.0.0.1:56106/`，已由桌面发布脚本启动。保留本机数据和模型配置。
-- main随同步记录推送；已确认a414f6c CI成功，最新以[Actions](https://github.com/65638/poetry-checker/actions)实际状态为准。
+- main随同步记录推送；已确认ef6befd CI成功，最新以[Actions](https://github.com/65638/poetry-checker/actions)实际状态为准。
+
+## 晚间批次13接入点
+
+- compare契约新增可选question（1–240字符），旧输入与收藏兼容；问题参与请求摘要，API要求引用真实左右原句，不预设共同意象、不冒称看到旧对话。
+- `.pc-comparison-questions`复用StudyQuestion(comparison=true)/StudyHistory；提交才调用模型，回看最近6条不调用；新问题等待/失败保留旧答。等待预览显示本次问题，结果/分享/收藏标明已完成回答的问题；换诗或交换清空本次问题与历史，已收藏保留。
+- 原“对读已完成”按钮现在可显式重做当前显示问题，不自动发送，不读取未发问题草稿。焦点遵循当前阅读位置，不抢走已移开的焦点。
+- 证据`evening13-comparison-final/`6场景、`evening13-studio-stable/`12场景；受控上游不代表文学准确率。旧综合测试的回答标签更新、翻页等待现要求实际页号变化，避免把旧页aria-busy=false误当完成。320px截图已查。56106已发布。
+- UI可执行`git fetch origin`后`git merge da66ca7`（或已包含该提交的origin/main）；不需修改本机数据或模型配置。
 
 ## 晚间批次12接入点
 
