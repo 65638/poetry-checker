@@ -75,3 +75,9 @@ git -c http.version=HTTP/1.1 -c http.postBuffer=104857600 -c core.compression=0 
 - 本机Edge无头、4倍CPU降速、1440/390、动画开/减少动态，每种120帧×3；采样帧间隔中位约16.7ms，采样内P95约16.8–16.9ms。首轮桌面动画样本有2帧>33.4ms，其余采样0帧。无非用户触发布局偏移。该结果不是用户群体P95。
 - 首次内容绘制320–368ms；首次主脚本解压554123字节、CSS214391字节，初始化出现52–189ms长任务。共享机器有其他任务，不能据一次样本给出通用设备性能保证。证据work/ui-audit/evening-performance/baseline.json。
 - 当前未发现持续动画掉帧瓶颈，不为消除构建警告而盲目拆包；后续关注首次加载与长页交互。
+
+### 20:26 交叉路径最小修正预告
+
+- 语料浏览器回归连续两次在ResearchNotes等待超时；切诗后原诗区残留多个读音与版本details。LibraryContainer中ResearchNotes与新RelatedReading使用相同的selected.id sibling key。
+- 本次仅将这两个key分别加research:、related:前缀，消除同级标识碰撞；不移动插槽、不改props/请求/业务。现有corpus-reference测试补充切诗后的面板数量断言。
+- AnnotatedVerses的逐段焦点性能修改仍在验证，不将本次失败隐去或宣称全通过。
