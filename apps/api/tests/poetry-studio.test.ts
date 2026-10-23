@@ -75,6 +75,77 @@ const post = (
     headers: { "x-poetry-features": "structured-rule-review" },
   });
 describe("poetry studio with real lexicon and controlled model", () => {
+  it("keeps useful critique and valid edits when individual rewrite records are malformed", async () => {
+    const revisions = [
+      edit,
+      { ...edit, tradeoff: null },
+      { replacement: "月" },
+      null,
+      { ...edit, startTokenId: "l99c1" },
+    ];
+    await withApp({ ...result, revisions }, async (app, fetcher) => {
+      const response = await app.inject({
+        method: "POST",
+        url: "/api/v1/poetry-assistant",
+        payload: critique,
+        headers: {
+          "x-poetry-features":
+            "structured-rule-review, validated-partial-advice",
+        },
+      });
+      expect(response.statusCode).toBe(200);
+      const parsed = PoetryAssistantResponseSchema.parse(response.json());
+      expect(parsed.result).toMatchObject({
+        overview: result.overview,
+        strengths: result.strengths,
+        revisions: [edit],
+        revisionNotice: expect.stringContaining("已隐藏4条"),
+      });
+      expect(fetcher).toHaveBeenCalledTimes(1);
+      expect((await post(app, critique)).statusCode).toBe(502);
+    });
+  });
+  it("does not invent missing top-level content, shorten oversized lists or accept model-authored validation fields", async () => {
+    for (const output of [
+      { ...result, overview: null },
+      { ...result, strengths: null },
+      { ...result, revisions: null },
+      { ...result, revisions: Array(7).fill(null) },
+      { ...result, revisionNotice: "模型声称已审核", revisions: [null] },
+      { ...result, ruleReview: { summary: "伪造格律结论" }, revisions: [null] },
+    ])
+      await withApp(output, async (app) => {
+        const response = await app.inject({
+          method: "POST",
+          url: "/api/v1/poetry-assistant",
+          payload: critique,
+          headers: {
+            "x-poetry-features":
+              "structured-rule-review, validated-partial-advice",
+          },
+        });
+        expect(response.statusCode).toBe(502);
+      });
+  });
+  it("can retain a complete overview when all malformed rewrites are withheld, including reading mode", async () => {
+    await withApp({ ...result, revisions: [null] }, async (app) => {
+      for (const mode of ["writing", "reading"]) {
+        const response = await app.inject({
+          method: "POST",
+          url: "/api/v1/poetry-assistant",
+          payload: { ...critique, mode },
+          headers: {
+            "x-poetry-features":
+              "structured-rule-review, validated-partial-advice",
+          },
+        });
+        expect(response.statusCode).toBe(200);
+        expect(response.json().result.overview).toBe(result.overview);
+        expect(response.json().result.revisions).toEqual([]);
+        expect(response.json().result.revisionNotice).toContain("1条");
+      }
+    });
+  });
   it("binds a comparison question to both originals and rejects invalid questions before calling the model", async () => {
     const pair = {
       task: "compare",
