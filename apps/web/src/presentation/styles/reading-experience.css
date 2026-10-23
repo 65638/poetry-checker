@@ -460,3 +460,182 @@ html:has(.pc-workspace) {
     transition: none;
   }
 }
+
+/* Related poems form a small reading shelf, with evidence distinct from actions. */
+.pc-workspace .pc-related-reading {
+  padding: 0 18px;
+  border: 1px solid #8c9e7b66;
+  border-radius: 4px;
+  background: #e9e9dc;
+  color: #30483a;
+  font: 14px/1.85 var(--pc-font-sans);
+  --pc-text: #30483a;
+  --pc-surface-sheet: #fbf9ef;
+  --pc-focus: #356959;
+}
+.pc-workspace .pc-related-reading[open] {
+  padding-bottom: 18px;
+}
+.pc-workspace .pc-related-reading > summary {
+  min-height: 56px;
+  padding-block: 14px;
+  box-sizing: border-box;
+  color: #36533d;
+  font: 18px/1.6 var(--pc-font-serif);
+}
+.pc-workspace .pc-related-reading[open] > summary {
+  border-bottom: 1px solid #8c9e7b55;
+}
+.pc-workspace .pc-related-reading > p {
+  margin-block: 16px;
+  color: #586651;
+}
+.pc-workspace .pc-related-reading__controls {
+  gap: 12px 24px;
+  padding-block: 2px 14px;
+  border-bottom: 1px solid #8c9e7b55;
+}
+.pc-workspace .pc-related-reading__controls label {
+  min-height: 44px;
+  font-size: 13px;
+}
+.pc-workspace .pc-related-reading__controls select {
+  margin-left: 0;
+  min-width: 132px;
+  font: 14px/1.6 var(--pc-font-sans);
+}
+.pc-workspace .pc-related-reading__controls input {
+  width: 17px;
+  height: 17px;
+}
+.pc-workspace .pc-related-reading__list {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 16px;
+  margin-block: 20px;
+}
+.pc-workspace .pc-related-reading__list li {
+  display: flex;
+  flex-direction: column;
+  padding: 18px;
+  border-radius: 3px;
+  border: 1px solid #a9b29980;
+  border-top: 2px solid #8b9d7c;
+  background: #fbf9ef;
+}
+.pc-workspace .pc-related-reading__list h4 {
+  margin: 0 0 5px;
+  font: 23px/1.5 var(--pc-font-serif);
+  color: #30483a;
+}
+.pc-workspace .pc-related-reading__list h4 + p {
+  margin: 0;
+  color: #63715b;
+  font: 12px/1.8 var(--pc-font-sans);
+}
+.pc-workspace .pc-related-reading__list blockquote {
+  margin-block: 16px;
+  padding-right: 6px;
+  color: #30483a;
+  font: 19px/1.95 var(--pc-font-serif);
+  text-wrap: pretty;
+  scrollbar-width: thin;
+  scrollbar-color: #8a9c7c transparent;
+  overscroll-behavior: contain;
+}
+.pc-workspace .pc-related-reading__list .pc-related-reading__reason {
+  margin-top: auto;
+  padding: 10px 12px;
+  border-left: 2px solid #9ca98a;
+  background: #e7ebde;
+  color: #4b604b;
+  font: 12px/1.85 var(--pc-font-sans);
+}
+.pc-workspace .pc-related-reading__actions {
+  margin-top: 12px;
+  gap: 8px;
+}
+.pc-workspace .pc-related-reading__actions button {
+  flex: 1 1 auto;
+  font: 13px/1.6 var(--pc-font-sans);
+  background: transparent;
+  border-color: #879a7c;
+}
+.pc-workspace .pc-related-reading__actions button:first-child {
+  color: #fbf7e9;
+  background: #42664b;
+  border-color: #42664b;
+}
+.pc-workspace .pc-related-reading__actions button:hover:not(:disabled) {
+  background: #e3e9d8;
+}
+.pc-workspace .pc-related-reading__actions button:first-child:hover {
+  background: #34583d;
+}
+.pc-workspace .pc-related-reading__actions button[aria-pressed="true"] {
+  background: #dce6cf;
+  box-shadow: inset 0 -2px #617d58;
+}
+.pc-workspace .pc-related-reading__pages {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  padding-top: 16px;
+  border-top: 1px solid #8c9e7b55;
+}
+.pc-workspace .pc-related-reading__pages > span {
+  text-align: center;
+  color: #586651;
+  font-variant-numeric: tabular-nums;
+}
+.pc-workspace .pc-related-reading__pages button {
+  font: 13px/1.6 var(--pc-font-sans);
+}
+.pc-workspace .pc-related-reading > small {
+  display: block;
+  color: #586651;
+  font: 12px/1.85 var(--pc-font-sans);
+}
+.pc-workspace .pc-related-reading__empty {
+  padding: 16px;
+  border-left: 2px solid #9ca98a;
+  background: #f4f1e5;
+}
+.pc-workspace .pc-related-return {
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  margin: 8px auto 14px;
+  padding-inline: 12px;
+  border-color: #8c9e7b66;
+  background: #e3e9d8;
+  color: #3b5944;
+  font: 13px/1.7 var(--pc-font-sans);
+  text-align: left;
+  white-space: normal;
+}
+@media (max-width: 599px) {
+  .pc-workspace .pc-related-reading {
+    padding-inline: 12px;
+  }
+  .pc-workspace .pc-related-reading__controls {
+    gap: 2px;
+  }
+  .pc-workspace .pc-related-reading__list li {
+    padding: 14px 12px;
+  }
+  .pc-workspace .pc-related-reading__list h4 {
+    font-size: 22px;
+  }
+  .pc-workspace .pc-related-reading__list blockquote {
+    font-size: 18px;
+  }
+  .pc-workspace .pc-related-reading__pages {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .pc-workspace .pc-related-reading__pages > span {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+  .pc-workspace .pc-related-reading__pages button {
+    grid-row: 2;
+  }
+}
