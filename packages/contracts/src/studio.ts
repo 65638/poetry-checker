@@ -130,6 +130,7 @@ export const PoetryAssistantRequestSchema = z.discriminatedUnion("task", [
     task: z.literal("compare"),
     left: text,
     right: text,
+    question: z.string().trim().min(1).max(240).optional(),
     revision: z
       .strictObject({
         beforeLabel: z.string().trim().min(1).max(120),

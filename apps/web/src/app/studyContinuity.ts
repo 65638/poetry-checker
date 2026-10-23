@@ -5,6 +5,12 @@ export function canKeepStudyAnswer(
   previous: PoetryAssistantRequest | null,
   next: PoetryAssistantRequest,
 ): boolean {
+  if (previous?.task === "compare" && next.task === "compare")
+    return (
+      previous.left === next.left &&
+      previous.right === next.right &&
+      JSON.stringify(previous.revision) === JSON.stringify(next.revision)
+    );
   if (previous?.task !== "critique" || next.task !== "critique") return false;
   return (
     previous.text === next.text &&

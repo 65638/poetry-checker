@@ -44,6 +44,39 @@ const response: PoetryAssistantResponse = {
 const entry = () =>
   createStudyEntry(input, response, "暮色一篇", "2026-10-23T00:00:00Z");
 describe("durable study snapshots and reader-facing sharing", () => {
+  it("preserves comparison questions in sharing and backup without mixing other answers", () => {
+    const pair = PoetryAssistantRequestSchema.parse({
+      task: "compare",
+      left: "空山不见人。",
+      right: "白日依山尽。",
+      question: "空间有什么不同？",
+    });
+    const answer: PoetryAssistantResponse = {
+      task: "compare",
+      provider: "deepseek",
+      model: "controlled",
+      notice: "参考",
+      inputHash: sha256Hex(JSON.stringify(pair)),
+      result: {
+        overview: "受控回答",
+        aspects: [{ name: "空间", left: "受控左诗", right: "受控右诗" }],
+      },
+    };
+    const saved = createStudyEntry(pair, answer);
+    expect(studyText(saved)).toContain("对读问题\n空间有什么不同？");
+    expect(parseStudyArchive(JSON.stringify(studyArchive([saved])))).toEqual([
+      saved,
+    ]);
+    expect(() =>
+      createStudyEntry(
+        PoetryAssistantRequestSchema.parse({
+          ...pair,
+          question: "情绪相同吗？",
+        }),
+        answer,
+      ),
+    ).toThrow("不对应");
+  });
   it("renames only metadata, supports undo and rejects stale or invalid titles", () => {
     const saved = entry();
     const rows = [saved];

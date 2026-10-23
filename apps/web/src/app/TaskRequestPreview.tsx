@@ -29,9 +29,8 @@ export function TaskRequestPreview({
       {input.task === "compare" && input.revision?.intention && (
         <p>修改意图：{input.revision.intention}</p>
       )}
-      {input.task === "critique" && input.question && (
-        <p>本次提问：{input.question}</p>
-      )}
+      {(input.task === "critique" || input.task === "compare") &&
+        input.question && <p>本次提问：{input.question}</p>}
       {texts.map((text, index) => (
         <details key={index}>
           <summary>

@@ -186,6 +186,9 @@ export function LibraryContainer({
     ]),
   );
   const comparison = usePoetryTask(`${leftId}|${rightId}`);
+  const comparisonFocus = useStudyAnswerFocus<HTMLHeadingElement>(
+    comparison.result,
+  );
   const literary = usePoetryTask(`${selectedId}|${studySection}`);
   const answerFocus = useStudyAnswerFocus<HTMLElement>(literary.result);
   useEffect(() => {
@@ -683,24 +686,30 @@ export function LibraryContainer({
               </button>
               <button
                 className="pc-studio-action pc-compare-submit"
-                disabled={
-                  !!compareUnavailable ||
-                  comparison.busy ||
-                  comparison.result?.task === "compare"
-                }
+                disabled={!!compareUnavailable || comparison.busy}
                 aria-describedby="pc-compare-guidance"
                 onClick={() => {
-                  if (left && right)
-                    void comparison.run({
-                      task: "compare",
-                      left: left.paragraphs.join("\n"),
-                      right: right.paragraphs.join("\n"),
-                    });
+                  if (left && right) {
+                    comparisonFocus.begin();
+                    void comparison.run(
+                      comparison.result?.task === "compare" &&
+                        comparison.resultInput?.task === "compare"
+                        ? comparison.resultInput
+                        : {
+                            task: "compare",
+                            left: left.paragraphs.join("\n"),
+                            right: right.paragraphs.join("\n"),
+                          },
+                    );
+                  }
                 }}
               >
                 <BookOpen size={17} />
                 {comparison.result?.task === "compare"
-                  ? "对读已完成"
+                  ? comparison.resultInput?.task === "compare" &&
+                    comparison.resultInput.question
+                    ? "重新回答这个问题"
+                    : "重新对读"
                   : "比较两诗"}
               </button>
             </div>
@@ -717,6 +726,31 @@ export function LibraryContainer({
             {poemColumn(right, "right")}
           </div>
           <div className="pc-compare-task">
+            <div className="pc-comparison-questions">
+              <StudyQuestion
+                key={`${leftId}:${rightId}`}
+                heading="带着问题对读"
+                comparison
+                mode="reading"
+                disabled={!!compareUnavailable || comparison.busy}
+                onAsk={(question) => {
+                  if (!left || !right || compareUnavailable) return;
+                  comparisonFocus.begin();
+                  void comparison.run({
+                    task: "compare",
+                    left: left.paragraphs.join("\n"),
+                    right: right.paragraphs.join("\n"),
+                    question,
+                  });
+                }}
+              />
+              <StudyHistory
+                entries={comparison.history}
+                current={comparison.result ? comparison.resultInput : null}
+                busy={comparison.busy}
+                onRestore={comparison.restore}
+              />
+            </div>
             <StudioTaskState {...comparison} />
           </div>
           {comparison.result?.task === "compare" && (
@@ -729,12 +763,20 @@ export function LibraryContainer({
               <header className="pc-compare-notes-heading">
                 <span aria-hidden="true">评</span>
                 <div>
-                  <h2>合卷细读</h2>
+                  <h2 ref={comparisonFocus.target} tabIndex={-1}>
+                    合卷细读
+                  </h2>
                   <p>
                     《{left?.title}》与《{right?.title}》 · AI 对读札记
                   </p>
                 </div>
               </header>
+              {comparison.resultInput?.task === "compare" &&
+                comparison.resultInput.question && (
+                  <p className="pc-study-question-asked">
+                    这份回答的问题：{comparison.resultInput.question}
+                  </p>
+                )}
               <StudyProse
                 className="pc-compare-overview"
                 text={comparison.result.result.overview}
