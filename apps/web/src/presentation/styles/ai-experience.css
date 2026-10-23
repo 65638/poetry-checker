@@ -116,6 +116,120 @@
 .pc-workspace .pc-preliminary-readings__poem [data-tone="unknown"] small {
   color: #e3c585;
 }
+.pc-workspace .pc-study-question {
+  padding: 0 16px;
+  border: 1px solid #8c9e7b66;
+  border-radius: 3px;
+  background: #f7f5e950;
+}
+.pc-workspace .pc-study-question > summary {
+  min-height: 48px;
+  padding-block: 12px;
+  box-sizing: border-box;
+  font: 15px/1.6 var(--pc-font-sans);
+  color: #395640;
+}
+.pc-workspace .pc-study-question[open] > summary {
+  border-bottom: 1px solid #8c9e7b55;
+}
+.pc-workspace .pc-study-question form {
+  gap: 16px;
+  padding-block: 16px;
+}
+.pc-workspace .pc-study-question label {
+  color: #41593f;
+  font: 14px/1.8 var(--pc-font-sans);
+}
+.pc-workspace .pc-study-question textarea {
+  min-height: 104px;
+  padding: 12px 14px;
+  background: #fbf9ef;
+  border-color: #839777;
+  border-radius: 3px;
+  font: 15px/1.9 var(--pc-font-sans);
+  color: #30483a;
+}
+.pc-workspace .pc-study-question textarea::placeholder {
+  color: #677160;
+}
+.pc-workspace .pc-study-question__limit {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font: 12px/1.7 var(--pc-font-sans);
+  color: #5c6855;
+}
+.pc-workspace .pc-study-question__limit > span {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.pc-workspace .pc-study-question__examples {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.pc-workspace .pc-study-question__examples button {
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid #8a9c7c66;
+  border-radius: 3px;
+  background: #e1e6d536;
+  font: 13px/1.8 var(--pc-font-sans);
+  color: #42573e;
+}
+.pc-workspace .pc-study-question__examples button:hover,
+.pc-workspace .pc-study-question__examples button[data-selected="true"] {
+  background: #dce5cd;
+  border-color: #617d58;
+}
+.pc-workspace .pc-study-question__examples button[data-selected="true"] {
+  box-shadow: inset 0 -2px #617d58;
+}
+.pc-workspace .pc-study-question__actions > span {
+  color: #586651;
+  line-height: 1.8;
+}
+.pc-workspace .pc-study-question__actions > button {
+  min-height: 44px;
+  padding-inline: 18px;
+  border-color: #42664b;
+  background: #42664b;
+  color: #fbf7e9;
+}
+.pc-workspace .pc-study-question__actions > button:hover:not(:disabled) {
+  background: #34583d;
+  color: #fff9e8;
+}
+.pc-workspace .pc-study-question__actions > button:disabled {
+  border-color: #a2ac95;
+  background: #e0e3d4;
+  color: #65705b;
+}
+.pc-workspace .pc-study-question-asked {
+  border-left: 3px solid #709065;
+  background: #dce5cd88;
+  padding: 14px 16px;
+  color: #34503a;
+  font: 15px/1.9 var(--pc-font-sans);
+}
+@media (max-width: 599px) {
+  .pc-workspace .pc-study-question {
+    padding-inline: 12px;
+  }
+  .pc-workspace .pc-study-question__examples {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .pc-workspace .pc-study-question__actions > button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+@media (forced-colors: active) {
+  .pc-workspace .pc-study-question__examples button[data-selected="true"] {
+    border-color: Highlight;
+    border-bottom-width: 3px;
+  }
+}
 @media (max-width: 359px) {
   .pc-workspace .pc-preliminary-readings__poem > p {
     gap: 4px;
