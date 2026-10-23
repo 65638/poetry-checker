@@ -177,3 +177,11 @@ git -c http.version=HTTP/1.1 -c http.postBuffer=104857600 -c core.compression=0 
 - 仅修改study-experience.css，未动业务组件。真实API受控回答在1440/768短屏/390/320、大字、键盘发送回焦、高对比均通过；原收藏字节不变、改稿题目不误称“两首诗”、打印保持原有收藏隐藏策略。相关收藏比较5浏览器场景通过。
 - evidence：evening23-saved-pair-baseline保留浅字/字号问题；evening23-saved-pair修正后axe无确定违规；evening23-regression为业务回归。模型文本为受控样例，不表示文学正确性。
 - 644f167阶段全量verify1168/103通过，见evening22-verify.log。最终阶段将针对交付SHA核对。
+
+### 00:22 最终验收阶段
+
+- 本侧已合ec3956c为34b2cac；保留功能侧选段题目、Ctrl/⌘+Enter、输入法/重复键保护与追问等待期间下一题草稿保护。34b2cac整合全量verify1168/103通过，快捷键4、追问8通过。
+- 最后展示修正仅一行`text-wrap: pretty`：320px收藏提问提示不再把“发送”拆成行末“发”与下一行孤立“送”；快捷键组合保留。之后Web构建及1440/768短屏/390/320收藏/改稿展示、字号/原收藏不变/axe检查再次通过。
+- 证据：`work/ui-audit/evening-final-verify.log`、`evening-final-shortcuts`、`evening-final-followup`、`evening-final-saved-visual`。这些为本侧实测，未替代功能侧正式56106发布验收。
+- PR #36 https://github.com/65638/poetry-checker/pull/36 为a0f1541之后的独立补丁审查入口；a0f1541两个GitHub基础检查成功并已ready，随后34b2cac已推本分支。PR #35已合并，不再当作待合PR。
+- 00:22以后冻结新增功能，剩余仅固定SHA核对、远端检查、独立预览更新和最终交接。四个旧未跟踪artifacts目录未提交，其他协作者工作树未清理。
