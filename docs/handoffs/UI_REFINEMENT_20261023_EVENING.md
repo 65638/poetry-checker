@@ -110,3 +110,9 @@ git -c http.version=HTTP/1.1 -c http.postBuffer=104857600 -c core.compression=0 
 
 - 仅print-experience.css：改稿两版原文、已展开逐行差异和追问历史移除屏幕滚动高度限制；串读保持已展开的真实原句与线索，隐藏筛选/收藏/跳转/分页控件；隐藏改稿选择与发送表单。不会自动展开、调用模型或更换原文。
 - 浏览器print媒体检查：50行旧/新稿各1852px完整高度、逐行差异3579px无裁切；追问已展开历史保留文本且无滚动截断；串读6条原句保持；切回screen操作区恢复。受控请求3次，打印切换未增加调用。证据evening10-print/results.json、两张打印媒体截图（这是浏览器CSS布局验证，不冒充实体打印或文学正确性）。
+
+### 21:20 键盘交接发现（功能方正在编辑相关组件，UI未抢写）
+
+- 复现于0034398功能基线+UI：打开收藏→展开续问→发送受控回答→结果出现后document.activeElement为BODY，原发送控件随key重挂载而丢焦。若请求期间用户仍留在原发送区，应把完成焦点导向新回答标题/可访问入口；如果已移到其他控件，不应抢焦。证据evening07-visual/results.json的afterSavedFollowup。
+- 点“改标题”后表单插在按钮前，焦点仍是“改标题”按钮（afterOpeningRename），正向Tab会跳过刚出现的输入。建议打开时聚焦标题输入，保存/取消后回到触发入口；错误时保留输入，关闭收藏时仍回列表。现有业务并发覆盖保护须保留。
+- 这两处不是模型准确性问题，也未记为已修。StudyArchivePanel/StudyFollowUp/SavedStudyDiscussion由功能侧当前写入；本侧继续展示和独立验证。最新已推UI到1c6ff7d，41406ac打印补丁正在推送。
