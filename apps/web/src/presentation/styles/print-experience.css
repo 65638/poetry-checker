@@ -44,7 +44,7 @@
     .pc-library-pinyin-toggle, .pc-library-section-picker,
     .pc-library-reading-hint, .pc-excerpt-copy, .pc-compare-picker,
     .pc-compare-poem-tools, .pc-compare-guidance small,
-    .pc-studio-actions, .pc-study-question, .pc-notebook-archive,
+    .pc-studio-actions, .pc-study-question, .pc-study-history, .pc-notebook-archive,
     .pc-poetry-desk > [role="tablist"], .pc-busy
   ) {
     display: none !important;

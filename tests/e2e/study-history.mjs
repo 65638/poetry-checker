@@ -86,6 +86,11 @@ try {
     await h.evaluate("document.querySelector('.pc-study-history').scrollIntoView({block:'start',behavior:'instant'})");
     assert.equal(await h.evaluate('document.documentElement.scrollWidth <= innerWidth + 1'), true);
     await shot('history-320');
+    await h.evaluate("document.querySelector('.pc-study-history__list').focus()");
+    await h.cdp.send('Input.dispatchKeyEvent',{type:'keyDown',key:'End',code:'End',windowsVirtualKeyCode:35});
+    await h.cdp.send('Input.dispatchKeyEvent',{type:'keyUp',key:'End',code:'End',windowsVirtualKeyCode:35});
+    await waitFor(()=>h.evaluate("document.querySelector('.pc-study-history__list').scrollTop>20"));
+    await shot('history-keyboard-end-320');
   });
   await check('new-poem-does-not-inherit-other-poems-question-history', async () => {
     await h.viewport(1440, 1000);

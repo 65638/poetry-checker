@@ -235,3 +235,79 @@
     gap: 4px;
   }
 }
+.pc-workspace .pc-study-history {
+  padding: 14px 16px;
+  margin-block: 16px;
+  border: 1px solid #8e9e8066;
+  border-radius: 3px;
+  background: #e5e9da55;
+  color: #304c38;
+}
+.pc-workspace .pc-study-history > summary {
+  min-height: 44px;
+  box-sizing: border-box;
+  padding-block: 10px;
+  font: 15px/1.6 var(--pc-font-sans);
+}
+.pc-workspace .pc-study-history > p {
+  color: #52624b;
+  font-size: 13px;
+}
+.pc-workspace .pc-study-history__list {
+  max-height: min(420px, 60dvh);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #8b9b7f transparent;
+  padding: 4px;
+}
+.pc-workspace .pc-study-history ul {
+  margin: 0;
+}
+.pc-workspace .pc-study-history button {
+  min-height: 44px;
+  align-items: center;
+  border: 1px solid #9caa9080;
+  border-radius: 3px;
+  background: #f5f4e8;
+  font-size: 14px;
+}
+.pc-workspace .pc-study-history button[aria-pressed="true"] {
+  border-color: #5b7954;
+  background: #dce6cf;
+  box-shadow: inset 3px 0 #5b7954;
+}
+.pc-workspace .pc-study-history small {
+  padding: 2px 7px;
+  border: 1px solid #87997b;
+  border-radius: 3px;
+  font: 12px/1.6 var(--pc-font-sans);
+  white-space: nowrap;
+}
+.pc-workspace .pc-library-questions {
+  margin-block: 20px;
+}
+.pc-workspace .pc-library-literary {
+  margin-block: 20px;
+  padding: 20px;
+  border: 1px solid #8b9a7d66;
+  border-left: 3px solid #8c9c74;
+  border-radius: 3px;
+  background: #e5e9d744;
+  color: #2e4735;
+  font: 15px/2 var(--pc-font-sans);
+}
+.pc-workspace .pc-library-literary > p {
+  overflow-wrap: anywhere;
+}
+@media (max-width: 599px) {
+  .pc-workspace .pc-study-history,
+  .pc-workspace .pc-library-literary {
+    padding: 12px;
+  }
+}
+@media (forced-colors: active) {
+  .pc-workspace .pc-study-history button[aria-pressed="true"] {
+    border: 2px solid Highlight;
+  }
+}

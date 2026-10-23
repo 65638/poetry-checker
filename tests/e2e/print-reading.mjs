@@ -39,7 +39,7 @@ try{
  assert(!await visible('.pc-desk'));assert(await visible('.pc-report'));
  assert.equal(await reportText(),reportBefore);
  assert(await h.evaluate("(()=>{const e=document.querySelector('.pc-notes__body');return e.scrollHeight<=e.clientHeight+1;})()"),'Printed annotations must not be clipped by their screen scroll region');
- await shot('report');results.push({name:'report',visibleFindings:await h.evaluate("[...document.querySelectorAll('.pc-findings > li')].filter(e=>e.getClientRects().length>0).length")});
+ await shot('report');results.push({name:'report',mountedFindings:await h.evaluate("document.querySelectorAll('.pc-findings > li').length")});
  await h.cdp.send('Emulation.setEmulatedMedia',{media:'screen'});await h.setText('床前明月光，疑是地上霜。');await printMedia();
  assert(await visible('.pc-stale'));assert.equal(await reportText(),reportBefore);
  await shot('stale-report');results.push({name:'stale-report',staleLabelPreserved:true});
