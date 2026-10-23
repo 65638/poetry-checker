@@ -278,6 +278,12 @@
 .pc-workspace .pc-library-verse-row[data-ask-line="true"] {
   padding-inline: 0;
 }
+.pc-workspace .pc-library-verses {
+  container: manuscript / inline-size;
+}
+.pc-workspace .pc-verse-text {
+  min-width: 0;
+}
 .pc-workspace .pc-verse-actions {
   display: flex;
   justify-content: center;
@@ -314,6 +320,27 @@
   color: #6c7668;
   border-color: #8f9f7f55;
   cursor: default;
+}
+
+/* Wide manuscripts keep tools in the margin, so a long poem reads continuously.
+   Narrow sheets and ruby keep the full-width text with controls beneath it. */
+@media screen {
+  @container manuscript (min-width: 760px) {
+    .pc-workspace
+      .pc-library-verses[data-pinyin="false"]
+      .pc-library-verse-row[data-ask-line="true"] {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 136px;
+      align-items: center;
+      column-gap: 16px;
+    }
+    .pc-workspace .pc-library-verses[data-pinyin="false"] .pc-verse-actions {
+      margin-top: 0;
+      gap: 4px 8px;
+      padding-left: 12px;
+      border-left: 1px solid #9ca78e40;
+    }
+  }
 }
 
 /* A compact tool tray leaves the manuscript visible on narrow screens. */
