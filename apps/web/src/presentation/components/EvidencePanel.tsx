@@ -29,7 +29,7 @@ const READING: Record<AnnotatedToken['readingStatus'], string> = {
 const KIND: Record<Evidence['kind'], string> = {
   rhyme_entry: '韵书条目', dictionary: '字典', fanqie: '反切', context: '语境', work_metadata: '作品资料',
 };
-const FOCUSABLE = 'button:not([disabled]), a[href], summary, [tabindex]:not([tabindex="-1"])';
+const FOCUSABLE = 'button:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), a[href], summary, [tabindex]:not([tabindex="-1"])';
 const toneText = (t: string) => (t === 'P' ? '平' : t === 'Z' ? '仄' : t);
 const safeUrl = (url: string | null) => (url !== null && /^https?:\/\//i.test(url) ? url : null);
 
@@ -120,6 +120,10 @@ export function EvidencePanel(props: EvidencePanelProps) {
             <div><dt>选择方式</dt><dd>{METHOD[token.selectionMethod]}</dd></div>
             <div className="pc-evidence__wide"><dt>说明</dt><dd>{readingExplanation(token)}</dd></div>
           </dl>
+          <details className="pc-evidence__reason">
+            <summary>查看判读过程</summary>
+            <p>{token.reason}</p>
+          </details>
           {token.selectionMethod === 'user' && (
             <p className="pc-evidence__note">当前读音来自你的手动选择，不是文献依据。</p>
           )}
@@ -189,6 +193,9 @@ export function EvidencePanel(props: EvidencePanelProps) {
                   <li key={id} className={`pc-ev pc-ev--${ev.reviewStatus}`}>
                     <div className="pc-ev__head">
                       <strong>{groupNames.length ? groupNames.join('、') : KIND[ev.kind]}</strong>
+                      <span className="pc-ev__review" data-review={ev.reviewStatus}>
+                        {ev.reviewStatus === 'approved' ? '已人工核验' : '待人工核验'}
+                      </span>
                       {url && <a className="pc-ev__link" href={url} target="_blank" rel="noopener noreferrer" aria-label="原始来源（新窗口）">原始来源</a>}
                       {!src && <span className="pc-ev__meta">来源记录缺失</span>}
                     </div>

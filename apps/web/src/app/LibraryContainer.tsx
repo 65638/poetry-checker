@@ -709,10 +709,10 @@ export function LibraryContainer({
                     {aspect.name}
                   </h3>
                   <p>
-                    <strong>左卷</strong> {aspect.left}
+                    <strong>左卷 ·《{left?.title}》</strong> {aspect.left}
                   </p>
                   <p>
-                    <strong>右卷</strong> {aspect.right}
+                    <strong>右卷 ·《{right?.title}》</strong> {aspect.right}
                   </p>
                 </div>
               ))}
@@ -1027,7 +1027,7 @@ export function LibraryContainer({
             aria-label="原诗阅读"
             tabIndex={-1}
           >
-            <div className="pc-studio-actions">
+            <div className="pc-studio-actions pc-reader-navigation">
               <button className="pc-studio-action" onClick={closeWork}>
                 <ArrowLeft size={17} />
                 回诗库
@@ -1075,6 +1075,10 @@ export function LibraryContainer({
               </button>
             </div>
             <h2>{selected.title}</h2>
+            <p className="pc-studio-meta pc-library-byline">
+              {selected.dynasty || "朝代未载"} · {selected.author || "作者未载"}
+              {selected.kind === "prose" ? " · 散文" : ""}
+            </p>
             <div className="pc-studio-actions pc-poem-share">
               <button
                 className="pc-studio-action"
@@ -1134,10 +1138,6 @@ export function LibraryContainer({
                 {shareFeedback.message}
               </p>
             )}
-            <p className="pc-studio-meta pc-library-byline">
-              {selected.dynasty || "朝代未载"} · {selected.author || "作者未载"}
-              {selected.kind === "prose" ? " · 散文" : ""}
-            </p>
             {sections.length > 1 && (
               <label className="pc-library-section-picker">
                 研读选段
@@ -1213,7 +1213,7 @@ export function LibraryContainer({
                 ))}
               </section>
             )}
-            <div className="pc-studio-actions">
+            <div className="pc-studio-actions pc-reader-lookup">
               <label className="pc-studio-inline-label">
                 查字
                 <input

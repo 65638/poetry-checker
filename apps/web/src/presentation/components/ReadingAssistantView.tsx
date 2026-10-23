@@ -101,60 +101,67 @@ export function ReadingAssistantView(props: {
           {!props.result.suggestions.length && (
             <p>当前没有需要辨析的多候选字位。</p>
           )}
-          <ol>
-            {props.result.suggestions.map((item) => (
-              <li key={item.tokenId}>
-                <div className="pc-reading-assistant__entry">
-                  <strong>
-                    「{item.character}」{item.pronunciation ?? "读音未定"}
-                  </strong>
-                  <span>
-                    第{item.line}句·第{item.column}字
-                  </span>
-                </div>
-                {item.candidate && (
-                  <p>
-                    {item.groupNames.join("、")} ·{" "}
-                    {item.candidate.tone === "P"
-                      ? "平"
-                      : item.candidate.tone === "Z"
-                        ? "仄"
-                        : "声调未定"}
-                  </p>
-                )}
-                <p>{item.reason}</p>
-                {item.candidate && (
-                  <p className="pc-reading-assistant__notice">语境读音参考</p>
-                )}
-                <div className="pc-reading-assistant__actions">
-                  {item.candidateId && props.onChooseReading && (
-                    <button
-                      type="button"
-                      className="pc-button"
-                      disabled={props.disabled || props.busy}
-                      onClick={() =>
-                        props.onChooseReading?.({
-                          tokenId: item.tokenId,
-                          readingId: item.candidateId!,
-                        })
-                      }
-                    >
-                      采用此读音并重查
-                    </button>
+          <div
+            className="pc-reading-assistant__list"
+            role="region"
+            aria-label="本批读音建议"
+            tabIndex={props.result.suggestions.length ? 0 : undefined}
+          >
+            <ol>
+              {props.result.suggestions.map((item) => (
+                <li key={item.tokenId}>
+                  <div className="pc-reading-assistant__entry">
+                    <strong>
+                      「{item.character}」{item.pronunciation ?? "读音未定"}
+                    </strong>
+                    <span>
+                      第{item.line}句·第{item.column}字
+                    </span>
+                  </div>
+                  {item.candidate && (
+                    <p>
+                      {item.groupNames.join("、")} ·{" "}
+                      {item.candidate.tone === "P"
+                        ? "平"
+                        : item.candidate.tone === "Z"
+                          ? "仄"
+                          : "声调未定"}
+                    </p>
                   )}
-                  {props.onInspect && (
-                    <button
-                      type="button"
-                      className="pc-button pc-button--quiet"
-                      onClick={() => props.onInspect?.(item.character)}
-                    >
-                      查「{item.character}」字
-                    </button>
+                  <p>{item.reason}</p>
+                  {item.candidate && (
+                    <p className="pc-reading-assistant__notice">语境读音参考</p>
                   )}
-                </div>
-              </li>
-            ))}
-          </ol>
+                  <div className="pc-reading-assistant__actions">
+                    {item.candidateId && props.onChooseReading && (
+                      <button
+                        type="button"
+                        className="pc-button"
+                        disabled={props.disabled || props.busy}
+                        onClick={() =>
+                          props.onChooseReading?.({
+                            tokenId: item.tokenId,
+                            readingId: item.candidateId!,
+                          })
+                        }
+                      >
+                        采用此读音并重查
+                      </button>
+                    )}
+                    {props.onInspect && (
+                      <button
+                        type="button"
+                        className="pc-button pc-button--quiet"
+                        onClick={() => props.onInspect?.(item.character)}
+                      >
+                        查「{item.character}」字
+                      </button>
+                    )}
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
           {!!props.result.missingTokenIds.length && (
             <p>
               另有{props.result.missingTokenIds.length}个字位未收录，保留未定。

@@ -153,7 +153,7 @@ export function InputPanel(props: InputPanelProps) {
           }
         }}
       />
-      <div className="pc-input__measure" aria-label="诗文字数">
+      <div className="pc-input__measure" role="group" aria-label="诗文字数">
         <span>
           {hanCount ? `${hanCount} 字 · ${phraseCount} 句` : "落笔成诗"}
         </span>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 import "./study-question.css";
 
 export function StudyQuestion({
@@ -15,6 +15,7 @@ export function StudyQuestion({
   prose?: boolean;
 }) {
   const [question, setQuestion] = useState("");
+  const limitId = useId();
   const examples =
     mode === "reading"
       ? [
@@ -40,18 +41,30 @@ export function StudyQuestion({
           想请 AI 留意什么？
           <textarea
             aria-label="本诗研读问题"
+            aria-describedby={limitId}
             value={question}
             maxLength={240}
             rows={3}
             placeholder="例如：最后一句的情绪，和前面的景物衔接自然吗？"
             onChange={(event) => setQuestion(event.target.value)}
           />
+          <span className="pc-study-question__limit" id={limitId}>
+            最多 240 个字符 <span>{question.length} / 240</span>
+          </span>
         </label>
-        <div className="pc-study-question__examples" aria-label="提问示例">
+        <div
+          className="pc-study-question__examples"
+          role="group"
+          aria-label="提问示例"
+        >
           {examples.map((example) => (
             <button
               type="button"
               key={example}
+              data-selected={
+                question ===
+                (prose ? example.replaceAll("这首诗", "这篇文章") : example)
+              }
               onClick={() =>
                 setQuestion(
                   prose ? example.replaceAll("这首诗", "这篇文章") : example,

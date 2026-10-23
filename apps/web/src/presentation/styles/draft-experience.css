@@ -1,0 +1,203 @@
+/* A compact archive stays beside the editor without growing indefinitely. */
+.pc-workspace .pc-draft-collection {
+  border-radius: 4px;
+  border-color: #a5b3954a;
+  background: #102a2f70;
+  padding: 0 14px;
+  margin-block: 16px 4px;
+  color: #d2ddce;
+}
+.pc-workspace .pc-draft-collection > summary {
+  min-height: 48px;
+  box-sizing: border-box;
+  padding-block: 13px;
+  color: #e5d3aa;
+  font: 14px/1.7 var(--pc-font-sans);
+}
+.pc-workspace .pc-draft-collection[open] > summary {
+  border-bottom: 1px solid #9aaf9540;
+}
+.pc-workspace .pc-draft-collection[open] {
+  padding-bottom: 6px;
+}
+.pc-workspace .pc-draft-collection p {
+  font-size: 13px;
+  color: #c2d1c3;
+  margin-block: 12px;
+}
+.pc-workspace .pc-draft-collection input {
+  min-height: 44px;
+  border-color: #9bb3a67a;
+  border-radius: 4px;
+  background: #10272c;
+  font: 14px/1.6 var(--pc-font-sans);
+}
+.pc-workspace .pc-draft-collection input::placeholder {
+  color: #adbdaf;
+}
+.pc-workspace .pc-draft-collection button {
+  min-height: 44px;
+  border-radius: 4px;
+  color: #e5dbc0;
+  background: #b6cbb30c;
+  border-color: #a6b89c66;
+  font: 13px/1.5 var(--pc-font-sans);
+}
+.pc-workspace .pc-draft-collection button:hover:not(:disabled) {
+  background: #b6cbb324;
+  border-color: #d5c49b;
+}
+.pc-workspace .pc-draft-collection > .pc-draft-collection-actions > label {
+  flex: 1 1 100%;
+}
+.pc-workspace .pc-draft-collection > .pc-draft-collection-actions > button {
+  flex: 1;
+  border-color: #aebd9f;
+  background: #aebd9f;
+  color: #18382f;
+}
+.pc-workspace
+  .pc-draft-collection
+  > .pc-draft-collection-actions
+  > button:hover:not(:disabled) {
+  background: #c3cdb7;
+}
+.pc-workspace .pc-draft-collection-list {
+  max-height: min(440px, 50dvh);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: #7c9b85 transparent;
+  margin-top: 14px;
+  padding-right: 7px;
+}
+.pc-workspace .pc-draft-collection article {
+  padding: 16px 0;
+  margin: 0;
+  border-color: #9aaf9540;
+}
+.pc-workspace .pc-draft-collection article > strong {
+  display: block;
+  font: 19px/1.7 var(--pc-font-serif);
+  color: #efe3bf;
+}
+.pc-workspace .pc-draft-collection article time {
+  font: 12px/1.6 var(--pc-font-sans);
+  font-variant-numeric: tabular-nums;
+  color: #b1c3b6;
+  opacity: 1;
+}
+.pc-workspace .pc-draft-collection article summary {
+  cursor: pointer;
+  min-height: 36px;
+  padding-block: 7px;
+  box-sizing: border-box;
+  font-size: 13px;
+  color: #d2ddce;
+}
+.pc-workspace .pc-draft-collection article blockquote {
+  padding: 10px 12px;
+  border-left: 2px solid #a79c73;
+  background: #b6cbb30a;
+  color: #dce4d4;
+  font-family: var(--pc-font-serif);
+  overflow-wrap: anywhere;
+}
+.pc-workspace .pc-draft-collection article .pc-draft-collection-actions {
+  gap: 8px;
+  margin-bottom: 0;
+}
+.pc-workspace .pc-draft-collection article button:last-child {
+  color: #dfb9a3;
+  background: transparent;
+  border-color: #c5a38840;
+}
+.pc-workspace .pc-draft-collection > [role="status"],
+.pc-workspace .pc-draft-collection > [role="alert"] {
+  padding: 10px 12px;
+  border-left: 2px solid #a6bd9a;
+  background: #a9c29b12;
+  border-radius: 3px;
+}
+.pc-workspace .pc-draft-collection > [role="alert"] {
+  border-left-color: #cf8e78;
+  background: #b46f5814;
+  color: #ffd1bf;
+}
+
+/* Keep the garden visible while a first visit loads its reading room. */
+.pc-workspace .pc-section-loading {
+  position: relative;
+  width: min(760px, calc(100% - 32px));
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 12px;
+  padding: 36px clamp(24px, 5vw, 56px);
+  margin-block: 48px;
+  border: 1px solid #8ba09445;
+  border-top: 2px solid #c5b387;
+  border-radius: 5px;
+  background: #172f33f5;
+  color: #e5dfc8;
+}
+.pc-workspace .pc-section-loading p {
+  margin: 0;
+  font-size: 14px;
+  color: #c3d0c6;
+}
+.pc-workspace .pc-section-loading > p:first-child {
+  font: 400 26px/1.8 var(--pc-font-serif);
+  color: #eee2c5;
+}
+.pc-workspace .pc-section-loading[role="status"]::before {
+  content: "";
+  width: 44px;
+  height: 3px;
+  margin-bottom: 8px;
+  background: #c5b387;
+  transform-origin: left;
+  animation: pc-opening-room 1600ms ease-in-out infinite;
+}
+.pc-workspace .pc-section-loading[role="alert"] {
+  border-top-color: #bc816c;
+}
+.pc-workspace .pc-section-loading button {
+  min-height: 44px;
+  padding: 10px 18px;
+  margin-top: 10px;
+  border-radius: 4px;
+  font: 14px/1.5 var(--pc-font-sans);
+  background: #b6cbb310;
+  color: #e5dbc0;
+  border-color: #a6b89c66;
+}
+.pc-workspace .pc-section-loading button:hover {
+  background: #b6cbb324;
+}
+@keyframes pc-opening-room {
+  50% {
+    opacity: 0.45;
+    transform: scaleX(0.65);
+  }
+}
+.pc-workspace[data-motion="off"] .pc-section-loading::before {
+  animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pc-workspace .pc-section-loading::before {
+    animation: none;
+  }
+}
+@media (max-width: 599px) {
+  .pc-workspace .pc-section-loading {
+    min-height: 240px;
+    margin-block: 24px;
+  }
+  .pc-workspace .pc-section-loading > p:first-child {
+    font-size: 23px;
+  }
+}

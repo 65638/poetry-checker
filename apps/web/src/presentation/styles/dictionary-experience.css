@@ -1,0 +1,320 @@
+/* Character entries share the same paper and action hierarchy as the reader. */
+.pc-workspace .pc-dictionary__desk,
+.pc-workspace .pc-dictionary__picker {
+  border-radius: 5px;
+  background: #172f33f5;
+  border-color: #8ba09445;
+  border-top-color: #c5b387;
+}
+.pc-workspace .pc-dictionary__searchline input {
+  border-radius: 4px;
+  border-color: #9bb3a67a;
+}
+.pc-workspace .pc-dictionary__book {
+  border-radius: 4px;
+  min-height: 72px;
+}
+.pc-workspace .pc-dictionary__book:has(input:checked) {
+  background: #c3d1b51a;
+  border-color: #c6cba9;
+  box-shadow: inset 0 -2px #c6cba9;
+}
+.pc-workspace .pc-dictionary__folio:not([data-empty="true"]) {
+  --pc-surface-sheet: #f1eddf;
+  background-color: #f1eddf;
+  border-radius: 4px;
+  --pc-focus: #356959;
+  --pc-text-muted: #526359;
+}
+.pc-workspace .pc-dictionary__folio[data-empty="true"] {
+  background: #18343ae6;
+  border: 1px solid #8ba09445;
+  border-radius: 4px;
+  --pc-text-muted: #becdc1;
+}
+.pc-workspace .pc-dictionary__picker .pc-reading-assistant {
+  padding-top: 20px;
+  border-color: #9eb39e66;
+}
+.pc-workspace .pc-dictionary__picker .pc-reading-assistant__head h3 {
+  color: #ecdab4;
+  font: 20px/1.6 var(--pc-font-serif);
+}
+.pc-workspace .pc-dictionary__picker .pc-reading-assistant__head > span {
+  color: #b8cbbb;
+  font: 11px/1.8 var(--pc-font-sans);
+}
+.pc-workspace
+  .pc-reading-assistant__result
+  > nav.pc-reading-assistant__actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-block: 16px;
+  padding: 12px 0;
+  border-block: 1px solid #9eb39e44;
+}
+.pc-workspace .pc-reading-assistant__result > nav > span {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  text-align: center;
+  color: #d8dfc7;
+  font: 13px/1.8 var(--pc-font-sans);
+  font-variant-numeric: tabular-nums;
+}
+.pc-workspace .pc-reading-assistant__result > nav > button {
+  grid-row: 2;
+  width: 100%;
+  min-width: 0;
+  padding-inline: 6px;
+  font: 12px/1.7 var(--pc-font-sans);
+}
+.pc-workspace .pc-reading-assistant__list {
+  max-height: min(540px, 65dvh);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: #8fa58a transparent;
+  padding: 2px 7px 2px 2px;
+  margin-top: 16px;
+}
+.pc-workspace .pc-reading-assistant__list:focus-visible {
+  outline: 2px solid #d6c49b;
+  outline-offset: 2px;
+}
+.pc-workspace .pc-reading-assistant__list ol {
+  margin: 0;
+}
+.pc-workspace .pc-reading-assistant__list li {
+  padding: 14px 12px;
+  margin-bottom: 10px;
+  border: 1px solid #9eb39e44;
+  border-radius: 3px;
+  background: #b7cdb509;
+}
+.pc-workspace .pc-reading-assistant__entry {
+  align-items: baseline;
+  gap: 6px 10px;
+  margin-bottom: 10px;
+}
+.pc-workspace .pc-reading-assistant__entry strong {
+  color: #eee2c4;
+  font: 19px/1.7 var(--pc-font-serif);
+}
+.pc-workspace .pc-reading-assistant__entry > span {
+  color: #b6c9b9;
+  font-size: 12px;
+}
+.pc-workspace .pc-reading-assistant__list .pc-reading-assistant__notice {
+  color: #c0cdb9;
+  font-size: 12px;
+}
+.pc-workspace .pc-reading-assistant__list .pc-button {
+  font: 13px/1.7 var(--pc-font-sans);
+  min-height: 44px;
+  border-radius: 3px;
+}
+.pc-workspace .pc-reading-assistant [role="alert"] {
+  padding: 10px 12px;
+  border-left: 2px solid #e5a892;
+  background: #b76f4c16;
+}
+.pc-workspace
+  .pc-dictionary__folio:has(.pc-dictionary__result):not([data-loading="true"])
+  .pc-dictionary__status {
+  position: absolute;
+  clip-path: inset(50%);
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.pc-workspace .pc-dictionary__entry {
+  padding-block: 26px;
+}
+.pc-workspace .pc-dictionary__glyph {
+  width: 108px;
+  height: 112px;
+  background-color: #fffdf528;
+  border-color: #9da48d66;
+  box-shadow: inset 0 0 0 5px #d8dacb40;
+}
+.pc-workspace .pc-dictionary__entry h2 {
+  font-size: 30px;
+  letter-spacing: 0.08em;
+}
+.pc-workspace .pc-dictionary__entry p:last-child {
+  line-height: 1.8;
+}
+.pc-workspace .pc-dictionary__trail {
+  border-block-color: #a0a58f4d;
+  padding-block: 4px;
+}
+.pc-workspace .pc-dictionary__actions {
+  gap: 8px;
+  margin-block: 16px;
+}
+.pc-workspace .pc-dictionary__actions .pc-button {
+  border-radius: 4px;
+  min-height: 42px;
+}
+.pc-workspace .pc-dictionary__actions .pc-dictionary__compare-button {
+  margin-left: auto;
+  background: #2c594f;
+  color: #fff8e5;
+  border-color: #2c594f;
+}
+.pc-workspace
+  .pc-dictionary__actions
+  .pc-dictionary__compare-button:hover:not(:disabled) {
+  background: #214b42;
+  color: #fff8e5;
+}
+.pc-workspace .pc-dictionary__notice {
+  background: #70875f0d;
+  border-left-color: #8a9c7a;
+  margin-bottom: 8px;
+}
+.pc-workspace .pc-dictionary__reading-guide {
+  font-size: 13px;
+  color: #526359;
+  margin-bottom: 24px;
+}
+.pc-workspace .pc-dictionary__reading-guide summary {
+  cursor: pointer;
+  padding-block: 8px;
+  min-height: 38px;
+  box-sizing: border-box;
+  width: fit-content;
+}
+.pc-workspace .pc-dictionary__reading-guide dl {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  margin: 4px 0 0;
+  border: 1px solid #9da48d50;
+  background: #fffdf52e;
+  border-radius: 4px;
+}
+.pc-workspace .pc-dictionary__reading-guide dt {
+  font-weight: 600;
+  color: #315346;
+  margin-bottom: 4px;
+}
+.pc-workspace .pc-dictionary__reading-guide dd {
+  margin: 0;
+  line-height: 1.8;
+}
+.pc-workspace .pc-dictionary__candidate {
+  padding: 20px;
+  margin-block: 16px;
+  border: 1px solid #9da48d70;
+  border-radius: 5px;
+  background: #fffdf529;
+}
+.pc-workspace .pc-dictionary__candidate:last-child {
+  border-bottom: 1px solid #9da48d70;
+}
+.pc-workspace .pc-dictionary__candidate-no {
+  font: 14px/1 var(--pc-font-sans);
+  font-variant-numeric: tabular-nums;
+  color: #61705e;
+}
+.pc-workspace .pc-dictionary__candidate > header {
+  gap: 10px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #a0a58f4d;
+}
+.pc-workspace .pc-dictionary__candidate h3 {
+  font-size: 24px;
+  line-height: 1.5;
+}
+.pc-workspace .pc-dictionary__facts {
+  gap: 18px;
+  margin-block: 18px;
+}
+.pc-workspace .pc-dictionary__facts dt {
+  font-size: 13px;
+}
+.pc-workspace .pc-dictionary__facts > div:nth-child(-n + 2) {
+  padding: 12px;
+  background: #72866a0d;
+  border-left: 2px solid #9da48d70;
+}
+.pc-workspace .pc-dictionary__source summary {
+  border-top: 1px solid #a0a58f4d;
+  padding-top: 14px;
+}
+.pc-workspace .pc-dictionary__evidence {
+  font-size: 13px;
+  line-height: 1.85;
+}
+.pc-workspace .pc-dictionary__evidence-title span {
+  font-size: 12px;
+}
+.pc-workspace .pc-dictionary__comparison {
+  border-radius: 4px;
+  background: #dce5d64a;
+}
+.pc-workspace .pc-dictionary__comparison-row > button {
+  min-height: 44px;
+  text-align: left;
+  text-underline-offset: 4px;
+}
+.pc-workspace .pc-dictionary__comparison-row > div {
+  gap: 9px;
+  line-height: 1.8;
+}
+.pc-workspace .pc-dictionary__version {
+  font-size: 12px;
+  line-height: 1.8;
+}
+@media (max-width: 799px) {
+  .pc-workspace .pc-dictionary__book {
+    min-height: 52px;
+  }
+}
+@media (max-width: 599px) {
+  .pc-workspace .pc-dictionary__folio {
+    padding-inline: 18px;
+  }
+  .pc-workspace .pc-dictionary__entry {
+    gap: 16px;
+    padding-block: 20px;
+  }
+  .pc-workspace .pc-dictionary__glyph {
+    width: 72px;
+    height: 82px;
+    font-size: 58px;
+  }
+  .pc-workspace .pc-dictionary__entry h2 {
+    font-size: 24px;
+  }
+  .pc-workspace .pc-dictionary__candidate {
+    padding: 14px;
+  }
+  .pc-workspace .pc-dictionary__candidate > header {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .pc-workspace .pc-dictionary__candidate h3 {
+    font-size: 21px;
+  }
+  .pc-workspace .pc-dictionary__badge {
+    font-size: 11px;
+    padding-inline: 6px;
+  }
+  .pc-workspace .pc-dictionary__facts {
+    gap: 14px 10px;
+  }
+  .pc-workspace .pc-dictionary__facts > div:nth-child(-n + 2) {
+    padding: 8px;
+  }
+  .pc-workspace .pc-dictionary__facts > div:nth-child(2) dd {
+    font-size: 21px;
+  }
+  .pc-workspace .pc-dictionary__actions .pc-dictionary__compare-button {
+    margin-left: 0;
+  }
+}

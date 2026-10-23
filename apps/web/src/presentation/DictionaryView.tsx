@@ -2,6 +2,7 @@ import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import type { BookId, LookupResult, ReadingCandidate } from "@poetry/contracts";
 import { useMotionPreference } from "./useMotionPreference";
 import { useBusyIndicator } from "./useBusyIndicator";
+import "./styles/dictionary-experience.css";
 
 import type { DictionaryShelf, ShelfEntry } from "../app/dictionaryShelf";
 import type { BookComparison } from "../app/dictionaryComparison";
@@ -762,8 +763,31 @@ export function DictionaryView(props: DictionaryViewProps) {
                 {candidates.length ? (
                   <>
                     <p className="pc-dictionary__notice">
-                      条目供查阅。标为“待核”的候选尚不能支撑确定分析；查字不会替你选择诗中读音。
+                      这里列出字的候选读音，诗中采用哪一音需结合语境。“待核”表示相关来源尚未逐条人工核验。
                     </p>
+                    <details className="pc-dictionary__reading-guide">
+                      <summary>怎么看平仄、韵部与反切？</summary>
+                      <dl>
+                        <div>
+                          <dt>平仄</dt>
+                          <dd>
+                            古诗中两类声调。平水韵、词林正韵以平声为平，上、去、入声为仄；中华新韵按普通话本调区分。
+                          </dd>
+                        </div>
+                        <div>
+                          <dt>韵部</dt>
+                          <dd>
+                            韵书将可以相押的字归为一组。不同韵书的分组可能不同，可用“三书对照”查看。
+                          </dd>
+                        </div>
+                        <div>
+                          <dt>反切</dt>
+                          <dd>
+                            用两个字标注旧读音：取上字的声母、下字的韵母和声调，不能直接按今天的普通话拼读。
+                          </dd>
+                        </div>
+                      </dl>
+                    </details>
                     <ol className="pc-dictionary__candidates">
                       {candidates.map((candidate, index) => {
                         const evidence = candidate.evidenceIds.map((id) =>

@@ -15,6 +15,7 @@ import { FindingReference } from "./FindingReference";
 import { FormatSummary } from "./FormatSummary";
 import { ResearchNotes } from "./ResearchNotes";
 import "../styles/report.css";
+import "../styles/report-experience.css";
 
 type ReportViewProps = Pick<
   CheckerViewProps,
@@ -83,7 +84,8 @@ const BOOK: Record<BookId, string> = {
   cilin: "词林正韵",
   xinyun: "中华新韵",
 };
-const toneText = (t: string) => (t === "P" ? "平" : t === "Z" ? "仄" : t);
+const toneText = (t: string) =>
+  t === "P" ? "平" : t === "Z" ? "仄" : t === "P/Z" ? "平或仄" : t;
 
 function toneOf(t: AnnotatedToken) {
   if (t.toneStatus === "resolved" && t.tone !== null) {
@@ -500,10 +502,33 @@ export function ReportView(props: ReportViewProps) {
         <ResearchNotes text={report.poem.originalText} data={report.research} />
       )}
 
+      <nav className="pc-report-navigation" aria-label="报告阅读导航">
+        {[
+          { id: "pc-grid-heading", label: "看逐字平仄" },
+          { id: "pc-findings-heading", label: "看检查批注" },
+        ].map(({ id, label }) => (
+          <button
+            key={id}
+            type="button"
+            className="pc-button pc-button--quiet"
+            onClick={() => {
+              const heading = document.getElementById(id);
+              heading?.scrollIntoView({
+                block: "start",
+                behavior: prefersReducedMotion(heading) ? "instant" : "smooth",
+              });
+              heading?.focus({ preventScroll: true });
+            }}
+          >
+            {label} <span aria-hidden="true">↓</span>
+          </button>
+        ))}
+      </nav>
+
       <div className="pc-report-workbench">
         <section className="pc-reading" aria-labelledby="pc-grid-heading">
           <div className="pc-reading__head">
-            <h3 id="pc-grid-heading" className="pc-section-title">
+            <h3 id="pc-grid-heading" className="pc-section-title" tabIndex={-1}>
               <span className="pc-section-title__no" aria-hidden="true">
                 贰
               </span>
@@ -646,7 +671,11 @@ export function ReportView(props: ReportViewProps) {
 
         <section className="pc-notes" aria-labelledby="pc-findings-heading">
           <div className="pc-notes-heading">
-            <h3 id="pc-findings-heading" className="pc-section-title">
+            <h3
+              id="pc-findings-heading"
+              className="pc-section-title"
+              tabIndex={-1}
+            >
               <span className="pc-section-title__no" aria-hidden="true">
                 叁
               </span>
@@ -697,6 +726,7 @@ export function ReportView(props: ReportViewProps) {
           <div
             ref={notesRef}
             className="pc-notes__body"
+            role="region"
             tabIndex={0}
             aria-label="批注列表"
           >

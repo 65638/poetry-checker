@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useState } from "react";
 import type { LibraryWork } from "@poetry/contracts";
 import { searchLibrary } from "./library";
 import "./compare-picker-search.css";
@@ -23,6 +23,7 @@ export function ComparePoemPicker({
   const [query, setQuery] = useState("");
   const [onlyFavorites, setOnlyFavorites] = useState(false);
   const [recent, setRecent] = useState([selected]);
+  const countId = useId();
   useEffect(
     () =>
       setRecent((previous) =>
@@ -44,17 +45,18 @@ export function ComparePoemPicker({
       !visible.some((row) => row.id === work.id),
   );
   return (
-    <div className="pc-compare-picker">
+    <div className="pc-compare-picker" role="group" aria-label={`${name}选诗`}>
       <span>
         <b aria-hidden="true">{side === "left" ? "壹" : "贰"}</b>
         {name}
-        <small>选一首诗</small>
+        <small>检索后选诗</small>
       </span>
       <label className="pc-compare-search">
         <span>检索{name}</span>
         <input
           type="search"
           aria-label={`检索${name}诗作`}
+          aria-describedby={countId}
           value={query}
           placeholder="题名、作者或诗句"
           onChange={(event) => setQuery(event.target.value)}
@@ -68,31 +70,34 @@ export function ComparePoemPicker({
         />
         只看收藏
       </label>
-      <select
-        aria-label={`选择${name}诗作`}
-        value={selected}
-        onChange={(event) => onSelect(event.target.value)}
-      >
-        {!!pinned.length && (
-          <optgroup label="当前及最近所选">
-            {pinned.map((work) => (
-              <option key={work.id} value={work.id}>
-                {label(work)}
-              </option>
-            ))}
-          </optgroup>
-        )}
-        {visible.map((work) => (
-          <option key={work.id} value={work.id}>
-            {label(work)}
-          </option>
-        ))}
-      </select>
-      <p className="pc-compare-match-count" role="status">
+      <p className="pc-compare-match-count" id={countId} role="status">
         {matches.length
           ? `匹配 ${matches.length} 首${matches.length > 80 ? "，先列出80首；输入更具体的词可缩小范围。" : "。"}`
           : "没有匹配的诗作，当前所选仍保留。"}
       </p>
+      <label className="pc-compare-selection">
+        <span>选择{name}</span>
+        <select
+          aria-label={`选择${name}诗作`}
+          value={selected}
+          onChange={(event) => onSelect(event.target.value)}
+        >
+          {!!pinned.length && (
+            <optgroup label="当前及最近所选">
+              {pinned.map((work) => (
+                <option key={work.id} value={work.id}>
+                  {label(work)}
+                </option>
+              ))}
+            </optgroup>
+          )}
+          {visible.map((work) => (
+            <option key={work.id} value={work.id}>
+              {label(work)}
+            </option>
+          ))}
+        </select>
+      </label>
     </div>
   );
 }

@@ -1,0 +1,176 @@
+/* Browser printing keeps the currently visible reading and its scope labels.
+   It never opens disclosures, substitutes a draft, or requests new analysis. */
+@media print {
+  @page {
+    size: A4;
+    margin: 15mm;
+  }
+  html,
+  body {
+    background: white !important;
+  }
+  .pc-workspace,
+  .pc-workspace .pc-root {
+    min-height: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  .pc-workspace,
+  .pc-workspace * {
+    background: transparent !important;
+    color: #182c30 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    animation: none !important;
+    transition: none !important;
+    caret-color: transparent !important;
+  }
+  .pc-workspace *::before,
+  .pc-workspace *::after {
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+  .pc-workspace .pc-place[hidden] {
+    display: none !important;
+  }
+  .pc-workspace :is(
+    .pc-scene, .pc-places, .pc-skip-link, .pc-reading-tools,
+    .pc-motion-toggle, .pc-motion-toggle__note, .pc-evidence,
+    .pc-reading-journal, .pc-backup-panel, .pc-study-archive,
+    .pc-study-result-actions, .pc-draft-collection, .pc-draft-tools,
+    .pc-report-navigation, .pc-status__actions, .pc-return-poem, .pc-reference__note,
+    .pc-finding__locate, .pc-library-copy-feedback,
+    .pc-library-heading, .pc-library > [role="tablist"],
+    .pc-reader-navigation, .pc-reader-lookup, .pc-poem-share,
+    .pc-library-pinyin-toggle, .pc-library-section-picker,
+    .pc-library-reading-hint, .pc-excerpt-copy, .pc-compare-picker,
+    .pc-compare-poem-tools, .pc-compare-guidance small,
+    .pc-studio-actions, .pc-study-question, .pc-study-history, .pc-notebook-archive,
+    .pc-poetry-desk > [role="tablist"], .pc-busy
+  ) {
+    display: none !important;
+  }
+  .pc-workspace:has(.pc-report) .pc-desk,
+  .pc-workspace:has(.pc-library-reading[aria-label="原诗阅读"]) .pc-library-catalogue {
+    display: none !important;
+  }
+  .pc-workspace :is(
+    .pc-page, .pc-hall, .pc-library, .pc-library-worktable,
+    .pc-library-reading, .pc-manuscript, .pc-report-workbench,
+    .pc-notes, .pc-notes__body, .pc-poetry-desk, .pc-library-comparison-notes
+  ) {
+    position: static !important;
+    display: block !important;
+    float: none !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    contain: none !important;
+    container-type: normal !important;
+    transform: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+  }
+  /* Native hidden is stronger than a print layout override. */
+  .pc-workspace [hidden] {
+    display: none !important;
+  }
+  .pc-workspace .pc-masthead {
+    min-height: 0;
+    padding: 0 0 16px;
+  }
+  .pc-workspace .pc-masthead .pc-seal {
+    border: 1px solid currentColor;
+  }
+  .pc-workspace .pc-title {
+    font-size: 24px;
+  }
+  .pc-workspace .pc-report-workbench > * + * {
+    margin-top: 24px !important;
+  }
+  .pc-workspace .pc-line,
+  .pc-workspace .pc-finding,
+  .pc-workspace .pc-poetry-edit,
+  .pc-workspace .pc-library-verse-row {
+    break-inside: avoid;
+  }
+  .pc-workspace :is(h1, h2, h3, summary) {
+    break-after: avoid;
+  }
+  .pc-workspace p {
+    orphans: 3;
+    widows: 3;
+  }
+  .pc-workspace .pc-notes__body {
+    padding-right: 0 !important;
+  }
+  .pc-workspace .pc-findings {
+    display: block;
+  }
+  .pc-workspace .pc-grid {
+    gap: 0;
+  }
+  .pc-workspace .pc-line {
+    padding: 8px 0;
+    margin-top: 0;
+  }
+  .pc-workspace .pc-finding {
+    padding-block: 8px;
+  }
+  .pc-workspace .pc-finding__msg {
+    margin-block: 6px;
+    line-height: 1.6;
+  }
+  .pc-workspace .pc-cell {
+    border: 1px solid #7c8785;
+  }
+  .pc-workspace .pc-cell__char {
+    font-size: 24px;
+  }
+  .pc-workspace .pc-cell__tone {
+    font-size: 11px;
+  }
+  .pc-workspace .pc-library-diptych {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+  .pc-workspace .pc-compare-leaf {
+    padding: 12px;
+  }
+  .pc-workspace .pc-library-verses {
+    font-size: 20px !important;
+    letter-spacing: .08em;
+  }
+  .pc-workspace .pc-library-character {
+    min-height: 0;
+    border: 0;
+    padding: 0;
+  }
+  .pc-workspace .pc-library-verse-row {
+    padding-block: 8px;
+  }
+  .pc-workspace .pc-library-verses,
+  .pc-workspace .pc-compare-source,
+  .pc-workspace .pc-library-literary {
+    max-height: none;
+    overflow: visible;
+  }
+  .pc-workspace .pc-library-footer,
+  .pc-workspace .pc-colophon {
+    margin: 20px 0 0;
+    padding: 12px 0 0;
+    border-top: 1px solid #7c8785;
+    font-size: 11px;
+    line-height: 1.8;
+  }
+  .pc-workspace .pc-library-reading > .pc-studio-meta a[href^="http"]::after,
+  .pc-workspace .pc-compare-source a[href^="http"]::after {
+    content: "（" attr(href) "）";
+    font-size: 10px;
+    overflow-wrap: anywhere;
+  }
+}

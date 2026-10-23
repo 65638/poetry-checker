@@ -1,0 +1,399 @@
+/* Shared reading surfaces. Keep the garden's art direction and the business
+   components intact; establish a consistent hierarchy for everyday actions. */
+.pc-workspace {
+  --pc-control-radius: 5px;
+  --pc-night-divider: #8caaa238;
+  --pc-night-label: #c3d0c6;
+  --pc-paper-edge: #c5beaa;
+}
+
+.pc-skip-link {
+  position: fixed;
+  z-index: 200;
+  left: 16px;
+  top: 12px;
+  padding: 12px 18px;
+  border: 2px solid #e4c98c;
+  border-radius: 4px;
+  background: #142b31;
+  color: #fff3d7;
+  font: 15px/1.5 var(--pc-font-sans);
+}
+.pc-skip-link:not(:focus) {
+  clip-path: inset(50%);
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.pc-workspace .pc-places {
+  border-bottom: 1px solid var(--pc-night-divider);
+  background: linear-gradient(180deg, #10252aeb, #122a2e94);
+}
+.pc-workspace .pc-places button {
+  border-radius: 5px 5px 0 0;
+  transition:
+    background-color 180ms,
+    color 180ms;
+}
+.pc-workspace .pc-places button[aria-current="page"] {
+  background: linear-gradient(180deg, #cfbf9320, #cfbf9308);
+  color: #fff1ce;
+}
+.pc-workspace .pc-places button:hover:not([aria-current]) {
+  background: #b6cbb30c;
+}
+.pc-workspace .pc-places button small {
+  font-family: var(--pc-font-sans);
+  letter-spacing: 0.12em;
+}
+.pc-workspace :is(button, a, input, textarea, select, summary):focus-visible {
+  outline: 2px solid var(--pc-focus, #c3d5b8);
+  outline-offset: 3px;
+}
+.pc-workspace :is(input[type="checkbox"], input[type="radio"]) {
+  accent-color: #9dbaaa;
+}
+.pc-workspace :is(.pc-studio-action, .pc-studio-icon, .pc-motion-toggle) {
+  border-radius: var(--pc-control-radius);
+}
+.pc-workspace :is(.pc-studio-action, .pc-studio-icon) {
+  min-height: 44px;
+}
+.pc-workspace .pc-studio-icon {
+  min-width: 44px;
+}
+.pc-workspace .pc-studio-meta {
+  line-height: 1.8;
+}
+
+/* Keep the writing panel familiar while making its small cues readable. */
+.pc-workspace .pc-input__measure {
+  font-size: 12px;
+  color: var(--pc-night-label);
+  margin-block: 9px 16px;
+}
+.pc-workspace .pc-input__measure kbd {
+  border: 1px solid #aebc9f38;
+  padding-inline: 5px;
+  border-radius: 3px;
+  color: #e5d3aa;
+}
+.pc-workspace .pc-input__text::placeholder {
+  font-size: 18px;
+  color: #abbeb6;
+}
+.pc-workspace .pc-input__hint {
+  font-size: 13px;
+  line-height: 1.8;
+}
+.pc-workspace .pc-input__submit {
+  letter-spacing: 0.18em;
+  border-radius: 4px;
+}
+.pc-workspace .pc-draft-save {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font: 12px/1.7 var(--pc-font-sans);
+}
+.pc-workspace .pc-draft-save:not(:empty)::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #a4c7b3;
+}
+
+/* The catalogue is navigation; the manuscript is the reading destination. */
+.pc-workspace .pc-library-worktable {
+  grid-template-columns: clamp(304px, 25vw, 360px) minmax(0, 1fr);
+  gap: clamp(24px, 2.4vw, 40px);
+}
+.pc-workspace .pc-library-catalogue {
+  padding: 20px 20px 8px;
+  border-color: #8ba09445;
+  border-top-color: #c5b387;
+  border-radius: 5px;
+  background: #172f33f5;
+}
+.pc-workspace .pc-library-query .pc-studio-searchbox {
+  border-radius: 4px;
+  border-color: #9bb3a67a;
+  background: #10272c;
+}
+.pc-workspace .pc-library-query .pc-studio-searchbox:focus-within {
+  border-color: #d5c49b;
+  box-shadow: 0 0 0 2px #d5c49b1a;
+}
+.pc-workspace .pc-library-query .pc-studio-searchbox input {
+  font-size: 14px;
+}
+.pc-workspace .pc-library-filters select {
+  min-height: 40px;
+  font-size: 13px;
+  border-radius: 4px;
+}
+.pc-workspace .pc-library-filters .pc-library-filter {
+  font-size: 13px;
+}
+.pc-workspace .pc-library-filter-check {
+  min-height: 36px;
+  font-size: 13px;
+  color: #c7d4c8;
+}
+.pc-workspace .pc-library-filters input {
+  width: 16px;
+  height: 16px;
+}
+.pc-workspace .pc-library-count {
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: #bdd0b813;
+  color: #dfd6b9;
+  font-size: 12px;
+}
+.pc-workspace .pc-library-row {
+  padding: 17px 4px 17px 12px;
+  border-bottom: 1px solid var(--pc-night-divider);
+  border-radius: 3px;
+}
+.pc-workspace .pc-library-row[data-selected="true"] {
+  background: #afc2ab16;
+  box-shadow: inset 3px 0 #d8c28f;
+}
+.pc-workspace .pc-library-title {
+  font-size: 23px;
+  line-height: 1.5;
+  text-underline-offset: 5px;
+}
+.pc-workspace .pc-library-excerpt {
+  color: #bccbc2;
+  font-size: 14px;
+  margin-bottom: 0;
+}
+.pc-workspace .pc-library-row .pc-studio-meta {
+  font: 12px/1.7 var(--pc-font-sans);
+  color: #a7bbb0;
+  margin-bottom: 5px;
+}
+.pc-workspace .pc-library-pagination {
+  border-top: 1px solid var(--pc-night-divider);
+  gap: 14px;
+  min-height: 64px;
+  margin-top: 8px;
+  font-size: 13px;
+}
+.pc-workspace .pc-library-reading:not(.pc-library-comparison) {
+  background-color: #f1eddf;
+  border-top: 2px solid #c4b48f;
+  border-radius: 4px;
+  padding: 24px clamp(22px, 3vw, 48px) 36px;
+  --pc-focus: #396b60;
+  --pc-text-muted: #526359;
+}
+.pc-workspace .pc-library-reading > h2 {
+  margin: 30px 0 8px;
+  font-size: clamp(28px, 2.4vw, 38px);
+  letter-spacing: 0.12em;
+  line-height: 1.5;
+}
+.pc-workspace .pc-library-reading > .pc-library-byline {
+  margin: 0 0 22px;
+  font: 14px/1.8 var(--pc-font-sans);
+  letter-spacing: 0.08em;
+}
+.pc-workspace .pc-library-reading .pc-poem-share {
+  justify-content: center;
+  margin: 0 0 24px;
+  padding: 0 0 22px;
+  border-bottom: 1px solid #a0a58f4d;
+}
+.pc-workspace .pc-library-reading .pc-poem-share .pc-studio-action {
+  min-height: 36px;
+  padding: 6px 12px;
+  border-color: transparent;
+  background: #657f6510;
+  color: #486051;
+  font-size: 13px;
+}
+.pc-workspace .pc-library-reading .pc-reader-navigation {
+  border-bottom: 1px solid #a0a58f4d;
+  padding-bottom: 16px;
+  gap: 10px;
+}
+.pc-workspace .pc-reader-navigation > .pc-studio-action:last-child {
+  margin-left: auto;
+  border-color: #3e695b;
+  background: #2c594f;
+  color: #fff8e5;
+}
+.pc-workspace
+  .pc-reader-navigation
+  > .pc-studio-action:last-child:hover:not(:disabled) {
+  background: #214b42;
+  color: #fff8e5;
+}
+.pc-workspace .pc-library-reading .pc-reader-lookup {
+  gap: 10px;
+  padding: 10px 12px;
+  background: #7d957711;
+  border: 1px solid #9ca78e40;
+  border-radius: 4px;
+}
+.pc-workspace .pc-reader-lookup .pc-studio-action:last-child {
+  margin-left: auto;
+}
+.pc-workspace .pc-library-pinyin-toggle {
+  font: 13px/1.8 var(--pc-font-sans);
+  min-height: 40px;
+  align-items: center;
+}
+.pc-workspace .pc-library-reading-hint {
+  font: 12px/1.8 var(--pc-font-sans);
+  letter-spacing: 0.08em;
+}
+.pc-workspace .pc-library-reading .pc-library-copy-feedback {
+  font: 13px/1.8 var(--pc-font-sans);
+}
+.pc-workspace .pc-library-character {
+  display: inline-block;
+  min-width: 28px;
+  min-height: 44px;
+}
+
+/* A compact tool tray leaves the manuscript visible on narrow screens. */
+html:has(.pc-workspace) {
+  scroll-padding-block: 24px 88px;
+}
+.pc-workspace :is(button, a, input, select, textarea, summary, [tabindex]) {
+  scroll-margin-block: 24px 88px;
+}
+.pc-workspace .pc-reading-tools {
+  left: auto;
+  width: auto;
+  max-width: calc(100vw - 24px);
+  right: max(12px, env(safe-area-inset-right));
+  bottom: max(12px, env(safe-area-inset-bottom));
+  padding: 4px;
+  gap: 3px;
+  border: 1px solid #91aa9859;
+  border-radius: 8px;
+  background: #12292ef5;
+  box-shadow: 0 6px 24px #061c2440;
+  justify-content: flex-end;
+}
+.pc-workspace .pc-reading-tools button {
+  min-height: 44px;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  color: #e5dbc0;
+  font-family: var(--pc-font-sans);
+}
+.pc-workspace .pc-reading-tools button:hover {
+  background: #d6d5ac14;
+}
+.pc-workspace .pc-reading-tools button[aria-pressed="true"] {
+  background: #d6d5ac1f;
+  box-shadow: inset 0 0 0 1px #d4c19066;
+}
+.pc-workspace :is(.pc-colophon, .pc-library-footer, .pc-dictionary__footer) {
+  max-width: 100%;
+  text-wrap: pretty;
+}
+@media (max-width: 999px) {
+  .pc-workspace .pc-library-worktable {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+  .pc-workspace .pc-library-catalogue {
+    position: static;
+  }
+}
+@media (min-width: 1000px) {
+  .pc-workspace .pc-library-catalogue {
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100dvh - 48px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #8fa58a transparent;
+  }
+  .pc-workspace .pc-library-catalogue > * {
+    flex-shrink: 0;
+  }
+  .pc-workspace .pc-library-catalogue > .pc-library-list {
+    flex: 1 1 410px;
+    min-height: min(180px, 30dvh);
+    max-height: 410px;
+  }
+}
+@media (max-width: 599px) {
+  .pc-workspace .pc-places button {
+    gap: 5px;
+    padding-inline: 4px;
+  }
+  .pc-workspace .pc-places button > span {
+    font-size: 18px;
+    flex: none;
+  }
+  .pc-workspace .pc-places button b {
+    font-size: 17px;
+    white-space: nowrap;
+  }
+  .pc-workspace .pc-places button small {
+    font-size: 10px;
+  }
+  .pc-workspace .pc-library-catalogue {
+    padding: 16px 16px 6px;
+  }
+  .pc-workspace .pc-library-reading:not(.pc-library-comparison) {
+    padding: 20px 18px 28px;
+  }
+  .pc-workspace .pc-library-reading > h2 {
+    margin-top: 24px;
+  }
+  .pc-workspace .pc-reader-navigation {
+    gap: 7px;
+  }
+  .pc-workspace .pc-reader-navigation .pc-studio-action {
+    font-size: 13px;
+    padding-inline: 10px;
+  }
+  .pc-workspace .pc-reader-navigation .pc-studio-icon {
+    min-width: 38px;
+    width: 38px;
+    box-sizing: border-box;
+    padding-inline: 4px;
+  }
+  .pc-workspace .pc-reader-lookup .pc-studio-action:last-child {
+    margin-left: 0;
+  }
+  .pc-workspace .pc-reading-tools {
+    padding: 3px;
+  }
+  .pc-workspace .pc-reading-light {
+    padding-inline: 10px;
+    font-size: 12px;
+  }
+  .pc-workspace .pc-library-filters .pc-library-filter {
+    gap: 6px;
+  }
+}
+@media (max-width: 359px) {
+  .pc-workspace .pc-reader-navigation > .pc-studio-action:first-child svg {
+    display: none;
+  }
+  .pc-workspace .pc-reader-navigation .pc-studio-action {
+    padding-inline: 8px;
+    gap: 6px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pc-workspace .pc-places button {
+    transition: none;
+  }
+}

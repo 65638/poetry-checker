@@ -156,7 +156,7 @@ try {
       await h.click('[aria-controls="library-space"]');
       await waitFor(() =>
         h.evaluate(
-          "document.querySelector('.pc-library-heading').textContent.includes('2022首入藏')",
+          "document.querySelector('.pc-library-heading')?.textContent.includes('2022首入藏')",
         ),
       );
       await h.evaluate(

@@ -190,15 +190,29 @@ export function ReadingRail({
         data-expanded={directoryOpen}
       >
         <ul className="pc-rail__counts" aria-label="检查项计数">
-          {COUNTS.map(({ status, label, icon }) => (
-            <li key={status} className={`pc-rail__count pc-finding--${status}`}>
-              <span aria-hidden="true">{icon}</span> {label}
-              <strong>
-                {checks.filter((f) => f.status === status).length}
-              </strong>
-            </li>
-          ))}
+          {COUNTS.map(({ status, label, icon }) => {
+            const conditional =
+              status === "fail" && report.genre.applicability !== "applicable";
+            return (
+              <li
+                key={status}
+                className={`pc-rail__count pc-finding--${status}`}
+              >
+                <span aria-hidden="true">{conditional ? "△" : icon}</span>{" "}
+                {conditional ? "参考不符" : label}
+                <strong>
+                  {checks.filter((f) => f.status === status).length}
+                </strong>
+              </li>
+            );
+          })}
         </ul>
+        {report.genre.applicability !== "applicable" &&
+          checks.some((finding) => finding.status === "fail") && (
+            <p className="pc-rail__scope">
+              按参考格式逐项计数，不代表独立诗病数。
+            </p>
+          )}
 
         <p className="pc-rail__kicker" id="pc-rail-lines">
           诗句{stale ? "（上次分析）" : ""}

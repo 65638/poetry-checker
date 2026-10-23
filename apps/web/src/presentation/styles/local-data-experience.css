@@ -1,0 +1,424 @@
+/* Query help and local data tools use the same quiet hierarchy as the catalogue. */
+.pc-workspace .pc-notebook-archive {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--pc-divider);
+}
+.pc-workspace .pc-notebook-note {
+  display: grid;
+  gap: 8px;
+  align-items: stretch;
+  white-space: normal;
+  font-size: 13px;
+}
+.pc-workspace .pc-notebook-note input {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 44px;
+  padding-inline: 12px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+.pc-workspace
+  :is(.pc-notebook-archive, [aria-label="推敲笺"])
+  > .pc-studio-actions {
+  align-items: flex-end;
+}
+.pc-workspace .pc-notebook-archive .pc-studio-inline-label {
+  min-height: 44px;
+  font-size: 13px;
+}
+.pc-workspace .pc-studio-inline-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  flex: none;
+  margin: 0;
+}
+.pc-workspace .pc-notebook-entry {
+  border: 1px solid var(--pc-divider);
+  border-radius: 4px;
+  background: var(--pc-surface-sheet);
+  padding: 20px;
+  margin-top: 18px;
+}
+.pc-workspace .pc-notebook-entry header {
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--pc-divider);
+}
+.pc-workspace .pc-notebook-entry time {
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.8;
+}
+.pc-workspace .pc-notebook-entry > p {
+  margin-block: 16px;
+  line-height: 1.9;
+}
+.pc-workspace .pc-notebook-entry summary {
+  min-height: 40px;
+  padding-block: 9px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+.pc-workspace .pc-notebook-diff {
+  gap: 14px;
+  margin-top: 8px;
+}
+.pc-workspace .pc-notebook-diff > div {
+  border: 1px solid var(--pc-divider);
+  border-radius: 4px;
+  padding: 16px;
+  background: color-mix(in srgb, var(--pc-text) 3%, transparent);
+}
+.pc-workspace .pc-notebook-diff h4 {
+  margin: 0 0 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--pc-text-muted);
+}
+.pc-workspace .pc-notebook-diff p {
+  margin: 0;
+  font-family: var(--pc-font-serif);
+  line-height: 2;
+}
+.pc-workspace .pc-notebook-lines {
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 1.9;
+}
+.pc-workspace .pc-notebook-lines p {
+  padding: 6px 8px;
+  margin-block: 4px;
+}
+@media (max-width: 599px) {
+  .pc-workspace .pc-notebook-entry {
+    padding: 16px 12px;
+  }
+  .pc-workspace .pc-notebook-entry header {
+    flex-wrap: wrap;
+  }
+  .pc-workspace .pc-notebook-diff > div {
+    padding: 12px;
+  }
+}
+
+.pc-workspace .pc-excerpt-notebook {
+  border-radius: 5px;
+  border-color: #8ba09445;
+  border-top: 2px solid #c5b387;
+  padding: clamp(20px, 3vw, 36px);
+  background: #172f33f5;
+}
+.pc-workspace .pc-excerpt-notebook > header h2 {
+  margin: 0 0 12px;
+  font: 400 clamp(24px, 2.1vw, 30px) / 1.6 var(--pc-font-serif);
+  color: #eee2c5;
+  letter-spacing: 0.06em;
+}
+.pc-workspace .pc-excerpt-notebook > header p {
+  margin: 0 0 24px;
+  color: #c3d0c6;
+  font-size: 14px;
+  line-height: 1.8;
+}
+.pc-workspace .pc-excerpt-notebook > .pc-studio-actions {
+  align-items: flex-end;
+  gap: 14px 22px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--pc-night-divider);
+}
+.pc-workspace .pc-excerpt-notebook > .pc-studio-actions > label {
+  display: grid;
+  gap: 8px;
+  flex: 1 1 260px;
+  max-width: 480px;
+  font-size: 13px;
+}
+.pc-workspace .pc-excerpt-notebook > .pc-studio-actions input {
+  box-sizing: border-box;
+  min-height: 44px;
+  width: 100%;
+  border: 1px solid #9bb3a67a;
+  border-radius: 4px;
+  padding: 10px 12px;
+  background: #10272c;
+  color: #e5dbc0;
+  font: 14px/1.5 var(--pc-font-sans);
+}
+.pc-workspace .pc-excerpt-notebook input::placeholder {
+  color: #afc1b6;
+}
+.pc-workspace .pc-excerpt-entry {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(240px, 0.8fr);
+  gap: 0 36px;
+  padding: 28px;
+  margin-top: 24px;
+  border: 1px solid #c5beaa;
+  border-radius: 4px;
+  background: #f1eddf;
+  color: #29423c;
+  --pc-focus: #356959;
+}
+.pc-workspace .pc-excerpt-entry > :is(blockquote, p, .pc-studio-actions) {
+  grid-column: 1;
+  min-width: 0;
+}
+.pc-workspace .pc-excerpt-entry blockquote {
+  padding-left: 18px;
+  border-left: 2px solid #a79569;
+  margin: 0 0 16px;
+  color: #274d42;
+  font: 400 26px/1.9 var(--pc-font-serif);
+  letter-spacing: 0.04em;
+}
+.pc-workspace .pc-excerpt-entry > p {
+  margin-block: 4px 10px;
+  font-size: 14px;
+  line-height: 1.8;
+}
+.pc-workspace .pc-excerpt-entry .pc-studio-meta {
+  font-size: 13px;
+  color: #526359;
+}
+.pc-workspace .pc-excerpt-entry a {
+  color: #315f50;
+}
+.pc-workspace .pc-excerpt-entry > .pc-studio-actions {
+  align-self: start;
+  margin-top: 12px;
+  gap: 8px;
+}
+.pc-workspace .pc-excerpt-entry .pc-studio-action {
+  color: #3d6153;
+  background: #72866a0b;
+  border-color: #99a59080;
+  font-size: 13px;
+  padding-inline: 12px;
+}
+.pc-workspace .pc-excerpt-entry .pc-studio-action:hover:not(:disabled) {
+  background: #72866a20;
+  color: #274d42;
+}
+.pc-workspace .pc-excerpt-entry .pc-studio-actions button:last-child {
+  color: #8d5144;
+  border-color: #a16e5b4d;
+  background: transparent;
+}
+.pc-workspace .pc-excerpt-note {
+  grid-column: 2;
+  grid-row: 1 / span 3;
+  margin: 0;
+  align-content: start;
+  font-size: 13px;
+  color: #526359;
+}
+.pc-workspace .pc-excerpt-note textarea {
+  min-height: 140px;
+  padding: 12px 14px;
+  border: 1px solid #99a59099;
+  border-radius: 4px;
+  background: #fffdf54d;
+  color: #29423c;
+  font: 14px/1.85 var(--pc-font-sans);
+}
+.pc-workspace .pc-excerpt-note textarea::placeholder {
+  color: #667460;
+}
+.pc-workspace .pc-excerpt-entry > button {
+  grid-column: 2;
+  grid-row: 4;
+  justify-self: start;
+  align-self: start;
+  margin-top: 12px;
+}
+.pc-workspace .pc-excerpt-entry > button:not(:disabled) {
+  background: #2c594f;
+  color: #fff8e5;
+  border-color: #2c594f;
+}
+.pc-workspace .pc-excerpt-entry > button:hover:not(:disabled) {
+  background: #214b42;
+  color: #fff8e5;
+}
+@media (max-width: 899px) {
+  .pc-workspace .pc-excerpt-entry {
+    display: block;
+    padding: 22px;
+  }
+  .pc-workspace .pc-excerpt-note {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid #a0a58f4d;
+  }
+  .pc-workspace .pc-excerpt-note textarea {
+    min-height: 110px;
+  }
+}
+@media (max-width: 599px) {
+  .pc-workspace .pc-excerpt-notebook {
+    padding: 16px;
+  }
+  .pc-workspace .pc-excerpt-entry {
+    padding: 18px 14px;
+  }
+  .pc-workspace .pc-excerpt-entry blockquote {
+    padding-left: 12px;
+    font-size: 23px;
+  }
+  .pc-workspace .pc-excerpt-notebook > .pc-studio-actions {
+    gap: 12px;
+  }
+}
+
+.pc-workspace .pc-library-query-help {
+  border-bottom: 1px solid var(--pc-night-divider);
+  margin: 4px 0 16px;
+  padding-bottom: 6px;
+  font-size: 13px;
+  color: #c7d4c8;
+}
+.pc-workspace .pc-library-query-help summary {
+  padding-block: 10px;
+  min-height: 44px;
+  box-sizing: border-box;
+  cursor: pointer;
+  line-height: 1.8;
+  color: #dfd6b9;
+}
+.pc-workspace .pc-library-query-help .pc-studio-meta {
+  font-size: 13px;
+  margin-block: 4px 12px;
+  color: #bccbc2;
+}
+.pc-workspace .pc-library-query-help .pc-studio-actions {
+  margin-bottom: 12px;
+  gap: 7px;
+}
+.pc-workspace .pc-library-query-help .pc-studio-action {
+  padding: 7px 10px;
+  font-size: 12px;
+  background: #b6cbb30c;
+  color: #dfd6b9;
+  border-color: #a6b89c4a;
+}
+.pc-workspace .pc-backup-panel {
+  --pc-focus: #e5d3aa;
+  box-sizing: border-box;
+  max-width: min(1040px, calc(100% - 48px));
+  border: 1px solid #8ba09445;
+  border-radius: 5px;
+  background: #172f33f5;
+  padding: 4px 22px;
+  margin-bottom: 56px;
+  color: #d2ddce;
+}
+.pc-workspace .pc-backup-panel > summary {
+  min-height: 56px;
+  box-sizing: border-box;
+  padding-block: 15px;
+  font: 15px/1.8 var(--pc-font-sans);
+  color: #e7d9b5;
+}
+.pc-workspace .pc-backup-panel[open] {
+  padding-bottom: 22px;
+}
+.pc-workspace .pc-backup-panel[open] > summary {
+  border-bottom: 1px solid var(--pc-night-divider);
+}
+.pc-workspace .pc-backup-panel > p {
+  max-width: 76ch;
+  margin-block: 16px;
+  font-size: 14px;
+  line-height: 1.9;
+}
+.pc-workspace .pc-backup-panel .pc-studio-action {
+  border-color: #a6b89c66;
+  background: #b6cbb30c;
+  color: #e5dbc0;
+  font-size: 14px;
+}
+.pc-workspace .pc-backup-panel .pc-studio-action:hover:not(:disabled) {
+  background: #b6cbb324;
+  border-color: #d5c49b;
+}
+.pc-workspace .pc-backup-preview {
+  border-top: 1px solid var(--pc-night-divider);
+  padding-top: 14px;
+  margin-top: 22px;
+}
+.pc-workspace .pc-backup-preview > p {
+  font-size: 13px;
+  color: #becdc1;
+}
+.pc-workspace .pc-backup-preview > .pc-studio-actions {
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 10px;
+}
+.pc-workspace .pc-backup-preview label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  line-height: 1.7;
+}
+.pc-workspace .pc-backup-preview input[type="checkbox"] {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+}
+.pc-workspace .pc-backup-preview [aria-label="备份合并预览"] {
+  border: 1px solid #b5ad7159;
+  border-left: 3px solid #c5b387;
+  border-radius: 4px;
+  padding: 16px 18px;
+  margin-top: 20px;
+  background: #b5ad710c;
+}
+.pc-workspace .pc-backup-preview [aria-label="备份合并预览"] > p:first-child {
+  margin-top: 0;
+  color: #f0e3be;
+}
+.pc-workspace .pc-backup-preview [aria-label="备份合并预览"] > button {
+  background: #b8c5a9;
+  color: #15342c;
+  border-color: #b8c5a9;
+}
+.pc-workspace
+  .pc-backup-preview
+  [aria-label="备份合并预览"]
+  > button:hover:not(:disabled) {
+  background: #c8d2ba;
+  color: #15342c;
+}
+.pc-workspace .pc-backup-panel > :is([role="status"], [role="alert"]) {
+  padding: 12px 14px;
+  background: #a9c29b12;
+  border-left: 2px solid #a6bd9a;
+  border-radius: 3px;
+  margin-bottom: 0;
+}
+.pc-workspace .pc-backup-panel > [role="alert"] {
+  border-left-color: #cf8e78;
+  background: #b46f5814;
+  color: #ffd1bf;
+}
+@media (max-width: 599px) {
+  .pc-workspace .pc-backup-panel {
+    max-width: none;
+    margin-inline: 16px;
+    padding-inline: 16px;
+  }
+  .pc-workspace .pc-backup-panel .pc-studio-actions {
+    gap: 8px;
+  }
+  .pc-workspace .pc-backup-panel .pc-studio-action {
+    padding-inline: 10px;
+    font-size: 13px;
+  }
+  .pc-workspace .pc-backup-preview [aria-label="备份合并预览"] {
+    padding-inline: 12px;
+  }
+}

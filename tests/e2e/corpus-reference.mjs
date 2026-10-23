@@ -81,7 +81,7 @@ try {
     await h.click('[aria-controls="library-space"]');
     await waitFor(() =>
       h.evaluate(
-        "document.querySelector('.pc-library-heading').textContent.includes('2022首入藏')",
+        "document.querySelector('.pc-library-heading')?.textContent.includes('2022首入藏')",
       ),
     );
     assert.equal(
@@ -421,6 +421,64 @@ try {
         );
         await shot("reference-" + width);
       }
+    },
+  );
+  await check(
+    "long-reading-keyboard-moves-within-paragraph-and-can-tab-out",
+    async () => {
+      await h.load({ path: "#library", reduce: true });
+      await waitFor(() =>
+        h.evaluate(
+          "document.querySelector('.pc-library-heading')?.textContent.includes('2022首入藏')",
+        ),
+      );
+      await open("长恨歌");
+      const state = () =>
+        h.evaluate(`(() => {
+      const row = document.querySelector('.pc-library-verse-row');
+      const letters = [...row.querySelectorAll('.pc-library-character')];
+      return {
+        focused: letters.indexOf(document.activeElement),
+        last: letters.length - 1,
+        excerpt: document.activeElement === row.querySelector('.pc-excerpt-copy'),
+        selected: document.querySelectorAll('.pc-library-character[aria-pressed="true"]').length,
+        tabStops: document.querySelectorAll('.pc-library-character[tabindex="0"]').length,
+        characters: document.querySelectorAll('.pc-library-character').length,
+        paragraphs: [...document.querySelectorAll('.pc-library-verse-row')].filter(row => row.querySelector('.pc-library-character')).length,
+      };
+    })()`);
+      const key = async (key, code, virtualCode) => {
+        for (const type of ["keyDown", "keyUp"])
+          await h.cdp.send("Input.dispatchKeyEvent", {
+            type,
+            key,
+            code,
+            windowsVirtualKeyCode: virtualCode,
+          });
+      };
+      await h.evaluate(
+        "document.querySelector('.pc-library-character').focus()",
+      );
+      const before = await state();
+      assert(before.characters > 800);
+      assert.equal(before.tabStops, before.paragraphs);
+      await key("ArrowRight", "ArrowRight", 39);
+      assert.equal((await state()).focused, 1);
+      assert.equal(
+        (await state()).selected,
+        before.selected,
+        "Moving focus must not select a reading",
+      );
+      await key("End", "End", 35);
+      assert.equal((await state()).focused, before.last);
+      await key("Home", "Home", 36);
+      assert.equal((await state()).focused, 0);
+      await key("Tab", "Tab", 9);
+      assert.equal(
+        (await state()).excerpt,
+        true,
+        "Tab leaves the characters for the excerpt control",
+      );
     },
   );
   assert.deepEqual(result.errors, []);

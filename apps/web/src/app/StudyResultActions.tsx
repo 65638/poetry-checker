@@ -58,7 +58,11 @@ export function StudyResultActions({
   }
   return (
     <div className="pc-study-result-actions">
-      <div className="pc-studio-actions" aria-label="保存与分享研读">
+      <div
+        className="pc-studio-actions"
+        role="group"
+        aria-label="保存与分享研读"
+      >
         <button
           type="button"
           className="pc-studio-action"

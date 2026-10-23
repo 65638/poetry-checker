@@ -17,11 +17,35 @@ const app = buildApp({ readingAssistant: { apiKey: 'controlled-ui-test', fetcher
   const suggestions = data.targets.map(t => ({ tokenId: t.tokenId, candidateId: t.candidates[0].id, pronunciation: null, reason: 'Controlled choice for presentation verification only.' }));
   return new Response(JSON.stringify({ choices: [{ finish_reason: 'stop', message: { content: JSON.stringify({ suggestions }) } }] }));
 } } });
-app.addHook('onSend', async (request, _reply, payload) => {
-  if (request.url === '/api/v1/analyze' && typeof payload === 'string') { latestReport = JSON.parse(payload); analysisCalls++; }
+app.addHook('preHandler', async (request) => {
+  if (request.url === '/api/v1/analyze') analysisCalls++;
 });
 const baseUrl = await app.listen({ host: '127.0.0.1', port: 0 });
 const h = await startHarness({ production: true, api: { baseUrl, stop: () => app.close() } });
+// Observe a clone of the actual response, including the final NDJSON report.
+// Fastify's onSend payload is now a stream, not a serialized report object.
+await h.cdp.send('Page.addScriptToEvaluateOnNewDocument', { source: `(() => {
+  const original = window.fetch.bind(window);
+  window.fetch = async (...args) => {
+    const response = await original(...args);
+    if (String(args[0]).endsWith('/api/v1/analyze') && response.ok) {
+      void response.clone().text().then(raw => {
+        const report = response.headers.get('content-type')?.includes('application/x-ndjson')
+          ? raw.trim().split('\\n').map(line => JSON.parse(line)).find(event => event.type === 'result')?.report
+          : JSON.parse(raw);
+        if (report) { window.__finalReport = report; window.__reportCount = (window.__reportCount ?? 0) + 1; }
+      });
+    }
+    return response;
+  };
+})()` });
+const analyze = h.analyze;
+h.analyze = async () => {
+  const before = await h.evaluate('window.__reportCount ?? 0');
+  await analyze();
+  await waitFor(() => h.evaluate(`(window.__reportCount ?? 0) > ${before}`));
+  latestReport = await h.evaluate('window.__finalReport');
+};
 const result = { revision: revision(), mode: 'real-api-controlled-model-for-ui-only', realModelAccuracyTested: false, checks: [], errors: [] };
 h.cdp.on('Runtime.exceptionThrown', event => result.errors.push(event.exceptionDetails.text));
 const check = async (name, run) => { await run(); result.checks.push({ name, status: 'pass' }); console.log('[PASS]', name); };
@@ -32,6 +56,9 @@ try {
     await h.setText('灯前夜半键声轻，一局未终天欲明。错落音符随指下，参差节拍搅心旌。');
     await h.analyze();
     assert.equal(latestReport.summary.status, 'needs_review');
+    assert.notEqual(latestReport.genre.applicability, 'applicable');
+    const railCounts = await h.evaluate("document.querySelector('.pc-rail__counts').textContent");
+    assert(railCounts.includes('参考不符') && !railCounts.includes('违规'), 'reading rail must preserve the same conditional scope as the report');
     assert.equal(latestReport.prosody.selectedTemplateId, null);
     assert.equal(latestReport.prosody.format.start.value, 'ping');
     assert.equal(latestReport.prosody.format.start.tokenId, 'l1c2');

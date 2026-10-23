@@ -1,0 +1,88 @@
+/* A readable document while the application module loads; React replaces it. */
+html {
+  background: #101f25;
+}
+body {
+  margin: 0;
+}
+.pc-entrance {
+  box-sizing: border-box;
+  display: flex;
+  min-height: 100vh;
+  min-height: 100svh;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 48px 24px;
+  background: radial-gradient(ellipse at 50% 30%, #25454a, #101f25 70%);
+  color: #ece6d6;
+  font:
+    15px/1.9 system-ui,
+    sans-serif;
+  text-align: center;
+}
+.pc-entrance > img {
+  margin-bottom: 18px;
+  box-shadow: 0 12px 40px #0003;
+  border-radius: 16px;
+}
+.pc-entrance__eyebrow {
+  margin: 0 0 8px;
+  color: #d9c595;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+}
+.pc-entrance h1 {
+  margin: 0;
+  font:
+    500 clamp(26px, 5vw, 34px) / 1.5 "Songti SC",
+    "SimSun",
+    serif;
+  letter-spacing: 0.12em;
+}
+.pc-entrance__status {
+  margin: 22px 0 8px;
+  color: #b9c9c6;
+}
+.pc-entrance__help {
+  max-width: 28em;
+  color: #b9c9c6;
+  font-size: 14px;
+}
+.pc-entrance__help summary {
+  padding: 12px 6px;
+  cursor: pointer;
+}
+.pc-entrance__help p {
+  margin: 4px 0;
+}
+.pc-entrance__help a {
+  display: inline-block;
+  padding: 8px 4px;
+  color: #e2c27a;
+  text-underline-offset: 4px;
+}
+.pc-entrance :focus-visible {
+  outline: 2px solid #e2c27a;
+  outline-offset: 4px;
+}
+.pc-entrance__noscript {
+  max-width: 28em;
+  margin-top: 24px;
+}
+@media (forced-colors: active) {
+  .pc-entrance {
+    background: Canvas;
+    color: CanvasText;
+  }
+  .pc-entrance p,
+  .pc-entrance summary {
+    color: CanvasText;
+  }
+  .pc-entrance a {
+    color: LinkText;
+  }
+  .pc-entrance :focus-visible {
+    outline-color: Highlight;
+  }
+}

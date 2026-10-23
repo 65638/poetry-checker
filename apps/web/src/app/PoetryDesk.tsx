@@ -31,6 +31,7 @@ import { downloadJson } from "./library";
 import { currentLineEnd, parseNotebook, type NotebookEntry } from "./notebook";
 
 import { NotebookArchive } from "../presentation/components/NotebookArchive";
+import { RevisionSubstitution } from "../presentation/components/RevisionSubstitution";
 import { StudyResultActions } from "./StudyResultActions";
 import { RuleReviewNote } from "./RuleReviewNote";
 import { planRevision } from "./revisionPlan";
@@ -536,11 +537,10 @@ export function PoetryDesk({
               )}
               {currentCritique.revisions.map((edit, i) => (
                 <article className="pc-poetry-edit" key={i}>
-                  <div className="pc-poetry-substitution">
-                    <del>{edit.original}</del>
-                    <ArrowRight size={18} aria-hidden="true" />
-                    <ins>{edit.replacement}</ins>
-                  </div>
+                  <RevisionSubstitution
+                    original={edit.original}
+                    replacement={edit.replacement}
+                  />
                   <p>{edit.reason}</p>
                   <p className="pc-studio-meta">取舍：{edit.tradeoff}</p>
                   {canApply && pendingEdits && report && (
@@ -633,7 +633,7 @@ export function PoetryDesk({
                   </select>
                 </label>
                 <label>
-                  读音候选
+                  韵脚读音
                   <select
                     aria-label="选择韵脚读音"
                     value={seedReading?.id ?? ""}
@@ -684,7 +684,7 @@ export function PoetryDesk({
                 <>
                   <div className="pc-studio-actions">
                     <span className="pc-studio-meta">
-                      同部{rhymeWords.total}字 · 本页
+                      同韵部{rhymeWords.total}字 · 本页
                       {rhymeWords.lookup.entries.length}字
                     </span>
                     <button
@@ -780,6 +780,9 @@ export function PoetryDesk({
                       )
                     );
                   })}
+                  <p className="pc-studio-meta pc-rhyme-grid-hint">
+                    点选下方汉字，可前往藏韵阁查看读音与出处。
+                  </p>
                   <div className="pc-rhyme-characters" aria-busy={rhymeBusy}>
                     {rhymeWords.lookup.entries.map((e) => (
                       <button
@@ -844,7 +847,7 @@ export function PoetryDesk({
                     </button>
                   </div>
                   <p className="pc-studio-meta">
-                    语义推荐取本页前120条读音候选；同韵不等于同义或整诗合律。
+                    荐字参考当前页的读音候选；同韵不等于同义或整诗合律。
                   </p>
                 </>
               )}

@@ -1,0 +1,239 @@
+/* Advice is a choice: distinguish the proposal without marking the original wrong. */
+.pc-workspace .pc-poetry-edit {
+  padding: 20px;
+  margin-block: 16px;
+  border: 1px solid #8c9d7d66;
+  border-left: 3px solid #8a9e7c;
+  border-radius: 3px;
+  background: #f7f5e966;
+}
+.pc-workspace .pc-poetry-edit > p {
+  margin-block: 14px;
+  font-size: 15px;
+  line-height: 1.9;
+  overflow-wrap: anywhere;
+}
+.pc-workspace .pc-poetry-edit > .pc-studio-meta {
+  padding: 10px 12px;
+  border-left: 2px solid #b6a574;
+  background: #b8aa7a14;
+  color: #53604b;
+  font-size: 13px;
+}
+.pc-workspace .pc-poetry-substitution {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 20px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  max-width: 620px;
+}
+.pc-workspace .pc-revision-word {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 5px;
+  padding: 10px 14px;
+  border-radius: 3px;
+  background: #6679690c;
+}
+.pc-workspace .pc-revision-word > span {
+  color: #5b6859;
+  font: 12px/1.6 var(--pc-font-sans);
+}
+.pc-workspace .pc-poetry-substitution :is(del, ins) {
+  display: block;
+  margin: 0;
+  padding: 0;
+  font: 500 27px/1.6 var(--pc-font-serif);
+  text-decoration: none;
+  background: transparent;
+  color: #42544a;
+  overflow-wrap: anywhere;
+}
+.pc-workspace .pc-revision-word--proposed {
+  background: #dce5cd;
+}
+.pc-workspace .pc-revision-word--proposed ins {
+  color: #2c5138;
+}
+.pc-workspace .pc-poetry-edit > .pc-studio-action {
+  min-height: 44px;
+  background: #e1e7d4;
+  color: #2d4f3b;
+  border-color: #7a9272;
+}
+.pc-workspace .pc-poetry-edit > .pc-studio-action:hover:not(:disabled) {
+  background: #d3dfc3;
+  border-color: #4d7153;
+}
+.pc-workspace .pc-poetry-edit > h3 {
+  margin: 0 0 10px;
+  font: 500 30px/1.5 var(--pc-font-serif);
+  color: #34513d;
+}
+.pc-workspace .pc-poetry-edit > h3 small {
+  font: 14px/1.7 var(--pc-font-sans);
+  color: #536951;
+}
+.pc-workspace .pc-rhyme-grid-hint {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--pc-divider);
+}
+.pc-workspace .pc-rhyme-characters {
+  margin-top: 12px;
+  gap: 8px;
+}
+.pc-workspace .pc-rhyme-characters button {
+  background: #fbf9ed50;
+  border-color: #9ba98b88;
+  border-radius: 3px;
+  color: #354b3e;
+}
+.pc-workspace .pc-rhyme-characters button:hover:not(:disabled) {
+  background: #dce5cd;
+  border-color: #667f5f;
+}
+.pc-workspace .pc-rhyme-loading:empty {
+  min-height: 0;
+}
+.pc-workspace .pc-revision-preview {
+  padding: 0 14px;
+  border-color: #8f9f7e66;
+  background: #e0e5d338;
+}
+.pc-workspace .pc-revision-preview > summary {
+  min-height: 44px;
+  box-sizing: border-box;
+  padding-block: 10px;
+  font: 14px/1.8 var(--pc-font-sans);
+  color: #3a5940;
+}
+.pc-workspace .pc-revision-preview[open] > summary {
+  border-bottom: 1px solid #8f9f7e55;
+}
+.pc-workspace .pc-revision-preview p {
+  color: #56624e;
+  font: 13px/1.9 var(--pc-font-sans);
+}
+.pc-workspace .pc-revision-preview dl {
+  align-items: center;
+  gap: 10px 14px;
+  margin-block: 18px;
+}
+.pc-workspace .pc-revision-preview dt {
+  color: #54654f;
+  font: 12px/1.6 var(--pc-font-sans);
+}
+.pc-workspace .pc-revision-preview dd {
+  padding: 10px 12px;
+  border-left: 2px solid #a9b197;
+  background: #61766009;
+  color: #304d3b;
+  font: 21px/1.9 var(--pc-font-serif);
+}
+.pc-workspace .pc-revision-preview dd:last-child {
+  background: #dce5cd88;
+  border-left-color: #729067;
+}
+.pc-workspace .pc-revision-preview details > summary {
+  min-height: 44px;
+  box-sizing: border-box;
+  padding-block: 10px;
+  color: #3a5940;
+  font: 13px/1.8 var(--pc-font-sans);
+}
+.pc-workspace .pc-revision-preview blockquote {
+  padding: 14px 16px;
+  background: #f6f3e7;
+  border: 1px solid #a1ad9259;
+  border-left: 3px solid #8ba079;
+  color: #32483a;
+  font: 20px/2 var(--pc-font-serif);
+  scrollbar-width: thin;
+  scrollbar-color: #7c946e transparent;
+  overscroll-behavior: contain;
+}
+.pc-workspace .pc-revision-preview blockquote:focus-visible {
+  outline: 2px solid #527347;
+  outline-offset: 2px;
+}
+.pc-workspace .pc-rule-review-note {
+  margin-block: 22px;
+  padding: 14px 18px;
+  border: 1px solid #b3a37566;
+  border-left: 3px solid #a99465;
+  border-radius: 3px;
+  background: #f5f0e1a6;
+}
+.pc-workspace .pc-rule-review-note > p {
+  margin: 0;
+  color: #565d48;
+  font: 14px/1.9 var(--pc-font-sans);
+}
+.pc-workspace .pc-rule-review-note summary {
+  min-height: 44px;
+  padding-block: 10px;
+  box-sizing: border-box;
+  color: #5e593f;
+  font: 13px/1.8 var(--pc-font-sans);
+  cursor: pointer;
+}
+.pc-workspace .pc-rule-review-note details[open] > summary {
+  border-bottom: 1px solid #b3a37555;
+}
+.pc-workspace .pc-rule-review-note ul {
+  margin: 10px 0 0;
+  padding-left: 22px;
+  color: #455443;
+  font-size: 14px;
+  line-height: 1.9;
+  overflow-wrap: anywhere;
+}
+.pc-workspace .pc-rule-review-note li + li {
+  margin-top: 8px;
+}
+@media (max-width: 599px) {
+  .pc-workspace .pc-poetry-edit {
+    padding: 16px 12px;
+  }
+  .pc-workspace .pc-poetry-substitution {
+    gap: 8px;
+    grid-template-columns: minmax(0, 1fr) 16px minmax(0, 1fr);
+  }
+  .pc-workspace .pc-poetry-substitution > svg {
+    width: 16px;
+  }
+  .pc-workspace .pc-revision-word {
+    padding: 8px;
+  }
+  .pc-workspace .pc-poetry-substitution :is(del, ins) {
+    font-size: 24px;
+  }
+  .pc-workspace .pc-poetry-edit > .pc-studio-action {
+    width: 100%;
+    justify-content: center;
+  }
+  .pc-workspace .pc-revision-preview dl {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 6px;
+  }
+  .pc-workspace .pc-revision-preview dt:not(:first-child) {
+    margin-top: 10px;
+  }
+  .pc-workspace .pc-revision-preview dd,
+  .pc-workspace .pc-revision-preview blockquote {
+    font-size: 19px;
+    padding-inline: 10px;
+  }
+  .pc-workspace .pc-rule-review-note {
+    padding-inline: 12px;
+  }
+}
+@media (forced-colors: active) {
+  .pc-workspace .pc-poetry-edit,
+  .pc-workspace .pc-revision-word,
+  .pc-workspace .pc-rhyme-characters button {
+    border: 1px solid CanvasText;
+  }
+}

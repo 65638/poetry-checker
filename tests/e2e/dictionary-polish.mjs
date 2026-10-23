@@ -34,6 +34,19 @@ const check = async (name, run) => {
 };
 try {
   await h.load({ path: "#dictionary" });
+  await check("empty-state-text-retains-contrast-on-its-own-surface", async () => {
+    await waitFor(()=>evaluate("!!document.querySelector('.pc-dictionary__empty h2')"));
+    const ratios=await evaluate(`(() => {
+      const rgb=value=>value.match(/[\\d.]+/g).map(Number);
+      const luminance=values=>values.slice(0,3).map(v=>v/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4).reduce((sum,v,i)=>sum+v*[.2126,.7152,.0722][i],0);
+      const background=rgb(getComputedStyle(document.querySelector('.pc-dictionary__folio')).backgroundColor),alpha=background[3]??1;
+      return [...document.querySelectorAll('.pc-dictionary__empty h2,.pc-dictionary__empty p')].map(e=>{
+        const ink=luminance(rgb(getComputedStyle(e).color));
+        return Math.min(...[0,255].map(under=>{const paper=luminance(background.slice(0,3).map(v=>v*alpha+under*(1-alpha)));return (Math.max(ink,paper)+.05)/(Math.min(ink,paper)+.05);}));
+      });
+    })()`);
+    assert(ratios.every(ratio=>ratio>=4.5),`Empty prompt contrast: ${ratios.join(', ')}`);
+  });
   await shot("after-empty");
   await click(".pc-dictionary__examples button");
   await ready();
@@ -63,7 +76,7 @@ try {
       window.__samples = [];
       window.__sampling = true;
       const sample = () => {
-        const button = document.querySelector('.pc-dictionary__searchline button');
+        const button = document.querySelector('.pc-dictionary__searchline button[type=submit]');
         window.__samples.push({
           at: performance.now(),
           width: button.getBoundingClientRect().width,
@@ -75,7 +88,7 @@ try {
       };
       requestAnimationFrame(sample);
     })()`);
-    await click(".pc-dictionary__searchline button");
+    await click(".pc-dictionary__searchline button[type=submit]");
     await sleep(850);
     const samples = await evaluate(
       "window.__sampling = false; window.__samples",
@@ -107,11 +120,11 @@ try {
         ? Promise.resolve(response.clone()) : window.__originalFetch(...args);
       window.__labels = [];
       window.__labelObserver = new MutationObserver(() => {
-        window.__labels.push(document.querySelector('.pc-dictionary__searchline button').textContent);
+        window.__labels.push(document.querySelector('.pc-dictionary__searchline button[type=submit]').textContent);
       });
       window.__labelObserver.observe(document.querySelector('.pc-dictionary__searchline'), {subtree:true,childList:true,characterData:true});
     })()`);
-    await click(".pc-dictionary__searchline button");
+    await click(".pc-dictionary__searchline button[type=submit]");
     await sleep(550);
     assert.ok(
       (await evaluate("window.__labels")).every((s) => !s.includes("查阅中")),
@@ -208,12 +221,10 @@ try {
       ),
       "false",
     );
-    assert.equal(
-      await evaluate(
-        "getComputedStyle(document.querySelector('.pc-dictionary__reveal')).transitionDuration",
-      ),
-      "0s, 0s, 0s",
+    const durations = await evaluate(
+      "getComputedStyle(document.querySelector('.pc-dictionary__reveal')).transitionDuration",
     );
+    assert.ok(durations.split(',').every((duration) => parseFloat(duration) === 0));
   });
   await check("failed-refresh-does-not-announce-old-success", async () => {
     await evaluate(`(() => {
@@ -221,7 +232,7 @@ try {
       window.fetch = (...args) => String(args[0]).includes('/characters/')
         ? Promise.reject(new TypeError('Test connection failure')) : window.__originalFetch(...args);
     })()`);
-    await click(".pc-dictionary__searchline button");
+    await click(".pc-dictionary__searchline button[type=submit]");
     await waitFor(() =>
       evaluate("!!document.querySelector('.pc-dictionary__error')"),
     );

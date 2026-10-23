@@ -1,0 +1,42 @@
+/* In Windows contrast themes, transparent borders become visible too. Use
+   system colors and a structural selected state instead of color alone. */
+@media (forced-colors: active) {
+  .pc-workspace {
+    --pc-paper-texture: none;
+  }
+  .pc-workspace .pc-places button {
+    border: 0;
+  }
+  .pc-workspace .pc-places button[aria-current="page"] {
+    border: 2px solid Highlight;
+    font-weight: 700;
+  }
+  .pc-workspace .pc-studio-tabs button {
+    border-bottom: 0;
+  }
+  .pc-workspace .pc-studio-tabs button[aria-selected="true"] {
+    border-bottom: 3px solid Highlight;
+    font-weight: 700;
+  }
+  .pc-workspace
+    :is(button[aria-pressed="true"], .pc-dictionary__book:has(input:checked)) {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
+  .pc-workspace .pc-segmented__radio:checked + .pc-segmented__face {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    font-weight: 700;
+  }
+  .pc-workspace .pc-library-comparison .pc-compare-line[data-active="true"] {
+    border-left: 4px solid Highlight;
+  }
+  .pc-workspace :focus-visible {
+    outline: 3px solid Highlight;
+    outline-offset: 3px;
+  }
+  .pc-workspace :is(button, input, select, textarea):disabled {
+    color: GrayText;
+    opacity: 1;
+  }
+}
