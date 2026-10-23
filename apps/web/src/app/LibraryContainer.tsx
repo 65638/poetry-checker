@@ -1335,12 +1335,12 @@ export function LibraryContainer({
               )}
             </p>
             <ResearchNotes
-              key={selected.id}
+              key={`research:${selected.id}`}
               text={selected.paragraphs.join("\n")}
             />
             {selected.kind !== "prose" && (
               <RelatedReading
-                key={selected.id}
+                key={`related:${selected.id}`}
                 selected={selected}
                 works={unique.works}
                 favorites={favorites}

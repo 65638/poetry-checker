@@ -81,3 +81,11 @@ git -c http.version=HTTP/1.1 -c http.postBuffer=104857600 -c core.compression=0 
 - 语料浏览器回归连续两次在ResearchNotes等待超时；切诗后原诗区残留多个读音与版本details。LibraryContainer中ResearchNotes与新RelatedReading使用相同的selected.id sibling key。
 - 本次仅将这两个key分别加research:、related:前缀，消除同级标识碰撞；不移动插槽、不改props/请求/业务。现有corpus-reference测试补充切诗后的面板数量断言。
 - AnnotatedVerses的逐段焦点性能修改仍在验证，不将本次失败隐去或宣称全通过。
+
+### 批次06：长诗焦点性能与资料面板修复
+
+- AnnotatedVerses把焦点状态放到逐段组件，缓存标点/codepoint拆分；方向键只重绘所在段。保留逐段一个Tab入口、Home/End/左右、Enter选字、摘句与原注音位置。
+- 真实《长恨歌》840字按钮/56段，本机Edge4倍CPU降速30次方向键×3：脚本耗时基线200.55/176.97/255.80ms，修改后80.66/65.86/60.01ms；中位约降低67%。整轮墙钟约563→497ms，不能宣称可见响应提升三倍。证据evening-long-reading/baseline.json及after.json。
+- 语料回归两次暴露同级ResearchNotes/RelatedReading key重复而残留空面板；仅给两处key加不同前缀。补充每次切诗恰好一个资料面板断言后，语料11场景全部通过，包括真实注音、扩展汉字、出处分页、长诗键盘；poetry-studio12场景亦通过。类型/局部eslint/构建通过。
+- three-round-polish旧脚本在懒加载字典未挂载时focus空节点失败，未把它计为通过；该脚本就绪条件需后续修正。UI产品现有字典9场景此前通过。
+- 证据evening06-corpus-fixed/results.json、evening06-studio、evening06-typecheck.log。跨路径仅上述key补丁。
