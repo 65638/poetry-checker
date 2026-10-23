@@ -20,6 +20,8 @@ export function usePoetryTask(identity: string) {
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [reused, setReused] = useState(false);
+  const [pendingInput, setPendingInput] =
+    useState<PoetryAssistantRequest | null>(null);
   const [history, setHistory] = useState<{
     identity: string;
     entries: PoetryTaskRecord[];
@@ -51,6 +53,7 @@ export function usePoetryTask(identity: string) {
     sequence.current++;
     controller.current?.abort();
     setBusy(false);
+    setPendingInput(null);
     setError(null);
     setCancelled(true);
   }, []);
@@ -78,6 +81,7 @@ export function usePoetryTask(identity: string) {
       const requestIdentity = currentIdentity.current;
       const requestKey = JSON.stringify(input);
       lastRequest.current = { identity: requestIdentity, input };
+      setPendingInput(input);
       controller.current?.abort();
       setReused(false);
       const cached = options.reuse ? cache.current.get(input) : null;
@@ -87,6 +91,7 @@ export function usePoetryTask(identity: string) {
         setResult(cached);
         setResultInput(input);
         setBusy(false);
+        setPendingInput(null);
         setError(null);
         setCancelled(false);
         setReused(true);
@@ -116,7 +121,10 @@ export function usePoetryTask(identity: string) {
         if (id === sequence.current && !own.signal.aborted)
           setError(cause instanceof Error ? cause.message : "建议暂不可用。");
       } finally {
-        if (id === sequence.current) setBusy(false);
+        if (id === sequence.current) {
+          setBusy(false);
+          setPendingInput(null);
+        }
       }
     },
     [remember],
@@ -137,6 +145,7 @@ export function usePoetryTask(identity: string) {
       setResult(entry.result);
       setResultInput(entry.input);
       setBusy(false);
+      setPendingInput(null);
       setError(null);
       setCancelled(false);
       setReused(true);
@@ -160,5 +169,6 @@ export function usePoetryTask(identity: string) {
     reused,
     history: history.identity === identity ? history.entries : [],
     restore,
+    pendingInput: busy ? pendingInput : null,
   };
 }

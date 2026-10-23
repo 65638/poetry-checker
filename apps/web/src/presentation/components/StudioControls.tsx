@@ -1,6 +1,11 @@
 import { X, LoaderCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useBusyIndicator } from "../useBusyIndicator";
+import type { PoetryAssistantRequest } from "@poetry/contracts";
+import {
+  TaskRequestPreview,
+  taskWaitLabel,
+} from "../../app/TaskRequestPreview";
 
 export function StudioTabs<T extends string>({
   tabs,
@@ -57,6 +62,7 @@ export function StudioTaskState({
   retry,
   cancelled = false,
   result,
+  pendingInput,
 }: {
   busy: boolean;
   error: string | null;
@@ -64,6 +70,7 @@ export function StudioTaskState({
   retry?: () => void;
   cancelled?: boolean;
   result?: unknown;
+  pendingInput?: PoetryAssistantRequest | null;
 }) {
   const visible = useBusyIndicator(busy);
   const [seconds, setSeconds] = useState(0);
@@ -93,7 +100,7 @@ export function StudioTaskState({
             {busy
               ? seconds >= 25
                 ? "还在研读，可先继续看诗"
-                : "正在研读…"
+                : taskWaitLabel(pendingInput)
               : "研读已结束"}
           </span>{" "}
           {busy && <small aria-hidden="true">{seconds} 秒</small>}
@@ -108,6 +115,9 @@ export function StudioTaskState({
             <X size={17} />
           </button>
         </div>
+      )}
+      {visible && busy && pendingInput && (
+        <TaskRequestPreview input={pendingInput} />
       )}
       {(error || cancelled) && !busy && (
         <div

@@ -36,7 +36,11 @@ export function AnalysisWaitPanel({
       </header>
       <p role="status" aria-live="polite">
         {preliminaryPoem
-          ? "本地读音已返回，正在等待 AI 核对。"
+          ? seconds >= 60
+            ? "本地读音已返回；AI 仍未完成，可继续等候或停止本次分析。"
+            : seconds >= 20
+              ? "AI 核对还需要一些时间；先看下方原诗，也可以停止等待。"
+              : "本地读音已返回，正在等待 AI 核对。"
           : seconds >= 60
             ? "仍在等待分析服务返回，尚未生成新结果。"
             : seconds >= 20

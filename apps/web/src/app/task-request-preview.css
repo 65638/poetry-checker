@@ -1,0 +1,28 @@
+.pc-task-request-preview {
+  margin-block: 10px 18px;
+  font-size: 13px;
+  line-height: 1.9;
+  overflow-wrap: anywhere;
+}
+.pc-task-request-preview p {
+  white-space: pre-wrap;
+}
+.pc-task-request-preview details {
+  margin-block: 6px;
+}
+.pc-task-request-preview summary {
+  cursor: pointer;
+}
+.pc-task-request-preview blockquote {
+  white-space: pre-wrap;
+  max-height: 280px;
+  overflow-y: auto;
+  margin: 10px 0;
+  padding: 10px 14px;
+  border-left: 2px solid currentColor;
+  font: inherit;
+}
+.pc-task-request-preview :is(summary, blockquote):focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}

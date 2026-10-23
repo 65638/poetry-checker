@@ -21,7 +21,7 @@ const app = buildApp({ readingAssistant: {
 app.addHook('preHandler', async request => {
   if (request.url !== '/api/v1/poetry-assistant') return;
   requests.push(structuredClone(request.body));
-  if (slow) await sleep(2500);
+  if (slow) await sleep(5000);
 });
 const baseUrl = await app.listen({ host: '127.0.0.1', port: 0 });
 const h = await startHarness({ production: true, api: { baseUrl, stop: () => app.close() } });
@@ -70,9 +70,19 @@ try {
     const count = requests.length;
     await ask('迟到的回答不得覆盖。', false);
     await waitFor(() => requests.length === count + 1);
+    await waitFor(() => h.evaluate("document.querySelector('.pc-task-request-preview')?.textContent.includes('本次提问：迟到的回答不得覆盖。')"));
+    await h.evaluate("(() => { const e=document.querySelector('[aria-label=\"本诗研读问题\"]');Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype,'value').set.call(e,'尚未提交的新问题');e.dispatchEvent(new Event('input',{bubbles:true})); })()");
+    assert.equal(await h.evaluate("document.querySelector('.pc-task-request-preview').textContent.includes('尚未提交的新问题')"), false);
+    await h.click('.pc-task-request-preview summary');
+    assert.equal(await h.evaluate("document.querySelector('.pc-task-request-preview blockquote').textContent"), '白日依山尽，黄河入海流。欲穷千里目，更上一层楼。');
+    await h.viewport(320, 900, true);
+    await h.evaluate("document.querySelector('.pc-task-request-preview').scrollIntoView({block:'start',behavior:'instant'})");
+    assert.equal(await h.evaluate('document.documentElement.scrollWidth <= innerWidth + 1'), true);
+    await shot('pending-question-320');
     await clickText('.pc-study-history button', '结尾如何展开？');
     await waitFor(() => reviewContains('受控回答：结尾如何展开？'));
-    await sleep(2800);
+    assert.equal(await h.evaluate("!!document.querySelector('.pc-task-request-preview')"), false);
+    await sleep(5200);
     assert.equal(await reviewContains('受控回答：结尾如何展开？'), true);
     assert.equal(await reviewContains('迟到的回答'), false);
     assert.equal(requests.length, count + 1);
