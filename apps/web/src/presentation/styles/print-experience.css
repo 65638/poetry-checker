@@ -45,7 +45,11 @@
     .pc-library-reading-hint, .pc-excerpt-copy, .pc-compare-picker,
     .pc-compare-poem-tools, .pc-compare-guidance small,
     .pc-studio-actions, .pc-study-question, .pc-study-history, .pc-notebook-archive,
-    .pc-poetry-desk > [role="tablist"], .pc-busy
+    .pc-poetry-desk > [role="tablist"], .pc-busy,
+    .pc-study-share-options, .pc-draft-comparison__selectors,
+    .pc-draft-comparison > form, .pc-study-follow-up,
+    .pc-related-return, .pc-related-reading__controls,
+    .pc-related-reading__actions, .pc-related-reading__pages
   ) {
     display: none !important;
   }
@@ -155,9 +159,29 @@
   }
   .pc-workspace .pc-library-verses,
   .pc-workspace .pc-compare-source,
-  .pc-workspace .pc-library-literary {
-    max-height: none;
-    overflow: visible;
+  .pc-workspace .pc-library-literary,
+  .pc-workspace .pc-draft-comparison__versions blockquote,
+  .pc-workspace .pc-draft-comparison__changes ul,
+  .pc-workspace .pc-study-follow-up-context ol,
+  .pc-workspace .pc-related-reading__list blockquote {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+  .pc-workspace .pc-draft-comparison__versions,
+  .pc-workspace .pc-related-reading__list {
+    display: block;
+  }
+  .pc-workspace .pc-draft-comparison__versions > div {
+    margin-block: 16px;
+    padding: 0;
+    border: 0;
+  }
+  .pc-workspace .pc-related-reading__list > li {
+    break-inside: avoid;
+    padding: 12px 0;
+  }
+  .pc-workspace .pc-draft-comparison__result section h4 {
+    break-after: avoid;
   }
   .pc-workspace .pc-library-footer,
   .pc-workspace .pc-colophon {
