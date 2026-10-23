@@ -290,6 +290,28 @@
 .pc-workspace .pc-saved-discussion .pc-study-result-actions .pc-studio-actions {
   gap: 8px;
 }
+/* The reading preference follows the text into saved and continued readings. */
+.pc-workspace[data-reading-size="1"] {
+  --pc-study-reading-size: 18px;
+}
+.pc-workspace[data-reading-size="2"] {
+  --pc-study-reading-size: 20px;
+}
+.pc-workspace:is([data-reading-size="1"], [data-reading-size="2"])
+  :is(
+    .pc-study-prose,
+    .pc-study-archive__reader pre,
+    .pc-saved-discussion__answer > .pc-study-prose,
+    .pc-saved-discussion__answer > ul,
+    .pc-saved-discussion__revisions p,
+    .pc-poetry-review > ul,
+    .pc-poetry-edit > p,
+    .pc-library-literary > p,
+    .pc-library-aspect p,
+    .pc-draft-comparison__result .pc-draft-comparison__versions > p
+  ) {
+  font-size: var(--pc-study-reading-size);
+}
 @media (max-width: 1099px) {
   .pc-workspace .pc-study-archive {
     margin-inline: 24px;

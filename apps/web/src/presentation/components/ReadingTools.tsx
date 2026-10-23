@@ -125,7 +125,7 @@ export function ReadingTools({ place }: { place: string }) {
           type="button"
           className="pc-reading-light"
           aria-label={`诗文字号：${["标准", "较大", "大字"][size]}，点击切换`}
-          title="调整原诗、对读与推敲笺字号"
+          title="调整诗文、研读回答、收藏与推敲笺字号"
           onClick={() => setSize((size + 1) % 3)}
         >
           字号 · {["标准", "较大", "大字"][size]}
