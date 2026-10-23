@@ -119,7 +119,9 @@ export function StudyArchivePanel() {
                   <strong>{row.title}</strong>
                   <small>
                     {row.input.task === "compare"
-                      ? "两诗对读"
+                      ? row.input.revision
+                        ? "改稿对照"
+                        : "两诗对读"
                       : row.input.mode === "reading"
                         ? "原诗赏读"
                         : "写作推敲"}{" "}

@@ -2199,6 +2199,70 @@
                 "type": "string",
                 "minLength": 1,
                 "maxLength": 240
+              },
+              "followUp": {
+                "type": "object",
+                "properties": {
+                  "textHash": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  "rhymeBook": {
+                    "type": "string",
+                    "enum": [
+                      "pingshui",
+                      "cilin",
+                      "xinyun"
+                    ]
+                  },
+                  "mode": {
+                    "type": "string",
+                    "enum": [
+                      "writing",
+                      "reading"
+                    ]
+                  },
+                  "direction": {
+                    "type": "string",
+                    "enum": [
+                      "meaning",
+                      "imagery",
+                      "sound"
+                    ]
+                  },
+                  "turns": {
+                    "minItems": 1,
+                    "maxItems": 3,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "question": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 240
+                        },
+                        "answer": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 1600
+                        }
+                      },
+                      "required": [
+                        "answer"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": [
+                  "textHash",
+                  "rhymeBook",
+                  "mode",
+                  "direction",
+                  "turns"
+                ],
+                "additionalProperties": false
               }
             },
             "required": [
@@ -2226,6 +2290,31 @@
                 "type": "string",
                 "minLength": 1,
                 "maxLength": 2000
+              },
+              "revision": {
+                "type": "object",
+                "properties": {
+                  "beforeLabel": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 120
+                  },
+                  "afterLabel": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 120
+                  },
+                  "intention": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 800
+                  }
+                },
+                "required": [
+                  "beforeLabel",
+                  "afterLabel"
+                ],
+                "additionalProperties": false
               }
             },
             "required": [

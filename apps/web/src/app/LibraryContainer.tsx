@@ -43,6 +43,7 @@ import { StudyResultActions } from "./StudyResultActions";
 import { RuleReviewNote } from "./RuleReviewNote";
 import { StudyQuestion } from "./StudyQuestion";
 import { StudyHistory } from "./StudyHistory";
+import { StudyFollowUp, StudyFollowUpContext } from "./StudyFollowUp";
 import {
   StudioTabs,
   StudioTaskState,
@@ -1207,6 +1208,17 @@ export function LibraryContainer({
                     </p>
                   )}
                 <p>{literary.result.result.overview}</p>
+                <StudyFollowUpContext input={literary.resultInput} />
+                <StudyFollowUp
+                  key={JSON.stringify([
+                    literary.resultInput,
+                    literary.result.result.overview,
+                  ])}
+                  input={literary.resultInput}
+                  response={literary.result}
+                  disabled={literary.busy}
+                  onAsk={(input) => void literary.run(input)}
+                />
                 <RuleReviewNote review={literary.result.result.ruleReview} />
                 {literary.result.result.strengths.map((value, i) => (
                   <p key={i}>{value}</p>

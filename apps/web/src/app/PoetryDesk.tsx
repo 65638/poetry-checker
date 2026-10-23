@@ -39,6 +39,8 @@ import { RevisionPreview } from "./RevisionPreview";
 import { StudyQuestion } from "./StudyQuestion";
 import { formatModernReading } from "./readingLabels";
 import { StudyHistory } from "./StudyHistory";
+import { StudyFollowUp, StudyFollowUpContext } from "./StudyFollowUp";
+import { DraftComparison } from "./DraftComparison";
 
 type CritiqueInput = Extract<PoetryAssistantRequest, { task: "critique" }>;
 export function PoetryDesk({
@@ -519,6 +521,17 @@ export function PoetryDesk({
                   : "通篇观照"}
               </h3>
               <p>{currentCritique.overview}</p>
+              <StudyFollowUpContext input={critique.resultInput} />
+              <StudyFollowUp
+                key={JSON.stringify([
+                  critique.resultInput,
+                  currentCritique.overview,
+                ])}
+                input={critique.resultInput}
+                response={critique.result}
+                disabled={!usable || critique.busy}
+                onAsk={(input) => void critique.run(input)}
+              />
               {currentCritique.revisionNotice && (
                 <p className="pc-studio-notice" role="status">
                   {currentCritique.revisionNotice}
@@ -920,6 +933,7 @@ export function PoetryDesk({
               }}
             />
           </div>
+          <DraftComparison draft={draft} entries={entries} />
           <NotebookArchive entries={entries} busy={busy} onRestore={revise} />
         </div>
       )}

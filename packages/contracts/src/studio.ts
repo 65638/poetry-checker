@@ -106,8 +106,36 @@ export const PoetryAssistantRequestSchema = z.discriminatedUnion("task", [
     mode: z.enum(["writing", "reading"]),
     prosodyContext: ProsodyContextSchema.optional(),
     question: z.string().trim().min(1).max(240).optional(),
+    followUp: z
+      .strictObject({
+        textHash: z.string().regex(/^[a-f0-9]{64}$/u),
+        rhymeBook: book,
+        mode: z.enum(["writing", "reading"]),
+        direction: z.enum(["meaning", "imagery", "sound"]),
+        turns: z
+          .array(
+            z.strictObject({
+              question: z.string().trim().min(1).max(240).optional(),
+              answer: note,
+            }),
+          )
+          .min(1)
+          .max(3),
+      })
+      .optional(),
   }),
-  z.strictObject({ task: z.literal("compare"), left: text, right: text }),
+  z.strictObject({
+    task: z.literal("compare"),
+    left: text,
+    right: text,
+    revision: z
+      .strictObject({
+        beforeLabel: z.string().trim().min(1).max(120),
+        afterLabel: z.string().trim().min(1).max(120),
+        intention: z.string().trim().min(1).max(800).optional(),
+      })
+      .optional(),
+  }),
   z.strictObject({
     task: z.literal("search"),
     query: z.string().min(1).max(120),

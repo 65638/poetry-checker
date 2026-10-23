@@ -4,11 +4,24 @@
 
 ## 最新可用版本
 
-- 功能提交：`0e35dc7`（持续迭代批次27：等待时回看提交内容），包含前二十六批。
-- main 随本同步记录一起推送；最新CI请查看 [Actions](https://github.com/65638/poetry-checker/actions)。前二十六批CI均已成功，最近确认[批次26](https://github.com/65638/poetry-checker/actions/runs/39930275084)。
-- 业务基线：1137测试 / 96文件，全量verify通过；研读等待/回看5、主分析取消/恢复4浏览器场景通过（受控模型、真实API和浏览器），含320px。
-- 本机预览：`http://127.0.0.1:56106/`。桌面入口指向 `work/main-closeout`，Codex维护此预览。
+- 功能提交：`a9ff5b0`（晚间批次02：改稿对照）；整合提交`291202c`包含PR#35截至d3587ec的展示优化。
+- 业务基线：1144测试 / 98文件，全量verify通过；UI整合后追问6、改稿6浏览器场景通过，含320px。均使用受控模型、真实API和浏览器，不代表真实模型质量。
+- 本机预览：`http://127.0.0.1:56106/`，已由桌面发布脚本启动。保留本机数据和模型配置。
+- main随同步记录推送；晚间批次01的218f0ed CI已成功，最新以[Actions](https://github.com/65638/poetry-checker/actions)实际状态为准。
 
+## 晚间批次02接入点
+
+- `DraftComparison.tsx` / `draftComparisonRequest.ts` / `draft-comparison.css`位于推敲笺的NotebookArchive之前；`.pc-draft-comparison`及`__selectors`/`__versions`/`__changes`/`__result`供展示适配。
+- 选择当前稿或已存版本，去除相同正文，展示逐行增删；点击后才请求AI，失败可原样重试、切换两版/意图取消在途请求，重复请求可复用本次缓存。查看不会改写草稿。
+- compare请求可选revision（beforeLabel/afterLabel/intention），独立于两诗对读；比较表达得失不冒称正式格律检查。保存/分享带实际两版和意图，旧收藏兼容。
+- 全量verify1144/98，末次分享文案调整后相关单元测试通过；UI整合后Web构建、追问6/改稿6通过。证据`artifacts/continuous-improvement/evening02-ui-follow-up/`、`evening02-ui-revision/`。桌面发布脚本已更新56106。
+- Git推送曾HTTP408；本机成功命令为`git -c http.version=HTTP/1.1 -c http.postBuffer=104857600 -c core.compression=0 push --no-thin origin HEAD:refs/heads/main`。这只是实测成功配置，不认定网络根因；失败提示Everything up-to-date不能当成功，须核对远端SHA。
+## 晚间批次01接入点
+
+- `StudyFollowUp.tsx` / `followUpRequest.ts` / `study-follow-up.css`：显式发送，最近最多三轮正文，校诗台及诗库可用；选择示例不请求模型。`.pc-study-follow-up`与`.pc-study-follow-up-context`可用于展示适配。
+- critique请求新增可选followUp，绑定原文hash、韵书、模式、方向；旧接口兼容，缓存和收藏包含上下文。旧回答不是事实证据；输入不匹配时API在调用模型前拒绝。
+- 原文改动禁用旧追问；失败重试保持同一快照；恢复历史取消在途请求。复制/下载评议附追问背景。
+- 证据：`artifacts/continuous-improvement/evening01-follow-up/`、`evening01-history/`，运行于a200a37加本批未提交源码，归档功能提交7ce391a。
 ## 拉取更新
 
 在你自己的工作树/分支执行，先保留自己的改动：
@@ -32,7 +45,9 @@ $env:WEB_PORT='56216'
 pnpm dev
 ```
 
-## 本轮并行边界（已延长至系统时间2026-10-23 09:30）
+## 本轮并行边界（2026-10-23 18:22至2026-10-24 00:52）
+
+第二轮计划与执行记录见 [第二轮持续改进](continuous-improvement-2026-10-23-evening.md)。起点已同步PR#34至a200a37；功能侧先实现围绕回答追问，新增独立组件，协议/缓存/收藏归属一起校验。原UI协作会话继续独立分支展示层工作。
 
 - UI协作者：展示设计、CSS、动效、布局与美术资源，主要在 `apps/web/src/presentation/`、`apps/web/public/design/`。
 - Codex：业务算法、API、保存/检索/恢复、契约、测试和工程运行。新增组件会优先独立文件；每批在本文件注明接入点。
@@ -42,8 +57,6 @@ pnpm dev
 ## 需要保留的行为
 
 连续采纳建议后集中分析；旧报告有过期标识。改稿恢复有记录。失败/取消可重试，相同请求期间保留旧结果、不同诗文不串结果。字位悬停800ms后定位，点击/键盘即时响应。减少动态设置生效。320px布局可用。收藏、阅读记录、草稿、字号和静读偏好按原key保存。
-
-## 批次26接入点（已交付）
 
 ## 批次27接入点（已交付）
 
