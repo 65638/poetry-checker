@@ -52,6 +52,91 @@ const post = (app: ReturnType<typeof buildApp>, payload = input) =>
   app.inject({ method: "POST", url: "/api/v1/reading-suggestions", payload });
 
 describe("GLM reading suggestions preserve candidate and approval boundaries", () => {
+  it("accepts a complete JSON code fence but still rejects invented reading IDs inside it", async () => {
+    let invalid = false;
+    await withApp(
+      {
+        fetcher: async () =>
+          new Response(
+            JSON.stringify({
+              choices: [
+                {
+                  finish_reason: "stop",
+                  message: {
+                    content:
+                      "```json\n" +
+                      JSON.stringify({
+                        suggestions: [
+                          {
+                            ...choice,
+                            candidateId: invalid
+                              ? "invented"
+                              : choice.candidateId,
+                          },
+                        ],
+                      }) +
+                      "\n```",
+                  },
+                },
+              ],
+            }),
+          ),
+      },
+      async (app) => {
+        expect((await post(app)).statusCode).toBe(200);
+        invalid = true;
+        const rejected = await post(app);
+        expect(rejected.statusCode).toBe(502);
+        expect(rejected.json().error.code).toBe("MODEL_INVALID_RESPONSE");
+      },
+    );
+  });
+  it("pages long passages with full context and original positions while retaining the legacy response shape", async () => {
+    const text = "更".repeat(50);
+    const fetcher: typeof fetch = async (_url, init) => {
+      const payload = JSON.parse(
+        JSON.parse(init!.body as string).messages[1].content,
+      );
+      expect(payload.text).toBe(text);
+      return modelResponse(
+        payload.targets.map(({ tokenId }: { tokenId: string }) => ({
+          ...choice,
+          tokenId,
+        })),
+      );
+    };
+    await withApp({ fetcher }, async (app) => {
+      const pages = [];
+      for (const offset of [0, 24, 48]) {
+        const response = await app.inject({
+          method: "POST",
+          url: "/api/v1/reading-suggestions",
+          payload: { text, rhymeBook: "pingshui", offset },
+        });
+        expect(response.statusCode).toBe(200);
+        const page = ReadingSuggestionResponseSchema.parse(response.json());
+        expect(page.offset).toBe(offset);
+        expect(page.truncated).toBe(offset !== 48);
+        pages.push(page);
+      }
+      const rows = pages.flatMap((p) => p.suggestions);
+      expect(rows.map((row) => row.tokenId)).toEqual(
+        Array.from({ length: 50 }, (_, i) => `l1c${i + 1}`),
+      );
+      const legacy = await app.inject({
+        method: "POST",
+        url: "/api/v1/reading-suggestions",
+        payload: { text, rhymeBook: "pingshui" },
+      });
+      expect(legacy.json()).not.toHaveProperty("offset");
+      const invalid = await app.inject({
+        method: "POST",
+        url: "/api/v1/reading-suggestions",
+        payload: { ...input, offset: 24 },
+      });
+      expect(invalid.statusCode).toBe(422);
+    });
+  });
   it("queues concurrent tasks, cancels waiting work without contacting the model, and recovers slots", async () => {
     const started: string[] = [];
     const releases = new Map<string, () => void>();

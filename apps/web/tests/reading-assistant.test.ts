@@ -46,6 +46,7 @@ describe("reading assistant client validates ownership", () => {
     ).toBeNull();
   });
   it.each([
+    { ...response, offset: 24 },
     { ...response, inputHash: "a".repeat(64) },
     { ...response, rhymeBook: "cilin" },
     {

@@ -64,6 +64,7 @@ export function createReadingAssistant(
       if (
         result.inputHash !== sha256Hex(input.text) ||
         result.rhymeBook !== input.rhymeBook ||
+        (result.offset ?? 0) !== (input.offset ?? 0) ||
         result.suggestions.some((row) => {
           const duplicate = seen.has(row.tokenId);
           seen.add(row.tokenId);

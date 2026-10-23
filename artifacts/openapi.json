@@ -3255,6 +3255,11 @@
               "type": "string",
               "minLength": 1
             }
+          },
+          "offset": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1999
           }
         },
         "required": [
@@ -3574,6 +3579,11 @@
           },
           "truncated": {
             "type": "boolean"
+          },
+          "offset": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1999
           },
           "notice": {
             "type": "string"

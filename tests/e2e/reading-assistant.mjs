@@ -46,6 +46,7 @@ const choice = (input) => {
           ? input.targetTokenIds.includes(token.tokenId)
           : token.text === "更",
       )
+      .slice(input.offset ?? 0, (input.offset ?? 0) + 24)
       .map((token) => ({
         tokenId: token.tokenId,
         character: token.text,
@@ -59,7 +60,8 @@ const choice = (input) => {
         evidenceApproved: false,
       })),
     missingTokenIds: [],
-    truncated: false,
+    truncated: poem.tokens.filter(token=>token.text==='更').length > (input.offset ?? 0) + 24,
+    ...(input.offset !== undefined ? {offset:input.offset} : {}),
     notice: "受控UI测试响应，非真实DeepSeek推理。",
   };
 };
@@ -255,6 +257,31 @@ try {
       );
     },
   );
+  await check('long-passage-pages-cover-all-positions-and-cache-return-visits', async () => {
+    await fillPassage('更'.repeat(50));
+    await waitFor(()=>evaluate("document.querySelectorAll('.pc-reading-assistant__result li').length===24"));
+    const firstPosts=posts;
+    const next='[aria-label="辨音批次"] button:last-child', previous='[aria-label="辨音批次"] button:first-child';
+    nextMode='failure';
+    await click(next);
+    await waitFor(()=>evaluate("document.querySelector('.pc-reading-assistant [role=alert]')?.textContent.includes('受控超时')"));
+    assert.equal(await evaluate("document.querySelector('.pc-reading-assistant__entry span').textContent"),'第1句·第1字');
+    await click(next);
+    await waitFor(()=>evaluate("document.querySelector('.pc-reading-assistant__entry span')?.textContent==='第1句·第25字'"));
+    await click(next);
+    await waitFor(()=>evaluate("document.querySelectorAll('.pc-reading-assistant__result li').length===2"));
+    assert.equal(await evaluate("document.querySelector('.pc-reading-assistant__entry span').textContent"),'第1句·第49字');
+    assert.equal(await evaluate(`document.querySelector(${JSON.stringify(next)}).disabled`),true);
+    assert.equal(posts,firstPosts+3);
+    await click(previous);
+    await waitFor(()=>evaluate("document.querySelector('.pc-reading-assistant__entry span')?.textContent==='第1句·第25字'"));
+    await click(previous);
+    await waitFor(()=>evaluate("document.querySelector('.pc-reading-assistant__entry span')?.textContent==='第1句·第1字'"));
+    assert.equal(posts,firstPosts+3);
+    await h.viewport(320,900,true);
+    await evaluate("document.querySelector('[aria-label=\"辨音批次\"]').scrollIntoView({block:'center',behavior:'instant'})");
+    await shot('reading-pages-320');
+  });
   await check("mobile-results-and-controls-fit-at-375-and-320", async () => {
     for (const width of [375, 320]) {
       await h.viewport(width, 900, true);

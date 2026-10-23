@@ -28,6 +28,8 @@ export function ReadingAssistantContainer(props: {
   const [result, setResult] = useState<ReadingSuggestionResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [page, setPage] = useState(0);
+  const pages = useRef(new Map<number, ReadingSuggestionResponse>());
   const pending = useRef<AbortController | null>(null);
   const automaticTimer = useRef<number | null>(null);
   const serial = useRef(0);
@@ -66,12 +68,14 @@ export function ReadingAssistantContainer(props: {
     setResult(null);
     setError(null);
     setBusy(false);
+    setPage(0);
+    pages.current.clear();
     return () => {
       serial.current++;
       pending.current?.abort();
     };
   }, [signature]);
-  const run = async () => {
+  const run = async (nextPage = 0, reuse = false) => {
     if (props.disabled || busy || !status?.configured || !props.text.trim())
       return;
     if (automaticTimer.current !== null)
@@ -84,6 +88,15 @@ export function ReadingAssistantContainer(props: {
     pending.current = controller;
     setBusy(true);
     setError(null);
+    const cached = reuse ? pages.current.get(nextPage) : undefined;
+    if (cached) {
+      resultSignature.current = requestSignature;
+      setResult(cached);
+      setPage(nextPage);
+      setBusy(false);
+      pending.current = null;
+      return;
+    }
     const timer = window.setTimeout(
       () => controller.abort(),
       AI_CLIENT_TIMEOUT_MS,
@@ -94,12 +107,25 @@ export function ReadingAssistantContainer(props: {
           text: props.text,
           rhymeBook: props.book,
           ...(props.tokenId ? { targetTokenIds: [props.tokenId] } : {}),
+          ...(!props.tokenId ? { offset: nextPage * 24 } : {}),
         },
         controller.signal,
       );
       if (id === serial.current && requestSignature === signatureRef.current) {
         resultSignature.current = requestSignature;
+        if (
+          pages.current.size &&
+          [...pages.current.values()].some(
+            (value) => value.dataVersion !== response.dataVersion,
+          )
+        ) {
+          pages.current.clear();
+          if (nextPage !== 0)
+            throw new Error("韵书资料已更新，请点击重新辨音从第一批开始。");
+        }
+        pages.current.set(nextPage, response);
         setResult(response);
+        setPage(nextPage);
       }
     } catch (cause) {
       if (id === serial.current && requestSignature === signatureRef.current)
@@ -149,6 +175,8 @@ export function ReadingAssistantContainer(props: {
       result={resultSignature.current === signature ? result : null}
       error={error}
       busy={busy}
+      page={page}
+      onPage={(nextPage) => void run(nextPage, true)}
       disabled={
         !!props.disabled || !props.text.trim() || [...props.text].length > 2000
       }
