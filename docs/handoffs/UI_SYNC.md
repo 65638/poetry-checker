@@ -4,11 +4,17 @@
 
 ## 最新可用版本
 
-- 功能提交：`9b73a61`（晚间批次03：同题串读）；当前发布`b31e801`包含UI截至34a0828与无障碍语义修正。
-- 业务基线：1147测试 / 99文件，全量verify通过；UI整合后追问6、改稿6、串读4浏览器场景通过，含320px。受控模型结果与真实模型实测分开记账。
+- 功能提交/本机发布：`aba14d2`（晚间批次04：回答分段与分享范围），包含前批串读、UI截至34a0828及语义修正。
+- 业务基线：1149测试 / 100文件，全量verify通过；追问7、收藏5、改稿6浏览器场景通过，含320px。受控模型结果与真实模型实测分开记账。
 - 本机预览：`http://127.0.0.1:56106/`，已由桌面发布脚本启动。保留本机数据和模型配置。
 - main随同步记录推送；晚间批次02的1149051 CI已成功，最新以[Actions](https://github.com/65638/poetry-checker/actions)实际状态为准。
 
+## 晚间批次04接入点
+
+- `StudyProse.tsx`渲染仍为p，`.pc-study-prose`保留换行；`studyProseText.ts`只对260字以上无分段文字在完整句末加入空行，不改字、不截断，原始模型结果及校验hash不变。提示词也要求长回答分段且减少重复。
+- `StudyShareOptions.tsx` / `.pc-study-share-options`在当前结果与研读收藏中出现：有追问历史时，默认复制/下载仅含当前问题、原诗和回答，可勾选附此前问答。收藏、完整备份和回看始终保留完整数据。
+- `studyText(entry)`仍默认完整供收藏回看/检索；copyStudy/downloadStudy默认简洁分享，可显式传true附历史。旧普通评议与改稿对照内容保留。
+- verify1149/100，追问7（新增长段落可读且存档原文不变、简洁/完整分享）、收藏5、改稿6通过。证据`evening04-*`，已发布56106。推送偶发HTTP408，以远端SHA为准。
 ## 晚间批次03接入点
 
 - `RelatedReading.tsx` / `relatedReadings.ts` / `related-reading.css`位于原诗文末ResearchNotes之后；`.pc-related-reading`/`__list`/`__controls`/`__actions`/`__pages`提供展示接入。
