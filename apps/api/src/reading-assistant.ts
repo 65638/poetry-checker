@@ -16,6 +16,7 @@ import { characterReferenceRows } from "./library.js";
 import { modelResearch } from "./research.js";
 import { requestModel } from "./model-request.js";
 import { ModelQueueFullError, ModelRequestQueue } from "./model-queue.js";
+import { ModelOutputError, parseModelOutput } from "./model-output.js";
 import {
   DEFAULT_ANALYSIS_TIMEOUT_MS,
   DEFAULT_MODEL_TIMEOUT_MS,
@@ -477,36 +478,18 @@ export function createReadingAssistant(
           : `${name}未接受这次请求，请检查模型配置或缩短诗文后重试。`,
       );
     }
-    const envelope = (await response.json()) as {
-      choices?: Array<{
-        finish_reason?: string;
-        message?: { content?: unknown };
-      }>;
-    };
-    const content = envelope.choices?.[0]?.message?.content;
-    if (envelope.choices?.[0]?.finish_reason === "length")
-      throw new AssistantError(
-        502,
-        "MODEL_INVALID_RESPONSE",
-        `${name}本次生成达到长度上限，建议尚未完成，请重试。`,
-      );
-    if (typeof content !== "string" || content.length > 40000)
-      throw new AssistantError(
-        502,
-        "MODEL_INVALID_RESPONSE",
-        "模型未返回完整建议，请重试。",
-      );
-    let output: unknown;
     try {
-      output = JSON.parse(content);
-    } catch {
+      return parseModelOutput(await response.json());
+    } catch (cause) {
+      if (signal.aborted) throw cause;
       throw new AssistantError(
         502,
         "MODEL_INVALID_RESPONSE",
-        "模型建议格式异常，请重试。",
+        cause instanceof ModelOutputError
+          ? cause.message
+          : "模型返回的消息不完整，请重试。",
       );
     }
-    return output;
   }
 }
 

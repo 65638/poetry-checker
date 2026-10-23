@@ -52,6 +52,45 @@ const post = (app: ReturnType<typeof buildApp>, payload = input) =>
   app.inject({ method: "POST", url: "/api/v1/reading-suggestions", payload });
 
 describe("GLM reading suggestions preserve candidate and approval boundaries", () => {
+  it("accepts a complete JSON code fence but still rejects invented reading IDs inside it", async () => {
+    let invalid = false;
+    await withApp(
+      {
+        fetcher: async () =>
+          new Response(
+            JSON.stringify({
+              choices: [
+                {
+                  finish_reason: "stop",
+                  message: {
+                    content:
+                      "```json\n" +
+                      JSON.stringify({
+                        suggestions: [
+                          {
+                            ...choice,
+                            candidateId: invalid
+                              ? "invented"
+                              : choice.candidateId,
+                          },
+                        ],
+                      }) +
+                      "\n```",
+                  },
+                },
+              ],
+            }),
+          ),
+      },
+      async (app) => {
+        expect((await post(app)).statusCode).toBe(200);
+        invalid = true;
+        const rejected = await post(app);
+        expect(rejected.statusCode).toBe(502);
+        expect(rejected.json().error.code).toBe("MODEL_INVALID_RESPONSE");
+      },
+    );
+  });
   it("pages long passages with full context and original positions while retaining the legacy response shape", async () => {
     const text = "更".repeat(50);
     const fetcher: typeof fetch = async (_url, init) => {
