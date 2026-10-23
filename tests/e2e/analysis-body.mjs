@@ -10,7 +10,8 @@ export function analysisBody(raw) {
   assert(events.length > 0 && events.every(event => ['readings', 'result', 'error'].includes(event?.type)), 'Unknown analysis stream event');
   const terminal = events.filter(event => event.type !== 'readings');
   assert.equal(terminal.length, 1, 'Analysis stream must have exactly one final event');
-  assert.equal(events.at(-1), terminal[0], 'Analysis final event must be last');
+  // Compare event identity without formatting two entire reports on rejection.
+  assert(events.at(-1) === terminal[0], 'Analysis final event must be last');
   assert.equal(terminal[0].type, 'result', `Analysis stream failed: ${terminal[0].status ?? ''} ${terminal[0].body?.error?.message ?? ''}`);
   assert(terminal[0].report && typeof terminal[0].report === 'object', 'Final report is missing');
   return terminal[0].report;
