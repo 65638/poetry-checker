@@ -120,7 +120,13 @@
   padding: 0 16px;
   border: 1px solid #8c9e7b66;
   border-radius: 3px;
-  background: #f7f5e950;
+  background: #f4f1e5;
+  color: #30483a;
+  --pc-text: #30483a;
+  --pc-text-muted: #586651;
+  --pc-surface-sheet: #fbf9ef;
+  --pc-focus: #356959;
+  --pc-cursor-action: url("/design/cursor-rain-action-ink.svg") 12 12, pointer;
 }
 .pc-workspace .pc-study-question > summary {
   min-height: 48px;
@@ -240,8 +246,9 @@
   margin-block: 16px;
   border: 1px solid #8e9e8066;
   border-radius: 3px;
-  background: #e5e9da55;
+  background: #e8ecdf;
   color: #304c38;
+  --pc-focus: #356959;
 }
 .pc-workspace .pc-study-history > summary {
   min-height: 44px;
