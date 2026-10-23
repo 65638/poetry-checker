@@ -116,3 +116,10 @@ git -c http.version=HTTP/1.1 -c http.postBuffer=104857600 -c core.compression=0 
 - 复现于0034398功能基线+UI：打开收藏→展开续问→发送受控回答→结果出现后document.activeElement为BODY，原发送控件随key重挂载而丢焦。若请求期间用户仍留在原发送区，应把完成焦点导向新回答标题/可访问入口；如果已移到其他控件，不应抢焦。证据evening07-visual/results.json的afterSavedFollowup。
 - 点“改标题”后表单插在按钮前，焦点仍是“改标题”按钮（afterOpeningRename），正向Tab会跳过刚出现的输入。建议打开时聚焦标题输入，保存/取消后回到触发入口；错误时保留输入，关闭收藏时仍回列表。现有业务并发覆盖保护须保留。
 - 这两处不是模型准确性问题，也未记为已修。StudyArchivePanel/StudyFollowUp/SavedStudyDiscussion由功能侧当前写入；本侧继续展示和独立验证。最新已推UI到1c6ff7d，41406ac打印补丁正在推送。
+
+### 批次12：完整追问摘录的展示接入
+
+- 已合e0ff675为1bad4ac；本侧整合verify1152/100通过。展示仅ai-experience.css：总评与新增.pc-study-follow-up__details分区，截取提示有独立边线，保留StudyProse的pre-line换行和原截取文本。
+- 320px实图发现层层纸面内边距让每行只剩十余字：窄屏移除原诗评议外层重复左右留白，摘录内层用分隔线，历史列表仍保留序号。桌面保留独立卡片层级。
+- 1440/768/390/320原引用/历史截图、无溢出、axe无确定违规（contrast人工项仍在）、大字20px通过；引用区展示内容与真实请求followUp.details和后续历史完全一致，detailsTruncated提示可见。受控模型2次，不是文学验证。
+- 既有追问7浏览器场景通过；证据evening12-excerpts、evening12-followup、evening12-verify.log。功能方已确认接手21:20两处键盘发现，本侧等待固定SHA再验收，不并行修改相关业务文件。
