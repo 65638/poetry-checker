@@ -4,11 +4,19 @@
 
 ## 最新可用版本
 
-- 功能提交：`a9ff5b0`（晚间批次02：改稿对照）；整合提交`291202c`包含PR#35截至d3587ec的展示优化。
-- 业务基线：1144测试 / 98文件，全量verify通过；UI整合后追问6、改稿6浏览器场景通过，含320px。均使用受控模型、真实API和浏览器，不代表真实模型质量。
+- 功能提交：`9b73a61`（晚间批次03：同题串读）；当前发布`b31e801`包含UI截至34a0828与无障碍语义修正。
+- 业务基线：1147测试 / 99文件，全量verify通过；UI整合后追问6、改稿6、串读4浏览器场景通过，含320px。受控模型结果与真实模型实测分开记账。
 - 本机预览：`http://127.0.0.1:56106/`，已由桌面发布脚本启动。保留本机数据和模型配置。
-- main随同步记录推送；晚间批次01的218f0ed CI已成功，最新以[Actions](https://github.com/65638/poetry-checker/actions)实际状态为准。
+- main随同步记录推送；晚间批次02的1149051 CI已成功，最新以[Actions](https://github.com/65638/poetry-checker/actions)实际状态为准。
 
+## 晚间批次03接入点
+
+- `RelatedReading.tsx` / `relatedReadings.ts` / `related-reading.css`位于原诗文末ResearchNotes之后；`.pc-related-reading`/`__list`/`__controls`/`__actions`/`__pages`提供展示接入。
+- 本机按正文共现词或作者找作品，显示真实连续原句与匹配词，排除同正文与散文；同作者不把佚名合并。一次6首，最多24首，支持收藏筛选/分页/读原诗/收藏/送入对读。送入对读不调用AI，比较按钮才发送。
+- `.pc-related-return`在诗题后，返回串读中的上一首；最多12步，仅本次页面保留。读原诗与对读切换均归还键盘焦点，不修改目录检索。
+- 真实语料去重2021首，30次本机算法测量P95 10.85ms/max40.95ms；不含网络/模型，不保证其他设备相同性能。证据`evening03-related/`。UI合并后`evening03-ui-*`共16浏览器场景通过。
+- UI截至34a0828：阅读设置手机收纳，追问/改稿纸面与层级优化；补全可滚动原文region和分页group语义。axe1440/320检查改稿/串读：0确定违规，命名语义项已消除，颜色对比因装饰叠层仍需人工判断，非完整认证；证据`evening03-axe.json`。
+- 正式56106实际DeepSeek Flash使用公开《鹿柴》：初次问题18073ms、接续追问12281ms，均HTTP200/结构校验通过；已阅读两份回答，追问回应了前次声/光对比，非文学准确率或延迟P95。证据`evening03-real-model.json`，无密钥或私人诗稿。
 ## 晚间批次02接入点
 
 - `DraftComparison.tsx` / `draftComparisonRequest.ts` / `draft-comparison.css`位于推敲笺的NotebookArchive之前；`.pc-draft-comparison`及`__selectors`/`__versions`/`__changes`/`__result`供展示适配。
