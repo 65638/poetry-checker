@@ -7,6 +7,7 @@ import "./styles/dictionary-experience.css";
 import type { DictionaryShelf, ShelfEntry } from "../app/dictionaryShelf";
 import type { BookComparison } from "../app/dictionaryComparison";
 import { passageRowStatus, type PassageLookup } from "../app/passageLookup";
+import { formatModernReading } from "../app/readingLabels";
 
 const BOOKS: Array<{ id: BookId; name: string; note: string }> = [
   { id: "pingshui", name: "平水韵", note: "传统诗韵 · 106部" },
@@ -843,7 +844,7 @@ export function DictionaryView(props: DictionaryViewProps) {
                                 <dt>现代读音</dt>
                                 <dd>
                                   {candidate.modernReading
-                                    ? `${candidate.modernReading.pinyin} · ${candidate.modernReading.toneNumber}声`
+                                    ? formatModernReading(candidate.modernReading)
                                     : "本条未载"}
                                 </dd>
                               </div>

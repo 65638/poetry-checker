@@ -1,4 +1,5 @@
 import type { AnnotatedPoem } from "@poetry/contracts";
+import { readingExplanation } from "./readingLabels";
 
 /** Read-only progress, intentionally independent of the report and its export actions. */
 export function PreliminaryReadings({ poem }: { poem: AnnotatedPoem }) {
@@ -34,7 +35,7 @@ export function PreliminaryReadings({ poem }: { poem: AnnotatedPoem }) {
               return (
                 <span
                   key={id}
-                  title={token.reason}
+                  title={readingExplanation(token)}
                   data-tone={token.tone ?? "unknown"}
                 >
                   <span>{token.text}</span>

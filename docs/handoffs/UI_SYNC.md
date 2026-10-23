@@ -4,9 +4,9 @@
 
 ## 最新可用版本
 
-- 功能提交：`32e6184`（持续迭代批次23：对读分别检索选诗），包含前二十二批。
-- main 随本同步记录一起推送；最新CI请查看 [Actions](https://github.com/65638/poetry-checker/actions)。前十九批CI均已成功，最近确认[批次19](https://github.com/65638/poetry-checker/actions/runs/39922384851)。
-- 业务基线：1119测试 / 95文件，全量verify通过；推敲/对读/独立检索12浏览器场景通过（受控模型、真实API和浏览器），含320px。批次22跨功能复跑推敲11、收藏5场景均通过。
+- 功能提交：`e577255`（持续迭代批次24：读音说明与模型归属文案），包含前二十三批。
+- main 随本同步记录一起推送；最新CI请查看 [Actions](https://github.com/65638/poetry-checker/actions)。前二十三批CI均已成功，最近确认[批次23](https://github.com/65638/poetry-checker/actions/runs/39926032079)。
+- 业务基线：1137测试 / 96文件，全量verify通过；辨音/字典7浏览器场景通过（受控模型、真实API和浏览器），含320px。
 - 本机预览：`http://127.0.0.1:56106/`。桌面入口指向 `work/main-closeout`，Codex维护此预览。
 
 ## 拉取更新
@@ -42,6 +42,13 @@ pnpm dev
 ## 需要保留的行为
 
 连续采纳建议后集中分析；旧报告有过期标识。改稿恢复有记录。失败/取消可重试，相同请求期间保留旧结果、不同诗文不串结果。字位悬停800ms后定位，点击/键盘即时响应。减少动态设置生效。320px布局可用。收藏、阅读记录、草稿、字号和静读偏好按原key保存。
+
+## 批次24接入点（已交付）
+
+- `readingLabels.ts` 统一读音显示：已有普通话拼音加声调；冲突/多词回退原文附声调，不推导历史平仄。单字解释保留语境和义项，隐藏内部候选/规则ID；报告原始理由不变。
+- 修复底层硬编码“GLM自动辨音”为“AI语境辨音”，模型实际名称继续由响应显示；旧缓存详情也归一化。`EvidencePanel`、`DictionaryView`、`PreliminaryReadings`、`PoetryDesk`仅小范围接入，不重排布局。
+- 真实DeepSeek抽查在此前运行SHA `f4c6e82`：登鹳雀楼分析23808ms/本地433ms，鹿柴18237ms/204ms，夜雨寄北53681ms/215ms，具体提问7402ms，对读17675ms；5次均完成。仅单次功能样本，不作P95或内容准确率结论。原始证据 `artifacts/continuous-improvement/batch24-real-samples.json`。
+- 1137测试verify、辨音7浏览器场景通过，320px截图检查。首次TS检查发现目标环境不支持findLastIndex，改用兼容实现后全量通过。
 
 ## 批次16接入点（已交付）
 

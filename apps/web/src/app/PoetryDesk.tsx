@@ -37,6 +37,7 @@ import { RuleReviewNote } from "./RuleReviewNote";
 import { planRevision } from "./revisionPlan";
 import { RevisionPreview } from "./RevisionPreview";
 import { StudyQuestion } from "./StudyQuestion";
+import { formatModernReading } from "./readingLabels";
 
 type CritiqueInput = Extract<PoetryAssistantRequest, { task: "critique" }>;
 export function PoetryDesk({
@@ -624,7 +625,7 @@ export function PoetryDesk({
                     {seedCandidates.map((c) => (
                       <option key={c.id} value={c.id}>
                         {c.modernReading
-                          ? `${c.modernReading.pinyin}${c.modernReading.toneNumber} · `
+                          ? `${formatModernReading(c.modernReading)} · `
                           : ""}
                         {c.groupIds
                           .map(
@@ -715,8 +716,7 @@ export function PoetryDesk({
                             {c.modernReading && (
                               <small>
                                 {" "}
-                                {c.modernReading.pinyin}
-                                {c.modernReading.toneNumber}
+                                {formatModernReading(c.modernReading)}
                               </small>
                             )}
                           </h3>
@@ -772,7 +772,7 @@ export function PoetryDesk({
                         title={e.candidates
                           .map((c) =>
                             c.modernReading
-                              ? `${c.modernReading.pinyin}${c.modernReading.toneNumber}`
+                              ? formatModernReading(c.modernReading)
                               : c.toneClass,
                           )
                           .join(" / ")}

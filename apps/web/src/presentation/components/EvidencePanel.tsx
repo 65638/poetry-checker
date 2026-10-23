@@ -3,6 +3,7 @@ import { useEffect, useId, useRef, type KeyboardEvent, type ReactNode } from 're
 import type { AnalysisResponse, AnnotatedToken, Evidence, ReadingCandidate } from '@poetry/contracts';
 import type { CheckerViewProps } from '../../view-contract';
 import '../styles/evidence.css';
+import { formatModernReading, readingExplanation } from '../../app/readingLabels';
 
 type EvidencePanelProps = {
   report: AnalysisResponse;
@@ -117,6 +118,7 @@ export function EvidencePanel(props: EvidencePanelProps) {
               <dd>{token.possibleTones.length > 0 ? token.possibleTones.map(toneText).join(' / ') : '未定'}</dd>
             </div>
             <div><dt>选择方式</dt><dd>{METHOD[token.selectionMethod]}</dd></div>
+            <div className="pc-evidence__wide"><dt>说明</dt><dd>{readingExplanation(token)}</dd></div>
           </dl>
           <details className="pc-evidence__reason">
             <summary>查看判读过程</summary>
@@ -155,7 +157,7 @@ export function EvidencePanel(props: EvidencePanelProps) {
                         : '未提供'}
                     </p>
                     {c.gloss && <p className="pc-candidate__line">释义：{c.gloss}</p>}
-                    {c.modernReading && <p className="pc-candidate__line">今音参考：{c.modernReading.pinyin}</p>}
+                    {c.modernReading && <p className="pc-candidate__line">今音参考：{formatModernReading(c.modernReading)}</p>}
                     {c.fanqie && <p className="pc-candidate__line">反切：{c.fanqie.text}</p>}
                     {!isSelected && (
                       <button
