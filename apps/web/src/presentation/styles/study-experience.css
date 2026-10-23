@@ -214,6 +214,20 @@
   background: #e0e6d1;
   color: #274a36;
 }
+.pc-workspace .pc-study-result-actions .pc-study-open-saved {
+  min-height: 44px;
+  margin-top: 4px;
+  padding: 8px 14px;
+  border: 1px solid #7b9272;
+  border-radius: 3px;
+  background: #e5ebd9;
+  color: #31513d;
+  font: 14px/1.7 var(--pc-font-sans);
+}
+.pc-workspace .pc-study-result-actions .pc-study-open-saved:hover {
+  border-color: #42664b;
+  background: #d7e2c8;
+}
 
 /* A new discussion follows the saved sheet without looking like a replacement. */
 .pc-workspace .pc-saved-discussion {

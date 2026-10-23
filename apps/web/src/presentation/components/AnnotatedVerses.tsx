@@ -139,47 +139,51 @@ const VerseLine = memo(function VerseLine({
       : firstOffset;
   return (
     <p className="pc-library-verse-row" data-ask-line={!!onAskLine}>
-      {phrases.map(({ start, units }, part) => (
-        <span className="pc-library-phrase" key={part}>
-          {units.map(({ char, index, punctuation }) => {
-            const reading = readings?.[start + index];
-            return (
-              <span className="pc-library-syllable" key={index}>
-                {/\p{Script=Han}/u.test(char) ? (
-                  <button
-                    type="button"
-                    className="pc-library-character"
-                    aria-label={`选字「${char}」`}
-                    aria-pressed={selected === char}
-                    tabIndex={start + index === activeOffset ? 0 : -1}
-                    onFocus={() => setFocusedOffset(start + index)}
-                    title={
-                      showPinyin && aligned
-                        ? (reading ?? "本字未提供注音")
-                        : undefined
-                    }
-                    onClick={() => onSelect(char)}
-                  >
-                    {showPinyin ? (
-                      <ruby>
-                        {char}
-                        <rt>{aligned ? (reading ?? "·") : "\u00a0"}</rt>
-                      </ruby>
-                    ) : (
-                      char
-                    )}
-                  </button>
-                ) : (
-                  <span>{char}</span>
-                )}
-                {punctuation && (
-                  <span className="pc-library-punctuation">{punctuation}</span>
-                )}
-              </span>
-            );
-          })}
-        </span>
-      ))}
+      <span className="pc-verse-text">
+        {phrases.map(({ start, units }, part) => (
+          <span className="pc-library-phrase" key={part}>
+            {units.map(({ char, index, punctuation }) => {
+              const reading = readings?.[start + index];
+              return (
+                <span className="pc-library-syllable" key={index}>
+                  {/\p{Script=Han}/u.test(char) ? (
+                    <button
+                      type="button"
+                      className="pc-library-character"
+                      aria-label={`选字「${char}」`}
+                      aria-pressed={selected === char}
+                      tabIndex={start + index === activeOffset ? 0 : -1}
+                      onFocus={() => setFocusedOffset(start + index)}
+                      title={
+                        showPinyin && aligned
+                          ? (reading ?? "本字未提供注音")
+                          : undefined
+                      }
+                      onClick={() => onSelect(char)}
+                    >
+                      {showPinyin ? (
+                        <ruby>
+                          {char}
+                          <rt>{aligned ? (reading ?? "·") : "\u00a0"}</rt>
+                        </ruby>
+                      ) : (
+                        char
+                      )}
+                    </button>
+                  ) : (
+                    <span>{char}</span>
+                  )}
+                  {punctuation && (
+                    <span className="pc-library-punctuation">
+                      {punctuation}
+                    </span>
+                  )}
+                </span>
+              );
+            })}
+          </span>
+        ))}
+      </span>
       {onAskLine ? (
         <span
           className="pc-verse-actions"

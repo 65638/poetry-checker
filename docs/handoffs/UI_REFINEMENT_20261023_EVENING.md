@@ -136,3 +136,34 @@ git -c http.version=HTTP/1.1 -c http.postBuffer=104857600 -c core.compression=0 
 - 原21:20发现已闭环：320/1440真实Enter发送后焦点为收藏回答region；先移到搜索框则回答不抢焦；改标题Enter打开自动全选，保存/取消/Esc回入口。纸面焦点环实测2px、rgb(72,110,86)，截图可见。
 - 追问8/收藏7浏览器场景通过，含失败/迟到/移焦/并发改名保护；证据evening14-followup、evening14-saved。独立焦点脚本最初误把search输入按textbox定位超时，改用searchbox后通过，未修改产品以迎合测试。
 - even­ing14-focus/results.json与320px截图保留。手机回答region顶部约-73px（模型标识在屏外），问题和回答正文在当前视口可见；当前实现明确preventScroll，未额外强制滚动。
+
+### 批次16：问这段展示接口已固定，可直接合并
+
+- 三文件独立提交 **868a27525b989e27b4921862426bea08ca7d5d15**：AnnotatedVerses.tsx、reading-experience.css、print-experience.css。功能侧可直接merge此SHA，无需提取未提交diff。
+- 可选onAskLine(paragraphIndex)和askDisabled；有回调时每段文字后并列摘句/问这段，aria-label为询问第N段诗句；disabled仍显示。无回调时原有摘句排版保持。按钮44px触达，Tab顺序原诗字→摘句→问这段，方向键仍只在本段字中移动；打印隐藏操作。
+- typecheck/build通过。隔离Vite组件真实浏览器验证三段（含补充汉字𪩘）回调索引0/2、摘句索引1、禁用不回调、注音位置、每段一个字Tab入口；1440/768/390/320无溢出。证据evening16-paragraph-actions/results.json；临时组件页已移除，没有修改业务容器。完整原句入问和选段业务待功能侧集成验收。
+- 慢加载问题已由功能侧确认接管：初始目录空状态，失败后才用基础示例，不跨底本猜测替换；本侧不改LibraryContainer。
+
+### 批次18：实际段落提问与收藏直达验收
+
+- 已合功能ef6befd为f9f76c8，包含完整“问这段”与慢目录保留原作；f9f76c8于22:58推送成功。此前HTTP408未被计为成功。
+- 真实《鹿柴》《长恨歌》在1440/768/390/320、标准/大字、注音、忙碌禁用及键盘焦点检查通过；点击准备可编辑问题，不自动调用。收藏后的直达按钮在1440/390/320打开准确记录，标题在视口内且获焦，无额外模型调用。证据evening18-visual/results.json，受控模型仅用于界面。
+- 展示组件新增pc-verse-text包装；宽度至少760px的非注音诗文纸面，将摘句/问这段放入右侧工具栏。较窄纸面和注音仍置于段后，不遮挡诗字、不压缩44px触达区；规则仅screen生效。1440px大字模式实测单段122.39→74.39px，长诗可连续阅读。没有修改段落内容/回调/业务状态。
+- 本批typecheck、Web构建、组件eslint通过；语料11、段落提问4、慢目录2浏览器场景通过。axe没有确定违规，纹理背景颜色对比仍是人工检查项。
+- 功能侧批次13正在开发两诗独立问题；本侧不修改StudyQuestion/StudyHistory/studyArchive或比较容器，待固定SHA后接入展示。
+
+### 批次20：两诗定向提问展示接入
+
+- 已合固定da66ca7为0ae91ab。完整构建后定向对读6场景通过；首次仅重建Web遗漏新契约dist导致请求失败，已重建全工作区解决，没有把该次失败记为通过。
+- 展示只改comparison-experience.css：提问/等待与回答纸面最大1080px对齐，总评最大44em，保留两卷原诗并排宽度；手机自然单列，不修改请求或历史。
+- 1440/768短屏/390/320，大字、键盘Tab/Enter发送、等待后不抢已移开的输入焦点、失败保留原问题标签、高对比与打印媒体检查通过。打印隐藏输入表单、保留已显示回答。axe无确定违规，颜色纹理仍有incomplete项。证据evening20-comparison/results.json及实际截图；受控模型仅验证界面。
+- eaf29af全量verify1158/102通过（evening19-verify.log）；da66ca7整合后的局部浏览器结果单列，未称其为相同版本的全量验证。
+- 功能侧正在处理长篇两诗选段，暂避LibraryContainer与新范围组件，等待固定SHA。
+
+### 批次21–22：对比度抽样与长篇选段展示
+
+- 7ea33b8已整合；按功能侧明确委派接管新`apps/web/src/app/comparison-scope.css`展示，不改ComparisonScope.tsx或LibraryContainer业务。
+- 选段范围独立浅色纸面，标签/提示/预览层级明确，选择与展开入口至少44px。原预览未响应字号，现16/18/20px；原打印保留240px滚动限制，现完整展开（本次《离骚》519字符，大字打印实测4700px全部显示）。切回screen仍限制预览高度，原文不变，无新增模型调用。
+- 1440/768短屏/390/320、真实键盘选段/Tab/正文PageDown/Tab离开、高对比、打印媒体均通过；既有长篇选段4场景通过。证据evening22-scope、evening22-passages；基线问题在evening22-scope-baseline保留。
+- **留给当前业务写入方的语义小修正**：ComparisonScope.tsx的可滚动blockquote带aria-label但没有role。axe列aria-prohibited-attr为incomplete，和此前DraftComparison问题相同；建议加`role="region"`使命名的滚动原文区域有明确语义，本侧未抢写TSX。当前不能把此项称作已修。
+- 14处实际背景对比度抽样通过：暂时隐藏字形，对截图背景采样，与原计算文字色核对（排除边框），覆盖诗文提示/问这段/作者、提问示例、对读问题标签/正文/左右卷标记、收藏入口/元数据/移除。字体小于24px按4.5:1检查；例如诗文作者最低4.69:1、段落按钮4.96:1。证据evening21-contrast/results.json；这是指定区域的保守采样，不代表全站无障碍认证。初脚本误选含输入框的整个label，把控件边框当文字背景，已改为只采独立文本/按钮，未改产品颜色以迎合脚本。
