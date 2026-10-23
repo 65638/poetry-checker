@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { OPEN_STUDY_EVENT } from "./studyNavigation";
 import { StudyShareOptions } from "./StudyShareOptions";
 import { SavedStudyDiscussion } from "./SavedStudyDiscussion";
 import {
@@ -29,6 +30,9 @@ function readArchive() {
   }
 }
 export function StudyArchivePanel() {
+  const root = useRef<HTMLDetailsElement>(null);
+  const readerHeading = useRef<HTMLHeadingElement>(null);
+  const [openTarget, setOpenTarget] = useState<{ id: string } | null>(null);
   const [state, setState] = useState(readArchive);
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<string | null>(null);
@@ -60,13 +64,48 @@ export function StudyArchivePanel() {
   }
   useEffect(() => {
     const refresh = () => setState(readArchive());
+    const open = (event: Event) => {
+      const detail: unknown = (event as CustomEvent).detail;
+      if (
+        !detail ||
+        typeof detail !== "object" ||
+        !("id" in detail) ||
+        typeof detail.id !== "string"
+      )
+        return;
+      const latest = readArchive();
+      setState(latest);
+      if (!latest.entries.some((item) => item.id === detail.id)) {
+        setNotice("这份研读已被移除或暂时无法读取，请重新收藏后打开。");
+        if (root.current) root.current.open = true;
+        root.current?.querySelector("summary")?.focus();
+        return;
+      }
+      setQuery("");
+      setKind("all");
+      setSelected(detail.id);
+      setRenaming(null);
+      setNotice("");
+      setOpenTarget({ id: detail.id });
+    };
     window.addEventListener(STUDY_ARCHIVE_EVENT, refresh);
     window.addEventListener("storage", refresh);
+    window.addEventListener(OPEN_STUDY_EVENT, open);
     return () => {
       window.removeEventListener(STUDY_ARCHIVE_EVENT, refresh);
       window.removeEventListener("storage", refresh);
+      window.removeEventListener(OPEN_STUDY_EVENT, open);
     };
   }, []);
+  useLayoutEffect(() => {
+    if (!openTarget || !root.current) return;
+    root.current.open = true;
+    readerHeading.current?.focus({ preventScroll: true });
+    readerHeading.current?.scrollIntoView({
+      block: "start",
+      behavior: "instant",
+    });
+  }, [openTarget]);
   const matches = [...state.entries]
     .reverse()
     .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt))
@@ -93,7 +132,7 @@ export function StudyArchivePanel() {
     }
   }
   return (
-    <details className="pc-study-archive">
+    <details className="pc-study-archive" ref={root}>
       <summary>研读收藏 · {state.entries.length} 份</summary>
       <p>
         把值得留下的评议连同当时的原诗存好。这里的旧评议可离线查看，不会套用到当前稿件。
@@ -231,7 +270,9 @@ export function StudyArchivePanel() {
             className="pc-study-archive__reader"
             aria-label="已收藏的研读"
           >
-            <h3>{entry.title}</h3>
+            <h3 tabIndex={-1} ref={readerHeading}>
+              {entry.title}
+            </h3>
             {renaming?.id === entry.id && (
               <form
                 className="pc-study-archive__rename"
