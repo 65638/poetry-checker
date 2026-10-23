@@ -89,3 +89,11 @@ git -c http.version=HTTP/1.1 -c http.postBuffer=104857600 -c core.compression=0 
 - 语料回归两次暴露同级ResearchNotes/RelatedReading key重复而残留空面板；仅给两处key加不同前缀。补充每次切诗恰好一个资料面板断言后，语料11场景全部通过，包括真实注音、扩展汉字、出处分页、长诗键盘；poetry-studio12场景亦通过。类型/局部eslint/构建通过。
 - three-round-polish旧脚本在懒加载字典未挂载时focus空节点失败，未把它计为通过；该脚本就绪条件需后续修正。UI产品现有字典9场景此前通过。
 - 证据evening06-corpus-fixed/results.json、evening06-studio、evening06-typecheck.log。跨路径仅上述key补丁。
+
+### 批次07-08：收藏续问纸面与整理入口
+
+- `study-experience.css`将收藏续问与原收藏分成两层：回答采用不透明浅色阅读纸，问题、历史、答案、建议和分享动作有明确顺序；手机取消多层横向内边距，保留长回答换行。
+- 修正按钮选择器只把“移除这份研读”保留警示色；复制/下载/改标题使用普通动作色。收藏类型select、问题摘要两行截断、改标题表单和焦点环已预留给功能侧新列表字段。
+- `evening07-saved`收藏续问5场景通过；`evening07-visual`在1440/768/390/320无横向溢出，触达控件≥44px，axe无确定违规（装饰背景颜色对比仍需人工判断），强制颜色截图通过。受控模型调用1次，仅验证交互。
+- `evening08-saved`在当前样式下复跑收藏续问5场景通过；Web build、局部eslint、typecheck通过。构建仍有既有主包>500KB提示，未据此盲目拆包。
+- 最新UI提交：`c8f1aaa`（收藏筛选/问题/标题整理样式）及`b528329`（长诗焦点性能、资料面板key修正）。推送需以远端SHA复核，最近一次遇到HTTP502。
