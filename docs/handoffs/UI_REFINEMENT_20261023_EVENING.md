@@ -136,3 +136,10 @@ git -c http.version=HTTP/1.1 -c http.postBuffer=104857600 -c core.compression=0 
 - 原21:20发现已闭环：320/1440真实Enter发送后焦点为收藏回答region；先移到搜索框则回答不抢焦；改标题Enter打开自动全选，保存/取消/Esc回入口。纸面焦点环实测2px、rgb(72,110,86)，截图可见。
 - 追问8/收藏7浏览器场景通过，含失败/迟到/移焦/并发改名保护；证据evening14-followup、evening14-saved。独立焦点脚本最初误把search输入按textbox定位超时，改用searchbox后通过，未修改产品以迎合测试。
 - even­ing14-focus/results.json与320px截图保留。手机回答region顶部约-73px（模型标识在屏外），问题和回答正文在当前视口可见；当前实现明确preventScroll，未额外强制滚动。
+
+### 批次16：问这段展示接口已固定，可直接合并
+
+- 三文件独立提交 **868a27525b989e27b4921862426bea08ca7d5d15**：AnnotatedVerses.tsx、reading-experience.css、print-experience.css。功能侧可直接merge此SHA，无需提取未提交diff。
+- 可选onAskLine(paragraphIndex)和askDisabled；有回调时每段文字后并列摘句/问这段，aria-label为询问第N段诗句；disabled仍显示。无回调时原有摘句排版保持。按钮44px触达，Tab顺序原诗字→摘句→问这段，方向键仍只在本段字中移动；打印隐藏操作。
+- typecheck/build通过。隔离Vite组件真实浏览器验证三段（含补充汉字𪩘）回调索引0/2、摘句索引1、禁用不回调、注音位置、每段一个字Tab入口；1440/768/390/320无溢出。证据evening16-paragraph-actions/results.json；临时组件页已移除，没有修改业务容器。完整原句入问和选段业务待功能侧集成验收。
+- 慢加载问题已由功能侧确认接管：初始目录空状态，失败后才用基础示例，不跨底本猜测替换；本侧不改LibraryContainer。
