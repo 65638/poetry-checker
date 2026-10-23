@@ -6,6 +6,7 @@ import type {
 import { buildStudyFollowUp, studyAnswerDetails } from "./followUpRequest";
 import { StudyProse } from "./StudyProse";
 import "./study-follow-up.css";
+import { submitQuestionShortcut } from "./questionKeyboard";
 
 export function StudyFollowUp({
   input,
@@ -59,6 +60,7 @@ export function StudyFollowUp({
             maxLength={240}
             value={question}
             onChange={(event) => setQuestion(event.target.value)}
+            onKeyDown={(event) => submitQuestionShortcut(event, disabled)}
             placeholder="例如：你说的层次感，具体体现在哪两句？"
           />
         </label>
@@ -82,7 +84,7 @@ export function StudyFollowUp({
           ))}
         </div>
         <div className="pc-study-follow-up__actions">
-          <small>{question.length} / 240</small>
+          <small>{question.length} / 240 · Ctrl / ⌘ + Enter 发送</small>
           <button
             type="submit"
             disabled={disabled || !question.trim()}

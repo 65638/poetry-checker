@@ -756,6 +756,7 @@ export function LibraryContainer({
                 key={JSON.stringify([leftId, leftPart, rightId, rightPart])}
                 heading="带着问题对读"
                 comparison
+                excerpt={!!compareInput?.scope}
                 mode="reading"
                 disabled={!!compareUnavailable || comparison.busy}
                 onAsk={(question) => {
@@ -1302,9 +1303,14 @@ export function LibraryContainer({
                     : undefined
                 }
                 heading={
-                  selected.kind === "prose" ? "问问这篇文章" : "问问这首诗"
+                  sections.length > 1
+                    ? "问问这一选段"
+                    : selected.kind === "prose"
+                      ? "问问这篇文章"
+                      : "问问这首诗"
                 }
                 prose={selected.kind === "prose"}
+                excerpt={sections.length > 1}
                 mode="reading"
                 disabled={!sections[studySection] || literary.busy}
                 onAsk={(question) => {

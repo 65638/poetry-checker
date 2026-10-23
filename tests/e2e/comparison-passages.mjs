@@ -40,6 +40,7 @@ try{
  await check('chosen-section-is-exactly-what-is-sent-and-shared-with-explicit-scope',async()=>{
    await select('[aria-label=左卷对读选段]',1);await waitFor(()=>h.evaluate("!document.querySelector('.pc-compare-submit').disabled"));
    const excerpt=await h.evaluate("document.querySelector('[aria-label=左卷本次选段原文]').textContent");
+   assert.equal(await h.evaluate("document.querySelector('.pc-comparison-questions .pc-study-question__examples').textContent.includes('两份所选文字')"),true);
    assert(excerpt.length<=2000);assert.notEqual(excerpt,long.paragraphs.join('\n'));assert.equal(requests.length,0);
    await h.click('.pc-comparison-questions .pc-study-question summary');await fill('[aria-label=两诗对读问题]','请比较所选文字中的景与情。');await h.click('.pc-comparison-questions button[type=submit]');await answer();
    assert.equal(requests.at(-1).left,excerpt);assert.equal(requests.at(-1).scope.left.part,2);assert.equal(requests.at(-1).scope.left.title,long.title);assert.equal(requests.at(-1).scope.right.parts,1);

@@ -1,5 +1,6 @@
 import { useId, useLayoutEffect, useRef, useState } from "react";
 import "./study-question.css";
+import { submitQuestionShortcut } from "./questionKeyboard";
 
 export function StudyQuestion({
   disabled,
@@ -9,6 +10,7 @@ export function StudyQuestion({
   prose = false,
   seed,
   comparison = false,
+  excerpt = false,
 }: {
   disabled: boolean;
   mode: "reading" | "writing";
@@ -17,6 +19,7 @@ export function StudyQuestion({
   prose?: boolean;
   seed?: { question: string; revision: number };
   comparison?: boolean | "revision";
+  excerpt?: boolean;
 }) {
   const [question, setQuestion] = useState("");
   const limitId = useId();
@@ -29,7 +32,7 @@ export function StudyQuestion({
     field.current?.focus({ preventScroll: true });
     field.current?.scrollIntoView({ block: "center", behavior: "instant" });
   }, [seed]);
-  const examples =
+  const baseExamples =
     comparison === "revision"
       ? [
           "这次修改是否更贴近原定意图？请比较具体改动。",
@@ -53,6 +56,16 @@ export function StudyQuestion({
               "转折和结尾是否自然？请结合前文说明。",
               "画面有没有重复或不连贯的地方？",
             ];
+  const examples = baseExamples.map((example) =>
+    excerpt
+      ? example
+          .replaceAll("两首诗", "两份所选文字")
+          .replaceAll("这首诗", "这一选段")
+          .replaceAll("结尾", "收束处")
+      : prose
+        ? example.replaceAll("这首诗", "这篇文章")
+        : example,
+  );
   return (
     <details className="pc-study-question" ref={root}>
       <summary>{heading}</summary>
@@ -84,11 +97,16 @@ export function StudyQuestion({
             placeholder={
               comparison === "revision"
                 ? "例如：改后的结尾更好吗，还是旧稿更贴合前文？"
-                : comparison
-                  ? "例如：两首诗都写月亮，情绪有什么不同？"
-                  : "例如：最后一句的情绪，和前面的景物衔接自然吗？"
+                : excerpt
+                  ? comparison
+                    ? "例如：所选文字中的景物与情绪有什么不同？"
+                    : "例如：这一段的语气是怎样变化的？"
+                  : comparison
+                    ? "例如：两首诗都写月亮，情绪有什么不同？"
+                    : "例如：最后一句的情绪，和前面的景物衔接自然吗？"
             }
             onChange={(event) => setQuestion(event.target.value)}
+            onKeyDown={(event) => submitQuestionShortcut(event, disabled)}
           />
           <span className="pc-study-question__limit" id={limitId}>
             最多 240 个字符 <span>{question.length} / 240</span>
@@ -103,22 +121,15 @@ export function StudyQuestion({
             <button
               type="button"
               key={example}
-              data-selected={
-                question ===
-                (prose ? example.replaceAll("这首诗", "这篇文章") : example)
-              }
-              onClick={() =>
-                setQuestion(
-                  prose ? example.replaceAll("这首诗", "这篇文章") : example,
-                )
-              }
+              data-selected={question === example}
+              onClick={() => setQuestion(example)}
             >
-              {prose ? example.replaceAll("这首诗", "这篇文章") : example}
+              {example}
             </button>
           ))}
         </div>
         <div className="pc-study-question__actions">
-          <span>填写或选示例后，点击提问才发送。</span>
+          <span>点击提问或按 Ctrl / ⌘ + Enter 发送。</span>
           <button
             type="submit"
             className="pc-studio-action"
