@@ -75,6 +75,45 @@ const post = (
     headers: { "x-poetry-features": "structured-rule-review" },
   });
 describe("poetry studio with real lexicon and controlled model", () => {
+  it("keeps comparison excerpt scopes explicit in prompt and hash and rejects contradictory metadata", async () => {
+    const scope = {
+      left: { title: "长作", part: 2, parts: 3 },
+      right: { title: "短作", part: 1, parts: 1 },
+    };
+    const payload = {
+      task: "compare",
+      left: "山高水远。",
+      right: "白日依山尽。",
+      scope,
+    };
+    await withApp(
+      {
+        overview: "选段的受控比较",
+        aspects: [{ name: "意象", left: "左段", right: "右诗" }],
+      },
+      async (app, fetcher) => {
+        const response = await post(app, payload);
+        expect(response.statusCode).toBe(200);
+        const sent = JSON.parse(fetcher.mock.calls[0]![1]!.body as string);
+        expect(JSON.parse(sent.messages[1].content).scope).toEqual(scope);
+        expect(sent.messages[0].content).toContain("不能声称读过其余部分");
+        expect(response.json().inputHash).toBe(
+          createHash("sha256")
+            .update(JSON.stringify(PoetryAssistantRequestSchema.parse(payload)))
+            .digest("hex"),
+        );
+        for (const bad of [
+          {
+            ...payload,
+            scope: { ...scope, left: { title: "长作", part: 4, parts: 3 } },
+          },
+          { ...payload, revision: { beforeLabel: "初稿", afterLabel: "二稿" } },
+        ])
+          expect((await post(app, bad)).statusCode).toBe(422);
+        expect(fetcher).toHaveBeenCalledTimes(1);
+      },
+    );
+  });
   it("keeps useful critique and valid edits when individual rewrite records are malformed", async () => {
     const revisions = [
       edit,

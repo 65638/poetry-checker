@@ -164,7 +164,7 @@ try {
     assert.equal(await h.evaluate("document.querySelectorAll('[aria-label=\"研读选段\"] option').length>1"),true);
     await clickText('[aria-label="原诗阅读"] button','加入对读');
     assert.equal(await h.evaluate("document.querySelector('.pc-compare-submit').disabled"),true);
-    assert.equal(await h.evaluate("document.querySelector('.pc-compare-guidance').textContent.includes('2000')"),true);
+    assert.equal(await h.evaluate("document.querySelector('.pc-compare-guidance').textContent.includes('选择本次要比较的选段')"),true);
     assert.equal(await h.evaluate('document.documentElement.scrollWidth<=innerWidth+1'),true);
   });
   assert.deepEqual(result.errors,[]);

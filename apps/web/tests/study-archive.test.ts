@@ -50,6 +50,10 @@ describe("durable study snapshots and reader-facing sharing", () => {
       left: "空山不见人。",
       right: "白日依山尽。",
       question: "空间有什么不同？",
+      scope: {
+        left: { title: "左作", part: 2, parts: 3 },
+        right: { title: "右作", part: 1, parts: 1 },
+      },
     });
     const answer: PoetryAssistantResponse = {
       task: "compare",
@@ -64,6 +68,8 @@ describe("durable study snapshots and reader-facing sharing", () => {
     };
     const saved = createStudyEntry(pair, answer);
     expect(studyText(saved)).toContain("对读问题\n空间有什么不同？");
+    expect(studyText(saved)).toContain("左卷：《左作》 · 选段2/3");
+    expect(studyText(saved)).toContain("不据选段评定整篇");
     expect(parseStudyArchive(JSON.stringify(studyArchive([saved])))).toEqual([
       saved,
     ]);

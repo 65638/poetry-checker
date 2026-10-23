@@ -15,6 +15,8 @@ import type { LibraryWork, PoemPronunciation } from "@poetry/contracts";
 import { loadCatalog, loadPronunciation } from "../api/library";
 import { LibraryQueryHelp } from "./LibraryQueryHelp";
 import { ComparePoemPicker } from "./ComparePoemPicker";
+import { ComparisonScope } from "./ComparisonScope";
+import { comparisonInput, comparisonSourceLabel } from "./comparisonPassages";
 import { useExcerpts } from "../hooks/useExcerpts";
 import { ExcerptsPanel } from "./ExcerptsPanel";
 import {
@@ -101,6 +103,16 @@ export function LibraryContainer({
   const shareRequest = useRef(0);
   const [leftId, setLeftId] = useState(BUILTIN_WORKS[0]!.id);
   const [rightId, setRightId] = useState(BUILTIN_WORKS[1]!.id);
+  const [leftSelection, setLeftSelection] = useState<{
+    id: string;
+    part: number | null;
+  } | null>(null);
+  const [rightSelection, setRightSelection] = useState<{
+    id: string;
+    part: number | null;
+  } | null>(null);
+  const leftPart = leftSelection?.id === leftId ? leftSelection.part : null;
+  const rightPart = rightSelection?.id === rightId ? rightSelection.part : null;
   const currentLibrary = useRef({ works, selectedId, leftId, rightId });
   currentLibrary.current = { works, selectedId, leftId, rightId };
   const [dynasty, setDynasty] = useState("");
@@ -185,7 +197,9 @@ export function LibraryContainer({
       works.map((w) => w.id),
     ]),
   );
-  const comparison = usePoetryTask(`${leftId}|${rightId}`);
+  const comparison = usePoetryTask(
+    JSON.stringify([leftId, leftPart, rightId, rightPart]),
+  );
   const comparisonFocus = useStudyAnswerFocus<HTMLHeadingElement>(
     comparison.result,
   );
@@ -332,16 +346,18 @@ export function LibraryContainer({
   }, [selected, showPinyin]);
   const left = works.find((w) => w.id === leftId);
   const right = works.find((w) => w.id === rightId);
+  const compareInput = useMemo(
+    () =>
+      left && right ? comparisonInput(left, right, leftPart, rightPart) : null,
+    [left, right, leftPart, rightPart],
+  );
   const compareUnavailable =
     !left || !right
       ? "请先选好左右两卷。"
       : leftId === rightId
         ? "两卷是同一首诗，换一首再比较。"
-        : Math.max(
-              left.paragraphs.join("\n").length,
-              right.paragraphs.join("\n").length,
-            ) > 2000
-          ? "可阅读全文；AI 对读暂限每首 2000 字，请换一首较短的诗。"
+        : !compareInput
+          ? "原作较长，请先在左右卷中选择本次要比较的选段。"
           : null;
   const totalPages = Math.max(1, Math.ceil(display.length / 20));
   const visiblePage = Math.min(page, totalPages - 1);
@@ -493,6 +509,15 @@ export function LibraryContainer({
               {work.dynasty || "朝代未载"} · {work.author || "作者未载"}
             </p>
           </header>
+          <ComparisonScope
+            work={work}
+            side={side}
+            selected={side === "left" ? leftPart : rightPart}
+            onSelect={(part) => {
+              if (side === "left") setLeftSelection({ id: work.id, part });
+              else setRightSelection({ id: work.id, part });
+            }}
+          />
           <div className="pc-library-verses">
             {work.paragraphs.map((line, i) => (
               <p
@@ -679,6 +704,8 @@ export function LibraryContainer({
                 onClick={() => {
                   setLeftId(rightId);
                   setRightId(leftId);
+                  setLeftSelection(rightSelection);
+                  setRightSelection(leftSelection);
                 }}
               >
                 <ArrowLeftRight size={18} />
@@ -689,17 +716,13 @@ export function LibraryContainer({
                 disabled={!!compareUnavailable || comparison.busy}
                 aria-describedby="pc-compare-guidance"
                 onClick={() => {
-                  if (left && right) {
+                  if (compareInput && !compareUnavailable) {
                     comparisonFocus.begin();
                     void comparison.run(
                       comparison.result?.task === "compare" &&
                         comparison.resultInput?.task === "compare"
                         ? comparison.resultInput
-                        : {
-                            task: "compare",
-                            left: left.paragraphs.join("\n"),
-                            right: right.paragraphs.join("\n"),
-                          },
+                        : compareInput,
                     );
                   }
                 }}
@@ -710,7 +733,9 @@ export function LibraryContainer({
                     comparison.resultInput.question
                     ? "重新回答这个问题"
                     : "重新对读"
-                  : "比较两诗"}
+                  : compareInput?.scope
+                    ? "比较所选文字"
+                    : "比较两诗"}
               </button>
             </div>
           </header>
@@ -728,18 +753,16 @@ export function LibraryContainer({
           <div className="pc-compare-task">
             <div className="pc-comparison-questions">
               <StudyQuestion
-                key={`${leftId}:${rightId}`}
+                key={JSON.stringify([leftId, leftPart, rightId, rightPart])}
                 heading="带着问题对读"
                 comparison
                 mode="reading"
                 disabled={!!compareUnavailable || comparison.busy}
                 onAsk={(question) => {
-                  if (!left || !right || compareUnavailable) return;
+                  if (!compareInput || compareUnavailable) return;
                   comparisonFocus.begin();
                   void comparison.run({
-                    task: "compare",
-                    left: left.paragraphs.join("\n"),
-                    right: right.paragraphs.join("\n"),
+                    ...compareInput,
                     question,
                   });
                 }}
@@ -771,6 +794,16 @@ export function LibraryContainer({
                   </p>
                 </div>
               </header>
+              {comparison.resultInput?.task === "compare" &&
+                comparison.resultInput.scope && (
+                  <p className="pc-study-question-asked">
+                    本次只比较：左卷
+                    {comparisonSourceLabel(comparison.resultInput.scope.left)}
+                    ；右卷
+                    {comparisonSourceLabel(comparison.resultInput.scope.right)}
+                    。不据选段评定整篇。
+                  </p>
+                )}
               {comparison.resultInput?.task === "compare" &&
                 comparison.resultInput.question && (
                   <p className="pc-study-question-asked">

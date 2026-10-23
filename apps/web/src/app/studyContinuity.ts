@@ -9,6 +9,7 @@ export function canKeepStudyAnswer(
     return (
       previous.left === next.left &&
       previous.right === next.right &&
+      JSON.stringify(previous.scope) === JSON.stringify(next.scope) &&
       JSON.stringify(previous.revision) === JSON.stringify(next.revision)
     );
   if (previous?.task !== "critique" || next.task !== "critique") return false;

@@ -5,6 +5,13 @@ const text = z.string().min(1).max(2000);
 const book = z.enum(["pingshui", "cilin", "xinyun"]);
 const note = z.string().min(1).max(1600);
 export const MAX_REVISION_SUGGESTIONS = 6;
+const comparisonSource = z
+  .strictObject({
+    title: z.string().min(1).max(200),
+    part: z.number().int().min(1).max(2000),
+    parts: z.number().int().min(1).max(2000),
+  })
+  .refine((source) => source.part <= source.parts, "选段编号不能大于总段数");
 export const LibraryWorkSchema = z.object({
   id: z.string().min(1).max(160),
   title: z.string().min(1).max(200),
@@ -132,6 +139,9 @@ export const PoetryAssistantRequestSchema = z.discriminatedUnion("task", [
     left: text,
     right: text,
     question: z.string().trim().min(1).max(240).optional(),
+    scope: z
+      .strictObject({ left: comparisonSource, right: comparisonSource })
+      .optional(),
     revision: z
       .strictObject({
         beforeLabel: z.string().trim().min(1).max(120),

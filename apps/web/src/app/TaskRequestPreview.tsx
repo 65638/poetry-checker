@@ -1,6 +1,7 @@
 import type { PoetryAssistantRequest } from "@poetry/contracts";
 import "./task-request-preview.css";
 import { StudyFollowUpContext } from "./StudyFollowUp";
+import { comparisonSourceLabel } from "./comparisonPassages";
 
 export function taskWaitLabel(input?: PoetryAssistantRequest | null): string {
   if (input?.task === "search") return "正在寻找契合意境的诗句…";
@@ -26,6 +27,12 @@ export function TaskRequestPreview({
   return (
     <div className="pc-task-request-preview">
       <StudyFollowUpContext input={input} />
+      {input.task === "compare" && input.scope && (
+        <p>
+          本次范围：左卷{comparisonSourceLabel(input.scope.left)}；右卷
+          {comparisonSourceLabel(input.scope.right)}。仅按所选文字比较。
+        </p>
+      )}
       {input.task === "compare" && input.revision?.intention && (
         <p>修改意图：{input.revision.intention}</p>
       )}
