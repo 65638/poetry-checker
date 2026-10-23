@@ -29,6 +29,7 @@ import "../presentation/styles/ai-experience.css";
 import "../presentation/styles/study-experience.css";
 import "../presentation/styles/revision-experience.css";
 import "../presentation/styles/accessibility-experience.css";
+import "../presentation/styles/print-experience.css";
 import { PoetryDesk } from "./PoetryDesk";
 import { ReadingTools } from "../presentation/components/ReadingTools";
 import { CharacterReference } from "./CharacterReference";
