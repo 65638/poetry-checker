@@ -178,6 +178,7 @@ export const ReadingSuggestionRequestSchema = z.strictObject({
     .refine((text) => [...text].length <= 2000, "最多2000字"),
   rhymeBook: BookIdSchema,
   targetTokenIds: z.array(id).min(1).max(24).optional(),
+  offset: z.number().int().min(0).max(1999).optional(),
 });
 export const ReadingAssistantStatusSchema = z.strictObject({
   configured: z.boolean(),
@@ -217,6 +218,7 @@ export const ReadingSuggestionResponseSchema = z.strictObject({
   suggestions: z.array(ReadingSuggestionSchema).max(24),
   missingTokenIds: ids,
   truncated: z.boolean(),
+  offset: z.number().int().min(0).max(1999).optional(),
   notice: z.string(),
 });
 export const ContextRuleSchema = z.strictObject({

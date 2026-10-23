@@ -199,6 +199,12 @@ export function createReadingAssistant(
       );
     }
     const ids = input.targetTokenIds;
+    if (ids && (input.offset ?? 0) > 0)
+      throw new AssistantError(
+        422,
+        "VALIDATION_ERROR",
+        "指定字位时无需分页，请重新选择。",
+      );
     if (
       ids &&
       (new Set(ids).size !== ids.length ||
@@ -222,9 +228,11 @@ export function createReadingAssistant(
         ? ids.includes(token.tokenId)
         : (byCharacter.get(token.text)?.length ?? 0) > 1,
     );
-    const targets = selected
-      .filter((token) => (byCharacter.get(token.text)?.length ?? 0) > 0)
-      .slice(0, 24);
+    const available = selected.filter(
+      (token) => (byCharacter.get(token.text)?.length ?? 0) > 0,
+    );
+    const offset = input.offset ?? 0;
+    const targets = available.slice(offset, offset + 24);
     const base = {
       provider,
       model,
@@ -238,7 +246,8 @@ export function createReadingAssistant(
             !byCharacter.get(token.text)?.length,
         )
         .map((token) => token.tokenId),
-      truncated: selected.length > 24,
+      truncated: available.length > offset + 24,
+      ...(input.offset !== undefined ? { offset } : {}),
       notice,
     };
     if (!targets.length) return { ...base, suggestions: [] };

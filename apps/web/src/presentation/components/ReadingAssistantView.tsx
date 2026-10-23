@@ -12,6 +12,8 @@ export function ReadingAssistantView(props: {
   result: ReadingSuggestionResponse | null;
   error: string | null;
   busy: boolean;
+  page?: number;
+  onPage?: (page: number) => void;
   disabled: boolean;
   onRequest: () => void;
   onRefreshStatus: () => void;
@@ -33,7 +35,11 @@ export function ReadingAssistantView(props: {
           disabled={!props.configured || props.disabled || props.busy}
           onClick={props.onRequest}
         >
-          {props.busy ? "AI 正在辨音…" : "重新辨音"}
+          {props.busy
+            ? "AI 正在辨音…"
+            : (props.page ?? 0) > 0
+              ? "从首批重新辨音"
+              : "重新辨音"}
         </button>
         {props.busy && (
           <button
@@ -63,6 +69,35 @@ export function ReadingAssistantView(props: {
       {props.error && <p role="alert">{props.error}</p>}
       {props.result && (
         <div className="pc-reading-assistant__result" aria-live="polite">
+          {props.onPage &&
+            ((props.page ?? 0) > 0 || props.result.truncated) && (
+              <nav
+                className="pc-reading-assistant__actions"
+                aria-label="辨音批次"
+              >
+                <button
+                  type="button"
+                  className="pc-button pc-button--quiet"
+                  disabled={
+                    props.busy || props.disabled || (props.page ?? 0) === 0
+                  }
+                  onClick={() => props.onPage?.((props.page ?? 0) - 1)}
+                >
+                  上一批
+                </button>
+                <span>第 {(props.page ?? 0) + 1} 批</span>
+                <button
+                  type="button"
+                  className="pc-button pc-button--quiet"
+                  disabled={
+                    props.busy || props.disabled || !props.result.truncated
+                  }
+                  onClick={() => props.onPage?.((props.page ?? 0) + 1)}
+                >
+                  继续辨析下一批
+                </button>
+              </nav>
+            )}
           {!props.result.suggestions.length && (
             <p>当前没有需要辨析的多候选字位。</p>
           )}
@@ -126,7 +161,9 @@ export function ReadingAssistantView(props: {
             </p>
           )}
           {props.result.truncated && (
-            <p>本次取前24个多候选字位，可分段继续。</p>
+            <p>
+              本批最多24个多候选字位；还有后续字位可继续辨析，每批都结合全文。
+            </p>
           )}
           <p className="pc-reading-assistant__notice">{props.result.notice}</p>
         </div>
