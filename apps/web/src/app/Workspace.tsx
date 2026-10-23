@@ -49,10 +49,12 @@ const initialPlace = (): Place =>
 export function Workspace({
   onCancelAnalysis,
   preliminaryPoem,
+  restoredAnalysis,
   ...props
 }: CheckerViewProps & {
   onCancelAnalysis?: () => void;
   preliminaryPoem?: AnnotatedPoem | null;
+  restoredAnalysis?: boolean;
 }) {
   const [place, setPlace] = useState<Place>(initialPlace);
   const [visited, setVisited] = useState(
@@ -457,6 +459,7 @@ export function Workspace({
             poetryDesk={
               <PoetryDesk
                 checker={props}
+                restoredAnalysis={restoredAnalysis}
                 entries={notebook}
                 notice={notebookNotice}
                 onRevise={revise}

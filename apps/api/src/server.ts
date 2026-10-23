@@ -1,4 +1,4 @@
-import { createHash } from "node:crypto";
+import { createHash, randomUUID } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import Fastify, { type FastifyInstance } from "fastify";
@@ -80,6 +80,7 @@ export function buildApp(options?: {
   readingAssistant?: ReadingAssistantOptions;
 }): FastifyInstance {
   const app = Fastify({ logger: false });
+  const analysisSession = randomUUID();
   // 真实编排默认启用；POETRY_DEV_MOCK=1 时显式回退 fixture mock（开发联调专用）
   const devMock = process.env.POETRY_DEV_MOCK === "1";
   const resources: Resources = options?.resources ?? loadResources();
@@ -96,6 +97,7 @@ export function buildApp(options?: {
   app.get("/healthz", async () => ({ status: "ok" }));
 
   app.get("/readyz", async (_req, reply) => {
+    reply.header("X-Poetry-Analysis-Session", analysisSession);
     // Diagnostics live in headers so contract-v1's strict 503 ErrorResponse stays valid.
     const versions = devMock
       ? fixtureVersions
@@ -269,6 +271,7 @@ export function buildApp(options?: {
   });
 
   app.post("/api/v1/analyze", async (request, reply) => {
+    if (!devMock) reply.header("X-Poetry-Analysis-Session", analysisSession);
     if (!devMock) {
       const parsedReq = AnalyzeRequestSchema.safeParse(request.body);
       if (!parsedReq.success) {

@@ -1,14 +1,19 @@
-import { lazy, Suspense, useMemo } from "react";
+import { lazy, Suspense, useEffect, useMemo } from "react";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { AUTO_ANALYZE_DELAY_MS, CheckerStore } from "./app/store";
 import { Workspace } from "./app/Workspace";
 import { EXAMPLES } from "./app/examples";
-import { createRuntimeTransport, readWebEnv } from "./app/config";
+import {
+  createRuntimeTransport,
+  readWebEnv,
+  resolveApiConfig,
+} from "./app/config";
 import { useCheckerStore } from "./hooks/useCheckerStore";
 import type { CheckerViewProps } from "./view-contract";
 import type { DevShell as DevShellComponent } from "./app/DevShell";
 import { loadSavedDraft } from "./app/draftPersistence";
+import { connectAnalysisSession } from "./app/analysisSession";
 
 /**
  * 开发壳按需加载。
@@ -36,6 +41,17 @@ function App() {
     });
   }, []);
   const state = useCheckerStore(store);
+  useEffect(() => {
+    if (import.meta.env.DEV) return;
+    try {
+      return connectAnalysisSession(store, {
+        storage: sessionStorage,
+        baseUrl: resolveApiConfig(readWebEnv()).baseUrl,
+      });
+    } catch {
+      return;
+    }
+  }, [store]);
 
   const props: CheckerViewProps = {
     draft: state.draft,
@@ -92,6 +108,7 @@ function App() {
       {...props}
       preliminaryPoem={state.preliminaryPoem}
       onCancelAnalysis={() => store.cancelAnalysis()}
+      restoredAnalysis={state.restoredFromSession}
     />
   );
 }

@@ -50,6 +50,7 @@ export function PoetryDesk({
   canRedo,
   mode,
   onModeChange,
+  restoredAnalysis = false,
 }: {
   checker: CheckerViewProps;
   entries: NotebookEntry[];
@@ -62,6 +63,7 @@ export function PoetryDesk({
   canRedo: boolean;
   mode: CritiqueInput["mode"];
   onModeChange: (mode: CritiqueInput["mode"]) => void;
+  restoredAnalysis?: boolean;
 }) {
   const [tab, setTab] = useState<"critique" | "rhyme" | "notebook">("critique");
   const [direction, setDirection] =
@@ -105,6 +107,7 @@ export function PoetryDesk({
     versions: Array<{ text: string; edits: Revision[] }>;
   }>({ baseHash: "", versions: [] });
   const lastAutoReview = useRef<string | null>(null);
+  const previouslyRestored = useRef(restoredAnalysis);
   const notebookFile = useRef<HTMLInputElement>(null);
   const { report, draft, stale, busy } = checker;
   const usable =
@@ -263,7 +266,14 @@ export function PoetryDesk({
     mode,
   ]);
   useEffect(() => {
+    if (previouslyRestored.current && !restoredAnalysis)
+      lastAutoReview.current = null;
+    previouslyRestored.current = restoredAnalysis;
     if (usable && automatic && lastAutoReview.current !== reviewIdentity) {
+      if (restoredAnalysis && lastAutoReview.current === null) {
+        lastAutoReview.current = reviewIdentity;
+        return;
+      }
       lastAutoReview.current = reviewIdentity;
       void critique.run(
         {
@@ -277,7 +287,7 @@ export function PoetryDesk({
         { reuse: true },
       );
     }
-  }, [reviewIdentity, usable, automatic, critique.run]);
+  }, [reviewIdentity, usable, automatic, critique.run, restoredAnalysis]);
   function revise(next: InputDraft, reason: string) {
     onRevise(next, reason);
     setFeedback(null);
@@ -448,6 +458,14 @@ export function PoetryDesk({
             }
           />
           <StudioTaskState {...critique} />
+          {restoredAnalysis &&
+            !critique.result &&
+            !critique.busy &&
+            !critique.error && (
+              <p className="pc-studio-meta">
+                上次声律分析已恢复；点“研读全诗”可获取文学评议。
+              </p>
+            )}
           {critique.reused && (
             <p className="pc-studio-meta" role="status">
               已取回本次会话的评议；点“重新评议”可获取新建议。
