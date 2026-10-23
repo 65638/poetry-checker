@@ -239,9 +239,11 @@ export function StudyArchivePanel() {
                       ? row.input.question
                         ? `问：${row.input.question}`
                         : "通篇评议"
-                      : row.input.revision
-                        ? `${row.input.revision.beforeLabel} → ${row.input.revision.afterLabel}`
-                        : "两首原诗并读"}
+                      : row.input.question
+                        ? `问：${row.input.question}`
+                        : row.input.revision
+                          ? `${row.input.revision.beforeLabel} → ${row.input.revision.afterLabel}`
+                          : "两首原诗并读"}
                   </span>
                   <small>
                     {row.input.task === "compare"

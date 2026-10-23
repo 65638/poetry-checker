@@ -75,6 +75,45 @@ const post = (
     headers: { "x-poetry-features": "structured-rule-review" },
   });
 describe("poetry studio with real lexicon and controlled model", () => {
+  it("binds a comparison question to both originals and rejects invalid questions before calling the model", async () => {
+    const pair = {
+      task: "compare",
+      left: "空山不见人，但闻人语响。",
+      right: "白日依山尽，黄河入海流。",
+    };
+    await withApp(
+      {
+        overview: "受控比较",
+        aspects: [{ name: "空间", left: "受控左诗", right: "受控右诗" }],
+      },
+      async (app, fetcher) => {
+        const payload = { ...pair, question: "  两诗怎样表现空间？  " };
+        const response = await post(app, payload);
+        expect(response.statusCode).toBe(200);
+        const input = PoetryAssistantRequestSchema.parse(payload);
+        const sent = JSON.parse(fetcher.mock.calls[0]![1]!.body as string);
+        expect(JSON.parse(sent.messages[1].content)).toMatchObject({
+          ...pair,
+          question: "两诗怎样表现空间？",
+        });
+        expect(sent.messages[0].content).toContain(
+          "不要求两首诗一定有共同意象",
+        );
+        expect(response.json().inputHash).toBe(
+          createHash("sha256").update(JSON.stringify(input)).digest("hex"),
+        );
+        const ordinary = await post(app, pair);
+        expect(ordinary.statusCode).toBe(200);
+        expect(ordinary.json().inputHash).not.toBe(response.json().inputHash);
+        const another = await post(app, { ...pair, question: "结尾如何？" });
+        expect(another.statusCode).toBe(200);
+        expect(another.json().inputHash).not.toBe(response.json().inputHash);
+        for (const question of [" ", "字".repeat(241), null])
+          expect((await post(app, { ...pair, question })).statusCode).toBe(422);
+        expect(fetcher).toHaveBeenCalledTimes(3);
+      },
+    );
+  });
   it("compares revision snapshots without pretending to have formal meter evidence", async () => {
     const payload = {
       task: "compare",

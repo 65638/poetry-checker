@@ -11,6 +11,41 @@ const input: Extract<PoetryAssistantRequest, { task: "critique" }> = {
   question: "声音与静寂的关系？",
 };
 describe("readable prior answers without changed-source leakage", () => {
+  it("keeps comparison answers only for identical left/right sources and version intent", () => {
+    const pair = {
+      task: "compare" as const,
+      left: "空山不见人。",
+      right: "白日依山尽。",
+      question: "如何写景？",
+    };
+    expect(canKeepStudyAnswer(pair, { ...pair, question: "结尾如何？" })).toBe(
+      true,
+    );
+    expect(
+      canKeepStudyAnswer(pair, { ...pair, left: pair.right, right: pair.left }),
+    ).toBe(false);
+    expect(canKeepStudyAnswer(pair, { ...pair, right: "黄河入海流。" })).toBe(
+      false,
+    );
+    const revision = {
+      beforeLabel: "初稿",
+      afterLabel: "二稿",
+      intention: "保留原意",
+    };
+    expect(canKeepStudyAnswer(pair, { ...pair, revision })).toBe(false);
+    expect(
+      canKeepStudyAnswer(
+        { ...pair, revision },
+        { ...pair, revision, question: "改得好吗？" },
+      ),
+    ).toBe(true);
+    expect(
+      canKeepStudyAnswer(
+        { ...pair, revision },
+        { ...pair, revision: { ...revision, intention: "改换主题" } },
+      ),
+    ).toBe(false);
+  });
   it("allows another question about the same text and formal context", () => {
     expect(
       canKeepStudyAnswer(input, { ...input, question: "请谈谈意象。" }),

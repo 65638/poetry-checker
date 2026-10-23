@@ -223,6 +223,7 @@ export function studyText(
       rows.push(...review.checks.map((check) => `• ${check}`));
     }
   } else if (input.task === "compare" && response.task === "compare") {
+    if (input.question) rows.push("对读问题", input.question, "");
     const leftLabel = input.revision ? "旧稿" : "左诗";
     const rightLabel = input.revision ? "新稿" : "右诗";
     rows.push(

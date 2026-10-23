@@ -81,7 +81,11 @@ try {
     await clickText('.pc-library-reading button', '加入对读');
     await clickText('.pc-library-comparison button', '比较两诗');
     await waitFor(() => h.evaluate("document.querySelector('.pc-library-comparison-notes')?.textContent.includes('受控对读总评')"));
-    assert.equal(await h.evaluate("document.querySelector('.pc-compare-submit').disabled"), true, 'Completed pair must not flash a duplicate request');
+    const completedCalls = calls.filter(task => task === 'compare').length;
+    assert.equal(await h.evaluate("document.querySelector('.pc-compare-submit').disabled"), false, 'Explicit rerun is available');
+    assert.equal(await h.evaluate("document.querySelector('.pc-compare-submit').textContent.trim()"), '重新对读');
+    await sleep(300);
+    assert.equal(calls.filter(task => task === 'compare').length, completedCalls, 'Completed pair must not automatically repeat a request');
     await clickText('.pc-library-comparison-notes .pc-study-result-actions button', '收藏评议');
     await waitFor(() => h.evaluate("JSON.parse(localStorage.getItem('poetry-study-archive-v1') ?? '{\"entries\":[]}').entries.length===1"));
     const savedStudy=await h.evaluate("JSON.parse(localStorage.getItem('poetry-study-archive-v1')).entries[0]");
@@ -167,7 +171,7 @@ try {
     assert.equal(critiqueInputs.at(-1).mode,'reading');
     assert.equal(analyses,before);
     await fill('[aria-label="本诗研读问题"]','尚未发送的另一个问题');
-    assert.equal(await h.evaluate("document.querySelector('.pc-study-question-asked').textContent"),'本次提问：转折和结尾是否自然？');
+    assert.equal(await h.evaluate("document.querySelector('.pc-study-question-asked').textContent"),'这份回答的问题：转折和结尾是否自然？');
     await clickText('.pc-poetry-review .pc-study-result-actions button','收藏评议');
     await waitFor(()=>h.evaluate("JSON.parse(localStorage.getItem('poetry-study-archive-v1')).entries.some(e=>e.input.question==='转折和结尾是否自然？')"));
     await h.viewport(320,900,true);
@@ -331,8 +335,9 @@ try {
       await shot('rhyme-page2-' + width);
       // Visit the final page, whose spare cells must preserve the same footprint.
       while (await h.evaluate("!document.querySelector('[aria-label=\"下一页韵字\"]').disabled")) {
+        const previousPage = await h.evaluate("document.querySelector('.pc-library-pagination span').textContent");
         await h.click('[aria-label="下一页韵字"]');
-        await waitFor(() => h.evaluate("document.querySelector('.pc-rhyme-characters').getAttribute('aria-busy')==='false'"));
+        await waitFor(() => h.evaluate(`document.querySelector('.pc-rhyme-characters').getAttribute('aria-busy')==='false' && document.querySelector('.pc-library-pagination span').textContent!==${JSON.stringify(previousPage)}`));
       }
       assert.equal(await h.evaluate("document.querySelector('.pc-rhyme-characters').getBoundingClientRect().height"), baseline.height);
       assert.equal(await h.evaluate('document.documentElement.scrollWidth<=innerWidth+1'), true);

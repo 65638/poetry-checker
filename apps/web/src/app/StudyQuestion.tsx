@@ -8,6 +8,7 @@ export function StudyQuestion({
   heading = "带着问题读诗",
   prose = false,
   seed,
+  comparison = false,
 }: {
   disabled: boolean;
   mode: "reading" | "writing";
@@ -15,6 +16,7 @@ export function StudyQuestion({
   heading?: string;
   prose?: boolean;
   seed?: { question: string; revision: number };
+  comparison?: boolean;
 }) {
   const [question, setQuestion] = useState("");
   const limitId = useId();
@@ -27,8 +29,13 @@ export function StudyQuestion({
     field.current?.focus({ preventScroll: true });
     field.current?.scrollIntoView({ block: "center", behavior: "instant" });
   }, [seed]);
-  const examples =
-    mode === "reading"
+  const examples = comparison
+    ? [
+        "两首诗怎样用景物表达不同的情绪？请引用左右原句。",
+        "两首诗的结尾各有什么作用？请比较与前文的联系。",
+        "两首诗在结构与表达方式上，有哪些值得借鉴的不同？",
+      ]
+    : mode === "reading"
       ? [
           "这首诗的情绪是怎样层层展开的？",
           "哪些字最能体现这首诗的意境？",
@@ -49,15 +56,19 @@ export function StudyQuestion({
         }}
       >
         <label>
-          想请 AI 留意什么？
+          {comparison ? "想请 AI 比较什么？" : "想请 AI 留意什么？"}
           <textarea
             ref={field}
-            aria-label="本诗研读问题"
+            aria-label={comparison ? "两诗对读问题" : "本诗研读问题"}
             aria-describedby={limitId}
             value={question}
             maxLength={240}
             rows={3}
-            placeholder="例如：最后一句的情绪，和前面的景物衔接自然吗？"
+            placeholder={
+              comparison
+                ? "例如：两首诗都写月亮，情绪有什么不同？"
+                : "例如：最后一句的情绪，和前面的景物衔接自然吗？"
+            }
             onChange={(event) => setQuestion(event.target.value)}
           />
           <span className="pc-study-question__limit" id={limitId}>
