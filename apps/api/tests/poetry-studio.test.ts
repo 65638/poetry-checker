@@ -75,6 +75,56 @@ const post = (
     headers: { "x-poetry-features": "structured-rule-review" },
   });
 describe("poetry studio with real lexicon and controlled model", () => {
+  it("compares revision snapshots without pretending to have formal meter evidence", async () => {
+    const payload = {
+      task: "compare",
+      left: "山高水远。",
+      right: "山高水长。",
+      revision: {
+        beforeLabel: "初稿",
+        afterLabel: "二稿",
+        intention: "强调绵延",
+      },
+    };
+    await withApp(
+      {
+        overview: "长强调绵延，远侧重距离。",
+        aspects: [{ name: "语意", left: "空间距离", right: "延伸感" }],
+      },
+      async (app, fetcher) => {
+        const response = await post(app, payload);
+        expect(response.statusCode).toBe(200);
+        const sent = JSON.parse(fetcher.mock.calls[0]![1]!.body as string);
+        expect(JSON.parse(sent.messages[1].content).revision).toEqual(
+          payload.revision,
+        );
+        expect(sent.messages[0].content).toContain("新稿不必优于旧稿");
+        expect(sent.messages[0].content).toContain("没有正式格律检查结果");
+        const input = PoetryAssistantRequestSchema.parse(payload);
+        expect(response.json().inputHash).toBe(
+          createHash("sha256").update(JSON.stringify(input)).digest("hex"),
+        );
+        const ordinary = await post(app, {
+          task: "compare",
+          left: payload.left,
+          right: payload.right,
+        });
+        expect(ordinary.statusCode).toBe(200);
+        expect(ordinary.json().inputHash).not.toBe(response.json().inputHash);
+        const count = fetcher.mock.calls.length;
+        for (const invalid of [
+          { ...payload, right: payload.left },
+          {
+            ...payload,
+            revision: { ...payload.revision, intention: "字".repeat(801) },
+          },
+          { ...payload, revision: { ...payload.revision, beforeLabel: "" } },
+        ])
+          expect((await post(app, invalid)).statusCode).toBe(422);
+        expect(fetcher).toHaveBeenCalledTimes(count);
+      },
+    );
+  });
   it("binds follow-up history to the exact poem and options before any model call", async () => {
     const followUp = {
       textHash: createHash("sha256").update(critique.text).digest("hex"),

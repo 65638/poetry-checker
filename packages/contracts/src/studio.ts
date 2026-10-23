@@ -124,7 +124,18 @@ export const PoetryAssistantRequestSchema = z.discriminatedUnion("task", [
       })
       .optional(),
   }),
-  z.strictObject({ task: z.literal("compare"), left: text, right: text }),
+  z.strictObject({
+    task: z.literal("compare"),
+    left: text,
+    right: text,
+    revision: z
+      .strictObject({
+        beforeLabel: z.string().trim().min(1).max(120),
+        afterLabel: z.string().trim().min(1).max(120),
+        intention: z.string().trim().min(1).max(800).optional(),
+      })
+      .optional(),
+  }),
   z.strictObject({
     task: z.literal("search"),
     query: z.string().min(1).max(120),

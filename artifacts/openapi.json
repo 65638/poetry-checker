@@ -2290,6 +2290,31 @@
                 "type": "string",
                 "minLength": 1,
                 "maxLength": 2000
+              },
+              "revision": {
+                "type": "object",
+                "properties": {
+                  "beforeLabel": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 120
+                  },
+                  "afterLabel": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 120
+                  },
+                  "intention": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 800
+                  }
+                },
+                "required": [
+                  "beforeLabel",
+                  "afterLabel"
+                ],
+                "additionalProperties": false
               }
             },
             "required": [

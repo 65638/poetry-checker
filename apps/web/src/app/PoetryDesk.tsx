@@ -40,6 +40,7 @@ import { StudyQuestion } from "./StudyQuestion";
 import { formatModernReading } from "./readingLabels";
 import { StudyHistory } from "./StudyHistory";
 import { StudyFollowUp, StudyFollowUpContext } from "./StudyFollowUp";
+import { DraftComparison } from "./DraftComparison";
 
 type CritiqueInput = Extract<PoetryAssistantRequest, { task: "critique" }>;
 export function PoetryDesk({
@@ -932,6 +933,7 @@ export function PoetryDesk({
               }}
             />
           </div>
+          <DraftComparison draft={draft} entries={entries} />
           <NotebookArchive entries={entries} busy={busy} onRestore={revise} />
         </div>
       )}
