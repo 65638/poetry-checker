@@ -4,9 +4,9 @@
 
 ## 最新可用版本
 
-- 功能提交：`f7b146d`（持续迭代批次22：刷新恢复已完成分析），包含前二十一批。
+- 功能提交：`32e6184`（持续迭代批次23：对读分别检索选诗），包含前二十二批。
 - main 随本同步记录一起推送；最新CI请查看 [Actions](https://github.com/65638/poetry-checker/actions)。前十九批CI均已成功，最近确认[批次19](https://github.com/65638/poetry-checker/actions/runs/39922384851)。
-- 业务基线：1119测试 / 95文件，全量verify通过；刷新/主动作业/缓存损坏/服务变更/存储失败5浏览器场景通过（受控模型、真实API和浏览器），含320px。批次18真实DeepSeek单次提问8544ms完成，不是P95或内容正确率测评。
+- 业务基线：1119测试 / 95文件，全量verify通过；推敲/对读/独立检索12浏览器场景通过（受控模型、真实API和浏览器），含320px。批次22跨功能复跑推敲11、收藏5场景均通过。
 - 本机预览：`http://127.0.0.1:56106/`。桌面入口指向 `work/main-closeout`，Codex维护此预览。
 
 ## 拉取更新
@@ -91,6 +91,13 @@ pnpm dev
 - `CheckerStore.restoreCompletedAnalysis` 以原子快照恢复；手动分析照常请求，并清除恢复标志。导出仍使用原请求与已生效覆盖。`main.tsx` 在正式页面接入，开发合成入口不启用。
 - `Workspace.tsx` 增加可选`restoredAnalysis`传给PoetryDesk：恢复本身不自动触发新文学评议，明确提示可手动研读；随后主动分析仍自动评议。展示设计可调整提示位置，保留避免重复请求与竞态守卫。
 - 1119测试verify通过；浏览器5场景通过：刷新0新增模型请求、主动重算、改稿/损坏缓存拒绝、模拟服务实例变化拒绝、sessionStorage配额失败仍可分析。证据 `artifacts/continuous-improvement/batch22-session/`。这是临时会话缓存，持久收藏/备份继续用原有功能。
+
+## 批次23接入点（已交付）
+
+- `ComparePoemPicker.tsx` 与专用 `compare-picker-search.css` 为左右卷提供各自题名/作者/正文检索（继承多条件检索语法）和只看收藏；键入只筛选，不换诗、不发AI。
+- 下拉先列80个匹配项，并保留当前两卷及本侧最近5次选择；总匹配数可见，没有命中也不清空当前诗。减少两千多首双侧同时装入DOM的负担，不删除任何诗库内容。
+- `LibraryContainer.tsx` 将旧select插槽换成独立组件，保留左右id、同诗提示、交换、键盘并读及选诗后失效旧AI结果行为。视觉可调整，保留明确的检索/选择步骤。
+- 首轮浏览器发现最近所选退出前80后不便切回，加入近期选诗后完整复跑通过。1119测试verify、12浏览器场景及320px截图通过；证据 `artifacts/continuous-improvement/batch23-studio-final/`。
 
 ## 批次01接入点（已交付）
 
