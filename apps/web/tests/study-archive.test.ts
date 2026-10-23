@@ -10,6 +10,7 @@ import {
   parseStudyArchive,
   studyArchive,
   studyText,
+  renameStudyEntry,
 } from "../src/app/studyArchive";
 
 const input = PoetryAssistantRequestSchema.parse({
@@ -43,6 +44,34 @@ const response: PoetryAssistantResponse = {
 const entry = () =>
   createStudyEntry(input, response, "暮色一篇", "2026-10-23T00:00:00Z");
 describe("durable study snapshots and reader-facing sharing", () => {
+  it("renames only metadata, supports undo and rejects stale or invalid titles", () => {
+    const saved = entry();
+    const rows = [saved];
+    const changed = renameStudyEntry(
+      rows,
+      saved.id,
+      "  山水中的层次  ",
+      saved.title,
+    );
+    expect(changed[0]).toEqual({ ...saved, title: "山水中的层次" });
+    expect(rows[0]).toEqual(saved);
+    expect(parseStudyArchive(JSON.stringify(studyArchive(changed)))).toEqual(
+      changed,
+    );
+    expect(
+      renameStudyEntry(changed, saved.id, saved.title, "山水中的层次"),
+    ).toEqual(rows);
+    expect(() =>
+      renameStudyEntry(changed, saved.id, "新的标题", saved.title),
+    ).toThrow("另一处更新");
+    expect(() =>
+      renameStudyEntry([], saved.id, "新的标题", saved.title),
+    ).toThrow("移除");
+    for (const title of [" ", "字".repeat(121)])
+      expect(() =>
+        renameStudyEntry(rows, saved.id, title, saved.title),
+      ).toThrow("1至120");
+  });
   it("retains the server's withheld-advice explanation in sharing and backup", () => {
     const saved = createStudyEntry(input, {
       ...response,
