@@ -41,6 +41,8 @@ import { useMotionPreference } from "../presentation/useMotionPreference";
 import { usePoetryTask } from "../hooks/usePoetryTask";
 import { StudyResultActions } from "./StudyResultActions";
 import { RuleReviewNote } from "./RuleReviewNote";
+import { StudyQuestion } from "./StudyQuestion";
+import { StudyHistory } from "./StudyHistory";
 import {
   StudioTabs,
   StudioTaskState,
@@ -1046,7 +1048,10 @@ export function LibraryContainer({
               </button>
               <button
                 className="pc-studio-action"
-                disabled={!sections[studySection]}
+                disabled={
+                  !sections[studySection] ||
+                  (selected.kind === "prose" && literary.busy)
+                }
                 onClick={() => {
                   const section = sections[studySection];
                   if (!section) return;
@@ -1150,14 +1155,57 @@ export function LibraryContainer({
                 </select>
               </label>
             )}
+            <div className="pc-library-questions">
+              <StudyQuestion
+                key={`${selected.id}:${studySection}`}
+                heading={
+                  selected.kind === "prose" ? "问问这篇文章" : "问问这首诗"
+                }
+                prose={selected.kind === "prose"}
+                mode="reading"
+                disabled={!sections[studySection] || literary.busy}
+                onAsk={(question) => {
+                  const section = sections[studySection];
+                  if (section)
+                    void literary.run({
+                      task: "critique",
+                      text: section.paragraphs.join("\n"),
+                      rhymeBook: "pingshui",
+                      direction: "meaning",
+                      mode: "reading",
+                      question,
+                    });
+                }}
+              />
+              {sections.length > 1 && (
+                <p className="pc-studio-meta">
+                  提问只针对第{studySection + 1}段；切换选段可读其他部分。
+                </p>
+              )}
+              <StudyHistory
+                entries={literary.history}
+                current={literary.result ? literary.resultInput : null}
+                busy={literary.busy}
+                onRestore={literary.restore}
+              />
+            </div>
             <StudioTaskState {...literary} />
             {literary.result?.task === "critique" && (
-              <section aria-label="文章赏读" className="pc-library-literary">
+              <section
+                aria-label={selected.kind === "prose" ? "文章赏读" : "诗作问答"}
+                className="pc-library-literary"
+              >
                 <StudyResultActions
                   input={literary.resultInput}
                   result={literary.result}
-                  title={selected.title}
+                  title={sections[studySection]?.title ?? selected.title}
                 />
+                {literary.resultInput?.task === "critique" &&
+                  literary.resultInput.question && (
+                    <p className="pc-study-question-asked">
+                      本次提问：{literary.resultInput.question}
+                    </p>
+                  )}
                 <p>{literary.result.result.overview}</p>
                 <RuleReviewNote review={literary.result.result.ruleReview} />
                 {literary.result.result.strengths.map((value, i) => (
