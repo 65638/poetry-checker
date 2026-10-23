@@ -5,10 +5,14 @@ export function StudyQuestion({
   disabled,
   mode,
   onAsk,
+  heading = "带着问题读诗",
+  prose = false,
 }: {
   disabled: boolean;
   mode: "reading" | "writing";
   onAsk: (question: string) => void;
+  heading?: string;
+  prose?: boolean;
 }) {
   const [question, setQuestion] = useState("");
   const limitId = useId();
@@ -26,7 +30,7 @@ export function StudyQuestion({
         ];
   return (
     <details className="pc-study-question">
-      <summary>带着问题读诗</summary>
+      <summary>{heading}</summary>
       <form
         onSubmit={(event) => {
           event.preventDefault();
@@ -57,10 +61,17 @@ export function StudyQuestion({
             <button
               type="button"
               key={example}
-              data-selected={question === example}
-              onClick={() => setQuestion(example)}
+              data-selected={
+                question ===
+                (prose ? example.replaceAll("这首诗", "这篇文章") : example)
+              }
+              onClick={() =>
+                setQuestion(
+                  prose ? example.replaceAll("这首诗", "这篇文章") : example,
+                )
+              }
             >
-              {example}
+              {prose ? example.replaceAll("这首诗", "这篇文章") : example}
             </button>
           ))}
         </div>

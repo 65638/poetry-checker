@@ -6,6 +6,12 @@ import type {
 import { requestPoetry } from "../api/poetry-studio";
 import { PoetryResultCache } from "../app/poetryResultCache";
 
+export type PoetryTaskRecord = {
+  key: string;
+  input: PoetryAssistantRequest;
+  result: PoetryAssistantResponse;
+};
+
 export function usePoetryTask(identity: string) {
   const [result, setResult] = useState<PoetryAssistantResponse | null>(null);
   const [resultInput, setResultInput] = useState<PoetryAssistantRequest | null>(
@@ -14,6 +20,21 @@ export function usePoetryTask(identity: string) {
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [reused, setReused] = useState(false);
+  const [history, setHistory] = useState<{
+    identity: string;
+    entries: PoetryTaskRecord[];
+  }>({ identity, entries: [] });
+  const remember = useCallback((scope: string, entry: PoetryTaskRecord) => {
+    setHistory((previous) => ({
+      identity: scope,
+      entries: [
+        ...(previous.identity === scope ? previous.entries : []).filter(
+          (item) => item.key !== entry.key,
+        ),
+        entry,
+      ].slice(-6),
+    }));
+  }, []);
   const cache = useRef(new PoetryResultCache());
   const sequence = useRef(0);
   const controller = useRef<AbortController | null>(null);
@@ -40,6 +61,7 @@ export function usePoetryTask(identity: string) {
     setError(null);
     setCancelled(false);
     setReused(false);
+    setHistory({ identity, entries: [] });
     lastRequest.current = null;
     resultRequest.current = null;
     return () => {
@@ -68,6 +90,7 @@ export function usePoetryTask(identity: string) {
         setError(null);
         setCancelled(false);
         setReused(true);
+        remember(requestIdentity, { key: requestKey, input, result: cached });
         return;
       }
       const own = new AbortController();
@@ -87,6 +110,7 @@ export function usePoetryTask(identity: string) {
           cache.current.set(input, value);
           setResult(value);
           setResultInput(input);
+          remember(requestIdentity, { key: requestKey, input, result: value });
         }
       } catch (cause) {
         if (id === sequence.current && !own.signal.aborted)
@@ -95,7 +119,29 @@ export function usePoetryTask(identity: string) {
         if (id === sequence.current) setBusy(false);
       }
     },
-    [],
+    [remember],
+  );
+  const restore = useCallback(
+    (key: string) => {
+      if (history.identity !== currentIdentity.current) return;
+      const entry = history.entries.find((item) => item.key === key);
+      if (!entry) return;
+      sequence.current++;
+      controller.current?.abort();
+      resultIdentity.current = currentIdentity.current;
+      resultRequest.current = entry.key;
+      lastRequest.current = {
+        identity: currentIdentity.current,
+        input: entry.input,
+      };
+      setResult(entry.result);
+      setResultInput(entry.input);
+      setBusy(false);
+      setError(null);
+      setCancelled(false);
+      setReused(true);
+    },
+    [history],
   );
   const retry = useCallback(() => {
     const request = lastRequest.current;
@@ -112,5 +158,7 @@ export function usePoetryTask(identity: string) {
     cancelled,
     retry,
     reused,
+    history: history.identity === identity ? history.entries : [],
+    restore,
   };
 }
