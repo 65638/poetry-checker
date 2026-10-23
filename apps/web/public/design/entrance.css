@@ -16,7 +16,9 @@ body {
   padding: 48px 24px;
   background: radial-gradient(ellipse at 50% 30%, #25454a, #101f25 70%);
   color: #ece6d6;
-  font: 15px/1.9 system-ui, sans-serif;
+  font:
+    15px/1.9 system-ui,
+    sans-serif;
   text-align: center;
 }
 .pc-entrance > img {
@@ -28,12 +30,15 @@ body {
   margin: 0 0 8px;
   color: #d9c595;
   font-size: 12px;
-  letter-spacing: .18em;
+  letter-spacing: 0.18em;
 }
 .pc-entrance h1 {
   margin: 0;
-  font: 500 clamp(26px, 5vw, 34px)/1.5 "Songti SC", "SimSun", serif;
-  letter-spacing: .12em;
+  font:
+    500 clamp(26px, 5vw, 34px) / 1.5 "Songti SC",
+    "SimSun",
+    serif;
+  letter-spacing: 0.12em;
 }
 .pc-entrance__status {
   margin: 22px 0 8px;
@@ -70,7 +75,8 @@ body {
     background: Canvas;
     color: CanvasText;
   }
-  .pc-entrance p, .pc-entrance summary {
+  .pc-entrance p,
+  .pc-entrance summary {
     color: CanvasText;
   }
   .pc-entrance a {

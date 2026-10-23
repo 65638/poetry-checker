@@ -129,3 +129,60 @@
     font-size: 13px;
   }
 }
+.pc-workspace .pc-compare-picker[role="group"] {
+  color: #304840;
+}
+.pc-workspace .pc-compare-search,
+.pc-workspace .pc-compare-selection {
+  display: grid;
+  min-width: 0;
+  gap: 8px;
+}
+.pc-workspace .pc-compare-selection {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid #8c9d8266;
+}
+.pc-workspace .pc-compare-search > span,
+.pc-workspace .pc-compare-selection > span {
+  color: #3e5547;
+  font-size: 13px;
+  font-weight: 600;
+}
+.pc-workspace .pc-compare-search input {
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid #829280;
+  border-radius: 3px;
+  background: #f8f5ea;
+  color: #263c32;
+}
+.pc-workspace .pc-compare-search input::placeholder {
+  color: #657364;
+  opacity: 1;
+}
+.pc-workspace .pc-compare-favorites {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 2px;
+  width: fit-content;
+  gap: 8px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.pc-workspace .pc-compare-favorites input {
+  width: 24px;
+  height: 24px;
+  margin: 0;
+}
+.pc-workspace .pc-compare-match-count {
+  margin: 0;
+  color: #4b5d4c;
+  font-size: 13px;
+  line-height: 1.8;
+}
+.pc-workspace .pc-compare-selection select {
+  margin-top: 0;
+  min-height: 44px;
+}
