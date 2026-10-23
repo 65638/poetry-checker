@@ -1,4 +1,4 @@
-import { useId, useState } from "react";
+import { useId, useLayoutEffect, useRef, useState } from "react";
 import "./study-question.css";
 
 export function StudyQuestion({
@@ -7,15 +7,26 @@ export function StudyQuestion({
   onAsk,
   heading = "带着问题读诗",
   prose = false,
+  seed,
 }: {
   disabled: boolean;
   mode: "reading" | "writing";
   onAsk: (question: string) => void;
   heading?: string;
   prose?: boolean;
+  seed?: { question: string; revision: number };
 }) {
   const [question, setQuestion] = useState("");
   const limitId = useId();
+  const root = useRef<HTMLDetailsElement>(null);
+  const field = useRef<HTMLTextAreaElement>(null);
+  useLayoutEffect(() => {
+    if (!seed) return;
+    setQuestion(seed.question);
+    if (root.current) root.current.open = true;
+    field.current?.focus({ preventScroll: true });
+    field.current?.scrollIntoView({ block: "center", behavior: "instant" });
+  }, [seed]);
   const examples =
     mode === "reading"
       ? [
@@ -29,7 +40,7 @@ export function StudyQuestion({
           "画面有没有重复或不连贯的地方？",
         ];
   return (
-    <details className="pc-study-question">
+    <details className="pc-study-question" ref={root}>
       <summary>{heading}</summary>
       <form
         onSubmit={(event) => {
@@ -40,6 +51,7 @@ export function StudyQuestion({
         <label>
           想请 AI 留意什么？
           <textarea
+            ref={field}
             aria-label="本诗研读问题"
             aria-describedby={limitId}
             value={question}

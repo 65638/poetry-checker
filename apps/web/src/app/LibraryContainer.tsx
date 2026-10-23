@@ -45,6 +45,7 @@ import { StudyQuestion } from "./StudyQuestion";
 import { StudyHistory } from "./StudyHistory";
 import { StudyFollowUp, StudyFollowUpContext } from "./StudyFollowUp";
 import { useStudyAnswerFocus } from "../hooks/useStudyAnswerFocus";
+import { passageQuestion } from "./passageQuestion";
 import { RelatedReading } from "./RelatedReading";
 import { StudyProse } from "./StudyProse";
 import {
@@ -75,7 +76,7 @@ export function LibraryContainer({
   active?: boolean;
 }) {
   const motion = useMotionPreference();
-  const [works, setWorks] = useState<LibraryWork[]>(BUILTIN_WORKS);
+  const [works, setWorks] = useState<LibraryWork[]>([]);
   const [ready, setReady] = useState(false);
   const [catalogFailed, setCatalogFailed] = useState(false);
   const [query, setQuery] = useState("");
@@ -100,6 +101,8 @@ export function LibraryContainer({
   const shareRequest = useRef(0);
   const [leftId, setLeftId] = useState(BUILTIN_WORKS[0]!.id);
   const [rightId, setRightId] = useState(BUILTIN_WORKS[1]!.id);
+  const currentLibrary = useRef({ works, selectedId, leftId, rightId });
+  currentLibrary.current = { works, selectedId, leftId, rightId };
   const [dynasty, setDynasty] = useState("");
   const [collection, setCollection] = useState("");
   const [kind, setKind] = useState("");
@@ -112,6 +115,12 @@ export function LibraryContainer({
   );
   const [pronunciationBusy, setPronunciationBusy] = useState(false);
   const [studySection, setStudySection] = useState(0);
+  const [questionSeed, setQuestionSeed] = useState<{
+    workId: string;
+    section: number;
+    question: string;
+    revision: number;
+  } | null>(null);
   const [favorites, setFavorites] = useState(readFavorites);
   const [onlyFavorites, setOnlyFavorites] = useState(false);
   const [showDuplicates, setShowDuplicates] = useState(false);
@@ -202,14 +211,29 @@ export function LibraryContainer({
       .then(([catalog, saved]) => {
         if (!live) return;
         const merged = mergeLibrary(catalog, saved).works;
+        // A retry may finish while a fallback work is open. Keep that exact source
+        // available for the reader/comparison instead of silently switching editions.
+        const current = currentLibrary.current;
+        const inUse = new Set([
+          current.selectedId,
+          current.leftId,
+          current.rightId,
+        ]);
+        for (const work of current.works)
+          if (inUse.has(work.id) && !merged.some((row) => row.id === work.id))
+            merged.push(work);
         setWorks(merged);
-        setLeftId(
-          merged.find((w) => w.title === "登鹳雀楼")?.id ?? merged[0]!.id,
+        setLeftId((previous) =>
+          merged.some((work) => work.id === previous)
+            ? previous
+            : (merged.find((w) => w.title === "登鹳雀楼")?.id ?? merged[0]!.id),
         );
-        setRightId(
-          merged.find((w) => w.title === "静夜思")?.id ??
-            merged[1]?.id ??
-            merged[0]!.id,
+        setRightId((previous) =>
+          merged.some((work) => work.id === previous)
+            ? previous
+            : (merged.find((w) => w.title === "静夜思")?.id ??
+              merged[1]?.id ??
+              merged[0]!.id),
         );
       })
       .catch((error: Error) => {
@@ -281,6 +305,7 @@ export function LibraryContainer({
     setPronunciation(null);
     setPronunciationError(null);
     setStudySection(0);
+    setQuestionSeed(null);
   }, [selectedId]);
   useEffect(() => {
     if (!showPinyin || !selected?.id.startsWith("deepseek:")) {
@@ -951,6 +976,11 @@ export function LibraryContainer({
             </p>
           )}
           <div className="pc-library-list" ref={catalogueList}>
+            {!ready && (
+              <p className="pc-studio-empty" role="status">
+                正在载入诗库与本机藏书，可先填写检索条件。
+              </p>
+            )}
             {display
               .slice(visiblePage * 20, visiblePage * 20 + 20)
               .map((hit) => (
@@ -994,7 +1024,7 @@ export function LibraryContainer({
                 </article>
               ))}
           </div>
-          {!display.length && (
+          {ready && !display.length && (
             <div className="pc-studio-empty">
               <p>
                 {mode === "scene" && matches
@@ -1173,7 +1203,10 @@ export function LibraryContainer({
                 <select
                   aria-label="研读选段"
                   value={studySection}
-                  onChange={(e) => setStudySection(Number(e.target.value))}
+                  onChange={(e) => {
+                    setStudySection(Number(e.target.value));
+                    setQuestionSeed(null);
+                  }}
                 >
                   {sections.map((section, i) => (
                     <option key={i} value={i}>
@@ -1187,6 +1220,12 @@ export function LibraryContainer({
             <div className="pc-library-questions">
               <StudyQuestion
                 key={`${selected.id}:${studySection}`}
+                seed={
+                  questionSeed?.workId === selected.id &&
+                  questionSeed.section === studySection
+                    ? questionSeed
+                    : undefined
+                }
                 heading={
                   selected.kind === "prose" ? "问问这篇文章" : "问问这首诗"
                 }
@@ -1195,7 +1234,8 @@ export function LibraryContainer({
                 disabled={!sections[studySection] || literary.busy}
                 onAsk={(question) => {
                   const section = sections[studySection];
-                  if (section)
+                  if (section) {
+                    answerFocus.begin();
                     void literary.run({
                       task: "critique",
                       text: section.paragraphs.join("\n"),
@@ -1204,6 +1244,7 @@ export function LibraryContainer({
                       mode: "reading",
                       question,
                     });
+                  }
                 }}
               />
               {sections.length > 1 && (
@@ -1319,6 +1360,27 @@ export function LibraryContainer({
               selected={lookupChar}
               onSelect={setLookupChar}
               onExcerpt={(line) => void copyExcerpt(selected, line)}
+              askDisabled={literary.busy}
+              onAskLine={(line) => {
+                if (literary.busy) return;
+                try {
+                  const next = passageQuestion(selected, line);
+                  setStudySection(next.section);
+                  setQuestionSeed((previous) => ({
+                    ...next,
+                    workId: selected.id,
+                    revision: (previous?.revision ?? 0) + 1,
+                  }));
+                } catch (cause) {
+                  setShareFeedback({
+                    id: selected.id,
+                    message:
+                      cause instanceof Error
+                        ? cause.message
+                        : "暂未带入原句，请手动提问。",
+                  });
+                }
+              }}
               excerptLine={
                 excerptFeedback?.id === selected.id &&
                 excerptFeedback.message.startsWith("此句")
