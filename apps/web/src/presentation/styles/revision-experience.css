@@ -97,6 +97,102 @@
 .pc-workspace .pc-rhyme-loading:empty {
   min-height: 0;
 }
+.pc-workspace .pc-revision-preview {
+  padding: 0 14px;
+  border-color: #8f9f7e66;
+  background: #e0e5d338;
+}
+.pc-workspace .pc-revision-preview > summary {
+  min-height: 44px;
+  box-sizing: border-box;
+  padding-block: 10px;
+  font: 14px/1.8 var(--pc-font-sans);
+  color: #3a5940;
+}
+.pc-workspace .pc-revision-preview[open] > summary {
+  border-bottom: 1px solid #8f9f7e55;
+}
+.pc-workspace .pc-revision-preview p {
+  color: #56624e;
+  font: 13px/1.9 var(--pc-font-sans);
+}
+.pc-workspace .pc-revision-preview dl {
+  align-items: center;
+  gap: 10px 14px;
+  margin-block: 18px;
+}
+.pc-workspace .pc-revision-preview dt {
+  color: #54654f;
+  font: 12px/1.6 var(--pc-font-sans);
+}
+.pc-workspace .pc-revision-preview dd {
+  padding: 10px 12px;
+  border-left: 2px solid #a9b197;
+  background: #61766009;
+  color: #304d3b;
+  font: 21px/1.9 var(--pc-font-serif);
+}
+.pc-workspace .pc-revision-preview dd:last-child {
+  background: #dce5cd88;
+  border-left-color: #729067;
+}
+.pc-workspace .pc-revision-preview details > summary {
+  min-height: 44px;
+  box-sizing: border-box;
+  padding-block: 10px;
+  color: #3a5940;
+  font: 13px/1.8 var(--pc-font-sans);
+}
+.pc-workspace .pc-revision-preview blockquote {
+  padding: 14px 16px;
+  background: #f6f3e7;
+  border: 1px solid #a1ad9259;
+  border-left: 3px solid #8ba079;
+  color: #32483a;
+  font: 20px/2 var(--pc-font-serif);
+  scrollbar-width: thin;
+  scrollbar-color: #7c946e transparent;
+  overscroll-behavior: contain;
+}
+.pc-workspace .pc-revision-preview blockquote:focus-visible {
+  outline: 2px solid #527347;
+  outline-offset: 2px;
+}
+.pc-workspace .pc-rule-review-note {
+  margin-block: 22px;
+  padding: 14px 18px;
+  border: 1px solid #b3a37566;
+  border-left: 3px solid #a99465;
+  border-radius: 3px;
+  background: #f5f0e1a6;
+}
+.pc-workspace .pc-rule-review-note > p {
+  margin: 0;
+  color: #565d48;
+  font: 14px/1.9 var(--pc-font-sans);
+}
+.pc-workspace .pc-rule-review-note summary {
+  min-height: 44px;
+  padding-block: 10px;
+  box-sizing: border-box;
+  color: #5e593f;
+  font: 13px/1.8 var(--pc-font-sans);
+  cursor: pointer;
+}
+.pc-workspace .pc-rule-review-note details[open] > summary {
+  border-bottom: 1px solid #b3a37555;
+}
+.pc-workspace .pc-rule-review-note ul {
+  margin: 10px 0 0;
+  padding-left: 22px;
+  color: #455443;
+  font-size: 14px;
+  line-height: 1.9;
+  overflow-wrap: anywhere;
+}
+.pc-workspace .pc-rule-review-note li + li {
+  margin-top: 8px;
+}
 @media (max-width: 599px) {
   .pc-workspace .pc-poetry-edit {
     padding: 16px 12px;
@@ -117,6 +213,21 @@
   .pc-workspace .pc-poetry-edit > .pc-studio-action {
     width: 100%;
     justify-content: center;
+  }
+  .pc-workspace .pc-revision-preview dl {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 6px;
+  }
+  .pc-workspace .pc-revision-preview dt:not(:first-child) {
+    margin-top: 10px;
+  }
+  .pc-workspace .pc-revision-preview dd,
+  .pc-workspace .pc-revision-preview blockquote {
+    font-size: 19px;
+    padding-inline: 10px;
+  }
+  .pc-workspace .pc-rule-review-note {
+    padding-inline: 12px;
   }
 }
 @media (forced-colors: active) {

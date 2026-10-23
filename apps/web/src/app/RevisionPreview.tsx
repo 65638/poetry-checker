@@ -44,7 +44,7 @@ export function RevisionPreview({
       )}
       <details>
         <summary>展开整首试稿</summary>
-        <blockquote tabIndex={0} aria-label="尚未采纳的整首试稿">
+        <blockquote tabIndex={0} role="region" aria-label="尚未采纳的整首试稿">
           {preview.text}
         </blockquote>
       </details>
