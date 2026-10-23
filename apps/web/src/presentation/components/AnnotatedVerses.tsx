@@ -9,6 +9,8 @@ type VerseProps = {
   onSelect: (character: string) => void;
   onExcerpt?: (line: number) => void;
   excerptLine?: number;
+  onAskLine?: (paragraphIndex: number) => void;
+  askDisabled?: boolean;
 };
 
 export function AnnotatedVerses({
@@ -19,6 +21,8 @@ export function AnnotatedVerses({
   onSelect,
   onExcerpt,
   excerptLine,
+  onAskLine,
+  askDisabled = false,
 }: VerseProps) {
   const aligned = pronunciation?.id === work.id ? pronunciation : null;
   const hintId = useId();
@@ -70,6 +74,8 @@ export function AnnotatedVerses({
           onSelect={onSelect}
           onExcerpt={onExcerpt}
           excerpted={excerptLine === i}
+          onAskLine={onAskLine}
+          askDisabled={askDisabled}
         />
       ))}
     </div>
@@ -87,6 +93,8 @@ const VerseLine = memo(function VerseLine({
   onSelect,
   onExcerpt,
   excerpted,
+  onAskLine,
+  askDisabled,
 }: {
   line: string;
   lineNumber: number;
@@ -97,6 +105,8 @@ const VerseLine = memo(function VerseLine({
   onSelect: VerseProps["onSelect"];
   onExcerpt: VerseProps["onExcerpt"];
   excerpted: boolean;
+  onAskLine: VerseProps["onAskLine"];
+  askDisabled: boolean;
 }) {
   const [focusedOffset, setFocusedOffset] = useState<number | null>(null);
   const { characters, phrases, firstOffset } = useMemo(() => {
@@ -128,7 +138,7 @@ const VerseLine = memo(function VerseLine({
       ? focusedOffset
       : firstOffset;
   return (
-    <p className="pc-library-verse-row">
+    <p className="pc-library-verse-row" data-ask-line={!!onAskLine}>
       {phrases.map(({ start, units }, part) => (
         <span className="pc-library-phrase" key={part}>
           {units.map(({ char, index, punctuation }) => {
@@ -170,7 +180,33 @@ const VerseLine = memo(function VerseLine({
           })}
         </span>
       ))}
-      {onExcerpt && (
+      {onAskLine ? (
+        <span
+          className="pc-verse-actions"
+          role="group"
+          aria-label={`第${lineNumber + 1}段操作`}
+        >
+          {onExcerpt && (
+            <button
+              type="button"
+              className="pc-excerpt-copy"
+              aria-label={`摘录第${lineNumber + 1}段诗句`}
+              onClick={() => onExcerpt(lineNumber)}
+            >
+              {excerpted ? "已摘" : "摘句"}
+            </button>
+          )}
+          <button
+            type="button"
+            className="pc-verse-ask"
+            aria-label={`询问第${lineNumber + 1}段诗句`}
+            disabled={askDisabled}
+            onClick={() => onAskLine(lineNumber)}
+          >
+            问这段
+          </button>
+        </span>
+      ) : onExcerpt ? (
         <button
           type="button"
           className="pc-excerpt-copy"
@@ -179,7 +215,7 @@ const VerseLine = memo(function VerseLine({
         >
           {excerpted ? "已摘" : "摘句"}
         </button>
-      )}
+      ) : null}
     </p>
   );
 });
