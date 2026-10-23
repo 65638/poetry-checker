@@ -44,6 +44,7 @@ import { RuleReviewNote } from "./RuleReviewNote";
 import { StudyQuestion } from "./StudyQuestion";
 import { StudyHistory } from "./StudyHistory";
 import { StudyFollowUp, StudyFollowUpContext } from "./StudyFollowUp";
+import { useStudyAnswerFocus } from "../hooks/useStudyAnswerFocus";
 import { RelatedReading } from "./RelatedReading";
 import { StudyProse } from "./StudyProse";
 import {
@@ -177,6 +178,7 @@ export function LibraryContainer({
   );
   const comparison = usePoetryTask(`${leftId}|${rightId}`);
   const literary = usePoetryTask(`${selectedId}|${studySection}`);
+  const answerFocus = useStudyAnswerFocus<HTMLElement>(literary.result);
   useEffect(() => {
     if (!active || ready) return;
     setCatalogFailed(false);
@@ -1221,6 +1223,8 @@ export function LibraryContainer({
               <section
                 aria-label={selected.kind === "prose" ? "文章赏读" : "诗作问答"}
                 className="pc-library-literary"
+                ref={answerFocus.target}
+                tabIndex={-1}
               >
                 <StudyResultActions
                   input={literary.resultInput}
@@ -1243,7 +1247,10 @@ export function LibraryContainer({
                   input={literary.resultInput}
                   response={literary.result}
                   disabled={literary.busy}
-                  onAsk={(input) => void literary.run(input)}
+                  onAsk={(input) => {
+                    answerFocus.begin();
+                    void literary.run(input);
+                  }}
                 />
                 <RuleReviewNote review={literary.result.result.ruleReview} />
                 {literary.result.result.strengths.map((value, i) => (

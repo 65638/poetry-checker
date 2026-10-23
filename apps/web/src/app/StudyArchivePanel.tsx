@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { StudyShareOptions } from "./StudyShareOptions";
 import { SavedStudyDiscussion } from "./SavedStudyDiscussion";
 import {
@@ -36,6 +36,8 @@ export function StudyArchivePanel() {
   const [notice, setNotice] = useState("");
   const [includeHistory, setIncludeHistory] = useState(false);
   const [kind, setKind] = useState("all");
+  const renameInput = useRef<HTMLInputElement>(null);
+  const renameTrigger = useRef<HTMLButtonElement>(null);
   const [renaming, setRenaming] = useState<{
     id: string;
     before: string;
@@ -46,6 +48,16 @@ export function StudyArchivePanel() {
     before: string;
     after: string;
   } | null>(null);
+  useEffect(() => {
+    if (renaming?.id) {
+      renameInput.current?.focus();
+      renameInput.current?.select();
+    }
+  }, [renaming?.id]);
+  function closeRename() {
+    setRenaming(null);
+    renameTrigger.current?.focus({ preventScroll: true });
+  }
   useEffect(() => {
     const refresh = () => setState(readArchive());
     window.addEventListener(STUDY_ARCHIVE_EVENT, refresh);
@@ -72,10 +84,12 @@ export function StudyArchivePanel() {
   function action(run: () => void) {
     try {
       run();
+      return true;
     } catch (cause) {
       setNotice(
         cause instanceof Error ? cause.message : "操作未完成，请重试。",
       );
+      return false;
     }
   }
   return (
@@ -221,9 +235,17 @@ export function StudyArchivePanel() {
             {renaming?.id === entry.id && (
               <form
                 className="pc-study-archive__rename"
+                id="pc-study-rename-form"
+                onKeyDown={(event) => {
+                  if (event.key === "Escape") {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    closeRename();
+                  }
+                }}
                 onSubmit={(event) => {
                   event.preventDefault();
-                  action(() => {
+                  const saved = action(() => {
                     const current = parseStudyArchive(
                       localStorage.getItem(STUDY_ARCHIVE_KEY),
                     );
@@ -240,14 +262,16 @@ export function StudyArchivePanel() {
                       before: renaming.before,
                       after: renaming.title.trim(),
                     });
-                    setRenaming(null);
+                    closeRename();
                     setNotice("标题已保存，原文与回答仍完整保留。");
                   });
+                  if (!saved) renameInput.current?.focus();
                 }}
               >
                 <label>
                   收藏标题
                   <input
+                    ref={renameInput}
                     aria-label="收藏标题"
                     value={renaming.title}
                     maxLength={120}
@@ -258,7 +282,7 @@ export function StudyArchivePanel() {
                 </label>
                 <div className="pc-study-archive__actions">
                   <button type="submit">保存标题</button>
-                  <button type="button" onClick={() => setRenaming(null)}>
+                  <button type="button" onClick={closeRename}>
                     取消改标题
                   </button>
                 </div>
@@ -270,6 +294,11 @@ export function StudyArchivePanel() {
             </p>
             <div className="pc-study-archive__actions">
               <button
+                ref={renameTrigger}
+                aria-expanded={renaming?.id === entry.id}
+                aria-controls={
+                  renaming?.id === entry.id ? "pc-study-rename-form" : undefined
+                }
                 type="button"
                 onClick={() => {
                   setRenaming({

@@ -59,6 +59,7 @@ try {
     assert.equal(requests.length,count);
     await follow('请解释空间层次。');
     assert.equal(requests.length,count+1);
+    await waitFor(()=>h.evaluate("document.activeElement?.matches('.pc-poetry-review > h3')"));
     assert.equal(requests.at(-1).text,poem);
     assert.deepEqual(requests.at(-1).followUp.turns,[{answer:'受控回答：通篇观照',details:'可取之处\n• 仅验证交互'}]);
     assert.equal(await h.evaluate("document.querySelector('.pc-study-follow-up-context .pc-study-follow-up__details').textContent.includes('仅验证交互')"),true);
@@ -155,6 +156,7 @@ try {
     assert.equal(requests.at(-1).text,previous.text);
     assert.equal(requests.at(-1).followUp.turns[0].question,previous.question);
     assert.equal(requests.at(-1).mode,'reading');
+    await waitFor(()=>h.evaluate("document.activeElement?.matches('.pc-library-literary')"));
   });
   await check('long-answer-is-readable-without-changing-the-stored-answer',async()=>{
     await h.evaluate("(()=>{document.querySelector('.pc-library-literary .pc-study-follow-up').open=true;const e=document.querySelector('.pc-library-literary [aria-label=围绕回答追问]');Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype,'value').set.call(e,'长文排版检查。');e.dispatchEvent(new Event('input',{bubbles:true}));})()");
