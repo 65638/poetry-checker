@@ -35,7 +35,11 @@ try{
    const count=requests.length;await fill('.pc-library-literary [aria-label=围绕回答追问]','请具体解释刚才的景物分析。');slow=true;await key(2);await waitFor(()=>requests.length===count+1);
    await fill('.pc-library-literary [aria-label=围绕回答追问]','下一题还未发送');await key(2);await sleep(250);assert.equal(requests.length,count+1);
    await waitFor(()=>h.evaluate("document.querySelector('.pc-library-literary .pc-study-prose')?.textContent.includes('请具体解释刚才')"));slow=false;
+   assert.equal(await h.evaluate("document.querySelector('.pc-library-literary [aria-label=围绕回答追问]').value"),'下一题还未发送','New answer must not erase a draft typed during its wait');
    assert.equal(requests.at(-1).text,requests[0].text);assert.equal(requests.at(-1).followUp.turns[0].question,requests[0].question);
+   await key(2);await waitFor(()=>requests.length===count+2);await waitFor(()=>h.evaluate("document.querySelector('.pc-library-literary .pc-study-prose')?.textContent.includes('下一题还未发送')"));
+   assert.equal(requests.at(-1).followUp.turns.at(-1).question,'请具体解释刚才的景物分析。');
+   assert.equal(await h.evaluate("document.querySelector('.pc-library-literary [aria-label=围绕回答追问]').value"),'','Only an unchanged successfully sent question is cleared');
  });
  await check('command-enter-also-submits-explicit-comparison-question',async()=>{
    await clickText('.pc-library > [role=tablist] button','对读');const count=requests.length;await fill('.pc-comparison-questions textarea','比较两首诗的情绪。');await key(4);

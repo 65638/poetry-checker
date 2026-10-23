@@ -1362,10 +1362,6 @@ export function LibraryContainer({
                 <StudyProse text={literary.result.result.overview} />
                 <StudyFollowUpContext input={literary.resultInput} />
                 <StudyFollowUp
-                  key={JSON.stringify([
-                    literary.resultInput,
-                    literary.result.result.overview,
-                  ])}
                   input={literary.resultInput}
                   response={literary.result}
                   disabled={literary.busy}
