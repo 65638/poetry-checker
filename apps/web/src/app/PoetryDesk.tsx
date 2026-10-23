@@ -37,6 +37,7 @@ import { planRevision } from "./revisionPlan";
 import { RevisionPreview } from "./RevisionPreview";
 import { StudyQuestion } from "./StudyQuestion";
 import { formatModernReading } from "./readingLabels";
+import { StudyHistory } from "./StudyHistory";
 
 type CritiqueInput = Extract<PoetryAssistantRequest, { task: "critique" }>;
 export function PoetryDesk({
@@ -444,10 +445,23 @@ export function PoetryDesk({
             <button
               className="pc-studio-action"
               disabled={!usable || critique.busy}
-              onClick={() => void critique.run(critiqueInput)}
+              onClick={() =>
+                void critique.run(
+                  currentCritique &&
+                    critique.resultInput?.task === "critique" &&
+                    critique.resultInput.question
+                    ? critique.resultInput
+                    : critiqueInput,
+                )
+              }
             >
               <Sparkles size={17} />
-              {currentCritique ? "重新评议" : "研读全诗"}
+              {currentCritique
+                ? critique.resultInput?.task === "critique" &&
+                  critique.resultInput.question
+                  ? "重新回答"
+                  : "重新评议"
+                : "研读全诗"}
             </button>
           </div>
           <StudyQuestion
@@ -459,6 +473,12 @@ export function PoetryDesk({
             }
           />
           <StudioTaskState {...critique} />
+          <StudyHistory
+            entries={critique.history}
+            current={critique.result ? critique.resultInput : null}
+            busy={critique.busy}
+            onRestore={critique.restore}
+          />
           {restoredAnalysis &&
             !critique.result &&
             !critique.busy &&
@@ -469,7 +489,7 @@ export function PoetryDesk({
             )}
           {critique.reused && (
             <p className="pc-studio-meta" role="status">
-              已取回本次会话的评议；点“重新评议”可获取新建议。
+              已取回本次会话的研读结果，没有新发请求。
             </p>
           )}
           {!usable && (

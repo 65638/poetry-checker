@@ -1,0 +1,48 @@
+.pc-study-history {
+  margin-block: 12px;
+  padding-block: 10px;
+  border-block: 1px solid currentColor;
+}
+.pc-study-history summary {
+  cursor: pointer;
+  line-height: 1.8;
+}
+.pc-study-history p {
+  font-size: 12px;
+  line-height: 1.8;
+}
+.pc-study-history ul {
+  list-style: none;
+  margin: 8px 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+.pc-study-history button {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+  padding: 10px 12px;
+  text-align: left;
+  overflow-wrap: anywhere;
+  font: inherit;
+  line-height: 1.7;
+  color: inherit;
+  background: transparent;
+  border: 1px solid currentColor;
+  cursor: pointer;
+}
+.pc-study-history button[aria-pressed="true"] {
+  border-width: 2px;
+  font-weight: bold;
+}
+.pc-study-history small {
+  font-size: 11px;
+  font-weight: normal;
+}
+.pc-study-history :is(summary, button):focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
