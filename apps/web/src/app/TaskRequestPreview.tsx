@@ -1,5 +1,6 @@
 import type { PoetryAssistantRequest } from "@poetry/contracts";
 import "./task-request-preview.css";
+import { StudyFollowUpContext } from "./StudyFollowUp";
 
 export function taskWaitLabel(input?: PoetryAssistantRequest | null): string {
   if (input?.task === "search") return "正在寻找契合意境的诗句…";
@@ -23,6 +24,7 @@ export function TaskRequestPreview({
     input.task === "compare" ? [input.left, input.right] : [input.text];
   return (
     <div className="pc-task-request-preview">
+      <StudyFollowUpContext input={input} />
       {input.task === "critique" && input.question && (
         <p>本次提问：{input.question}</p>
       )}

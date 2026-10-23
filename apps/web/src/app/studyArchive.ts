@@ -148,13 +148,18 @@ export function studyText(entry: StudyEntry): string {
   const rows = [entry.title, ""];
   if (input.task === "critique" && response.task === "critique") {
     if (input.question) rows.push("研读问题", input.question, "");
+    if (input.followUp) {
+      rows.push("追问背景（此前的 AI 回答，仅供参考）");
+      for (const turn of input.followUp.turns)
+        rows.push(turn.question ?? "通篇观照", turn.answer, "");
+    }
     rows.push(
       `${input.mode === "reading" ? "原诗赏读" : "写作推敲"} · ${directionNames[input.direction]} · ${bookNames[input.rhymeBook]}`,
       "",
       "原诗",
       input.text,
       "",
-      "通篇观照",
+      input.question ? "回应你的问题" : "通篇观照",
       response.result.overview,
     );
     if (response.result.revisionNotice)
