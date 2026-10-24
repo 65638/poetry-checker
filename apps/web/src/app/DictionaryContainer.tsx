@@ -1,3 +1,4 @@
+import { copyText } from "../utils/browser.js";
 import { useEffect, useRef, useState } from "react";
 import type { BookId, LookupResult } from "@poetry/contracts";
 import { characterInputError, createCharacterLookup } from "../api/characters";
@@ -261,7 +262,7 @@ export function DictionaryContainer({
     const lookupId = serial.current;
     const copyId = ++copySerial.current;
     try {
-      await navigator.clipboard.writeText(
+      await copyText(
         link
           ? `${window.location.href.split("#")[0]}${dictionaryHash({ character, book: result.book })}`
           : dictionaryText(character, result),

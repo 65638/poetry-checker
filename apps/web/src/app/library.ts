@@ -1,6 +1,7 @@
 import { LibraryWorkSchema, type LibraryWork } from "@poetry/contracts";
 import { EXAMPLES } from "./examples.js";
 import { literalLibrarySearch } from "./librarySearch.js";
+import { sha256Hex } from "../utils/sha256.js";
 
 export const BUILTIN_WORKS: LibraryWork[] = EXAMPLES.map((work) => ({
   ...work,
@@ -13,6 +14,8 @@ export const BUILTIN_WORKS: LibraryWork[] = EXAMPLES.map((work) => ({
 export const LIBRARY_LIMIT = 10000;
 export const IMPORT_BYTES = 10 * 1024 * 1024;
 export async function digest(text: string): Promise<string> {
+  if (!globalThis.crypto?.subtle)
+    return sha256Hex(new TextDecoder().decode(new TextEncoder().encode(text)));
   return [
     ...new Uint8Array(
       await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text)),

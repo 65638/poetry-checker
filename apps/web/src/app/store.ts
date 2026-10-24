@@ -1,3 +1,4 @@
+import { copyText } from "../utils/browser.js";
 import type {
   AnalysisResponse,
   AnalyzeRequest,
@@ -514,10 +515,8 @@ export class CheckerStore {
     try {
       if (this.options.writeText) {
         await this.options.writeText(text);
-      } else if (typeof navigator !== "undefined" && navigator.clipboard) {
-        await navigator.clipboard.writeText(text);
       } else {
-        throw new Error("当前环境不支持剪贴板");
+        await copyText(text);
       }
       this.commit({ feedback: "摘要已复制到剪贴板。" });
     } catch {

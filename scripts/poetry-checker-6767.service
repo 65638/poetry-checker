@@ -1,0 +1,33 @@
+[Unit]
+Description=Poetry checker website on port 6767
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=120
+StartLimitBurst=5
+
+[Service]
+Type=simple
+User=guji
+Group=guji
+WorkingDirectory=/home/guji/poetry-checker-6767/current
+ExecStart=/home/guji/poetry-checker-6767/runtime/node-v24.19.0-linux-x64/bin/node --import tsx scripts/serve.mjs
+Environment=NODE_ENV=production
+Environment=HOST=0.0.0.0
+Environment=PORT=6767
+Environment=POETRY_ENV_FILE=/home/guji/poetry-checker-6767/shared/model.env
+Environment=NODE_OPTIONS=--max-old-space-size=512
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=110
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+MemoryMax=768M
+CPUQuota=100%
+TasksMax=64
+Nice=5
+
+[Install]
+WantedBy=multi-user.target

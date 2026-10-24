@@ -1,3 +1,4 @@
+import { copyText } from "../utils/browser.js";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowLeft,
@@ -154,7 +155,7 @@ export function LibraryContainer({
     const request = ++excerptRequest.current;
     const saved = excerpts.add(work, line);
     try {
-      await navigator.clipboard.writeText(
+      await copyText(
         `${work.paragraphs[line]}\n——${work.author || "作者未载"}《${work.title}》`,
       );
       if (request === excerptRequest.current && selectedRef.current === work.id)
@@ -1220,8 +1221,7 @@ export function LibraryContainer({
                 onClick={() => {
                   const id = ++shareRequest.current;
                   const work = selected;
-                  void navigator.clipboard
-                    .writeText(poemText(work))
+                  void copyText(poemText(work))
                     .then(() => {
                       if (
                         id === shareRequest.current &&

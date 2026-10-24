@@ -1,3 +1,4 @@
+import { browserId } from "../utils/browser.js";
 import { LibraryWorkSchema, type LibraryWork } from "@poetry/contracts";
 
 export const EXCERPTS_KEY = "poetry-excerpts-v1";
@@ -88,7 +89,7 @@ export function addExcerpt(
   entries: Excerpt[],
   work: LibraryWork,
   paragraph: number,
-  id: string = crypto.randomUUID(),
+  id: string = browserId(),
   at = new Date().toISOString(),
 ) {
   const text = work.paragraphs[paragraph];

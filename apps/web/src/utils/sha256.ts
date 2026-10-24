@@ -1,4 +1,4 @@
-import type { InputDraft } from "../view-contract";
+import type { InputDraft } from "../view-contract.js";
 import type { AnalyzeRequest } from "@poetry/contracts";
 
 /** SHA-256 轮常量（FIPS 180-4）。 */

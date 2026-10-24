@@ -1,3 +1,4 @@
+import { browserId } from "../utils/browser.js";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 import type { CheckerViewProps } from "../view-contract";
@@ -122,7 +123,7 @@ export function Workspace({
       [
         ...notebook,
         {
-          id: crypto.randomUUID(),
+          id: browserId(),
           at: new Date().toISOString(),
           before,
           after: next,

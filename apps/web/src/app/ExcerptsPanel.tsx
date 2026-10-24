@@ -1,3 +1,4 @@
+import { copyText } from "../utils/browser.js";
 import { useState } from "react";
 import type { LibraryWork } from "@poetry/contracts";
 import type { useExcerpts } from "../hooks/useExcerpts";
@@ -125,8 +126,7 @@ export function ExcerptsPanel({
                 type="button"
                 className="pc-studio-action"
                 onClick={() => {
-                  void navigator.clipboard
-                    .writeText(excerptText(entry))
+                  void copyText(excerptText(entry))
                     .then(() =>
                       setNotice("诗句已复制，附原作与来源；随手记保留在本机。"),
                     )

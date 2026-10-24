@@ -1,3 +1,4 @@
+import { copyText } from "../utils/browser.js";
 import {
   PoetryAssistantRequestSchema,
   PoetryAssistantResponseSchema,
@@ -269,7 +270,7 @@ export function studyText(
     .trim();
 }
 export async function copyStudy(entry: StudyEntry, includeHistory = false) {
-  await navigator.clipboard.writeText(studyText(entry, { includeHistory }));
+  await copyText(studyText(entry, { includeHistory }));
 }
 export function downloadStudy(entry: StudyEntry, includeHistory = false) {
   const url = URL.createObjectURL(

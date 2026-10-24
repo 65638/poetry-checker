@@ -1,3 +1,4 @@
+import { browserId } from "../utils/browser.js";
 import type { InputDraft } from "../view-contract";
 import { parseSavedDraft } from "./draftPersistence";
 
@@ -86,7 +87,7 @@ export function savePoemDraft(
   entries: SavedPoemDraft[],
   draft: InputDraft,
   title = suggestedDraftTitle(draft),
-  id: string = crypto.randomUUID(),
+  id: string = browserId(),
   createdAt = new Date().toISOString(),
 ): SavedPoemDraft[] {
   if (!draft.text.trim()) throw new Error("先写几句诗，再收入稿匣。");

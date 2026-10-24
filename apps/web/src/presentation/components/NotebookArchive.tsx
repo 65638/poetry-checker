@@ -1,3 +1,4 @@
+import { copyText } from "../../utils/browser.js";
 import { useState } from "react";
 import { changedSpan, type NotebookEntry } from "../../app/notebook";
 import type { InputDraft } from "../../view-contract";
@@ -144,8 +145,7 @@ export function NotebookArchive({
                 <button
                   className="pc-studio-action"
                   onClick={() => {
-                    void navigator.clipboard
-                      .writeText(entry.after.text)
+                    void copyText(entry.after.text)
                       .then(() => setFeedback("此版诗文已复制。"))
                       .catch(() =>
                         setFeedback("复制未成功，可选中此版诗文手动复制。"),
