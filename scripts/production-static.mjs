@@ -38,15 +38,13 @@ export async function registerStatic(app, directory) {
           /* reject */
         }
         if (!allowed)
-          return reply
-            .code(403)
-            .send({
-              error: {
-                code: "ORIGIN_NOT_ALLOWED",
-                message: "请从本站页面提交。",
-                fieldErrors: [],
-              },
-            });
+          return reply.code(403).send({
+            error: {
+              code: "ORIGIN_NOT_ALLOWED",
+              message: "请从本站页面提交。",
+              fieldErrors: [],
+            },
+          });
       }
     }
   });

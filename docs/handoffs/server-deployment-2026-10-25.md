@@ -35,4 +35,5 @@ sudo journalctl -u poetry-checker-6767 -n 50 --no-pager
 - 真实DeepSeek《鹿柴》意象问答：HTTP200、6.283秒，响应结构与输入摘要有效；真实分析：HTTP200、8.904秒，AI应用8个字位。结论仍按实际证据保留needs_review，不伪造确定结论；单次调用不代表P95或文学准确率。
 - 已确认systemd enabled、运行中、意外重启0次；模型调用后内存约306MiB。未重启整台共享服务器。
 - 本机证据：`artifacts/acceptance/public-deployment/`；完整验证日志：`artifacts/continuous-improvement/server-deploy-verify.log`。
-- 两份上传包在服务器与本机SHA256一致：源码`7c8d0d2feb1f26f1a63d2a64ac73eed0c4f2ec62934d878098a3c8e1fb032379`；构建`d9eef72ea6adb344d8fa8b03078f2cea75c5c0fe54d1f9e87ee4625f6ba8a9e4`。部署基线为020b454及本次公网适配补丁，随此文提交后记录最终Git版本。
+- 两份上传包在服务器与本机SHA256一致：源码`7c8d0d2feb1f26f1a63d2a64ac73eed0c4f2ec62934d878098a3c8e1fb032379`；构建`d9eef72ea6adb344d8fa8b03078f2cea75c5c0fe54d1f9e87ee4625f6ba8a9e4`。部署基线为020b454及本次公网适配补丁，对应功能提交4623f43；后续静态入口格式整理不改变行为。
+- 已实际重启本项目systemd服务，公网healthz与DeepSeek配置仍正常。GitHub若暂不可达，不影响独立部署的公网网站；本机提交可随后同步。
