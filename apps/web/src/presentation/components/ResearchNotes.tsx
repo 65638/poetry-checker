@@ -1,3 +1,4 @@
+import { SourceLink } from "./SourceLink";
 import { useEffect, useState } from "react";
 import {
   ResearchResponseSchema,
@@ -71,9 +72,9 @@ export function ResearchNotes({
   const cite = (id: string) => {
     const s = sources.get(id);
     return s ? (
-      <a href={s.url} target="_blank" rel="noreferrer">
+      <SourceLink url={s.url}>
         {s.title}
-      </a>
+      </SourceLink>
     ) : (
       <span>来源暂缺</span>
     );

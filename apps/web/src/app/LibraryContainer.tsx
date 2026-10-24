@@ -1,3 +1,4 @@
+import { SourceLink } from "../presentation/components/SourceLink";
 import { copyText } from "../utils/browser.js";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -572,9 +573,9 @@ export function LibraryContainer({
                   <>
                     {" "}
                     ·{" "}
-                    <a href={work.sourceUrl} target="_blank" rel="noreferrer">
+                    <SourceLink url={work.sourceUrl}>
                       原始页面
-                    </a>
+                    </SourceLink>
                   </>
                 )}
               </p>
@@ -1476,9 +1477,9 @@ export function LibraryContainer({
                 <>
                   {" "}
                   ·{" "}
-                  <a href={selected.sourceUrl} target="_blank" rel="noreferrer">
+                  <SourceLink url={selected.sourceUrl}>
                     查看原始页面
-                  </a>
+                  </SourceLink>
                 </>
               )}
             </p>

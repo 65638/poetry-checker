@@ -1,3 +1,4 @@
+import { sourceLinkUrl as safeUrl } from "../utils/sourceLinks";
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import type { BookId, LookupResult, ReadingCandidate } from "@poetry/contracts";
 import { useMotionPreference } from "./useMotionPreference";
@@ -24,8 +25,6 @@ const TONES: Record<ReadingCandidate["toneClass"], string> = {
   neutral: "轻声",
   ze_unspecified: "仄声（未分上去）",
 };
-const safeUrl = (url: string | null) =>
-  url !== null && /^https?:\/\//iu.test(url) ? url : null;
 
 const LANDSCAPES = [
   {

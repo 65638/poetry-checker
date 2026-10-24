@@ -1,3 +1,4 @@
+import { SourceLink } from "../presentation/components/SourceLink";
 import { copyText } from "../utils/browser.js";
 import { useState } from "react";
 import type { LibraryWork } from "@poetry/contracts";
@@ -108,9 +109,9 @@ export function ExcerptsPanel({
             <p className="pc-studio-meta">
               来源：{entry.source || "未注明"}{" "}
               {entry.sourceUrl && (
-                <a href={entry.sourceUrl} target="_blank" rel="noreferrer">
+                <SourceLink url={entry.sourceUrl}>
                   查看来源
-                </a>
+                </SourceLink>
               )}
             </p>
             <div className="pc-studio-actions">

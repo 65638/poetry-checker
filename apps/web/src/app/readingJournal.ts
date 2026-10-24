@@ -1,3 +1,4 @@
+import { sourceLinkUrl } from "../utils/sourceLinks.js";
 import type { LibraryWork } from "@poetry/contracts";
 
 export const READING_JOURNAL_KEY = "poetry-reading-journal-v1";
@@ -53,7 +54,7 @@ export function poemText(work: LibraryWork): string {
     work.paragraphs.join("\n"),
     "",
     `来源：${work.source || "未注明"}`,
-    ...(work.sourceUrl ? [work.sourceUrl] : []),
+    ...(sourceLinkUrl(work.sourceUrl) ? [work.sourceUrl] : []),
   ].join("\n");
 }
 

@@ -1,3 +1,4 @@
+import { sourceLinkUrl as safeUrl } from "../../utils/sourceLinks";
 // apps/web/src/presentation/components/EvidencePanel.tsx
 import { useEffect, useId, useRef, type KeyboardEvent, type ReactNode } from 'react';
 import type { AnalysisResponse, AnnotatedToken, Evidence, ReadingCandidate } from '@poetry/contracts';
@@ -31,7 +32,6 @@ const KIND: Record<Evidence['kind'], string> = {
 };
 const FOCUSABLE = 'button:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), a[href], summary, [tabindex]:not([tabindex="-1"])';
 const toneText = (t: string) => (t === 'P' ? '平' : t === 'Z' ? '仄' : t);
-const safeUrl = (url: string | null) => (url !== null && /^https?:\/\//i.test(url) ? url : null);
 
 export function EvidencePanel(props: EvidencePanelProps) {
   const { report, token, lockedReason, onChooseReading, onClose, leaving = false, onExited } = props;

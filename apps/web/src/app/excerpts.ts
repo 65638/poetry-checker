@@ -1,3 +1,4 @@
+import { sourceLinkUrl } from "../utils/sourceLinks.js";
 import { browserId } from "../utils/browser.js";
 import { LibraryWorkSchema, type LibraryWork } from "@poetry/contracts";
 
@@ -154,7 +155,7 @@ export function excerptText(entry: Excerpt, includeNote = false): string {
     entry.text,
     `——${entry.author || "作者未载"}《${entry.title}》`,
     `来源：${entry.source || "未注明"}`,
-    ...(entry.sourceUrl ? [entry.sourceUrl] : []),
+    ...(sourceLinkUrl(entry.sourceUrl) ? [entry.sourceUrl] : []),
     ...(includeNote && entry.note ? [`随手记：${entry.note}`] : []),
   ].join("\n");
 }
