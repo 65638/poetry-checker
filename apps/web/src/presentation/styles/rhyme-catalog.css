@@ -1,0 +1,29 @@
+.pc-workspace .pc-rhyme-filter {
+  display: flex;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 12px;
+}
+.pc-workspace .pc-rhyme-filter label {
+  display: grid;
+  gap: 6px;
+  flex: 1 1 220px;
+  min-width: 0;
+  font-size: 14px;
+}
+.pc-workspace .pc-rhyme-filter input {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--pc-divider);
+  border-radius: 3px;
+  background: var(--pc-bg);
+  color: var(--pc-text);
+  font: inherit;
+}
+.pc-workspace .pc-rhyme-characters[aria-label="全部同韵字"] {
+  min-height: 0;
+  grid-auto-rows: min-content;
+}

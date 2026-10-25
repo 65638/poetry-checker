@@ -2,7 +2,7 @@
 
 [阅读与推敲使用指南](docs/features/reading-and-revision.md)：最近读过、整诗复制与下载、字号与静读记忆、推敲笺查找与逐行对比，以及 AI 失败重试。桌面启动见同页：重复打开复用服务，端口冲突时选择空闲端口。
 
-[DeepSeek / GLM 配置与荐字](docs/features/glm-reading-assistant.md)：支持服务端 DeepSeek Key，覆盖全局辨音与文学助手；采纳改稿后可按当前稿继续荐字，同韵翻页保留字格与推荐。密钥不进入网页或 Git。
+[DeepSeek / GLM 配置与荐字](docs/features/glm-reading-assistant.md)：支持服务端 DeepSeek Key，覆盖全局辨音与文学助手；采纳改稿后可按当前稿继续荐字，同韵字全部展开，AI一次提交遍历全量候选。密钥不进入网页或 Git。
 
 [全库逐字出处](data/research/full-corpus-v1/README.md)：2022条目录全部接入，约16.18万字位有直接语境候选，79处分歧保留；逐字出处、注释与正文差异可在“读音与版本”查看，并供GLM参考。来源主要为同一聚合站，尚未独立核验全部读音；不直接决定古音、韵部或诗体。
 

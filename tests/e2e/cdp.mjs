@@ -106,8 +106,14 @@ export async function launchBrowser(executable) {
     });
   };
   try {
-    proc = managedProcess(browserExecutable(executable), [
+    const binary = browserExecutable(executable);
+    proc = managedProcess(binary, [
       "--headless=new",
+      // Edge's compatibility launcher can exit while its relaunched browser lives.
+      // Keep the owned process attached so check()/stop() track this test instance.
+      ...(/(?:^|[\\/])msedge\.exe$/iu.test(binary)
+        ? ["--edge-skip-compat-layer-relaunch"]
+        : []),
       "--remote-debugging-port=0",
       "--remote-debugging-address=127.0.0.1",
       `--user-data-dir=${profile}`,
