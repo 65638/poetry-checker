@@ -1,5 +1,9 @@
 import { describe, expect, it, vi } from "vitest";
-import type { PoetryAssistantResponse } from "@poetry/contracts";
+import {
+  PoetryAssistantRequestSchema,
+  type PoetryAssistantResponse,
+} from "@poetry/contracts";
+import { sha256Hex } from "../src/utils/sha256";
 import {
   RhymeBatchSession,
   type RhymeTaskInput,
@@ -24,6 +28,46 @@ const response = (ids: string[]): PoetryAssistantResponse => ({
 const signal = () => new AbortController().signal;
 
 describe("全量同韵候选AI分批", () => {
+  it("真实请求入口逐批核对含意图的哈希，拒绝另一意图的答案", async () => {
+    let staleIntention = false;
+    const fetcher = vi.fn<typeof fetch>(async (_url, options) => {
+      const parsed = PoetryAssistantRequestSchema.parse(
+        JSON.parse(options!.body as string),
+      );
+      expect(parsed).toMatchObject({
+        task: "rhyme",
+        intention: "画面更静",
+      });
+      const bound = staleIntention
+        ? { ...parsed, intention: "另一轮意图" }
+        : parsed;
+      return new Response(
+        JSON.stringify({
+          ...response([]),
+          inputHash: sha256Hex(JSON.stringify(bound)),
+        }),
+        { status: 200 },
+      );
+    });
+    vi.stubGlobal("fetch", fetcher);
+    try {
+      const preferred = { ...input(121), intention: "画面更静" };
+      const result = await new RhymeBatchSession(preferred).run(signal());
+      expect(result.coverage).toEqual({
+        completed: 121,
+        total: 121,
+        batches: 2,
+      });
+      expect(fetcher).toHaveBeenCalledTimes(2);
+      staleIntention = true;
+      const rejected = new RhymeBatchSession(preferred);
+      await expect(rejected.run(signal())).rejects.toThrow("输入不一致");
+      expect(rejected.progress.completed).toBe(0);
+    } finally {
+      vi.unstubAllGlobals();
+    }
+  });
+
   it("覆盖末尾候选且每批不超过120，合并每批建议而非只看第一页", async () => {
     const request = vi.fn(async (value: RhymeTaskInput) =>
       response([value.candidateIds.at(-1)!]),
@@ -50,7 +94,7 @@ describe("全量同韵候选AI分批", () => {
     expect(result).not.toHaveProperty("inputHash");
   });
 
-  it("分批失败后仅重试未完成部分，诗文及读音快照不变", async () => {
+  it("分批失败后仅重试未完成部分，诗文、读音及推敲意图快照不变", async () => {
     let failOnce = true;
     const request = vi.fn(async (value: RhymeTaskInput) => {
       if (value.candidateIds[0] === "candidate:120" && failOnce) {
@@ -60,8 +104,10 @@ describe("全量同韵候选AI分批", () => {
       return response([value.candidateIds[0]!]);
     });
     const original = input();
+    original.intention = "保留静谧画面，略添思乡之情";
     const session = new RhymeBatchSession(original, request);
     original.text = "后来编辑的新诗";
+    original.intention = "刚输入但尚未提交的新意图";
     original.candidateIds[0] = "后来修改的候选";
     await expect(session.run(signal())).rejects.toThrow("受控网络故障");
     expect(session.progress).toEqual({ completed: 120, total: 241 });
@@ -75,6 +121,12 @@ describe("全量同韵候选AI分批", () => {
     expect(
       request.mock.calls.every(([value]) => value.text === input().text),
     ).toBe(true);
+    expect(
+      request.mock.calls.every(
+        ([value]) => value.intention === "保留静谧画面，略添思乡之情",
+      ),
+    ).toBe(true);
+    expect(session.input.intention).toBe("保留静谧画面，略添思乡之情");
     expect(result.result.matches).toHaveLength(3);
   });
 

@@ -1,6 +1,7 @@
 import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { registerStatic } from "./production-static.mjs";
+import { registerCompression } from "./production-compression.mjs";
 
 const environment =
   process.env.POETRY_ENV_FILE ??
@@ -13,6 +14,7 @@ if (!Number.isInteger(port) || port < 1 || port > 65535)
   throw new Error("Invalid PORT");
 const { buildApp } = await import("../apps/api/src/server.ts");
 const app = buildApp();
+registerCompression(app);
 await registerStatic(
   app,
   fileURLToPath(new URL("../apps/web/dist/", import.meta.url)),

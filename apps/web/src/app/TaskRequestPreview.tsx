@@ -27,6 +27,9 @@ export function TaskRequestPreview({
   return (
     <div className="pc-task-request-preview">
       <StudyFollowUpContext input={input} />
+      {input.task === "rhyme" && input.intention && (
+        <p>本次推敲意图：{input.intention}</p>
+      )}
       {input.task === "compare" && input.scope && (
         <p>
           本次范围：左卷{comparisonSourceLabel(input.scope.left)}；右卷

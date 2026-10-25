@@ -758,13 +758,43 @@ describe("poetry studio with real lexicon and controlled model", () => {
             e.candidates.map((c) => c.id),
         ),
       };
-      expect((await post(app, input)).statusCode).toBe(200);
+      const legacy = await post(app, input);
+      expect(legacy.statusCode).toBe(200);
+      expect(legacy.json().inputHash).toBe(
+        createHash("sha256").update(JSON.stringify(input)).digest("hex"),
+      );
       expect(
         JSON.parse(
           JSON.parse(fetcher.mock.calls[0]![1]!.body as string).messages[1]
             .content,
         ).targetToken,
       ).toEqual({ tokenId: "l2c3", text: "流", line: 2 });
+      const preferred = { ...input, intention: "  保留水势，增添归乡之意  " };
+      const revised = await post(app, preferred);
+      expect(revised.statusCode).toBe(200);
+      expect(revised.json().result).toEqual({ matches: [] });
+      expect(revised.json().inputHash).not.toBe(legacy.json().inputHash);
+      expect(revised.json().inputHash).toBe(
+        createHash("sha256")
+          .update(JSON.stringify(PoetryAssistantRequestSchema.parse(preferred)))
+          .digest("hex"),
+      );
+      const sent = JSON.parse(fetcher.mock.calls[1]![1]!.body as string);
+      const modelInput = JSON.parse(sent.messages[1].content);
+      expect(modelInput.intention).toBe("保留水势，增添归乡之意");
+      expect(modelInput.targetToken).toEqual({
+        tokenId: "l2c3",
+        text: "流",
+        line: 2,
+      });
+      expect(modelInput.candidateIds).toEqual(input.candidateIds);
+      expect(sent.messages[0].content).toContain(
+        "只是作者的推敲意图与语义偏好",
+      );
+      expect(sent.messages[0].content).toContain("不能扩大候选范围");
+      expect(sent.messages[0].content).toContain("不得创造候选或承诺整首合律");
+      for (const intention of ["", "  ", "意".repeat(241), 42])
+        expect((await post(app, { ...input, intention })).statusCode).toBe(422);
       expect(
         (await post(app, { ...input, targetTokenId: "l1c1" })).statusCode,
       ).toBe(422);
@@ -783,7 +813,7 @@ describe("poetry studio with real lexicon and controlled model", () => {
         (await post(app, { ...input, candidateIds: ["fabricated"] }))
           .statusCode,
       ).toBe(422);
-      expect(fetcher).toHaveBeenCalledTimes(1);
+      expect(fetcher).toHaveBeenCalledTimes(2);
     });
   });
   it("degrades explicitly when GLM is unconfigured", async () => {

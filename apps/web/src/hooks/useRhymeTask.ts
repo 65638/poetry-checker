@@ -9,6 +9,7 @@ import {
 type State = {
   identity: string;
   result: RhymeBatchResult | null;
+  resultInput: RhymeTaskInput | null;
   busy: boolean;
   error: string | null;
   cancelled: boolean;
@@ -18,6 +19,7 @@ type State = {
 const initial = (identity: string): State => ({
   identity,
   result: null,
+  resultInput: null,
   busy: false,
   error: null,
   cancelled: false,
@@ -75,7 +77,12 @@ export function useRhymeTask(identity: string) {
       const result = await session.run(own.signal, (progress) => {
         if (active()) setState((previous) => ({ ...previous, progress }));
       });
-      if (active()) setState((previous) => ({ ...previous, result }));
+      if (active())
+        setState((previous) => ({
+          ...previous,
+          result,
+          resultInput: session.input,
+        }));
     } catch (cause) {
       if (active()) {
         const detail =

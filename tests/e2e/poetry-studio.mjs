@@ -6,7 +6,7 @@ import { startHarness, waitFor, sleep, revision } from '../../docs/design/moonli
 
 const out = resolve(process.argv[2] ?? 'artifacts/poetry-studio');
 const rhymeOnly = process.argv.includes('--rhyme-only');
-const focusedChecks = new Set(['all-rhyme-characters-load-once-and-filter-without-ai', 'one-click-ai-covers-every-reading-candidate-including-last-batch', 'failed-later-batch-keeps-old-answer-and-retries-only-unfinished', 'cancelled-batch-ignores-late-answer-and-starts-no-more-batches', 'changing-rhyme-target-cancels-pending-batch-and-discards-late-result', 'empty-rhyme-recommendations-have-visible-feedback']);
+const focusedChecks = new Set(['rhyme-note-copy-download-and-adoption-keep-completed-snapshot', 'all-rhyme-characters-load-once-and-filter-without-ai', 'one-click-ai-covers-every-reading-candidate-including-last-batch', 'failed-later-batch-keeps-old-answer-and-retries-only-unfinished', 'cancelled-batch-ignores-late-answer-and-starts-no-more-batches', 'changing-rhyme-target-cancels-pending-batch-and-discards-late-result', 'empty-rhyme-recommendations-have-visible-feedback']);
 mkdirSync(out, { recursive: true });
 const calls = [];
 const critiqueInputs = [];
@@ -338,6 +338,10 @@ try {
     assert.equal(await h.evaluate("document.querySelector('.pc-input__text').value"), '手动新写的一首诗。');
   });
   let completePeers = [];
+  const firstIntention = '保留山水意象，更自然地衔接末句。';
+  const submittedIntention = '保留昂扬语气，避免艰涩用字。';
+  const nextIntention = '尚未提交的另一种方向。';
+  const displayedIntention = () => h.evaluate("[...document.querySelectorAll('.pc-poetry-desk p')].find(e=>e.textContent.startsWith('这份荐字的意图：'))?.textContent ?? null");
   const recommendationIdle = () => waitFor(() => h.evaluate("[...document.querySelectorAll('.pc-poetry-desk button')].some(el=>el.textContent.trim()==='结合全诗荐字' && !el.disabled)"));
   await check('all-rhyme-characters-load-once-and-filter-without-ai', async () => {
     await h.viewport(1440, 1000);
@@ -381,22 +385,94 @@ try {
   });
   await check('one-click-ai-covers-every-reading-candidate-including-last-batch', async () => {
     const before = rhymeInputs.length;
+    await fill('[aria-label="荐字意图"]', firstIntention);
+    await sleep(250);
+    assert.equal(rhymeInputs.length, before, 'Editing an intention must not call AI');
+    assert.equal(await h.evaluate("document.querySelector('[aria-label=\"荐字意图\"]').maxLength"), 240);
     await clickText('.pc-poetry-desk button', '结合全诗荐字');
     await recommendationIdle();
     const batches = rhymeInputs.slice(before);
     assert(batches.length >= 2);
     assert(batches.every(b => b.candidates.length > 0 && b.candidates.length <= 120));
+    assert(batches.every(b => b.intention === firstIntention), 'Every batch must keep the submitted intention');
+    assert.equal(await displayedIntention(), '这份荐字的意图：' + firstIntention);
+    assert.equal(await h.evaluate('document.documentElement.scrollWidth<=innerWidth+1'), true);
+    await h.evaluate("document.querySelector('[aria-label=\"荐字意图\"]').scrollIntoView({block:'start',behavior:'instant'})");
+    await shot('rhyme-intention-320');
     const sent = batches.flatMap(b => b.candidates.map(c => c.id));
     assert.deepEqual(sent, completePeers, 'Every candidate must reach the model exactly once in catalogue order');
     assert.equal(await h.evaluate("document.querySelectorAll('.pc-poetry-edit').length"), batches.length);
     assert.equal(await h.evaluate("document.querySelectorAll('.pc-rhyme-characters button').length"), new Set(batches.flatMap(b => b.candidates.map(c => c.character))).size);
+  });
+  await check('rhyme-note-copy-download-and-adoption-keep-completed-snapshot', async () => {
+    const originalText = await h.evaluate("document.querySelector('.pc-input__text').value");
+    const modelCount = rhymeInputs.length;
+    const analysisCount = analyses;
+    const matches = rhymeInputs.slice(-Math.ceil(completePeers.length / 120)).map(b => b.candidates[0]);
+    await h.evaluate(`(() => {
+      window.noteClipboardDescriptor=Object.getOwnPropertyDescriptor(navigator,'clipboard');
+      Object.defineProperty(navigator,'clipboard',{configurable:true,value:{writeText:async text=>{window.noteCopied=text;}}});
+      window.noteOriginalCreate=URL.createObjectURL;
+      window.noteOriginalClick=HTMLAnchorElement.prototype.click;
+      window.noteBlobs=new Map();
+      URL.createObjectURL=function(blob){const url=window.noteOriginalCreate.call(URL,blob);window.noteBlobs.set(url,blob);return url;};
+      HTMLAnchorElement.prototype.click=function(){if(this.download==='同韵推敲笺.txt'){window.noteDownloadName=this.download;window.noteDownloaded=window.noteBlobs.get(this.href).text();return;}return window.noteOriginalClick.call(this);};
+    })()`);
+    try {
+      await fill('[aria-label="荐字意图"]', nextIntention);
+      await clickText('[aria-label="分享荐字"] button', '复制荐字笺');
+      await waitFor(() => h.evaluate("typeof window.noteCopied==='string'"));
+      const copied = await h.evaluate('window.noteCopied');
+      assert(copied.includes('原诗：\n' + originalText));
+      assert(copied.includes('推敲意图：' + firstIntention));
+      assert(!copied.includes(nextIntention));
+      assert(copied.includes(`本次已遍历 ${completePeers.length} 个同韵读音候选。`));
+      matches.forEach((c, index) => assert(copied.includes(`${index + 1}. ${c.character}`), 'Every completed batch recommendation belongs in the export'));
+      assert.equal((copied.match(/受控同韵语义推荐。/gu) ?? []).length, matches.length);
+      await clickText('[aria-label="分享荐字"] button', '下载荐字笺');
+      const downloaded = await h.evaluate('window.noteDownloaded');
+      assert.equal(downloaded, copied, 'TXT and clipboard contain the same completed snapshot');
+      assert.equal(await h.evaluate('window.noteDownloadName'), '同韵推敲笺.txt');
+      await clickText('.pc-poetry-edit button', '试用');
+      await waitFor(() => h.evaluate(`document.querySelector('.pc-input__text').value!==${JSON.stringify(originalText)}`));
+      await h.evaluate('window.noteCopied=null');
+      await waitFor(() => h.evaluate("!!document.querySelector('[aria-label=\"分享荐字\"] button')"));
+      await clickText('[aria-label="分享荐字"] button', '复制荐字笺');
+      await waitFor(() => h.evaluate("typeof window.noteCopied==='string'"));
+      assert.equal(await h.evaluate('window.noteCopied'), copied, 'Adopting an edit must not replace the exported original poem');
+      assert.equal(rhymeInputs.length, modelCount, 'Sharing and adoption must not implicitly call AI');
+      assert.equal(analyses, analysisCount, 'Sharing and adoption must not reanalyze');
+      await h.click('[aria-label="撤销上次修改"]');
+      await waitFor(() => h.evaluate(`document.querySelector('.pc-input__text').value===${JSON.stringify(originalText)}`));
+      await recommendationIdle();
+      await h.evaluate("document.querySelector('[aria-label=\"分享荐字\"]').scrollIntoView({block:'center',behavior:'instant'})");
+      assert.equal(await h.evaluate('document.documentElement.scrollWidth<=innerWidth+1'), true);
+      await shot('rhyme-note-320');
+    } finally {
+      await h.evaluate(`(() => {
+        if(window.noteClipboardDescriptor)Object.defineProperty(navigator,'clipboard',window.noteClipboardDescriptor);else delete navigator.clipboard;
+        URL.createObjectURL=window.noteOriginalCreate;
+        HTMLAnchorElement.prototype.click=window.noteOriginalClick;
+        delete window.noteBlobs;
+      })()`);
+    }
   });
   await check('failed-later-batch-keeps-old-answer-and-retries-only-unfinished', async () => {
     const before = rhymeInputs.length;
     const oldAnswer = await h.evaluate("[...document.querySelectorAll('.pc-poetry-edit')].map(e=>e.textContent)");
     recommendationTag = '受控重试后新推荐。';
     failRhymeAt = before + 2;
+    blockRhymeAt = before + 2;
+    await fill('[aria-label="荐字意图"]', submittedIntention);
+    assert.equal(await displayedIntention(), '这份荐字的意图：' + firstIntention, 'Draft edits must not relabel the displayed answer');
     await clickText('.pc-poetry-desk button', '结合全诗荐字');
+    await waitFor(() => Boolean(releaseRhyme));
+    await fill('[aria-label="荐字意图"]', nextIntention);
+    assert.equal(await displayedIntention(), '这份荐字的意图：' + firstIntention, 'Pending result retains the old answer intention');
+    assert.equal(rhymeInputs.length, before + 2, 'Typing while waiting must neither submit nor cancel the snapshot');
+    releaseRhyme();
+    releaseRhyme = null;
+    blockRhymeAt = null;
     await waitFor(() => h.evaluate("!!document.querySelector('.pc-poetry-desk [role=alert]')"));
     assert.equal(rhymeInputs.length, before + 2);
     assert.deepEqual(await h.evaluate("[...document.querySelectorAll('.pc-poetry-edit')].map(e=>e.textContent)"), oldAnswer);
@@ -407,6 +483,9 @@ try {
     await recommendationIdle();
     const retry = rhymeInputs.slice(retryStart).flatMap(b => b.candidates.map(c => c.id));
     assert.deepEqual([...first, ...retry], completePeers, 'Retry must reuse the completed first batch without resending it');
+    assert(rhymeInputs.slice(before).every(b => b.intention === submittedIntention), 'Retry must use submitted intention, not the next question draft');
+    assert.equal(await displayedIntention(), '这份荐字的意图：' + submittedIntention);
+    assert.equal(await h.evaluate("document.querySelector('[aria-label=\"荐字意图\"]').value"), nextIntention, 'Waiting-period edits remain available after success');
     assert(await h.evaluate("[...document.querySelectorAll('.pc-poetry-edit')].every(e=>e.textContent.includes('受控重试后新推荐'))"));
     recommendationTag = '受控同韵语义推荐。';
   });
@@ -450,10 +529,14 @@ try {
   });
   await check('empty-rhyme-recommendations-have-visible-feedback', async () => {
     emptyRhyme = true;
+    await fill('[aria-label="荐字意图"]', '');
+    const before = rhymeInputs.length;
     await waitFor(() => h.evaluate("[...document.querySelectorAll('.pc-poetry-desk button')].some(el=>el.textContent.trim()==='结合全诗荐字' && !el.disabled)"));
     await clickText('.pc-poetry-desk button', '结合全诗荐字');
     await waitFor(() => h.evaluate("document.querySelector('.pc-poetry-desk').textContent.includes('本次未找到值得替换的字')"));
     assert.equal(await h.evaluate("document.querySelectorAll('.pc-poetry-edit').length"), 0);
+    assert(rhymeInputs.slice(before).every(b => !Object.hasOwn(b, 'intention')), 'Empty intention preserves the existing request shape');
+    assert.equal(await displayedIntention(), '这份荐字的意图：结合全诗，未指定额外侧重');
     await shot('rhyme-empty-375');
   });
   assert.deepEqual(result.errors, []);

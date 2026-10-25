@@ -5,14 +5,16 @@
   gap: 12px;
   margin-top: 12px;
 }
-.pc-workspace .pc-rhyme-filter label {
+.pc-workspace .pc-rhyme-filter label,
+.pc-workspace .pc-rhyme-intention {
   display: grid;
   gap: 6px;
   flex: 1 1 220px;
   min-width: 0;
   font-size: 14px;
 }
-.pc-workspace .pc-rhyme-filter input {
+.pc-workspace .pc-rhyme-filter input,
+.pc-workspace .pc-rhyme-intention input {
   box-sizing: border-box;
   width: 100%;
   min-height: 44px;
@@ -22,6 +24,9 @@
   background: var(--pc-bg);
   color: var(--pc-text);
   font: inherit;
+}
+.pc-workspace .pc-rhyme-intention {
+  margin: 16px 0;
 }
 .pc-workspace .pc-rhyme-characters[aria-label="全部同韵字"] {
   min-height: 0;

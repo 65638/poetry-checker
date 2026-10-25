@@ -8,6 +8,7 @@ import { StudyProse } from "./StudyProse";
 import "./study-follow-up.css";
 import { submitQuestionShortcut } from "./questionKeyboard";
 import { sha256Hex } from "../utils/sha256";
+import { studyContextKey } from "./studyContinuity";
 
 export function StudyFollowUp({
   input,
@@ -26,7 +27,7 @@ export function StudyFollowUp({
   const submitted = useRef<{ hash: string; version: number } | null>(null);
   const identity =
     input?.task === "critique"
-      ? JSON.stringify([
+      ? studyContextKey([
           input.text,
           input.rhymeBook,
           input.mode,

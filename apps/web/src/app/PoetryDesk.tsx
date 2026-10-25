@@ -27,6 +27,7 @@ import { requestAllRhymeWords } from "../api/all-rhyme-words";
 import { useRhymeTask } from "../hooks/useRhymeTask";
 import { RhymeCatalogCache } from "./rhymeCatalogCache";
 import { filterRhymeEntries } from "./rhymeFilter";
+import { RhymeNoteActions } from "./RhymeNoteActions";
 import "../presentation/styles/rhyme-catalog.css";
 import { createCharacterLookup } from "../api/characters";
 import { readWebEnv, resolveApiConfig } from "./config";
@@ -83,6 +84,7 @@ export function PoetryDesk({
   const [seedTokenId, setSeedTokenId] = useState("");
   const [readingId, setReadingId] = useState("");
   const [rhymeFilter, setRhymeFilter] = useState("");
+  const [rhymeIntention, setRhymeIntention] = useState("");
   const [rhymeRetry, setRhymeRetry] = useState(0);
   const [rhymeLoaded, setRhymeLoaded] = useState({ loaded: 0, total: 0 });
   const [rhymeSnapshot, setRhymeSnapshot] = useState<{
@@ -96,6 +98,7 @@ export function PoetryDesk({
   const [savedRecommendations, setSavedRecommendations] = useState<{
     scope: string;
     text: string;
+    input: Extract<PoetryAssistantRequest, { task: "rhyme" }>;
     matches: Extract<
       PoetryAssistantResponse,
       { task: "rhyme" }
@@ -346,10 +349,11 @@ export function PoetryDesk({
       ? savedRecommendations
       : null;
   useEffect(() => {
-    if (rhyme.result?.task === "rhyme")
+    if (rhyme.result?.task === "rhyme" && rhyme.resultInput)
       setSavedRecommendations({
         scope: recommendationScope,
-        text: draft.text,
+        text: rhyme.resultInput.text,
+        input: rhyme.resultInput,
         matches: rhyme.result.result.matches,
         candidates: recommendationCandidates,
       });
@@ -362,6 +366,8 @@ export function PoetryDesk({
     rhyme.result?.task === "rhyme"
       ? recommendationCandidates
       : (saved?.candidates ?? []);
+  const displayedInput = rhyme.result ? rhyme.resultInput : saved?.input;
+  const displayedIntention = displayedInput?.intention;
   const peers = rhymeWords?.lookup.entries.flatMap((e) => e.candidates) ?? [];
   const visibleRhymeEntries = useMemo(
     () => filterRhymeEntries(rhymeWords?.lookup.entries ?? [], rhymeFilter),
@@ -466,15 +472,16 @@ export function PoetryDesk({
             <button
               className="pc-studio-action"
               disabled={!usable || critique.busy}
-              onClick={() =>
+              onClick={() => {
+                answerFocus.begin();
                 void critique.run(
                   currentCritique &&
                     critique.resultInput?.task === "critique" &&
                     critique.resultInput.question
                     ? critique.resultInput
                     : critiqueInput,
-                )
-              }
+                );
+              }}
             >
               <Sparkles size={17} />
               {currentCritique
@@ -489,9 +496,10 @@ export function PoetryDesk({
             key={report?.inputHash ?? "empty"}
             disabled={!usable || critique.busy}
             mode={mode}
-            onAsk={(question) =>
-              void critique.run({ ...critiqueInput, question })
-            }
+            onAsk={(question) => {
+              answerFocus.begin();
+              void critique.run({ ...critiqueInput, question });
+            }}
           />
           <StudioTaskState {...critique} />
           <StudyHistory
@@ -727,6 +735,21 @@ export function PoetryDesk({
               )}
               {rhymeWords && (
                 <>
+                  <label className="pc-rhyme-intention">
+                    推敲意图（选填）
+                    <input
+                      aria-label="荐字意图"
+                      value={rhymeIntention}
+                      maxLength={240}
+                      placeholder="例如：保留江水的画面，让语气更清冷"
+                      onChange={(event) =>
+                        setRhymeIntention(event.target.value)
+                      }
+                    />
+                    <span className="pc-studio-meta">
+                      点击荐字后生效；仍从全部同韵候选中筛选。
+                    </span>
+                  </label>
                   <div className="pc-studio-actions">
                     <span className="pc-studio-meta">
                       同韵部共{rhymeWords.total}字 · 已全部展开
@@ -748,6 +771,9 @@ export function PoetryDesk({
                           targetTokenId: seed.tokenId,
                           readingId: seedReading!.id,
                           candidateIds: peers.map((c) => c.id),
+                          ...(rhymeIntention.trim()
+                            ? { intention: rhymeIntention.trim() }
+                            : {}),
                         });
                       }}
                     >
@@ -768,12 +794,24 @@ export function PoetryDesk({
                       上次荐字 · 可按当前稿重新推荐
                     </p>
                   )}
-                  {rhyme.result?.task === "rhyme" &&
-                    !recommendations.length && (
-                      <p className="pc-studio-meta" role="status">
-                        本次未找到值得替换的字，保留原字也可以。
-                      </p>
-                    )}
+                  {(rhyme.result || saved) && (
+                    <p className="pc-studio-meta">
+                      这份荐字的意图：
+                      {displayedIntention || "结合全诗，未指定额外侧重"}
+                    </p>
+                  )}
+                  {displayedInput && (
+                    <RhymeNoteActions
+                      input={displayedInput}
+                      matches={recommendations}
+                      candidates={displayedCandidates}
+                    />
+                  )}
+                  {(rhyme.result || saved) && !recommendations.length && (
+                    <p className="pc-studio-meta" role="status">
+                      本次未找到值得替换的字，保留原字也可以。
+                    </p>
+                  )}
                   {recommendations.map((match) => {
                     const c = displayedCandidates.find(
                       (p) => p.id === match.id,

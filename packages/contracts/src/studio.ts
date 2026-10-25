@@ -162,6 +162,7 @@ export const PoetryAssistantRequestSchema = z.discriminatedUnion("task", [
     targetTokenId: z.string().min(1).max(100),
     readingId: z.string().min(1).max(200),
     candidateIds: z.array(z.string().min(1).max(200)).min(1).max(120),
+    intention: z.string().trim().min(1).max(240).optional(),
   }),
 ]);
 const meta = {

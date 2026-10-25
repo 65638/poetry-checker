@@ -2543,6 +2543,11 @@
                   "minLength": 1,
                   "maxLength": 200
                 }
+              },
+              "intention": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 240
               }
             },
             "required": [

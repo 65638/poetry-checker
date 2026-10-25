@@ -1,6 +1,8 @@
 import { createReadStream } from "node:fs";
 import { realpath, stat } from "node:fs/promises";
 import { extname, resolve, sep } from "node:path";
+import { acceptsGzip, varyByEncoding } from "./production-compression.mjs";
+import { StaticCompressionCache } from "./static-compression-cache.mjs";
 
 const types = {
   ".html": "text/html; charset=utf-8",
@@ -22,6 +24,7 @@ const types = {
 /** Only the prebuilt public directory is served, never source or configuration. */
 export async function registerStatic(app, directory) {
   const root = await realpath(directory);
+  const compressedFiles = new StaticCompressionCache();
   await stat(resolve(root, "index.html"));
   app.addHook("onRequest", async (request, reply) => {
     reply.header("X-Content-Type-Options", "nosniff");
@@ -78,13 +81,30 @@ export async function registerStatic(app, directory) {
     } catch {
       return reply.code(404).send({ error: "Not found" });
     }
-    reply.type(type).header("Content-Length", info.size);
+    reply.type(type);
     reply.header(
       "Cache-Control",
       name.startsWith("assets/") && /-[\w-]{8,}\./u.test(name)
         ? "public, max-age=31536000, immutable"
         : "no-cache",
     );
+    if (
+      [".html", ".js", ".css", ".svg", ".txt"].includes(extname(name)) &&
+      info.size >= 1024
+    ) {
+      varyByEncoding(reply);
+      if (acceptsGzip(request.headers["accept-encoding"])) {
+        const compressed = await compressedFiles.get(file, info);
+        if (compressed) {
+          reply.header("Content-Encoding", "gzip");
+          reply.header("Content-Length", compressed.length);
+          return reply.send(compressed);
+        }
+        // A concurrently published index may have changed during the read.
+        info = await stat(file);
+      }
+    }
+    reply.header("Content-Length", info.size);
     return reply.send(createReadStream(file));
   });
 }
