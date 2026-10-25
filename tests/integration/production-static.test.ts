@@ -265,7 +265,10 @@ it("静态压缩缓存保留的gzip字节总量不超过8MB", async () => {
     }
     expect(sum).toBeGreaterThan(8 * 1024 * 1024);
     expect(cache.size).toBeLessThan(9);
-    expect(await cache.get(first!.file, first!.info)).not.toBe(first!.data);
+    // Compare identity without asking the assertion formatter to diff megabyte buffers.
+    expect((await cache.get(first!.file, first!.info)) === first!.data).toBe(
+      false,
+    );
     expect(cache.bytes).toBeLessThanOrEqual(8 * 1024 * 1024);
   } finally {
     await rm(root, { recursive: true, force: true });

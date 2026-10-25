@@ -50,7 +50,8 @@ describe("dictionary: real transport boundaries", () => {
     ]);
   });
   it("encodes the code point and forwards cancellation; a missing entry is a valid lookup", async () => {
-    const signal = new AbortController().signal;
+    const controller = new AbortController();
+    const signal = controller.signal;
     const calls: Array<{ url: string; signal?: AbortSignal | null }> = [];
     const lookup = createCharacterLookup(
       "https://example.org",
@@ -60,12 +61,13 @@ describe("dictionary: real transport boundaries", () => {
       },
     );
     const result = await lookup("𠀀", "pingshui", signal);
-    expect(calls).toEqual([
-      {
-        url: `https://example.org/api/v1/characters/${encodeURIComponent("𠀀")}?book=pingshui`,
-        signal,
-      },
-    ]);
+    expect(calls).toHaveLength(1);
+    expect(calls[0]!.url).toBe(
+      `https://example.org/api/v1/characters/${encodeURIComponent("𠀀")}?book=pingshui`,
+    );
+    expect(calls[0]!.signal?.aborted).toBe(false);
+    controller.abort();
+    expect(calls[0]!.signal?.aborted).toBe(true);
     expect(result.missing).toEqual(["𠀀"]);
   });
   it.each([

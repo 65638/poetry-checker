@@ -7,6 +7,7 @@ import { startHarness, waitFor, sleep, revision } from '../../docs/design/moonli
 const out = resolve(process.argv[2] ?? 'artifacts/poetry-studio');
 const rhymeOnly = process.argv.includes('--rhyme-only');
 const focusedChecks = new Set(['rhyme-note-copy-download-and-adoption-keep-completed-snapshot', 'all-rhyme-characters-load-once-and-filter-without-ai', 'one-click-ai-covers-every-reading-candidate-including-last-batch', 'failed-later-batch-keeps-old-answer-and-retries-only-unfinished', 'cancelled-batch-ignores-late-answer-and-starts-no-more-batches', 'changing-rhyme-target-cancels-pending-batch-and-discards-late-result', 'empty-rhyme-recommendations-have-visible-feedback']);
+focusedChecks.add('changed-seed-lookup-failure-keeps-saved-note-and-can-retry');
 mkdirSync(out, { recursive: true });
 const calls = [];
 const critiqueInputs = [];
@@ -18,6 +19,9 @@ const rhymePages = [];
 let failRhymeAt = null;
 let blockRhymeAt = null;
 let releaseRhyme = null;
+let failNextCharacterLookup = false;
+let releaseCharacterLookup = null;
+let characterLookups = 0;
 let recommendationTag = '受控同韵语义推荐。';
 const fetcher = async (_url, init) => {
   const data = JSON.parse(JSON.parse(init.body).messages[1].content);
@@ -41,7 +45,15 @@ const fetcher = async (_url, init) => {
 };
 const app = buildApp({ readingAssistant: { provider: 'deepseek', apiKey: 'controlled-test-key', fetcher } });
 let analyses = 0;
-app.addHook('preHandler', async request => {
+app.addHook('preHandler', async (request, reply) => {
+  if (request.url.startsWith('/api/v1/characters/')) {
+    characterLookups++;
+    if (failNextCharacterLookup) {
+      failNextCharacterLookup = false;
+      await new Promise(resolve => { releaseCharacterLookup = resolve; });
+      return reply.code(503).send({ message: '受控韵脚查询失败，请重试。' });
+    }
+  }
   if (request.url === '/api/v1/analyze') analyses++;
   if (request.url === '/api/v1/rhyme-words') { rhymeLookups++; if (slowPages) await sleep(650); }
 });
@@ -436,7 +448,7 @@ try {
       await clickText('.pc-poetry-edit button', '试用');
       await waitFor(() => h.evaluate(`document.querySelector('.pc-input__text').value!==${JSON.stringify(originalText)}`));
       await h.evaluate('window.noteCopied=null');
-      await waitFor(() => h.evaluate("!!document.querySelector('[aria-label=\"分享荐字\"] button')"));
+      await recommendationIdle();
       await clickText('[aria-label="分享荐字"] button', '复制荐字笺');
       await waitFor(() => h.evaluate("typeof window.noteCopied==='string'"));
       assert.equal(await h.evaluate('window.noteCopied'), copied, 'Adopting an edit must not replace the exported original poem');
@@ -455,6 +467,58 @@ try {
         HTMLAnchorElement.prototype.click=window.noteOriginalClick;
         delete window.noteBlobs;
       })()`);
+    }
+  });
+  await check('changed-seed-lookup-failure-keeps-saved-note-and-can-retry', async () => {
+    const originalText = await h.evaluate("document.querySelector('.pc-input__text').value");
+    const modelCount = rhymeInputs.length;
+    const analysisCount = analyses;
+    const lookupCount = characterLookups;
+    const savedMatches = await h.evaluate("[...document.querySelectorAll('.pc-poetry-edit h3')].map(e=>e.textContent)");
+    assert(savedMatches.length > 0);
+    await h.evaluate(`(() => {
+      window.lookupClipboardDescriptor=Object.getOwnPropertyDescriptor(navigator,'clipboard');
+      Object.defineProperty(navigator,'clipboard',{configurable:true,value:{writeText:async text=>{window.lookupCopied=text;}}});
+    })()`);
+    failNextCharacterLookup = true;
+    releaseCharacterLookup = null;
+    try {
+      await clickText('.pc-poetry-edit button', '试用');
+      await waitFor(() => !!releaseCharacterLookup);
+      assert.equal(await h.evaluate("!!document.querySelector('[aria-label=\"分享荐字\"] button')"), true, 'Saved note remains usable while changed seed lookup is pending');
+      assert.equal(await h.evaluate("document.querySelector('[aria-label=\"荐字意图\"]')?.value"), nextIntention, 'Intention editor stays present during lookup');
+      assert.equal(await h.evaluate("[...document.querySelectorAll('.pc-poetry-desk button')].find(e=>e.textContent.trim()==='结合全诗荐字')?.disabled"), true, 'New recommendation stays visible but disabled until candidates are ready');
+      assert.deepEqual(await h.evaluate("[...document.querySelectorAll('.pc-poetry-edit h3')].map(e=>e.textContent)"), savedMatches);
+      await clickText('[aria-label="分享荐字"] button', '复制荐字笺');
+      await waitFor(() => h.evaluate("typeof window.lookupCopied==='string'"));
+      const copied = await h.evaluate('window.lookupCopied');
+      assert(copied.includes('原诗：\n' + originalText));
+      assert(copied.includes('推敲意图：' + firstIntention));
+      releaseCharacterLookup();
+      releaseCharacterLookup = null;
+      await waitFor(() => h.evaluate("[...document.querySelectorAll('.pc-poetry-desk button')].some(e=>e.textContent.trim()==='重新查阅韵脚')"));
+      assert.equal(await h.evaluate("document.querySelector('[aria-label=\"荐字意图\"]')?.value"), nextIntention, 'Lookup failure preserves the next intention draft');
+      assert.equal(await h.evaluate("[...document.querySelectorAll('.pc-poetry-desk button')].find(e=>e.textContent.trim()==='结合全诗荐字')?.disabled"), true);
+      await h.evaluate('window.lookupCopied=null');
+      await clickText('[aria-label="分享荐字"] button', '复制荐字笺');
+      await waitFor(() => h.evaluate("typeof window.lookupCopied==='string'"));
+      assert.equal(await h.evaluate('window.lookupCopied'), copied, 'Lookup failure preserves completed note');
+      await h.evaluate("document.querySelector('[aria-label=\"分享荐字\"]').scrollIntoView({block:'center',behavior:'instant'})");
+      await shot('rhyme-seed-lookup-failed-320');
+      await clickText('.pc-poetry-desk button', '重新查阅韵脚');
+      await recommendationIdle();
+      assert.equal(characterLookups, lookupCount + 2, 'One failed lookup is followed by exactly one explicit retry');
+      assert.equal(await h.evaluate("document.querySelectorAll('.pc-rhyme-characters button').length"), 248, 'Retry restores complete real catalogue');
+      assert.equal(rhymeInputs.length, modelCount, 'Lookup recovery must not invoke AI');
+      assert.equal(analyses, analysisCount, 'Lookup recovery must not reanalyze');
+      await h.click('[aria-label="撤销上次修改"]');
+      await waitFor(() => h.evaluate(`document.querySelector('.pc-input__text').value===${JSON.stringify(originalText)}`));
+      await recommendationIdle();
+    } finally {
+      releaseCharacterLookup?.();
+      releaseCharacterLookup = null;
+      failNextCharacterLookup = false;
+      await h.evaluate("if(window.lookupClipboardDescriptor)Object.defineProperty(navigator,'clipboard',window.lookupClipboardDescriptor);else delete navigator.clipboard");
     }
   });
   await check('failed-later-batch-keeps-old-answer-and-retries-only-unfinished', async () => {
@@ -479,7 +543,7 @@ try {
     const first = rhymeInputs[before].candidates.map(c => c.id);
     failRhymeAt = null;
     const retryStart = rhymeInputs.length;
-    await clickText('.pc-poetry-desk button', '重试本次研读');
+    await clickText('.pc-poetry-desk button', '继续荐字');
     await recommendationIdle();
     const retry = rhymeInputs.slice(retryStart).flatMap(b => b.candidates.map(c => c.id));
     assert.deepEqual([...first, ...retry], completePeers, 'Retry must reuse the completed first batch without resending it');
@@ -506,6 +570,12 @@ try {
     assert.deepEqual(await h.evaluate("[...document.querySelectorAll('.pc-poetry-edit')].map(e=>e.textContent)"), oldAnswer);
     assert.equal(await h.evaluate("document.querySelector('.pc-poetry-desk').textContent.includes('不应显示的迟到推荐')"), false);
     recommendationTag = '受控同韵语义推荐。';
+    const retryStart = rhymeInputs.length;
+    await clickText('.pc-poetry-desk button', '继续荐字');
+    await recommendationIdle();
+    const completed = rhymeInputs[before].candidates.map(c => c.id);
+    const resumed = rhymeInputs.slice(retryStart).flatMap(b => b.candidates.map(c => c.id));
+    assert.deepEqual([...completed, ...resumed], completePeers, 'Explicit continuation after cancellation must reuse the completed first batch');
   });
   await check('changing-rhyme-target-cancels-pending-batch-and-discards-late-result', async () => {
     const original = await h.evaluate("document.querySelector('[aria-label=\"选择句末字\"]').value");

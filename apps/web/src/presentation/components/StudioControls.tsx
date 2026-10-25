@@ -63,6 +63,8 @@ export function StudioTaskState({
   cancelled = false,
   result,
   pendingInput,
+  retryLabel,
+  cancelledMessage,
 }: {
   busy: boolean;
   error: string | null;
@@ -71,6 +73,8 @@ export function StudioTaskState({
   cancelled?: boolean;
   result?: unknown;
   pendingInput?: PoetryAssistantRequest | null;
+  retryLabel?: string;
+  cancelledMessage?: string;
 }) {
   const visible = useBusyIndicator(busy);
   const [seconds, setSeconds] = useState(0);
@@ -131,10 +135,10 @@ export function StudioTaskState({
           className={error ? "pc-studio-error" : "pc-studio-notice"}
           role={error ? "alert" : "status"}
         >
-          <p>{error || "已停止本次研读，诗文仍保留。"}</p>
+          <p>{error || cancelledMessage || "已停止本次研读，诗文仍保留。"}</p>
           {retry && (
             <button type="button" className="pc-studio-action" onClick={retry}>
-              {cancelled ? "重新研读" : "重试本次研读"}
+              {retryLabel || (cancelled ? "重新研读" : "重试本次研读")}
             </button>
           )}
         </div>

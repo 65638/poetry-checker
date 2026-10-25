@@ -13,7 +13,7 @@ import {
 const production = !process.argv.includes("--source");
 const out = resolve(
   process.argv.slice(2).find((argument) => !argument.startsWith("--")) ??
-    "artifacts/study-continuity",
+    "artifacts/continuous-improvement/study-continuity",
 );
 mkdirSync(out, { recursive: true });
 const poem = "空山不见人，但闻人语响。返景入深林，复照青苔上。";

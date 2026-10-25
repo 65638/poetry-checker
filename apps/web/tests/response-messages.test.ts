@@ -90,7 +90,7 @@ describe("reader-facing API failures", () => {
     const aborted = AbortSignal.abort();
     await expect(
       createCharacterLookup("", fetcher)("月", "pingshui", aborted),
-    ).rejects.toBe(error);
+    ).rejects.toBe(aborted.reason);
     await expect(
       createReadingAssistant("", fetcher).status(aborted),
     ).rejects.toBe(error);

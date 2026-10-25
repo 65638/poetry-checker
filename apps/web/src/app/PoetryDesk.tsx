@@ -86,6 +86,7 @@ export function PoetryDesk({
   const [rhymeFilter, setRhymeFilter] = useState("");
   const [rhymeIntention, setRhymeIntention] = useState("");
   const [rhymeRetry, setRhymeRetry] = useState(0);
+  const [changedSeedRetry, setChangedSeedRetry] = useState(0);
   const [rhymeLoaded, setRhymeLoaded] = useState({ loaded: 0, total: 0 });
   const [rhymeSnapshot, setRhymeSnapshot] = useState<{
     identity: string;
@@ -167,7 +168,11 @@ export function PoetryDesk({
   const seed = originalSeed
     ? currentLineEnd(originalSeed, pendingEdits ?? [], report!.poem.tokens)
     : undefined;
-  const changedSeedIdentity = JSON.stringify([draft.rhymeBook, seed?.text]);
+  const changedSeedIdentity = JSON.stringify([
+    draft.rhymeBook,
+    seed?.text,
+    report?.versions.data,
+  ]);
   const seedChanged = seed?.text !== originalSeed?.text;
   const seedBusy = seedChanged && changedSeed?.identity !== changedSeedIdentity;
   const seedCandidates = seedChanged
@@ -211,6 +216,7 @@ export function PoetryDesk({
   useEffect(() => {
     if (!canUseSuggestions || !seedChanged || !seed?.text) return;
     const controller = new AbortController();
+    setChangedSeed(null);
     void lookupCharacter(seed.text, draft.rhymeBook, controller.signal)
       .then((result) => {
         if (!controller.signal.aborted)
@@ -229,7 +235,13 @@ export function PoetryDesk({
           });
       });
     return () => controller.abort();
-  }, [canUseSuggestions, changedSeedIdentity, seedChanged, lookupCharacter]);
+  }, [
+    canUseSuggestions,
+    changedSeedIdentity,
+    seedChanged,
+    lookupCharacter,
+    changedSeedRetry,
+  ]);
   useEffect(() => {
     setRhymeError(null);
     if (!canUseSuggestions || !seedReading || tab !== "rhyme") {
@@ -676,6 +688,7 @@ export function PoetryDesk({
                   <select
                     aria-label="选择韵脚读音"
                     value={seedReading?.id ?? ""}
+                    disabled={seedBusy || !seedCandidates.length}
                     onChange={(e) => {
                       setReadingId(e.target.value);
                       setRhymeFilter("");
@@ -703,12 +716,26 @@ export function PoetryDesk({
               </div>
               {seedBusy && <p role="status">查阅当前韵脚…</p>}
               {!seedBusy && !seedCandidates.length && (
-                <p>
+                <div className="pc-studio-error" role="status">
+                  <p>
+                    {changedSeed?.identity === changedSeedIdentity &&
+                    changedSeed.error
+                      ? changedSeed.error
+                      : "此字在所选韵书中未收录。"}
+                  </p>
                   {changedSeed?.identity === changedSeedIdentity &&
-                  changedSeed.error
-                    ? changedSeed.error
-                    : "此字在所选韵书中未收录。"}
-                </p>
+                    changedSeed.error && (
+                      <button
+                        type="button"
+                        className="pc-studio-action"
+                        onClick={() =>
+                          setChangedSeedRetry((count) => count + 1)
+                        }
+                      >
+                        重新查阅韵脚
+                      </button>
+                    )}
+                </div>
               )}
               <div
                 className="pc-rhyme-loading"
@@ -733,141 +760,138 @@ export function PoetryDesk({
                   </button>
                 </p>
               )}
+              <label className="pc-rhyme-intention">
+                推敲意图（选填）
+                <input
+                  aria-label="荐字意图"
+                  value={rhymeIntention}
+                  maxLength={240}
+                  placeholder="例如：保留江水的画面，让语气更清冷"
+                  onChange={(event) => setRhymeIntention(event.target.value)}
+                />
+                <span className="pc-studio-meta">
+                  点击荐字后生效；仍从全部同韵候选中筛选。
+                </span>
+              </label>
+              <div className="pc-studio-actions">
+                <span className="pc-studio-meta">
+                  {rhymeWords
+                    ? `同韵部共${rhymeWords.total}字 · 已全部展开`
+                    : "候选就绪后即可荐字"}
+                </span>
+                <button
+                  className="pc-studio-action"
+                  disabled={
+                    !canUseSuggestions ||
+                    rhyme.busy ||
+                    rhymeBusy ||
+                    !peers.length
+                  }
+                  onClick={() => {
+                    setRecommendationCandidates(peers);
+                    void rhyme.run({
+                      task: "rhyme",
+                      text: draft.text,
+                      rhymeBook: draft.rhymeBook,
+                      targetTokenId: seed.tokenId,
+                      readingId: seedReading!.id,
+                      candidateIds: peers.map((c) => c.id),
+                      ...(rhymeIntention.trim()
+                        ? { intention: rhymeIntention.trim() }
+                        : {}),
+                    });
+                  }}
+                >
+                  <Sparkles size={17} />
+                  结合全诗荐字
+                </button>
+              </div>
+              <StudioTaskState
+                {...rhyme}
+                retryLabel={rhyme.progress.completed ? "继续荐字" : "重试荐字"}
+                cancelledMessage="已停止荐字，诗文和已完成批次仍保留；继续时只处理剩余候选。"
+              />
+              {rhyme.progress.total > 0 && (
+                <p className="pc-studio-meta" role="status">
+                  已研读 {rhyme.progress.completed} / {rhyme.progress.total}{" "}
+                  个读音候选
+                  {rhyme.busy ? "，正在逐批结合全诗筛选…" : ""}
+                </p>
+              )}
+              {saved && saved.text !== draft.text && !rhyme.result && (
+                <p className="pc-studio-meta">上次荐字 · 可按当前稿重新推荐</p>
+              )}
+              {(rhyme.result || saved) && (
+                <p className="pc-studio-meta">
+                  这份荐字的意图：
+                  {displayedIntention || "结合全诗，未指定额外侧重"}
+                </p>
+              )}
+              {displayedInput && (
+                <RhymeNoteActions
+                  input={displayedInput}
+                  matches={recommendations}
+                  candidates={displayedCandidates}
+                />
+              )}
+              {(rhyme.result || saved) && !recommendations.length && (
+                <p className="pc-studio-meta" role="status">
+                  本次未找到值得替换的字，保留原字也可以。
+                </p>
+              )}
+              {recommendations.map((match) => {
+                const c = displayedCandidates.find((p) => p.id === match.id);
+                return (
+                  c && (
+                    <article className="pc-poetry-edit" key={c.id}>
+                      <h3>
+                        {c.character}
+                        {c.modernReading && (
+                          <small> {formatModernReading(c.modernReading)}</small>
+                        )}
+                      </h3>
+                      <p>{match.reason}</p>
+                      {canApply && pendingEdits && (
+                        <RevisionPreview
+                          poem={report.poem}
+                          currentText={draft.text}
+                          accepted={pendingEdits}
+                          edit={{
+                            startTokenId: originalSeed!.tokenId,
+                            endTokenId: originalSeed!.tokenId,
+                            original: originalSeed!.text,
+                            replacement: c.character,
+                            reason: match.reason,
+                            tradeoff: "同韵不等于同义或整诗合律。",
+                          }}
+                        />
+                      )}
+                      <button
+                        className="pc-studio-action"
+                        disabled={!canApply}
+                        onClick={() =>
+                          adopt(
+                            {
+                              startTokenId: originalSeed!.tokenId,
+                              endTokenId: originalSeed!.tokenId,
+                              original: originalSeed!.text,
+                              replacement: c.character,
+                              reason: match.reason,
+                              tradeoff: "同韵不等于同义或整诗合律。",
+                            },
+                            `同韵推敲：${seed.text}→${c.character}；候选${c.id}；${match.reason}`,
+                          )
+                        }
+                      >
+                        <Check size={16} />
+                        试用
+                      </button>
+                    </article>
+                  )
+                );
+              })}
               {rhymeWords && (
                 <>
-                  <label className="pc-rhyme-intention">
-                    推敲意图（选填）
-                    <input
-                      aria-label="荐字意图"
-                      value={rhymeIntention}
-                      maxLength={240}
-                      placeholder="例如：保留江水的画面，让语气更清冷"
-                      onChange={(event) =>
-                        setRhymeIntention(event.target.value)
-                      }
-                    />
-                    <span className="pc-studio-meta">
-                      点击荐字后生效；仍从全部同韵候选中筛选。
-                    </span>
-                  </label>
-                  <div className="pc-studio-actions">
-                    <span className="pc-studio-meta">
-                      同韵部共{rhymeWords.total}字 · 已全部展开
-                    </span>
-                    <button
-                      className="pc-studio-action"
-                      disabled={
-                        !canUseSuggestions ||
-                        rhyme.busy ||
-                        rhymeBusy ||
-                        !peers.length
-                      }
-                      onClick={() => {
-                        setRecommendationCandidates(peers);
-                        void rhyme.run({
-                          task: "rhyme",
-                          text: draft.text,
-                          rhymeBook: draft.rhymeBook,
-                          targetTokenId: seed.tokenId,
-                          readingId: seedReading!.id,
-                          candidateIds: peers.map((c) => c.id),
-                          ...(rhymeIntention.trim()
-                            ? { intention: rhymeIntention.trim() }
-                            : {}),
-                        });
-                      }}
-                    >
-                      <Sparkles size={17} />
-                      结合全诗荐字
-                    </button>
-                  </div>
-                  <StudioTaskState {...rhyme} />
-                  {rhyme.progress.total > 0 && (
-                    <p className="pc-studio-meta" role="status">
-                      已研读 {rhyme.progress.completed} / {rhyme.progress.total}{" "}
-                      个读音候选
-                      {rhyme.busy ? "，正在逐批结合全诗筛选…" : ""}
-                    </p>
-                  )}
-                  {saved && saved.text !== draft.text && !rhyme.result && (
-                    <p className="pc-studio-meta">
-                      上次荐字 · 可按当前稿重新推荐
-                    </p>
-                  )}
-                  {(rhyme.result || saved) && (
-                    <p className="pc-studio-meta">
-                      这份荐字的意图：
-                      {displayedIntention || "结合全诗，未指定额外侧重"}
-                    </p>
-                  )}
-                  {displayedInput && (
-                    <RhymeNoteActions
-                      input={displayedInput}
-                      matches={recommendations}
-                      candidates={displayedCandidates}
-                    />
-                  )}
-                  {(rhyme.result || saved) && !recommendations.length && (
-                    <p className="pc-studio-meta" role="status">
-                      本次未找到值得替换的字，保留原字也可以。
-                    </p>
-                  )}
-                  {recommendations.map((match) => {
-                    const c = displayedCandidates.find(
-                      (p) => p.id === match.id,
-                    );
-                    return (
-                      c && (
-                        <article className="pc-poetry-edit" key={c.id}>
-                          <h3>
-                            {c.character}
-                            {c.modernReading && (
-                              <small>
-                                {" "}
-                                {formatModernReading(c.modernReading)}
-                              </small>
-                            )}
-                          </h3>
-                          <p>{match.reason}</p>
-                          {canApply && pendingEdits && (
-                            <RevisionPreview
-                              poem={report.poem}
-                              currentText={draft.text}
-                              accepted={pendingEdits}
-                              edit={{
-                                startTokenId: originalSeed!.tokenId,
-                                endTokenId: originalSeed!.tokenId,
-                                original: originalSeed!.text,
-                                replacement: c.character,
-                                reason: match.reason,
-                                tradeoff: "同韵不等于同义或整诗合律。",
-                              }}
-                            />
-                          )}
-                          <button
-                            className="pc-studio-action"
-                            disabled={!canApply}
-                            onClick={() =>
-                              adopt(
-                                {
-                                  startTokenId: originalSeed!.tokenId,
-                                  endTokenId: originalSeed!.tokenId,
-                                  original: originalSeed!.text,
-                                  replacement: c.character,
-                                  reason: match.reason,
-                                  tradeoff: "同韵不等于同义或整诗合律。",
-                                },
-                                `同韵推敲：${seed.text}→${c.character}；候选${c.id}；${match.reason}`,
-                              )
-                            }
-                          >
-                            <Check size={16} />
-                            试用
-                          </button>
-                        </article>
-                      )
-                    );
-                  })}
                   <p className="pc-studio-meta pc-rhyme-grid-hint">
                     全部同韵字在下方连续展示。点字可查看读音与出处，AI荐字始终遍历全部候选。
                   </p>
